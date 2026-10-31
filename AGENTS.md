@@ -12,12 +12,14 @@ A public guide to Somerville, MA's sidewalk snow and ice rules, for people who w
 | `docs/index.html` | All page markup. English text lives here, each piece tagged `data-i18n="section.NN"`. |
 | `docs/i18n/en.js` | Every English string: `page` (mirrors the `data-i18n` tags) and `ui` (text scripts write). |
 | `docs/i18n/languages.js` | Languages in the switcher. The switcher stays hidden while only English is listed. |
+| `docs/i18n/drafts.js` + `es.js`, `pt.js`, `ht.js`, `ne.js` | AI-drafted translations awaiting native-speaker review. Not in the switcher; preview with `?lang=es` (a banner marks them as drafts). Review checklist: `research/translation-review.md`. Add new English keys to these too, or they fall back to English. |
 | `docs/js/deadline.js` | Pure sunrise/sunset + 6-daylight-hour deadline math. Covered by `test/`. |
 | `docs/js/shovel.js` | The animated street corner for "Down to the pavement" (steps 1–5). Each step plays one short animation; CSS under "shovel scene" in `style.css`. |
 | `docs/js/corner.js` | The street-corner SVG for the "Who clears this?" map. |
-| `docs/js/main.js` | Wires the page: steps, who-clears map, calculator, salt slider, fines, nav. |
+| `docs/js/main.js` | Wires the page: steps, who-clears map, calculator (starts at "just now" from Oct 1 to May 1), salt slider, fines, share-this-card links, nav. |
 | `cards/src/` | The 34 phone-size (1080×1920) social cards as standalone HTML (the editable source). |
 | `docs/cards/` | Rendered PNGs, served by the site with a gallery at `docs/cards.html`. `cards.json` lists them in story order. Regenerate with `npm run cards` (or `npm run cards -- 23-fines` for one). |
+| `docs/flyer.html` | One-page printable US Letter flyer (English) with a QR code (`docs/qr.svg`, to https://vitorpamplona.com/somersnow/). Has its own copy of the key facts: update it when a rule or fine changes. |
 | `docs/llms.txt` | Plain-text summary of the rules for AI assistants that read the live site. Keep it in sync with the facts below. |
 | `research/` | `ordinance.md` (law text + fines), `questions.md` (questions and proposals for officials), `sources.md`, and `source-files/` (the ordinance PDFs and the WalkBoston report). |
 
@@ -26,7 +28,7 @@ Deploy: anything pushed to `main` under `docs/` goes live within a minute or two
 
 ## Making changes
 
-- **A rule or number changes** (new fine, new even/odd side, new lots): update it everywhere it appears, in this order: the "Verified facts" list below, `docs/i18n/en.js` (and any translations), `docs/index.html`, `docs/llms.txt`, the affected cards in `cards/src/` (then `npm run cards -- <card>`), and `research/ordinance.md` if it's law. Search the repo for the old value before you finish.
+- **A rule or number changes** (new fine, new even/odd side, new lots): update it everywhere it appears, in this order: the "Verified facts" list below, `docs/i18n/en.js` (and any translations), `docs/index.html`, `docs/flyer.html`, `docs/llms.txt`, the affected cards in `cards/src/` (then `npm run cards -- <card>`), and `research/ordinance.md` if it's law. Search the repo for the old value before you finish.
 - **Every fact needs a source.** Law comes from `research/source-files/` or Municode; City practice from somervillema.gov; MBTA facts from mbta.com. If a source is a search snippet, mark it * in `research/sources.md`. Don't add facts from memory. If something is unconfirmed, add it to "Not yet confirmed" and to `research/questions.md`, not to the site.
 - **Text:** edit `docs/index.html` and `docs/i18n/en.js` together. Keys in `en.js` must match the `data-i18n` attributes. New visible text gets a new key.
 - **Before pushing:** `npm test`, then open `npm run dev` and check the page at phone width (390px) with no sideways scroll.

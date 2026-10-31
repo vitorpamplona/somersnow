@@ -11,6 +11,7 @@ Somerville's sidewalk snow and ice rules, for everyone who walks, rolls or rides
 ## What's in the repo
 
 - `docs/`: the website (plain HTML, CSS and JavaScript modules, no build step), including a deadline calculator that uses Somerville sunrise and sunset times, a "who clears this?" street corner, a salt-or-sand thermometer and a fine calculator.
+- `docs/flyer.html`: a one-page printable flyer with a QR code, for doors, building lobbies and shop windows.
 - `docs/cards/` and `cards/src/`: 34 phone-size cards to share, as PNGs and as editable HTML. Gallery at `/cards.html`.
 - `research/`: the ordinance text and fines, questions and proposals for City, MBTA and State officials, and sources.
 
@@ -22,7 +23,7 @@ npm test         # check the deadline math
 npm i && npm run cards   # re-render card PNGs after editing cards/src (uses Playwright)
 ```
 
-All English text is in `docs/i18n/en.js`. To add a language, copy it to `docs/i18n/<code>.js`, translate the values, have a native speaker review it, and list it in `docs/i18n/languages.js`.
+All English text is in `docs/i18n/en.js`. To add a language, copy it to `docs/i18n/<code>.js`, translate the values, have a native speaker review it, and list it in `docs/i18n/languages.js`. Spanish, Portuguese, Haitian Creole and Nepali drafts are waiting for review: preview them with `?lang=es`, `?lang=pt`, `?lang=ht` or `?lang=ne`, and see `research/translation-review.md`.
 
 GitHub Pages serves the `docs/` folder from `main` (**Settings → Pages → Deploy from a branch → `main` / `/docs`**). GitHub Actions runs the tests on every push.
 

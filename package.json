@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "python3 -m http.server 8080 --directory docs",
     "test": "node --test test/*.test.js",
-    "cards": "node scripts/render-cards.mjs"
+    "cards": "node scripts/render-cards.mjs",
+    "data": "python3 scripts/fetch_data.py"
   },
   "license": "MIT",
   "devDependencies": {

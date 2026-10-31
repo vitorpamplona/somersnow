@@ -139,6 +139,9 @@ What PTAC found in public data, and what's missing, is in [data-sources.md](data
 53. **ADA survey.** In the 2023 ADA Community Survey data, what does the 0–10 `sidewalks` column measure?
     - [Americans with Disabilities Act Community Survey Results](https://data.somervillema.gov/d/usj9-kz3f)
 
+54. **Teen shoveling contact.** The City's February 2026 snow emergency notices give the Council on Aging at 617-625-6600 x2300; the guide uses x2321. Which is current?
+    - [Snow emergency notice, Feb 21, 2026](https://www.somervillema.gov/news/somerville-declares-snow-emergency-effective-sunday-february-22-12-pm-noon)
+
 ## Sources
 
 See [sources.md](sources.md).

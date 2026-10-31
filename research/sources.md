@@ -57,6 +57,8 @@ Opened and queried Oct 31, 2026. Details, numbers and queries in [data-sources.m
 
 - [Somerville 311 Service, Information, and Feedback Requests](https://data.somervillema.gov/d/4pyi-uqq6) (City open data)
 - [Somerville Police Data: Crashes](https://data.somervillema.gov/d/mtik-28va); [ADA Community Survey Results](https://data.somervillema.gov/d/usj9-kz3f); Wards, Streets and Tax Parcels on [data.somervillema.gov](https://data.somervillema.gov)
+- City snow emergency notices, Feb 2026: [declared for Feb 22 at noon](https://www.somervillema.gov/news/somerville-declares-snow-emergency-effective-sunday-february-22-12-pm-noon) (odd/even rule, 4 hours, lots, teen shoveling x2300) and [ends Feb 24 at 8 p.m.](https://www.somervillema.gov/news/somerville-snow-emergency-will-end-tuesday-february-24-8-pm) ("the shoveling deadline was 1 p.m.", lots until 10 a.m. Feb 25, 24 h permits, 48 h cars); Jan 2026: [declared for Jan 25 at 7 a.m.](https://www.somervillema.gov/news/somerville-declares-snow-emergency-effective-sunday-january-25-7-am)
+- Hourly weather at Boston Logan (BOS): [Iowa Environmental Mesonet ASOS archive](https://mesonet.agron.iastate.edu/request/download.phtml?network=MA_ASOS)
 - [Sidewalk Snow Clearing Program, Broadway and School St.](https://www.somervillema.gov/departments/programs/sidewalk-snow-clearing-pilot)
 - NOAA daily and monthly snowfall for Boston (station record "BOSthr"), via the [ACIS web services](https://www.rcc-acis.org/docs_webservices.html)
 - [National Weather Service API](https://www.weather.gov/documentation/services-web-api) (forecast grid BOX 70,102)

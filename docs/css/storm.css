@@ -1,0 +1,71 @@
+/* Storm replay page (storm.html). Builds on style.css. */
+.replay-top{padding-top:48px}
+.replay-top h2{font-size:clamp(44px,6.5vw,84px)}
+.replay-top .lede{max-width:46ch}
+.k{font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:2px;text-transform:uppercase;color:var(--ice);margin-bottom:10px}
+
+/* player */
+.player{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px 18px;align-items:center;margin-top:36px;background:var(--night-2);border-radius:24px;padding:18px 22px}
+.play{width:56px;height:56px;border-radius:50%;border:0;background:var(--orange);display:flex;align-items:center;justify-content:center}
+.play svg{width:24px;height:24px;fill:var(--night)}
+.clock b{display:block;font-family:var(--display);font-weight:800;font-size:clamp(30px,4vw,44px);line-height:1;text-transform:uppercase}
+.clock span{color:var(--ice);font-size:16px}
+#scrub{grid-column:1/-1;accent-color:var(--orange);height:28px}
+.jumps{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px}
+.jumps .chip{font-size:15px;padding:6px 12px}
+
+/* layout */
+.replay{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:32px;margin-top:32px;align-items:start}
+.guide-col{position:sticky;top:76px}
+
+/* the phone with the guide's messages */
+.phone{background:var(--snow);color:var(--night);border-radius:32px;padding:16px;border:6px solid #0A1929;min-height:420px;box-shadow:0 10px 40px rgba(0,0,0,.35)}
+.msg{display:grid;grid-template-columns:40px minmax(0,1fr);gap:4px 12px;align-items:start;background:#fff;border-radius:18px;padding:14px 16px;margin-bottom:10px;border-left:6px solid #C9D6E3;animation:msgin .35s ease}
+.msg .ico{grid-row:1/3;width:40px;height:40px;color:var(--rust)}
+.msg b{font-family:var(--display);font-weight:800;font-size:24px;text-transform:uppercase;line-height:1}
+.msg span{font-size:16px;color:var(--sub);line-height:1.3}
+.msg.m-now{border-left-color:var(--orange)}
+.msg.m-warn{border-left-color:var(--rust);background:#FFF1E8}
+.msg.m-em{border-left-color:#3B82F6}
+.msg.m-em .ico{color:#3B82F6}
+.msg.m-city{background:var(--night);color:#fff;border-left-color:var(--ice)}
+.msg.m-city .ico{color:var(--ice)}
+.msg.m-city span{color:#DCE8F5}
+.msg .big{font-family:var(--display);font-weight:800;font-size:40px;line-height:.9;color:var(--rust)}
+@keyframes msgin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* chart */
+.chart-panel{padding:18px 18px 14px}
+#chart svg{width:100%;height:auto;display:block}
+.chart-panel .legend{color:var(--ice)}
+.tally{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px}
+.tally div{background:var(--night-2);border-radius:18px;padding:14px 16px;display:flex;flex-direction:column;gap:4px}
+.tally b{font-family:var(--display);font-weight:800;font-size:40px;line-height:.9;font-variant-numeric:tabular-nums}
+.tally span{font-size:14px;color:var(--ice);line-height:1.2}
+.tally i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px}
+
+/* map */
+.map-grid{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:32px;margin-top:32px;align-items:center}
+#map svg{width:100%;height:auto;max-height:560px;display:block;margin:0 auto}
+.map-grid .it b{font-size:44px}
+
+/* small multiples */
+.multiples{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:32px}
+.mini{background:var(--snow);border-radius:18px;padding:14px 14px 10px}
+.mini h4{margin:0;font-family:var(--display);font-weight:800;font-size:20px;text-transform:uppercase;line-height:1}
+.mini small{color:var(--mute);font-size:14px}
+.mini svg{width:100%;height:auto;display:block;margin-top:8px}
+.mini.sel{outline:3px solid var(--orange)}
+
+@media (max-width:900px){
+  .replay{grid-template-columns:1fr}
+  .guide-col{position:static}
+  .phone{min-height:0}
+  .map-grid{grid-template-columns:1fr}
+  .tally{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:600px){
+  .player{padding:14px 16px;border-radius:18px}
+  .play{width:48px;height:48px}
+  .multiples{grid-template-columns:repeat(2,minmax(0,1fr))}
+}

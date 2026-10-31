@@ -96,6 +96,15 @@ A curb-ramp inventory (City or MassDOT); a list of declared snow emergencies; th
 5. **Where 36 inches is tight.** A sidewalk-width map highlighting stretches of 4 ft or less. (§4)
 6. **Reports by ward.** Seven small bars per winter, with the "reports, not conditions" caveat. (§1)
 
-## How to refresh
+## Collected
 
-The site has no build step, so keep any data the page uses as small, pre-computed JSON files in `docs/data/`, written by a script in `scripts/` that runs these queries. Re-run it each fall before the first storm.
+`npm run data` (`scripts/fetch_data.py`, Python standard library, no keys) collects sources 1–3 and 5, the ward outlines and the hourly Logan weather into small files in `docs/data/`. The storm replay (`docs/storm.html`) reads them. Re-run it each fall before the first storm.
+
+Hourly weather comes from the [Iowa Environmental Mesonet ASOS archive](https://mesonet.agron.iastate.edu/request/download.phtml?network=MA_ASOS) (Logan, `BOS`; free, CORS-enabled). Its present-weather codes (`-SN`, `SN`, `+SN`) give when snow started and stopped, which the daily NOAA totals can't.
+
+**What the February 22–24, 2026 replay shows** (City notices + 311 + Logan):
+- The City declared the emergency on Saturday, effective Sunday at noon (odd side by 4 p.m.).
+- At Logan, snow fell from about 8 p.m. Sunday to about 10 p.m. Monday. It was heaviest from 6 a.m. to noon Monday, with visibility a quarter mile and winds over 30 knots.
+- Snow stopped after dark, so the 6 daylight hours started at sunrise: the guide's calculator says **12:28 p.m. Tuesday**. The City's notice said "the shoveling deadline was 1 p.m."
+- What people asked 311 changed by phase: parking and emergency questions at the declaration; plow and street requests while it snowed and on Tuesday morning; sidewalk reports after the deadline, peaking Wednesday midday; space-saver reports by Thursday. Only 38 of 841 sidewalk reports between the first snow and March 1 (about 1 in 20) came before the deadline.
+- In 12 of 15 big storms since 2016, sidewalk reports peaked 1 to 3 days after the last day of snow.

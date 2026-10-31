@@ -20,10 +20,12 @@ A public guide to Somerville, MA's sidewalk snow and ice rules, for people who w
 | `cards/src/` | The 34 phone-size (1080×1920) social cards as standalone HTML (the editable source). |
 | `docs/cards/` | Rendered PNGs, served by the site with a gallery at `docs/cards.html`. `cards.json` lists them in story order. Regenerate with `npm run cards` (or `npm run cards -- 23-fines` for one). |
 | `docs/flyer.html` | One-page printable US Letter flyer (English) with a QR code (`docs/qr.svg`, to https://vitorpamplona.com/somersnow/). Has its own copy of the key facts: update it when a rule or fine changes. |
+| `docs/storm.html` + `js/storm.js`, `css/storm.css` | Storm replay: one past storm hour by hour (snow at Logan, the emergency, the deadline from `deadline.js`, 311 requests, ward map), with a sketch of what the guide could show at each hour, plus every big storm since 2016. English only. `?storm=<id>` picks a replay. |
+| `docs/data/` | Small JSON files the replay reads, written by `npm run data` (`scripts/fetch_data.py`, Python standard library, no keys). Re-run each fall. To add a replay, add an entry to `REPLAYS` in the script with the City's notices and their source URLs. Sources and caveats: `research/data-sources.md`. |
 | `docs/llms.txt` | Plain-text summary of the rules for AI assistants that read the live site. Keep it in sync with the facts below. |
 | `research/` | `ordinance.md` (law text + fines), `questions.md` (questions and proposals for officials), `sources.md`, and `source-files/` (the ordinance PDFs and the WalkBoston report). |
 
-Commands: `npm run dev` (serve `docs/` at http://localhost:8080; ES modules don't load from file://), `npm test`, `npm run cards`.
+Commands: `npm run dev` (serve `docs/` at http://localhost:8080; ES modules don't load from file://), `npm test`, `npm run cards`, `npm run data`.
 Deploy: anything pushed to `main` under `docs/` goes live within a minute or two. `.github/workflows/test.yml` runs `npm test` on every push and pull request.
 
 ## Making changes
@@ -53,7 +55,7 @@ Deploy: anything pushed to `main` under `docs/` goes live within a minute or two
 - **Snow into the street:** banned unless broken up, spread ≤ 3 inches, in daylight, on a day with mean temperature above 40°F (12-9).
 - **Downspouts:** buildings may not shed water onto sidewalks (12-2).
 - **Space savers:** illegal under 12-18 (no objects in a way without a DPW permit); $100; each day a new offense; City may discard them.
-- **Snow emergency (City page / Sec. 1-11):** announced by City Alert and blue lights at 22 intersections; 4 hours to move to the **even** side (winter 2026/27); tow zone, hydrant and 20-ft-of-intersection tickets $100; 13 free City lots; Tufts Dowling Garage free for Wards 6 & 7 (register first); after it ends: 2 h leave lots, 24 h permit rules return, 48 h dig out. Tows: Stephen's Towing 781-395-0808, pickup at Dilboy Stadium, $132 + $35/day.
+- **Snow emergency (City page / Sec. 1-11):** announced by City Alert and blue lights at 22 intersections; 4 hours to move to the **even** side (winter 2026/27: the City's rule is that the side matches the year winter begins, odd in 2025/26 and even in 2026/27, per its Feb 21, 2026 snow emergency notice); tow zone, hydrant and 20-ft-of-intersection tickets $100; 13 free City lots; Tufts Dowling Garage free for Wards 6 & 7 (register first); after it ends: 2 h leave lots, 24 h permit rules return, 48 h dig out. Tows: Stephen's Towing 781-395-0808, pickup at Dilboy Stadium, $132 + $35/day.
 - **Landlords (105 CMR 410.260):** keep shared exits, stairs, walkways clear; a lease can't shift that. Tenants only for an exit that is theirs alone, if a written agreement says so.
 - **Bus stops:** City clears most of its 281 stops after streets (City page). MBTA clears all route 109 stops plus some on 77 (Mass Ave) and 104 (Sullivan Sq) within 24 hours (MBTA page). Snow routes: 85, 93.
 - **Deicers (Minnesota Pollution Control Agency, not a City rule):** rock salt to 15°F, magnesium chloride to −10°F, calcium chloride to −20°F, CMA to 20°F, sand never melts. ~12 oz covers 10 sidewalk squares.
@@ -61,7 +63,7 @@ Deploy: anything pushed to `main` under `docs/` goes live within a minute or two
 
 ## Not yet confirmed (see research/questions.md)
 
-Who clears residential corner ramps; when the City clears and liens (24 h after snow vs after the emergency); whether tickets go to tenants in practice; teen-shoveler 2026/27 prices (cards still show 2024/25: $25, $60 corner); MBTA routes after the bus network redesign; Green Line station access; state-road sidewalks; whether the even-side rule and the 13 lots are unchanged for 2026/27.
+Who clears residential corner ramps; when the City clears and liens (24 h after snow vs after the emergency); whether tickets go to tenants in practice; teen-shoveler 2026/27 prices (cards still show 2024/25: $25, $60 corner); MBTA routes after the bus network redesign; Green Line station access; state-road sidewalks; whether the 13 lots are unchanged for 2026/27; the teen-shoveler extension (the City's Feb 2026 notices say Council on Aging x2300, this file says x2321).
 
 Resident feedback (not data): small storms leave the worst ice; the first December storm is when people relearn the rules.
 

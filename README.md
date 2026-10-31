@@ -26,4 +26,4 @@ All English text is in `docs/i18n/en.js`. To add a language, copy it to `docs/i1
 
 GitHub Pages serves the `docs/` folder from `main` (**Settings → Pages → Deploy from a branch → `main` / `/docs`**). GitHub Actions runs the tests on every push.
 
-Working with Claude Code: `CLAUDE.md` holds the project context, verified facts, open questions and style rules.
+AI agents: `AGENTS.md` holds the project context, verified facts, open questions, style rules and how to change things (`CLAUDE.md` points to it). `docs/llms.txt` is a plain-text summary of the rules for AI assistants that read the live site.

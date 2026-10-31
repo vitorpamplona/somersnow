@@ -121,6 +121,20 @@ function renderMessages(t, i) {
   $('#msgs').innerHTML = messages(t, i).map((m) => `<div class="msg ${m.cls}"><svg class="ico" aria-hidden="true"><use href="#i-${m.icon}"/></svg><b>${m.b}</b><span>${m.big ? `<span class="big">${m.big}</span><br>` : ''}${m.s}</span></div>`).join('');
 }
 
+// The number of message cards changes hour by hour. Reserve the tallest the phone ever gets, so scrubbing
+// never changes its height and nothing on the page jumps (on phones the chart sits right below it).
+function lockPhoneHeight() {
+  const box = $('#msgs'); const phone = $('.phone');
+  const cur = +scrub.value;
+  phone.style.minHeight = '';
+  let mx = 0;
+  for (let i = 0; i < N; i++) { renderMessages(tOf(i + 1), i); mx = Math.max(mx, box.offsetHeight); }
+  const cs = getComputedStyle(phone);
+  const extra = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom) + parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth) + 10;
+  phone.style.minHeight = `${Math.ceil(mx + extra)}px`;
+  renderMessages(tOf(cur + 1), cur);
+}
+
 /* ---------- timeline chart ---------- */
 const CW = 900; const PAD = 8; const TOP = 40; const SNOW_H = 54; const REQ_TOP = TOP + SNOW_H + 14; const REQ_H = 170; const BOT = REQ_TOP + REQ_H;
 const xOf = (i) => PAD + (i / N) * (CW - 2 * PAD);
@@ -366,6 +380,7 @@ enableDrag($('#chart svg'));
 enableDrag($('#lanes svg'));
 buildMap();
 render(Math.max(0, Math.ceil(idxOf(declared)) - 1));
+lockPhoneHeight();
 {
   let timer2 = null; let lastW = LW;
   window.addEventListener('resize', () => {
@@ -373,7 +388,7 @@ render(Math.max(0, Math.ceil(idxOf(declared)) - 1));
     timer2 = setTimeout(() => {
       const w = Math.round($('#lanes').clientWidth);
       if (Math.abs(w - lastW) < 4) return;
-      lastW = w; buildLanes(); enableDrag($('#lanes svg')); render(+scrub.value);
+      lastW = w; buildLanes(); enableDrag($('#lanes svg')); render(+scrub.value); lockPhoneHeight();
     }, 150);
   });
 }

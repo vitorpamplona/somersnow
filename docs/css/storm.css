@@ -14,7 +14,10 @@
 .play{width:56px;height:56px;border-radius:50%;border:0;background:var(--orange);display:flex;align-items:center;justify-content:center}
 .play svg{width:24px;height:24px;fill:var(--night)}
 .clock b{display:block;font-family:var(--display);font-weight:800;font-size:clamp(30px,4vw,44px);line-height:1;text-transform:uppercase}
-.clock span{color:var(--ice);font-size:16px}
+.clock span{display:block;color:var(--ice);font-size:16px;line-height:1.4}
+/* the weather line wraps on narrow screens: reserve its lines so dragging the time never moves the page */
+@media (max-width:760px){.clock span{min-height:2.8em}}
+@media (max-width:360px){.clock span{min-height:4.2em}}
 #scrub{grid-column:1/-1;accent-color:var(--orange);height:28px}
 .jumps{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px}
 .jumps .chip{font-size:15px;padding:6px 12px}

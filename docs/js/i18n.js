@@ -1,6 +1,7 @@
 /* Minimal translation layer. English is written in index.html, so the page reads fine before any script runs. */
 import en from '../i18n/en.js';
 import languages from '../i18n/languages.js';
+import drafts from '../i18n/drafts.js';
 
 let dict = en;
 export const listeners = new Set();
@@ -12,15 +13,19 @@ export function t(path, vars = {}) {
   return s.replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? '');
 }
 
+const isDraft = (code) => !languages.some((l) => l.code === code) && drafts.some((l) => l.code === code);
+
 export async function setLanguage(code) {
-  if (!languages.some((l) => l.code === code)) code = 'en';
-  dict = code === 'en' ? en : (await import(`../i18n/${code}.js`)).default;
+  if (!languages.some((l) => l.code === code) && !isDraft(code)) code = 'en';
+  try { dict = code === 'en' ? en : (await import(`../i18n/${code}.js`)).default; } catch { dict = en; code = 'en'; }
   document.documentElement.lang = code;
   document.querySelectorAll('[data-i18n]').forEach((el) => {
     const v = dict.page?.[el.dataset.i18n] ?? en.page[el.dataset.i18n];
     if (v != null) el.innerHTML = v;
   });
-  try { localStorage.setItem('lang', code); } catch {}
+  // Drafts are preview-only: never remembered, always flagged.
+  if (!isDraft(code)) { try { localStorage.setItem('lang', code); } catch {} }
+  draftBanner(isDraft(code));
   listeners.forEach((fn) => fn(code));
 }
 
@@ -39,4 +44,18 @@ export function initLanguage(mount) {
     mount.appendChild(sel);
   }
   if (saved && saved !== 'en') setLanguage(saved);
+}
+
+/** A banner on draft (unreviewed) translations, with a way back to English. */
+function draftBanner(on) {
+  let b = document.getElementById('draftbar');
+  if (!on) { b?.remove(); return; }
+  if (!b) {
+    b = document.createElement('div');
+    b.id = 'draftbar';
+    b.className = 'draftbar';
+    b.setAttribute('role', 'note');
+    document.body.prepend(b);
+  }
+  b.innerHTML = `${t('draft')} <a href="?lang=en">${t('draftEn')}</a>`;
 }

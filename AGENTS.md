@@ -36,6 +36,50 @@ Deploy: anything pushed to `main` under `docs/` goes live within a minute or two
 - **Before pushing:** `npm test`, then open `npm run dev` and check the page at phone width (390px) with no sideways scroll.
 - **Don't** describe the site as official, put City or MBTA logos on it, or soften the "not an official City page" line.
 
+## Storm replays and data
+
+The guide teaches the rules; `docs/storms/` shows what actually happens in a storm, hour by hour, so PTAC can show residents and officials the pattern (sidewalk complaints peak 1 to 3 days after the snow stops, long after the deadline). Treat it as analysis, not rules: nothing there changes what the guide tells people to do.
+
+**How it fits together**
+1. `scripts/fetch_data.py` (`npm run data`) finds every storm with 6"+ in a day at Logan since July 2015 and collects, for each storm's window (2 days before to 6 days after; ids are the last day of snow), hourly data from public sources. `scripts/storm_extras.py` holds the extra collectors. Output: `docs/data/*.json`. Downloads over a few MB are cached in `.cache/` (about 1.5 GB; delete a file there to refresh it).
+2. `scripts/build_pages.py` (`npm run pages`, also run at the end of `npm run data`) writes `docs/storms/<id>.html` and `docs/storms/index.html` from `scripts/storm_page.html`, with the data embedded as JSON and the text (title, intro, description, prev/next, storm cards) already written. Script and CSS URLs carry a content hash (`?v=`) so browsers never mix a new page with an old cached script.
+3. `docs/js/storm.js` only draws: the guide's "storm mode" messages in a phone (a sketch of what the guide could say at each hour, not something the City said), the main chart (snow, NWS warnings, 311 by type, markers), "Getting around" lanes (drawn at real pixel width so text stays readable), counters, and the ward map. Dragging the chart or lanes moves the time; nothing on the page may change height while dragging (the phone reserves its tallest height).
+
+**Sources and coverage** (details, numbers and queries: `research/data-sources.md`)
+
+| Source | Where | Covers |
+|---|---|---|
+| Hourly weather at Logan (snow start/stop from METAR codes; falling snow only, lulls under 6 h are one storm) | Iowa Environmental Mesonet ASOS | all storms |
+| Daily snowfall at Logan, winters since 1891 | NOAA via ACIS (`BOSthr`) | all |
+| Snowfall inside Somerville | CoCoRaHS volunteers via ACIS | 9 storms, 4 complete ("partial report" otherwise) |
+| NWS warnings for zone MAZ014 | IEM VTEC archive | all |
+| 311 snow requests (sidewalk, street, emergency questions, space savers) and parking/trash calls | City open data `4pyi-uqq6` | all |
+| Snow emergency tows, disabled vehicles (per 8-hour police shift) | City open data `mdb2-mgc7` | 2017 on |
+| Crashes | City open data `mtik-28va` | March 2018 on |
+| Views of the City's snow pages | City open data `754v-8e35` (top 20 pages a day) | Dec 2020 – May 2023 |
+| T gated entries at Somerville stations (30-minute) | MBTA open data, yearly archive | all |
+| Bus trips run and minutes late, routes serving Somerville | MBTA bus arrival/departure times | Dec 2020 on |
+| MBTA service alerts on Somerville routes and stations | MBTA alerts archive | 2020 on |
+| Bluebikes trips from stations inside Somerville | Bluebikes system data | all (no winter trips in 2016–17) |
+| City snow emergency times and notices | somervillema.gov news, typed into `CITY` in `fetch_data.py` | Feb 2022 (end only), Jan 2026 (start only), Feb 2026 (both) |
+| Ward outlines (State Plane, converted); MBTA stops and Fall 2025 weekday boardings | City GIS `ym5n-phxd`; MBTA V3 API and ridership | — |
+
+**Rules for this data**
+- "Normal" for the T, buses and Bluebikes is the same hour on the 4 weeks before the window. Holidays in those weeks distort it (Feb 2026: −86% vs. that average, −89% vs. Feb 9 alone); say "compared with a normal week", not "usual".
+- 311 counts complaints, not unshoveled sidewalks. Reports per inch of snow jumped after 2023 (likely easier reporting), so don't present a trend as worse shoveling (question 47).
+- When a source doesn't cover a storm, show "not available" with the reason, never a zero.
+- The deadline comes from `deadline.js`. Two City notices let us check it: Feb 26, 2022 (City 12:30 p.m., calculator 12:24) and Feb 24, 2026 (City "1 p.m.", calculator 12:28).
+- New City facts found in data work go through the "Making changes" rules above (a source, then the facts list); e.g. the even-side rule for 2026/27 came from a City notice.
+
+**Checked on the City portal (data.somervillema.gov) and left out:** traffic citations (moving violations only; no parking or snow tickets), permits and licenses (dumpsters, curb cuts), the Winter Warming Center survey (about the shelter), the ADA survey (`sidewalks` column has no codebook), crime reports and the other surveys. **Not public:** sidewalk tickets issued, clean-and-lien jobs, plow GPS, a list of snow emergencies, snow spending, the 22 blue-light locations, curb-ramp inventory (questions 47–54).
+
+**Ideas not built yet:** the Happiness Survey (`wmeh-zuz2`, 2019/2023/2025) asks how people get around, by ward, for the ward map ("who depends on sidewalks"); Boston 311 "Unshoveled Sidewalk" for comparison; a freeze-thaw (refreeze) lane from the hourly temperatures; more 311 types (fallen trees, potholes); Census ACS by ward (free key); pavement temperature from state road sensors (free token).
+
+## History
+
+- Site: guide sections, cards, research, then (Oct–Nov 2026) the animated "Down to the pavement" corner, the redrawn "Who clears this?" map, shorter phone layout, "What's happening?" buttons, share-this-card links, printable flyer, calculator starting "just now", draft translations, and the "Replay a past storm" section.
+- Storm replays: one storm (Feb 2026), then all 15 big storms with fixed pages, then "Getting around" (T, Bluebikes, tows, parking calls, alerts, crashes), then buses, Somerville snowfall and City page views. The git log has the details.
+
 ## Voice and design rules
 
 - **Short sentences and illustrations first.** The owner cut the first web version for having too many words. One headline + one short line per idea; icon tiles over paragraphs. Punchy, plain, direct ("Ice can never happen.", "Blue lights? Move your car.").

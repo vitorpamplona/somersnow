@@ -1,5 +1,7 @@
 # Data for snow visualizations
 
+> Short version for agents: the coverage table and data rules are in `AGENTS.md` ("Storm replays and data"). This file has the details, numbers and queries, in the order they were found.
+
 What public data exists for charts and maps about snow work in Somerville, what it shows, and how to get it. Every source below was opened and queried on **Oct 31, 2026**; the numbers are from those queries. None of this is on the site yet.
 
 **Read first:** 311 reports count *complaints*, not unshoveled sidewalks. They depend on who reports and how easy reporting is. Say "reports", never "unshoveled sidewalks", and don't compare years without the caveat in §1.
@@ -98,7 +100,7 @@ A curb-ramp inventory (City or MassDOT); a list of declared snow emergencies; th
 
 ## Collected
 
-`npm run data` (`scripts/fetch_data.py`, Python standard library, no keys) collects sources 1–3 and 5, the ward outlines and the hourly Logan weather into small files in `docs/data/`, including an hour-by-hour file for each of the 15 big storms since 2016. The storm replay (`docs/storm.html?storm=<id>`) reads them.
+`npm run data` (`scripts/fetch_data.py`, Python standard library, no keys) collects sources 1–3 and 5, the ward outlines and the hourly Logan weather into small files in `docs/data/`, including an hour-by-hour file for each of the 15 big storms since 2016. The storm replays (`docs/storms/<id>.html`, written by `scripts/build_pages.py`) embed them.
 
 City snow emergency times come from the City's news posts. Its online archive reaches back only to about May 2022; it has both notices for Feb 22–24, 2026, only the declaration for Jan 25–27, 2026, and only the end notice for Feb 25, 2022 (which gives the City's own deadline, 12:30 p.m. Feb 26; the guide's calculator says 12:24 p.m.). Earlier storms replay without parking messages (question 48). Re-run it each fall before the first storm.
 
@@ -129,10 +131,16 @@ Hourly weather comes from the [Iowa Environmental Mesonet ASOS archive](https://
 
 ## In the replays (Nov 1, 2026)
 
-All the sources in the table above except Boston 311, the NWS spotter reports and bus arrival times are now collected for every storm by `scripts/storm_extras.py` and shown in each replay's "Getting around" panel and "at a glance" list. Coverage: NWS warnings and 311 for every storm; police dispatch from 2017; crashes from March 2018; MBTA alerts from 2020; T entries (yearly archive, 30-minute counts) and Bluebikes for every storm. "Normal" for the T and Bluebikes is the same hour on the 4 weeks before the storm window (holidays in those weeks lower it; e.g. Feb 23, 2026 shows −86% against that average, −89% against Feb 9 alone). Bluebikes had no trips from Somerville stations in the winters of 2016 and 2017 (both during the storms and the weeks before), so those replays say so.
+All the sources in the table above except Boston 311, the NWS spotter reports and Cambridge's data are now collected for every storm by `scripts/storm_extras.py` and shown in each replay's chart and "Getting around" panel (bus arrival times were added the same day; see below). Coverage: NWS warnings and 311 for every storm; police dispatch from 2017; crashes from March 2018; MBTA alerts from 2020; T entries (yearly archive, 30-minute counts) and Bluebikes for every storm. "Normal" for the T and Bluebikes is the same hour on the 4 weeks before the storm window (holidays in those weeks lower it; e.g. Feb 23, 2026 shows −86% against that average, −89% against Feb 9 alone). Bluebikes had no trips from Somerville stations in the winters of 2016 and 2017 (both during the storms and the weeks before), so those replays say so.
 
 ### Added Nov 1, 2026
 
 - **Snow in Somerville** — [CoCoRaHS](https://www.cocorahs.org/) volunteer observers inside Somerville (stations "SOMERVILLE 0.5 SSE", "0.5 W", "0.7 SSE", "0.8 SSE", "1.0 S"; 1998 to now), via ACIS `StnMeta`/`StnData`, no key. Daily snowfall for the 24 hours to about 7 a.m., averaged over the stations reporting. Coverage is uneven: some storms have every day reported (Jan 25–27, 2026: 19.0 in vs. 23.2 at Logan; Dec 16–17, 2020: 13.5 in), some only some days (shown as "partial report"), and in the 2022 storms and Feb 2026 the observer reported only melted precipitation, not snow.
 - **City website traffic** — [Website Analytics](https://data.somervillema.gov/d/754v-8e35) (`754v-8e35`): views of the top 20 pages per day, 2020 to May 15, 2023. Snow pages (URL contains "snow") per day vs. the average of the 28 days before: e.g. Jan 7, 2022: 8,188 views vs. about 17 a normal day; Jan 29, 2022 blizzard: 6,972 and 7,306. Only covers the Dec 2020 and the three 2022 storms. Pages outside the day's top 20 aren't counted, so "normal" is a low estimate.
 - **MBTA bus arrival and departure times** — yearly CSV collections on the MBTA open data portal (2020–2026, about 300 MB each, cached). For routes serving Somerville: trips that left their first stop per hour, and the median minutes late at timepoints, each vs. the same hour on the 4 weeks before. Covers the Dec 2020, 2022 and 2026 storms.
+
+### Checked on the City portal and left out (Nov 1, 2026)
+
+All 54 datasets on data.somervillema.gov were listed. Used: 311 (`4pyi-uqq6`), police dispatch (`mdb2-mgc7`), crashes (`mtik-28va`), website analytics (`754v-8e35`), wards (`ym5n-phxd`). Left out: traffic citations (`3mqx-eye9`: moving violations only, e.g. phone use, unlicensed driving; parking and snow-emergency tickets aren't in it), permits and licenses (`nneb-s3f7`, `vxgw-vmky`: dumpsters, curb cuts, occupancy), the Winter Warming Center survey (`e7ix-nqn6`: about the shelter), the ADA survey (`usj9-kz3f`: no codebook for `sidewalks`), crime reports and the other surveys.
+
+**Worth adding next:** the Happiness Survey (`wmeh-zuz2`) has `year`, `ward` and, for 2019, 2023 and 2025, how people get around (`transportation_walk_yn`, `transportation_public_transit_yn`, …) plus street-crossing safety and street-maintenance satisfaction. 2025: 1,185 of 1,392 respondents walk, 988 ride transit. By ward, it would show where sidewalks matter most next to the sidewalk-report map. It's a voluntary survey (about 150–200 answers per ward), not a census.

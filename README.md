@@ -11,7 +11,7 @@ Somerville's sidewalk snow and ice rules, for everyone who walks, rolls or rides
 ## What's in the repo
 
 - `docs/`: the website (plain HTML, CSS and JavaScript modules, no build step), including a deadline calculator that uses Somerville sunrise and sunset times, a "who clears this?" street corner, a salt-or-sand thermometer and a fine calculator.
-- `docs/storms/`: a replay page for every big storm since 2016, hour by hour, built from public data: snow, warnings, the snow emergency, the deadline, 311, the T, Bluebikes, tows and MBTA alerts (`npm run data` refreshes the data and the pages).
+- `docs/storms/`: a replay page for every big storm since 2016, hour by hour, built from public data: snow at Logan and inside Somerville, weather warnings, the City's snow emergency, the shoveling deadline, 311 reports by ward, the T, buses, Bluebikes, tows, MBTA alerts and crashes. `npm run data` refreshes the data and the pages; what each source covers and its caveats are in `AGENTS.md` ("Storm replays and data") and `research/data-sources.md`.
 - `docs/flyer.html`: a one-page printable flyer with a QR code, for doors, building lobbies and shop windows.
 - `docs/cards/` and `cards/src/`: 34 phone-size cards to share, as PNGs and as editable HTML. Gallery at `/cards.html`.
 - `research/`: the ordinance text and fines, questions and proposals for City, MBTA and State officials, and sources.

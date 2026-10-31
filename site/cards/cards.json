@@ -1,0 +1,206 @@
+[
+ {
+  "n": 1,
+  "file": "01-main",
+  "title": "Cover",
+  "heading": "Snow guide cover"
+ },
+ {
+  "n": 2,
+  "file": "02-why",
+  "title": "Why it matters",
+  "heading": "Why it matters"
+ },
+ {
+  "n": 3,
+  "file": "03-whoclears",
+  "title": "Who clears what",
+  "heading": "Who clears what"
+ },
+ {
+  "n": 4,
+  "file": "04-after",
+  "title": "On time",
+  "heading": "Shovel your sidewalk on time"
+ },
+ {
+  "n": 5,
+  "file": "05-path",
+  "title": "3 feet wide",
+  "heading": "Shovel three feet wide"
+ },
+ {
+  "n": 6,
+  "file": "06-pavement",
+  "title": "Down to the pavement",
+  "heading": "Shovel down to the pavement"
+ },
+ {
+  "n": 7,
+  "file": "07-ice",
+  "title": "Ice",
+  "heading": "Ice counts too"
+ },
+ {
+  "n": 8,
+  "file": "08-ramp",
+  "title": "The ramp too",
+  "heading": "Clear the ramp too"
+ },
+ {
+  "n": 9,
+  "file": "09-cornerlot",
+  "title": "Corner lots",
+  "heading": "Corner lots"
+ },
+ {
+  "n": 10,
+  "file": "10-notstreet",
+  "title": "Not into the street",
+  "heading": "Do not shovel snow into the street"
+ },
+ {
+  "n": 11,
+  "file": "11-plow",
+  "title": "Plow buried it",
+  "heading": "The plow buried it again"
+ },
+ {
+  "n": 12,
+  "file": "12-before",
+  "title": "Get ready",
+  "heading": "Get ready before it snows"
+ },
+ {
+  "n": 13,
+  "file": "13-teen",
+  "title": "Need a shoveler",
+  "heading": "Need a shoveler"
+ },
+ {
+  "n": 14,
+  "file": "14-treat",
+  "title": "Salt or sand",
+  "heading": "Salt or sand"
+ },
+ {
+  "n": 15,
+  "file": "15-treathow",
+  "title": "How to use it",
+  "heading": "How to use it"
+ },
+ {
+  "n": 16,
+  "file": "16-heart",
+  "title": "Heart attack snow",
+  "heading": "Heart attack snow"
+ },
+ {
+  "n": 17,
+  "file": "17-vents",
+  "title": "Clear your vents",
+  "heading": "Clear your vents"
+ },
+ {
+  "n": 18,
+  "file": "18-landlord",
+  "title": "Renting",
+  "heading": "Renting"
+ },
+ {
+  "n": 19,
+  "file": "19-vacant",
+  "title": "Empty lots",
+  "heading": "Construction sites"
+ },
+ {
+  "n": 20,
+  "file": "20-business",
+  "title": "Run a business",
+  "heading": "Run a business"
+ },
+ {
+  "n": 21,
+  "file": "21-away",
+  "title": "Going away",
+  "heading": "Going away"
+ },
+ {
+  "n": 22,
+  "file": "22-report",
+  "title": "Report it",
+  "heading": "Report an unshoveled sidewalk"
+ },
+ {
+  "n": 23,
+  "file": "23-fines",
+  "title": "Fines",
+  "heading": "You can be fined"
+ },
+ {
+  "n": 24,
+  "file": "24-busstops",
+  "title": "Your bus stop",
+  "heading": "Your bus stop"
+ },
+ {
+  "n": 25,
+  "file": "25-mbta",
+  "title": "Is the T running",
+  "heading": "Is the T running"
+ },
+ {
+  "n": 26,
+  "file": "26-communitypath",
+  "title": "Community Path",
+  "heading": "Community Path"
+ },
+ {
+  "n": 27,
+  "file": "27-during",
+  "title": "Snow emergency",
+  "heading": "Snow emergency declared"
+ },
+ {
+  "n": 28,
+  "file": "28-wherepark",
+  "title": "Where to park",
+  "heading": "Where to park"
+ },
+ {
+  "n": 29,
+  "file": "29-spacesavers",
+  "title": "Space savers",
+  "heading": "Space savers"
+ },
+ {
+  "n": 30,
+  "file": "30-lots",
+  "title": "City lots",
+  "heading": "City lots"
+ },
+ {
+  "n": 31,
+  "file": "31-stopreport",
+  "title": "Emergency over",
+  "heading": "Emergency over"
+ },
+ {
+  "n": 32,
+  "file": "32-snowroutes",
+  "title": "Got towed",
+  "heading": "Got towed"
+ },
+ {
+  "n": 33,
+  "file": "33-neighbor",
+  "title": "Help a neighbor",
+  "heading": "Help a neighbor"
+ },
+ {
+  "n": 34,
+  "file": "34-share",
+  "title": "Pass it on",
+  "heading": "Pass it on"
+ }
+]

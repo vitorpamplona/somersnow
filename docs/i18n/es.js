@@ -13,6 +13,15 @@ export default {
     "header.07": "Bus &amp; T",
     "header.08": "Multas",
     "header.09": "Reportar",
+    "header.10": "Repetir",
+    "footer.storm": "<a href=\"storm.html\">Repite una tormenta pasada</a>, hora por hora.",
+    "replay.01": "<span class=\"n\">08</span> Mira atrás",
+    "replay.02": "Repite una<br/>tormenta pasada",
+    "replay.03": "Hora por hora: la nieve, la emergencia, el plazo y cada reporte al 311.",
+    "replay.04": "Los reportes llegan tarde",
+    "replay.05": "Los reportes de aceras llegan al máximo 1 a 3 días después de que para la nieve. El plazo es de 6 horas de luz.",
+    "replay.06": "Repite la última tormenta",
+    "replay.07": "Ve todas las tormentas grandes",
     "top.01": "Invierno 2026/27 · Somerville, MA",
     "top.02": "Nieve y hielo<br/>en la <em>acera</em>",
     "top.03": "Un bus solo sirve si puedes llegar caminando.",
@@ -245,6 +254,13 @@ export default {
     },
     "draft": "Traducción preliminar, aún no revisada por un hablante nativo. La página en inglés es la referencia.",
     "draftEn": "Leer en inglés",
+    "replay": {
+      "title": "Reportes de aceras al 311, por día",
+      "storm": "Tormenta del {date} · {inches} pulg.",
+      "last": "Última nieve",
+      "peak": "Máximo: {n}",
+      "open": "Abrir la repetición →"
+    },
     "track": {
       "stopped": "Paró de nevar",
       "deadline": "Plazo"

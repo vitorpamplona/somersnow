@@ -19,6 +19,7 @@ export default {
     "header.07": "Bus &amp; T",
     "header.08": "Fines",
     "header.09": "Report",
+    "header.10": "Replay",
     "top.01": "Winter 2026/27 · Somerville, MA",
     "top.02": "Snow &amp; ice<br/>on the <em>sidewalk</em>",
     "top.03": "A bus is only as good as the walk to it.",
@@ -154,6 +155,13 @@ export default {
     "report.14": "3 feet all around.",
     "report.15": "Push, don't lift",
     "report.16": "Heavy snow strains the heart.",
+    "replay.01": "<span class=\"n\">08</span> Look back",
+    "replay.02": "Replay a<br/>past storm",
+    "replay.03": "Hour by hour: the snow, the emergency, the deadline, and every 311 report.",
+    "replay.04": "Reports come late",
+    "replay.05": "Sidewalk reports peak 1 to 3 days after the snow stops. The deadline is 6 daylight hours.",
+    "replay.06": "Replay the latest storm",
+    "replay.07": "See every big storm",
     "footer.01": "Somerville PTAC",
     "footer.02": "Not an official City page. The City's rules apply. Official rules in 9 languages: <a href=\"https://www.somervillema.gov/snow\">somervillema.gov/snow</a>",
     "footer.03": "Sources",
@@ -251,6 +259,13 @@ export default {
     },
     "draft": "Draft translation, not yet checked by a native speaker. The English page is the reference.",
     "draftEn": "Read in English",
+    "replay": {
+      "title": "Sidewalk reports to 311, per day",
+      "storm": "{date} storm · {inches} in",
+      "last": "Last snow",
+      "peak": "Peak: {n}",
+      "open": "Open the replay →"
+    },
     "track": {
       "stopped": "Snow stopped",
       "deadline": "Deadline"

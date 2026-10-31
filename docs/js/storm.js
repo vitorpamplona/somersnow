@@ -156,6 +156,7 @@ function buildChart() {
   });
   s += `<rect id="future" x="0" y="${TOP}" width="0" height="${BOT - TOP + 2}" fill="#1A3A5F" opacity=".78"/>`;
   s += `<path id="head" d="M0 ${TOP - 6} V${BOT + 4}" stroke="#fff" stroke-width="2.5"/>`;
+  s += `<g id="knob"><circle r="11" fill="#FF8A3D" stroke="#fff" stroke-width="3"/><path d="M-3 -4 V4 M3 -4 V4" stroke="#10243A" stroke-width="2" stroke-linecap="round"/></g>`;
   s += '</svg>';
   $('#chart').innerHTML = s;
   $('#legend').innerHTML = ['sidewalk', 'street', 'ask', 'spacesaver'].map((g) => `<span><i style="background:${GROUP[g].color}"></i>${GROUP[g].label}</span>`).join('') + '<span><i style="background:#0E2238"></i>Night</span>';
@@ -226,6 +227,7 @@ function render(i) {
   const x = xOf(i + 1);
   $('#future').setAttribute('x', x); $('#future').setAttribute('width', Math.max(0, CW - x));
   $('#head').setAttribute('d', `M${x} ${TOP - 6} V${BOT + 4}`);
+  $('#knob').setAttribute('transform', `translate(${x} ${BOT + 4})`);
   const c = since(i);
   $('#tally').innerHTML = ['sidewalk', 'street', 'ask', 'spacesaver'].map((g) => `<div><b>${c[gi(g)]}</b><span><i style="background:${GROUP[g].color}"></i>${GROUP[g].label}</span></div>`).join('');
   // map
@@ -246,6 +248,20 @@ const jumps = [[has('start') ? 'City declares' : 'City notice', notices.length ?
 $('#jumps').innerHTML = jumps.filter(([, t]) => typeof t === 'number' && idxOf(t) >= 0 && idxOf(t) < N).map(([l, t]) => `<button class="chip" data-i="${Math.max(0, Math.ceil(idxOf(t)) - 1)}">${l}</button>`).join('');
 $('#jumps').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) { stop(); render(+b.dataset.i); } });
 scrub.addEventListener('input', () => { stop(); render(+scrub.value); });
+// Grab the line on the chart (or tap anywhere on it) and drag through the hours. Called once the chart exists.
+function enableDrag() {
+  const svg = $('#chart svg');
+  const hourAt = (e) => { const r = svg.getBoundingClientRect(); const x = ((e.clientX - r.left) / r.width) * CW; return Math.round((x - PAD) / bw) - 1; };
+  let dragging = false;
+  svg.addEventListener('pointerdown', (e) => { dragging = true; svg.setPointerCapture(e.pointerId); stop(); render(hourAt(e)); });
+  svg.addEventListener('pointermove', (e) => { if (dragging) render(hourAt(e)); });
+  ['pointerup', 'pointercancel'].forEach((ev) => svg.addEventListener(ev, () => { dragging = false; }));
+  svg.addEventListener('keydown', (e) => {
+    const step = { ArrowRight: 1, ArrowLeft: -1, PageUp: 24, PageDown: -24 }[e.key];
+    if (step) { e.preventDefault(); stop(); render(+scrub.value + step); }
+  });
+  svg.setAttribute('tabindex', '0');
+}
 let timer = null;
 function stop() { clearInterval(timer); timer = null; $('#play-ico').setAttribute('d', 'M7 4 L20 12 L7 20 Z'); $('#play').setAttribute('aria-label', 'Play'); }
 $('#play').addEventListener('click', () => {
@@ -272,6 +288,7 @@ $('#r-lede').textContent = `${S.snowTotal} inches at Logan. Snow from ${dayTm(sn
   ].join('');
 }
 buildChart();
+enableDrag();
 buildMap();
 buildMultiples();
 render(Math.max(0, Math.ceil(idxOf(declared)) - 1));

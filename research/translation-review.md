@@ -9,6 +9,10 @@ The City's snow page has no translated snow rules to borrow terms from (its lang
 1. A native speaker reads the whole page at `?lang=<code>`, on a phone, and fixes the file.
 2. Move the language from `docs/i18n/drafts.js` to `docs/i18n/languages.js`. The switcher appears automatically.
 
+## Added later (by the same AI, after the first drafts)
+
+The "Replay a past storm" section (`header.10`, `replay.01`–`07`, `ui.replay.*`) and the footer link `footer.storm`. Check these with the rest.
+
 ## Ask the reviewer to check
 
 **All languages**

@@ -13,6 +13,15 @@ export default {
     "header.07": "Ônibus &amp; T",
     "header.08": "Multas",
     "header.09": "Reportar",
+    "header.10": "Rever",
+    "footer.storm": "<a href=\"storm.html\">Reveja uma tempestade passada</a>, hora a hora.",
+    "replay.01": "<span class=\"n\">08</span> Olhar para trás",
+    "replay.02": "Reveja uma<br/>tempestade",
+    "replay.03": "Hora a hora: a neve, a emergência, o prazo e cada reclamação ao 311.",
+    "replay.04": "As reclamações chegam tarde",
+    "replay.05": "As reclamações sobre calçadas chegam ao pico 1 a 3 dias depois que a neve para. O prazo é de 6 horas de luz do dia.",
+    "replay.06": "Reveja a última tempestade",
+    "replay.07": "Veja todas as grandes tempestades",
     "top.01": "Inverno 2026/27 · Somerville, MA",
     "top.02": "Neve &amp; gelo<br/>na <em>calçada</em>",
     "top.03": "O ônibus só é bom se o caminho até ele for bom.",
@@ -245,6 +254,13 @@ export default {
     },
     "draft": "Tradução provisória, ainda não revisada por um falante nativo. A página em inglês é a referência.",
     "draftEn": "Ler em inglês",
+    "replay": {
+      "title": "Reclamações de calçadas ao 311, por dia",
+      "storm": "Tempestade de {date} · {inches} pol.",
+      "last": "Última neve",
+      "peak": "Pico: {n}",
+      "open": "Abrir a reprise →"
+    },
     "track": {
       "stopped": "Parou de nevar",
       "deadline": "Prazo"

@@ -172,8 +172,33 @@ const secIO = new IntersectionObserver((es) => es.forEach((e) => {
 }), { rootMargin: '-40% 0px -55% 0px' });
 links.forEach((a) => { const s = $(a.getAttribute('href')); if (s) secIO.observe(s); });
 
+/* ---------- Replay teaser: the latest big storm's sidewalk reports by day (data/storms.json, from npm run data) ---------- */
+let latestStorm = null;
+fetch('data/storms.json').then((r) => r.json()).then((d) => { latestStorm = d.storms[d.storms.length - 1]; renderReplay(); }).catch(() => {});
+function renderReplay() {
+  const card = $('#replay-card');
+  if (!card || !latestStorm) return;
+  const st = latestStorm;
+  const v = st.days.map((d) => d[2].sidewalk || 0); // 2 days before to 7 days after the last day of snow
+  const mx = Math.max(1, ...v);
+  const pk = v.indexOf(mx);
+  const date = new Date(`${st.end}T12:00:00Z`).toLocaleDateString(document.documentElement.lang || 'en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+  const bw = 32; const gap = 8; const W = 20 + 10 * (bw + gap) - gap; const base = 150; const H = 110;
+  const bars = v.map((n, k) => {
+    const h = Math.max(2, (n / mx) * H); const x = 10 + k * (bw + gap);
+    return `<rect x="${x}" y="${base - h}" width="${bw}" height="${h}" rx="4" fill="${k === 2 ? '#10243A' : '#FF8A3D'}"/>`;
+  }).join('');
+  const px = 10 + pk * (bw + gap) + bw / 2;
+  card.innerHTML = `<span class="k">${t('replay.title')}</span><span class="sub">${t('replay.storm', { date, inches: st.snow })}</span>`
+    + `<svg viewBox="0 0 ${W} 180" role="img" aria-label="${t('replay.title')}">${bars}`
+    + `<path d="M6 ${base + 1} H${W - 6}" stroke="#C9D6E3" stroke-width="2"/>`
+    + `<text x="${10 + 2 * (bw + gap) + bw / 2}" y="${base + 22}" text-anchor="middle" class="cap" font-size="15" fill="#47607C">${t('replay.last').toUpperCase()}</text>`
+    + `<text x="${px}" y="${base - (mx / mx) * H - 8}" text-anchor="middle" class="cap" font-size="16" fill="#B93D06">${t('replay.peak', { n: mx }).toUpperCase()}</text></svg>`
+    + `<span class="go">${t('replay.open')}</span>`;
+}
+
 /* ---------- Render, and re-render when the language changes ---------- */
-function renderAll() { renderKeys(); pick(whoSel); renderDeadline(); renderSalt(); renderFines(); }
+function renderAll() { renderKeys(); pick(whoSel); renderDeadline(); renderSalt(); renderFines(); renderReplay(); }
 listeners.add(renderAll);
 renderAll();
 initLanguage($('.bar .wrap'));

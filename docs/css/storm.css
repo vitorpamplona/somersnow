@@ -41,7 +41,9 @@
 
 /* chart */
 .chart-panel{padding:18px 18px 14px}
-#chart svg{width:100%;height:auto;display:block}
+#chart svg{width:100%;height:auto;display:block;cursor:ew-resize;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+#chart svg:focus{outline:none}
+#chart svg:focus-visible{outline:3px solid var(--orange);outline-offset:4px;border-radius:8px}
 .chart-panel .legend{color:var(--ice)}
 .tally{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px}
 .tally div{background:var(--night-2);border-radius:18px;padding:14px 16px;display:flex;flex-direction:column;gap:4px}

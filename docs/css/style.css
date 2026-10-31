@@ -356,3 +356,20 @@ footer ul{padding-left:18px;margin:0;display:flex;flex-direction:column;gap:6px}
   .sharep{margin-top:24px}
   footer{padding:44px 0}
 }
+
+/* ---------- replay invitation (last section) ---------- */
+.replay-cta{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:40px;margin-top:32px;align-items:center}
+#replay .it{background:var(--snow)}
+.replay-btns{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-flex;align-items:center;font-family:var(--display);font-weight:800;font-size:20px;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;padding:14px 22px;border-radius:999px;background:var(--night);color:#fff}
+.btn:hover{background:var(--rust)}
+.btn.ghost{background:transparent;color:var(--night);border:2px solid var(--night)}
+.btn.ghost:hover{background:var(--night);color:#fff}
+.replay-card{display:flex;flex-direction:column;gap:4px;background:var(--snow);border-radius:28px;padding:24px 24px 18px;color:var(--night);text-decoration:none;min-height:280px;transition:transform .15s,box-shadow .15s}
+.replay-card:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(16,36,58,.14)}
+.replay-card .k{font-family:var(--display);font-weight:800;font-size:24px;text-transform:uppercase;line-height:1}
+.replay-card .sub{color:var(--mute);font-size:16px}
+.replay-card svg{width:100%;height:auto;display:block;margin-top:10px}
+.replay-card .go{font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:1.5px;text-transform:uppercase;color:var(--rust)}
+@media (max-width:900px){.replay-cta{grid-template-columns:1fr;gap:24px}}
+@media (max-width:600px){.btn{font-size:18px;padding:12px 18px}.replay-card{min-height:0;padding:18px}}

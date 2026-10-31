@@ -13,6 +13,15 @@ export default {
     "header.07": "Bis &amp; T",
     "header.08": "Amann",
     "header.09": "Rapòte",
+    "header.10": "Revize",
+    "footer.storm": "<a href=\"storm.html\">Revize yon tanpèt ki pase</a>, èdtan pa èdtan.",
+    "replay.01": "<span class=\"n\">08</span> Gade dèyè",
+    "replay.02": "Revize yon<br/>tanpèt ki pase",
+    "replay.03": "Èdtan pa èdtan: nèj la, ijans lan, dènye dat la, ak chak rapò bay 311.",
+    "replay.04": "Rapò yo vin an reta",
+    "replay.05": "Rapò sou twotwa yo rive nan pi wo pwen yo 1 a 3 jou apre nèj la sispann. Dènye dat la se 6 èdtan lajounen.",
+    "replay.06": "Revize dènye tanpèt la",
+    "replay.07": "Gade tout gwo tanpèt yo",
     "top.01": "Ivè 2026/27 · Somerville, MA",
     "top.02": "Nèj &amp; glas<br/>sou <em>twotwa</em> a",
     "top.03": "Yon bis vo sa chemen pou rive jwenn li vo.",
@@ -245,6 +254,13 @@ export default {
     },
     "draft": "Tradiksyon bouyon. Yon moun ki pale lang lan poko verifye l. Paj an anglè a se referans lan.",
     "draftEn": "Li l an anglè",
+    "replay": {
+      "title": "Rapò twotwa bay 311, chak jou",
+      "storm": "Tanpèt {date} · {inches} pous",
+      "last": "Dènye nèj",
+      "peak": "Pi wo: {n}",
+      "open": "Louvri revizyon an →"
+    },
     "track": {
       "stopped": "Nèj la sispann",
       "deadline": "Delè"

@@ -331,30 +331,60 @@ def buses(cached, windows, routes):
             need_days.add(d.isoformat()); months.add((d.year, d.month)); d += timedelta(1)
     trips, late = Counter(), defaultdict(list)
     have_months = set()
+    MON = {m: k + 1 for k, m in enumerate('Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec'.split())}
+
+    def file_months(name, y):
+        """Months a file covers: monthly '..._2021-12.csv', or quarterly '... Oct-Dec 2020.csv' (2020)."""
+        base = name.rsplit('/', 1)[-1]
+        if base.endswith(f'_{y}-' + base[-6:-4] + '.csv'):
+            return {int(base[-6:-4])}
+        for a in MON:
+            for b in MON:
+                if f'{a}-{b} {y}' in base or f'{a}-{b[:3]}' in base and str(y) in base:
+                    return set(range(MON[a], MON[b] + 1))
+        return set()
+
+    def when(v):
+        """'1900-01-01 05:05:00.000' or '1900-01-01T05:05:00Z' -> datetime; None for 'NA' or empty."""
+        if not v or v == 'NA':
+            return None
+        return datetime.strptime(v.replace('T', ' ')[:19], '%Y-%m-%d %H:%M:%S')
+
     for y in sorted({y for y, _ in months}):
         try:
             z = zipfile.ZipFile(cached(f'bus-{y}.zip', BUS_ZIPS[y]))
         except Exception as e:
             print(f'    buses {y}: {e}', file=sys.stderr)
             continue
-        for m in sorted(mm for yy, mm in months if yy == y):
-            f = next((n for n in z.namelist() if n.endswith(f'_{y}-{m:02d}.csv')), None)
-            if not f:
+        wanted = {mm for yy, mm in months if yy == y}
+        for f in sorted(n for n in z.namelist() if n.endswith('.csv')):
+            got = file_months(f, y) & wanted
+            if not got:
                 continue
-            print(f'    buses {y}-{m:02d}…', file=sys.stderr)
-            have_months.add((y, m))
+            print(f'    buses {y} {sorted(got)}…', file=sys.stderr)
+            have_months.update((y, m) for m in got)
             with z.open(f) as fh:
-                for r in csv.DictReader(io.TextIOWrapper(fh, encoding='utf-8-sig')):
-                    if r['route_id'].lstrip('0') not in want or r['service_date'] not in need_days or not r['actual']:
+                rd = csv.reader(io.TextIOWrapper(fh, encoding='utf-8-sig'))
+                head = [h.strip().lower().replace(' ', '') for h in next(rd)]
+                col = {k: head.index(k) for k in head}
+                ci = lambda *names: next(col[n] for n in names if n in col)
+                i_day, i_rt, i_pt = ci('service_date', 'servicedate'), ci('route_id', 'route'), ci('point_type', 'pointtype')
+                i_sch, i_act = ci('scheduled'), ci('actual')
+                for r in rd:
+                    if r[i_rt].lstrip('0') not in want or r[i_day][:10] not in need_days:
                         continue
-                    base = datetime.fromisoformat(r['service_date'])
-                    act = base + (datetime.fromisoformat(r['actual'][:19]) - _T0)
+                    a_ = when(r[i_act])
+                    if a_ is None:
+                        continue
+                    base = datetime.fromisoformat(r[i_day][:10])
+                    act = base + (a_ - _T0)
                     k = act.replace(minute=0, second=0, microsecond=0)
-                    if r['point_type'] == 'Startpoint':
+                    if r[i_pt] == 'Startpoint':
                         trips[k] += 1
-                    elif r['scheduled']:
-                        sch = base + (datetime.fromisoformat(r['scheduled'][:19]) - _T0)
-                        late[k].append((act - sch).total_seconds() / 60)
+                    else:
+                        s_ = when(r[i_sch])
+                        if s_ is not None:
+                            late[k].append((act - (base + (s_ - _T0))).total_seconds() / 60)
     out = {}
     for sid, t0, t1 in windows:
         if not all(((t0 - timedelta(weeks=4)).year, (t0 - timedelta(weeks=4)).month) in have_months and (t.year, t.month) in have_months for t in (t0, t1 - timedelta(hours=1))):

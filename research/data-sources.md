@@ -108,3 +108,19 @@ Hourly weather comes from the [Iowa Environmental Mesonet ASOS archive](https://
 - Snow stopped after dark, so the 6 daylight hours started at sunrise: the guide's calculator says **12:28 p.m. Tuesday**. The City's notice said "the shoveling deadline was 1 p.m."
 - What people asked 311 changed by phase: parking and emergency questions at the declaration; plow and street requests while it snowed and on Tuesday morning; sidewalk reports after the deadline, peaking Wednesday midday; space-saver reports by Thursday. Only 38 of 841 sidewalk reports between the first snow and March 1 (about 1 in 20) came before the deadline.
 - In 12 of 15 big storms since 2016, sidewalk reports peaked 1 to 3 days after the last day of snow.
+
+## More sources to correlate with a storm (checked Nov 1, 2026, on the Feb 22–24, 2026 storm)
+
+| Source | Access | What it showed for this storm | Time detail |
+|---|---|---|---|
+| **NWS warnings** for Somerville's zone MAZ014 | [IEM VTEC API](https://mesonet.agron.iastate.edu/json/vtec_events_byugc.php?ugc=MAZ014&sdate=2026-02-15&edate=2026-02-28), no key | Blizzard Warning from 4 p.m. Sun to 7:32 p.m. Mon (after a Winter Storm Watch) | minutes |
+| **Police dispatch (CAD)** `mdb2-mgc7` | City open data | 102 `SNOEMTOW` (snow emergency tow) calls Feb 22–25: 53 Sun 4 p.m.–midnight, right after the 4 p.m. move deadline, then 42 overnight. Also `DISABLED MV`, crashes. Tows per year since 2017 (2026: 156). | police shift (8 h) and ward |
+| **Crashes** `mtik-28va` | City open data | 13 crashes Feb 22–28, 8 on snow-covered roads, none involving pedestrians | minutes |
+| **Other 311 types** `4pyi-uqq6` | City open data | Illegal parking (148), towed/booted car questions (25), trash schedule (106) spike with the emergency | minutes |
+| **MBTA gated station entries** | [ArcGIS feature service](https://services1.arcgis.com/ceiitspzDAHrdGO1/arcgis/rest/services/GSE/FeatureServer/0) | Somerville stations: about 7,300 entries on a normal Monday (Feb 9), **812 on Mon Feb 23 (−89%)**, about −40% on Tuesday, normal by Wednesday. Mostly Davis and Assembly: Green Line Extension stations record very few gated entries. | 30 min |
+| **MBTA service alerts 2026** | [CSV, monthly](https://mbta-massdot.opendata.arcgis.com/datasets/d233f1820cf54139bd18e75e30dd2c6c) | Sunday-level subway and bus service announced for Monday; 45 alerts on Somerville routes and stations Feb 22–25: delays up to 30+ min (85, 87, 88, 89, 109), route 90 snow detour, Union Sq detour, elevator outages at Gilman, Union and Ball Square | minutes |
+| **Bluebikes trips** | [monthly zip](https://s3.amazonaws.com/hubway-data/index.html), no key | Trips starting at the 41 stations inside Somerville: about 340–400 on a normal weekday, **0 on Mon Feb 23**, 77 on Tuesday, normal by Thursday | minutes |
+| **MBTA bus arrival/departure 2026** | [CSV, 318 MB](https://mbta-massdot.opendata.arcgis.com/datasets/9d8a8cad277545c984c1b25ed10b7d3c) | Not processed yet: would give on-time performance per Somerville route during the storm | minutes |
+| **Boston 311** (2026) | [data.boston.gov](https://data.boston.gov/dataset/311-service-requests), SQL API | 2,484 "Unshoveled Sidewalk" and 3,223 plowing requests Feb 22–Mar 1. A neighbor to compare the complaint wave with. | minutes |
+| NWS spotter reports (PNS) | [IEM AFOS](https://mesonet.agron.iastate.edu/cgi-bin/afos/retrieve.py?pil=PNSBOX) | No Somerville report; nearest partial: Arlington 11.8" by 2:09 p.m. Mon | — |
+| Cambridge snow and ice code cases `6qf3-rbkf` | Cambridge open data | Has violation types (ramp blocked, icy, path under 4 ft), but the data ends in 2020 | — |

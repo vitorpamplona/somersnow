@@ -10,12 +10,14 @@ Sources, caveats and what each file holds: research/data-sources.md.
   docs/data/bus-stops.json      MBTA bus stops in Somerville with average weekday boardings
   docs/data/storm-<id>.json     each big storm hour by hour (id = last day of snow): weather at Logan, 311 requests, City notices
 """
+import storm_extras
 import csv, io, json, math, os, statistics, struct, sys, tempfile, time, urllib.parse, urllib.request, zipfile
 from collections import Counter, defaultdict
 from datetime import date, datetime, timedelta
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, 'docs', 'data')
+CACHE = os.path.join(ROOT, '.cache')  # big downloads (station entries, bike trips, alert archives); git-ignored
 UA = 'somersnow data script (Somerville PTAC snow guide)'
 
 SOCRATA_311 = 'https://data.somervillema.gov/resource/4pyi-uqq6.json'
@@ -87,6 +89,19 @@ def get(url, params=None, data=None, tries=4):
                 raise
             print(f'  retry {url[:70]}… ({e})', file=sys.stderr)
             time.sleep(2 ** (i + 1))
+
+
+def cached(name, url):
+    """Download once into .cache/ and return the local path (delete the file to refresh it)."""
+    os.makedirs(CACHE, exist_ok=True)
+    path = os.path.join(CACHE, name)
+    if not os.path.exists(path):
+        print(f'  downloading {name}…', file=sys.stderr)
+        data = get(url)
+        with open(path + '.part', 'wb') as f:
+            f.write(data)
+        os.replace(path + '.part', path)
+    return path
 
 
 def write(name, obj):
@@ -303,15 +318,43 @@ def main():
             })
     write('storms.json', {'storms': storms})
 
-    print('Wards…'); write('wards.json', {'wards': fetch_wards()})
-    print('Bus stops and riders…'); write('bus-stops.json', fetch_bus_stops())
+    print('Wards…'); wards = fetch_wards(); write('wards.json', {'wards': wards})
+    print('Bus stops and riders…'); bus = fetch_bus_stops(); write('bus-stops.json', bus)
+
+    def in_somerville(lon, lat):
+        for w in wards:
+            for ring in w['rings']:
+                c = False
+                for k in range(len(ring)):
+                    (x1, y1), (x2, y2) = ring[k], ring[k - 1]
+                    if (y1 > lat) != (y2 > lat) and lon < (x2 - x1) * (lat - y1) / (y2 - y1) + x1:
+                        c = not c
+                if c:
+                    return True
+        return False
+
+    # Each storm's window: 2 days before its first snow day to 6 days after its last (06:00 to 00:00, local time).
+    windows = []
+    for st in storms:
+        first, last = date.fromisoformat(st['start']), date.fromisoformat(st['end'])
+        windows.append((st['end'], datetime.combine(first - timedelta(2), datetime.min.time()).replace(hour=6),
+                        datetime.combine(last + timedelta(6), datetime.min.time())))
+    print('Extra sources for each storm…')
+    routes = {r for s_ in bus['stops'] for r in s_['routes']}
+    stop_ids = {s_['id'] for s_ in bus['stops']}
+    extra = {
+        'warnings': storm_extras.warnings(get, windows),
+        'police': storm_extras.police(get, windows),
+        'crashes': storm_extras.crashes(get, windows),
+        'calls311': storm_extras.calls311(get, windows),
+        'tEntries': storm_extras.t_entries(cached, windows),
+        'bikes': storm_extras.bikes(cached, windows, in_somerville),
+        'alerts': storm_extras.alerts(cached, windows, routes, stop_ids),
+    }
 
     MONTHS = 'January February March April May June July August September October November December'.split()
-    for st in storms:
-        sid = st['end']
+    for st, (sid, t0, t1) in zip(storms, windows):
         first, last = date.fromisoformat(st['start']), date.fromisoformat(st['end'])
-        t0 = datetime.combine(first - timedelta(2), datetime.min.time()).replace(hour=6)
-        t1 = datetime.combine(last + timedelta(6), datetime.min.time())
         print(f'Replay {sid}…')
         wx = fetch_hourly_weather(t0.isoformat(), t1.isoformat())
         hours = []
@@ -334,14 +377,14 @@ def main():
         main_run = max(near, key=len)
         start, stop = main_run[0], main_run[-1] + timedelta(hours=1)
         req = defaultdict(lambda: [0] * len(GROUPS))
-        wards = defaultdict(lambda: Counter())
+        wards_ = defaultdict(lambda: Counter())
         order = list(GROUPS)
         for tt, g, ward in reqs:
             if t0 <= tt < t1:
                 i = int((tt - t0).total_seconds() // 3600)
                 req[i][order.index(g)] += 1
                 if g == 'sidewalk' and ward:
-                    wards[i][ward] += 1
+                    wards_[i][ward] += 1
         a_, b_ = start.date(), (stop - timedelta(minutes=1)).date()
         title = (f'{MONTHS[a_.month - 1]} {a_.day}, {a_.year}' if a_ == b_ else
                  f'{MONTHS[a_.month - 1]} {a_.day}–{b_.day}, {a_.year}' if a_.month == b_.month else
@@ -356,13 +399,15 @@ def main():
             'snowTotal': st['snow'],  # same total as the storm's card in storms.json
             'hours': hours,
             'requests': {str(i): v for i, v in sorted(req.items())},
-            'sidewalkByWard': {str(i): dict(v) for i, v in sorted(wards.items())},
+            'sidewalkByWard': {str(i): dict(v) for i, v in sorted(wards_.items())},
+            'extra': {k: v.get(sid) for k, v in extra.items()},
             'sources': {
                 'weather': 'Hourly observations at Boston Logan (BOS), Iowa Environmental Mesonet ASOS archive',
                 'requests': '311 Service, Information, and Feedback Requests, data.somervillema.gov (4pyi-uqq6)',
                 'snowfall': 'NOAA daily snowfall, Boston, via ACIS (BOSthr)',
             },
         })
+    print('Pages…'); import build_pages; build_pages.main()
     print('Done.')
 
 

@@ -189,6 +189,8 @@ function renderReplay() {
     return `<rect x="${x}" y="${base - h}" width="${bw}" height="${h}" rx="4" fill="${k === 2 ? '#10243A' : '#FF8A3D'}"/>`;
   }).join('');
   const px = 10 + pk * (bw + gap) + bw / 2;
+  card.href = `storms/${st.end}.html`;
+  const latestBtn = document.querySelector('#replay .btn:not(.ghost)'); if (latestBtn) latestBtn.href = card.href;
   card.innerHTML = `<span class="k">${t('replay.title')}</span><span class="sub">${t('replay.storm', { date, inches: st.snow })}</span>`
     + `<svg viewBox="0 0 ${W} 180" role="img" aria-label="${t('replay.title')}">${bars}`
     + `<path d="M6 ${base + 1} H${W - 6}" stroke="#C9D6E3" stroke-width="2"/>`

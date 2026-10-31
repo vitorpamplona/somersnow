@@ -11,7 +11,7 @@ Somerville's sidewalk snow and ice rules, for everyone who walks, rolls or rides
 ## What's in the repo
 
 - `docs/`: the website (plain HTML, CSS and JavaScript modules, no build step), including a deadline calculator that uses Somerville sunrise and sunset times, a "who clears this?" street corner, a salt-or-sand thermometer and a fine calculator.
-- `docs/storm.html`: a replay of the February 22–24, 2026 storm, hour by hour, built from public data (`npm run data` refreshes `docs/data/`).
+- `docs/storms/`: a replay page for every big storm since 2016, hour by hour, built from public data: snow, warnings, the snow emergency, the deadline, 311, the T, Bluebikes, tows and MBTA alerts (`npm run data` refreshes the data and the pages).
 - `docs/flyer.html`: a one-page printable flyer with a QR code, for doors, building lobbies and shop windows.
 - `docs/cards/` and `cards/src/`: 34 phone-size cards to share, as PNGs and as editable HTML. Gallery at `/cards.html`.
 - `research/`: the ordinance text and fines, questions and proposals for City, MBTA and State officials, and sources.
@@ -21,7 +21,8 @@ Somerville's sidewalk snow and ice rules, for everyone who walks, rolls or rides
 ```sh
 npm run dev      # serve the site at http://localhost:8080
 npm test         # check the deadline math
-npm run data     # refresh docs/data/ from public sources (Python 3, no keys)
+npm run data     # refresh docs/data/ and the storm pages from public sources (Python 3, no keys)
+npm run pages    # rebuild only the storm pages in docs/storms/
 npm i && npm run cards   # re-render card PNGs after editing cards/src (uses Playwright)
 ```
 

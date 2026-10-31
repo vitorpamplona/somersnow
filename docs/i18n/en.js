@@ -8,7 +8,7 @@ export default {
   "page": {
     "footer.cards": "<a href=\"cards.html\">Download the 34 cards</a> to share.",
     "footer.flyer": "<a href=\"flyer.html\">Print a flyer</a> for your door, building or shop.",
-    "footer.storm": "<a href=\"storm.html\">Replay a past storm</a>, hour by hour.",
+    "footer.storm": "<a href=\"storms/\">Replay a past storm</a>, hour by hour.",
     "share.card": "Share this card",
     "header.01": "Somerville <span>Snow</span>",
     "header.02": "Deadline",

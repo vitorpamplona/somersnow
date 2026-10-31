@@ -76,7 +76,7 @@ button{font:inherit;cursor:pointer}
 .dark .chip[aria-pressed="true"]{background:var(--orange);border-color:var(--orange);color:var(--night)}
 .answer{display:flex;flex-direction:column;gap:6px}
 .answer .k{font-family:var(--display);font-weight:700;font-size:20px;letter-spacing:2px;text-transform:uppercase;color:var(--mute)}
-.answer .big{font-family:var(--display);font-weight:800;font-size:clamp(64px,8vw,104px);line-height:.88;color:var(--rust);font-variant-numeric:tabular-nums}
+.answer .big{font-family:var(--display);font-weight:800;font-size:clamp(52px,6.2vw,88px);white-space:nowrap;line-height:.88;color:var(--rust);font-variant-numeric:tabular-nums}
 .answer .day{font-family:var(--display);font-weight:700;font-size:32px;text-transform:uppercase;line-height:1}
 .days{display:flex;flex-direction:column;gap:14px;margin-top:26px}
 .dayrow{display:grid;grid-template-columns:76px 1fr;gap:12px;align-items:center}

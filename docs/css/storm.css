@@ -4,6 +4,12 @@
 .replay-top .lede{max-width:46ch}
 .k{font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:2px;text-transform:uppercase;color:var(--ice);margin-bottom:10px}
 
+/* at a glance (written into the page by build_pages.py) */
+.glance{list-style:none;padding:0;margin:22px 0 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px 24px;font-size:16px;color:#DCE8F5;max-width:1000px}
+.glance li{padding-left:16px;position:relative;line-height:1.35}
+.glance li::before{content:"";position:absolute;left:0;top:.55em;width:7px;height:7px;border-radius:50%;background:var(--orange)}
+.glance b{color:#fff}
+
 /* previous / next storm */
 .storm-nav{display:flex;justify-content:space-between;gap:12px;margin-top:20px;font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:1px;text-transform:uppercase}
 .storm-nav a{color:var(--orange);text-decoration:none}
@@ -33,6 +39,8 @@
 .msg.m-warn{border-left-color:var(--rust);background:#FFF1E8}
 .msg.m-em{border-left-color:#3B82F6}
 .msg.m-em .ico{color:#3B82F6}
+.msg.m-t{border-left-color:#F4C95D}
+.msg.m-t .ico{color:var(--night)}
 .msg.m-city{background:var(--night);color:#fff;border-left-color:var(--ice)}
 .msg.m-city .ico{color:var(--ice)}
 .msg.m-city span{color:#DCE8F5}
@@ -50,6 +58,13 @@
 .tally b{font-family:var(--display);font-weight:800;font-size:40px;line-height:.9;font-variant-numeric:tabular-nums}
 .tally span{font-size:14px;color:var(--ice);line-height:1.2}
 .tally i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px}
+
+/* getting around lanes */
+.lanes-panel{padding:16px 18px 10px}
+#lanes svg{width:100%;height:auto;display:block;cursor:ew-resize;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+#lanes svg:focus{outline:none}
+#lanes svg:focus-visible{outline:3px solid var(--orange);outline-offset:4px;border-radius:8px}
+#tally2 b{font-size:34px}
 
 /* ward map (inside the replay, under the counters) */
 .map-panel{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,4fr);gap:20px;align-items:center;padding:18px}

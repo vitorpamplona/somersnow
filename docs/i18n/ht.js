@@ -14,7 +14,7 @@ export default {
     "header.08": "Amann",
     "header.09": "Rapòte",
     "header.10": "Revize",
-    "footer.storm": "<a href=\"storm.html\">Revize yon tanpèt ki pase</a>, èdtan pa èdtan.",
+    "footer.storm": "<a href=\"storms/\">Revize yon tanpèt ki pase</a>, èdtan pa èdtan.",
     "replay.01": "<span class=\"n\">08</span> Gade dèyè",
     "replay.02": "Revize yon<br/>tanpèt ki pase",
     "replay.03": "Èdtan pa èdtan: nèj la, ijans lan, dènye dat la, ak chak rapò bay 311.",

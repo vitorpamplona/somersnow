@@ -14,7 +14,7 @@ export default {
     "header.08": "Multas",
     "header.09": "Reportar",
     "header.10": "Repetir",
-    "footer.storm": "<a href=\"storm.html\">Repite una tormenta pasada</a>, hora por hora.",
+    "footer.storm": "<a href=\"storms/\">Repite una tormenta pasada</a>, hora por hora.",
     "replay.01": "<span class=\"n\">08</span> Mira atrás",
     "replay.02": "Repite una<br/>tormenta pasada",
     "replay.03": "Hora por hora: la nieve, la emergencia, el plazo y cada reporte al 311.",

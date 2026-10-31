@@ -126,3 +126,7 @@ Hourly weather comes from the [Iowa Environmental Mesonet ASOS archive](https://
 | **Boston 311** (2026) | [data.boston.gov](https://data.boston.gov/dataset/311-service-requests), SQL API | 2,484 "Unshoveled Sidewalk" and 3,223 plowing requests Feb 22–Mar 1. A neighbor to compare the complaint wave with. | minutes |
 | NWS spotter reports (PNS) | [IEM AFOS](https://mesonet.agron.iastate.edu/cgi-bin/afos/retrieve.py?pil=PNSBOX) | No Somerville report; nearest partial: Arlington 11.8" by 2:09 p.m. Mon | — |
 | Cambridge snow and ice code cases `6qf3-rbkf` | Cambridge open data | Has violation types (ramp blocked, icy, path under 4 ft), but the data ends in 2020 | — |
+
+## In the replays (Nov 1, 2026)
+
+All the sources in the table above except Boston 311, the NWS spotter reports and bus arrival times are now collected for every storm by `scripts/storm_extras.py` and shown in each replay's "Getting around" panel and "at a glance" list. Coverage: NWS warnings and 311 for every storm; police dispatch from 2017; crashes from March 2018; MBTA alerts from 2020; T entries (yearly archive, 30-minute counts) and Bluebikes for every storm. "Normal" for the T and Bluebikes is the same hour on the 4 weeks before the storm window (holidays in those weeks lower it; e.g. Feb 23, 2026 shows −86% against that average, −89% against Feb 9 alone). Bluebikes had no trips from Somerville stations in the winters of 2016 and 2017 (both during the storms and the weeks before), so those replays say so.

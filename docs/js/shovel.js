@@ -4,10 +4,10 @@
    so with prefers-reduced-motion (animations off) the reader still sees the finished picture for each step. */
 
 // Small deterministic random, so the snow looks the same on every load.
-function rng(seed) { let s = seed; return () => ((s = (s * 16807) % 2147483647) - 1) / 2147483646; }
+export function rng(seed) { let s = seed; return () => ((s = (s * 16807) % 2147483647) - 1) / 2147483646; }
 
 // A rectangle with lumpy edges, drawn as one path: looks like a snow mass rather than a box.
-function lumpy(x, y, w, h, seed, amp = 7, step = 34) {
+export function lumpy(x, y, w, h, seed, amp = 7, step = 34) {
   const r = rng(seed);
   const pts = [];
   const edge = (x0, y0, x1, y1, nx, ny) => {

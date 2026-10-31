@@ -6,19 +6,19 @@ A public guide to Somerville, MA's sidewalk snow and ice rules, for people who w
 
 | Path | What it is |
 |---|---|
-| `site/` | The website, deployed as-is to GitHub Pages. No build step. |
-| `site/index.html` | All page markup. English text lives here, each piece tagged `data-i18n="section.NN"`. |
-| `site/i18n/en.js` | Every English string: `page` (mirrors the `data-i18n` tags) and `ui` (text scripts write). |
-| `site/i18n/languages.js` | Languages in the switcher. The switcher stays hidden while only English is listed. |
-| `site/js/deadline.js` | Pure sunrise/sunset + 6-daylight-hour deadline math. Covered by `test/`. |
-| `site/js/corner.js` | The street-corner SVG used by the step-by-step and "Who clears this?". |
-| `site/js/main.js` | Wires the page: steps, who-clears map, calculator, salt slider, fines, nav. |
+| `docs/` | The website. GitHub Pages serves this folder straight from `main` (Settings → Pages → Deploy from a branch → `main`, `/docs`). No build step. |
+| `docs/index.html` | All page markup. English text lives here, each piece tagged `data-i18n="section.NN"`. |
+| `docs/i18n/en.js` | Every English string: `page` (mirrors the `data-i18n` tags) and `ui` (text scripts write). |
+| `docs/i18n/languages.js` | Languages in the switcher. The switcher stays hidden while only English is listed. |
+| `docs/js/deadline.js` | Pure sunrise/sunset + 6-daylight-hour deadline math. Covered by `test/`. |
+| `docs/js/corner.js` | The street-corner SVG used by the step-by-step and "Who clears this?". |
+| `docs/js/main.js` | Wires the page: steps, who-clears map, calculator, salt slider, fines, nav. |
 | `cards/src/` | The 34 phone-size (1080×1920) social cards as standalone HTML (the editable source). |
-| `site/cards/` | Rendered PNGs, served by the site with a gallery at `site/cards.html`. `cards.json` lists them in story order. Regenerate with `npm run cards` (or `npm run cards -- 23-fines` for one). |
+| `docs/cards/` | Rendered PNGs, served by the site with a gallery at `docs/cards.html`. `cards.json` lists them in story order. Regenerate with `npm run cards` (or `npm run cards -- 23-fines` for one). |
 | `research/` | `ordinance.md` (law text + fines), `questions.md` (questions and proposals for officials), `sources.md`, and `source-files/` (the ordinance PDFs and the WalkBoston report). |
 
-Commands: `npm run dev` (serve `site/` at http://localhost:8080; ES modules don't load from file://), `npm test`, `npm run cards`.
-Deploy: pushing to `main` runs `.github/workflows/pages.yml`, which runs the tests and publishes `site/` to GitHub Pages.
+Commands: `npm run dev` (serve `docs/` at http://localhost:8080; ES modules don't load from file://), `npm test`, `npm run cards`.
+Deploy: anything pushed to `main` under `docs/` goes live within a minute or two. `.github/workflows/test.yml` runs `npm test` on every push and pull request.
 
 ## Voice and design rules
 

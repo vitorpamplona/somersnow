@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { deadline, sunTimes, wall, zoned } from '../site/js/deadline.js';
+import { deadline, sunTimes, wall, zoned } from '../docs/js/deadline.js';
 
 const at = (ms) => { const w = wall(ms); return `${w.m}/${w.d} ${String(w.h).padStart(2, '0')}:${String(w.mi).padStart(2, '0')}`; };
 const near = (ms, expected, tolMin = 3) => {

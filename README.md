@@ -10,8 +10,8 @@ Somerville's sidewalk snow and ice rules, for everyone who walks, rolls or rides
 
 ## What's in the repo
 
-- `site/`: the website (plain HTML, CSS and JavaScript modules, no build step), including a deadline calculator that uses Somerville sunrise and sunset times, a "who clears this?" street corner, a salt-or-sand thermometer and a fine calculator.
-- `site/cards/` and `cards/src/`: 34 phone-size cards to share, as PNGs and as editable HTML. Gallery at `/cards.html`.
+- `docs/`: the website (plain HTML, CSS and JavaScript modules, no build step), including a deadline calculator that uses Somerville sunrise and sunset times, a "who clears this?" street corner, a salt-or-sand thermometer and a fine calculator.
+- `docs/cards/` and `cards/src/`: 34 phone-size cards to share, as PNGs and as editable HTML. Gallery at `/cards.html`.
 - `research/`: the ordinance text and fines, questions and proposals for City, MBTA and State officials, and sources.
 
 ## Work on it
@@ -22,8 +22,8 @@ npm test         # check the deadline math
 npm i && npm run cards   # re-render card PNGs after editing cards/src (uses Playwright)
 ```
 
-All English text is in `site/i18n/en.js`. To add a language, copy it to `site/i18n/<code>.js`, translate the values, have a native speaker review it, and list it in `site/i18n/languages.js`.
+All English text is in `docs/i18n/en.js`. To add a language, copy it to `docs/i18n/<code>.js`, translate the values, have a native speaker review it, and list it in `docs/i18n/languages.js`.
 
-Pushing to `main` tests and publishes the site through GitHub Actions. In the repo's **Settings → Pages**, set **Source** to **GitHub Actions** once.
+GitHub Pages serves the `docs/` folder from `main` (**Settings → Pages → Deploy from a branch → `main` / `/docs`**). GitHub Actions runs the tests on every push.
 
 Working with Claude Code: `CLAUDE.md` holds the project context, verified facts, open questions and style rules.

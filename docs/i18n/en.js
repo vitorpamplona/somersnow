@@ -7,6 +7,8 @@
 export default {
   "page": {
     "footer.cards": "<a href=\"cards.html\">Download the 34 cards</a> to share.",
+    "footer.flyer": "<a href=\"flyer.html\">Print a flyer</a> for your door, building or shop.",
+    "share.card": "Share this card",
     "header.01": "Somerville <span>Snow</span>",
     "header.02": "Deadline",
     "header.03": "Shovel",
@@ -24,6 +26,10 @@ export default {
     "top.06": "<b>0″</b><span>Snow or ice left</span>",
     "top.07": "Ramp to crosswalk",
     "top.08": "By the Somerville PTAC. Not an official City page.",
+    "top.09": "What's happening?",
+    "top.10": "<b>Snowing</b><small>Salt early. Get alerts.</small>",
+    "top.11": "<b>It stopped</b><small>6 daylight hours to shovel.</small>",
+    "top.12": "<b>Blue lights</b><small>Move your car.</small>",
     "deadline.01": "<span class=\"n\">01</span> Snow stopped",
     "deadline.02": "Shovel by when?",
     "deadline.03": "6 daylight hours. Night doesn't count.",
@@ -37,6 +43,7 @@ export default {
     "deadline.11": "<span><i style=\"background:#DCE8F5\"></i>Daylight</span><span><i style=\"background:var(--orange)\"></i>Your 6 hours</span><span><i style=\"background:#1B2D44\"></i>Night: paused</span>",
     "deadline.12": "Every snowfall counts",
     "deadline.13": "Even one inch. Small storms leave the worst ice.",
+    "deadline.14": "Just now",
     "shovel.01": "<span class=\"n\">02</span> How to shovel",
     "shovel.02": "Down to the<br/>pavement",
     "shovel.03": "Snow stops. Clock starts.",
@@ -241,6 +248,8 @@ export default {
       "tooCold": "Too cold",
       "grip": "Grip"
     },
+    "draft": "Draft translation, not yet checked by a native speaker. The English page is the reference.",
+    "draftEn": "Read in English",
     "track": {
       "stopped": "Snow stopped",
       "deadline": "Deadline"

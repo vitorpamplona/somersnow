@@ -58,7 +58,9 @@ keys.addEventListener('click', (e) => { const c = e.target.closest('.chip'); if 
 const TZ = SOMERVILLE.tz;
 const dDate = $('#d-date');
 const dTime = $('#d-time');
-function fmt(ms, opts) { return new Intl.DateTimeFormat(document.documentElement.lang || 'en-US', { timeZone: TZ, ...opts }).format(ms); }
+// Date formats per page language: US Spanish and Brazilian Portuguese. Latin digits everywhere, to match the rest of the page.
+const LOCALE = { en: 'en-US', es: 'es-US', pt: 'pt-BR' };
+function fmt(ms, opts) { const l = document.documentElement.lang; return new Intl.DateTimeFormat(LOCALE[l] || l || 'en-US', { timeZone: TZ, numberingSystem: 'latn', ...opts }).format(ms); }
 const niceTime = (ms) => fmt(ms, { hour: 'numeric', minute: '2-digit' }).replace('AM', 'a.m.').replace('PM', 'p.m.');
 function renderDeadline() {
   if (!dDate.value || !dTime.value) return;
@@ -99,13 +101,28 @@ function renderDeadline() {
   $$('.presets .chip').forEach((c) => c.setAttribute('aria-pressed', 'false'));
   renderDeadline();
 }));
+const pad = (n) => String(n).padStart(2, '0');
+function nowStamp() { const w = wall(Date.now()); return `${w.y}-${pad(w.m)}-${pad(w.d)}T${pad(w.h)}:${pad(w.mi)}`; }
 $('.presets').addEventListener('click', (e) => {
   const c = e.target.closest('.chip'); if (!c) return;
-  const [dd, tt] = c.dataset.p.split('T');
+  const [dd, tt] = (c.dataset.p === 'now' ? nowStamp() : c.dataset.p).split('T');
   dDate.value = dd; dTime.value = tt;
   $$('.presets .chip').forEach((x) => x.setAttribute('aria-pressed', x === c));
   renderDeadline();
 });
+// In snow season (Oct 1 – May 1, the season fines are counted in) start at "just now" in Somerville,
+// and move the example chips to today. Out of season, keep the January example written in the HTML.
+{
+  const w = wall(Date.now());
+  if (w.m >= 10 || w.m <= 4) {
+    const today = nowStamp().split('T')[0];
+    $$('.presets .chip').forEach((c) => {
+      if (c.dataset.p === 'now') c.hidden = false;
+      else c.dataset.p = `${today}T${c.dataset.p.split('T')[1]}`;
+    });
+    $('.presets .chip[data-p="now"]').click();
+  }
+}
 
 /* ---------- Salt or sand ---------- */
 // Lowest pavement temperature (°F) each product still melts at. Source: Minnesota Pollution Control Agency.
@@ -135,6 +152,18 @@ function renderFines() {
 }
 $$('[data-b]').forEach((b) => b.addEventListener('click', () => { fb = b.dataset.b; renderFines(); }));
 $$('[data-n]').forEach((b) => b.addEventListener('click', () => { fn = +b.dataset.n; renderFines(); }));
+
+/* ---------- Share this card: native share sheet with the PNG where the browser supports it, else open the PNG ---------- */
+document.addEventListener('click', async (e) => {
+  const a = e.target.closest('a.share'); if (!a || !navigator.canShare) return;
+  e.preventDefault();
+  try {
+    const blob = await (await fetch(a.href)).blob();
+    const file = new File([blob], `somerville-snow-${a.dataset.card}.png`, { type: 'image/png' });
+    if (navigator.canShare({ files: [file] })) await navigator.share({ files: [file], url: location.href.split('#')[0] });
+    else window.open(a.href, '_blank');
+  } catch (err) { if (err.name !== 'AbortError') window.open(a.href, '_blank'); }
+});
 
 /* ---------- Nav highlight ---------- */
 const links = $$('.nav a');

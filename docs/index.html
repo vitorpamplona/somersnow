@@ -45,6 +45,7 @@
 <symbol id="i-tow" viewbox="0 0 48 48"><path d="M4 33 V24 H20 V33"></path><path d="M20 28 L32 14 L36 18"></path><path d="M36 18 V26 A3 3 0 0 1 30 26"></path><circle cx="10" cy="36" r="3.5"></circle><path d="M4 33 H44"></path></symbol>
 <symbol id="i-vent" viewbox="0 0 48 48"><path d="M8 20 C14 14 20 26 26 20 S38 14 42 18"></path><path d="M8 30 C14 24 20 36 26 30 S38 24 42 28"></path><path d="M6 8 V40"></path></symbol>
 <symbol id="i-snow" viewbox="0 0 48 48"><path d="M24 4 V44 M6 14 L42 34 M6 34 L42 14"></path></symbol>
+<symbol id="i-share" viewbox="0 0 48 48"><path d="M24 30 V6 M14 15 L24 5 L34 15"></path><path d="M10 24 V40 H38 V24"></path></symbol>
 <symbol id="i-mail" viewbox="0 0 48 48"><rect height="26" rx="3" width="38" x="5" y="11"></rect><path d="M5 13 L24 27 L43 13"></path></symbol>
 </defs>
 </svg>
@@ -69,6 +70,12 @@
 <div class="eyebrow" data-i18n="top.01">Winter 2026/27 · Somerville, MA</div>
 <h1 data-i18n="top.02" style="margin-top:18px">Snow &amp; ice<br/>on the <em>sidewalk</em></h1>
 <p class="lede" data-i18n="top.03">A bus is only as good as the walk to it.</p>
+<nav aria-labelledby="now-k" class="now">
+<span class="now-k" data-i18n="top.09" id="now-k">What's happening?</span>
+<a href="#saltsand"><svg aria-hidden="true" class="ico"><use href="#i-snow"></use></svg><span data-i18n="top.10"><b>Snowing</b><small>Salt early. Get alerts.</small></span></a>
+<a href="#deadline"><svg aria-hidden="true" class="ico"><use href="#i-clock"></use></svg><span data-i18n="top.11"><b>It stopped</b><small>6 daylight hours to shovel.</small></span></a>
+<a href="#emergency"><i aria-hidden="true" class="beacon"></i><span data-i18n="top.12"><b>Blue lights</b><small>Move your car.</small></span></a>
+</nav>
 <div class="rules">
 <a class="rule" data-i18n="top.04" href="#deadline"><b>6</b><span>Daylight hours</span></a>
 <a class="rule" data-i18n="top.05" href="#shovel"><b>36″</b><span>Wide path</span></a>
@@ -91,6 +98,7 @@
 <div class="field"><label data-i18n="deadline.05" for="d-time">At</label><input id="d-time" type="time" value="15:00"/></div>
 </div>
 <div aria-label="Examples" class="presets" role="group">
+<button aria-pressed="false" class="chip" data-i18n="deadline.14" data-p="now" hidden>Just now</button>
 <button aria-pressed="true" class="chip" data-i18n="deadline.06" data-p="2027-01-15T15:00">3 p.m.</button>
 <button aria-pressed="false" class="chip" data-i18n="deadline.07" data-p="2027-01-15T02:00">Overnight</button>
 <button aria-pressed="false" class="chip" data-i18n="deadline.08" data-p="2027-01-15T09:00">9 a.m.</button>
@@ -114,6 +122,7 @@
 </div>
 </div>
 </div>
+<p class="sharep"><a class="share" data-card="04-after" href="cards/04-after.png" target="_blank"><svg aria-hidden="true" class="ico"><use href="#i-share"></use></svg><span data-i18n="share.card">Share this card</span></a></p>
 </div>
 </section>
 <!-- ============ SHOVEL (scrolly) ============ -->
@@ -131,6 +140,7 @@
 <div class="step" data-step="5"><div class="card"><span class="num">5</span><h3 data-i18n="shovel.11">Plow buried it?</h3><p data-i18n="shovel.12">Clear it again. Ramp last.</p></div></div>
 </div>
 </div>
+<p class="sharep"><a class="share" data-card="06-pavement" href="cards/06-pavement.png" target="_blank"><svg aria-hidden="true" class="ico"><use href="#i-share"></use></svg><span data-i18n="share.card">Share this card</span></a></p>
 </div>
 </section>
 <!-- ============ WHO CLEARS ============ -->
@@ -152,6 +162,7 @@
 <div class="it"><svg aria-hidden="true" class="ico"><use href="#i-bag"></use></svg><b data-i18n="whoclears.08">Away</b><span data-i18n="whoclears.09">Still your job. Line up help.</span></div>
 <div class="it"><svg aria-hidden="true" class="ico"><use href="#i-cone"></use></svg><b data-i18n="whoclears.10">Empty lot</b><span data-i18n="whoclears.11">Same rules. Report it.</span></div>
 </div>
+<p class="sharep"><a class="share" data-card="03-whoclears" href="cards/03-whoclears.png" target="_blank"><svg aria-hidden="true" class="ico"><use href="#i-share"></use></svg><span data-i18n="share.card">Share this card</span></a></p>
 </div>
 </section>
 <!-- ============ SALT ============ -->
@@ -177,6 +188,7 @@
 <div class="it"><svg aria-hidden="true" class="ico"><use href="#i-bell"></use></svg><b data-i18n="saltsand.17">Get alerts</b><span data-i18n="saltsand.18"><a href="https://www.somervillema.gov/alerts">somervillema.gov/alerts</a></span></div>
 </div>
 </div>
+<p class="sharep"><a class="share" data-card="14-treat" href="cards/14-treat.png" target="_blank"><svg aria-hidden="true" class="ico"><use href="#i-share"></use></svg><span data-i18n="share.card">Share this card</span></a></p>
 </div>
 </section>
 <!-- ============ EMERGENCY ============ -->
@@ -212,6 +224,7 @@
 <div class="it"><svg aria-hidden="true" class="ico"><use href="#i-ban"></use></svg><b data-i18n="emergency.26">Space savers</b><span data-i18n="emergency.27">Banned. $100. Thrown out.</span></div>
 <div class="it"><svg aria-hidden="true" class="ico"><use href="#i-shovel"></use></svg><b data-i18n="emergency.28">Dig your own</b><span data-i18n="emergency.29">Don't take a dug-out spot.</span></div>
 </div>
+<p class="sharep"><a class="share" data-card="27-during" href="cards/27-during.png" target="_blank"><svg aria-hidden="true" class="ico"><use href="#i-share"></use></svg><span data-i18n="share.card">Share this card</span></a></p>
 </div>
 </section>
 <!-- ============ GETTING AROUND ============ -->
@@ -225,6 +238,7 @@
 <div class="it"><svg aria-hidden="true" class="ico"><use href="#i-train"></use></svg><b data-i18n="around.07">Check first</b><span data-i18n="around.08"><a href="https://www.mbta.com/winter">mbta.com/winter</a></span></div>
 <div class="it"><svg aria-hidden="true" class="ico"><use href="#i-path"></use></svg><b data-i18n="around.09">Community Path</b><span data-i18n="around.10">May close in big storms.</span></div>
 </div>
+<p class="sharep"><a class="share" data-card="24-busstops" href="cards/24-busstops.png" target="_blank"><svg aria-hidden="true" class="ico"><use href="#i-share"></use></svg><span data-i18n="share.card">Share this card</span></a></p>
 </div>
 </section>
 <!-- ============ FINES ============ -->
@@ -252,6 +266,7 @@
 <div class="it"><svg aria-hidden="true" class="ico"><use href="#i-ban"></use></svg><b data-i18n="fines.12">Snow in the street</b><span data-i18n="fines.13">Same fines.</span></div>
 </div>
 </div>
+<p class="sharep"><a class="share" data-card="23-fines" href="cards/23-fines.png" target="_blank"><svg aria-hidden="true" class="ico"><use href="#i-share"></use></svg><span data-i18n="share.card">Share this card</span></a></p>
 </div>
 </section>
 <!-- ============ REPORT ============ -->
@@ -271,6 +286,7 @@
 <div class="it"><svg aria-hidden="true" class="ico"><use href="#i-hydrant"></use></svg><b data-i18n="report.13">Dig out the hydrant</b><span data-i18n="report.14">3 feet all around.</span></div>
 <div class="it"><svg aria-hidden="true" class="ico"><use href="#i-heart"></use></svg><b data-i18n="report.15">Push, don't lift</b><span data-i18n="report.16">Heavy snow strains the heart.</span></div>
 </div>
+<p class="sharep"><a class="share" data-card="22-report" href="cards/22-report.png" target="_blank"><svg aria-hidden="true" class="ico"><use href="#i-share"></use></svg><span data-i18n="share.card">Share this card</span></a></p>
 </div>
 </section>
 <footer>
@@ -279,6 +295,7 @@
 <h3 data-i18n="footer.01">Somerville PTAC</h3>
 <p data-i18n="footer.02">Not an official City page. The City's rules apply. Official rules in 9 languages: <a href="https://www.somervillema.gov/snow">somervillema.gov/snow</a></p>
 <p data-i18n="footer.cards"><a href="cards.html">Download the 34 cards</a> to share.</p>
+<p data-i18n="footer.flyer"><a href="flyer.html">Print a flyer</a> for your door, building or shop.</p>
 </div>
 <div>
 <h3 data-i18n="footer.03">Sources</h3>

@@ -23,7 +23,7 @@ section{padding:96px 0;position:relative}
 .dark{background:var(--night);color:#fff}
 .dark .lede,.dark .muted{color:#DCE8F5}
 .eyebrow{font-family:var(--display);font-weight:700;font-size:20px;letter-spacing:2.5px;text-transform:uppercase;color:var(--rust);display:flex;gap:14px;align-items:baseline}
-.dark .eyebrow{color:var(--orange)}
+.dark .eyebrow,.hero .eyebrow{color:var(--orange)}
 .eyebrow .n{font-variant-numeric:tabular-nums;opacity:.6}
 .lede{font-size:clamp(21px,2.4vw,26px);line-height:1.35;font-weight:500;color:var(--sub)}
 .muted{color:var(--mute)}
@@ -309,3 +309,50 @@ footer ul{padding-left:18px;margin:0;display:flex;flex-direction:column;gap:6px}
 
 /* language picker (shown only when more than one language exists) */
 .lang{font:600 15px var(--body);background:var(--night-2);color:#fff;border:1px solid #2B5482;border-radius:999px;padding:6px 10px;margin-left:8px}
+
+/* ---------- "What's happening?" quick start (hero) ---------- */
+.now{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:28px}
+.now-k{font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:2px;text-transform:uppercase;color:var(--ice);width:100%}
+.now a{display:flex;align-items:center;gap:12px;padding:12px 18px 12px 14px;border-radius:18px;background:var(--night-2);color:#fff;text-decoration:none;border:2px solid transparent}
+.now a:hover{border-color:var(--orange)}
+.now a .ico{width:32px;height:32px;color:var(--orange)}
+.now a .beacon{width:18px;height:18px;margin:0 7px}
+.now b{display:block;font-family:var(--display);font-weight:800;font-size:24px;text-transform:uppercase;line-height:1}
+.now small{display:block;font-size:15px;color:var(--ice);line-height:1.25}
+
+/* ---------- share-this-card link at the end of each section ---------- */
+.sharep{margin-top:32px}
+.share{display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;padding:8px 16px 8px 12px;border-radius:999px;border:2px solid currentColor}
+.share .ico{width:22px;height:22px;stroke-width:4}
+.report .share{color:var(--night)}
+
+/* ---------- draft translation banner ---------- */
+.draftbar{background:#FFE9A8;color:var(--night);font-size:15px;padding:8px 20px;text-align:center}
+.draftbar a{color:var(--rust);font-weight:600}
+
+/* ---------- phones: shorter page ---------- */
+@media (max-width:600px){
+  section{padding:52px 0}
+  .hero{padding:48px 0 44px}
+  .rules{margin-top:32px}
+  .rule{padding:18px 16px}
+  .now a{flex:1 1 100%}
+  .step{min-height:40vh}
+  .step:last-child{min-height:36vh}
+  .step .card{padding:20px}
+  .step .num{font-size:34px}
+  .step .card p{font-size:19px}
+  .icons4,.icons3,.icons2{grid-template-columns:1fr;gap:10px;margin-top:28px}
+  .salt .icons2{margin-top:0}
+  .it{display:grid;grid-template-columns:40px minmax(0,1fr);column-gap:14px;row-gap:2px;align-items:center;padding:14px 16px;border-radius:18px}
+  .it .ico{grid-row:1/3;width:40px;height:40px;margin:0}
+  .it b{font-size:24px}
+  .icons2.one .it b{min-width:0}
+  .salt,.fines,.emerg,.who-grid,.calc{gap:24px;margin-top:28px}
+  .clocks{gap:10px}
+  .ways{gap:10px;margin-top:28px}
+  .way{padding:18px}
+  h3[style*="margin-top:56px"]{margin-top:36px!important}
+  .sharep{margin-top:24px}
+  footer{padding:44px 0}
+}

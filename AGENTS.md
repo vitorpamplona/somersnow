@@ -13,7 +13,8 @@ A public guide to Somerville, MA's sidewalk snow and ice rules, for people who w
 | `docs/i18n/en.js` | Every English string: `page` (mirrors the `data-i18n` tags) and `ui` (text scripts write). |
 | `docs/i18n/languages.js` | Languages in the switcher. The switcher stays hidden while only English is listed. |
 | `docs/js/deadline.js` | Pure sunrise/sunset + 6-daylight-hour deadline math. Covered by `test/`. |
-| `docs/js/corner.js` | The street-corner SVG used by the step-by-step and "Who clears this?". |
+| `docs/js/shovel.js` | The animated street corner for "Down to the pavement" (steps 1–5). Each step plays one short animation; CSS under "shovel scene" in `style.css`. |
+| `docs/js/corner.js` | The street-corner SVG for the "Who clears this?" map. |
 | `docs/js/main.js` | Wires the page: steps, who-clears map, calculator, salt slider, fines, nav. |
 | `cards/src/` | The 34 phone-size (1080×1920) social cards as standalone HTML (the editable source). |
 | `docs/cards/` | Rendered PNGs, served by the site with a gallery at `docs/cards.html`. `cards.json` lists them in story order. Regenerate with `npm run cards` (or `npm run cards -- 23-fines` for one). |

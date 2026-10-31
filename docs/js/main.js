@@ -1,4 +1,5 @@
 import { corner } from './corner.js';
+import { shovelScene } from './shovel.js';
 import { snowfall } from './snowfall.js';
 import { deadline, sunTimes, wall, zoned, SOMERVILLE } from './deadline.js';
 import { t, listeners, initLanguage } from './i18n.js';
@@ -7,7 +8,7 @@ const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 
 /* ---------- Street corner: step-by-step ---------- */
-$('#fig').innerHTML = corner('corner1', false);
+$('#fig').innerHTML = shovelScene('corner1');
 $('#fig2').innerHTML = corner('corner2', true);
 const svg1 = $('#corner1');
 const steps = $$('.step');
@@ -19,6 +20,7 @@ const stepIO = new IntersectionObserver((es) => es.forEach((e) => {
 }), { rootMargin: '-45% 0px -45% 0px' });
 steps.forEach((s) => stepIO.observe(s));
 steps[0].classList.add('on');
+// The picture starts snowed-in (step 0) so step 1's snowfall plays when the reader gets there, not at page load.
 
 /* ---------- Who clears this? ---------- */
 const WHO_KEYS = ['sidewalk', 'corner', 'ramp', 'crosswalk', 'street', 'bus', 'hydrant', 'drain', 'building'];

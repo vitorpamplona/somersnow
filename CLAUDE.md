@@ -15,7 +15,7 @@ A public guide to Somerville, MA's sidewalk snow and ice rules, for people who w
 | `site/js/main.js` | Wires the page: steps, who-clears map, calculator, salt slider, fines, nav. |
 | `cards/src/` | The 34 phone-size (1080×1920) social cards as standalone HTML (the editable source). |
 | `site/cards/` | Rendered PNGs, served by the site with a gallery at `site/cards.html`. `cards.json` lists them in story order. Regenerate with `npm run cards` (or `npm run cards -- 23-fines` for one). |
-| `research/` | `ordinance.md` (law text + fines), `questions.md` (questions and proposals for officials), `sources.md`. |
+| `research/` | `ordinance.md` (law text + fines), `questions.md` (questions and proposals for officials), `sources.md`, and `source-files/` (the ordinance PDFs and the WalkBoston report). |
 
 Commands: `npm run dev` (serve `site/` at http://localhost:8080; ES modules don't load from file://), `npm test`, `npm run cards`.
 Deploy: pushing to `main` runs `.github/workflows/pages.yml`, which runs the tests and publishes `site/` to GitHub Pages.

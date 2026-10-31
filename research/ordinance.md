@@ -1,6 +1,6 @@
 # Somerville Code of Ordinances: snow-related sections
 
-Text copied from the Code of Ordinances PDFs supplied by PTAC (Chapter 12 current through Ord. 2025-25, effective 12/11/2025; Sec. 1-11 effective 9/24/2026). The official, current code is on [Municode](https://library.municode.com/ma/somerville/codes/code_of_ordinances). Line breaks come from the PDF.
+Text copied from the Code of Ordinances PDFs in [source-files/](source-files/) (Chapter 12 current through Ord. 2025-25, effective 12/11/2025; Sec. 1-11 effective 9/24/2026). The official, current code is on [Municode](https://library.municode.com/ma/somerville/codes/code_of_ordinances). Line breaks come from the PDF.
 
 ## Sec. 12-2. Water run-off (downspouts)
 

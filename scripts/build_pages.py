@@ -6,7 +6,7 @@ links to the previous and next storm, the storm cards, and the data (as JSON in 
 (docs/js/storm.js) only draws and animates. Run by `npm run data` after collecting, or alone with `npm run pages`.
 Template: scripts/storm_page.html.
 """
-import html, json, os
+import hashlib, html, json, os
 from collections import defaultdict
 from datetime import datetime, timedelta
 
@@ -146,6 +146,12 @@ def main():
     ids = [st['end'] for st in storms]
     with open(os.path.join(ROOT, 'scripts', 'storm_page.html')) as f:
         tpl = f.read()
+    # Cache-busting: browsers may keep old copies of these files for a while; a content hash in the URL
+    # makes a changed file load fresh, so a new page never runs with an old script.
+    for rel in ('js/storm.js', 'js/deadline.js', 'css/storm.css', 'css/style.css'):
+        with open(os.path.join(ROOT, 'docs', rel), 'rb') as f:
+            v = hashlib.sha1(f.read()).hexdigest()[:8]
+        tpl = tpl.replace(f'../{rel}"', f'../{rel}?v={v}"')
     os.makedirs(OUT, exist_ok=True)
     for k, sid in enumerate(ids):
         S = load(f'storm-{sid}.json')
@@ -167,7 +173,11 @@ def main():
     # index: every storm, newest first in the lede link
     cards_html, all_lede = cards(storms)
     latest = ids[-1]
-    idx = INDEX.replace('%%CARDS%%', cards_html).replace('%%ALL_LEDE%%', esc(all_lede)).replace('%%LATEST%%', latest).replace('%%LATEST_NAME%%', esc(load(f'storm-{latest}.json')['title']))
+    idx = INDEX
+    for rel in ('css/storm.css', 'css/style.css'):
+        with open(os.path.join(ROOT, 'docs', rel), 'rb') as f:
+            idx = idx.replace(f'../{rel}"', f'../{rel}?v={hashlib.sha1(f.read()).hexdigest()[:8]}"')
+    idx = idx.replace('%%CARDS%%', cards_html).replace('%%ALL_LEDE%%', esc(all_lede)).replace('%%LATEST%%', latest).replace('%%LATEST_NAME%%', esc(load(f'storm-{latest}.json')['title']))
     with open(os.path.join(OUT, 'index.html'), 'w') as f:
         f.write(idx)
     print(f'  wrote docs/storms/ ({len(ids)} storm pages and index.html)')

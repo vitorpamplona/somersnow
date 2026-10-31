@@ -80,7 +80,8 @@ def facts(S):
     sidewalk = sum(v[k] for i, v in S['requests'].items() if int(i) >= base)
     items, summary = [], []
     items.append(f'<li><b>{S["snowTotal"]} in</b> of snow at Logan, {esc(day_tm(start))} to {esc(day_tm(stop))}</li>')
-    summary.append(f'{S["snowTotal"]} inches of snow')
+    som = x.get('snowSomerville')
+    summary.append(f'{S["snowTotal"]} inches of snow at Logan' + (f' ({som["total"]} in Somerville)' if som and not som['partial'] else ''))
     # the most serious NWS product that overlapped the snow (several segments of it are merged)
     RANK = ['BZ.W', 'WS.W', 'IS.W', 'LE.W', 'WC.W', 'WW.Y', 'WS.A', 'BZ.A']
     ws = [w for w in x.get('warnings') or [] if w['code'] in RANK and datetime.fromisoformat(w['to']) > start and datetime.fromisoformat(w['from']) < stop]
@@ -119,7 +120,9 @@ def lede(S):
     missing = (' The City\'s snow emergency notices for this storm aren\'t online, so parking messages are left out.' if not e
                else ' Only the City\'s notice about the end of the emergency is online.' if not e.get('start')
                else ' The City\'s notice about the end of the emergency isn\'t online.' if not e.get('end') else '')
-    return (f'{S["snowTotal"]} inches at Logan. Snow from {day_tm(start)} to {day_tm(stop)}.{missing} Press play, or drag the line.').replace('..', '.')
+    som = (S.get('extra') or {}).get('snowSomerville')
+    here = f' ({som["total"]} in Somerville, from volunteer observers{", partial report" if som["partial"] else ""})' if som else ''
+    return (f'{S["snowTotal"]} inches at Logan{here}. Snow from {day_tm(start)} to {day_tm(stop)}.{missing} Press play, or drag the line.').replace('..', '.')
 
 
 def cards(storms, current=None, prefix=''):

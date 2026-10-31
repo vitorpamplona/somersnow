@@ -11,6 +11,9 @@ say "not available" instead of showing a false zero. Big downloads are cached in
   tEntries   MBTA gated entries at stations in Somerville per hour, and the same hour's average over the 4 previous weeks
   bikes      Bluebikes trips starting at stations inside Somerville per hour, with the same 4-week baseline
   alerts     MBTA service alerts created during the window on Somerville bus routes and stations (2020+)
+  snowSomerville  daily snowfall from volunteer observers inside Somerville (CoCoRaHS via ACIS), and the storm total
+  web        daily views of the City's snow pages (top 20 pages per day; the City's data covers 2020 to May 2023)
+  buses      MBTA bus trips run and median minutes late on routes serving Somerville, per hour, with the 4-week baseline (2020+)
 """
 import csv, io, json, os, sys, urllib.parse, zipfile
 from collections import Counter, defaultdict
@@ -238,4 +241,134 @@ def alerts(cached, windows, routes, stops):
                         label = r['route_id'] or STATIONS.get(r['stop_id'], '')
                         seen[r['alert_id']] = [_idx(t, t0), kind, label, head[:170]]
         out[sid] = sorted(seen.values())
+    return out
+
+
+# ---------- Somerville's own snowfall (CoCoRaHS volunteer observers, via ACIS) ----------
+ACIS_META = 'https://data.rcc-acis.org/StnMeta'
+ACIS_DATA = 'https://data.rcc-acis.org/StnData'
+
+
+def somerville_snow(get, windows, storms):
+    """Daily snowfall reported by volunteer observers inside Somerville (24 hours to about 7 a.m.), averaged over
+    the stations reporting that day, and the storm total from the first snow day to the morning after the last."""
+    meta = json.loads(get(ACIS_META, data=json.dumps({'bbox': '-71.135,42.37,-71.07,42.42', 'elems': 'snow', 'meta': 'name,sids,valid_daterange'}).encode()))['meta']
+    stations = [m for m in meta if m['name'].upper().startswith('SOMERVILLE')]
+    span = {st['end']: (st['start'], st['end']) for st in storms}
+    out = {}
+    for sid, t0, t1 in windows:
+        per_day = defaultdict(list)
+        names = set()
+        for m in stations:
+            a, b = m['valid_daterange'][0]
+            if b < t0.date().isoformat() or a > t1.date().isoformat():
+                continue
+            q = {'sid': m['sids'][0].split()[0], 'sdate': t0.date().isoformat(), 'edate': t1.date().isoformat(), 'elems': [{'name': 'snow'}]}
+            for d, v in json.loads(get(ACIS_DATA, data=json.dumps(q).encode())).get('data', []):
+                if v not in ('M', 'S', ''):
+                    per_day[d].append(0.0 if v == 'T' else float(v.rstrip('A')))
+                    names.add(m['name'])
+        first, last = span[sid]
+        storm_days = [(date.fromisoformat(first) + timedelta(k)).isoformat() for k in range((date.fromisoformat(last) - date.fromisoformat(first)).days + 2)]
+        # Observers skip some days; a missing day may mean no snow or no report. Sum what was reported and say
+        # when some storm days have no report ("partial").
+        got = [d for d in storm_days if per_day.get(d)]
+        total = round(sum(sum(per_day[d]) / len(per_day[d]) for d in got), 1) if got else None
+        out[sid] = ({'days': [[d, round(sum(v) / len(v), 1), len(v)] for d, v in sorted(per_day.items())], 'total': total,
+                     'partial': len(got) < len(storm_days), 'stations': sorted(names)} if got and total else None)
+    return out
+
+
+# ---------- City website: views of snow pages (top 20 pages per day, 2020 to May 2023) ----------
+WEB = 'https://data.somervillema.gov/resource/754v-8e35.json'
+
+
+def web_views(get, windows):
+    have = json.loads(get(WEB, {'$select': 'min(date) as a, max(date) as b'}))[0]
+    lo, hi = datetime.fromisoformat(have['a'][:10]), datetime.fromisoformat(have['b'][:10])
+    out = {}
+    for sid, t0, t1 in windows:
+        if t0 - timedelta(weeks=4) < lo or t1 - timedelta(days=1) > hi:
+            out[sid] = None
+            continue
+        a = (t0 - timedelta(weeks=4)).date().isoformat()
+        q = {'$select': 'date,url,pageviews', '$where': f"date >= '{a}' and date < '{t1.date().isoformat()}' and upper(url) like '%SNOW%'", '$limit': 5000}
+        day = Counter()
+        for r in json.loads(get(WEB, q)):
+            day[r['date'][:10]] += int(r['pageviews'])
+        days, k = [], t0.replace(hour=0)
+        while k < t1:
+            days.append([_idx(max(k, t0), t0), day.get(k.date().isoformat(), 0)])
+            k += timedelta(days=1)
+        before = [day.get((t0 - timedelta(days=n)).date().isoformat(), 0) for n in range(1, 29)]
+        out[sid] = {'days': days, 'base': round(sum(before) / len(before))}
+    return out
+
+
+# ---------- MBTA bus arrival and departure times (2020+) ----------
+BUS_ZIPS = {
+    2020: 'https://www.arcgis.com/sharing/rest/content/items/4c1293151c6c4a069d49e6b85ee68ea4/data',
+    2021: 'https://www.arcgis.com/sharing/rest/content/items/2d415555f63b431597721151a7e07a3e/data',
+    2022: 'https://www.arcgis.com/sharing/rest/content/items/ef464a75666349f481353f16514c06d0/data',
+    2023: 'https://www.arcgis.com/sharing/rest/content/items/b7b36fdb7b3a4728af2fccc78c2ca5b7/data',
+    2024: 'https://www.arcgis.com/sharing/rest/content/items/96c77138c3144906bce93d0257531b6a/data',
+    2025: 'https://www.arcgis.com/sharing/rest/content/items/924df13d845f4907bb6a6c3ed380d57a/data',
+    2026: 'https://www.arcgis.com/sharing/rest/content/items/9d8a8cad277545c984c1b25ed10b7d3c/data',
+}
+_T0 = datetime(1900, 1, 1)
+
+
+def buses(cached, windows, routes):
+    """Per hour, on bus routes that serve Somerville: trips that left their first stop, and the median minutes
+    late at timepoints; each with the same hour's value on the 4 weeks before."""
+    want = {r.lstrip('0') for r in routes}
+    need_days, months = set(), set()
+    for _, t0, t1 in windows:
+        if t0.year < 2020 or (t0 - timedelta(weeks=4)).year < 2020:
+            continue
+        d = (t0 - timedelta(weeks=4)).date()
+        while d <= t1.date():
+            need_days.add(d.isoformat()); months.add((d.year, d.month)); d += timedelta(1)
+    trips, late = Counter(), defaultdict(list)
+    have_months = set()
+    for y in sorted({y for y, _ in months}):
+        try:
+            z = zipfile.ZipFile(cached(f'bus-{y}.zip', BUS_ZIPS[y]))
+        except Exception as e:
+            print(f'    buses {y}: {e}', file=sys.stderr)
+            continue
+        for m in sorted(mm for yy, mm in months if yy == y):
+            f = next((n for n in z.namelist() if n.endswith(f'_{y}-{m:02d}.csv')), None)
+            if not f:
+                continue
+            print(f'    buses {y}-{m:02d}…', file=sys.stderr)
+            have_months.add((y, m))
+            with z.open(f) as fh:
+                for r in csv.DictReader(io.TextIOWrapper(fh, encoding='utf-8-sig')):
+                    if r['route_id'].lstrip('0') not in want or r['service_date'] not in need_days or not r['actual']:
+                        continue
+                    base = datetime.fromisoformat(r['service_date'])
+                    act = base + (datetime.fromisoformat(r['actual'][:19]) - _T0)
+                    k = act.replace(minute=0, second=0, microsecond=0)
+                    if r['point_type'] == 'Startpoint':
+                        trips[k] += 1
+                    elif r['scheduled']:
+                        sch = base + (datetime.fromisoformat(r['scheduled'][:19]) - _T0)
+                        late[k].append((act - sch).total_seconds() / 60)
+    out = {}
+    for sid, t0, t1 in windows:
+        if not all(((t0 - timedelta(weeks=4)).year, (t0 - timedelta(weeks=4)).month) in have_months and (t.year, t.month) in have_months for t in (t0, t1 - timedelta(hours=1))):
+            out[sid] = None
+            continue
+        first = date(*min(have_months), 1)
+        now, base = _with_baseline(trips, t0, t1, first)
+        med = {k: sorted(v)[len(v) // 2] for k, v in late.items() if len(v) >= 5}
+        n = len(now)
+        late_now = [round(med[t0 + k * HOUR], 1) if (t0 + k * HOUR) in med else None for k in range(n)]
+        late_base = []
+        for k in range(n):
+            t = t0 + k * HOUR
+            prev = [med[t - timedelta(weeks=w)] for w in (1, 2, 3, 4) if (t - timedelta(weeks=w)) in med]
+            late_base.append(round(sorted(prev)[len(prev) // 2], 1) if prev else None)
+        out[sid] = {'trips': {'now': now, 'base': base}, 'late': {'now': late_now, 'base': late_base}}
     return out

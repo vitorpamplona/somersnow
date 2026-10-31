@@ -158,6 +158,7 @@ function buildChart() {
     if (b > a) s += `<rect x="${xOf(a)}" y="${TOP + SNOW_H + 3}" width="${xOf(b) - xOf(a)}" height="7" rx="3" fill="${NWS[w.code] || '#C084FC'}"><title>${w.name}</title></rect>`;
   });
   s += `<text x="${PAD + 4}" y="${TOP + 14}" class="cap" font-size="13" fill="#A9C4E4">SNOW AT LOGAN</text>`;
+  if (X.snowSomerville) s += `<text x="${CW - PAD - 4}" y="${TOP + 14}" text-anchor="end" class="cap" font-size="13" fill="#A9C4E4">SOMERVILLE OBSERVERS: ${X.snowSomerville.total} IN${X.snowSomerville.partial ? ' (PARTIAL REPORT)' : ''}</text>`;
   s += `<text x="${PAD + 4}" y="${REQ_TOP + 14}" class="cap" font-size="13" fill="#A9C4E4">311 REQUESTS PER HOUR</text>`;
   // requests, stacked (sidewalk on the bottom)
   const order = ['sidewalk', 'street', 'ask', 'spacesaver', 'feedback'];
@@ -197,7 +198,10 @@ const LABEL = 24; const STRIP = 40; const GAP = 14; const LH = LABEL + STRIP + G
 const ALERT = { delay: '#F4C95D', detour: '#FF8A3D', reduced: '#FF6B6B', access: '#C084FC', other: '#A9C4E4' };
 const LANES = [
   { key: 'tEntries', label: 'T entries at Somerville stations', note: 'bars: this week · line: a normal week', color: '#A9C4E4', kind: 'vsBase', from: 'no T entry counts' },
+  { key: 'busTrips', label: 'Bus trips on Somerville routes', note: 'bars: trips run · line: a normal week', color: '#7FD4C1', kind: 'vsBase', from: 'MBTA bus records start in 2020' },
+  { key: 'busLate', label: 'How late the buses ran', note: 'median minutes late · line: a normal week', color: '#FF6B6B', kind: 'late', from: 'MBTA bus records start in 2020' },
   { key: 'bikes', label: 'Bluebikes trips from Somerville', note: 'bars: this week · line: a normal week', color: '#F4C95D', kind: 'vsBase', from: 'no Bluebikes data' },
+  { key: 'web', label: 'Views of the City\'s snow pages', note: 'per day · line: a normal day', color: '#C084FC', kind: 'daily', from: 'the City\'s page-view data covers 2020 to May 2023' },
   { key: 'tows', label: 'Snow emergency tows (police)', note: 'per 8-hour shift', color: '#3B82F6', kind: 'shift', from: 'police dispatch data starts in 2017' },
   { key: 'parking', label: 'Parking calls to 311', note: 'illegal parking, towed cars', color: '#7FA7F5', kind: 'hourly' },
   { key: 'alerts', label: 'MBTA alerts, Somerville routes', note: 'yellow delay · orange detour · red cuts · purple elevator', kind: 'ticks', from: 'the MBTA alerts archive starts in 2020' },
@@ -209,6 +213,8 @@ const lbw = () => (LW - 2 * PAD) / N;
 function laneData(key) {
   if (key === 'tows') return X.police ? X.police.tows : null;
   if (key === 'parking') return X.calls311 ? X.calls311.parking : null;
+  if (key === 'busTrips') return X.buses ? X.buses.trips : null;
+  if (key === 'busLate') return X.buses ? X.buses.late : null;
   return X[key] ?? null;
 }
 function buildLanes() {
@@ -235,6 +241,22 @@ function buildLanes() {
       d.now.forEach((v, i) => { if (v) s += `<rect x="${lx(i)}" y="${yb - (v / mx) * inner}" width="${Math.max(1, bw_ - 0.4)}" height="${(v / mx) * inner}" fill="${L.color}"/>`; });
       const line = d.base.map((v, i) => (v == null ? null : `${lx(i).toFixed(1)} ${(yb - (v / mx) * inner).toFixed(1)} ${lx(i + 1).toFixed(1)} ${(yb - (v / mx) * inner).toFixed(1)}`)).filter(Boolean);
       if (line.length) s += `<path d="M${line.join(' L')}" fill="none" stroke="#fff" stroke-width="1.5" opacity=".9"/>`;
+    } else if (L.kind === 'late') {
+      // minutes late (early counts as 0), capped so one stuck bus doesn't flatten the rest
+      const cap = (v) => Math.max(0, Math.min(v, 45));
+      const mx = Math.max(5, ...d.now.filter((v) => v != null).map(cap), ...d.base.filter((v) => v != null).map(cap));
+      d.now.forEach((v, i) => { if (v != null && v > 0) s += `<rect x="${lx(i)}" y="${yb - (cap(v) / mx) * inner}" width="${Math.max(1, bw_ - 0.4)}" height="${(cap(v) / mx) * inner}" fill="${L.color}"><title>${v} min late</title></rect>`; });
+      const line = d.base.map((v, i) => (v == null ? null : `${lx(i).toFixed(1)} ${(yb - (cap(v) / mx) * inner).toFixed(1)} ${lx(i + 1).toFixed(1)} ${(yb - (cap(v) / mx) * inner).toFixed(1)}`)).filter(Boolean);
+      if (line.length) s += `<path d="M${line.join(' L')}" fill="none" stroke="#fff" stroke-width="1.5" opacity=".9"/>`;
+    } else if (L.kind === 'daily') {
+      const mx = Math.max(1, d.base, ...d.days.map(([, n]) => n));
+      d.days.forEach(([i, n], k) => {
+        const end = k + 1 < d.days.length ? d.days[k + 1][0] : N; const w = lx(end) - lx(i) - 2; const hh = (n / mx) * inner;
+        s += `<rect x="${lx(i) + 1}" y="${yb - hh}" width="${Math.max(1, w)}" height="${hh}" fill="${L.color}"/>`;
+        if (n && w >= 30) s += `<text x="${lx(i) + 1 + w / 2}" y="${hh > 16 ? yb - hh + 13 : yb - hh - 3}" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">${n.toLocaleString('en-US')}</text>`;
+      });
+      const yb_ = yb - (d.base / mx) * inner;
+      s += `<path d="M${lx(0)} ${yb_} H${lx(N)}" stroke="#fff" stroke-width="1.5" opacity=".9"/>`;
     } else if (L.kind === 'shift' || L.kind === 'hourly') {
       const w = L.kind === 'shift' ? 8 : 1;
       const mx = Math.max(1, ...d.map(([, n]) => n));
@@ -319,12 +341,11 @@ function render(i) {
   const pct = (r) => (r == null ? '–' : `${r > 0 ? '+' : r < 0 ? '−' : ''}${Math.abs(Math.round(r * 100))}%`);
   const sumTo = (pairs) => (pairs ? pairs.filter(([k]) => k <= i).reduce((a, [, n]) => a + n, 0) : null);
   const tows = X.police ? sumTo(X.police.tows.filter(([k]) => k >= BASE - 24)) : null;
-  const alertsSoFar = X.alerts ? X.alerts.filter(([k]) => k <= i && k >= BASE - 24).length : null;
   $('#tally2').innerHTML = [
     [pct(todayVsNormal(X.tEntries, i)), 'T entries today vs. a normal week', '#A9C4E4'],
+    [pct(todayVsNormal(X.buses && X.buses.trips, i)), 'Bus trips today vs. normal', '#7FD4C1'],
     [pct(todayVsNormal(X.bikes, i)), 'Bluebikes trips today vs. normal', '#F4C95D'],
     [tows ?? '–', 'Snow emergency tows so far', '#3B82F6'],
-    [alertsSoFar ?? '–', 'MBTA alerts on Somerville routes so far', '#FF8A3D'],
   ].map(([v, l, c]) => `<div><b>${v}</b><span><i style="background:${c}"></i>${l}</span></div>`).join('');
   const c = since(i);
   $('#tally').innerHTML = ['sidewalk', 'street', 'ask', 'spacesaver'].map((g) => `<div><b>${c[gi(g)]}</b><span><i style="background:${GROUP[g].color}"></i>${GROUP[g].label}</span></div>`).join('');

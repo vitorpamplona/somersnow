@@ -350,6 +350,9 @@ def main():
         'tEntries': storm_extras.t_entries(cached, windows),
         'bikes': storm_extras.bikes(cached, windows, in_somerville),
         'alerts': storm_extras.alerts(cached, windows, routes, stop_ids),
+        'snowSomerville': storm_extras.somerville_snow(get, windows, storms),
+        'web': storm_extras.web_views(get, windows),
+        'buses': storm_extras.buses(cached, windows, routes),
     }
 
     MONTHS = 'January February March April May June July August September October November December'.split()

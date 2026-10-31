@@ -14,9 +14,13 @@ const GROUP = {
   feedback: { label: 'Feedback', color: '#47607C' },
 };
 
-const id = new URLSearchParams(location.search).get('storm') || '2026-02-23';
 const load = (f) => fetch(`data/${f}`).then((r) => r.json());
-const [S, WARDS, BUS, STORMS] = await Promise.all([load(`storm-${id}.json`), load('wards.json'), load('bus-stops.json'), load('storms.json')]);
+const STORMS = await load('storms.json');
+// ?storm=<last day of snow>; default: the most recent big storm
+const IDS = STORMS.storms.map((st) => st.end);
+const asked = new URLSearchParams(location.search).get('storm');
+const id = IDS.includes(asked) ? asked : IDS[IDS.length - 1];
+const [S, WARDS, BUS] = await Promise.all([load(`storm-${id}.json`), load('wards.json'), load('bus-stops.json')]);
 
 /* ---------- time helpers (all instants are UTC ms; the data's hours are Somerville wall-clock) ---------- */
 const ms = (iso) => { const [d, t = '00:00'] = iso.split('T'); const [y, m, dd] = d.split('-').map(Number); const [h, mi] = t.split(':').map(Number); return zoned(y, m, dd, h, mi); };
@@ -31,8 +35,11 @@ const dayTm = (t) => `${fmt(t, { weekday: 'short' })} ${tm(t)}`;
 const dur = (d) => { const h = Math.floor(d / HOUR); const m = Math.round((d % HOUR) / 6e4); return h ? `${h} h ${m} min` : `${m} min`; };
 
 /* ---------- the storm's key moments ---------- */
-const E = Object.fromEntries(Object.entries(S.emergency).map(([k, v]) => [k, typeof v === 'string' && v.includes('T') ? ms(v) : v]));
-const SIDE = (S.emergency.side || '').toUpperCase();
+// What the City announced. Any of these can be missing: some storms have no notice online, some only the start or the end.
+const E = Object.fromEntries(Object.entries(S.emergency || {}).map(([k, v]) => [k, typeof v === 'string' && v.includes('T') ? ms(v) : v]));
+const has = (k) => typeof E[k] === 'number';
+const SIDE = (E.side || '').toUpperCase();
+const sideTxt = SIDE ? `the ${SIDE} side` : 'the posted side';
 const snowStart = ms(S.snowStart);
 const snowStop = ms(S.snowStop);
 const D = deadline(snowStop);
@@ -40,7 +47,10 @@ const DL = D.end;
 const clockFrom = D.days.find((d) => d.from).from;
 const cityDL = S.cityDeadline ? ms(S.cityDeadline) : null;
 const notices = (S.notices || []).map((n) => ({ ...n, at: ms(n.t) }));
-const declared = notices[0]?.at ?? E.start - 24 * HOUR;
+const declared = notices[0]?.at ?? (has('start') ? E.start - 24 * HOUR : snowStart);
+// When we know the emergency was on: from its start (or the City's notice about it) to its end (or, if the end isn't known, the shoveling deadline).
+const emOn = has('moveBy') ? E.moveBy : has('start') ? E.start : (S.emergency && notices.length ? notices[0].at : null);
+const emOff = has('end') ? E.end : DL;
 
 /* ---------- requests, cumulative by hour ---------- */
 const groups = S.groups;
@@ -71,19 +81,19 @@ function messages(t, i) {
   const h = S.hours[Math.max(0, Math.min(N - 1, i))] || [];
   notices.forEach((n) => { if (t >= n.at && t < n.at + 20 * HOUR) add('city', 'city', `City · ${n.approx ? fmt(n.at, { weekday: 'short', month: 'short', day: 'numeric' }) : dayTm(n.at)}`, `${n.text} <a href="${n.src}">Read it</a>`); });
 
-  if (t < declared) {
+  if (t < Math.min(declared, snowStart)) {
     add('now', 'snow', 'Snow on the way', 'Buy salt or sand now. Stores run out.');
     add('', 'phone', 'Get City Alerts', 'somervillema.gov/alerts');
-  } else if (t < E.start) {
-    add('em', 'car', `Snow emergency ${dayTm(E.start)}`, `Then 4 hours to move to the ${SIDE} side, or into a City lot.`);
+  } else if (has('start') && t < E.start) {
+    add('em', 'car', `Snow emergency ${dayTm(E.start)}`, `Then 4 hours to move to ${sideTxt}, or into a City lot.`);
     add('now', 'bag', 'Salt before it starts', 'It stops snow from sticking.');
-  } else if (t < E.moveBy) {
-    add('em', 'car', 'Move your car', `${SIDE} side or a City lot by ${tm(E.moveBy)}.`, `${dur(E.moveBy - t)} left`);
-  } else if (t < E.end) {
-    add('em', 'car', 'Snow emergency on', `Park on the ${SIDE} side. Not within 20 feet of a corner.`);
+  } else if (has('start') && has('moveBy') && t < E.moveBy) {
+    add('em', 'car', 'Move your car', `${SIDE ? `${SIDE} side` : 'The posted side'} or a City lot by ${tm(E.moveBy)}.`, `${dur(E.moveBy - t)} left`);
+  } else if (emOn != null && t >= emOn && t < emOff) {
+    add('em', 'car', 'Snow emergency on', `Park on ${sideTxt}. Not within 20 feet of a corner.`);
   }
 
-  if (t >= E.start && t < snowStart) add('now', 'bag', 'Salt now', 'Snow is coming. Salt stops it from sticking.');
+  if (has('start') && t >= E.start && t < snowStart) add('now', 'bag', 'Salt now', 'Snow is coming. Salt stops it from sticking.');
   if (t >= snowStart && t < snowStop) {
     add('now', 'snow', h[0] === 3 ? 'Heavy snow' : 'Snowing', 'The 6-hour clock starts when it stops. Night doesn\'t count.');
   }
@@ -97,10 +107,12 @@ function messages(t, i) {
     add('warn', 'phone', 'Deadline passed', `It was ${dayTm(DL)}${cityDL ? ` (the City said ${tm(cityDL)})` : ''}. Still buried? Report it: 311.`);
   }
   if (t >= DL) add('', 'ice', 'Check for ice', 'Meltwater refreezes overnight. Sand or salt it.');
-  if (t >= E.end && t < E.lotsBy) add('em', 'car', 'Emergency over', `Out of City lots by ${dayTm(E.lotsBy)}.`);
-  else if (t >= E.lotsBy && t < E.permitsBy) add('em', 'car', 'Permit visible', `Clear your parking permit by ${dayTm(E.permitsBy)}.`);
-  else if (t >= E.permitsBy && t < E.carsBy) add('em', 'car', 'Dig out your car', `Fully cleared by ${dayTm(E.carsBy)}.`);
-  if (t >= E.end) add('', 'ban', 'Space savers', 'Banned. $100. Thrown out.');
+  if (has('end') && t >= E.end) {
+    if (has('lotsBy') && t < E.lotsBy) add('em', 'car', 'Emergency over', `Out of City lots by ${dayTm(E.lotsBy)}.`);
+    else if (has('permitsBy') && t < E.permitsBy) add('em', 'car', 'Permit visible', `Clear your parking permit by ${dayTm(E.permitsBy)}.`);
+    else if (has('carsBy') && t < E.carsBy) add('em', 'car', 'Dig out your car', `Fully cleared by ${dayTm(E.carsBy)}.`);
+  }
+  if (t >= (has('end') ? E.end : DL)) add('', 'ban', 'Space savers', 'Banned. $100. Thrown out.');
   return out.slice(0, 4);
 }
 
@@ -135,7 +147,8 @@ function buildChart() {
     order.forEach((g) => { const v = reqAt(i)[gi(g)] || 0; if (!v) return; const hh = (v / maxReq) * REQ_H; y -= hh; s += `<rect x="${xOf(i)}" y="${y}" width="${Math.max(1, bw - 0.6)}" height="${hh}" fill="${GROUP[g].color}"/>`; });
   }
   // markers
-  const marks = [[E.start, 'Emergency', '#3B82F6'], [snowStart, 'Snow starts', '#fff'], [snowStop, 'Snow stops', '#fff'], [DL, 'Deadline', '#FF8A3D'], [E.end, 'Emergency ends', '#3B82F6']];
+  const marks = [[E.start, 'Emergency', '#3B82F6'], [snowStart, 'Snow starts', '#fff'], [snowStop, 'Snow stops', '#fff'], [DL, 'Deadline', '#FF8A3D'], [E.end, 'Emergency ends', '#3B82F6']]
+    .filter(([t]) => typeof t === 'number' && idxOf(t) >= 0 && idxOf(t) <= N);
   marks.forEach(([t, label, c], k) => {
     const x = xOf(idxOf(t));
     s += `<path d="M${x} ${TOP - (k % 2 ? 4 : 20)} V${BOT}" stroke="${c}" stroke-width="${label === 'Deadline' ? 3 : 2}" ${label === 'Deadline' ? '' : 'stroke-dasharray="5 5"'}/>`;
@@ -193,8 +206,8 @@ function buildMultiples() {
     const end = new Date(`${st.end}T12:00:00Z`);
     const label = end.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
     const bars = v.map((n, k) => `<rect x="${k * 20 + 2}" y="${60 - (n / mx) * 56}" width="16" height="${(n / mx) * 56}" rx="2" fill="${k === 2 ? '#10243A' : '#FF8A3D'}"/>`).join('');
-    const sel = S.id && st.end === S.id ? ' sel' : '';
-    return `<div class="mini${sel}"><h4>${label}</h4><small>${st.snow} in · peak ${mx} on day ${pk >= 0 ? '+' : ''}${pk}</small><svg viewBox="0 0 200 74">${bars}<path d="M0 61 H200" stroke="#C9D6E3"/><text x="51" y="73" text-anchor="middle" font-size="10" fill="#47607C">LAST SNOW</text></svg></div>`;
+    const sel = st.end === id;
+    return `<a class="mini${sel ? ' sel' : ''}" href="storm.html?storm=${st.end}"${sel ? ' aria-current="page"' : ''}><h4>${label}</h4><small>${st.snow} in · peak ${mx} on day ${pk >= 0 ? '+' : ''}${pk}</small><svg viewBox="0 0 200 74">${bars}<path d="M0 61 H200" stroke="#C9D6E3"/><text x="51" y="73" text-anchor="middle" font-size="10" fill="#47607C">LAST SNOW</text></svg><span class="go">${sel ? 'Showing above' : 'Replay this storm →'}</span></a>`;
   }).join('');
   $('#all-lede').textContent = `In ${peaks13} of ${list.length} big storms, sidewalk reports peaked 1 to 3 days after the last day of snow.`;
 }
@@ -229,8 +242,8 @@ function render(i) {
 }
 
 /* ---------- controls ---------- */
-const jumps = [['City declares', declared], ['Emergency', E.start], ['Snow starts', snowStart], ['Heaviest', tOf(S.hours.findIndex((h) => h[0] === 3) + 1)], ['Snow stops', snowStop], ['Deadline', DL], ['Emergency ends', E.end], ['Day 3', DL + 48 * HOUR]];
-$('#jumps').innerHTML = jumps.filter(([, t]) => t && idxOf(t) >= 0 && idxOf(t) < N).map(([l, t]) => `<button class="chip" data-i="${Math.max(0, Math.ceil(idxOf(t)) - 1)}">${l}</button>`).join('');
+const jumps = [[has('start') ? 'City declares' : 'City notice', notices.length ? declared : null], ['Emergency', E.start], ['Snow starts', snowStart], ['Heaviest', S.hours.some((h) => h[0] === 3) ? tOf(S.hours.findIndex((h) => h[0] === 3) + 1) : null], ['Snow stops', snowStop], ['Deadline', DL], ['Emergency ends', E.end], ['Day 3', DL + 48 * HOUR]];
+$('#jumps').innerHTML = jumps.filter(([, t]) => typeof t === 'number' && idxOf(t) >= 0 && idxOf(t) < N).map(([l, t]) => `<button class="chip" data-i="${Math.max(0, Math.ceil(idxOf(t)) - 1)}">${l}</button>`).join('');
 $('#jumps').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) { stop(); render(+b.dataset.i); } });
 scrub.addEventListener('input', () => { stop(); render(+scrub.value); });
 let timer = null;
@@ -245,7 +258,19 @@ $('#play').addEventListener('click', () => {
 /* ---------- go ---------- */
 $('#r-title').textContent = S.title;
 document.title = `Storm replay: ${S.title} · Somerville Snow Guide`;
-$('#r-lede').textContent = `${S.snowTotal} inches at Logan. Snow from ${dayTm(snowStart)} to ${dayTm(snowStop)}. Press play, or drag the time.`.replace(/\.\./g, '.');
+const missing = !S.emergency ? ' The City\'s snow emergency notices for this storm aren\'t online, so parking messages are left out.'
+  : !has('start') ? ' Only the City\'s notice about the end of the emergency is online.'
+    : !has('end') ? ' The City\'s notice about the end of the emergency isn\'t online.' : '';
+$('#r-lede').textContent = `${S.snowTotal} inches at Logan. Snow from ${dayTm(snowStart)} to ${dayTm(snowStop)}.${missing} Press play, or drag the time.`.replace(/\.\./g, '.');
+{
+  const k = IDS.indexOf(id);
+  const short = (sid) => new Date(`${sid}T12:00:00Z`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+  $('#storm-nav').innerHTML = [
+    k > 0 ? `<a href="storm.html?storm=${IDS[k - 1]}">← ${short(IDS[k - 1])}</a>` : '<span></span>',
+    `<a href="#all">All ${IDS.length} storms</a>`,
+    k < IDS.length - 1 ? `<a href="storm.html?storm=${IDS[k + 1]}">${short(IDS[k + 1])} →</a>` : '<span></span>',
+  ].join('');
+}
 buildChart();
 buildMap();
 buildMultiples();

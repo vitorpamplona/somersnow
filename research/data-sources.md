@@ -98,7 +98,9 @@ A curb-ramp inventory (City or MassDOT); a list of declared snow emergencies; th
 
 ## Collected
 
-`npm run data` (`scripts/fetch_data.py`, Python standard library, no keys) collects sources 1–3 and 5, the ward outlines and the hourly Logan weather into small files in `docs/data/`. The storm replay (`docs/storm.html`) reads them. Re-run it each fall before the first storm.
+`npm run data` (`scripts/fetch_data.py`, Python standard library, no keys) collects sources 1–3 and 5, the ward outlines and the hourly Logan weather into small files in `docs/data/`, including an hour-by-hour file for each of the 15 big storms since 2016. The storm replay (`docs/storm.html?storm=<id>`) reads them.
+
+City snow emergency times come from the City's news posts. Its online archive reaches back only to about May 2022; it has both notices for Feb 22–24, 2026, only the declaration for Jan 25–27, 2026, and only the end notice for Feb 25, 2022 (which gives the City's own deadline, 12:30 p.m. Feb 26; the guide's calculator says 12:24 p.m.). Earlier storms replay without parking messages (question 48). Re-run it each fall before the first storm.
 
 Hourly weather comes from the [Iowa Environmental Mesonet ASOS archive](https://mesonet.agron.iastate.edu/request/download.phtml?network=MA_ASOS) (Logan, `BOS`; free, CORS-enabled). Its present-weather codes (`-SN`, `SN`, `+SN`) give when snow started and stopped, which the daily NOAA totals can't.
 

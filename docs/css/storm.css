@@ -4,6 +4,11 @@
 .replay-top .lede{max-width:46ch}
 .k{font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:2px;text-transform:uppercase;color:var(--ice);margin-bottom:10px}
 
+/* previous / next storm */
+.storm-nav{display:flex;justify-content:space-between;gap:12px;margin-top:20px;font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:1px;text-transform:uppercase}
+.storm-nav a{color:var(--orange);text-decoration:none}
+.storm-nav a:hover{text-decoration:underline}
+
 /* player */
 .player{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px 18px;align-items:center;margin-top:36px;background:var(--night-2);border-radius:24px;padding:18px 22px}
 .play{width:56px;height:56px;border-radius:50%;border:0;background:var(--orange);display:flex;align-items:center;justify-content:center}
@@ -51,7 +56,10 @@
 
 /* small multiples */
 .multiples{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:32px}
-.mini{background:var(--snow);border-radius:18px;padding:14px 14px 10px}
+.mini{display:block;background:var(--snow);border-radius:18px;padding:14px 14px 10px;color:var(--night);text-decoration:none;transition:transform .15s,box-shadow .15s}
+.mini:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(16,36,58,.12)}
+.mini .go{display:block;margin-top:6px;font-family:var(--display);font-weight:700;font-size:15px;letter-spacing:1px;text-transform:uppercase;color:var(--rust)}
+.mini.sel .go{color:var(--mute)}
 .mini h4{margin:0;font-family:var(--display);font-weight:800;font-size:20px;text-transform:uppercase;line-height:1}
 .mini small{color:var(--mute);font-size:14px}
 .mini svg{width:100%;height:auto;display:block;margin-top:8px}

@@ -8,7 +8,7 @@ Sources, caveats and what each file holds: research/data-sources.md.
   docs/data/storms.json         every 6-inch-plus storm since July 2015: daily snowfall and 311 requests around it
   docs/data/wards.json          Somerville ward outlines (lon/lat), simplified
   docs/data/bus-stops.json      MBTA bus stops in Somerville with average weekday boardings
-  docs/data/storm-<id>.json     one storm hour by hour: weather at Logan, 311 requests, City notices
+  docs/data/storm-<id>.json     each big storm hour by hour (id = last day of snow): weather at Logan, 311 requests, City notices
 """
 import csv, io, json, math, os, statistics, struct, sys, tempfile, time, urllib.parse, urllib.request, zipfile
 from collections import Counter, defaultdict
@@ -36,22 +36,42 @@ GROUPS = {
 }
 TYPE_GROUP = {t: g for g, ts in GROUPS.items() for t in ts}
 
-# Storms to replay hour by hour. Times are Somerville local time. Each City notice cites the page it came from.
+# Every big storm in storms.json gets an hour-by-hour replay file, named by its last day of snow (storm-<id>.json).
+# CITY adds what the City announced for a storm: snow emergency times and notices, each with the page it came from.
+# Times are Somerville local time. Storms without an entry replay without emergency messages.
 NEWS = 'https://www.somervillema.gov/news/'
-REPLAYS = [{
-    'id': '2026-02-23',
-    'title': 'February 22–24, 2026',
-    'from': '2026-02-21T06:00', 'to': '2026-03-01T00:00',
-    'emergency': {'start': '2026-02-22T12:00', 'moveBy': '2026-02-22T16:00', 'side': 'odd', 'end': '2026-02-24T20:00',
-                  'lotsBy': '2026-02-25T10:00', 'permitsBy': '2026-02-25T20:00', 'carsBy': '2026-02-26T20:00'},
-    'cityDeadline': '2026-02-24T13:00',
-    'notices': [
-        {'t': '2026-02-21T12:00', 'approx': True, 'text': 'City declares a snow emergency starting noon Sunday.',
-         'src': NEWS + 'somerville-declares-snow-emergency-effective-sunday-february-22-12-pm-noon'},
-        {'t': '2026-02-24T12:00', 'approx': True, 'text': 'City: the emergency ends 8 p.m. tonight. Shoveling deadline was 1 p.m. "You still have to shovel."',
-         'src': NEWS + 'somerville-snow-emergency-will-end-tuesday-february-24-8-pm'},
-    ],
-}]
+CITY = {
+    '2022-02-25': {
+        # Only the end notice is online; the declaration isn't, so the start time is unknown.
+        'emergency': {'side': 'odd', 'end': '2022-02-26T08:00', 'lotsBy': '2022-02-26T10:00',
+                      'permitsBy': '2022-02-27T08:00', 'carsBy': '2022-02-28T08:00'},
+        'cityDeadline': '2022-02-26T12:30',
+        'notices': [
+            {'t': '2022-02-25T12:00', 'approx': True, 'text': 'City: the snow emergency ends 8 a.m. Saturday. Shovel by 12:30 p.m. Saturday.',
+             'src': NEWS + 'somerville-snow-emergency-will-end-saturday-february-26-8-am%E2%80%8B%E2%80%8B%E2%80%8B-move-cars-city-lots-10-am'},
+        ],
+    },
+    '2026-01-26': {
+        # Only the declaration is online; the end time is unknown.
+        'emergency': {'start': '2026-01-25T07:00', 'moveBy': '2026-01-25T11:00', 'side': 'odd'},
+        'notices': [
+            {'t': '2026-01-24T12:00', 'approx': True, 'text': 'City declares a snow emergency starting 7 a.m. Sunday. Odd side by 11 a.m.',
+             'src': NEWS + 'somerville-declares-snow-emergency-effective-sunday-january-25-7-am'},
+        ],
+    },
+    '2026-02-23': {
+        'title': 'February 22–24, 2026',
+        'emergency': {'start': '2026-02-22T12:00', 'moveBy': '2026-02-22T16:00', 'side': 'odd', 'end': '2026-02-24T20:00',
+                      'lotsBy': '2026-02-25T10:00', 'permitsBy': '2026-02-25T20:00', 'carsBy': '2026-02-26T20:00'},
+        'cityDeadline': '2026-02-24T13:00',
+        'notices': [
+            {'t': '2026-02-21T12:00', 'approx': True, 'text': 'City declares a snow emergency starting noon Sunday.',
+             'src': NEWS + 'somerville-declares-snow-emergency-effective-sunday-february-22-12-pm-noon'},
+            {'t': '2026-02-24T12:00', 'approx': True, 'text': 'City: the emergency ends 8 p.m. tonight. Shoveling deadline was 1 p.m. "You still have to shovel."',
+             'src': NEWS + 'somerville-snow-emergency-will-end-tuesday-february-24-8-pm'},
+        ],
+    },
+}
 
 
 def get(url, params=None, data=None, tries=4):
@@ -127,7 +147,9 @@ def fetch_hourly_weather(t0, t1):
         t = datetime.strptime(r['valid'], '%Y-%m-%d %H:%M')
         k = t.replace(minute=0)
         wx = r['wxcodes'] if r['wxcodes'] != 'M' else ''
-        snow = 3 if '+SN' in wx else 2 if any(w.startswith('SN') for w in wx.split()) else 1 if 'SN' in wx else 0
+        # falling snow only (blowing/drifting snow is wind, not new snow); intensity from the METAR prefix
+        falling = [w for w in wx.split() if 'SN' in w and 'BLSN' not in w and 'DRSN' not in w]
+        snow = max([3 if w[0] == '+' else 1 if w[0] == '-' else 2 for w in falling], default=0)
         h = hours.setdefault(k, {'snow': 0, 'temp': None, 'vis': None, 'wind': None, 'wx': ''})
         h['snow'] = max(h['snow'], snow)
         if r['tmpf'] != 'M': h['temp'] = round(float(r['tmpf']))
@@ -284,25 +306,33 @@ def main():
     print('Wards…'); write('wards.json', {'wards': fetch_wards()})
     print('Bus stops and riders…'); write('bus-stops.json', fetch_bus_stops())
 
-    for rp in REPLAYS:
-        print(f'Replay {rp["id"]}…')
-        t0, t1 = datetime.fromisoformat(rp['from']), datetime.fromisoformat(rp['to'])
-        wx = fetch_hourly_weather(rp['from'], rp['to'])
+    MONTHS = 'January February March April May June July August September October November December'.split()
+    for st in storms:
+        sid = st['end']
+        first, last = date.fromisoformat(st['start']), date.fromisoformat(st['end'])
+        t0 = datetime.combine(first - timedelta(2), datetime.min.time()).replace(hour=6)
+        t1 = datetime.combine(last + timedelta(6), datetime.min.time())
+        print(f'Replay {sid}…')
+        wx = fetch_hourly_weather(t0.isoformat(), t1.isoformat())
         hours = []
         t = t0
         while t < t1:
             w = wx.get(t, {})
             hours.append([w.get('snow', 0), w.get('temp'), w.get('vis'), w.get('wind')])
             t += timedelta(hours=1)
+        # The storm: snowy hours at Logan, with lulls under 6 hours counted as the same storm.
+        # Pick the run that overlaps the storm's snow days (the window can include other, smaller snows).
         snowing = [k for k, w in sorted(wx.items()) if w['snow'] and t0 <= k < t1]
-        # the main event: the longest run of snowy hours with gaps under 3 hours
         runs, cur = [], []
         for k in snowing:
-            if cur and (k - cur[-1]) > timedelta(hours=3):
+            if cur and (k - cur[-1]) > timedelta(hours=6):
                 runs.append(cur); cur = []
             cur.append(k)
         if cur: runs.append(cur)
-        main_run = max(runs, key=len)
+        lo, hi = datetime.combine(first, datetime.min.time()), datetime.combine(last + timedelta(1), datetime.min.time())
+        near = [r for r in runs if r[-1] >= lo and r[0] < hi] or runs
+        main_run = max(near, key=len)
+        start, stop = main_run[0], main_run[-1] + timedelta(hours=1)
         req = defaultdict(lambda: [0] * len(GROUPS))
         wards = defaultdict(lambda: Counter())
         order = list(GROUPS)
@@ -312,12 +342,18 @@ def main():
                 req[i][order.index(g)] += 1
                 if g == 'sidewalk' and ward:
                     wards[i][ward] += 1
-        write(f'storm-{rp["id"]}.json', {
-            **rp,
+        a_, b_ = start.date(), (stop - timedelta(minutes=1)).date()
+        title = (f'{MONTHS[a_.month - 1]} {a_.day}, {a_.year}' if a_ == b_ else
+                 f'{MONTHS[a_.month - 1]} {a_.day}–{b_.day}, {a_.year}' if a_.month == b_.month else
+                 f'{MONTHS[a_.month - 1]} {a_.day} – {MONTHS[b_.month - 1]} {b_.day}, {b_.year}')
+        write(f'storm-{sid}.json', {
+            'id': sid, 'title': title,
+            'from': t0.isoformat(timespec='minutes'), 'to': t1.isoformat(timespec='minutes'),
+            **CITY.get(sid, {}),
             'groups': order,
-            'snowStart': main_run[0].isoformat(timespec='minutes'),
-            'snowStop': (main_run[-1] + timedelta(hours=1)).isoformat(timespec='minutes'),
-            'snowTotal': round(sum(v for d, v in daily.items() if rp['from'][:10] <= d < rp['to'][:10]), 1),
+            'snowStart': start.isoformat(timespec='minutes'),
+            'snowStop': stop.isoformat(timespec='minutes'),
+            'snowTotal': st['snow'],  # same total as the storm's card in storms.json
             'hours': hours,
             'requests': {str(i): v for i, v in sorted(req.items())},
             'sidewalkByWard': {str(i): dict(v) for i, v in sorted(wards.items())},

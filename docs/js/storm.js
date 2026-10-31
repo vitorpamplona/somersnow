@@ -183,13 +183,16 @@ function buildMap() {
   let s = `<svg viewBox="0 0 ${MW} ${MH}" role="img" aria-label="Map of Somerville's seven wards, shaded by sidewalk reports so far, with the 19 busiest bus stops">`;
   WARDS.wards.forEach((w) => {
     const d = w.rings.map((r) => `M${r.map((p) => px(p).map((v) => v.toFixed(1)).join(' ')).join(' L')} Z`).join(' ');
-    s += `<path class="ward" data-w="${w.ward}" d="${d}" fill="#DCE8F5" stroke="#fff" stroke-width="3"/>`;
+    s += `<path class="ward" data-w="${w.ward}" d="${d}" fill="#DCE8F5" stroke="#1A3A5F" stroke-width="3"/>`;
   });
   topStops.forEach((b) => { const [x, y] = px([b.lon, b.lat]); s += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(2.5 + Math.sqrt(b.riders) / 4).toFixed(1)}" fill="#10243A" stroke="#fff" stroke-width="1.5"><title>${b.name}: ${b.riders} weekday boardings</title></circle>`; });
   WARDS.wards.forEach((w) => {
-    const pts = w.rings[0]; const c = pts.reduce((a, p) => [a[0] + p[0] / pts.length, a[1] + p[1] / pts.length], [0, 0]);
-    const [x, y] = px(c);
-    s += `<g class="wl" pointer-events="none"><text x="${x}" y="${y - 6}" text-anchor="middle" class="cap" font-size="16" fill="#10243A">WARD ${w.ward}</text><text data-n="${w.ward}" x="${x}" y="${y + 22}" text-anchor="middle" class="cap" font-size="30" fill="#10243A">0</text></g>`;
+    // label at the ward's area centroid (in screen space), so it sits inside the shape
+    const ring = w.rings.reduce((a, r) => (r.length > a.length ? r : a)).map(px);
+    let A = 0; let cx = 0; let cy = 0;
+    ring.forEach(([x1, y1], k) => { const [x2, y2] = ring[(k + 1) % ring.length]; const f = x1 * y2 - x2 * y1; A += f; cx += (x1 + x2) * f; cy += (y1 + y2) * f; });
+    const [x, y] = [cx / (3 * A), cy / (3 * A)];
+    s += `<g class="wl" pointer-events="none"><text x="${x.toFixed(1)}" y="${(y - 4).toFixed(1)}" text-anchor="middle" class="cap" font-size="14" fill="#10243A">WARD ${w.ward}</text><text data-n="${w.ward}" x="${x.toFixed(1)}" y="${(y + 20).toFixed(1)}" text-anchor="middle" class="cap" font-size="26" fill="#10243A">0</text></g>`;
   });
   s += '</svg>';
   $('#map').innerHTML = s;

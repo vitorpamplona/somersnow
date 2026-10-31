@@ -51,10 +51,14 @@
 .tally span{font-size:14px;color:var(--ice);line-height:1.2}
 .tally i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px}
 
-/* map */
-.map-grid{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:32px;margin-top:32px;align-items:center}
-#map svg{width:100%;height:auto;max-height:560px;display:block;margin:0 auto}
-.map-grid .it b{font-size:44px}
+/* ward map (inside the replay, under the counters) */
+.map-panel{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,4fr);gap:20px;align-items:center;padding:18px}
+#map svg{width:100%;height:auto;max-height:340px;display:block;margin:0 auto}
+.map-side{display:flex;flex-direction:column;gap:12px}
+.map-side div{display:flex;flex-direction:column;gap:2px}
+.map-side b{font-family:var(--display);font-weight:800;font-size:48px;line-height:.9;color:var(--orange);font-variant-numeric:tabular-nums}
+.map-side div span{font-size:15px;color:#DCE8F5;line-height:1.25}
+.map-side .cite{font-size:13px;line-height:1.35}
 
 /* small multiples */
 .multiples{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:32px}
@@ -71,7 +75,7 @@
   .replay{grid-template-columns:1fr}
   .guide-col{position:static}
   .phone{min-height:0}
-  .map-grid{grid-template-columns:1fr}
+  .map-panel{grid-template-columns:1fr}
   .tally{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media (max-width:600px){

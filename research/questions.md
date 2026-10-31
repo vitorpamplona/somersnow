@@ -125,6 +125,20 @@ Today the City has a priority order with no times, enforcement that waits for co
 46. **A PTAC partnership.** PTAC volunteers can audit 30 to 50 fixed points (key corners and bus stops) 24 and 48 hours after each storm this winter, with photos and times, and share the results with the City. One winter of this would be the first local evidence Somerville has, and a baseline for the City's own measurements.
     - 311 service data the City already publishes ([Somerville services, data.gov](https://catalog.data.gov/dataset/somerville-services))
 
+## City: data for charts and maps
+
+What PTAC found in public data, and what's missing, is in [data-sources.md](data-sources.md).
+
+47. **Why did sidewalk reports jump?** "Snow/sidewalk not shoveled" reports per inch of Boston snowfall were 6–15 from 2015 to 2022, then 51–72 in 2024/25 and 2025/26 (3,182 reports last winter). Was it the 311 app, publicity, new request types or enforcement? We don't want to show it as "people shovel less" if it isn't.
+    - [311 Service, Information, and Feedback Requests](https://data.somervillema.gov/d/4pyi-uqq6); snowfall from NOAA via [ACIS](https://www.rcc-acis.org/)
+48. **Snow emergencies.** Is there a list of declared snow emergencies since 2015, with start and end times? It would let us compare storms with and without an emergency (proposal 37).
+49. **The 22 blue lights.** Which intersections have them? A map would help new residents learn the signal.
+50. **Curb ramps.** Does the City have a GIS layer of curb ramps (for example from the ADA transition plan)? Neither the City nor MassDOT publishes one. See proposal 40.
+51. **Tickets and liens.** Sidewalk-snow tickets issued, and clean-and-lien jobs done, per winter and ward. 311 shows complaints only.
+52. **Which bus stop list?** The City says it clears 281 bus stops; MBTA lists 207 stops in Somerville. Which stops does the City count, and are its 4 routes public?
+53. **ADA survey.** In the 2023 ADA Community Survey data, what does the 0–10 `sidewalks` column measure?
+    - [Americans with Disabilities Act Community Survey Results](https://data.somervillema.gov/d/usj9-kz3f)
+
 ## Sources
 
 See [sources.md](sources.md).

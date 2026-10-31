@@ -50,3 +50,15 @@ Pages marked * were seen only as search-result excerpts, not opened in full. Che
 - [WJE: Deicer primer](https://chinesedrywall.wje.com/assets/pdfs/articles/WJE-ThoughtLeadership-PRIMER-Deicer.pdf)
 - [Somerville Open Studios: Getting around Somerville](https://www.somervilleopenstudios.org/getting-around-somerville/) *
 - [Cambridge transit map (bus routes)](https://www.cambridgema.gov/-/media/Files/CDD/Maps/transportation/BusMapGO2025.pdf) *
+
+## Data (for charts and maps)
+
+Opened and queried Oct 31, 2026. Details, numbers and queries in [data-sources.md](data-sources.md).
+
+- [Somerville 311 Service, Information, and Feedback Requests](https://data.somervillema.gov/d/4pyi-uqq6) (City open data)
+- [Somerville Police Data: Crashes](https://data.somervillema.gov/d/mtik-28va); [ADA Community Survey Results](https://data.somervillema.gov/d/usj9-kz3f); Wards, Streets and Tax Parcels on [data.somervillema.gov](https://data.somervillema.gov)
+- [Sidewalk Snow Clearing Program, Broadway and School St.](https://www.somervillema.gov/departments/programs/sidewalk-snow-clearing-pilot)
+- NOAA daily and monthly snowfall for Boston (station record "BOSthr"), via the [ACIS web services](https://www.rcc-acis.org/docs_webservices.html)
+- [National Weather Service API](https://www.weather.gov/documentation/services-web-api) (forecast grid BOX 70,102)
+- [MBTA V3 API](https://api-v3.mbta.com/) (stops, alerts); [MBTA Bus Ridership by Trip, Season, Route/Line and Stop](https://mbta-massdot.opendata.arcgis.com/datasets/8daf4a33925a4df59183f860826d29ee)
+- [MassDOT Road Inventory 2025](https://gis.massdot.state.ma.us/arcgis/rest/services/Roads/RoadInventoryYearEndFiles/FeatureServer/11) and [Pedestrian Facilities](https://gis.massdot.state.ma.us/arcgis/rest/services/Roads/PedestrianFacilities/FeatureServer/0) (sidewalk widths and condition)

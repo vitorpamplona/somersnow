@@ -392,7 +392,7 @@ def buses(cached, windows, routes):
             continue
         first = date(*min(have_months), 1)
         now, base = _with_baseline(trips, t0, t1, first)
-        med = {k: sorted(v)[len(v) // 2] for k, v in late.items() if len(v) >= 5}
+        med = {k: sorted(v)[len(v) // 2] for k, v in late.items() if len(v) >= 20}  # quiet hours with few buses are too noisy
         n = len(now)
         late_now = [round(med[t0 + k * HOUR], 1) if (t0 + k * HOUR) in med else None for k in range(n)]
         late_base = []

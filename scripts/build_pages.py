@@ -70,7 +70,8 @@ def daily_drop(series, t0, after):
 
 
 def facts(S):
-    """Short lines for "at a glance", from the prepared data. Returns (html list items, plain-text summary bits)."""
+    """The storm's key facts, from the prepared data, for the page description (link previews).
+    Returns (html list items, plain-text summary bits); only the summary is used now."""
     t0 = datetime.fromisoformat(S['from'])
     start, stop = datetime.fromisoformat(S['snowStart']), datetime.fromisoformat(S['snowStop'])
     x = S.get('extra') or {}
@@ -155,7 +156,7 @@ def main():
     os.makedirs(OUT, exist_ok=True)
     for k, sid in enumerate(ids):
         S = load(f'storm-{sid}.json')
-        items, summary = facts(S)
+        _, summary = facts(S)
         nav = ''.join([
             f'<a href="{ids[k - 1]}.html">← {short(ids[k - 1])}</a>' if k > 0 else '<span></span>',
             '<a href="./">All storms</a>',
@@ -166,7 +167,7 @@ def main():
                           separators=(',', ':'), ensure_ascii=False).replace('</', '<\\/')
         desc = f'Replay the {S["title"]} storm in Somerville hour by hour: ' + ', '.join(summary) + '. By the Somerville PTAC.'
         page = (tpl.replace('%%TITLE%%', esc(S['title'])).replace('%%DESC%%', esc(desc)).replace('%%URL%%', f'{SITE}storms/{sid}.html')
-                .replace('%%LEDE%%', esc(lede(S))).replace('%%FACTS%%', items).replace('%%NAV%%', nav)
+                .replace('%%LEDE%%', esc(lede(S))).replace('%%NAV%%', nav)
                 .replace('%%CARDS%%', cards_html).replace('%%ALL_LEDE%%', esc(all_lede)).replace('%%DATA%%', data))
         with open(os.path.join(OUT, f'{sid}.html'), 'w') as f:
             f.write(page)

@@ -4,12 +4,6 @@
 .replay-top .lede{max-width:46ch}
 .k{font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:2px;text-transform:uppercase;color:var(--ice);margin-bottom:10px}
 
-/* at a glance (written into the page by build_pages.py) */
-.glance{list-style:none;padding:0;margin:22px 0 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px 24px;font-size:16px;color:#DCE8F5;max-width:1000px}
-.glance li{padding-left:16px;position:relative;line-height:1.35}
-.glance li::before{content:"";position:absolute;left:0;top:.55em;width:7px;height:7px;border-radius:50%;background:var(--orange)}
-.glance b{color:#fff}
-
 /* previous / next storm */
 .storm-nav{display:flex;justify-content:space-between;gap:12px;margin-top:20px;font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:1px;text-transform:uppercase}
 .storm-nav a{color:var(--orange);text-decoration:none}

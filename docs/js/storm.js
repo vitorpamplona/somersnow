@@ -340,11 +340,6 @@ $('#play').addEventListener('click', () => {
 });
 
 /* ---------- go ---------- */
-{
-  const f = $('#f-deadline');
-  f.innerHTML = `<b>Shovel by ${dayTm(DL)}</b>: 6 daylight hours after the snow stopped${cityDL ? ` (the City said ${tm(cityDL)})` : ''}`;
-  f.hidden = false;
-}
 buildChart();
 buildLanes();
 enableDrag($('#chart svg'));

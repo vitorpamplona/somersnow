@@ -178,53 +178,70 @@ function sunOf(w) {
 }
 
 /* ---------- getting around: lanes on the same time axis as the chart ---------- */
-const LH = 58; // lane height
+// Drawn at the panel's real pixel width (not scaled down like the main chart), so the text stays readable on phones.
+const LABEL = 24; const STRIP = 40; const GAP = 14; const LH = LABEL + STRIP + GAP;
 const ALERT = { delay: '#F4C95D', detour: '#FF8A3D', reduced: '#FF6B6B', access: '#C084FC', other: '#A9C4E4' };
 const LANES = [
-  { key: 'tEntries', label: 'T entries at Somerville stations', note: 'vs. a normal week', color: '#A9C4E4', kind: 'vsBase', from: 'T entry counts start in 2014' },
-  { key: 'bikes', label: 'Bluebikes trips from Somerville', note: 'vs. a normal week', color: '#F4C95D', kind: 'vsBase', from: 'Bluebikes data' },
+  { key: 'tEntries', label: 'T entries at Somerville stations', note: 'bars: this week · line: a normal week', color: '#A9C4E4', kind: 'vsBase', from: 'no T entry counts' },
+  { key: 'bikes', label: 'Bluebikes trips from Somerville', note: 'bars: this week · line: a normal week', color: '#F4C95D', kind: 'vsBase', from: 'no Bluebikes data' },
   { key: 'tows', label: 'Snow emergency tows (police)', note: 'per 8-hour shift', color: '#3B82F6', kind: 'shift', from: 'police dispatch data starts in 2017' },
   { key: 'parking', label: 'Parking calls to 311', note: 'illegal parking, towed cars', color: '#7FA7F5', kind: 'hourly' },
-  { key: 'alerts', label: 'MBTA alerts, Somerville routes', note: 'delays · detours · cuts · elevators', kind: 'ticks', from: 'the MBTA alerts archive starts in 2020' },
+  { key: 'alerts', label: 'MBTA alerts, Somerville routes', note: 'yellow delay · orange detour · red cuts · purple elevator', kind: 'ticks', from: 'the MBTA alerts archive starts in 2020' },
   { key: 'crashes', label: 'Crashes', note: 'orange: a pedestrian was involved', kind: 'dots', from: 'crash data starts in March 2018' },
 ];
+let LW = CW; // lanes width in px, measured when built
+const lx = (i) => PAD + (i / N) * (LW - 2 * PAD);
+const lbw = () => (LW - 2 * PAD) / N;
 function laneData(key) {
   if (key === 'tows') return X.police ? X.police.tows : null;
   if (key === 'parking') return X.calls311 ? X.calls311.parking : null;
   return X[key] ?? null;
 }
 function buildLanes() {
-  const H = LANES.length * LH + 26;
-  let s = `<svg viewBox="0 0 ${CW} ${H}" role="img" aria-label="How the city got around during the storm: T entries, Bluebikes trips, tows, parking calls, MBTA alerts and crashes, hour by hour">`;
-  for (let i = 0; i < N; i++) { const t = tOf(i); const [rise, set] = sunOf(wall(t)); if (t + HOUR / 2 < rise || t + HOUR / 2 > set) s += `<rect x="${xOf(i)}" y="0" width="${bw + 0.5}" height="${LANES.length * LH}" fill="#0E2238"/>`; }
+  LW = Math.max(300, Math.round($('#lanes').clientWidth || CW));
+  const wide = LW >= 620;
+  const bw_ = lbw();
+  const H = LANES.length * LH + 18;
+  const msg = (y, text) => `<text x="${LW / 2}" y="${y}" text-anchor="middle" font-size="13" fill="#9DB2CA">${text}</text>`;
+  let s = `<svg viewBox="0 0 ${LW} ${H}" width="${LW}" height="${H}" role="img" aria-label="How the city got around during the storm: T entries, Bluebikes trips, tows, parking calls, MBTA alerts and crashes, hour by hour">`;
+  let labels = ''; // drawn last, above the "future" shading and the time line
   LANES.forEach((L, k) => {
-    const y0 = k * LH; const top = y0 + 20; const hgt = LH - 24; const base = top + hgt;
-    s += `<path d="M${PAD} ${y0 + LH - 0.5} H${CW - PAD}" stroke="#2B5482"/>`;
-    s += `<text x="${PAD + 4}" y="${y0 + 13}" class="cap" font-size="13" fill="#DCE8F5">${L.label.toUpperCase()}</text><text x="${CW - PAD - 4}" y="${y0 + 13}" text-anchor="end" font-size="12" fill="#A9C4E4">${L.note}</text>`;
+    const y0 = k * LH; const top = y0 + LABEL; const base = top + STRIP;
+    labels += `<rect x="${PAD - 4}" y="${y0 + 1}" width="${LW - 2 * PAD + 8}" height="${LABEL - 3}" fill="#1A3A5F"/>`;
+    labels += `<text x="${PAD}" y="${y0 + 16}" class="cap" font-size="15" letter-spacing="1" fill="#fff">${L.label.toUpperCase()}</text>`;
+    if (wide) labels += `<text x="${LW - PAD}" y="${y0 + 16}" text-anchor="end" font-size="13" fill="#A9C4E4">${L.note}</text>`;
+    s += `<rect x="${PAD}" y="${top}" width="${LW - 2 * PAD}" height="${STRIP}" rx="4" fill="#16304F"/>`;
+    for (let i = 0; i < N; i++) { const t = tOf(i); const [rise, set] = sunOf(wall(t)); if (t + HOUR / 2 < rise || t + HOUR / 2 > set) s += `<rect x="${lx(i)}" y="${top}" width="${bw_ + 0.5}" height="${STRIP}" fill="#0E2238"/>`; }
     const d = laneData(L.key);
-    if (d == null) { s += `<text x="${CW / 2}" y="${base - 2}" text-anchor="middle" font-size="13" fill="#7D93AD">Not available for this storm: ${L.from}.</text>`; return; }
-    if (L.kind === 'vsBase' && !d.now.some(Boolean) && !d.base.some(Boolean)) { s += `<text x="${CW / 2}" y="${base - 2}" text-anchor="middle" font-size="13" fill="#7D93AD">No trips from Somerville stations in these weeks.</text>`; return; }
+    const inner = STRIP - 6; const yb = base - 2;
+    if (d == null) { s += msg(top + STRIP / 2 + 5, `Not available for this storm: ${L.from}.`); return; }
+    if (L.kind === 'vsBase' && !d.now.some(Boolean) && !d.base.some(Boolean)) { s += msg(top + STRIP / 2 + 5, 'No trips from Somerville stations in these weeks.'); return; }
     if (L.kind === 'vsBase') {
       const mx = Math.max(1, ...d.now, ...d.base.filter((v) => v != null));
-      d.now.forEach((v, i) => { if (v) s += `<rect x="${xOf(i)}" y="${base - (v / mx) * hgt}" width="${Math.max(1, bw - 0.4)}" height="${(v / mx) * hgt}" fill="${L.color}"/>`; });
-      const line = d.base.map((v, i) => (v == null ? null : `${xOf(i).toFixed(1)} ${(base - (v / mx) * hgt).toFixed(1)} ${xOf(i + 1).toFixed(1)} ${(base - (v / mx) * hgt).toFixed(1)}`)).filter(Boolean);
-      if (line.length) s += `<path d="M${line.join(' L')}" fill="none" stroke="#fff" stroke-width="1.5" opacity=".85"/>`;
+      d.now.forEach((v, i) => { if (v) s += `<rect x="${lx(i)}" y="${yb - (v / mx) * inner}" width="${Math.max(1, bw_ - 0.4)}" height="${(v / mx) * inner}" fill="${L.color}"/>`; });
+      const line = d.base.map((v, i) => (v == null ? null : `${lx(i).toFixed(1)} ${(yb - (v / mx) * inner).toFixed(1)} ${lx(i + 1).toFixed(1)} ${(yb - (v / mx) * inner).toFixed(1)}`)).filter(Boolean);
+      if (line.length) s += `<path d="M${line.join(' L')}" fill="none" stroke="#fff" stroke-width="1.5" opacity=".9"/>`;
     } else if (L.kind === 'shift' || L.kind === 'hourly') {
       const w = L.kind === 'shift' ? 8 : 1;
       const mx = Math.max(1, ...d.map(([, n]) => n));
-      d.forEach(([i, n]) => { const hh = (n / mx) * hgt; s += `<rect x="${xOf(i)}" y="${base - hh}" width="${Math.max(1, w * bw - 1)}" height="${hh}" fill="${L.color}"/>`; if (w > 1 && n) s += `<text x="${xOf(i) + (w * bw) / 2}" y="${hh > 15 ? base - hh + 12 : base - hh - 3}" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">${n}</text>`; });
+      d.forEach(([i, n]) => {
+        const hh = (n / mx) * inner;
+        s += `<rect x="${lx(i)}" y="${yb - hh}" width="${Math.max(1, w * bw_ - 1)}" height="${hh}" fill="${L.color}"/>`;
+        if (w > 1 && n && w * bw_ >= 18) s += `<text x="${lx(i) + (w * bw_) / 2}" y="${hh > 16 ? yb - hh + 13 : yb - hh - 3}" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">${n}</text>`;
+      });
     } else if (L.kind === 'ticks') {
-      d.forEach(([i, kind, label, head]) => { s += `<rect x="${xOf(i)}" y="${top}" width="${Math.max(2, bw)}" height="${hgt}" fill="${ALERT[kind]}"><title>${label}: ${head.replace(/</g, '&lt;')}</title></rect>`; });
-      if (!d.length) s += `<text x="${CW / 2}" y="${base - 2}" text-anchor="middle" font-size="13" fill="#7D93AD">No alerts on Somerville routes or stations.</text>`;
+      d.forEach(([i, kind, label, head]) => { s += `<rect x="${lx(i)}" y="${top + 4}" width="${Math.max(2, bw_)}" height="${STRIP - 8}" fill="${ALERT[kind]}"><title>${label}: ${head.replace(/</g, '&lt;')}</title></rect>`; });
+      if (!d.length) s += msg(top + STRIP / 2 + 5, 'No alerts on Somerville routes or stations.');
     } else if (L.kind === 'dots') {
-      d.forEach(([i, surface, ped]) => { s += `<circle cx="${xOf(i) + bw / 2}" cy="${top + hgt / 2}" r="5" fill="${ped ? '#FF8A3D' : '#DCE8F5'}"><title>${surface || 'Crash'}${ped ? ', pedestrian involved' : ''}</title></circle>`; });
-      if (!d.length) s += `<text x="${CW / 2}" y="${base - 2}" text-anchor="middle" font-size="13" fill="#7D93AD">No crashes reported.</text>`;
+      d.forEach(([i, surface, ped]) => { s += `<circle cx="${lx(i) + bw_ / 2}" cy="${top + STRIP / 2}" r="5.5" fill="${ped ? '#FF8A3D' : '#DCE8F5'}"><title>${surface || 'Crash'}${ped ? ', pedestrian involved' : ''}</title></circle>`; });
+      if (!d.length) s += msg(top + STRIP / 2 + 5, 'No crashes reported.');
     }
   });
-  for (let i = 0; i < N; i++) { const w = wall(tOf(i)); if (w.h === 12) s += `<text x="${xOf(i)}" y="${LANES.length * LH + 19}" text-anchor="middle" class="cap" font-size="15" fill="#A9C4E4">${fmt(tOf(i), { weekday: 'short' }).toUpperCase()} ${w.d}</text>`; }
-  s += `<rect id="future2" x="0" y="0" width="0" height="${LANES.length * LH}" fill="#1A3A5F" opacity=".78" pointer-events="none"/>`;
-  s += `<path id="head2" d="M0 0 V${LANES.length * LH}" stroke="#fff" stroke-width="2.5"/>`;
-  s += '</svg>';
+  const lastBase = (LANES.length - 1) * LH + LABEL + STRIP;
+  for (let i = 0; i < N; i++) { const w = wall(tOf(i)); if (w.h === 12) s += `<text x="${lx(i)}" y="${lastBase + 17}" text-anchor="middle" class="cap" font-size="14" fill="#A9C4E4">${fmt(tOf(i), { weekday: 'short' }).toUpperCase()}${wide ? ` ${w.d}` : ''}</text>`; }
+  s += `<rect id="future2" x="0" y="${LABEL - 4}" width="0" height="${lastBase - LABEL + 6}" fill="#1A3A5F" opacity=".72" pointer-events="none"/>`;
+  s += `<path id="head2" d="M0 ${LABEL - 4} V${lastBase + 2}" stroke="#fff" stroke-width="2.5"/>`;
+  s += labels + '</svg>';
   $('#lanes').innerHTML = s;
 }
 // "today so far" vs. the same hours in a normal week, for the counters under the lanes
@@ -281,8 +298,10 @@ function render(i) {
   $('#future').setAttribute('x', x); $('#future').setAttribute('width', Math.max(0, CW - x));
   $('#head').setAttribute('d', `M${x} ${TOP - 6} V${BOT + 4}`);
   $('#knob').setAttribute('transform', `translate(${x} ${BOT + 4})`);
-  $('#future2').setAttribute('x', x); $('#future2').setAttribute('width', Math.max(0, CW - x));
-  $('#head2').setAttribute('d', `M${x} 0 V${LANES.length * LH}`);
+  const x2 = lx(i + 1);
+  $('#future2').setAttribute('x', x2); $('#future2').setAttribute('width', Math.max(0, LW - x2));
+  const lastBase = (LANES.length - 1) * LH + LABEL + STRIP;
+  $('#head2').setAttribute('d', `M${x2} ${LABEL - 4} V${lastBase + 2}`);
   const pct = (r) => (r == null ? '–' : `${r > 0 ? '+' : r < 0 ? '−' : ''}${Math.abs(Math.round(r * 100))}%`);
   const sumTo = (pairs) => (pairs ? pairs.filter(([k]) => k <= i).reduce((a, [, n]) => a + n, 0) : null);
   const tows = X.police ? sumTo(X.police.tows.filter(([k]) => k >= BASE - 24)) : null;
@@ -319,7 +338,8 @@ $('#jumps').addEventListener('click', (e) => { const b = e.target.closest('butto
 scrub.addEventListener('input', () => { stop(); render(+scrub.value); });
 // Grab the line on the chart (or tap anywhere on it) and drag through the hours. Called once the chart exists.
 function enableDrag(svg) {
-  const hourAt = (e) => { const r = svg.getBoundingClientRect(); const x = ((e.clientX - r.left) / r.width) * CW; return Math.round((x - PAD) / bw) - 1; };
+  const W = svg.viewBox.baseVal.width;
+  const hourAt = (e) => { const r = svg.getBoundingClientRect(); const x = ((e.clientX - r.left) / r.width) * W; return Math.round((x - PAD) / ((W - 2 * PAD) / N)) - 1; };
   let dragging = false;
   svg.addEventListener('pointerdown', (e) => { dragging = true; svg.setPointerCapture(e.pointerId); stop(); render(hourAt(e)); });
   svg.addEventListener('pointermove', (e) => { if (dragging) render(hourAt(e)); });
@@ -346,3 +366,14 @@ enableDrag($('#chart svg'));
 enableDrag($('#lanes svg'));
 buildMap();
 render(Math.max(0, Math.ceil(idxOf(declared)) - 1));
+{
+  let timer2 = null; let lastW = LW;
+  window.addEventListener('resize', () => {
+    clearTimeout(timer2);
+    timer2 = setTimeout(() => {
+      const w = Math.round($('#lanes').clientWidth);
+      if (Math.abs(w - lastW) < 4) return;
+      lastW = w; buildLanes(); enableDrag($('#lanes svg')); render(+scrub.value);
+    }, 150);
+  });
+}

@@ -54,8 +54,8 @@
 .tally i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px}
 
 /* getting around lanes */
-.lanes-panel{padding:16px 18px 10px}
-#lanes svg{width:100%;height:auto;display:block;cursor:ew-resize;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.lanes-panel{padding:18px 16px 12px}
+#lanes svg{width:100%;height:auto;max-width:100%;display:block;cursor:ew-resize;touch-action:pan-y;user-select:none;-webkit-user-select:none}
 #lanes svg:focus{outline:none}
 #lanes svg:focus-visible{outline:3px solid var(--orange);outline-offset:4px;border-radius:8px}
 #tally2 b{font-size:34px}

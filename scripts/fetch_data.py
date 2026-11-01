@@ -390,6 +390,71 @@ def fetch_bus_routes(route_ids, wards):
     return out
 
 
+
+def fetch_subway(wards):
+    """Red, Orange, Green D and Green E (the lines that run through Somerville): the usual path inside the city plus
+    the run to the next station outside it at each end, and the stations along what's drawn.
+    {line: {'name', 'color', 'paths': [[[lon, lat], ...]], 'stations': [{name, lon, lat, inside}]}}"""
+    def inside(lon, lat):
+        for w in wards:
+            for ring in w['rings']:
+                c = False
+                for k in range(len(ring)):
+                    (x1, y1), (x2, y2) = ring[k], ring[k - 1]
+                    if (y1 > lat) != (y2 > lat) and lon < (x2 - x1) * (lat - y1) / (y2 - y1) + x1:
+                        c = not c
+                if c:
+                    return True
+        return False
+    meters = lambda a, b: math.hypot((a[0] - b[0]) * 82000, (a[1] - b[1]) * 111000)
+    lines = ['Red', 'Orange', 'Green-D', 'Green-E']
+    meta = {r['id']: r['attributes'] for r in json.loads(get('https://api-v3.mbta.com/routes', {'filter[id]': ','.join(lines)}))['data']}
+    out = {}
+    for rid in lines:
+        d = json.loads(get('https://api-v3.mbta.com/route_patterns', {'filter[route]': rid, 'include': 'representative_trip.shape'}))
+        shapes = {i['id']: i['attributes']['polyline'] for i in d.get('included', []) if i['type'] == 'shape'}
+        trips = {i['id']: (i['relationships'].get('shape', {}).get('data') or {}).get('id') for i in d.get('included', []) if i['type'] == 'trip'}
+        stations = [(st['attributes']['name'], st['attributes']['longitude'], st['attributes']['latitude'])
+                    for st in json.loads(get('https://api-v3.mbta.com/stops', {'filter[route]': rid}))['data']]
+        outside = [(lo, la) for _, lo, la in stations if not inside(lo, la)]
+        at_station = lambda p: any(meters(p, q) < 60 for q in outside)
+        paths = []
+        for pat in d['data']:
+            if pat['attributes'].get('typicality') != 1:
+                continue
+            shp = shapes.get(trips.get(pat['relationships']['representative_trip']['data']['id']))
+            if not shp:
+                continue
+            pts = [(lo, la) for la, lo in decode_polyline(shp)]
+            ins = [inside(*q) for q in pts]
+            k = 0
+            while k < len(pts):
+                if not ins[k]:
+                    k += 1; continue
+                a = b = k
+                while b + 1 < len(pts) and ins[b + 1]:
+                    b += 1
+                lo_, walked = a, 0
+                while lo_ > 0 and walked < 3000 and not (lo_ < a and at_station(pts[lo_])):
+                    walked += meters(pts[lo_], pts[lo_ - 1]); lo_ -= 1
+                hi_, walked = b, 0
+                while hi_ < len(pts) - 1 and walked < 3000 and not (hi_ > b and at_station(pts[hi_])):
+                    walked += meters(pts[hi_], pts[hi_ + 1]); hi_ += 1
+                if hi_ - lo_ >= 1:
+                    paths.append(pts[lo_:hi_ + 1])
+                k = b + 1
+        if not paths:
+            continue
+        paths = paths[:1]  # one direction is enough: both run on the same tracks
+        drawn = [q for p_ in paths for q in p_]
+        keep = [{'name': n, 'lon': round(lo, 5), 'lat': round(la, 5), 'inside': inside(lo, la)}
+                for n, lo, la in stations if any(meters((lo, la), q) < 150 for q in drawn)]
+        out[rid] = {'name': meta.get(rid, {}).get('long_name', rid), 'color': '#' + meta.get(rid, {}).get('color', '888888'),
+                    'paths': [[[round(x, 5), round(y, 5)] for x, y in (simplify(p_, 0.00003) if len(p_) > 2 else p_)] for p_ in paths],
+                    'stations': keep}
+    print('  subway: ' + ', '.join(f'{k} ({len(v["stations"])} stations)' for k, v in out.items()))
+    return out
+
 def fetch_bus_stops():
     stops = {s['id']: s['attributes'] for s in json.loads(get(MBTA_STOPS))['data'] if s['attributes']['municipality'] == 'Somerville'}
     with tempfile.TemporaryFile() as tmp:
@@ -621,7 +686,8 @@ def main():
     print('Wards…'); wards = fetch_wards(); survey = fetch_ward_survey()
     write('wards.json', {'wards': wards, 'survey': survey})
     print('Bus stops and riders…'); bus = fetch_bus_stops()
-    bus['routes'] = fetch_bus_routes({r for st in bus['stops'] for r in st['routes']}, wards); write('bus-stops.json', bus)
+    bus['routes'] = fetch_bus_routes({r for st in bus['stops'] for r in st['routes']}, wards)
+    bus['subway'] = fetch_subway(wards); write('bus-stops.json', bus)
 
     def in_somerville(lon, lat):
         for w in wards:

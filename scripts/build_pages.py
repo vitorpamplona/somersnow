@@ -304,7 +304,7 @@ def main():
             f'<a href="{ids[k + 1]}.html">{span(storms[k + 1])} →</a>' if k < len(ids) - 1 else '<span></span>',
         ])
         cards_html, all_lede = cards(storms, sid)
-        data = json.dumps({'storm': S, 'holidays': window_holidays(S), 'wards': wards, 'survey': survey, 'bus': {'season': bus['season'], 'stops': [{k: st[k] for k in ('name', 'lat', 'lon', 'riders', 'routes')} for st in bus['stops']], 'routes': bus.get('routes', {})}, 'ids': ids},
+        data = json.dumps({'storm': S, 'holidays': window_holidays(S), 'wards': wards, 'survey': survey, 'bus': {'season': bus['season'], 'stops': [{k: st[k] for k in ('name', 'lat', 'lon', 'riders', 'routes')} for st in bus['stops']], 'routes': bus.get('routes', {}), 'subway': bus.get('subway', {})}, 'ids': ids},
                           separators=(',', ':'), ensure_ascii=False).replace('</', '<\\/')
         desc = f'Replay the {S["title"]} storm in Somerville hour by hour: ' + ', '.join(summary) + '. By the Somerville PTAC.'
         page = (tpl.replace('%%TITLE%%', esc(S['title'])).replace('%%DESC%%', esc(desc)).replace('%%URL%%', f'{SITE}storms/{sid}.html')

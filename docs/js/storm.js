@@ -534,7 +534,8 @@ function todayVsNormal(series, i) {
 /* ---------- ward map ---------- */
 const lat0 = 42.39; const kx = Math.cos(lat0 * Math.PI / 180);
 // the map frames the wards plus each bus route's run out to its next stop beyond the city line
-const allPts = WARDS.wards.flatMap((w) => w.rings.flat()).concat(Object.values(BUS.routes || {}).flatMap((r) => r.paths.flat()));
+const allPts = WARDS.wards.flatMap((w) => w.rings.flat()).concat(Object.values(BUS.routes || {}).flatMap((r) => r.paths.flat()))
+  .concat(Object.values(BUS.subway || {}).flatMap((l) => l.paths.flat()));
 const minX = Math.min(...allPts.map((p) => p[0] * kx)); const maxX = Math.max(...allPts.map((p) => p[0] * kx));
 const minY = Math.min(...allPts.map((p) => p[1])); const maxY = Math.max(...allPts.map((p) => p[1]));
 const MW = 640; const sc = (MW - 20) / (maxX - minX); const MH = Math.round((maxY - minY) * sc + 20);
@@ -578,6 +579,11 @@ function buildMap() {
   wardD.forEach(([w, d]) => { s += `<path class="ward" data-w="${w.ward}" d="${d}" fill="#DCE8F5" stroke="#1A3A5F" stroke-width="3"/>`; });
   // bus routes (the usual path, both directions), out to the next stop beyond the city line, one color each; where
   // routes share a street they run side by side like a subway map; a wide invisible stroke makes each easy to tap
+  // subway lines (MBTA colors), under the buses: thicker, white-cased, out to the next station beyond the city line
+  const T = Object.entries(BUS.subway || {});
+  const tpath = (l) => l.paths.map((p) => `M${p.map((q) => px(q).map((v) => v.toFixed(1)).join(' ')).join(' L')}`).join(' ');
+  s += `<g fill="none" stroke-linejoin="round" stroke-linecap="round">${T.map(([id, l]) => `<path class="rcase" data-r="T-${id}" d="${tpath(l)}" stroke="#fff" stroke-width="8.5"/>`).join('')}`
+    + T.map(([id, l]) => `<g class="route tline" data-r="T-${id}" data-long="${attr(esc(l.name))}"><path class="rt-line" d="${tpath(l)}" stroke="${l.color}" stroke-width="5"/><path d="${tpath(l)}" stroke="transparent" stroke-width="14"/></g>`).join('') + '</g>';
   const lines = routeLines();
   s += `<g class="rcases" fill="none" stroke="#fff" stroke-width="4.4" stroke-linejoin="round" stroke-linecap="round" opacity=".9">${lines.map(([id, d]) => `<path class="rcase" data-r="${id}" d="${d}"/>`).join('')}</g>`;
   s += `<g class="rlines" fill="none" stroke-linejoin="round" stroke-linecap="round">${lines.map(([id, d, r, color]) => `<g class="route" data-r="${id}" data-long="${attr(esc(r.long))}"><path d="${d}" class="rt-line" stroke="${color}" stroke-width="2.4"/>`
@@ -587,6 +593,10 @@ function buildMap() {
   const dot = (b, big) => { const [x, y] = px([b.lon, b.lat]); return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${big ? (2.5 + Math.sqrt(b.riders) / 4).toFixed(1) : 2.6}" fill="${big ? '#10243A' : '#fff'}" stroke="${big ? '#fff' : '#1A3A5F'}" stroke-width="${big ? 1.5 : 1.2}" class="stop${big ? ' big' : ''}" data-name="${attr(esc(b.name))}" data-riders="${b.riders}" data-routes="${b.routes.join(', ')}"/>`; };
   BUS.stops.slice(19).forEach((b) => { s += dot(b, false); });
   topStops.forEach((b) => { s += dot(b, true); });
+  // T stations: one dot per station (Green D and E share Lechmere), on top of everything
+  const stations = new Map();
+  T.forEach(([, l]) => l.stations.forEach((st) => { const k = st.name; if (!stations.has(k)) stations.set(k, { ...st, lines: [] }); stations.get(k).lines.push(l.name); }));
+  stations.forEach((st) => { const [x, y] = px([st.lon, st.lat]); s += `<circle class="station" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${st.inside ? 6 : 4.5}" fill="#fff" stroke="#10243A" stroke-width="${st.inside ? 3 : 2}" data-name="${attr(esc(st.name))}" data-lines="${attr(st.lines.join(', '))}" data-in="${st.inside ? 1 : 0}"/>`; });
   WARDS.wards.forEach((w) => {
     // label at the ward's area centroid (in screen space), so it sits inside the shape
     const ring = w.rings.reduce((a, r) => (r.length > a.length ? r : a)).map(px);
@@ -598,8 +608,10 @@ function buildMap() {
   s += '</svg>';
   $('#map').innerHTML = s;
   $('#m-season').textContent = BUS.season;
-  $('#map-routes').innerHTML = Object.entries(BUS.routes || {}).filter(([, r]) => r.paths.length)
-    .map(([id]) => `<button class="rchip" data-r="${id}" aria-pressed="false"><i style="background:${routeColor[id]}"></i>${id}</button>`).join('');
+  $('#map-routes').innerHTML = Object.entries(BUS.subway || {})
+    .map(([id, l]) => `<button class="rchip tchip" data-r="T-${id}" aria-pressed="false"><i style="background:${l.color}"></i>${l.name.replace(' Line', '')}</button>`).join('')
+    + Object.entries(BUS.routes || {}).filter(([, r]) => r.paths.length)
+      .map(([id]) => `<button class="rchip" data-r="${id}" aria-pressed="false"><i style="background:${routeColor[id]}"></i>${id}</button>`).join('');
   // Routes change: the map shows today's; say which ones also stopped in Somerville at the time of this storm.
   const today = new Set(BUS.stops.flatMap((b) => b.routes).map((r) => (r === '747' ? 'CT2' : r)));
   const then = (X.buses && X.buses.routes) || null;
@@ -628,7 +640,12 @@ function enableWardTips() {
   svg.addEventListener('click', (e) => { const r = e.target.closest('.route'); if (r) choose(r.dataset.r); });
   const show = (path, e) => {
     light(path.classList.contains('route') ? path : null);
-    if (path.classList.contains('route')) {
+    if (path.classList.contains('tline')) {
+      const l = BUS.subway[path.dataset.r.slice(2)]; const here = l.stations.filter((st) => st.inside).map((st) => st.name);
+      tip.innerHTML = `<b>${l.name}</b><br>In Somerville: ${here.join(', ')}<br><small>Out to the next station each way · tap to ${sel === path.dataset.r ? 'clear' : 'highlight'}</small>`;
+    } else if (path.classList.contains('station')) {
+      tip.innerHTML = `<b>${path.dataset.name}</b>: T station<br>${path.dataset.lines}${path.dataset.in === '1' ? '' : '<br><small>Just outside Somerville</small>'}`;
+    } else if (path.classList.contains('route')) {
       const n = BUS.stops.filter((b) => b.routes.includes(path.dataset.r)).length;
       tip.innerHTML = `<b>Bus ${path.dataset.r}</b>${path.dataset.long ? `: ${path.dataset.long}` : ''}<br>${n} stops in Somerville<br><small>Usual route, to the next stop outside the city · tap to ${sel === path.dataset.r ? 'clear' : 'highlight'}</small>`;
     } else if (path.classList.contains('stop')) {
@@ -643,7 +660,7 @@ function enableWardTips() {
     tip.style.left = `${Math.max(8, Math.min(pr.width - w - 8, e.clientX - pr.left - w / 2))}px`;
     tip.style.top = `${Math.max(8, e.clientY - pr.top - h - 14)}px`;
   };
-  const pick = (e) => e.target.closest('.stop, .route, .ward');
+  const pick = (e) => e.target.closest('.station, .stop, .route, .ward');
   svg.addEventListener('pointermove', (e) => { const p = pick(e); if (p) show(p, e); else { tip.hidden = true; light(null); } });
   svg.addEventListener('pointerdown', (e) => { const p = pick(e); if (p) show(p, e); });
   svg.addEventListener('pointerleave', () => { tip.hidden = true; light(null); });

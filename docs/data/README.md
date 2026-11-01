@@ -26,7 +26,7 @@ Sources change after the fact (311 records get edited, archives get republished)
 | `sources.json` | Every download behind this folder: address, date fetched, size, SHA-256. |
 | `winters.json` | Snowfall at Boston Logan per winter since 1891 and the 1991–2020 median. |
 | `wards.json` | Ward outlines (lon/lat) and the Happiness Survey shares (walked / rode transit in the past week) per ward. |
-| `bus-stops.json` | MBTA bus stops in Somerville with average weekday boardings, and today's bus route shapes (`routes`: the stretch inside the city plus the run to each route's next stop outside it, within 80 m of that stop; `ends`: those stops). |
+| `bus-stops.json` | MBTA bus stops in Somerville with average weekday boardings, and today's bus route shapes (`routes`: the stretch inside the city plus the run to each route's next stop outside it, within 80 m of that stop; `ends`: those stops), and the subway (`subway`: Red, Orange, Green D and E, the stretch inside the city plus the run to the next station outside, and the stations along it). |
 
 ## Ids, periods and windows
 

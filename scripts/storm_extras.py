@@ -25,6 +25,14 @@ TZ = ZoneInfo('America/New_York')
 UTC = timezone.utc
 HOUR = timedelta(hours=1)
 
+# Record-level extracts for each storm window, written to docs/data/raw/<id>/<source>.csv so anyone can check the
+# counts on a page against the rows they came from: RAW[(storm id, source)] = (header, rows).
+RAW = {}
+
+
+def raw(sid, src, head, row):
+    RAW.setdefault((sid, src), (head, []))[1].append(row)
+
 VTEC = 'https://mesonet.agron.iastate.edu/json/vtec_events_byugc.php'
 CAD = 'https://data.somervillema.gov/resource/mdb2-mgc7.json'
 CRASHES = 'https://data.somervillema.gov/resource/mtik-28va.json'
@@ -86,6 +94,7 @@ def police(get, windows):
             if not (t0 <= start < t1):
                 continue
             i = _idx(start, t0)
+            raw(sid, 'police', ['shift_start', 'police_shift', 'type', 'ward'], [start.isoformat(timespec='minutes'), r['police_shift'], r['inctype'], r.get('ward', '')])
             if r['inctype'] == 'SNOEMTOW':
                 tows[i] += 1
                 if r.get('ward'): wards[r['ward']] += 1
@@ -148,6 +157,7 @@ def calls311(get, windows):
             if not (t0 <= t < t1):  # see crashes(): text comparison lets the next morning in
                 continue
             i = _idx(t, t0)
+            raw(sid, '311_parking_trash', ['created', 'type'], [t.isoformat(timespec='minutes'), r['type']])
             (park if r['type'] in PARKING else trash)[i] += 1
         out[sid] = {'parking': sorted(park.items()), 'trash': sorted(trash.items())}
     return out
@@ -616,6 +626,10 @@ def fire_dept(get, windows, cache_dir):
             base.append(round(sum(prev) / len(prev), 1) if prev else None)
         events = []
         for t, ty, st in inc:
+            if t0 <= t < t1 and (ty in FIRE_EVENTS or ty in EMS_TYPES):  # medical calls: time and type only, never a street
+                raw(sid, 'fire_dept', ['alarm', 'nfirs_type', 'shown_as', 'street'],
+                    [t.isoformat(timespec='minutes'), ty, 'medical' if ty in EMS_TYPES else FIRE_EVENTS[ty][0],
+                     '' if ty in EMS_TYPES else ' '.join(w.capitalize() for w in (st or '').split())])
             if ty in FIRE_EVENTS and t0 <= t < t1:
                 kind, label = FIRE_EVENTS[ty]
                 street = ' '.join(w.capitalize() for w in (st or '').split())  # street only, never a house number

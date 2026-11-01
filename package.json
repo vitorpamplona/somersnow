@@ -9,7 +9,8 @@
     "test": "node --test test/*.test.js",
     "cards": "node scripts/render-cards.mjs",
     "data": "python3 scripts/fetch_data.py",
-    "pages": "python3 scripts/build_pages.py"
+    "pages": "python3 scripts/build_pages.py",
+    "verify": "node scripts/verify.mjs"
   },
   "license": "MIT",
   "devDependencies": {

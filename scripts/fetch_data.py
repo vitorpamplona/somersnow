@@ -78,6 +78,23 @@ CITY = {
 
 STORM_MIN = 3.0  # inches at Logan over the storm's consecutive snowy days (each with 0.5 in or more)
 
+# Every download is recorded (address, date, size, SHA-256) and written to docs/data/sources.json, so a later run can
+# tell whether it worked from the same inputs. Sources change: 311 records get edited, archives get republished.
+PROV = {}
+
+
+def _fingerprint(blob=None, path=None):
+    import hashlib
+    h = hashlib.sha256()
+    if blob is not None:
+        h.update(blob)
+    else:
+        with open(path, 'rb') as f:
+            for chunk in iter(lambda: f.read(1 << 20), b''):
+                h.update(chunk)
+    return h.hexdigest()
+
+
 def get(url, params=None, data=None, tries=4):
     if params:
         url += ('&' if '?' in url else '?') + urllib.parse.urlencode(params)
@@ -85,7 +102,11 @@ def get(url, params=None, data=None, tries=4):
         try:
             req = urllib.request.Request(url, data=data, headers={'User-Agent': UA, **({'Content-Type': 'application/json'} if data else {})})
             with urllib.request.urlopen(req, timeout=300) as r:
-                return r.read()
+                blob = r.read()
+                PROV[url + ('' if data is None else ' POST ' + data.decode()[:300])] = {
+                    'url': url, **({'post': data.decode()} if data else {}), 'fetched': datetime.now().isoformat(timespec='seconds'),
+                    'bytes': len(blob), 'sha256': _fingerprint(blob)}
+                return blob
         except Exception as e:  # network hiccup: back off and retry
             if i == tries - 1:
                 raise
@@ -103,6 +124,9 @@ def cached(name, url):
         with open(path + '.part', 'wb') as f:
             f.write(data)
         os.replace(path + '.part', path)
+    if url not in PROV:
+        PROV[url] = {'url': url, 'cache_file': name, 'fetched': datetime.fromtimestamp(os.path.getmtime(path)).isoformat(timespec='seconds'),
+                     'bytes': os.path.getsize(path), 'sha256': _fingerprint(path=path)}
     return path
 
 
@@ -175,7 +199,7 @@ def fetch_snow_winters():
     return {s: round(tot[s], 1) for s in tot if months[s] == 12 and not missing[s]}
 
 
-def fetch_hourly_weather(t0, t1):
+def fetch_hourly_weather(t0, t1, sid=None):
     a, b = datetime.fromisoformat(t0), datetime.fromisoformat(t1)
     p = {'station': 'BOS', 'data': ['tmpf', 'wxcodes', 'vsby', 'sknt'], 'tz': 'America/New_York', 'format': 'onlycomma',
          'latlon': 'no', 'missing': 'M', 'trace': 'T', 'report_type': '3',
@@ -195,6 +219,9 @@ def fetch_hourly_weather(t0, t1):
         if r['vsby'] != 'M': h['vis'] = float(r['vsby'])
         if r['sknt'] != 'M': h['wind'] = round(float(r['sknt']))
         if wx: h['wx'] = wx
+        if sid:  # every report, as published: the snow start and stop (and so the deadline) come from these codes
+            storm_extras.raw(sid, 'weather_logan', ['observed', 'temp_f', 'weather_codes', 'visibility_mi', 'wind_kn', 'falling_snow_0to3'],
+                             [r['valid'], r['tmpf'], wx, r['vsby'], r['sknt'], snow])
     return hours
 
 
@@ -482,6 +509,40 @@ def snow_periods(daily, by_day, seeds):
     return periods
 
 
+def write_raw(storms, windows, extra):
+    """docs/data/raw/<id>/<source>.csv: the records behind each storm's counts. Collected rows (311, police, fire,
+    Logan weather reports) plus the per-record lists already kept in the storm data (crashes, alerts, warnings,
+    Somerville observers). Privacy as on the pages: streets without house numbers, medical calls without a street."""
+    import shutil
+    root = os.path.join(OUT, 'raw')
+    if os.path.isdir(root):
+        shutil.rmtree(root)
+    for st, (sid, t0, t1) in zip(storms, windows):
+        tables = {src: v for (k, src), v in storm_extras.RAW.items() if k == sid}
+        at = lambda i: (t0 + timedelta(hours=i)).isoformat(timespec='minutes')
+        x = {k: v.get(sid) for k, v in extra.items()}
+        if x.get('crashes'):
+            tables['crashes'] = (['date_hour', 'time', 'where', 'what', 'how', 'surface', 'weather', 'light', 'hurt', 'pedestrian', 'cyclist',
+                                  'pedestrian_where', 'pedestrian_doing', 'hit_and_run'],
+                                 [[at(c['i']), c.get('t', ''), c.get('where', ''), c.get('what', ''), c.get('how', ''), c.get('surface', ''),
+                                   c.get('weather', ''), c.get('light', ''), c.get('hurt', ''), c.get('ped', 0), c.get('bike', 0),
+                                   c.get('pedWhere', ''), c.get('pedDoing', ''), c.get('hitRun', '')] for c in x['crashes']])
+        if x.get('alerts'):
+            tables['mbta_alerts'] = (['created_hour', 'kind', 'route_or_station', 'header'], [[at(a[0]), a[1], a[2], a[3]] for a in x['alerts']])
+        if x.get('warnings'):
+            tables['nws_warnings'] = (['name', 'code', 'from', 'to'], [[w['name'], w['code'], w['from'], w['to']] for w in x['warnings']])
+        if x.get('snowSomerville'):
+            tables['snow_somerville'] = (['date', 'inches_avg', 'stations_reporting'], [list(map(str, d)) for d in x['snowSomerville']['days']])
+        d = os.path.join(root, sid)
+        os.makedirs(d, exist_ok=True)
+        for src, (head, rows) in sorted(tables.items()):
+            with open(os.path.join(d, f'{src}.csv'), 'w', newline='') as f:
+                w = csv.writer(f)
+                w.writerow(head)
+                w.writerows(sorted(rows, key=lambda r: str(r[0])))
+    print(f'  wrote docs/data/raw/ ({len(storms)} storms)')
+
+
 def main():
     print('311 requests…'); reqs = fetch_311()
     print('Snowfall…'); daily = fetch_snow_daily('2015-07-01'); winters = fetch_snow_winters()
@@ -582,7 +643,7 @@ def main():
     MONTHS = 'January February March April May June July August September October November December'.split()
     for st, (sid, t0, t1) in zip(storms, windows):
         print(f'Replay {sid}…')
-        wx = fetch_hourly_weather(t0.isoformat(), t1.isoformat())
+        wx = fetch_hourly_weather(t0.isoformat(), t1.isoformat(), sid)
         hours = []
         t = t0
         while t < t1:
@@ -618,6 +679,7 @@ def main():
         salting = Counter()
         for tt, g, ward, typ in reqs:
             if t0 <= tt < t1:
+                storm_extras.raw(sid, '311_snow', ['created', 'group', 'type', 'ward'], [tt.isoformat(timespec='minutes'), g, typ, ward or ''])
                 i = int((tt - t0).total_seconds() // 3600)
                 req[i][order.index(g)] += 1
                 if typ == 'Salting request':
@@ -659,6 +721,11 @@ def main():
                 'snowfall': 'NOAA daily snowfall, Boston, via ACIS (BOSthr)',
             },
         })
+    write_raw(storms, windows, extra)
+    write('sources.json', {'note': 'Every download behind docs/data, with its address, when it was fetched, its size and SHA-256. '
+                                   'Big archives are kept in .cache/ (not published); a new run can compare fingerprints.',
+                           'generated': datetime.now().isoformat(timespec='seconds'),
+                           'downloads': sorted(PROV.values(), key=lambda p: p['url'])})
     # old storm files whose snowfall is now part of a longer period (its page forwards there)
     keep = {f'storm-{st["id"]}.json' for st in storms}
     for f in os.listdir(OUT):

@@ -6,7 +6,7 @@ links to the previous and next storm, the storm cards, and the data (as JSON in 
 (docs/js/storm.js) only draws and animates. Run by `npm run data` after collecting, or alone with `npm run pages`.
 Template: scripts/storm_page.html.
 """
-import hashlib, html, json, os
+import csv, hashlib, html, io, json, os
 from collections import defaultdict
 from datetime import date, datetime, timedelta
 
@@ -222,6 +222,57 @@ def cards(storms, current=None, prefix=''):
     return '\n'.join(out), lede_
 
 
+def hourly_csv(S):
+    """docs/data/csv/<id>.csv: one row per hour of the storm's window, every hourly number the page draws, so the
+    charts can be checked in a spreadsheet. Empty cells: the source doesn't cover this storm (never a zero)."""
+    t0 = datetime.fromisoformat(S['from']); n = len(S['hours']); x = S.get('extra') or {}
+    pick = lambda *path: (lambda o: o if isinstance(o, list) else None)(_dig(x, path))
+    def per_hour(pairs):  # [[hour index, count], ...] -> list
+        if pairs is None:
+            return None
+        v = [0] * n
+        for i, c in pairs:
+            if 0 <= i < n: v[i] += c
+        return v
+    snow_start = datetime.fromisoformat(S['snowStart'])
+    temps = [h[1] for h in S['hours']]
+    refreeze = []
+    for k, tv in enumerate(temps):  # same rule as the page: at or below 32°F within 12 h after 34°F or warmer, from the first snow
+        ok = tv is not None and tv <= 32 and t0 + timedelta(hours=k) >= snow_start and any(
+            temps[j] is not None and temps[j] >= 34 for j in range(max(0, k - 12), k))
+        refreeze.append(int(ok))
+    pol = x.get('police')
+    cols = [('hour_start', [(t0 + timedelta(hours=k)).isoformat(timespec='minutes') for k in range(n)]),
+            ('snow_logan_0to3', [h[0] for h in S['hours']]), ('temp_f', temps), ('visibility_mi', [h[2] for h in S['hours']]),
+            ('wind_kn', [h[3] for h in S['hours']])]
+    for g_i, g in enumerate(S['groups']):
+        cols.append((f'311_{g}', [(S['requests'].get(str(k)) or [0] * len(S['groups']))[g_i] for k in range(n)]))
+    cols += [('311_salting', per_hour(S.get('salting'))), ('refreezing', refreeze),
+             ('311_parking', per_hour(_dig(x, ('calls311', 'parking')))), ('311_trash', per_hour(_dig(x, ('calls311', 'trash')))),
+             ('police_tows_per_shift', per_hour(pol['tows']) if pol else None), ('police_disabled_per_shift', per_hour(pol['disabled']) if pol else None),
+             ('t_entries', pick('tEntries', 'now')), ('t_entries_normal', pick('tEntries', 'base')),
+             ('bus_trips', pick('buses', 'trips', 'now')), ('bus_trips_normal', pick('buses', 'trips', 'base')),
+             ('bus_minutes_late', pick('buses', 'late', 'now')), ('bus_minutes_late_normal', pick('buses', 'late', 'base')),
+             ('bus_pct_slower', pick('buses', 'speed', 'slow')),
+             ('subway_pct_slower', pick('subway', 'slow')), ('subway_trains', pick('subway', 'trains', 'now')), ('subway_trains_normal', pick('subway', 'trains', 'base')),
+             ('bluebikes_trips', pick('bikes', 'now')), ('bluebikes_trips_normal', pick('bikes', 'base')),
+             ('fire_medical_calls', pick('fire', 'ems', 'now')), ('fire_medical_calls_normal', pick('fire', 'ems', 'base'))]
+    out = io.StringIO()
+    w = csv.writer(out)
+    w.writerow([c for c, _ in cols])
+    for k in range(n):
+        w.writerow(['' if v is None or v[k] is None else v[k] for _, v in cols])
+    return out.getvalue()
+
+
+def _dig(o, path):
+    for p_ in path:
+        if not isinstance(o, dict) or o.get(p_) is None:
+            return None
+        o = o[p_]
+    return o
+
+
 def main():
     storms = load('storms.json')['storms']
     W = load('wards.json'); wards = W['wards']; survey = W.get('survey')
@@ -249,10 +300,13 @@ def main():
                           separators=(',', ':'), ensure_ascii=False).replace('</', '<\\/')
         desc = f'Replay the {S["title"]} storm in Somerville hour by hour: ' + ', '.join(summary) + '. By the Somerville PTAC.'
         page = (tpl.replace('%%TITLE%%', esc(S['title'])).replace('%%DESC%%', esc(desc)).replace('%%URL%%', f'{SITE}storms/{sid}.html')
-                .replace('%%LEDE%%', esc(lede(S))).replace('%%NAV%%', nav)
+                .replace('%%LEDE%%', esc(lede(S))).replace('%%NAV%%', nav).replace('%%ID%%', sid)
                 .replace('%%CARDS%%', cards_html).replace('%%ALL_LEDE%%', esc(all_lede)).replace('%%DATA%%', data))
         with open(os.path.join(OUT, f'{sid}.html'), 'w') as f:
             f.write(page)
+        os.makedirs(os.path.join(ROOT, 'docs', 'data', 'csv'), exist_ok=True)
+        with open(os.path.join(ROOT, 'docs', 'data', 'csv', f'{sid}.csv'), 'w', newline='') as f:
+            f.write(hourly_csv(S))
     # a snowfall that is now part of a longer period keeps its address: a small page that forwards to the period
     alias = {a: st['id'] for st in storms for a in st.get('aliases', [])}
     for a, to in alias.items():

@@ -37,7 +37,7 @@ ALERT_ZIPS = {  # MBTA Service Alerts archives (CSV collections on the MBTA open
     '2025': 'https://www.arcgis.com/sharing/rest/content/items/ef115f7cf6684360b040b6d1d033eff0/data',
     '2026': 'https://www.arcgis.com/sharing/rest/content/items/d233f1820cf54139bd18e75e30dd2c6c/data',
 }
-STATIONS = {'place-davis': 'Davis', 'place-asmql': 'Assembly', 'place-unsqu': 'Union Square', 'place-esomr': 'East Somerville',
+STATIONS = {'place-davis': 'Davis', 'place-astao': 'Assembly', 'place-unsqu': 'Union Square', 'place-esomr': 'East Somerville',
             'place-gilmn': 'Gilman Square', 'place-mgngl': 'Magoun Square', 'place-balsq': 'Ball Square'}
 PARKING = ['Illegal parking', 'Car booted/towed inquiry', 'Parking information']
 TRASH = ['Verification of sanitation schedule', 'Trash questions', 'Trash/recycling out too early or late']
@@ -452,7 +452,7 @@ RT_ZIPS = {
 # station-to-station segments in or touching Somerville (either direction)
 SUBWAY_SEGMENTS = {frozenset(p) for p in [
     ('place-alfcl', 'place-davis'), ('place-davis', 'place-portr'),                                   # Red Line
-    ('place-sull', 'place-asmql'), ('place-asmql', 'place-welln'),                                    # Orange Line
+    ('place-sull', 'place-astao'), ('place-astao', 'place-welln'),                                    # Orange Line
     ('place-lech', 'place-unsqu'), ('place-lech', 'place-esomr'), ('place-esomr', 'place-gilmn'),     # Green Line Extension
     ('place-gilmn', 'place-mgngl'), ('place-mgngl', 'place-balsq'), ('place-balsq', 'place-mdftf')]}
 
@@ -476,7 +476,9 @@ def subway(cached, windows):
             print(f'    subway {y}: {e}', file=sys.stderr)
             continue
         for m in sorted(mm for yy, mm in months if yy == y):
-            files = [n for n in z.namelist() if n.endswith('.csv') and f'{y}-{m:02d}' in n.rsplit('/', 1)[-1]]
+            q = (m - 1) // 3 + 1
+            # monthly ('2025-12_HRTravelTimes.csv') or quarterly ('2022-Q1_HRTravelTimes.csv', 'HRTravelTimesQ4_21.csv')
+            files = [n for n in z.namelist() if n.endswith('.csv') and any(k in n.rsplit('/', 1)[-1] for k in (f'{y}-{m:02d}', f'{y}-Q{q}', f'Q{q}_{str(y)[2:]}'))]
             if not files:
                 continue
             have_months.add((y, m))

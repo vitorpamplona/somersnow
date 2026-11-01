@@ -31,7 +31,8 @@
 /* the phone with the guide's messages */
 .phone{background:var(--snow);color:var(--night);border-radius:28px;padding:14px;border:6px solid #0A1929;box-shadow:0 10px 40px rgba(0,0,0,.35)}
 #msgs.scrolls{overflow-y:auto;overscroll-behavior:contain;-webkit-mask-image:linear-gradient(#000 calc(100% - 28px),transparent);mask-image:linear-gradient(#000 calc(100% - 28px),transparent)}
-.msg{display:grid;grid-template-columns:40px minmax(0,1fr);gap:4px 12px;align-items:start;background:#fff;border-radius:18px;padding:14px 16px;margin-bottom:10px;border-left:6px solid #C9D6E3;animation:msgin .35s ease}
+.msg{display:grid;grid-template-columns:40px minmax(0,1fr);gap:4px 12px;align-items:start;background:#fff;border-radius:18px;padding:14px 16px;margin-bottom:10px;border-left:6px solid #C9D6E3;overflow:hidden}
+.msg.leaving{pointer-events:none}
 .msg .ico{grid-row:1/3;width:40px;height:40px;color:var(--rust)}
 .msg b{font-family:var(--display);font-weight:800;font-size:24px;text-transform:uppercase;line-height:1}
 .msg span{font-size:16px;color:var(--sub);line-height:1.3}
@@ -70,7 +71,7 @@
 #lanes svg{width:100%;height:auto;max-width:100%;display:block;cursor:ew-resize;touch-action:pan-y;user-select:none;-webkit-user-select:none}
 #lanes svg:focus{outline:none}
 #lanes svg:focus-visible{outline:3px solid var(--orange);outline-offset:4px;border-radius:8px}
-#tally2 b{font-size:34px}
+
 
 /* ward map (inside the replay, under the counters) */
 .map-k{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 16px}

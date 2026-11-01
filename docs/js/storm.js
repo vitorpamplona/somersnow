@@ -87,7 +87,7 @@ const wardSince = (i) => { if (i < BASE) return {}; const a = wardCum[i]; const 
 /* ---------- what the guide would say at time t ---------- */
 function messages(t, i) {
   const out = [];
-  const add = (cls, icon, b, s, big) => out.push({ cls: cls && `m-${cls}`, icon, b, s: s.replace(/\.\.(?=$|\s|<)/g, '.'), big });
+  const add = (cls, icon, b, s, big, k) => out.push({ cls: cls && `m-${cls}`, icon, b, s: s.replace(/\.\.(?=$|\s|<)/g, '.'), big, k });
   const h = S.hours[Math.max(0, Math.min(N - 1, i))] || [];
   (X.warnings || []).forEach((w) => { if (t >= ms(w.from) && t < ms(w.to)) add('warn', 'snow', w.name, `National Weather Service, until ${dayTm(ms(w.to))}.`); });
   notices.forEach((n) => { if (t >= n.at && t < n.at + 20 * HOUR) add('city', 'city', `City · ${n.approx ? fmt(n.at, { weekday: 'short', month: 'short', day: 'numeric' }) : dayTm(n.at)}`, `${n.text} <a href="${n.src}">Read it</a>`); });
@@ -107,7 +107,7 @@ function messages(t, i) {
 
   if (has('start') && t >= E.start && t < snowStart) add('now', 'bag', 'Salt now', 'Snow is coming. Salt stops it from sticking.');
   if (t >= F.start && t < F.stop) {
-    add('now', 'snow', h[0] === 3 ? 'Heavy snow' : F !== FALLS[0] ? 'Snowing again' : 'Snowing', 'The 6-hour clock starts when it stops. Night doesn\'t count.');
+    add('now', 'snow', h[0] === 3 ? 'Heavy snow' : F !== FALLS[0] ? 'Snowing again' : 'Snowing', 'The 6-hour clock starts when it stops. Night doesn\'t count.', undefined, 'snowing');
   }
   if (t >= F.stop && t < F.clockFrom) {
     add('now', 'clock', 'Snow stopped', `Night doesn't count. The clock starts at sunrise, ${tm(F.clockFrom)}.`, `Shovel by ${dayTm(F.DL)}`);
@@ -128,12 +128,44 @@ function messages(t, i) {
   if (t >= (has('end') ? E.end : DL)) add('', 'ban', 'Space savers', 'Banned. $100. Thrown out.');
   // the latest MBTA alert on a Somerville route or station in the past 6 hours (delays, detours, cuts, elevators)
   const al = (X.alerts || []).filter(([k]) => k <= i && k > i - 6).pop();
-  if (al) out.splice(Math.min(out.length, 2), 0, { cls: 'm-t', icon: 'bus', b: `MBTA · ${al[2].replace(/^Green-/, 'Green Line ')}`, s: al[3] });
+  if (al) out.splice(Math.min(out.length, 2), 0, { k: 'mbta', cls: 'm-t', icon: 'bus', b: `MBTA · ${al[2].replace(/^Green-/, 'Green Line ')}`, s: al[3] });
   return out.slice(0, 4);
 }
 
-function renderMessages(t, i) {
-  $('#msgs').innerHTML = messages(t, i).map((m) => `<div class="msg ${m.cls}"><svg class="ico" aria-hidden="true"><use href="#i-${m.icon}"/></svg><b>${m.b}</b><span>${m.big ? `<span class="big">${m.big}</span><br>` : ''}${m.s}</span></div>`).join('');
+// Each card is kept by its kind and title: a card that stays only updates its text (a countdown ticking), a new card
+// grows in, and a card that's no longer true shrinks away. Nothing else moves, so playing doesn't make the panel blink.
+const msgKey = (m) => m.k || `${m.cls}|${m.icon}|${m.b}`; // a card can name itself (snowing, MBTA) to update in place
+const msgInner = (m) => `<svg class="ico" aria-hidden="true"><use href="#i-${m.icon}"/></svg><b>${m.b}</b><span>${m.big ? `<span class="big">${m.big}</span><br>` : ''}${m.s}</span>`;
+const calm = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+function renderMessages(t, i, instant = true) {
+  const box = $('#msgs'); const list = messages(t, i);
+  if (instant || calm) {
+    box.innerHTML = list.map((m) => `<div class="msg ${m.cls}" data-k="${attr(msgKey(m))}">${msgInner(m)}</div>`).join('');
+    return;
+  }
+  const keep = new Map([...box.children].filter((el) => !el.classList.contains('leaving')).map((el) => [el.dataset.k, el]));
+  const want = list.map((m) => {
+    const k = msgKey(m); let el = keep.get(k);
+    if (el) { keep.delete(k); const html = msgInner(m); if (el.dataset.h !== html) { el.innerHTML = html; el.dataset.h = html; } return [el, false]; }
+    el = document.createElement('div'); el.className = `msg ${m.cls}`; el.dataset.k = k; el.innerHTML = el.dataset.h = msgInner(m);
+    return [el, true];
+  });
+  keep.forEach((el) => { // no longer true: shrink away where it is
+    el.classList.add('leaving');
+    const h = el.offsetHeight;
+    el.animate([{ opacity: 1, height: `${h}px`, marginBottom: '10px' }, { opacity: 0, height: '0px', marginBottom: '0px', paddingTop: '0px', paddingBottom: '0px' }], { duration: 260, easing: 'ease-in' })
+      .onfinish = () => el.remove();
+  });
+  let cursor = box.firstElementChild; // place the cards in order, leaving the shrinking ones where they are
+  want.forEach(([el, isNew]) => {
+    while (cursor && cursor.classList.contains('leaving')) cursor = cursor.nextElementSibling;
+    if (el === cursor) { cursor = cursor.nextElementSibling; return; }
+    box.insertBefore(el, cursor);
+    if (isNew) {
+      const h = el.offsetHeight;
+      el.animate([{ opacity: 0, height: '0px', marginBottom: '0px', paddingTop: '0px', paddingBottom: '0px', transform: 'translateX(-12px)' }, { opacity: 1, height: `${h}px`, marginBottom: '10px', transform: 'none' }], { duration: 300, easing: 'ease-out' });
+    }
+  });
 }
 
 // The number of message cards changes hour by hour. Reserve the tallest the phone ever gets, so scrubbing
@@ -567,7 +599,7 @@ function render(i) {
   $('#now-time').textContent = `${fmt(t, { weekday: 'short', month: 'short', day: 'numeric' })} · ${tm(t)}`;
   const sky = h[0] === 3 ? 'Heavy snow' : h[0] === 2 ? 'Snow' : h[0] === 1 ? 'Light snow' : 'No snow';
   $('#now-wx').textContent = [sky, h[1] != null ? `${h[1]}°F` : '', h[2] != null && h[0] ? `visibility ${h[2] < 1 ? `${h[2]} mi` : `${h[2]} mi`}` : '', h[3] ? `wind ${h[3]} kn` : ''].filter(Boolean).join(' · ') + ' at Logan';
-  renderMessages(t, i);
+  renderMessages(t, i, false);
   const x = xOf(i + 1);
   $('#future').setAttribute('x', x); $('#future').setAttribute('width', Math.max(0, CW - x));
   $('#head').setAttribute('d', `M${x} ${TOP - 6} V${BOT + 4}`);

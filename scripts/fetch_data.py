@@ -466,6 +466,18 @@ def snow_periods(daily, by_day, seeds):
             'aliases': sorted({f['end'] for f in falls if f['kind'] != 'small'} - {last.isoformat()}),
             'days': [[x.isoformat(), daily.get(x.isoformat(), 0), dict(by_day[x])] for x in rng],
         })
+    # Windows never show a neighbor's snow or tail: they start no earlier than the day the previous period's reports
+    # died down (a quiet day; it can hold the City's notice for the next storm) and end before the next period's first
+    # snow day (Jan 18-19, 2026 used to end on Jan 25, the day the blizzard began).
+    for k, p in enumerate(periods):
+        lo = date.fromisoformat(p['start']) - timedelta(2)
+        hi = date.fromisoformat(p['clear']) + timedelta(1)  # last day shown
+        if k > 0:
+            lo = max(lo, date.fromisoformat(periods[k - 1]['clear']))
+        if k + 1 < len(periods):
+            hi = min(hi, date.fromisoformat(periods[k + 1]['start']) - timedelta(1))
+        p['from'], p['to'] = lo.isoformat(), hi.isoformat()
+        p['days'] = [d for d in p['days'] if lo.isoformat() <= d[0] <= hi.isoformat()]
     print(f'  {len(seeds)} snowfalls in {len(periods)} snow periods')
     return periods
 
@@ -535,8 +547,9 @@ def main():
     windows = []
     for st in storms:
         first = date.fromisoformat(st['start'])
-        t0 = datetime.combine(first - timedelta(2), datetime.min.time()).replace(hour=6)
-        t1 = min(datetime.combine(date.fromisoformat(st['clear']) + timedelta(2), datetime.min.time()),
+        # from 6 a.m. on the first day shown to midnight after the last (see snow_periods: never a neighbor's days)
+        t0 = datetime.combine(date.fromisoformat(st['from']), datetime.min.time()).replace(hour=6)
+        t1 = min(datetime.combine(date.fromisoformat(st['to']) + timedelta(1), datetime.min.time()),
                  datetime.combine(first - timedelta(2) + timedelta(PERIOD_MAX_DAYS), datetime.min.time()))
         windows.append((st['id'], t0, t1))
     print('Extra sources for each storm…')

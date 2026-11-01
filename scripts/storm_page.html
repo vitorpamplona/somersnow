@@ -75,7 +75,7 @@
       <div class="map-side">
         <div><b id="m-total">–</b><span>sidewalk reports since the snow started</span></div>
         <div><b id="m-late">–</b><span id="m-late-l">came after the deadline</span></div>
-        <p class="cite">Under each ward: the share of residents who walked in the past week (City of Somerville Happiness Survey, a random sample, about 200 residents per ward; tap a ward for more). Lines: every bus route through the city (its usual path). Dots: every bus stop; the 19 big ones are where half of Somerville's bus riders board (MBTA, <span id="m-season">Fall 2025</span>, average weekday). Tap a stop or a route for its name. <span id="m-routes"></span> 311 reports count complaints, not unshoveled sidewalks.</p>
+        <p class="cite">Under each ward: the share who walked last week (Happiness Survey). Lines: bus routes today. Dots: bus stops; the big ones are the 19 busiest. Tap for details. <span id="m-season" hidden>Fall 2025</span><span id="m-routes"></span></p>
       </div>
     </div>
   </div>
@@ -93,7 +93,7 @@
 %%CARDS%%
 </div>
 <p style="margin-top:20px"><a class="btn ghost" href="./">See every storm since 2016</a></p>
-<p class="cite" style="margin-top:20px">Tap a storm to replay it. Sidewalk reports to 311 per day (orange), snow days (navy), from 2 days before the snow until reports died down (two days in a row at no more than 1/20 of the peak day, or 2 reports). Snow of half an inch or more that falls before then joins the same period. Storms with 3 inches or more at Logan, over consecutive snowy days, plus smaller snows that drew many sidewalk reports (over 3 days, 3% of the winter's total and at least 30).</p>
+<p class="cite" style="margin-top:20px">Sidewalk reports per day (orange) and snow days (navy), until reports died down. Snow that falls before then joins the same storm.</p>
 </div>
 </section>
 
@@ -106,17 +106,13 @@
 <div>
 <h3>Sources</h3>
 <ul id="sources">
-<li>Weather: hourly observations at Boston Logan (BOS), <a href="https://mesonet.agron.iastate.edu/request/download.phtml?network=MA_ASOS">Iowa Environmental Mesonet</a>. Snowfall: NOAA via <a href="https://www.rcc-acis.org/">ACIS</a>.</li>
-<li>Requests: <a href="https://data.somervillema.gov/d/4pyi-uqq6">Somerville 311 open data</a>.</li>
-<li>Wards: <a href="https://data.somervillema.gov/d/ym5n-phxd">City of Somerville GIS</a>. Bus riders: <a href="https://mbta-massdot.opendata.arcgis.com/datasets/8daf4a33925a4df59183f860826d29ee">MBTA</a>.</li>
-<li>Warnings: National Weather Service, zone MAZ014, via the <a href="https://mesonet.agron.iastate.edu/vtec/">Iowa Environmental Mesonet VTEC archive</a>.</li>
-<li>Tows and disabled vehicles: <a href="https://data.somervillema.gov/d/mdb2-mgc7">Somerville police dispatch data</a> (2017 on, per 8-hour shift). Crashes: <a href="https://data.somervillema.gov/d/mtik-28va">Somerville police crash reports</a> (2018 on).</li>
-<li>T entries: <a href="https://mbta-massdot.opendata.arcgis.com/datasets/7859894afb5641ce91a2bb03599fdf5b">MBTA gated station entries</a> at stations in Somerville. MBTA alerts: <a href="https://mbta-massdot.opendata.arcgis.com/datasets/d233f1820cf54139bd18e75e30dd2c6c">MBTA service alerts archive</a> (2020 on). Bikes: <a href="https://bluebikes.com/system-data">Bluebikes trip data</a>. Buses: <a href="https://mbta-massdot.opendata.arcgis.com/datasets/9d8a8cad277545c984c1b25ed10b7d3c">MBTA bus arrival and departure times</a> (2020 on), on the routes that served Somerville at the time: today's routes that ran then, plus any route with a timing stop in Somerville then (routes change: the 86 stopped in Somerville in 2020–22, not in 2026). "Normal" is the same hour on the 4 weeks before. Bus speed: each bus's time between two timing stops in Somerville, compared with that stretch at the same hour (weekdays and weekends apart) over the 4 weeks before; slow buses mean busy streets, snowbanks or bad roads, not a count of cars (no public data counts cars on Somerville streets).</li>
-<li>Fire Department: <a href="https://www.usfa.fema.gov/data-insights/nfirs/data/">National Fire Incident Reporting System</a> (FEMA, U.S. Fire Administration; the "U.S. Fire Department Responses" public release), Somerville Fire Department, 2019–2025, by the type found on arrival. Medical calls are EMS calls and medical assists; the release doesn't say why someone needed help, so they are not a count of falls. Wires down includes arcing and electrical problems; carbon monoxide includes CO detectors that went off. Streets are shown without house numbers. No incidents were filed Feb 25–28 and Dec 10–15, 2022.</li>
-<li>Card spending: <a href="https://github.com/OpportunityInsights/EconomicTracker">Opportunity Insights Economic Tracker</a> (Affinity Solutions card data), Middlesex County, seasonally adjusted, 7-day average, each day compared with the 4 weeks before. County-wide and smoothed, so a one-day closure looks smaller than it was; it is spending, not City revenue (the City publishes no daily revenue). Daily data covers 2020 to early 2022.</li>
-<li>Who walks: <a href="https://data.somervillema.gov/d/wmeh-zuz2">Somerville Happiness Survey</a>, "In the past week, which of the following transportation options did you use?" Melt and refreeze: hourly temperature at Logan; "refreezing" means back at or below 32°F within 12 hours after it was 34°F or warmer.</li>
-<li>Snow in Somerville: <a href="https://www.cocorahs.org/">CoCoRaHS</a> volunteer observers inside Somerville, via <a href="https://www.rcc-acis.org/">ACIS</a> (24 hours to about 7 a.m.). City page views: <a href="https://data.somervillema.gov/d/754v-8e35">City of Somerville website analytics</a> (top 20 pages per day, 2020 to May 2023).</li>
-<li>Deadline: 6 daylight hours after the snow stops, Sec. 12-8(a), computed with the guide's calculator.</li>
+<li>Weather: Boston Logan, hourly (<a href="https://mesonet.agron.iastate.edu/request/download.phtml?network=MA_ASOS">Iowa Environmental Mesonet</a>). Snowfall: NOAA via <a href="https://www.rcc-acis.org/">ACIS</a>; in Somerville, <a href="https://www.cocorahs.org/">CoCoRaHS</a> volunteers. Warnings: National Weather Service (<a href="https://mesonet.agron.iastate.edu/vtec/">archive</a>).</li>
+<li>311 requests: <a href="https://data.somervillema.gov/d/4pyi-uqq6">Somerville open data</a>. Tows: <a href="https://data.somervillema.gov/d/mdb2-mgc7">police dispatch</a> (2017 on). Crashes: <a href="https://data.somervillema.gov/d/mtik-28va">police crash reports</a> (2018 on).</li>
+<li>MBTA: <a href="https://mbta-massdot.opendata.arcgis.com/datasets/7859894afb5641ce91a2bb03599fdf5b">station entries</a>, <a href="https://mbta-massdot.opendata.arcgis.com/datasets/9d8a8cad277545c984c1b25ed10b7d3c">bus times</a> (2020 on), <a href="https://mbta-massdot.opendata.arcgis.com/datasets/682fd13544ac4c518620019a1cb819b1">subway times</a> (2022 on), <a href="https://mbta-massdot.opendata.arcgis.com/datasets/d233f1820cf54139bd18e75e30dd2c6c">alerts</a> (2020 on), <a href="https://mbta-massdot.opendata.arcgis.com/datasets/8daf4a33925a4df59183f860826d29ee">bus riders</a>. Bikes: <a href="https://bluebikes.com/system-data">Bluebikes</a>.</li>
+<li>Fire Department calls: <a href="https://www.usfa.fema.gov/data-insights/nfirs/data/">FEMA fire incident reports</a> (2019–2025). Card spending: <a href="https://github.com/OpportunityInsights/EconomicTracker">Opportunity Insights</a>, Middlesex County (2020–22).</li>
+<li>Wards: <a href="https://data.somervillema.gov/d/ym5n-phxd">City GIS</a>. Who walks: <a href="https://data.somervillema.gov/d/wmeh-zuz2">Happiness Survey</a>. City page views: <a href="https://data.somervillema.gov/d/754v-8e35">website analytics</a> (2020–23).</li>
+<li>Deadline: 6 daylight hours after the snow stops (Sec. 12-8(a)), from the guide's calculator.</li>
+<li>Read it right: "normal" is the same hour in the 4 weeks before. 311 counts complaints, not unshoveled sidewalks. Medical calls aren't a count of falls. Bus speed stands in for traffic (no public car counts). Card spending isn't City revenue. How each number is made: <a href="https://github.com/vitorpamplona/somersnow/blob/main/research/data-sources.md">method notes</a>.</li>
 </ul>
 </div>
 </div>

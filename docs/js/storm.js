@@ -524,9 +524,7 @@ function buildMap() {
   const then = (X.buses && X.buses.routes) || null;
   const when = new Date(`${S.id}T12:00:00`).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
   const gone = then ? then.filter((r) => !today.has(r)) : [];
-  $('#m-routes').textContent = !then ? `Routes and stops are today's; some ran differently in ${S.id.slice(0, 4)}.`
-    : gone.length ? `Routes and stops are today's. In ${when} the ${gone.join(' and ')} also stopped in Somerville; the bus lane above counts the routes that ran then.`
-    : '';
+  $('#m-routes').textContent = gone.length ? `In ${when} the ${gone.join(' and ')} also ran here.` : '';
 }
 
 // Ward tooltips: who walks and rides transit there (Happiness Survey), and sidewalk reports so far.
@@ -594,9 +592,11 @@ function render(i) {
   // light blue (none) → orange → rust (the ward with the most reports by the end of the storm)
   const ramp = (f) => (f <= 0 ? '#DCE8F5' : f < 0.5 ? mix('#F6D3BC', '#FF8A3D', f / 0.5) : mix('#FF8A3D', '#B93D06', (f - 0.5) / 0.5));
   document.querySelectorAll('#map .ward').forEach((p) => { const n = w[p.dataset.w] || 0; p.setAttribute('fill', ramp(Math.min(1, n / wardMax))); });
-  document.querySelectorAll('#map [data-n]').forEach((el) => { const n = w[el.dataset.n] || 0; el.setAttribute('fill', n / wardMax >= 0.6 ? '#fff' : '#10243A'); el.previousElementSibling?.setAttribute('fill', n / wardMax >= 0.6 ? '#fff' : '#10243A'); });
+  // labels: navy on light wards, white on dark ones, each with a halo of the opposite color so bus stops never hide them
+  const ink = (dark) => (el) => { el.setAttribute('fill', dark ? '#fff' : '#10243A'); el.setAttribute('stroke', dark ? 'rgba(16,36,58,.85)' : 'rgba(255,255,255,.85)'); };
+  document.querySelectorAll('#map [data-n]').forEach((el) => { const dark = (w[el.dataset.n] || 0) / wardMax >= 0.6; ink(dark)(el); if (el.previousElementSibling) ink(dark)(el.previousElementSibling); });
   document.querySelectorAll('#map [data-n]').forEach((el) => { el.textContent = w[el.dataset.n] || 0; });
-  document.querySelectorAll('#map [data-s]').forEach((el) => { el.setAttribute('fill', (w[el.dataset.s] || 0) / wardMax >= 0.6 ? '#fff' : '#10243A'); });
+  document.querySelectorAll('#map [data-s]').forEach((el) => { ink((w[el.dataset.s] || 0) / wardMax >= 0.6)(el); });
   wardNow = w;
   const total = c[gi('sidewalk')];
   const lateFrom = Math.floor(idxOf(DL)); // the hour the deadline falls in counts as late

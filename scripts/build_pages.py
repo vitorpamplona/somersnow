@@ -304,7 +304,7 @@ INDEX = '''<!DOCTYPE html>
 <div class="multiples">
 %%CARDS%%
 </div>
-<p class="cite" style="margin-top:20px">Sidewalk reports to 311 per day (orange), snow days (navy), from 2 days before the snow until reports died down: two days in a row at no more than 1/20 of the peak day (or 2 reports). Snow of half an inch or more that falls before then joins the same period. Storms with 3 inches or more at Logan, over consecutive snowy days, plus smaller snows that drew many sidewalk reports (over 3 days, 3% of the winter's total and at least 30).</p>
+<p class="cite" style="margin-top:20px">Sidewalk reports per day (orange) and snow days (navy), until reports died down. Snow that falls before then joins the same storm. Every snow of 3 inches or more at Logan, plus smaller ones that drew many reports. <a href="https://github.com/vitorpamplona/somersnow/blob/main/research/data-sources.md">Method notes</a>.</p>
 </div>
 </section>
 <footer><div class="wrap"><p>By the Somerville PTAC. Not an official City page. The City's rules apply: <a href="https://www.somervillema.gov/snow">somervillema.gov/snow</a>.</p></div></footer>

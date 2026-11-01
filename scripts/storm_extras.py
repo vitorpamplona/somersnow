@@ -154,14 +154,16 @@ def calls311(get, windows):
 
 
 # ---------- baselines ----------
-def _with_baseline(counts, t0, t1, first_day):
-    """Hourly series for [t0, t1) plus the average of the same hour 7, 14, 21 and 28 days earlier (weeks with data only)."""
+def _with_baseline(counts, t0, t1, first_day, have=None):
+    """Hourly series for [t0, t1) plus the average of the same hour 7, 14, 21 and 28 days earlier (weeks with data only:
+    on or after first_day and, if given, in a month of `have`, a set of (year, month); a missing month is not zero)."""
     n = int((t1 - t0).total_seconds() // 3600)
     now = [counts.get(t0 + k * HOUR, 0) for k in range(n)]
     base = []
     for k in range(n):
         t = t0 + k * HOUR
-        prev = [counts.get(t - timedelta(weeks=w), 0) for w in (1, 2, 3, 4) if (t - timedelta(weeks=w)).date() >= first_day]
+        prev = [counts.get(t - timedelta(weeks=w), 0) for w in (1, 2, 3, 4)
+                if (t - timedelta(weeks=w)).date() >= first_day and (have is None or ((t - timedelta(weeks=w)).year, (t - timedelta(weeks=w)).month) in have)]
         base.append(round(sum(prev) / len(prev), 1) if prev else None)
     return now, base
 
@@ -234,7 +236,7 @@ def bikes(cached, windows, inside):
             out[sid] = None
             continue
         first = min(date(y, m, 1) for y, m in have)
-        now, base = _with_baseline(counts, t0, t1, first)
+        now, base = _with_baseline(counts, t0, t1, first, have)
         out[sid] = {'now': now, 'base': base}
     return out
 

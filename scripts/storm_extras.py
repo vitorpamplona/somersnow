@@ -14,6 +14,7 @@ say "not available" instead of showing a false zero. Big downloads are cached in
   snowSomerville  daily snowfall from volunteer observers inside Somerville (CoCoRaHS via ACIS), and the storm total
   web        daily views of the City's snow pages (top 20 pages per day; the City's data covers 2020 to May 2023)
   buses      MBTA bus trips run and median minutes late on routes serving Somerville, per hour, with the 4-week baseline (2020+)
+  subway     MBTA trains on Red, Orange and Green Line segments in Somerville: % slower than usual, and trains run vs. normal (2021+)
 """
 import csv, io, json, os, re, sys, urllib.parse, zipfile
 from collections import Counter, defaultdict
@@ -436,4 +437,85 @@ def buses(cached, windows, routes):
             prev = [med[t - timedelta(weeks=w)] for w in (1, 2, 3, 4) if (t - timedelta(weeks=w)) in med]
             late_base.append(round(sorted(prev)[len(prev) // 2], 1) if prev else None)
         out[sid] = {'trips': {'now': now, 'base': base}, 'late': {'now': late_now, 'base': late_base}}
+    return out
+
+
+# ---------- MBTA subway travel times (2021+) ----------
+RT_ZIPS = {
+    2021: 'https://www.arcgis.com/sharing/rest/content/items/4892695c4baf42419cbe19bd4995bc3a/data',
+    2022: 'https://www.arcgis.com/sharing/rest/content/items/e48c8cd8cf154d27b23d31777a8f39e9/data',
+    2023: 'https://www.arcgis.com/sharing/rest/content/items/b08854b18ad942e4bc471c8c20e80792/data',
+    2024: 'https://www.arcgis.com/sharing/rest/content/items/0b4dc16b8b984836962229865d5b573b/data',
+    2025: 'https://www.arcgis.com/sharing/rest/content/items/5f71a5c035fc4a4dad1b7fa73ba27ef8/data',
+    2026: 'https://www.arcgis.com/sharing/rest/content/items/682fd13544ac4c518620019a1cb819b1/data',
+}
+# station-to-station segments in or touching Somerville (either direction)
+SUBWAY_SEGMENTS = {frozenset(p) for p in [
+    ('place-alfcl', 'place-davis'), ('place-davis', 'place-portr'),                                   # Red Line
+    ('place-sull', 'place-asmql'), ('place-asmql', 'place-welln'),                                    # Orange Line
+    ('place-lech', 'place-unsqu'), ('place-lech', 'place-esomr'), ('place-esomr', 'place-gilmn'),     # Green Line Extension
+    ('place-gilmn', 'place-mgngl'), ('place-mgngl', 'place-balsq'), ('place-balsq', 'place-mdftf')]}
+
+
+def subway(cached, windows):
+    """Per hour, trains on the segments above: how much slower than usual they ran (median of each train's travel
+    time / that segment's median over the 4 weeks before), and how many trains ran vs. the same hour on those weeks."""
+    need_days, months = set(), set()
+    for _, t0, t1 in windows:
+        if (t0 - timedelta(weeks=4)).year < 2021:
+            continue
+        d = (t0 - timedelta(weeks=4, days=1)).date()
+        while d <= t1.date():
+            need_days.add(d.isoformat()); months.add((d.year, d.month)); d += timedelta(1)
+    rides = []  # (local departure hour, segment key, travel seconds)
+    have_months = set()
+    for y in sorted({y for y, _ in months}):
+        try:
+            z = zipfile.ZipFile(cached(f'rt-{y}.zip', RT_ZIPS[y]))
+        except Exception as e:
+            print(f'    subway {y}: {e}', file=sys.stderr)
+            continue
+        for m in sorted(mm for yy, mm in months if yy == y):
+            files = [n for n in z.namelist() if n.endswith('.csv') and f'{y}-{m:02d}' in n.rsplit('/', 1)[-1]]
+            if not files:
+                continue
+            have_months.add((y, m))
+            for f in files:
+                print(f'    subway {f.rsplit("/", 1)[-1]}…', file=sys.stderr)
+                with z.open(f) as fh:
+                    rd = csv.reader(io.TextIOWrapper(fh, encoding='utf-8-sig'))
+                    head = next(rd); c = {h: k for k, h in enumerate(head)}
+                    i_day, i_a, i_b, i_dep, i_tt = c['service_date'], c['from_parent_station'], c['to_parent_station'], c['from_stop_departure_datetime'], c['travel_time_sec']
+                    for r in rd:
+                        a, b = r[i_a], r[i_b]
+                        if (a == b) or frozenset((a, b)) not in SUBWAY_SEGMENTS or r[i_day] not in need_days:
+                            continue
+                        try:
+                            t = _local(r[i_dep]); tt = float(r[i_tt])
+                        except (ValueError, KeyError):
+                            continue
+                        if tt > 0:
+                            rides.append((t.replace(minute=0, second=0, microsecond=0), (a, b), tt))
+    out = {}
+    for sid, t0, t1 in windows:
+        if not all((t.year, t.month) in have_months for t in (t0 - timedelta(weeks=4), t0, t1 - timedelta(hours=1))):
+            out[sid] = None
+            continue
+        base_t = defaultdict(list)
+        for h, seg, tt in rides:
+            if t0 - timedelta(weeks=4) <= h < t0:
+                base_t[seg].append(tt)
+        typical = {seg: sorted(v)[len(v) // 2] for seg, v in base_t.items() if len(v) >= 50}
+        ratio, count = defaultdict(list), Counter()
+        for h, seg, tt in rides:
+            if seg in typical:
+                ratio[h].append(tt / typical[seg]); count[h] += 1
+        n = int((t1 - t0).total_seconds() // 3600)
+        slow = []
+        for k in range(n):
+            v = ratio.get(t0 + k * HOUR)
+            slow.append(round((sorted(v)[len(v) // 2] - 1) * 100) if v and len(v) >= 4 else None)
+        first = min(date(y, m, 1) for y, m in have_months)
+        now, base = _with_baseline(count, t0, t1, first)
+        out[sid] = {'slow': slow, 'trains': {'now': now, 'base': base}, 'segments': sorted('–'.join(s) for s in typical)}
     return out

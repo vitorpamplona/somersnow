@@ -21,7 +21,7 @@ A public guide to Somerville, MA's sidewalk snow and ice rules, for people who w
 | `cards/src/` | The 34 phone-size (1080×1920) social cards as standalone HTML (the editable source). |
 | `docs/cards/` | Rendered PNGs, served by the site with a gallery at `docs/cards.html`. `cards.json` lists them in story order. Regenerate with `npm run cards` (or `npm run cards -- 23-fines` for one). |
 | `docs/flyer.html` | One-page printable US Letter flyer (English) with a QR code (`docs/qr.svg`, to https://vitorpamplona.com/somersnow/). Has its own copy of the key facts: update it when a rule or fine changes. |
-| `docs/storms/` | Storm replays: one fixed page per big storm since 2016 (`storms/<last day of snow>.html`) and an index. Written by `scripts/build_pages.py` from the template `scripts/storm_page.html`, with the title, summary, storm cards and all data written into each page; `js/storm.js` + `css/storm.css` only draw and animate. Each replay shows snow at Logan, NWS warnings, the City's snow emergency, the deadline (from `deadline.js`), 311 requests, a ward map, snowfall from volunteer observers inside Somerville next to Logan's, and "Getting around": T entries, MBTA bus trips run and lateness on Somerville routes (2020+), and Bluebikes vs. a normal week; views of the City's snow pages (2020 to May 2023); police snow-emergency tows, parking calls, MBTA alerts and crashes. English only. `storm.html?storm=<id>` forwards to the fixed page. |
+| `docs/storms/` | Storm replays: one fixed page per big storm since 2016 (`storms/<last day of snow>.html`) and an index. Written by `scripts/build_pages.py` from the template `scripts/storm_page.html`, with the title, summary, storm cards and all data written into each page; `js/storm.js` + `css/storm.css` only draw and animate. Each replay shows snow at Logan, NWS warnings, the City's snow emergency, the deadline (from `deadline.js`), 311 requests, a ward map, snowfall from volunteer observers inside Somerville next to Logan's, and "Getting around": T entries, MBTA bus trips run and lateness on Somerville routes (2020+), how slow the subway ran (2022+), and Bluebikes vs. a normal week; melt-and-refreeze periods with salting requests; the ward map shows who walks there (Happiness Survey) and the busiest bus stops; views of the City's snow pages (2020 to May 2023); police snow-emergency tows, parking calls, MBTA alerts and crashes. English only. `storm.html?storm=<id>` forwards to the fixed page. |
 | `docs/data/` + `scripts/fetch_data.py`, `scripts/storm_extras.py` | `npm run data` (Python standard library, no keys) collects every source into small JSON files and then builds the pages; `npm run pages` rebuilds the pages only. Big downloads are cached in `.cache/` (git-ignored). Re-run each fall. To add what the City announced for a storm (emergency times, notices), add it to `CITY` in `fetch_data.py` with source URLs; the City's online news archive only goes back to 2022. Sources and caveats: `research/data-sources.md`. |
 | `docs/llms.txt` | Plain-text summary of the rules for AI assistants that read the live site. Keep it in sync with the facts below. |
 | `research/` | `ordinance.md` (law text + fines), `questions.md` (questions and proposals for officials), `sources.md`, and `source-files/` (the ordinance PDFs and the WalkBoston report). |
@@ -62,6 +62,9 @@ The guide teaches the rules; `docs/storms/` shows what actually happens in a sto
 | Bus trips run and minutes late, routes serving Somerville | MBTA bus arrival/departure times | Dec 2020 on |
 | MBTA service alerts on Somerville routes and stations | MBTA alerts archive | 2020 on |
 | Bluebikes trips from stations inside Somerville | Bluebikes system data | all (no winter trips in 2016–17) |
+| Subway: % slower than usual and trains run, Red/Orange/Green Line segments in Somerville (Alewife–Davis–Porter, Sullivan–Assembly–Wellington, Green Line Extension) | MBTA rapid transit travel times (about 1–1.5 GB a year, cached) | Jan 2022 on (Green Line Extension from late 2022) |
+| Melt and refreeze (back at or below 32°F within 12 h after 34°F+) and salting requests | Logan hourly temperature; 311 "Salting request" | all |
+| Who walked / rode transit in the past week, by ward | Happiness Survey `wmeh-zuz2` (2025, random sample, ~200 per ward) | ward map |
 | City snow emergency times and notices | somervillema.gov news, typed into `CITY` in `fetch_data.py` | Feb 2022 (end only), Jan 2026 (start only), Feb 2026 (both) |
 | Ward outlines (State Plane, converted); MBTA stops and Fall 2025 weekday boardings | City GIS `ym5n-phxd`; MBTA V3 API and ridership | — |
 
@@ -77,13 +80,13 @@ The guide teaches the rules; `docs/storms/` shows what actually happens in a sto
 
 **Checked on the City portal (data.somervillema.gov) and left out:** traffic citations (moving violations only; no parking or snow tickets), permits and licenses (dumpsters, curb cuts), the Winter Warming Center survey (about the shelter), the ADA survey (`sidewalks` column has no codebook), crime reports and the other surveys. **Not public:** sidewalk tickets issued, clean-and-lien jobs, plow GPS, a list of snow emergencies, snow spending, the 22 blue-light locations, curb-ramp inventory (questions 47–54).
 
-**Ideas not built yet:** the Happiness Survey (`wmeh-zuz2`, 2019/2023/2025) asks how people get around, by ward, for the ward map ("who depends on sidewalks"); Boston 311 "Unshoveled Sidewalk" for comparison; a freeze-thaw (refreeze) lane from the hourly temperatures; more 311 types (fallen trees, potholes); Census ACS by ward (free key); pavement temperature from state road sensors (free token).
+**Ideas not built yet:** Boston 311 "Unshoveled Sidewalk" for comparison; more 311 types (fallen trees, potholes); Census ACS by ward (free key); pavement temperature from state road sensors (free token).
 
 ## History
 
 - Site: guide sections, cards, research, then (Oct–Nov 2026) the animated "Down to the pavement" corner, the redrawn "Who clears this?" map, shorter phone layout, "What's happening?" buttons, share-this-card links, printable flyer, calculator starting "just now", draft translations, and the "Replay a past storm" section.
 - Live storm mode on the main guide (Nov 2026).
-- Storm replays: one storm (Feb 2026), then all 15 big storms with fixed pages, then "Getting around" (T, Bluebikes, tows, parking calls, alerts, crashes), then buses, Somerville snowfall and City page views. The git log has the details.
+- Storm replays: one storm (Feb 2026), then all 15 big storms with fixed pages, then "Getting around" (T, Bluebikes, tows, parking calls, alerts, crashes), then buses, Somerville snowfall and City page views, then crash details, subway speed, melt-and-refreeze and the ward survey. The git log has the details.
 
 ## Voice and design rules
 

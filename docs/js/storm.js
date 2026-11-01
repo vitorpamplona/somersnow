@@ -15,7 +15,7 @@ const GROUP = {
   feedback: { label: 'Feedback', color: '#47607C' },
 };
 
-const { storm: S, wards: WARD_LIST, bus: BUS } = JSON.parse($('#storm-data').textContent);
+const { storm: S, wards: WARD_LIST, survey: SURVEY, bus: BUS } = JSON.parse($('#storm-data').textContent);
 const WARDS = { wards: WARD_LIST };
 const X = S.extra || {};
 
@@ -66,6 +66,12 @@ const wardCum = [];
   }
 }
 const gi = (g) => groups.indexOf(g);
+// Refreezing: at or below 32°F within 12 hours after it was 34°F or warmer, from the first snow on.
+const REFREEZE = S.hours.map((h, k) => {
+  if (h[1] == null || h[1] > 32 || tOf(k) < snowStart) return false;
+  for (let j = Math.max(0, k - 12); j < k; j++) if (S.hours[j][1] != null && S.hours[j][1] >= 34) return true;
+  return false;
+});
 // Counters and the map count this storm only: from the first snowy hour (earlier reports belong to earlier snow).
 const BASE = Math.max(0, Math.floor(idxOf(snowStart)));
 const since = (i) => (i < BASE ? groups.map(() => 0) : cum[i].map((v, k) => v - (BASE ? cum[BASE - 1][k] : 0)));
@@ -104,7 +110,8 @@ function messages(t, i) {
   if (t >= DL && t < DL + 30 * HOUR) {
     add('warn', 'phone', 'Deadline passed', `It was ${dayTm(DL)}${cityDL ? ` (the City said ${tm(cityDL)})` : ''}. Still buried? Report it: 311.`);
   }
-  if (t >= DL) add('', 'ice', 'Check for ice', 'Meltwater refreezes overnight. Sand or salt it.');
+  if (REFREEZE[i] && t >= snowStop) add('warn', 'ice', 'Refreezing now', 'It went above freezing, now it is back below. Meltwater turns to ice: salt or sand.');
+  else if (t >= DL) add('', 'ice', 'Check for ice', 'Meltwater refreezes overnight. Sand or salt it.');
   if (has('end') && t >= E.end) {
     if (has('lotsBy') && t < E.lotsBy) add('em', 'car', 'Emergency over', `Out of City lots by ${dayTm(E.lotsBy)}.`);
     else if (has('permitsBy') && t < E.permitsBy) add('em', 'car', 'Permit visible', `Clear your parking permit by ${dayTm(E.permitsBy)}.`);
@@ -222,11 +229,13 @@ const LANES = [
   { key: 'tEntries', label: 'T entries at Somerville stations', note: 'bars: this week · line: a normal week', color: '#A9C4E4', kind: 'vsBase', from: 'no T entry counts' },
   { key: 'busTrips', label: 'Bus trips on Somerville routes', note: 'bars: trips run · line: a normal week', color: '#7FD4C1', kind: 'vsBase', from: 'MBTA bus records start in 2020' },
   { key: 'busLate', label: 'How late the buses ran', note: 'median minutes late · line: a normal week', color: '#FF6B6B', kind: 'late', from: 'MBTA bus records start in 2020' },
+  { key: 'subway', label: 'How slow the T ran in Somerville', note: 'bars: % slower than usual · red: under half the usual trains', color: '#7DD3FC', kind: 'slow', from: 'MBTA travel times start in 2021' },
   { key: 'bikes', label: 'Bluebikes trips from Somerville', note: 'bars: this week · line: a normal week', color: '#F4C95D', kind: 'vsBase', from: 'no Bluebikes data' },
   { key: 'web', label: 'Views of the City\'s snow pages', note: 'per day · line: a normal day', color: '#C084FC', kind: 'daily', from: 'the City\'s page-view data covers 2020 to May 2023' },
   { key: 'tows', label: 'Snow emergency tows (police)', note: 'per 8-hour shift', color: '#3B82F6', kind: 'shift', from: 'police dispatch data starts in 2017' },
   { key: 'parking', label: 'Parking calls to 311', note: 'illegal parking, towed cars', color: '#7FA7F5', kind: 'hourly' },
   { key: 'alerts', label: 'MBTA alerts, Somerville routes', note: 'yellow delay · orange detour · red cuts · purple elevator', kind: 'ticks', from: 'the MBTA alerts archive starts in 2020' },
+  { key: 'thaw', label: 'Melt and refreeze', note: 'line: temperature · dashes: 32°F · blue: freezing again after a thaw · bars: salting requests', kind: 'thaw' },
   { key: 'crashes', label: 'Crashes', note: 'orange: pedestrian or cyclist · large: someone hurt · tap for details', kind: 'dots', from: 'crash data starts in March 2018' },
 ];
 let LW = CW; // lanes width in px, measured when built
@@ -236,6 +245,7 @@ function laneData(key) {
   if (key === 'tows') return X.police ? X.police.tows : null;
   if (key === 'parking') return X.calls311 ? X.calls311.parking : null;
   if (key === 'busTrips') return X.buses ? X.buses.trips : null;
+  if (key === 'thaw') return S.hours.some((h) => h[1] != null) ? { temps: S.hours.map((h) => h[1]), salting: S.salting || [] } : null;
   if (key === 'busLate') return X.buses ? X.buses.late : null;
   return X[key] ?? null;
 }
@@ -268,6 +278,29 @@ function buildLanes() {
       d.now.forEach((v, i) => { if (v) s += `<rect x="${lx(i)}" y="${yb - (v / mx) * inner}" width="${Math.max(1, bw_ - 0.4)}" height="${(v / mx) * inner}" fill="${L.color}"/>`; });
       const line = d.base.map((v, i) => (v == null ? null : `${lx(i).toFixed(1)} ${(yb - (v / mx) * inner).toFixed(1)} ${lx(i + 1).toFixed(1)} ${(yb - (v / mx) * inner).toFixed(1)}`)).filter(Boolean);
       if (line.length) s += `<path d="M${line.join(' L')}" fill="none" stroke="#fff" stroke-width="1.5" opacity=".9"/>`;
+    } else if (L.kind === 'thaw') {
+      const ts = d.temps.filter((v) => v != null); const lo = Math.min(...ts, 28) - 2; const hi = Math.max(...ts, 36) + 2;
+      const ty = (v) => top + 3 + (1 - (v - lo) / (hi - lo)) * (STRIP - 6);
+      REFREEZE.forEach((on, k) => { if (on) s += `<rect x="${lx(k)}" y="${top}" width="${bw_ + 0.5}" height="${STRIP}" fill="#A9C4E4" opacity=".38"/>`; });
+      const smax = Math.max(1, ...d.salting.map(([, n]) => n));
+      d.salting.forEach(([k, n]) => { const hh = (n / smax) * (STRIP * 0.55); s += `<rect x="${lx(k)}" y="${top + STRIP - hh}" width="${Math.max(1.5, bw_ - 0.4)}" height="${hh}" fill="#F4C95D"/>`; });
+      s += `<path d="M${lx(0)} ${ty(32)} H${lx(N)}" stroke="#DCE8F5" stroke-width="1" stroke-dasharray="4 4" opacity=".8"/>`;
+      const pts = d.temps.map((v, k) => (v == null ? null : `${(lx(k) + bw_ / 2).toFixed(1)} ${ty(v).toFixed(1)}`));
+      let path = ''; let pen = false;
+      pts.forEach((p) => { if (p == null) { pen = false; return; } path += `${pen ? 'L' : 'M'}${p} `; pen = true; });
+      s += `<path d="${path}" fill="none" stroke="#fff" stroke-width="1.8"/>`;
+      s += `<text x="${PAD + 4}" y="${ty(32) - 3}" font-size="11" fill="#DCE8F5">32°F</text>`;
+    } else if (L.kind === 'slow') {
+      // % slower than usual on Red, Orange and Green Line segments in Somerville (capped), and hours with under half the trains
+      const cap = (v) => Math.max(0, Math.min(v, 150));
+      const mx = Math.max(25, ...d.slow.filter((v) => v != null).map(cap));
+      d.slow.forEach((v, i) => {
+        const few = d.trains.base[i] >= 4 && d.trains.now[i] < d.trains.base[i] / 2;
+        const tipTxt = `<b>${dayTm(tOf(i))}</b><br>${v == null ? 'Too few trains to time' : `${v > 0 ? `${v}% slower` : v < 0 ? `${-v}% faster` : 'Usual speed'} than usual`}<br>${d.trains.now[i]} trains (usually ${Math.round(d.trains.base[i] ?? 0)})`;
+        if (v != null && v > 0) s += `<rect x="${lx(i)}" y="${yb - (cap(v) / mx) * inner}" width="${Math.max(1, bw_ - 0.4)}" height="${(cap(v) / mx) * inner}" fill="${L.color}"/>`;
+        if (few) s += `<rect x="${lx(i)}" y="${top + 2}" width="${Math.max(1.5, bw_ - 0.4)}" height="5" fill="#FF6B6B"/>`;
+        if (v != null || few) s += `<rect data-tip="${attr(tipTxt)}" x="${lx(i)}" y="${top}" width="${Math.max(2, bw_)}" height="${STRIP}" fill="transparent"/>`;
+      });
     } else if (L.kind === 'late') {
       // minutes late (early counts as 0), capped so one stuck bus doesn't flatten the rest
       const cap = (v) => Math.max(0, Math.min(v, 45));
@@ -384,18 +417,41 @@ function buildMap() {
     const d = w.rings.map((r) => `M${r.map((p) => px(p).map((v) => v.toFixed(1)).join(' ')).join(' L')} Z`).join(' ');
     s += `<path class="ward" data-w="${w.ward}" d="${d}" fill="#DCE8F5" stroke="#1A3A5F" stroke-width="3"/>`;
   });
-  topStops.forEach((b) => { const [x, y] = px([b.lon, b.lat]); s += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(2.5 + Math.sqrt(b.riders) / 4).toFixed(1)}" fill="#10243A" stroke="#fff" stroke-width="1.5"><title>${b.name}: ${b.riders} weekday boardings</title></circle>`; });
+  topStops.forEach((b) => { const [x, y] = px([b.lon, b.lat]); s += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(2.5 + Math.sqrt(b.riders) / 4).toFixed(1)}" fill="#10243A" stroke="#fff" stroke-width="1.5" class="stop" data-name="${attr(esc(b.name))}" data-riders="${b.riders}" data-routes="${b.routes.join(', ')}"/>`; });
   WARDS.wards.forEach((w) => {
     // label at the ward's area centroid (in screen space), so it sits inside the shape
     const ring = w.rings.reduce((a, r) => (r.length > a.length ? r : a)).map(px);
     let A = 0; let cx = 0; let cy = 0;
     ring.forEach(([x1, y1], k) => { const [x2, y2] = ring[(k + 1) % ring.length]; const f = x1 * y2 - x2 * y1; A += f; cx += (x1 + x2) * f; cy += (y1 + y2) * f; });
     const [x, y] = [cx / (3 * A), cy / (3 * A)];
-    s += `<g class="wl" pointer-events="none"><text x="${x.toFixed(1)}" y="${(y - 4).toFixed(1)}" text-anchor="middle" class="cap" font-size="14" fill="#10243A">WARD ${w.ward}</text><text data-n="${w.ward}" x="${x.toFixed(1)}" y="${(y + 24).toFixed(1)}" text-anchor="middle" class="cap" font-size="26" fill="#10243A">0</text></g>`;
+    s += `<g class="wl" pointer-events="none"><text x="${x.toFixed(1)}" y="${(y - 4).toFixed(1)}" text-anchor="middle" class="cap" font-size="14" fill="#10243A">WARD ${w.ward}</text><text data-n="${w.ward}" x="${x.toFixed(1)}" y="${(y + 24).toFixed(1)}" text-anchor="middle" class="cap" font-size="26" fill="#10243A">0</text>${SURVEY && SURVEY.wards[w.ward] ? `<text data-s="${w.ward}" x="${x.toFixed(1)}" y="${(y + 40).toFixed(1)}" text-anchor="middle" class="cap" font-size="12" fill="#10243A">${SURVEY.wards[w.ward].walk}% WALK</text>` : ''}</g>`;
   });
   s += '</svg>';
   $('#map').innerHTML = s;
   $('#m-season').textContent = BUS.season;
+}
+
+// Ward tooltips: who walks and rides transit there (Happiness Survey), and sidewalk reports so far.
+let wardNow = {};
+function enableWardTips() {
+  const svg = $('#map svg'); const panel = svg.closest('.panel');
+  const tip = document.createElement('div'); tip.className = 'hovertip'; tip.hidden = true; tip.setAttribute('role', 'tooltip'); panel.appendChild(tip);
+  const show = (path, e) => {
+    if (path.classList.contains('stop')) {
+      tip.innerHTML = `<b>${path.dataset.name}</b>: bus stop<br>${(+path.dataset.riders).toLocaleString('en-US')} weekday boardings<br><small>Routes ${path.dataset.routes} · MBTA, ${BUS.season}</small>`;
+    } else {
+    const k = path.dataset.w; const sv = SURVEY && SURVEY.wards[k];
+    tip.innerHTML = `<b>Ward ${k}</b>: ${wardNow[k] || 0} sidewalk reports since the snow started` +
+      (sv ? `<br>In the past week, <b>${sv.walk}%</b> walked and <b>${sv.transit}%</b> rode transit<br><small>${SURVEY.year} Happiness Survey, ${sv.n} residents</small>` : '');
+    }
+    tip.hidden = false;
+    const pr = panel.getBoundingClientRect(); const w = tip.offsetWidth; const h = tip.offsetHeight;
+    tip.style.left = `${Math.max(8, Math.min(pr.width - w - 8, e.clientX - pr.left - w / 2))}px`;
+    tip.style.top = `${Math.max(8, e.clientY - pr.top - h - 14)}px`;
+  };
+  svg.addEventListener('pointermove', (e) => { const p = e.target.closest('.stop, .ward'); if (p) show(p, e); else tip.hidden = true; });
+  svg.addEventListener('pointerdown', (e) => { const p = e.target.closest('.stop, .ward'); if (p) show(p, e); });
+  svg.addEventListener('pointerleave', () => { tip.hidden = true; });
 }
 
 /* ---------- render one hour ---------- */
@@ -435,6 +491,8 @@ function render(i) {
   document.querySelectorAll('#map .ward').forEach((p) => { const n = w[p.dataset.w] || 0; p.setAttribute('fill', ramp(Math.min(1, n / wardMax))); });
   document.querySelectorAll('#map [data-n]').forEach((el) => { const n = w[el.dataset.n] || 0; el.setAttribute('fill', n / wardMax >= 0.6 ? '#fff' : '#10243A'); el.previousElementSibling?.setAttribute('fill', n / wardMax >= 0.6 ? '#fff' : '#10243A'); });
   document.querySelectorAll('#map [data-n]').forEach((el) => { el.textContent = w[el.dataset.n] || 0; });
+  document.querySelectorAll('#map [data-s]').forEach((el) => { el.setAttribute('fill', (w[el.dataset.s] || 0) / wardMax >= 0.6 ? '#fff' : '#10243A'); });
+  wardNow = w;
   const total = c[gi('sidewalk')];
   const lateFrom = Math.floor(idxOf(DL)); // the hour the deadline falls in counts as late
   const before = lateFrom > 0 ? since(Math.min(i, lateFrom - 1))[gi('sidewalk')] : 0;
@@ -481,6 +539,7 @@ enableDrag($('#chart svg'));
 enableDrag($('#lanes svg'));
 enableTips($('#lanes svg'));
 buildMap();
+enableWardTips();
 render(Math.max(0, Math.ceil(idxOf(declared)) - 1));
 lockPhoneHeight();
 {

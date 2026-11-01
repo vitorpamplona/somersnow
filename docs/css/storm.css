@@ -62,6 +62,7 @@
 .hovertip[hidden]{display:none}
 .hovertip{position:absolute;z-index:5;max-width:300px;background:#fff;color:var(--night);font-size:14px;line-height:1.35;padding:10px 12px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.35);pointer-events:none}
 .hovertip b{font-weight:700}
+.hovertip small{color:var(--mute)}
 .hovertip hr{border:0;border-top:1px solid #C9D6E3;margin:8px 0}
 #lanes svg{width:100%;height:auto;max-width:100%;display:block;cursor:ew-resize;touch-action:pan-y;user-select:none;-webkit-user-select:none}
 #lanes svg:focus{outline:none}
@@ -69,7 +70,11 @@
 #tally2 b{font-size:34px}
 
 /* ward map (inside the replay, under the counters) */
-.map-panel{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,4fr);gap:20px;align-items:center;padding:18px}
+.map-k{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 16px}
+.map-legend{font-family:var(--body);font-weight:500;font-size:14px;letter-spacing:0;text-transform:none;color:#DCE8F5}
+.map-legend i{display:inline-block;width:11px;height:11px;border-radius:50%;background:#10243A;border:2px solid #fff;margin-right:6px;vertical-align:-1px}
+#map .stop{cursor:pointer}
+.map-panel{position:relative;display:grid;grid-template-columns:minmax(0,7fr) minmax(0,4fr);gap:20px;align-items:center;padding:18px}
 #map svg{width:100%;height:auto;max-height:340px;display:block;margin:0 auto}
 .map-side{display:flex;flex-direction:column;gap:12px}
 .map-side div{display:flex;flex-direction:column;gap:2px}

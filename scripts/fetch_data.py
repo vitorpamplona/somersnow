@@ -125,8 +125,30 @@ def fetch_311():
     for r in rows:
         g = TYPE_GROUP.get(r.get('type'))
         if g and r.get('date_created'):
-            out.append((datetime.strptime(r['date_created'][:16], '%Y-%m-%d %H:%M'), g, r.get('ward')))
+            out.append((datetime.strptime(r['date_created'][:16], '%Y-%m-%d %H:%M'), g, r.get('ward'), r.get('type')))
     print(f'  311: {len(out)} snow requests')
+    return out
+
+
+HAPPINESS = 'https://data.somervillema.gov/resource/wmeh-zuz2.json'
+
+
+def fetch_ward_survey():
+    """How residents got around, by ward, from the latest Happiness Survey that asked it: "In the past week, which of
+    the following transportation options did you use? Check all that apply." (2019, 2023, 2025). A random-sample survey
+    of about 200 residents per ward, not a census."""
+    yn = lambda c: f"sum(case({c}='1',1,true,0))"
+    q = {'$select': f"year,ward,count(*) as n,{yn('transportation_walk_yn')} as walk,{yn('transportation_public_transit_yn')} as transit,"
+                    f"{yn('transportation_car_yn')} as car,{yn('transportation_bicycle_yn')} as bike",
+         '$group': 'year,ward', '$order': 'year'}
+    rows = [r for r in json.loads(get(HAPPINESS, q)) if r.get('ward') and int(r['walk']) > 0]
+    year = max(r['year'] for r in rows)
+    out = {'year': int(year), 'question': 'In the past week, which of the following transportation options did you use? Check all that apply.', 'wards': {}}
+    for r in rows:
+        if r['year'] == year:
+            n = int(r['n'])
+            out['wards'][str(int(float(r['ward'])))] = {'n': n, **{k: round(int(r[k]) / n * 100) for k in ('walk', 'transit', 'car', 'bike')}}
+    print(f'  ward survey: {year}, {sum(w["n"] for w in out["wards"].values())} answers')
     return out
 
 
@@ -288,7 +310,7 @@ def main():
 
     # winters.json
     per = defaultdict(Counter)
-    for t, g, _ in reqs:
+    for t, g, _, _ in reqs:
         per[season_of(t)][g] += 1
     first311 = 2015
     write('winters.json', {
@@ -300,7 +322,7 @@ def main():
 
     # storms.json: consecutive snow days with a 6-inch-plus day
     by_day = defaultdict(Counter)
-    for t, g, _ in reqs:
+    for t, g, _, _ in reqs:
         by_day[t.date()][g] += 1
     days = sorted(daily)
     storms, used = [], set()
@@ -318,7 +340,8 @@ def main():
             })
     write('storms.json', {'storms': storms})
 
-    print('Wards…'); wards = fetch_wards(); write('wards.json', {'wards': wards})
+    print('Wards…'); wards = fetch_wards(); survey = fetch_ward_survey()
+    write('wards.json', {'wards': wards, 'survey': survey})
     print('Bus stops and riders…'); bus = fetch_bus_stops(); write('bus-stops.json', bus)
 
     def in_somerville(lon, lat):
@@ -353,6 +376,7 @@ def main():
         'snowSomerville': storm_extras.somerville_snow(get, windows, storms),
         'web': storm_extras.web_views(get, windows),
         'buses': storm_extras.buses(cached, windows, routes),
+        'subway': storm_extras.subway(cached, windows),
     }
 
     MONTHS = 'January February March April May June July August September October November December'.split()
@@ -382,10 +406,13 @@ def main():
         req = defaultdict(lambda: [0] * len(GROUPS))
         wards_ = defaultdict(lambda: Counter())
         order = list(GROUPS)
-        for tt, g, ward in reqs:
+        salting = Counter()
+        for tt, g, ward, typ in reqs:
             if t0 <= tt < t1:
                 i = int((tt - t0).total_seconds() // 3600)
                 req[i][order.index(g)] += 1
+                if typ == 'Salting request':
+                    salting[i] += 1
                 if g == 'sidewalk' and ward:
                     wards_[i][ward] += 1
         a_, b_ = start.date(), (stop - timedelta(minutes=1)).date()
@@ -403,6 +430,7 @@ def main():
             'hours': hours,
             'requests': {str(i): v for i, v in sorted(req.items())},
             'sidewalkByWard': {str(i): dict(v) for i, v in sorted(wards_.items())},
+            'salting': sorted(salting.items()),
             'extra': {k: v.get(sid) for k, v in extra.items()},
             'sources': {
                 'weather': 'Hourly observations at Boston Logan (BOS), Iowa Environmental Mesonet ASOS archive',

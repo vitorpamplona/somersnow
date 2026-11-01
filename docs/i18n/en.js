@@ -59,7 +59,7 @@ export default {
     "shovel.09": "Check for ice",
     "shovel.10": "It refreezes overnight. Ice counts too.",
     "shovel.11": "Plow buried it?",
-    "shovel.12": "Clear it again. Ramp last.",
+    "shovel.12": "Clear it again. Help the bus stop and hydrant too.",
     "whoclears.01": "<span class=\"n\">03</span> Who does what",
     "whoclears.02": "Who clears this?",
     "whoclears.03": "Tap the corner.",

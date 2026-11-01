@@ -70,12 +70,18 @@ export function shovelScene(id) {
   const berm = [];
   for (let x = 14; x < 520; x += 38) {
     const cx = x + Math.round(r() * 10); const ry = 14 + Math.round(r() * 6);
+    if ((cx > 78 && cx < 182) || (cx > 380 && cx < 446)) continue; // bus stop and hydrant: their own mounds, dug out again
     berm.push(`<ellipse class="lump" cx="${cx}" cy="${352 + Math.round(r() * 6)}" rx="28" ry="${ry}" fill="${SNOW}" style="transform-origin:${cx}px 352px;animation-delay:${plowAt(cx).toFixed(2)}s"/>`);
   }
-  const heap = [[548, 344, 40, 26], [585, 350, 36, 24], [566, 372, 44, 22], [600, 330, 20, 18]]
-    .map(([cx, cy, rx, ry]) => `<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="${SNOW}"/>`).join('');
+  // What the plow throws on the ramp, the bus stop and the hydrant (step 5). Each pops up as the blade passes and
+  // is dug out again in order: bus stop, hydrant, ramp last (the shovel moves between them; CSS "dig").
+  const mound = (cls, parts, cx, clearAt) => `<g class="mound ${cls}" style="transform-origin:${cx}px 350px;--a:${plowAt(cx).toFixed(2)}s;--b:${clearAt}s">`
+    + parts.map(([x, y, rx, ry]) => `<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" fill="${SNOW}"/>`).join('') + '</g>';
+  const heap = mound('m-ramp', [[548, 344, 40, 26], [585, 350, 36, 24], [566, 372, 44, 22], [600, 330, 20, 18]], 565, 4.2)
+    + mound('m-bus', [[112, 336, 34, 22], [146, 340, 30, 20], [128, 352, 42, 16]], 128, 3.0)
+    + mound('m-hyd', [[404, 334, 26, 22], [424, 338, 22, 18], [412, 350, 32, 14]], 412, 3.6);
 
-  return `<svg id="${id}" class="scene" viewBox="0 0 800 560" data-s="0" role="img" aria-label="Illustration of a street corner after a snowstorm. It changes with each step: snow covers the sidewalks, a 36-inch path is shoveled to bare pavement, the curb ramp is opened to the crosswalk, ice is sanded, and a plow buries the ramp, which is cleared again.">
+  return `<svg id="${id}" class="scene" viewBox="0 0 800 560" data-s="0" role="img" aria-label="Illustration of a street corner after a snowstorm. It changes with each step: snow covers the sidewalks, a 36-inch path is shoveled to bare pavement and the bus stop and hydrant are dug out, the curb ramp is opened to the crosswalk, ice is sanded, and a plow buries the bus stop, hydrant and ramp, which are cleared again.">
   <defs><clipPath id="${id}-clip"><rect width="800" height="560"/></clipPath></defs>
   <g clip-path="url(#${id}-clip)">
   <rect width="800" height="560" fill="#10243A"/>
@@ -123,6 +129,15 @@ export function shovelScene(id) {
   </g>
   <g class="sv on2"><g class="shovel"><circle r="26" fill="#FF8A3D" stroke="#10243A" stroke-width="4"/><use href="#i-shovel" x="-17" y="-17" width="34" height="34" fill="none" stroke="#10243A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g></g>
 
+  <!-- step 2+: the bus stop and the hydrant, dug out of the bank (same drawing as the who-clears map) -->
+  <g class="sv on2 on3 on4 on5">
+    <g class="dug d-bus"><rect x="92" y="314" width="88" height="36" fill="${BARE}"/>
+      <rect x="102" y="318" width="52" height="26" rx="5" fill="#FF8A3D" stroke="#10243A" stroke-width="3"/>
+      <text x="128" y="337" text-anchor="middle" class="cap" font-size="16" fill="#10243A">BUS</text></g>
+    <g class="dug d-hyd"><circle cx="412" cy="330" r="22" fill="${BARE}"/>
+      <circle cx="412" cy="330" r="10" fill="#D9412B"/><rect x="398" y="326" width="28" height="8" rx="3" fill="#D9412B"/><circle cx="412" cy="330" r="4" fill="#8F2414"/></g>
+  </g>
+
   <!-- step 3: ramp opened to the crosswalk -->
   <!-- step 3+: the curb ramp, shoveled open (a snow cover wipes off it in step 3) -->
   <g class="sv on3 on4 on5">
@@ -150,7 +165,7 @@ export function shovelScene(id) {
   <!-- step 5: plow buries the ramp; clear it again -->
   <g class="sv on5">
     ${berm.join('')}
-    <g class="heap">${heap}</g>
+    ${heap}
     <g class="plow">
       <rect x="18" y="368" width="26" height="9" fill="#0A1929"/><rect x="18" y="437" width="26" height="9" fill="#0A1929"/>
       <rect x="112" y="368" width="26" height="9" fill="#0A1929"/><rect x="112" y="437" width="26" height="9" fill="#0A1929"/>
@@ -163,7 +178,7 @@ export function shovelScene(id) {
       <path d="M186 360 L196 360 L${BLADE} 452 L${BLADE - 10} 452 Z" fill="#C9D6E3" stroke="#10243A" stroke-width="2"/>
       <g fill="#fff"><circle cx="190" cy="352" r="5"/><circle cx="178" cy="345" r="4"/><circle cx="196" cy="342" r="3"/></g>
     </g>
-    <g class="shovel2" transform="translate(565 300)"><circle r="26" fill="#FF8A3D" stroke="#10243A" stroke-width="4"/><use href="#i-shovel" x="-17" y="-17" width="34" height="34" fill="none" stroke="#10243A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g class="shovel2"><circle r="26" fill="#FF8A3D" stroke="#10243A" stroke-width="4"/><use href="#i-shovel" x="-17" y="-17" width="34" height="34" fill="none" stroke="#10243A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g>
   </g>
   </g>
 </svg>`;

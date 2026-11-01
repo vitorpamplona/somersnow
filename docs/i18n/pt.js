@@ -61,7 +61,7 @@ export default {
     "shovel.09": "Veja se tem gelo",
     "shovel.10": "Congela de novo à noite. Gelo também conta.",
     "shovel.11": "O limpa-neve cobriu?",
-    "shovel.12": "Limpe de novo. A rampa por último.",
+    "shovel.12": "Limpe de novo. Ajude também o ponto de ônibus e o hidrante.",
     "whoclears.01": "<span class=\"n\">03</span> Quem faz o quê",
     "whoclears.02": "Quem limpa isto?",
     "whoclears.03": "Toque na esquina.",

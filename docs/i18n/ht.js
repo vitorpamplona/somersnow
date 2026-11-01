@@ -61,7 +61,7 @@ export default {
     "shovel.09": "Gade si gen glas",
     "shovel.10": "Li jele ankò lannwit. Glas konte tou.",
     "shovel.11": "Machin nèj la kouvri l?",
-    "shovel.12": "Netwaye l ankò. Ranp lan an dènye.",
+    "shovel.12": "Netwaye l ankò. Ede ak arè bis la ak idran an tou.",
     "whoclears.01": "<span class=\"n\">03</span> Kiyès ki fè kisa",
     "whoclears.02": "Kiyès ki netwaye sa?",
     "whoclears.03": "Touche kwen an.",

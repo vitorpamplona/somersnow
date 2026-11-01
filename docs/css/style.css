@@ -135,6 +135,10 @@ button{font:inherit;cursor:pointer}
 .scene[data-s="2"] .shovel{animation:shovel 2.5s linear both}
 @keyframes shovel{0%{transform:translate(0,286px);opacity:1}56%{transform:translate(565px,286px)}94%{opacity:1}100%{transform:translate(565px,24px);opacity:0}}
 .scene[data-s="2"] .dim{animation:fade .5s ease 2.4s both}
+/* 2: then the bus stop and the hydrant are dug out of the bank */
+.scene .dug{transform-origin:center;transform-box:fill-box}
+.scene[data-s="2"] .d-bus{animation:pop .45s cubic-bezier(.3,1.5,.6,1) 2.5s both}
+.scene[data-s="2"] .d-hyd{animation:pop .45s cubic-bezier(.3,1.5,.6,1) 2.8s both}
 /* 3: the ramp opens, then a wheelchair rolls down it into the crosswalk */
 .scene .rampcover{transform-origin:565px 358px}
 .scene[data-s="3"] .rampcover{animation:wipeY .7s ease-in both}
@@ -158,12 +162,14 @@ button{font:inherit;cursor:pointer}
 .scene .beacon{animation:beacon .5s steps(2) infinite}
 @keyframes beacon{50%{opacity:.25}}
 .scene[data-s="5"] .lump{animation:pop .3s ease-out both}
-.scene .heap{opacity:0;transform-origin:565px 352px}
-.scene[data-s="5"] .heap{animation:heap 4.2s ease both}
-@keyframes heap{0%,27%{opacity:0;transform:scale(.4)}33%,72%{opacity:1;transform:scale(1)}84%,100%{opacity:0;transform:scale(.5)}}
-.scene .shovel2{opacity:0}
-.scene[data-s="5"] .shovel2{animation:blink 1.2s ease 2.8s both}
-@keyframes blink{0%,100%{opacity:0}20%,75%{opacity:1}}
+/* the plow's snow lands on the bus stop, hydrant and ramp as the blade passes (--a), and each is dug out again (--b) */
+.scene .mound{opacity:0}
+.scene[data-s="5"] .mound{animation:pop .3s ease-out var(--a) both,dig .5s ease-in var(--b) forwards}
+@keyframes dig{from{opacity:1;transform:scale(1)}to{opacity:0;transform:scale(.4)}}
+/* the shovel goes bus stop -> hydrant -> ramp */
+.scene .shovel2{opacity:0;transform:translate(565px,300px)}
+.scene[data-s="5"] .shovel2{animation:dig3 2.4s ease-in-out 2.6s both}
+@keyframes dig3{0%{opacity:0;transform:translate(128px,300px)}8%,22%{opacity:1;transform:translate(128px,300px)}38%,47%{transform:translate(412px,300px)}63%,82%{opacity:1;transform:translate(565px,300px)}100%{opacity:0;transform:translate(565px,300px)}}
 
 /* ---------- who clears ---------- */
 .who-grid{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:40px;margin-top:40px;align-items:start}

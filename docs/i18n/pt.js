@@ -21,7 +21,7 @@ export default {
     "replay.04": "As reclamações chegam tarde",
     "replay.05": "As reclamações sobre calçadas chegam ao pico 1 a 3 dias depois que a neve para. O prazo é de 6 horas de luz do dia.",
     "replay.06": "Reveja a última tempestade",
-    "replay.07": "Veja todas as grandes tempestades",
+    "replay.07": "Veja todas as tempestades",
     "top.01": "Inverno 2026/27 · Somerville, MA",
     "top.02": "Neve &amp; gelo<br/>na <em>calçada</em>",
     "top.03": "O ônibus só é bom se o caminho até ele for bom.",

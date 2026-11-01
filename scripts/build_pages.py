@@ -129,23 +129,36 @@ def winter_of(day):
     return int(day[:4]) - (int(day[5:7]) < 7)
 
 
+def _peak(st):
+    v = [d[2].get('sidewalk', 0) for d in st['days']]
+    return v.index(max(1, *v)) - 2 if max(v, default=0) else -99
+
+
 def cards(storms, current=None, prefix=''):
-    out, peaks13 = [], 0
+    """Storm cards grouped by winter. On the index: every winter (one without a storm says so, so years never
+    silently go missing). On a storm page (current): only that storm's winter."""
+    out = []
     W_ = load('winters.json'); totals = dict(W_['snow'])  # winter starting year -> inches at Logan
-    for n_, st in enumerate(storms):
-        if n_:
-            # winters with no 6-inch day at Logan: say so, so the list doesn't seem to skip years
-            a, b = winter_of(storms[n_ - 1]['end']) + 1, winter_of(st['end']) - 1
-            if a <= b:
-                ws = range(a, b + 1)
-                span = f'{a}–{(a + 1) % 100:02d}' if a == b else f'{a}–{(a + 1) % 100:02d} to {b}–{(b + 1) % 100:02d}'
-                inch = ', '.join(f'{totals[w]:g}' for w in ws if w in totals)
-                out.append(f'<div class="mini gap"><h4>{"Winter" if a == b else "Winters"} {span}</h4>'
-                           f'<small>No day with 6 inches at Logan. {"Whole winter" if a == b else "Each whole winter"}: {inch} inches (the 1991–2020 median: {W_["normal"]:g}).</small></div>')
+    first_w, last_w = winter_of(storms[0]['end']), winter_of(storms[-1]['end'])
+    if current:
+        first_w = last_w = winter_of(current)
+    by_w = defaultdict(list)
+    for st in storms:
+        by_w[winter_of(st['end'])].append(st)
+    seq = []
+    for w in range(first_w, last_w + 1):
+        tot = f' · {totals[w]:g} in all winter' if w in totals else ''
+        seq.append(f'<h3 class="winter">Winter {w}–{(w + 1) % 100:02d}<small>{tot}</small></h3>')
+        if not by_w[w]:
+            seq.append('<div class="mini gap"><small>No storm with 3 inches or more at Logan.</small></div>')
+        seq.extend(by_w[w])
+    for st in seq:
+        if isinstance(st, str):
+            out.append(st)
+            continue
         v = [d[2].get('sidewalk', 0) for d in st['days']]
         mx = max(1, *v)
         pk = v.index(mx) - 2
-        if 1 <= pk <= 3: peaks13 += 1
         bars = ''.join(f'<rect x="{k * 20 + 2}" y="{60 - n / mx * 56:.1f}" width="16" height="{n / mx * 56:.1f}" rx="2" fill="{"#10243A" if k == 2 else "#FF8A3D"}"/>' for k, n in enumerate(v))
         sel = st['end'] == current
         cur = ' aria-current="page"' if sel else ''
@@ -153,7 +166,11 @@ def cards(storms, current=None, prefix=''):
                    f'<h4>{short(st["end"])}</h4><small>{st["snow"]} in · peak {mx} on day {"+" if pk >= 0 else ""}{pk}</small>'
                    f'<svg viewBox="0 0 200 74" aria-hidden="true">{bars}<path d="M0 61 H200" stroke="#C9D6E3"/><text x="51" y="73" text-anchor="middle" font-size="10" fill="#47607C">LAST SNOW</text></svg>'
                    f'<span class="go">{"Showing above" if sel else "Replay this storm →"}</span></a>')
-    lede_ = f'In {peaks13} of {len(storms)} big storms, sidewalk reports peaked 1 to 3 days after the last day of snow.'
+    peaks13 = sum(1 for st in storms if 1 <= _peak(st) <= 3)
+    big = [st for st in storms if st['snow'] >= 6]
+    peaks_big = sum(1 for st in big if 1 <= _peak(st) <= 3)
+    lede_ = (f'In {peaks13} of {len(storms)} storms, sidewalk reports peaked 1 to 3 days after the last day of snow '
+             f'({peaks_big} of the {len(big)} with 6 inches or more).')
     return '\n'.join(out), lede_
 
 
@@ -206,10 +223,10 @@ INDEX = '''<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Every big storm since 2016 · Somerville Snow Guide</title>
-<meta name="description" content="Replay every big Somerville snowstorm since 2016, hour by hour: the snow, the City's snow emergency, the shoveling deadline, 311 reports, the T and Bluebikes. By the Somerville PTAC.">
-<meta property="og:title" content="Every big storm since 2016 · Somerville Snow Guide">
-<meta property="og:description" content="Replay every big Somerville snowstorm since 2016, hour by hour.">
+<title>Every storm since 2016 · Somerville Snow Guide</title>
+<meta name="description" content="Replay every Somerville snowstorm of 3 inches or more since 2016, hour by hour: the snow, the City's snow emergency, the shoveling deadline, 311 reports, the T and Bluebikes. By the Somerville PTAC.">
+<meta property="og:title" content="Every storm since 2016 · Somerville Snow Guide">
+<meta property="og:description" content="Replay every Somerville snowstorm of 3 inches or more since 2016, hour by hour.">
 <meta name="theme-color" content="#10243A">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -222,13 +239,13 @@ INDEX = '''<!DOCTYPE html>
 <section class="replay-all" style="background:var(--paper)">
 <div class="wrap">
 <div class="eyebrow">Storm replays</div>
-<h2 style="margin-top:14px">Every big storm<br>since 2016</h2>
+<h2 style="margin-top:14px">Every storm<br>since 2016</h2>
 <p class="lede" style="margin-top:18px">%%ALL_LEDE%% Pick a storm to replay it hour by hour: the snow, the City's snow emergency, the shoveling deadline, 311, the T and Bluebikes.</p>
 <p style="margin-top:20px"><a class="btn" href="%%LATEST%%.html">Replay the latest: %%LATEST_NAME%%</a></p>
 <div class="multiples">
 %%CARDS%%
 </div>
-<p class="cite" style="margin-top:20px">Sidewalk reports to 311 per day, from 2 days before to 7 days after the last day of snow (marked). Storms with 6 inches or more in a day at Logan.</p>
+<p class="cite" style="margin-top:20px">Sidewalk reports to 311 per day, from 2 days before to 7 days after the last day of snow (marked). Storms with 3 inches or more at Logan, over consecutive snowy days. Small storms count: they leave ice too.</p>
 </div>
 </section>
 <footer><div class="wrap"><p>By the Somerville PTAC. Not an official City page. The City's rules apply: <a href="https://www.somervillema.gov/snow">somervillema.gov/snow</a>.</p></div></footer>

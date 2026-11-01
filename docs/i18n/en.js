@@ -161,7 +161,7 @@ export default {
     "replay.04": "Reports come late",
     "replay.05": "Sidewalk reports peak 1 to 3 days after the snow stops. The deadline is 6 daylight hours.",
     "replay.06": "Replay the latest storm",
-    "replay.07": "See every big storm",
+    "replay.07": "See every storm",
     "footer.01": "Somerville PTAC",
     "footer.02": "Not an official City page. The City's rules apply. Official rules in 9 languages: <a href=\"https://www.somervillema.gov/snow\">somervillema.gov/snow</a>",
     "footer.03": "Sources",

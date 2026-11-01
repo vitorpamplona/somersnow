@@ -21,7 +21,7 @@ export default {
     "replay.04": "Rapò yo vin an reta",
     "replay.05": "Rapò sou twotwa yo rive nan pi wo pwen yo 1 a 3 jou apre nèj la sispann. Dènye dat la se 6 èdtan lajounen.",
     "replay.06": "Revize dènye tanpèt la",
-    "replay.07": "Gade tout gwo tanpèt yo",
+    "replay.07": "Gade tout tanpèt yo",
     "top.01": "Ivè 2026/27 · Somerville, MA",
     "top.02": "Nèj &amp; glas<br/>sou <em>twotwa</em> a",
     "top.03": "Yon bis vo sa chemen pou rive jwenn li vo.",

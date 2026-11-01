@@ -21,7 +21,7 @@ export default {
     "replay.04": "Los reportes llegan tarde",
     "replay.05": "Los reportes de aceras llegan al máximo 1 a 3 días después de que para la nieve. El plazo es de 6 horas de luz.",
     "replay.06": "Repite la última tormenta",
-    "replay.07": "Ve todas las tormentas grandes",
+    "replay.07": "Ve todas las tormentas",
     "top.01": "Invierno 2026/27 · Somerville, MA",
     "top.02": "Nieve y hielo<br/>en la <em>acera</em>",
     "top.03": "Un bus solo sirve si puedes llegar caminando.",

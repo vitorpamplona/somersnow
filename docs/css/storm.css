@@ -95,7 +95,10 @@
 .mini small{color:var(--mute);font-size:14px}
 .mini svg{width:100%;height:auto;display:block;margin-top:8px}
 .mini.sel{outline:3px solid var(--orange)}
-.mini.gap{background:transparent;border:2px dashed #A9C4E4;color:var(--mute)}
+.mini.gap{background:transparent;border:2px dashed #A9C4E4;color:var(--mute);display:flex;align-items:center}
+.multiples .winter{grid-column:1/-1;margin:18px 0 -4px;font-family:var(--display);font-weight:800;font-size:22px;text-transform:uppercase;color:var(--night)}
+.multiples .winter:first-child{margin-top:0}
+.multiples .winter small{font-family:var(--body);font-weight:500;font-size:15px;text-transform:none;color:var(--mute);margin-left:8px}
 .mini.gap:hover{transform:none;box-shadow:none}
 .mini.gap small{color:var(--mute)}
 

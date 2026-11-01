@@ -8,7 +8,7 @@ Sources, caveats and what each file holds: research/data-sources.md.
   docs/data/storms.json         every 6-inch-plus storm since July 2015: daily snowfall and 311 requests around it
   docs/data/wards.json          Somerville ward outlines (lon/lat), simplified
   docs/data/bus-stops.json      MBTA bus stops in Somerville with average weekday boardings
-  docs/data/storm-<id>.json     each big storm hour by hour (id = last day of snow): weather at Logan, 311 requests, City notices
+  docs/data/storm-<id>.json     each storm (3 inches or more) hour by hour (id = last day of snow): weather at Logan, 311 requests, City notices
 """
 import storm_extras
 import csv, io, json, math, os, statistics, struct, sys, tempfile, time, urllib.parse, urllib.request, zipfile
@@ -38,7 +38,7 @@ GROUPS = {
 }
 TYPE_GROUP = {t: g for g, ts in GROUPS.items() for t in ts}
 
-# Every big storm in storms.json gets an hour-by-hour replay file, named by its last day of snow (storm-<id>.json).
+# Every storm (3 inches or more) in storms.json gets an hour-by-hour replay file, named by its last day of snow (storm-<id>.json).
 # CITY adds what the City announced for a storm: snow emergency times and notices, each with the page it came from.
 # Times are Somerville local time. Storms without an entry replay without emergency messages.
 NEWS = 'https://www.somervillema.gov/news/'
@@ -75,6 +75,8 @@ CITY = {
     },
 }
 
+
+STORM_MIN = 3.0  # inches at Logan over the storm's consecutive snowy days (each with 0.5 in or more)
 
 def get(url, params=None, data=None, tries=4):
     if params:
@@ -374,19 +376,23 @@ def main():
         'normal': round(statistics.median(winters[s] for s in range(1991, 2021)), 1) if all(s in winters for s in range(1991, 2021)) else None,
     })
 
-    # storms.json: consecutive snow days with a 6-inch-plus day
+    # storms.json: runs of consecutive days with half an inch or more at Logan, 3 inches or more in all.
+    # (Until Nov 2026 the cutoff was a 6-inch day; small storms also leave ice and complaints, so they count now.
+    # A storm's id, its last day of snow, is the same under both rules.)
     by_day = defaultdict(Counter)
     for t, g, _, _ in reqs:
         by_day[t.date()][g] += 1
     days = sorted(daily)
     storms, used = [], set()
     for d in days:
-        if daily[d] >= 6 and d not in used:
+        if daily[d] >= 0.5 and d not in used:
             a = b = date.fromisoformat(d)
             while daily.get((a - timedelta(1)).isoformat(), 0) >= 0.5: a -= timedelta(1)
             while daily.get((b + timedelta(1)).isoformat(), 0) >= 0.5: b += timedelta(1)
             span = [(a + timedelta(k)).isoformat() for k in range((b - a).days + 1)]
             used.update(span)
+            if sum(daily[x] for x in span) < STORM_MIN:
+                continue
             storms.append({
                 'start': a.isoformat(), 'end': b.isoformat(), 'snow': round(sum(daily[x] for x in span), 1),
                 'days': [[(b + timedelta(k)).isoformat(), daily.get((b + timedelta(k)).isoformat(), 0), dict(by_day[b + timedelta(k)])]

@@ -181,8 +181,8 @@ def t_entries(cached, windows):
         if not f:
             continue
         print(f'    station entries {y}…', file=sys.stderr)
-        with z.open(f) as fh:
-            for r in csv.DictReader(io.TextIOWrapper(fh, encoding='utf-8-sig')):
+        with _text(z, f) as fh:
+            for r in csv.DictReader(fh):
                 if r['service_date'] in days:
                     seen_days.add(r['service_date'])
                     if r['station_name'] in names or r['stop_id'] in STATIONS:
@@ -215,8 +215,8 @@ def bikes(cached, windows, inside):
         f = next(n for n in z.namelist() if n.endswith('.csv') and not n.startswith('__'))
         print(f'    bikes {y}-{m:02d}…', file=sys.stderr)
         have.add((y, m))
-        with z.open(f) as fh:
-            for r in csv.DictReader(io.TextIOWrapper(fh, encoding='utf-8-sig')):
+        with _text(z, f) as fh:
+            for r in csv.DictReader(fh):
                 st = r.get('started_at') or r.get('starttime')
                 lat = r.get('start_lat') or r.get('start station latitude')
                 lon = r.get('start_lng') or r.get('start station longitude')
@@ -262,8 +262,8 @@ def alerts(cached, windows, routes, stops):
             f = next((n for n in z.namelist() if n.endswith((f'alerts_{y}_{m:02d}.csv', f'{y}-{m:02d}_ALERTS.csv'))), None)
             if not f:
                 continue
-            with z.open(f) as fh:
-                for r in csv.DictReader(io.TextIOWrapper(fh, encoding='utf-8-sig')):
+            with _text(z, f) as fh:
+                for r in csv.DictReader(fh):
                     if r['alert_id'] in seen or not r.get('created_dt'):
                         continue
                     # MBTA archive times end in 'Z' but are Boston wall-clock time (alerts are created 7-8 a.m., almost
@@ -407,8 +407,8 @@ def buses(cached, windows, som_stops, today_routes):
                 continue
             print(f'    buses {y} {sorted(got)}…', file=sys.stderr)
             have_months.update((y, m) for m in got)
-            with z.open(f) as fh:  # pass 1: which routes stopped in Somerville that month
-                rd = csv.reader(io.TextIOWrapper(fh, encoding='utf-8-sig'))
+            with _text(z, f) as fh:  # pass 1: which routes stopped in Somerville that month
+                rd = csv.reader(fh)
                 head = [h.strip().lower().replace(' ', '') for h in next(rd)]
                 i_day = next(head.index(n) for n in ('service_date', 'servicedate') if n in head)
                 i_rt = next(head.index(n) for n in ('route_id', 'route') if n in head)
@@ -419,8 +419,8 @@ def buses(cached, windows, som_stops, today_routes):
                         if rt in today or r[i_st] in som_stops:
                             served[(y, int(r[i_day][5:7]))].add(rt)
             want = set().union(*served.values()) if served else set()
-            with z.open(f) as fh:
-                rd = csv.reader(io.TextIOWrapper(fh, encoding='utf-8-sig'))
+            with _text(z, f) as fh:
+                rd = csv.reader(fh)
                 head = [h.strip().lower().replace(' ', '') for h in next(rd)]
                 col = {k: head.index(k) for k in head}
                 ci = lambda *names: next(col[n] for n in names if n in col)
@@ -486,10 +486,15 @@ SUBWAY_SEGMENTS = {frozenset(p) for p in [
     ('place-gilmn', 'place-mgngl'), ('place-mgngl', 'place-balsq'), ('place-balsq', 'place-mdftf')]}
 
 
-def _open_member(path, member):
+def _text(z, member):
+    """A text stream for one file in an open ZipFile (falls back to the system unzip for Deflate64)."""
+    return _open_member(z.filename, member, z)
+
+
+def _open_member(path, member, z=None):
     """A text stream for one file in a zip. Some MBTA archives use a compression Python's zipfile can't read
     (Deflate64); the system 'unzip' can."""
-    z = zipfile.ZipFile(path)
+    z = z or zipfile.ZipFile(path)
     try:
         return io.TextIOWrapper(z.open(member), encoding='utf-8-sig')
     except NotImplementedError:

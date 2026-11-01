@@ -58,6 +58,11 @@
 
 /* getting around lanes */
 .lanes-panel{padding:18px 16px 12px}
+.lanes-panel{position:relative}
+.hovertip[hidden]{display:none}
+.hovertip{position:absolute;z-index:5;max-width:300px;background:#fff;color:var(--night);font-size:14px;line-height:1.35;padding:10px 12px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.35);pointer-events:none}
+.hovertip b{font-weight:700}
+.hovertip hr{border:0;border-top:1px solid #C9D6E3;margin:8px 0}
 #lanes svg{width:100%;height:auto;max-width:100%;display:block;cursor:ew-resize;touch-action:pan-y;user-select:none;-webkit-user-select:none}
 #lanes svg:focus{outline:none}
 #lanes svg:focus-visible{outline:3px solid var(--orange);outline-offset:4px;border-radius:8px}

@@ -15,7 +15,7 @@ say "not available" instead of showing a false zero. Big downloads are cached in
   web        daily views of the City's snow pages (top 20 pages per day; the City's data covers 2020 to May 2023)
   buses      MBTA bus trips run and median minutes late on routes serving Somerville, per hour, with the 4-week baseline (2020+)
 """
-import csv, io, json, os, sys, urllib.parse, zipfile
+import csv, io, json, os, re, sys, urllib.parse, zipfile
 from collections import Counter, defaultdict
 from datetime import date, datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
@@ -94,15 +94,45 @@ def police(get, windows):
     return out
 
 
+def _nice(v):
+    """'COLLISION WITH PARKED MOTOR VEHICLE  ' -> 'Collision with parked motor vehicle'; '' for empty/unknown."""
+    v = ' '.join((v or '').split())
+    return '' if v.upper() in ('', 'UNKNOWN', 'NOT REPORTED', 'OTHER', 'NONE') else v[0].upper() + v[1:].lower()
+
+
+def _street(addr):
+    """Street or intersection only, no house number: '230 SOMERVILLE AVE. Somerville, MA' -> 'Somerville Ave'.
+    The City publishes exact addresses; we trim them so a single crash can't point at a home."""
+    a = re.sub(r',?\s*Somerville,?\s*MA.*$', '', addr or '', flags=re.I).strip()
+    a = re.sub(r'^\d+[A-Z]?(-\d+)?\s+', '', a).rstrip('.').strip()
+    return ' '.join(w.capitalize() if not re.match(r'^(and|at|of)$', w, re.I) else w.lower() for w in a.split())
+
+
 def crashes(get, windows):
+    """Crash reports in each window, with what a reader needs to understand one crash (see the dataset's columns)."""
     out = {}
     for sid, t0, t1 in windows:
         if t1 < datetime(2018, 3, 23):
             out[sid] = None
             continue
-        q = {'$select': 'dtcrash,roadsurfdesc,nonmotoristpedestrian', '$where': f"dtcrash >= '{t0.isoformat()}' and dtcrash < '{t1.isoformat()}'", '$limit': 1000}
-        rows = json.loads(get(CRASHES, q))
-        out[sid] = [[_idx(datetime.fromisoformat(r['dtcrash'][:16]), t0), (r.get('roadsurfdesc') or '').strip().title(), int(r.get('nonmotoristpedestrian') or 0) > 0] for r in rows]
+        q = {'$where': f"dtcrash >= '{t0.isoformat()}' and dtcrash < '{t1.isoformat()}'", '$limit': 1000, '$order': 'dtcrash'}
+        items = []
+        for r in json.loads(get(CRASHES, q)):
+            t = datetime.fromisoformat(r['dtcrash'][:16])
+            if not (t0 <= t < t1):  # the API compares text ('2026-03-01 09:42' < '2026-03-01T00:00'): check the real time
+                continue
+            n = lambda k: int(float(r.get(k) or 0))
+            hurt = ('fatal' if n('fatalinjury') else 'serious' if n('suspectedseriousinjury') else 'minor' if n('suspectedminorinjury')
+                    else 'possible' if n('possibleinjury') else 'none' if n('noapparentinjury') else '')
+            items.append({
+                'i': _idx(t, t0), 't': t.strftime('%H:%M'), 'where': _street(r.get('address')),
+                'what': _nice(r.get('hrmfeventdesc2')), 'how': _nice(r.get('manrcolldesc')),
+                'surface': _nice(r.get('roadsurfdesc')), 'weather': _nice(r.get('weathcond1desc')), 'light': _nice(r.get('ambntlightdesc')),
+                'hurt': hurt, 'ped': n('nonmotoristpedestrian'), 'bike': n('nonmotoristcyclist'),
+                'pedWhere': _nice(r.get('nonmtrstlocdesc')), 'pedDoing': _nice(r.get('nonmtrstactdesc')),
+                'hitRun': (r.get('hitrunflag') or '').strip().upper() == 'Y',
+            })
+        out[sid] = items
     return out
 
 
@@ -113,7 +143,10 @@ def calls311(get, windows):
         q = {'$select': 'type,date_created', '$where': "type in (%s) and date_created >= '%s' and date_created < '%s'" % (','.join("'%s'" % t for t in types), t0.isoformat(), t1.isoformat()), '$limit': 20000}
         park, trash = Counter(), Counter()
         for r in json.loads(get(S311, q)):
-            i = _idx(datetime.strptime(r['date_created'][:16], '%Y-%m-%d %H:%M'), t0)
+            t = datetime.strptime(r['date_created'][:16], '%Y-%m-%d %H:%M')
+            if not (t0 <= t < t1):  # see crashes(): text comparison lets the next morning in
+                continue
+            i = _idx(t, t0)
             (park if r['type'] in PARKING else trash)[i] += 1
         out[sid] = {'parking': sorted(park.items()), 'trash': sorted(trash.items())}
     return out

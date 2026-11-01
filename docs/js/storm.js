@@ -205,7 +205,7 @@ const LANES = [
   { key: 'tows', label: 'Snow emergency tows (police)', note: 'per 8-hour shift', color: '#3B82F6', kind: 'shift', from: 'police dispatch data starts in 2017' },
   { key: 'parking', label: 'Parking calls to 311', note: 'illegal parking, towed cars', color: '#7FA7F5', kind: 'hourly' },
   { key: 'alerts', label: 'MBTA alerts, Somerville routes', note: 'yellow delay · orange detour · red cuts · purple elevator', kind: 'ticks', from: 'the MBTA alerts archive starts in 2020' },
-  { key: 'crashes', label: 'Crashes', note: 'orange: a pedestrian was involved', kind: 'dots', from: 'crash data starts in March 2018' },
+  { key: 'crashes', label: 'Crashes', note: 'orange: pedestrian or cyclist · large: someone hurt · tap for details', kind: 'dots', from: 'crash data starts in March 2018' },
 ];
 let LW = CW; // lanes width in px, measured when built
 const lx = (i) => PAD + (i / N) * (LW - 2 * PAD);
@@ -266,10 +266,17 @@ function buildLanes() {
         if (w > 1 && n && w * bw_ >= 18) s += `<text x="${lx(i) + (w * bw_) / 2}" y="${hh > 16 ? yb - hh + 13 : yb - hh - 3}" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">${n}</text>`;
       });
     } else if (L.kind === 'ticks') {
-      d.forEach(([i, kind, label, head]) => { s += `<rect x="${lx(i)}" y="${top + 4}" width="${Math.max(2, bw_)}" height="${STRIP - 8}" fill="${ALERT[kind]}"><title>${label}: ${head.replace(/</g, '&lt;')}</title></rect>`; });
+      d.forEach(([i, kind, label, head]) => {
+        const tip = `<b>${dayTm(tOf(i))} · MBTA ${esc(label.replace(/^Green-/, 'Green Line '))}</b><br>${esc(head)}`;
+        s += `<g data-tip="${attr(tip)}"><rect x="${lx(i) - 3}" y="${top}" width="${Math.max(2, bw_) + 6}" height="${STRIP}" fill="transparent"/><rect x="${lx(i)}" y="${top + 4}" width="${Math.max(2, bw_)}" height="${STRIP - 8}" fill="${ALERT[kind]}"/></g>`;
+      });
       if (!d.length) s += msg(top + STRIP / 2 + 5, 'No alerts on Somerville routes or stations.');
     } else if (L.kind === 'dots') {
-      d.forEach(([i, surface, ped]) => { s += `<circle cx="${lx(i) + bw_ / 2}" cy="${top + STRIP / 2}" r="5.5" fill="${ped ? '#FF8A3D' : '#DCE8F5'}"><title>${surface || 'Crash'}${ped ? ', pedestrian involved' : ''}</title></circle>`; });
+      d.forEach((c) => {
+        const nonMotor = c.ped || c.bike; const hurt = c.hurt && c.hurt !== 'none';
+        const cx = lx(c.i) + bw_ / 2; const cy = top + STRIP / 2;
+        s += `<g data-tip="${attr(crashTip(c))}"><circle cx="${cx}" cy="${cy}" r="14" fill="transparent"/><circle cx="${cx}" cy="${cy}" r="${hurt ? 7.5 : 5}" fill="${nonMotor ? '#FF8A3D' : '#DCE8F5'}"${hurt ? ' stroke="#fff" stroke-width="2"' : ''}/></g>`;
+      });
       if (!d.length) s += msg(top + STRIP / 2 + 5, 'No crashes reported.');
     }
   });
@@ -280,6 +287,51 @@ function buildLanes() {
   s += labels + '</svg>';
   $('#lanes').innerHTML = s;
 }
+// tooltips for crash dots and MBTA alert ticks (hover with a mouse, tap on a phone)
+const esc = (v) => String(v ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const attr = (v) => v.replace(/"/g, '&quot;');
+const HURT = { fatal: 'Someone was killed', serious: 'Serious injury', minor: 'Minor injury', possible: 'Possible injury', none: 'No injuries', '': 'Injuries not reported' };
+function crashTip(c) {
+  const [hh, mm] = c.t.split(':').map(Number);
+  const when = dayTm(tOf(c.i) + mm * 6e4);
+  const what = c.what ? `${c.what}${c.how && !/^not a collision/i.test(c.how) ? ` (${c.how.toLowerCase()})` : ''}` : 'Crash';
+  const cond = [c.surface && `${c.surface.toLowerCase()} road`, c.weather && c.weather.toLowerCase(), c.light && c.light.toLowerCase()].filter(Boolean).join(' · ');
+  const who = c.ped || c.bike ? `<br><b>${c.ped ? 'Pedestrian' : 'Cyclist'}</b>${[c.pedWhere, c.pedDoing].filter(Boolean).length ? `: ${esc([c.pedWhere, c.pedDoing].filter(Boolean).join(', ').toLowerCase())}` : ''}` : '';
+  return `<b>${when}${c.where ? ` · ${esc(c.where)}` : ''}</b><br>${esc(what)}${cond ? `<br>${esc(cond)}` : ''}${who}<br>${HURT[c.hurt] ?? ''}${c.hitRun ? ' · hit and run' : ''}`;
+}
+function enableTips(svg) {
+  const panel = svg.closest('.panel');
+  let tip = panel.querySelector('.hovertip');
+  if (!tip) { tip = document.createElement('div'); tip.className = 'hovertip'; tip.hidden = true; tip.setAttribute('role', 'tooltip'); panel.appendChild(tip); }
+  const show = (els) => {
+    const el = els[0];
+    tip.innerHTML = els.map((x) => x.dataset.tip).join('<hr>'); tip.hidden = false;
+    const pr = panel.getBoundingClientRect(); const r = el.getBoundingClientRect();
+    const w = tip.offsetWidth; const h = tip.offsetHeight;
+    const x = Math.max(8, Math.min(pr.width - w - 8, r.left + r.width / 2 - pr.left - w / 2));
+    const above = r.top - pr.top - h - 8;
+    tip.style.left = `${x}px`; tip.style.top = `${above >= 0 ? above : r.bottom - pr.top + 8}px`;
+  };
+  // Dots and ticks can sit a few pixels apart: pick the one nearest the pointer in that lane, not whichever is on top.
+  const pick = (e) => {
+    const r = svg.getBoundingClientRect(); const k = svg.viewBox.baseVal.width / r.width;
+    const x = (e.clientX - r.left) * k; const y = (e.clientY - r.top) * k;
+    const near = [];
+    svg.querySelectorAll('[data-tip]').forEach((el) => {
+      const b = el.getBBox();
+      if (y < b.y - 4 || y > b.y + b.height + 4) return;
+      const d = Math.abs(b.x + b.width / 2 - x);
+      if (d < 18) near.push([d, el]);
+    });
+    if (!near.length) return null;
+    const bd = Math.min(...near.map(([d]) => d));
+    return near.filter(([d]) => d <= bd + 2).map(([, el]) => el).slice(0, 4); // dots that overlap: show them all
+  };
+  svg.addEventListener('pointermove', (e) => { if (e.buttons) return; const els = pick(e); if (els) show(els); else tip.hidden = true; });
+  svg.addEventListener('pointerleave', () => { tip.hidden = true; });
+  svg.addEventListener('pointerdown', (e) => { const els = pick(e); if (els) setTimeout(() => show(els)); else tip.hidden = true; });
+}
+
 // "today so far" vs. the same hours in a normal week, for the counters under the lanes
 function todayVsNormal(series, i) {
   if (!series) return null;
@@ -399,6 +451,7 @@ buildChart();
 buildLanes();
 enableDrag($('#chart svg'));
 enableDrag($('#lanes svg'));
+enableTips($('#lanes svg'));
 buildMap();
 render(Math.max(0, Math.ceil(idxOf(declared)) - 1));
 lockPhoneHeight();
@@ -409,7 +462,7 @@ lockPhoneHeight();
     timer2 = setTimeout(() => {
       const w = Math.round($('#lanes').clientWidth);
       if (Math.abs(w - lastW) < 4) return;
-      lastW = w; buildLanes(); enableDrag($('#lanes svg')); render(+scrub.value); lockPhoneHeight();
+      lastW = w; buildLanes(); enableDrag($('#lanes svg')); enableTips($('#lanes svg')); render(+scrub.value); lockPhoneHeight();
     }, 150);
   });
 }

@@ -56,7 +56,7 @@ The guide teaches the rules; `docs/storms/` shows what actually happens in a sto
 | NWS warnings for zone MAZ014 | IEM VTEC archive | all |
 | 311 snow requests (sidewalk, street, emergency questions, space savers) and parking/trash calls | City open data `4pyi-uqq6` | all |
 | Snow emergency tows, disabled vehicles (per 8-hour police shift) | City open data `mdb2-mgc7` | 2017 on |
-| Crashes | City open data `mtik-28va` | March 2018 on |
+| Crashes (time, street or intersection without house number, what happened, road/weather/light, injuries, pedestrian or cyclist and where they were; shown on hover/tap) | City open data `mtik-28va` | March 2018 on |
 | Views of the City's snow pages | City open data `754v-8e35` (top 20 pages a day) | Dec 2020 – May 2023 |
 | T gated entries at Somerville stations (30-minute) | MBTA open data, yearly archive | all |
 | Bus trips run and minutes late, routes serving Somerville | MBTA bus arrival/departure times | Dec 2020 on |
@@ -69,6 +69,8 @@ The guide teaches the rules; `docs/storms/` shows what actually happens in a sto
 - "Normal" for the T, buses and Bluebikes is the same hour on the 4 weeks before the window. Holidays in those weeks distort it (Feb 2026: −86% vs. that average, −89% vs. Feb 9 alone); say "compared with a normal week", not "usual".
 - 311 counts complaints, not unshoveled sidewalks. Reports per inch of snow jumped after 2023 (likely easier reporting), so don't present a trend as worse shoveling (question 47).
 - When a source doesn't cover a storm, show "not available" with the reason, never a zero.
+- Socrata compares dates as text (`'2026-03-01 09:42' < '2026-03-01T00:00'` is true), so always re-check each record's time in Python against the window, as `storm_extras.py` does.
+- Crash locations are trimmed to the street or intersection (no house number): the City publishes exact addresses, but a single crash with an injury shouldn't point at a home.
 - The deadline comes from `deadline.js`. Two City notices let us check it: Feb 26, 2022 (City 12:30 p.m., calculator 12:24) and Feb 24, 2026 (City "1 p.m.", calculator 12:28).
 - New City facts found in data work go through the "Making changes" rules above (a source, then the facts list); e.g. the even-side rule for 2026/27 came from a City notice.
 

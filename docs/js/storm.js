@@ -277,6 +277,8 @@ const LANES = [
   { key: 'alerts', label: 'MBTA alerts, Somerville routes', note: 'yellow delay · orange detour · red cuts · purple elevator', kind: 'ticks', from: 'the MBTA alerts archive starts in 2020' },
   { key: 'thaw', label: 'Melt and refreeze', note: 'line: temperature · dashes: 32°F · blue: freezing again after a thaw · bars: salting requests', kind: 'thaw' },
   { key: 'crashes', label: 'Crashes', note: 'orange: pedestrian or cyclist · large: someone hurt · tap for details', kind: 'dots', from: 'crash data starts in March 2018' },
+  { key: 'fireEms', label: 'Medical calls (Fire Dept.)', note: 'bars: this week · line: a normal week', color: '#F87171', kind: 'vsBase', from: 'Fire Department records cover 2019–2025 (none were filed Feb 25–28 and Dec 10–15, 2022)' },
+  { key: 'fireEvents', label: 'Wires down, carbon monoxide, crashes', note: 'yellow wires · purple CO · red crash (Fire Dept.) · tap for details', kind: 'events', from: 'Fire Department records cover 2019–2025 (none were filed Feb 25–28 and Dec 10–15, 2022)' },
 ];
 let LW = CW; // lanes width in px, measured when built
 const lx = (i) => PAD + (i / N) * (LW - 2 * PAD);
@@ -288,6 +290,8 @@ function laneData(key) {
   if (key === 'thaw') return S.hours.some((h) => h[1] != null) ? { temps: S.hours.map((h) => h[1]), salting: S.salting || [] } : null;
   if (key === 'busLate') return X.buses ? X.buses.late : null;
   if (key === 'busSpeed') return X.buses ? X.buses.speed || null : null;
+  if (key === 'fireEms') return X.fire ? X.fire.ems : null;
+  if (key === 'fireEvents') return X.fire ? X.fire.events : null;
   return X[key] ?? null;
 }
 function buildLanes() {
@@ -301,7 +305,7 @@ function buildLanes() {
     if (wide || text.length * 6.6 < LW - 2 * PAD || cut < 0) return `<text x="${LW / 2}" y="${y}" text-anchor="middle" font-size="13" fill="#9DB2CA">${text}</text>`;
     return `<text x="${LW / 2}" y="${y - 8}" text-anchor="middle" font-size="12" fill="#9DB2CA">${text.slice(0, cut + 1)}<tspan x="${LW / 2}" dy="15">${text.slice(cut + 2)}</tspan></text>`;
   };
-  let s = `<svg viewBox="0 0 ${LW} ${H}" width="${LW}" height="${H}" role="img" aria-label="How the city got around during the storm: T entries, bus trips, lateness and speed, subway speed, Bluebikes trips, card spending, tows, parking calls, MBTA alerts and crashes, hour by hour">`;
+  let s = `<svg viewBox="0 0 ${LW} ${H}" width="${LW}" height="${H}" role="img" aria-label="How the city got around during the storm: T entries, bus trips, lateness and speed, subway speed, Bluebikes trips, card spending, tows, parking calls, MBTA alerts, crashes and Fire Department calls, hour by hour">`;
   let labels = ''; // drawn last, above the "future" shading and the time line
   LANES.forEach((L, k) => {
     const y0 = k * LH; const top = y0 + LABEL; const base = top + STRIP;
@@ -384,6 +388,14 @@ function buildLanes() {
         s += `<g data-tip="${attr(tip)}"><rect x="${lx(i) - 3}" y="${top}" width="${Math.max(2, bw_) + 6}" height="${STRIP}" fill="transparent"/><rect x="${lx(i)}" y="${top + 4}" width="${Math.max(2, bw_)}" height="${STRIP - 8}" fill="${ALERT[kind]}"/></g>`;
       });
       if (!d.length) s += msg(top + STRIP / 2 + 5, 'No alerts on Somerville routes or stations.');
+    } else if (L.kind === 'events') {
+      // Fire Department calls: one tick each, colored by type; street only, never a house number
+      const FIRE = { wires: '#F4C95D', co: '#C084FC', crash: '#FF6B6B' };
+      d.forEach(([i, kind, label, street]) => {
+        const tip = `<b>${dayTm(tOf(i))} · Fire Dept.</b><br>${esc(label)}${street ? `<br>${esc(street)}` : ''}`;
+        s += `<g data-tip="${attr(tip)}"><rect x="${lx(i) - 3}" y="${top}" width="${Math.max(2, bw_) + 6}" height="${STRIP}" fill="transparent"/><rect x="${lx(i)}" y="${top + 4}" width="${Math.max(2, bw_)}" height="${STRIP - 8}" fill="${FIRE[kind]}"/></g>`;
+      });
+      if (!d.length) s += msg(top + STRIP / 2 + 5, 'No wires down, carbon monoxide calls or crashes.');
     } else if (L.kind === 'dots') {
       d.forEach((c) => {
         const nonMotor = c.ped || c.bike; const hurt = c.hurt && c.hurt !== 'none';

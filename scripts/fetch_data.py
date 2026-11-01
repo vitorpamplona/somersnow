@@ -498,6 +498,7 @@ def main():
         'buses': buses,
         'subway': storm_extras.subway(cached, windows, get),
         'spending': storm_extras.spending(cached, windows),
+        'fire': storm_extras.fire_dept(get, windows, CACHE),
     }
 
     MONTHS = 'January February March April May June July August September October November December'.split()

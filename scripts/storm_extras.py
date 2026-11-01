@@ -554,6 +554,76 @@ def spending(cached, windows):
     return out
 
 
+# ---------- Somerville Fire Department incidents (NFIRS, 2019-2025) ----------
+# FEMA/USFA's National Fire Incident Reporting System, "U.S. Fire Department Responses" (the light public data release
+# on ArcGIS), Somerville Fire Department = FDID 17274. Every call: fires, medical (EMS) calls, wires down, CO, crashes.
+NFIRS_SERVICES = {2019: 'NFIRS_PDR_Light_Service_2019', 2020: 'NFIRS_PDR_Light_Service_2020', 2021: 'NFIRS_PDR_Light_2021',
+                  2022: 'NFIRS_PDR_Light_Service_2022', 2023: 'NFIRS_PDR_Light_Service_2023', 2024: 'NFIRS_PDR_Light_Service_2024',
+                  2025: 'NFIRS_PDR_Light_Service_2025'}
+NFIRS_URL = 'https://services.arcgis.com/XG15cJAlne2vxtgt/arcgis/rest/services/{}/FeatureServer/0/query'
+# NFIRS 5.0 incident types shown as ticks
+FIRE_EVENTS = {'444': ('wires', 'Power line down'), '445': ('wires', 'Arcing, shorted electrical equipment'),
+               '440': ('wires', 'Electrical wiring or equipment problem'), '442': ('wires', 'Overheated motor'),
+               '424': ('co', 'Carbon monoxide incident'), '736': ('co', 'CO detector went off (malfunction)'),
+               '746': ('co', 'CO detector went off, no CO found'),
+               '322': ('crash', 'Vehicle crash with injuries'), '323': ('crash', 'Vehicle hit a pedestrian'),
+               '324': ('crash', 'Vehicle crash, no injuries')}
+EMS_TYPES = {'321', '311'}  # EMS call; medical assist
+
+
+def fire_dept(get, windows, cache_dir):
+    """Per storm: medical (EMS) calls per hour with the same hour on the 4 weeks before, and ticks for wires down, carbon
+    monoxide and vehicle crashes (time, type, street without house number). Alarm times are Boston wall-clock time
+    (calls bottom out at 3-5 a.m.). Days with no incidents at all are gaps in the release (Feb 25-28 and Dec 10-15,
+    2022): a storm whose window touches one shows "not available", and normal weeks skip them."""
+    rows = []
+    for y, svc in NFIRS_SERVICES.items():
+        path = os.path.join(cache_dir, f'nfirs-{y}.json')
+        if not os.path.exists(path):
+            print(f'  downloading Somerville Fire incidents {y}…', file=sys.stderr)
+            got, off = [], 0
+            while True:
+                d = json.loads(get(NFIRS_URL.format(svc), {'where': "FDID='17274' AND STATE='MA'", 'f': 'json', 'resultOffset': off,
+                                                           'resultRecordCount': 2000, 'orderByFields': 'OBJECTID',
+                                                           'outFields': 'ALARM,INC_TYPE,STREETNAME,OTH_INJ,OTH_DEATH'}))
+                fs = d.get('features', [])
+                got += [[f['attributes'][k] for k in ('ALARM', 'INC_TYPE', 'STREETNAME', 'OTH_INJ', 'OTH_DEATH')] for f in fs]
+                if len(fs) < 2000:
+                    break
+                off += 2000
+            with open(path + '.part', 'w') as f:
+                json.dump(got, f)
+            os.replace(path + '.part', path)
+        with open(path) as f:
+            rows += json.load(f)
+    inc = [(datetime(1970, 1, 1) + timedelta(milliseconds=a), t or '', st) for a, t, st, _, _ in rows if a]
+    per_day = Counter(t.date() for t, _, _ in inc)
+    first, last = min(per_day), max(per_day)
+    gaps = {first + timedelta(k) for k in range((last - first).days + 1)} - set(per_day)
+    ems = Counter(t.replace(minute=0, second=0, microsecond=0) for t, ty, _ in inc if ty in EMS_TYPES)
+    out = {}
+    for sid, t0, t1 in windows:
+        days = {(t0 + timedelta(hours=k)).date() for k in range(int((t1 - t0).total_seconds() // 3600))}
+        if t0.date() - timedelta(weeks=4) < first or (t1 - timedelta(hours=1)).date() > last or days & gaps:
+            out[sid] = None
+            continue
+        n = int((t1 - t0).total_seconds() // 3600)
+        now = [ems.get(t0 + k * HOUR, 0) for k in range(n)]
+        base = []
+        for k in range(n):
+            t = t0 + k * HOUR
+            prev = [ems.get(t - timedelta(weeks=w), 0) for w in (1, 2, 3, 4) if (t - timedelta(weeks=w)).date() not in gaps]
+            base.append(round(sum(prev) / len(prev), 1) if prev else None)
+        events = []
+        for t, ty, st in inc:
+            if ty in FIRE_EVENTS and t0 <= t < t1:
+                kind, label = FIRE_EVENTS[ty]
+                street = ' '.join(w.capitalize() for w in (st or '').split())  # street only, never a house number
+                events.append([_idx(t, t0), kind, label, street])
+        out[sid] = {'ems': {'now': now, 'base': base}, 'events': sorted(events)}
+    return out
+
+
 # ---------- MBTA subway travel times (2021+) ----------
 RT_ZIPS = {
     2021: 'https://www.arcgis.com/sharing/rest/content/items/4892695c4baf42419cbe19bd4995bc3a/data',

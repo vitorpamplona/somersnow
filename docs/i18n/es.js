@@ -15,6 +15,8 @@ export default {
     "header.09": "Reportar",
     "header.10": "Repetir",
     "footer.storm": "<a href=\"storms/\">Repite una tormenta pasada</a>, hora por hora.",
+    "footer.phone": "<a href=\"flyer-phone.html\">Descarga el volante para el teléfono</a> para compartir por mensaje o redes sociales.",
+    "footer.code": "<a href=\"https://github.com/vitorpamplona/somersnow\">Código fuente y datos</a>: abiertos a todos, licencia MIT.",
     "replay.01": "<span class=\"n\">08</span> Mira atrás",
     "replay.02": "Repite una<br/>tormenta pasada",
     "replay.03": "Hora por hora: la nieve, la emergencia, el plazo y cada reporte al 311.",

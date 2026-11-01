@@ -44,7 +44,9 @@ for (const st of storms) {
   const sw = (i) => (S.requests[i] || [])[k] || 0;
 
   // 1. the hourly table is the same data
-  const rows = csvRows(read(`docs/data/csv/${st.id}.csv`)).filter((r) => r.length > 1);
+  const csvFile = `docs/data/csv/${st.id}.csv`;
+  check(fs.existsSync(path.join(ROOT, csvFile)), `${st.id}: ${csvFile} is missing (npm run pages writes it)`);
+  const rows = fs.existsSync(path.join(ROOT, csvFile)) ? csvRows(read(csvFile)).filter((r) => r.length > 1) : [[]];
   const head = rows.shift();
   check(rows.length === n, `${st.id}: csv has ${rows.length} rows, expected ${n}`);
   const col = (name) => rows.map((r) => r[head.indexOf(name)]);

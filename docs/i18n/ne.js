@@ -15,6 +15,8 @@ export default {
     "header.09": "उजुरी",
     "header.10": "फेरि हेर्नुहोस्",
     "footer.storm": "<a href=\"storms/\">पुरानो हिउँ आँधी फेरि हेर्नुहोस्</a>, घण्टा-घण्टामा।",
+    "footer.phone": "<a href=\"flyer-phone.html\">फोनको पर्चा लिनुहोस्</a> सन्देश वा सामाजिक सञ्जालमा बाँड्न।",
+    "footer.code": "<a href=\"https://github.com/vitorpamplona/somersnow\">स्रोत कोड र डेटा</a>: सबैका लागि खुला, MIT लाइसेन्स।",
     "replay.01": "<span class=\"n\">08</span> पछाडि हेर्नुहोस्",
     "replay.02": "पुरानो हिउँ आँधी<br/>फेरि हेर्नुहोस्",
     "replay.03": "घण्टा-घण्टामा: हिउँ, आपतकाल, समयसीमा, र 311 मा गरिएका हरेक उजुरी।",

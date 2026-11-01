@@ -9,6 +9,8 @@ export default {
     "footer.cards": "<a href=\"cards.html\">Download the 34 cards</a> to share.",
     "footer.flyer": "<a href=\"flyer.html\">Print a flyer</a> for your door, building or shop.",
     "footer.storm": "<a href=\"storms/\">Replay a past storm</a>, hour by hour.",
+    "footer.phone": "<a href=\"flyer-phone.html\">Get the phone flyer</a> to share by text or social media.",
+    "footer.code": "<a href=\"https://github.com/vitorpamplona/somersnow\">Source code and data</a>: open to all, MIT license.",
     "share.card": "Share this card",
     "header.01": "Somerville <span>Snow</span>",
     "header.02": "Deadline",

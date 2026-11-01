@@ -52,37 +52,11 @@ h2{font-size:26px;font-weight:800;margin-bottom:8px}
 .foot b{color:var(--night)}
 @page{size:letter;margin:0}
 @media print{body{background:#fff}.tools{display:none}.page{margin:0;box-shadow:none}}
-/* Phones and narrow screens: the same flyer as one tall column at readable sizes (printing still gives the Letter page) */
-@media screen and (max-width:8.6in){
-  body{background:var(--night)}
-  .tools{background:var(--snow)}
-  .page{width:auto;height:auto;margin:0;box-shadow:none;overflow:visible}
-  .top{padding:24px 20px 22px}
-  .eyebrow{font-size:14px;letter-spacing:2px}
-  h1{font-size:clamp(40px,11vw,60px)}
-  .rules{grid-template-columns:1fr;margin-top:20px}
-  .rule{display:grid;grid-template-columns:86px 1fr;grid-template-rows:auto auto;column-gap:14px;align-items:center;padding:14px 16px}
-  .rule b,.rule svg{grid-row:1/3}
-  .rule b{font-size:46px}
-  .rule span{font-size:22px}
-  .rule small{font-size:16px}
-  .body{padding:22px 20px 10px;gap:22px}
-  .cols{grid-template-columns:1fr;gap:22px}
-  h2{font-size:30px}
-  .list{font-size:17px}
-  .fines{font-size:16px}
-  .fines td{font-size:22px}
-  .note{font-size:16px}
-  .report{grid-template-columns:1fr;text-align:left}
-  .report b.k{font-size:40px}
-  .report p{font-size:17px}
-  .report img{display:none} /* already on the site: the QR code is for the printed page */
-  .foot{flex-direction:column;gap:8px;padding:12px 20px 28px;font-size:14px;line-height:1.4}
-}
+@media screen and (max-width:8.6in){.page{zoom:calc(100vw / 8.6in)}}
 </style>
 </head>
 <body>
-<div class="tools"><button onclick="print()">Print this flyer</button><a href="./">Back to the guide</a></div>
+<div class="tools"><button onclick="print()">Print this flyer</button><a href="flyer-phone.html">Phone version</a><a href="./">Back to the guide</a></div>
 <main class="page">
   <div class="top">
     <div class="eyebrow">Winter 2026/27 · Somerville, MA · Snow &amp; ice on the sidewalk</div>

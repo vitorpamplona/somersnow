@@ -106,6 +106,7 @@ function messages(t, i) {
   }
 
   if (has('start') && t >= E.start && t < snowStart) add('now', 'bag', 'Salt now', 'Snow is coming. Salt stops it from sticking.');
+  if (h[4]) add('warn', 'ice', 'Freezing rain', 'Ice coats everything. Salt or sand the sidewalk.', undefined, 'fzra');
   if (t >= F.start && t < F.stop) {
     add('now', 'snow', h[0] === 3 ? 'Heavy snow' : F !== FALLS[0] ? 'Snowing again' : 'Snowing', 'The 6-hour clock starts when it stops. Night doesn\'t count.', undefined, 'snowing');
   }
@@ -229,6 +230,8 @@ function buildChart() {
   for (let i = 0, nd = 0; i < N; i++) { const w = wall(tOf(i)); if (w.h === 12 && (nd++ % every === 0) && xOf(i) > 20 && xOf(i) < CW - 20) s += `<text x="${xOf(i)}" y="${BOT + 20}" text-anchor="middle" class="cap" font-size="${wideC ? 15 : 13}" fill="#A9C4E4">${every > 1 && !wideC ? `${w.m}/${w.d}` : `${fmt(tOf(i), { weekday: 'short' }).toUpperCase()}${wideC ? ` ${w.d}` : ''}`}</text>`; }
   // snow intensity
   S.hours.forEach((h, i) => { if (h[0]) s += `<rect x="${xOf(i)}" y="${TOP + SNOW_H - h[0] * 17}" width="${bw + 0.4}" height="${h[0] * 17}" fill="#fff" opacity="${0.35 + h[0] * 0.2}"/>`; });
+  // freezing rain, freezing drizzle or sleet (ice pellets), in ice blue, on top of any snow that hour
+  S.hours.forEach((h, i) => { if (h[4]) { const top = TOP + SNOW_H - (h[0] || 0) * 17 - h[4] * 12; s += `<rect x="${xOf(i)}" y="${top}" width="${bw + 0.4}" height="${h[4] * 12}" fill="#7DD3FC"/>`; } });
   (X.warnings || []).forEach((w) => {
     const a = Math.max(0, idxOf(ms(w.from))); const b = Math.min(N, idxOf(ms(w.to)));
     if (b > a) s += `<rect x="${xOf(a)}" y="${TOP + SNOW_H + 3}" width="${xOf(b) - xOf(a)}" height="7" rx="3" fill="${NWS[w.code] || '#C084FC'}"><title>${w.name}</title></rect>`;
@@ -269,7 +272,8 @@ function buildChart() {
   labelMarkers();
   const seen = new Set();
   const warnLegend = (X.warnings || []).filter((w) => !seen.has(w.name) && seen.add(w.name)).map((w) => `<span><i style="background:${NWS[w.code] || '#C084FC'}"></i>${w.name}</span>`).join('');
-  $('#legend').innerHTML = ['sidewalk', 'street', 'ask', 'spacesaver'].map((g) => `<span><i style="background:${GROUP[g].color}"></i>${GROUP[g].label}</span>`).join('') + '<span><i style="background:#0E2238"></i>Night</span>' + warnLegend;
+  const iceLegend = S.hours.some((h) => h[4]) ? '<span><i style="background:#7DD3FC"></i>Freezing rain or sleet</span>' : '';
+  $('#legend').innerHTML = ['sidewalk', 'street', 'ask', 'spacesaver'].map((g) => `<span><i style="background:${GROUP[g].color}"></i>${GROUP[g].label}</span>`).join('') + '<span><i style="background:#0E2238"></i>Night</span>' + iceLegend + warnLegend;
 }
 // National Weather Service map colors for winter products
 const NWS = { 'BZ.W': '#FF4500', 'WS.W': '#FF69B4', 'WS.A': '#4682B4', 'WW.Y': '#7B68EE', 'WC.Y': '#AFEEEE', 'WC.W': '#B0C4DE', 'EC.W': '#0000FF', 'HW.W': '#DAA520', 'WI.Y': '#D2B48C' };
@@ -322,6 +326,7 @@ const LANES = [
   { key: 'parking', label: 'Parking calls to 311', note: 'illegal parking, towed cars', color: '#7FA7F5', kind: 'hourly' },
   { key: 'alerts', label: 'MBTA alerts, Somerville routes', note: 'yellow delay · orange detour · red cuts · purple elevator', kind: 'ticks', from: 'the MBTA alerts archive starts in 2020' },
   { key: 'thaw', label: 'Melt and refreeze', note: 'line: temperature · dashes: 32°F · blue: freezing again after a thaw · bars: salting requests', kind: 'thaw' },
+  { key: 'snowDepth', label: 'Snow on the ground', note: 'inches each morning, volunteer observer in Medford (or Winchester)', color: '#DCE8F5', kind: 'depth', from: 'no nearby snow-depth report' },
   { key: 'crashes', label: 'Crashes', note: 'orange: pedestrian or cyclist · large: someone hurt · tap for details', kind: 'dots', from: 'crash data starts in March 2018' },
   { key: 'fireEms', label: 'Medical calls (Fire Dept.)', note: 'bars: this week · line: a normal week', color: '#F87171', kind: 'vsBase', from: 'Fire Department records cover 2019–2025 (none were filed Feb 25–28 and Dec 10–15, 2022)' },
   { key: 'fireEvents', label: 'Wires down, carbon monoxide, crashes', note: 'yellow wires · purple CO · red crash (Fire Dept.) · tap for details', kind: 'events', from: 'Fire Department records cover 2019–2025 (none were filed Feb 25–28 and Dec 10–15, 2022)' },
@@ -434,6 +439,15 @@ function buildLanes() {
         s += `<g data-tip="${attr(tip)}"><rect x="${lx(i) - 3}" y="${top}" width="${Math.max(2, bw_) + 6}" height="${STRIP}" fill="transparent"/><rect x="${lx(i)}" y="${top + 4}" width="${Math.max(2, bw_)}" height="${STRIP - 8}" fill="${ALERT[kind]}"/></g>`;
       });
       if (!d.length) s += msg(top + STRIP / 2 + 5, 'No alerts on Somerville routes or stations.');
+    } else if (L.kind === 'depth') {
+      // inches on the ground each morning, a bar per day (to the next morning's report)
+      const mx = Math.max(4, ...d.map(([, v]) => v));
+      d.forEach(([i, v, st], k) => {
+        const end = k + 1 < d.length ? d[k + 1][0] : N; const w = lx(end) - lx(i) - 2; const hh = (v / mx) * inner;
+        s += `<rect x="${lx(i) + 1}" y="${yb - hh}" width="${Math.max(1, w)}" height="${Math.max(v ? 1.5 : 0, hh)}" fill="${L.color}" opacity=".85"/>`;
+        if (v && w >= 26) s += `<text x="${lx(i) + 1 + w / 2}" y="${hh > 16 ? yb - hh + 13 : yb - hh - 3}" text-anchor="middle" font-size="12" font-weight="700" fill="${hh > 16 ? '#10243A' : '#fff'}">${v}″</text>`;
+        s += `<rect data-tip="${attr(`<b>${fmt(tOf(i), { weekday: 'short', month: 'short', day: 'numeric' })}, 7 a.m.</b><br>${v} in of snow on the ground<br><small>CoCoRaHS observer, ${esc(st)}</small>`)}" x="${lx(i)}" y="${top}" width="${Math.max(2, lx(end) - lx(i))}" height="${STRIP}" fill="transparent"/>`;
+      });
     } else if (L.kind === 'events') {
       // Fire Department calls: one tick each, colored by type; street only, never a house number
       const FIRE = { wires: '#F4C95D', co: '#C084FC', crash: '#FF6B6B' };

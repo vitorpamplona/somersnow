@@ -63,7 +63,7 @@ A **snow period** groups snowfalls whose sidewalk reports overlap: a seed snowfa
 | `snowTotal`, `clear`, `lasted` | As in `storms.json`. |
 | `emergency`, `notices`, `cityDeadline` | Only where the City's notices are online (typed in `CITY` in `fetch_data.py`, each with its source link). |
 | `groups` | Order of the 311 groups in `requests`: `ask` (snow emergency questions), `street` (plowing, salting, snow removal), `sidewalk` ("snow/ice on sidewalk not shoveled"), `spacesaver`, `feedback`. |
-| `hours` | Per hour: `[falling snow 0–3 (none, light, moderate, heavy), °F, visibility miles, wind knots]` at Logan. |
+| `hours` | Per hour: `[falling snow 0–3 (none, light, moderate, heavy), °F, visibility miles, wind knots, freezing rain or sleet 0–3]` at Logan (from the report codes FZRA, FZDZ, PL). |
 | `requests` | `{hour index: [count per group]}`, 311 snow requests created that hour (hours with none are left out). |
 | `sidewalkByWard` | `{hour index: {ward: count}}`, sidewalk reports by ward. |
 | `salting` | `[[hour index, count]]`, 311 "Salting request". |
@@ -86,10 +86,11 @@ A **snow period** groups snowfalls whose sidewalk reports overlap: a seed snowfa
 | `subway` | `{slow, trains: {now, base}, segments}` | MBTA rapid transit travel times, 2022 on: % slower than usual on Somerville segments, trains run. |
 | `spending` | `{base, days: [[hour index, value, % vs. 4 weeks before]]}` | Opportunity Insights, card spending, Middlesex County, 2020 – early 2022. |
 | `fire` | `{ems: {now, base}, events: [[hour index, kind, label, street]]}` | FEMA/USFA fire incident reports (NFIRS), Somerville Fire Department, 2019–2025. |
+| `snowDepth` | `[[hour index of 7 a.m., inches on the ground, station]]` | CoCoRaHS volunteer observers via ACIS: Medford 1.2 W, else Winchester 0.7 SE (Logan reports no snow depth since 2015; the Somerville stations too rarely). |
 
 ## `csv/<id>.csv`
 
-One row per hour (`hour_start`), the hourly numbers above flattened: weather, each 311 group, salting, `refreezing` (1 when it's at or below 32°F within 12 hours after 34°F or warmer, from the first snow on: the light-blue hours on the page), parking and trash calls, police tows and disabled vehicles (counted at the start of the 8-hour shift), and each `now` / `_normal` pair. Empty cell: not covered.
+One row per hour (`hour_start`), the hourly numbers above flattened: weather (with `freezing_rain_or_sleet_0to3`), `snow_on_ground_in` (at the 7 a.m. hour of each report), each 311 group, salting, `refreezing` (1 when it's at or below 32°F within 12 hours after 34°F or warmer, from the first snow on: the light-blue hours on the page), parking and trash calls, police tows and disabled vehicles (counted at the start of the 8-hour shift), and each `now` / `_normal` pair. Empty cell: not covered.
 
 ## `raw/<id>/`
 
@@ -97,7 +98,8 @@ The records behind the counts, inside the storm's window. Same privacy as the pa
 
 | File | Rows |
 |---|---|
-| `weather_logan.csv` | Every Logan weather report (METAR codes); falling snow (0–3) is read from these, so this is where snow start and stop, and so the deadline, come from. |
+| `weather_logan.csv` | Every Logan weather report (METAR codes); falling snow and freezing rain or sleet (0–3) are read from these, so this is where snow start and stop, and so the deadline, come from. |
+| `snow_depth.csv` | Each morning's snow on the ground and the station that reported it. |
 | `311_snow.csv` | Each 311 snow request: time created, group, type, ward. |
 | `311_parking_trash.csv` | Each parking or trash call. |
 | `police.csv` | Each snow-emergency tow and disabled vehicle: shift, type, ward. |

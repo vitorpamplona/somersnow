@@ -234,6 +234,13 @@ def hourly_csv(S):
         for i, c in pairs:
             if 0 <= i < n: v[i] += c
         return v
+    def per_hour_at(rows):  # [[hour index, value, ...]] -> the value at its hour, empty elsewhere
+        if rows is None:
+            return None
+        v = [None] * n
+        for r in rows:
+            if 0 <= r[0] < n: v[r[0]] = r[1]
+        return v
     snow_start = datetime.fromisoformat(S['snowStart'])
     temps = [h[1] for h in S['hours']]
     refreeze = []
@@ -244,7 +251,7 @@ def hourly_csv(S):
     pol = x.get('police')
     cols = [('hour_start', [(t0 + timedelta(hours=k)).isoformat(timespec='minutes') for k in range(n)]),
             ('snow_logan_0to3', [h[0] for h in S['hours']]), ('temp_f', temps), ('visibility_mi', [h[2] for h in S['hours']]),
-            ('wind_kn', [h[3] for h in S['hours']])]
+            ('wind_kn', [h[3] for h in S['hours']]), ('freezing_rain_or_sleet_0to3', [h[4] if len(h) > 4 else None for h in S['hours']])]
     for g_i, g in enumerate(S['groups']):
         cols.append((f'311_{g}', [(S['requests'].get(str(k)) or [0] * len(S['groups']))[g_i] for k in range(n)]))
     cols += [('311_salting', per_hour(S.get('salting'))), ('refreezing', refreeze),
@@ -256,7 +263,8 @@ def hourly_csv(S):
              ('bus_pct_slower', pick('buses', 'speed', 'slow')),
              ('subway_pct_slower', pick('subway', 'slow')), ('subway_trains', pick('subway', 'trains', 'now')), ('subway_trains_normal', pick('subway', 'trains', 'base')),
              ('bluebikes_trips', pick('bikes', 'now')), ('bluebikes_trips_normal', pick('bikes', 'base')),
-             ('fire_medical_calls', pick('fire', 'ems', 'now')), ('fire_medical_calls_normal', pick('fire', 'ems', 'base'))]
+             ('fire_medical_calls', pick('fire', 'ems', 'now')), ('fire_medical_calls_normal', pick('fire', 'ems', 'base')),
+             ('snow_on_ground_in', per_hour_at(x.get('snowDepth')))]
     out = io.StringIO()
     w = csv.writer(out)
     w.writerow([c for c, _ in cols])

@@ -213,15 +213,19 @@ def fetch_hourly_weather(t0, t1, sid=None):
         # falling snow only (blowing/drifting snow is wind, not new snow); intensity from the METAR prefix
         falling = [w for w in wx.split() if 'SN' in w and 'BLSN' not in w and 'DRSN' not in w]
         snow = max([3 if w[0] == '+' else 1 if w[0] == '-' else 2 for w in falling], default=0)
-        h = hours.setdefault(k, {'snow': 0, 'temp': None, 'vis': None, 'wind': None, 'wx': ''})
+        # freezing rain, freezing drizzle or ice pellets (sleet): the ice that small storms leave
+        icy = [w for w in wx.split() if any(c in w for c in ('FZRA', 'FZDZ', 'PL'))]
+        ice = max([3 if w[0] == '+' else 1 if w[0] == '-' else 2 for w in icy], default=0)
+        h = hours.setdefault(k, {'snow': 0, 'ice': 0, 'temp': None, 'vis': None, 'wind': None, 'wx': ''})
         h['snow'] = max(h['snow'], snow)
+        h['ice'] = max(h['ice'], ice)
         if r['tmpf'] != 'M': h['temp'] = round(float(r['tmpf']))
         if r['vsby'] != 'M': h['vis'] = float(r['vsby'])
         if r['sknt'] != 'M': h['wind'] = round(float(r['sknt']))
         if wx: h['wx'] = wx
         if sid:  # every report, as published: the snow start and stop (and so the deadline) come from these codes
-            storm_extras.raw(sid, 'weather_logan', ['observed', 'temp_f', 'weather_codes', 'visibility_mi', 'wind_kn', 'falling_snow_0to3'],
-                             [r['valid'], r['tmpf'], wx, r['vsby'], r['sknt'], snow])
+            storm_extras.raw(sid, 'weather_logan', ['observed', 'temp_f', 'weather_codes', 'visibility_mi', 'wind_kn', 'falling_snow_0to3', 'freezing_rain_or_sleet_0to3'],
+                             [r['valid'], r['tmpf'], wx, r['vsby'], r['sknt'], snow, ice])
     return hours
 
 
@@ -638,6 +642,7 @@ def main():
         'subway': storm_extras.subway(cached, windows, get),
         'spending': storm_extras.spending(cached, windows),
         'fire': storm_extras.fire_dept(get, windows, CACHE),
+        'snowDepth': storm_extras.snow_depth(get, windows),
     }
 
     MONTHS = 'January February March April May June July August September October November December'.split()
@@ -648,7 +653,7 @@ def main():
         t = t0
         while t < t1:
             w = wx.get(t, {})
-            hours.append([w.get('snow', 0), w.get('temp'), w.get('vis'), w.get('wind')])
+            hours.append([w.get('snow', 0), w.get('temp'), w.get('vis'), w.get('wind'), w.get('ice', 0)])
             t += timedelta(hours=1)
         # The storm: snowy hours at Logan, with lulls under 6 hours counted as the same storm. A storm over several
         # days can have longer lulls: it runs from the first to the last run of 3 or more snowy hours that overlaps its

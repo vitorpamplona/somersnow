@@ -564,6 +564,33 @@ def spending(cached, windows):
     return out
 
 
+# ---------- Snow on the ground (CoCoRaHS volunteers next to Somerville, via ACIS) ----------
+# Logan hasn't reported snow depth since 2015 and the stations inside Somerville report it only now and then, so:
+# Medford 1.2 W (just over the city line), else Winchester 0.7 SE. Measured each morning around 7 a.m.
+DEPTH_STATIONS = [('US1MAMD0044', 'Medford 1.2 W'), ('US1MAMD0007', 'Winchester 0.7 SE')]
+
+
+def snow_depth(get, windows):
+    """Per storm: [[hour index of 7 a.m. that day, inches on the ground, station]] for each day of the window."""
+    lo = min(t0 for _, t0, _ in windows).date().isoformat(); hi = max(t1 for _, _, t1 in windows).date().isoformat()
+    by_station = []
+    for sid_, name in DEPTH_STATIONS:
+        d = json.loads(get(ACIS_DATA, data=json.dumps({'sid': sid_, 'sdate': lo, 'edate': hi, 'elems': [{'name': 'snwd'}]}).encode()))
+        by_station.append((name, {day: (0.0 if v == 'T' else float(v)) for day, v in d.get('data', []) if v not in ('M', '', 'S')}))
+    out = {}
+    for sid, t0, t1 in windows:
+        rows, day = [], t0.date()
+        while datetime.combine(day, datetime.min.time()) < t1:
+            got = next(((name, vals[day.isoformat()]) for name, vals in by_station if day.isoformat() in vals), None)
+            if got:
+                at = max(0, _idx(datetime.combine(day, datetime.min.time()).replace(hour=7), t0))
+                rows.append([at, got[1], got[0]])
+                raw(sid, 'snow_depth', ['date', 'inches_on_ground', 'station'], [day.isoformat(), got[1], got[0]])
+            day += timedelta(days=1)
+        out[sid] = rows if len(rows) >= 2 else None
+    return out
+
+
 # ---------- Somerville Fire Department incidents (NFIRS, 2019-2025) ----------
 # FEMA/USFA's National Fire Incident Reporting System, "U.S. Fire Department Responses" (the light public data release
 # on ArcGIS), Somerville Fire Department = FDID 17274. Every call: fires, medical (EMS) calls, wires down, CO, crashes.

@@ -121,3 +121,5 @@
   .play{width:48px;height:48px}
   .multiples{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
+/* chart, lane and map labels: the heading weight (800) is too heavy at small sizes */
+#chart .cap,#lanes .cap,#map .cap{font-weight:600;letter-spacing:1px}

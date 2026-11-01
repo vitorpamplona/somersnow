@@ -310,10 +310,10 @@ const LABEL = 24; const STRIP = 40; const GAP = 14; const LH = LABEL + STRIP + G
 const ALERT = { delay: '#F4C95D', detour: '#FF8A3D', reduced: '#FF6B6B', access: '#C084FC', other: '#A9C4E4' };
 const LANES = [
   { key: 'tEntries', label: 'T entries at Somerville stations', note: 'bars: this week · line: a normal week', color: '#A9C4E4', kind: 'vsBase', from: 'no T entry counts' },
-  { key: 'busTrips', label: 'Bus trips on Somerville routes', note: 'bars: trips run · line: a normal week', color: '#7FD4C1', kind: 'vsBase', from: 'MBTA bus records start in 2020' },
+  { key: 'busTrips', label: 'Buses run on Somerville routes', note: 'bars: bus trips started each hour (buses, not riders) · line: a normal week', color: '#7FD4C1', kind: 'vsBase', from: 'MBTA bus records start in 2020' },
   { key: 'busLate', label: 'How late the buses ran', note: 'median minutes late · line: a normal week', color: '#FF6B6B', kind: 'late', from: 'MBTA bus records start in 2020' },
-  { key: 'busSpeed', label: 'How fast the buses moved', note: 'bars: % slower than a normal week, same hour · traffic and snowbanks', color: '#5EEAD4', kind: 'slow', unit: 'bus runs timed', few: false, from: 'MBTA bus records start in 2020' },
-  { key: 'subway', label: 'How slow the T ran in Somerville', note: 'bars: % slower than usual · red: under half the usual trains', color: '#7DD3FC', kind: 'slow', from: 'MBTA travel times start in 2021' },
+  { key: 'busSpeed', label: 'How much slower the buses moved', note: 'bars: % slower than a normal week, same hour (taller = slower; none = normal)', color: '#5EEAD4', kind: 'slow', unit: 'bus runs timed', few: false, from: 'MBTA bus records start in 2020' },
+  { key: 'subway', label: 'How much slower the T ran in Somerville', note: 'bars: % slower than usual (taller = slower) · red: under half the usual trains', color: '#7DD3FC', kind: 'slow', from: 'MBTA travel times start in 2021' },
   { key: 'bikes', label: 'Bluebikes trips from Somerville', note: 'bars: this week · line: a normal week', color: '#F4C95D', kind: 'vsBase', from: 'no Bluebikes data, or too few trips from Somerville that winter' },
   { key: 'spending', label: 'Card spending, Middlesex County', note: 'per day vs. the 4 weeks before · 7-day average', color: '#F59E0B', kind: 'change', from: 'daily county spending data covers 2020 to early 2022' },
   { key: 'web', label: 'Views of the City\'s snow pages', note: 'per day · line: a normal day', color: '#C084FC', kind: 'daily', from: 'the City\'s page-view data covers 2020 to May 2023' },
@@ -613,7 +613,7 @@ function render(i) {
   const tows = X.police ? sumTo(X.police.tows.filter(([k]) => k >= BASE - 24)) : null;
   $('#tally2').innerHTML = [
     [pct(todayVsNormal(X.tEntries, i)), `T entries today vs. a normal week${holidayOf(tOf(i)) ? ` (${holidayOf(tOf(i))})` : ''}`, '#A9C4E4'],
-    [pct(todayVsNormal(X.buses && X.buses.trips, i)), 'Bus trips today vs. normal', '#7FD4C1'],
+    [pct(todayVsNormal(X.buses && X.buses.trips, i)), 'Buses run today vs. normal', '#7FD4C1'],
     [pct(todayVsNormal(X.bikes, i)), 'Bluebikes trips today vs. normal', '#F4C95D'],
     [tows ?? '–', 'Snow emergency tows so far', '#3B82F6'],
   ].map(([v, l, c]) => `<div><b>${v}</b><span><i style="background:${c}"></i>${l}</span></div>`).join('');

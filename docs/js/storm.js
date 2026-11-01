@@ -150,22 +150,35 @@ function lockLateHeight() {
 function lockPhoneHeight() {
   const box = $('#msgs'); const phone = $('.phone');
   const cur = +scrub.value;
-  phone.style.minHeight = '';
-  let mx = 0;
-  for (let i = 0; i < N; i++) { renderMessages(tOf(i + 1), i); mx = Math.max(mx, box.offsetHeight); }
+  phone.style.minHeight = ''; phone.style.height = ''; box.style.maxHeight = ''; box.classList.remove('scrolls');
+  const hs = [];
+  for (let i = 0; i < N; i++) { renderMessages(tOf(i + 1), i); hs.push(box.offsetHeight); }
   const cs = getComputedStyle(phone);
   const extra = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom) + parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth) + 10;
-  phone.style.minHeight = `${Math.ceil(mx + extra)}px`;
+  const mx = Math.max(...hs);
+  if (window.innerWidth < 700) {
+    // On a phone the box sits above the chart: fit 80% of the hours, and let the rare busiest hours scroll inside
+    // it, so the page neither jumps nor carries a big empty box.
+    const fit = Math.max(220, [...hs].sort((a, b) => a - b)[Math.floor(hs.length * 0.8)]);
+    if (fit < mx) { box.style.maxHeight = `${fit}px`; box.classList.add('scrolls'); }
+    phone.style.height = `${Math.ceil(Math.min(mx, fit) + extra)}px`;
+  } else {
+    phone.style.minHeight = `${Math.ceil(mx + extra)}px`;
+  }
   renderMessages(tOf(cur + 1), cur);
 }
 
 /* ---------- timeline chart ---------- */
-const CW = 900; const PAD = 8; const TOP = 56; const SNOW_H = 54; const REQ_TOP = TOP + SNOW_H + 14; const REQ_H = 170; const BOT = REQ_TOP + REQ_H;
+// Drawn at the panel's real pixel width (measured in buildChart), so text keeps its size on phones instead of
+// shrinking with a desktop-sized drawing.
+let CW = 900; const PAD = 8; const TOP = 56; const SNOW_H = 54; const REQ_TOP = TOP + SNOW_H + 14; const REQ_H = 170; const BOT = REQ_TOP + REQ_H;
 const xOf = (i) => PAD + (i / N) * (CW - 2 * PAD);
-const bw = (CW - 2 * PAD) / N;
+let bw = (CW - 2 * PAD) / N;
 const maxReq = Math.max(1, ...Array.from({ length: N }, (_, i) => reqAt(i).reduce((a, b) => a + b, 0)));
 function buildChart() {
-  let s = `<svg viewBox="0 0 ${CW} ${BOT + 26}" role="img" aria-label="Hour-by-hour timeline: snowfall intensity at Logan, and 311 snow requests stacked by type">`;
+  CW = Math.max(300, Math.round($('#chart').clientWidth || 900)); bw = (CW - 2 * PAD) / N;
+  const wideC = CW >= 620;
+  let s = `<svg viewBox="0 0 ${CW} ${BOT + 26}" width="${CW}" height="${BOT + 26}" role="img" aria-label="Hour-by-hour timeline: snowfall intensity at Logan, and 311 snow requests stacked by type">`;
   // night shading
   for (let i = 0; i < N; i++) {
     const t = tOf(i); const w = wall(t);
@@ -174,7 +187,7 @@ function buildChart() {
     if (night) s += `<rect x="${xOf(i)}" y="${TOP}" width="${bw + 0.5}" height="${BOT - TOP}" fill="#0E2238"/>`;
   }
   // day labels at local noon
-  for (let i = 0; i < N; i++) { const w = wall(tOf(i)); if (w.h === 12) s += `<text x="${xOf(i)}" y="${BOT + 20}" text-anchor="middle" class="cap" font-size="15" fill="#A9C4E4">${fmt(tOf(i), { weekday: 'short' }).toUpperCase()} ${w.d}</text>`; }
+  for (let i = 0; i < N; i++) { const w = wall(tOf(i)); if (w.h === 12) s += `<text x="${xOf(i)}" y="${BOT + 20}" text-anchor="middle" class="cap" font-size="${wideC ? 15 : 13}" fill="#A9C4E4">${fmt(tOf(i), { weekday: 'short' }).toUpperCase()}${wideC ? ` ${w.d}` : ''}</text>`; }
   // snow intensity
   S.hours.forEach((h, i) => { if (h[0]) s += `<rect x="${xOf(i)}" y="${TOP + SNOW_H - h[0] * 17}" width="${bw + 0.4}" height="${h[0] * 17}" fill="#fff" opacity="${0.35 + h[0] * 0.2}"/>`; });
   (X.warnings || []).forEach((w) => {
@@ -182,7 +195,10 @@ function buildChart() {
     if (b > a) s += `<rect x="${xOf(a)}" y="${TOP + SNOW_H + 3}" width="${xOf(b) - xOf(a)}" height="7" rx="3" fill="${NWS[w.code] || '#C084FC'}"><title>${w.name}</title></rect>`;
   });
   s += `<text x="${PAD + 4}" y="${TOP + 14}" class="cap" font-size="13" fill="#A9C4E4">SNOW AT LOGAN</text>`;
-  if (X.snowSomerville) s += `<text x="${CW - PAD - 4}" y="${TOP + 14}" text-anchor="end" class="cap" font-size="13" fill="#A9C4E4">SOMERVILLE OBSERVERS: ${X.snowSomerville.total} IN${X.snowSomerville.partial ? ' (PARTIAL REPORT)' : ''}</text>`;
+  if (X.snowSomerville) {
+    const txt = wideC ? `SOMERVILLE OBSERVERS: ${X.snowSomerville.total} IN${X.snowSomerville.partial ? ' (PARTIAL REPORT)' : ''}` : `SOMERVILLE: ${X.snowSomerville.total} IN${X.snowSomerville.partial ? ' (PARTIAL)' : ''}`;
+    s += `<text x="${CW - PAD - 4}" y="${TOP + 14}" text-anchor="end" class="cap" font-size="13" fill="#A9C4E4">${txt}</text>`;
+  }
   s += `<text x="${PAD + 4}" y="${REQ_TOP + 14}" class="cap" font-size="13" fill="#A9C4E4">311 REQUESTS PER HOUR</text>`;
   // requests, stacked (sidewalk on the bottom)
   const order = ['sidewalk', 'street', 'ask', 'spacesaver', 'feedback'];
@@ -197,7 +213,7 @@ function buildChart() {
   marks.forEach(([t, label, c]) => {
     const x = xOf(idxOf(t));
     s += `<path class="mk-line" data-x="${x}" d="M${x} ${TOP - 4} V${BOT}" stroke="${c}" stroke-width="${label === 'Deadline' ? 3 : 2}" ${label === 'Deadline' ? '' : 'stroke-dasharray="5 5"'}/>`;
-    s += `<text class="mk cap" data-x="${x}" x="${x + 4}" y="14" font-size="14" fill="${c}">${label.toUpperCase()}</text>`;
+    s += `<text class="mk cap" data-x="${x}" x="${x + 4}" y="14" font-size="${wideC ? 14 : 12}" fill="${c}">${label.toUpperCase()}</text>`;
   });
   s += `<rect id="future" x="0" y="${TOP}" width="0" height="${BOT - TOP + 2}" fill="#1A3A5F" opacity=".78"/>`;
   s += `<path id="head" d="M0 ${TOP - 6} V${BOT + 4}" stroke="#fff" stroke-width="2.5"/>`;
@@ -215,19 +231,24 @@ const NWS = { 'BZ.W': '#FF4500', 'WS.W': '#FF69B4', 'WS.A': '#4682B4', 'WW.Y': '
 function labelMarkers() {
   const ROWS = [14, 30, 46]; const placed = [];
   const free = (row, a, b) => a >= 0 && b <= CW && placed.every((p) => p.row !== row || b + 6 <= p.a || a >= p.b + 6);
-  const items = [...document.querySelectorAll('#chart .mk')].sort((m1, m2) => m1.dataset.x - m2.dataset.x);
+  // most important first, so the deadline always gets a spot; on a phone a label with no free spot is left out (the
+  // buttons under the slider name the same moments)
+  const PRI = ['DEADLINE', 'SNOW STOPS', 'SNOW STARTS', 'EMERGENCY', 'EMERGENCY ENDS'];
+  const items = [...document.querySelectorAll('#chart .mk')].sort((m1, m2) => PRI.indexOf(m1.textContent) - PRI.indexOf(m2.textContent));
   items.forEach((el) => {
+    el.style.display = '';
     const x = +el.dataset.x; const w = el.getComputedTextLength ? el.getComputedTextLength() : el.textContent.length * 10;
     let spot = null;
     for (const row of [0, 1, 2]) {
       if (free(row, x + 4, x + 4 + w)) { spot = [row, x + 4, x + 4 + w, 'start']; break; }
       if (free(row, x - 4 - w, x - 4)) { spot = [row, x - 4 - w, x - 4, 'end']; break; }
     }
+    const line = [...document.querySelectorAll('#chart .mk-line')].find((l) => l.dataset.x === el.dataset.x);
+    if (!spot && CW < 620) { el.style.display = 'none'; if (line) line.setAttribute('d', `M${x} ${TOP - 4} V${BOT}`); return; }
     spot = spot || [2, x + 4, x + 4 + w, 'start'];
     const [row, a, b, anchor] = spot;
     placed.push({ row, a, b });
     el.setAttribute('y', ROWS[row]); el.setAttribute('x', anchor === 'start' ? x + 4 : x - 4); el.setAttribute('text-anchor', anchor);
-    const line = [...document.querySelectorAll('#chart .mk-line')].find((l) => l.dataset.x === el.dataset.x);
     if (line) line.setAttribute('d', `M${x} ${ROWS[row] + 4} V${BOT}`);
   });
 }
@@ -246,8 +267,10 @@ const LANES = [
   { key: 'tEntries', label: 'T entries at Somerville stations', note: 'bars: this week · line: a normal week', color: '#A9C4E4', kind: 'vsBase', from: 'no T entry counts' },
   { key: 'busTrips', label: 'Bus trips on Somerville routes', note: 'bars: trips run · line: a normal week', color: '#7FD4C1', kind: 'vsBase', from: 'MBTA bus records start in 2020' },
   { key: 'busLate', label: 'How late the buses ran', note: 'median minutes late · line: a normal week', color: '#FF6B6B', kind: 'late', from: 'MBTA bus records start in 2020' },
+  { key: 'busSpeed', label: 'How fast the buses moved', note: 'bars: % slower than a normal week, same hour · traffic and snowbanks', color: '#5EEAD4', kind: 'slow', unit: 'bus runs timed', few: false, from: 'MBTA bus records start in 2020' },
   { key: 'subway', label: 'How slow the T ran in Somerville', note: 'bars: % slower than usual · red: under half the usual trains', color: '#7DD3FC', kind: 'slow', from: 'MBTA travel times start in 2021' },
   { key: 'bikes', label: 'Bluebikes trips from Somerville', note: 'bars: this week · line: a normal week', color: '#F4C95D', kind: 'vsBase', from: 'no Bluebikes data, or too few trips from Somerville that winter' },
+  { key: 'spending', label: 'Card spending, Middlesex County', note: 'per day vs. the 4 weeks before · 7-day average', color: '#F59E0B', kind: 'change', from: 'daily county spending data covers 2020 to early 2022' },
   { key: 'web', label: 'Views of the City\'s snow pages', note: 'per day · line: a normal day', color: '#C084FC', kind: 'daily', from: 'the City\'s page-view data covers 2020 to May 2023' },
   { key: 'tows', label: 'Snow emergency tows (police)', note: 'per 8-hour shift', color: '#3B82F6', kind: 'shift', from: 'police dispatch data starts in 2017' },
   { key: 'parking', label: 'Parking calls to 311', note: 'illegal parking, towed cars', color: '#7FA7F5', kind: 'hourly' },
@@ -264,6 +287,7 @@ function laneData(key) {
   if (key === 'busTrips') return X.buses ? X.buses.trips : null;
   if (key === 'thaw') return S.hours.some((h) => h[1] != null) ? { temps: S.hours.map((h) => h[1]), salting: S.salting || [] } : null;
   if (key === 'busLate') return X.buses ? X.buses.late : null;
+  if (key === 'busSpeed') return X.buses ? X.buses.speed || null : null;
   return X[key] ?? null;
 }
 function buildLanes() {
@@ -277,7 +301,7 @@ function buildLanes() {
     if (wide || text.length * 6.6 < LW - 2 * PAD || cut < 0) return `<text x="${LW / 2}" y="${y}" text-anchor="middle" font-size="13" fill="#9DB2CA">${text}</text>`;
     return `<text x="${LW / 2}" y="${y - 8}" text-anchor="middle" font-size="12" fill="#9DB2CA">${text.slice(0, cut + 1)}<tspan x="${LW / 2}" dy="15">${text.slice(cut + 2)}</tspan></text>`;
   };
-  let s = `<svg viewBox="0 0 ${LW} ${H}" width="${LW}" height="${H}" role="img" aria-label="How the city got around during the storm: T entries, Bluebikes trips, tows, parking calls, MBTA alerts and crashes, hour by hour">`;
+  let s = `<svg viewBox="0 0 ${LW} ${H}" width="${LW}" height="${H}" role="img" aria-label="How the city got around during the storm: T entries, bus trips, lateness and speed, subway speed, Bluebikes trips, card spending, tows, parking calls, MBTA alerts and crashes, hour by hour">`;
   let labels = ''; // drawn last, above the "future" shading and the time line
   LANES.forEach((L, k) => {
     const y0 = k * LH; const top = y0 + LABEL; const base = top + STRIP;
@@ -312,8 +336,9 @@ function buildLanes() {
       const cap = (v) => Math.max(0, Math.min(v, 150));
       const mx = Math.max(25, ...d.slow.filter((v) => v != null).map(cap));
       d.slow.forEach((v, i) => {
-        const few = d.trains.base[i] >= 4 && d.trains.now[i] < d.trains.base[i] / 2;
-        const tipTxt = `<b>${dayTm(tOf(i))}</b><br>${v == null ? 'Too few trains to time' : `${v > 0 ? `${v}% slower` : v < 0 ? `${-v}% faster` : 'Usual speed'} than usual`}<br>${d.trains.now[i]} trains (usually ${Math.round(d.trains.base[i] ?? 0)})`;
+        const few = L.few !== false && d.trains.base[i] >= 4 && d.trains.now[i] < d.trains.base[i] / 2;
+        const unit = L.unit || 'trains';
+        const tipTxt = `<b>${dayTm(tOf(i))}</b><br>${v == null ? `Too few ${unit.split(' ')[0] === 'bus' ? 'buses' : 'trains'} to time` : `${v > 0 ? `${v}% slower` : v < 0 ? `${-v}% faster` : 'Usual speed'} than usual`}<br>${d.trains.now[i]} ${unit} (usually ${Math.round(d.trains.base[i] ?? 0)})`;
         if (v != null && v > 0) s += `<rect x="${lx(i)}" y="${yb - (cap(v) / mx) * inner}" width="${Math.max(1, bw_ - 0.4)}" height="${(cap(v) / mx) * inner}" fill="${L.color}"/>`;
         if (few) s += `<rect x="${lx(i)}" y="${top + 2}" width="${Math.max(1.5, bw_ - 0.4)}" height="5" fill="#FF6B6B"/>`;
         if (v != null || few) s += `<rect data-tip="${attr(tipTxt)}" x="${lx(i)}" y="${top}" width="${Math.max(2, bw_)}" height="${STRIP}" fill="transparent"/>`;
@@ -325,6 +350,17 @@ function buildLanes() {
       d.now.forEach((v, i) => { if (v != null && v > 0) s += `<rect x="${lx(i)}" y="${yb - (cap(v) / mx) * inner}" width="${Math.max(1, bw_ - 0.4)}" height="${(cap(v) / mx) * inner}" fill="${L.color}"><title>${v} min late</title></rect>`; });
       const line = d.base.map((v, i) => (v == null ? null : `${lx(i).toFixed(1)} ${(yb - (cap(v) / mx) * inner).toFixed(1)} ${lx(i + 1).toFixed(1)} ${(yb - (cap(v) / mx) * inner).toFixed(1)}`)).filter(Boolean);
       if (line.length) s += `<path d="M${line.join(' L')}" fill="none" stroke="#fff" stroke-width="1.5" opacity=".9"/>`;
+    } else if (L.kind === 'change') {
+      // % change per day from the 4 weeks before: bars up or down from a middle line
+      const mid = top + STRIP / 2; const mx = Math.max(5, ...d.days.map(([, , r]) => Math.abs(r)));
+      s += `<path d="M${lx(0)} ${mid} H${lx(N)}" stroke="#fff" stroke-width="1" opacity=".6"/>`;
+      d.days.forEach(([i, v, r], k) => {
+        const end = k + 1 < d.days.length ? d.days[k + 1][0] : N; const w = lx(end) - lx(i) - 2; const hh = (Math.abs(r) / mx) * (STRIP / 2 - 3);
+        s += `<rect x="${lx(i) + 1}" y="${r >= 0 ? mid - hh : mid}" width="${Math.max(1, w)}" height="${Math.max(0.5, hh)}" fill="${r < 0 ? L.color : '#6B7F95'}"/>`;
+        const lab = `${r > 0 ? '+' : r < 0 ? '−' : ''}${Math.abs(r).toFixed(0)}%`;
+        if (w >= 30) s += `<text x="${lx(i) + 1 + w / 2}" y="${r >= 0 ? mid + 13 : mid - 4}" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">${lab}</text>`;
+        s += `<rect data-tip="${attr(`<b>${fmt(tOf(Math.min(N - 1, i + 12)), { weekday: 'short', month: 'short', day: 'numeric' })}</b><br>Card spending ${lab} vs. the 4 weeks before<br><small>Middlesex County, 7-day average (Opportunity Insights)</small>`)}" x="${lx(i)}" y="${top}" width="${Math.max(2, lx(end) - lx(i))}" height="${STRIP}" fill="transparent"/>`;
+      });
     } else if (L.kind === 'daily') {
       const mx = Math.max(1, d.base, ...d.days.map(([, n]) => n));
       d.days.forEach(([i, n], k) => {
@@ -401,7 +437,7 @@ function enableTips(svg) {
     svg.querySelectorAll('[data-tip]').forEach((el) => {
       const b = el.getBBox();
       if (y < b.y - 4 || y > b.y + b.height + 4) return;
-      const d = Math.abs(b.x + b.width / 2 - x);
+      const d = x >= b.x && x <= b.x + b.width ? 0 : Math.abs(b.x + b.width / 2 - x); // inside a wide bar counts
       if (d < 18) near.push([d, el]);
     });
     if (!near.length) return null;
@@ -591,7 +627,7 @@ lockPhoneHeight(); lockLateHeight();
     timer2 = setTimeout(() => {
       const w = Math.round($('#lanes').clientWidth);
       if (Math.abs(w - lastW) < 4) return;
-      lastW = w; buildLanes(); enableDrag($('#lanes svg')); enableTips($('#lanes svg')); render(+scrub.value); lockPhoneHeight(); lockLateHeight();
+      lastW = w; buildChart(); enableDrag($('#chart svg')); buildLanes(); enableDrag($('#lanes svg')); enableTips($('#lanes svg')); render(+scrub.value); lockPhoneHeight(); lockLateHeight();
     }, 150);
   });
 }

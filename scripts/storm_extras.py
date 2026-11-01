@@ -376,6 +376,7 @@ def buses(cached, windows, som_stops, today_routes):
         while d <= t1.date():
             need_days.add(d.isoformat()); months.add((d.year, d.month)); d += timedelta(1)
     trips, late = Counter(), defaultdict(list)  # keyed by (route, hour)
+    runs = defaultdict(list)  # (route, direction, stop a, stop b) -> [(hour, seconds)]: buses between Somerville timing stops
     have_months = set()
     served = defaultdict(set)  # (year, month) -> routes with a timing stop in Somerville
     MON = {m: k + 1 for k, m in enumerate('Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec'.split())}
@@ -429,6 +430,8 @@ def buses(cached, windows, som_stops, today_routes):
                 ci = lambda *names: next(col[n] for n in names if n in col)
                 i_day, i_rt, i_pt = ci('service_date', 'servicedate'), ci('route_id', 'route'), ci('point_type', 'pointtype')
                 i_sch, i_act = ci('scheduled'), ci('actual')
+                i_st, i_trip, i_ord, i_dir = ci('stop_id', 'stop'), ci('half_trip_id', 'halftripid'), ci('time_point_order', 'timepointorder'), ci('direction_id', 'direction')
+                passes = defaultdict(list)  # (day, trip) -> [(order, stop, time, route, direction)] at Somerville timing stops
                 for r in rd:
                     if r[i_rt].lstrip('0') not in want or r[i_day][:10] not in need_days:
                         continue
@@ -437,6 +440,11 @@ def buses(cached, windows, som_stops, today_routes):
                         continue
                     base = datetime.fromisoformat(r[i_day][:10])
                     act = base + (a_ - _T0)
+                    if r[i_st] in som_stops and r[i_trip] not in ('', 'NA', 'NULL'):
+                        try:
+                            passes[(r[i_day][:10], r[i_trip])].append((int(float(r[i_ord])), r[i_st], act, r[i_rt].lstrip('0'), r[i_dir]))
+                        except ValueError:
+                            pass
                     k = (r[i_rt].lstrip('0'), act.replace(minute=0, second=0, microsecond=0))
                     if r[i_pt] == 'Startpoint':
                         trips[k] += 1
@@ -444,6 +452,14 @@ def buses(cached, windows, som_stops, today_routes):
                         s_ = when(r[i_sch])
                         if s_ is not None:
                             late[k].append((act - (base + (s_ - _T0))).total_seconds() / 60)
+                # bus speed: time between consecutive timing stops, both inside Somerville, on the same trip
+                for pts in passes.values():
+                    pts.sort()
+                    for (o1, s1, t1_, rt, dr), (o2, s2, t2_, _, _) in zip(pts, pts[1:]):
+                        sec = (t2_ - t1_).total_seconds()
+                        if o2 == o1 + 1 and 0 < sec < 3600:
+                            runs[(rt, dr, s1, s2)].append((t1_.replace(minute=0, second=0, microsecond=0), sec))
+                del passes
     out = {}
     for sid, t0, t1 in windows:
         if not all(((t0 - timedelta(weeks=4)).year, (t0 - timedelta(weeks=4)).month) in have_months and (t.year, t.month) in have_months for t in (t0, t1 - timedelta(hours=1))):
@@ -468,7 +484,73 @@ def buses(cached, windows, som_stops, today_routes):
             prev = [med[t - timedelta(weeks=w)] for w in (1, 2, 3, 4) if (t - timedelta(weeks=w)) in med]
             late_base.append(round(sorted(prev)[len(prev) // 2], 1) if prev else None)
         out[sid] = {'trips': {'now': now, 'base': base}, 'late': {'now': late_now, 'base': late_base},
-                    'routes': sorted(rts, key=lambda r: (len(r), r))}
+                    'routes': sorted(rts, key=lambda r: (len(r), r)), 'speed': _bus_speed(runs, rts, t0, t1, first, have_months)}
+    return out
+
+
+def _bus_speed(runs, rts, t0, t1, first, have_months):
+    """How much slower than usual buses moved between timing stops in Somerville, per hour: each run's time over the
+    typical time for that segment at that hour of day (weekdays and weekends apart) in the 4 weeks before; the hourly
+    median. Rush hour is compared with rush hour, so it shows traffic and snow, not the time of day."""
+    b0 = t0 - timedelta(weeks=4)
+    ratio, count = defaultdict(list), Counter()
+    for seg, lst in runs.items():
+        if seg[0] not in rts:
+            continue
+        by_slot, all_ = defaultdict(list), []
+        for h, sec in lst:
+            if b0 <= h < t0:
+                by_slot[(h.hour, h.weekday() >= 5)].append(sec); all_.append(sec)
+        if len(all_) < 20:
+            continue
+        med = lambda v: sorted(v)[len(v) // 2]
+        overall = med(all_)
+        for h, sec in lst:
+            if t0 - timedelta(weeks=4) <= h < t1:
+                count[h] += 1
+            if t0 <= h < t1:
+                slot = by_slot.get((h.hour, h.weekday() >= 5), [])
+                ratio[h].append(sec / (med(slot) if len(slot) >= 6 else overall))
+    n = int((t1 - t0).total_seconds() // 3600)
+    slow = []
+    for k in range(n):
+        v = ratio.get(t0 + k * HOUR)
+        slow.append(round((sorted(v)[len(v) // 2] - 1) * 100) if v and len(v) >= 6 else None)
+    now, base = _with_baseline(count, t0, t1, first, have_months)
+    if not any(x is not None for x in slow):
+        return None
+    return {'slow': slow, 'trains': {'now': now, 'base': base}}
+
+
+# ---------- Card spending, Middlesex County (Opportunity Insights Economic Tracker, Affinity Solutions) ----------
+SPEND_CSV = 'https://raw.githubusercontent.com/OpportunityInsights/EconomicTracker/main/data/Affinity%20-%20County%20-%20Daily.csv'
+
+
+def spending(cached, windows):
+    """Daily card spending in Middlesex County (Somerville's county), seasonally adjusted, 7-day average, as a change
+    from January 2020; per storm, each day's change from the average of the 4 weeks before the window. Daily values
+    run from 2020 to mid-2022 (weekly after that, too coarse for a storm)."""
+    try:
+        path = cached('oi-affinity-county-daily.csv', SPEND_CSV)
+    except Exception as e:
+        print(f'    spending: {e}', file=sys.stderr)
+        return {sid: None for sid, _, _ in windows}
+    val = {}
+    with open(path, encoding='utf-8') as fh:
+        for r in csv.DictReader(fh):
+            if r['countyfips'] == '25017' and r['freq'] == 'd' and r['spend_all'] not in ('', '.'):
+                val[date(int(r['year']), int(r['month']), int(r['day']))] = float(r['spend_all'])
+    out = {}
+    for sid, t0, t1 in windows:
+        a, b = t0.date(), (t1 - timedelta(hours=1)).date()
+        prev = [val[a - timedelta(days=k)] for k in range(1, 29) if a - timedelta(days=k) in val]
+        days = [(a + timedelta(days=k)) for k in range((b - a).days + 1)]
+        if len(prev) < 20 or not all(d in val for d in days):
+            out[sid] = None
+            continue
+        base = sum(prev) / len(prev)
+        out[sid] = {'base': round(base, 3),
+                    'days': [[max(0, _idx(datetime.combine(d, datetime.min.time()), t0)), round(val[d], 3), round(((1 + val[d]) / (1 + base) - 1) * 100, 1)] for d in days]}
     return out
 
 

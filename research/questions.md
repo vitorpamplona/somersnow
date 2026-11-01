@@ -142,6 +142,10 @@ What PTAC found in public data, and what's missing, is in [data-sources.md](data
 54. **Teen shoveling contact.** The City's February 2026 snow emergency notices give the Council on Aging at 617-625-6600 x2300; the guide uses x2321. Which is current?
     - [Snow emergency notice, Feb 21, 2026](https://www.somervillema.gov/news/somerville-declares-snow-emergency-effective-sunday-february-22-12-pm-noon)
 
+55. **Traffic on Somerville streets.** Does the City have hourly traffic counts or a data-sharing deal (Waze for Cities or similar) that shows when cars are back on the streets during and after a storm? The replays use bus speed between timing stops as a stand-in.
+56. **Parking revenue by day.** Daily parking meter and ParkMobile revenue, ideally by area, for the storms since 2016. It would show what a storm and a snow emergency cost the City and local businesses.
+57. **Parking tickets in a snow emergency.** Parking tickets issued per day (snow emergency, hydrant, 20 feet of an intersection), the money collected, and the tow fees. The open-data citations cover moving violations only.
+
 ## Sources
 
 See [sources.md](sources.md).

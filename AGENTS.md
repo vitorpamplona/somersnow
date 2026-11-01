@@ -70,6 +70,7 @@ The guide teaches the rules; `docs/storms/` shows what actually happens in a sto
 - 311 counts complaints, not unshoveled sidewalks. Reports per inch of snow jumped after 2023 (likely easier reporting), so don't present a trend as worse shoveling (question 47).
 - When a source doesn't cover a storm, show "not available" with the reason, never a zero.
 - Socrata compares dates as text (`'2026-03-01 09:42' < '2026-03-01T00:00'` is true), so always re-check each record's time in Python against the window, as `storm_extras.py` does.
+- MBTA station entries are counted by service day, which runs past midnight: periods before 3 a.m. belong to the next calendar day (`t_entries()` shifts them). Bus times carry their own date offset (`1900-01-02` = after midnight). Police "Last Half (Midnight–8 AM)" shifts are dated by calendar day (checked against the Feb 2026 emergency).
 - Crash locations are trimmed to the street or intersection (no house number): the City publishes exact addresses, but a single crash with an injury shouldn't point at a home.
 - The deadline comes from `deadline.js`. Two City notices let us check it: Feb 26, 2022 (City 12:30 p.m., calculator 12:24) and Feb 24, 2026 (City "1 p.m.", calculator 12:28).
 - New City facts found in data work go through the "Making changes" rules above (a source, then the facts list); e.g. the even-side rule for 2026/27 came from a City notice.

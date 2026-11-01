@@ -136,7 +136,7 @@ function lockPhoneHeight() {
 }
 
 /* ---------- timeline chart ---------- */
-const CW = 900; const PAD = 8; const TOP = 40; const SNOW_H = 54; const REQ_TOP = TOP + SNOW_H + 14; const REQ_H = 170; const BOT = REQ_TOP + REQ_H;
+const CW = 900; const PAD = 8; const TOP = 56; const SNOW_H = 54; const REQ_TOP = TOP + SNOW_H + 14; const REQ_H = 170; const BOT = REQ_TOP + REQ_H;
 const xOf = (i) => PAD + (i / N) * (CW - 2 * PAD);
 const bw = (CW - 2 * PAD) / N;
 const maxReq = Math.max(1, ...Array.from({ length: N }, (_, i) => reqAt(i).reduce((a, b) => a + b, 0)));
@@ -169,22 +169,44 @@ function buildChart() {
   // markers
   const marks = [[E.start, 'Emergency', '#3B82F6'], [snowStart, 'Snow starts', '#fff'], [snowStop, 'Snow stops', '#fff'], [DL, 'Deadline', '#FF8A3D'], [E.end, 'Emergency ends', '#3B82F6']]
     .filter(([t]) => typeof t === 'number' && idxOf(t) >= 0 && idxOf(t) <= N);
-  marks.forEach(([t, label, c], k) => {
+  // Marker lines and labels; labelMarkers() places the labels once they can be measured (no overlaps).
+  marks.forEach(([t, label, c]) => {
     const x = xOf(idxOf(t));
-    s += `<path d="M${x} ${TOP - (k % 2 ? 4 : 20)} V${BOT}" stroke="${c}" stroke-width="${label === 'Deadline' ? 3 : 2}" ${label === 'Deadline' ? '' : 'stroke-dasharray="5 5"'}/>`;
-    s += `<text x="${x + 4}" y="${k % 2 ? 34 : 18}" class="cap" font-size="14" fill="${c}">${label.toUpperCase()}</text>`;
+    s += `<path class="mk-line" data-x="${x}" d="M${x} ${TOP - 4} V${BOT}" stroke="${c}" stroke-width="${label === 'Deadline' ? 3 : 2}" ${label === 'Deadline' ? '' : 'stroke-dasharray="5 5"'}/>`;
+    s += `<text class="mk cap" data-x="${x}" x="${x + 4}" y="14" font-size="14" fill="${c}">${label.toUpperCase()}</text>`;
   });
   s += `<rect id="future" x="0" y="${TOP}" width="0" height="${BOT - TOP + 2}" fill="#1A3A5F" opacity=".78"/>`;
   s += `<path id="head" d="M0 ${TOP - 6} V${BOT + 4}" stroke="#fff" stroke-width="2.5"/>`;
   s += `<g id="knob"><circle r="11" fill="#FF8A3D" stroke="#fff" stroke-width="3"/><path d="M-3 -4 V4 M3 -4 V4" stroke="#10243A" stroke-width="2" stroke-linecap="round"/></g>`;
   s += '</svg>';
   $('#chart').innerHTML = s;
+  labelMarkers();
   const seen = new Set();
   const warnLegend = (X.warnings || []).filter((w) => !seen.has(w.name) && seen.add(w.name)).map((w) => `<span><i style="background:${NWS[w.code] || '#C084FC'}"></i>${w.name}</span>`).join('');
   $('#legend').innerHTML = ['sidewalk', 'street', 'ask', 'spacesaver'].map((g) => `<span><i style="background:${GROUP[g].color}"></i>${GROUP[g].label}</span>`).join('') + '<span><i style="background:#0E2238"></i>Night</span>' + warnLegend;
 }
 // National Weather Service map colors for winter products
 const NWS = { 'BZ.W': '#FF4500', 'WS.W': '#FF69B4', 'WS.A': '#4682B4', 'WW.Y': '#7B68EE', 'WC.Y': '#AFEEEE', 'WC.W': '#B0C4DE', 'EC.W': '#0000FF', 'HW.W': '#DAA520', 'WI.Y': '#D2B48C' };
+// Put each marker label in the first free spot: three rows, to the right of its line, else to the left.
+function labelMarkers() {
+  const ROWS = [14, 30, 46]; const placed = [];
+  const free = (row, a, b) => a >= 0 && b <= CW && placed.every((p) => p.row !== row || b + 6 <= p.a || a >= p.b + 6);
+  const items = [...document.querySelectorAll('#chart .mk')].sort((m1, m2) => m1.dataset.x - m2.dataset.x);
+  items.forEach((el) => {
+    const x = +el.dataset.x; const w = el.getComputedTextLength ? el.getComputedTextLength() : el.textContent.length * 10;
+    let spot = null;
+    for (const row of [0, 1, 2]) {
+      if (free(row, x + 4, x + 4 + w)) { spot = [row, x + 4, x + 4 + w, 'start']; break; }
+      if (free(row, x - 4 - w, x - 4)) { spot = [row, x - 4 - w, x - 4, 'end']; break; }
+    }
+    spot = spot || [2, x + 4, x + 4 + w, 'start'];
+    const [row, a, b, anchor] = spot;
+    placed.push({ row, a, b });
+    el.setAttribute('y', ROWS[row]); el.setAttribute('x', anchor === 'start' ? x + 4 : x - 4); el.setAttribute('text-anchor', anchor);
+    const line = [...document.querySelectorAll('#chart .mk-line')].find((l) => l.dataset.x === el.dataset.x);
+    if (line) line.setAttribute('d', `M${x} ${ROWS[row] + 4} V${BOT}`);
+  });
+}
 const sunCache = {};
 function sunOf(w) {
   const k = `${w.y}-${w.m}-${w.d}`;
@@ -222,7 +244,12 @@ function buildLanes() {
   const wide = LW >= 620;
   const bw_ = lbw();
   const H = LANES.length * LH + 18;
-  const msg = (y, text) => `<text x="${LW / 2}" y="${y}" text-anchor="middle" font-size="13" fill="#9DB2CA">${text}</text>`;
+  // On narrow screens the note wraps after its first sentence, so it never spills out of the strip.
+  const msg = (y, text) => {
+    const cut = text.indexOf(': ');
+    if (wide || text.length * 6.6 < LW - 2 * PAD || cut < 0) return `<text x="${LW / 2}" y="${y}" text-anchor="middle" font-size="13" fill="#9DB2CA">${text}</text>`;
+    return `<text x="${LW / 2}" y="${y - 8}" text-anchor="middle" font-size="12" fill="#9DB2CA">${text.slice(0, cut + 1)}<tspan x="${LW / 2}" dy="15">${text.slice(cut + 2)}</tspan></text>`;
+  };
   let s = `<svg viewBox="0 0 ${LW} ${H}" width="${LW}" height="${H}" role="img" aria-label="How the city got around during the storm: T entries, Bluebikes trips, tows, parking calls, MBTA alerts and crashes, hour by hour">`;
   let labels = ''; // drawn last, above the "future" shading and the time line
   LANES.forEach((L, k) => {
@@ -364,7 +391,7 @@ function buildMap() {
     let A = 0; let cx = 0; let cy = 0;
     ring.forEach(([x1, y1], k) => { const [x2, y2] = ring[(k + 1) % ring.length]; const f = x1 * y2 - x2 * y1; A += f; cx += (x1 + x2) * f; cy += (y1 + y2) * f; });
     const [x, y] = [cx / (3 * A), cy / (3 * A)];
-    s += `<g class="wl" pointer-events="none"><text x="${x.toFixed(1)}" y="${(y - 4).toFixed(1)}" text-anchor="middle" class="cap" font-size="14" fill="#10243A">WARD ${w.ward}</text><text data-n="${w.ward}" x="${x.toFixed(1)}" y="${(y + 20).toFixed(1)}" text-anchor="middle" class="cap" font-size="26" fill="#10243A">0</text></g>`;
+    s += `<g class="wl" pointer-events="none"><text x="${x.toFixed(1)}" y="${(y - 4).toFixed(1)}" text-anchor="middle" class="cap" font-size="14" fill="#10243A">WARD ${w.ward}</text><text data-n="${w.ward}" x="${x.toFixed(1)}" y="${(y + 24).toFixed(1)}" text-anchor="middle" class="cap" font-size="26" fill="#10243A">0</text></g>`;
   });
   s += '</svg>';
   $('#map').innerHTML = s;
@@ -448,6 +475,7 @@ $('#play').addEventListener('click', () => {
 
 /* ---------- go ---------- */
 buildChart();
+document.fonts?.ready.then(labelMarkers); // re-place labels once the web font has its real widths
 buildLanes();
 enableDrag($('#chart svg'));
 enableDrag($('#lanes svg'));

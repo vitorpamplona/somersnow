@@ -170,7 +170,7 @@ def t_entries(cached, windows):
     z = zipfile.ZipFile(cached('gse_by_year.zip', GSE_ZIP))
     need = defaultdict(set)  # year -> dates
     for _, t0, t1 in windows:
-        d = (t0 - timedelta(weeks=4)).date()
+        d = (t0 - timedelta(weeks=4, days=1)).date()  # one extra service day: its after-midnight entries fall on the first day
         while d <= t1.date():
             need[d.year].add(d.isoformat()); d += timedelta(1)
     counts, seen_days = Counter(), set()
@@ -186,7 +186,9 @@ def t_entries(cached, windows):
                     seen_days.add(r['service_date'])
                     if r['station_name'] in names or r['stop_id'] in STATIONS:
                         h = int(r['time_period'].strip('()')[:2])
-                        counts[datetime.fromisoformat(r['service_date']) + h * HOUR] += float(r['gated_entries'] or 0)
+                        # A service day runs past midnight: periods before 3 a.m. belong to the next calendar day.
+                        day = datetime.fromisoformat(r['service_date']) + (timedelta(days=1) if h < 3 else timedelta(0))
+                        counts[day + h * HOUR] += float(r['gated_entries'] or 0)
     out = {}
     for sid, t0, t1 in windows:
         if t0.date().isoformat() not in seen_days:

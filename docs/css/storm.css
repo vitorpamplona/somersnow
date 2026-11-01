@@ -95,7 +95,6 @@
 .mini small{color:var(--mute);font-size:14px}
 .mini svg{width:100%;height:auto;display:block;margin-top:8px}
 .mini.sel{outline:3px solid var(--orange)}
-.mini .tag{display:inline-block;margin-bottom:6px;padding:2px 8px;border-radius:999px;background:var(--rust);color:#fff;font-family:var(--display);font-weight:700;font-size:13px;letter-spacing:.8px;text-transform:uppercase}
 .mini.gap{background:transparent;border:2px dashed #A9C4E4;color:var(--mute);display:flex;align-items:center}
 .multiples .winter{grid-column:1/-1;margin:18px 0 -4px;font-family:var(--display);font-weight:800;font-size:22px;text-transform:uppercase;color:var(--night)}
 .multiples .winter:first-child{margin-top:0}

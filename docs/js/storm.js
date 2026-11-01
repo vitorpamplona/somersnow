@@ -128,8 +128,9 @@ function messages(t, i) {
   if (t >= (has('end') ? E.end : DL)) add('', 'ban', 'Space savers', 'Banned. $100. Thrown out.');
   // the latest MBTA alert on a Somerville route or station in the past 6 hours (delays, detours, cuts, elevators)
   const al = (X.alerts || []).filter(([k]) => k <= i && k > i - 6).pop();
-  if (al) out.splice(Math.min(out.length, 2), 0, { k: 'mbta', cls: 'm-t', icon: 'bus', b: `MBTA · ${al[2].replace(/^Green-/, 'Green Line ')}`, s: al[3] });
-  return out.slice(0, 4);
+  // last, so an alert coming and going never pushes a rule card out of the panel (and makes it blink)
+  if (al) out.push({ k: 'mbta', cls: 'm-t', icon: 'bus', b: `MBTA · ${al[2].replace(/^Green-/, 'Green Line ')}`, s: al[3] });
+  return out.slice(0, 5);
 }
 
 // Each card is kept by its kind and title: a card that stays only updates its text (a countdown ticking), a new card

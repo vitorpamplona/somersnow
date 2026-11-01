@@ -115,7 +115,7 @@ def facts(S):
     if pol is not None:
         tows = sum(n for _, n in pol['tows'])
         items.append(f'<li><b>{tows}</b> snow emergency tows logged by police</li>')
-        if tows: summary.append(f'{tows} snow emergency tow{"s" if tows != 1 else ""}')
+        if tows: summary.append(f'{tows:,} snow emergency tow{"s" if tows != 1 else ""}')
     for key, label in (('tEntries', 'T entries at Somerville stations'), ('bikes', 'Bluebikes trips from Somerville stations')):
         # from the first snow to 3 days after it stops: later dips are more likely weekend shutdowns than the storm
         dd = daily_drop(x.get(key), t0, start, stop + timedelta(days=3), window_holidays(S))
@@ -126,7 +126,7 @@ def facts(S):
     if al:
         items.append(f'<li><b>{len(al)}</b> MBTA alerts on Somerville routes and stations</li>')
     items.append(f'<li><b>{sidewalk}</b> sidewalk reports to 311 after the snow started</li>')
-    summary.append(f'{sidewalk} sidewalk report{"s" if sidewalk != 1 else ""} to 311')
+    summary.append(f'{sidewalk:,} sidewalk report{"s" if sidewalk != 1 else ""} to 311')
     return '\n'.join(items), summary
 
 
@@ -239,10 +239,10 @@ def main():
     for k, sid in enumerate(ids):
         S = load(f'storm-{sid}.json')
         _, summary = facts(S)
-        nav = ''.join([
-            f'<a href="{ids[k - 1]}.html">← {short(ids[k - 1])}</a>' if k > 0 else '<span></span>',
+        nav = ''.join([  # neighbors by their date range ("Jan 25 – Feb 10, 2026"), not just their last day
+            f'<a href="{ids[k - 1]}.html">← {span(storms[k - 1])}</a>' if k > 0 else '<span></span>',
             '<a href="./">All storms</a>',
-            f'<a href="{ids[k + 1]}.html">{short(ids[k + 1])} →</a>' if k < len(ids) - 1 else '<span></span>',
+            f'<a href="{ids[k + 1]}.html">{span(storms[k + 1])} →</a>' if k < len(ids) - 1 else '<span></span>',
         ])
         cards_html, all_lede = cards(storms, sid)
         data = json.dumps({'storm': S, 'holidays': window_holidays(S), 'wards': wards, 'survey': survey, 'bus': {'season': bus['season'], 'stops': [{k: st[k] for k in ('name', 'lat', 'lon', 'riders', 'routes')} for st in bus['stops']], 'routes': bus.get('routes', {})}, 'ids': ids},

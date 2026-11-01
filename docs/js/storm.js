@@ -39,11 +39,16 @@ const E = Object.fromEntries(Object.entries(S.emergency || {}).map(([k, v]) => [
 const has = (k) => typeof E[k] === 'number';
 const SIDE = (E.side || '').toUpperCase();
 const sideTxt = SIDE ? `the ${SIDE} side` : 'the posted side';
-const snowStart = ms(S.snowStart);
-const snowStop = ms(S.snowStop);
-const D = deadline(snowStop);
-const DL = D.end;
-const clockFrom = D.days.find((d) => d.from).from;
+// A snow period can hold several snowfalls: each has its own start, stop and shoveling deadline. The page-wide
+// deadline (map text, emergency end) is the one for the period's biggest snowfall.
+const FALLS = (S.snowfalls && S.snowfalls.length ? S.snowfalls : [{ start: S.snowStart, stop: S.snowStop, snow: S.snowTotal }])
+  .map((f) => { const stop = ms(f.stop); const d = deadline(stop); return { start: ms(f.start), stop, snow: f.snow, DL: d.end, clockFrom: d.days.find((x) => x.from).from }; });
+const MAIN = FALLS.reduce((a, f) => (f.snow > a.snow ? f : a), FALLS[0]);
+const fallAt = (t) => FALLS.filter((f) => f.start <= t).pop() || FALLS[0];
+const snowStart = FALLS[0].start;
+const snowStop = MAIN.stop;
+const DL = MAIN.DL;
+const CLEAR = S.clear ? zoned(...S.clear.split('-').map(Number), 0, 0) : null; // the day sidewalk reports died down
 const cityDL = S.cityDeadline ? ms(S.cityDeadline) : null;
 const notices = (S.notices || []).map((n) => ({ ...n, at: ms(n.t) }));
 const declared = notices[0]?.at ?? (has('start') ? E.start - 24 * HOUR : snowStart);
@@ -87,6 +92,7 @@ function messages(t, i) {
   (X.warnings || []).forEach((w) => { if (t >= ms(w.from) && t < ms(w.to)) add('warn', 'snow', w.name, `National Weather Service, until ${dayTm(ms(w.to))}.`); });
   notices.forEach((n) => { if (t >= n.at && t < n.at + 20 * HOUR) add('city', 'city', `City · ${n.approx ? fmt(n.at, { weekday: 'short', month: 'short', day: 'numeric' }) : dayTm(n.at)}`, `${n.text} <a href="${n.src}">Read it</a>`); });
 
+  const F = fallAt(t); // the snowfall this hour belongs to
   if (t < Math.min(declared, snowStart)) {
     add('now', 'snow', 'Snow on the way', 'Buy salt or sand now. Stores run out.');
     add('', 'phone', 'Get City Alerts', 'somervillema.gov/alerts');
@@ -100,20 +106,20 @@ function messages(t, i) {
   }
 
   if (has('start') && t >= E.start && t < snowStart) add('now', 'bag', 'Salt now', 'Snow is coming. Salt stops it from sticking.');
-  if (t >= snowStart && t < snowStop) {
-    add('now', 'snow', h[0] === 3 ? 'Heavy snow' : 'Snowing', 'The 6-hour clock starts when it stops. Night doesn\'t count.');
+  if (t >= F.start && t < F.stop) {
+    add('now', 'snow', h[0] === 3 ? 'Heavy snow' : F !== FALLS[0] ? 'Snowing again' : 'Snowing', 'The 6-hour clock starts when it stops. Night doesn\'t count.');
   }
-  if (t >= snowStop && t < clockFrom) {
-    add('now', 'clock', 'Snow stopped', `Night doesn't count. The clock starts at sunrise, ${tm(clockFrom)}.`, `Shovel by ${dayTm(DL)}`);
+  if (t >= F.stop && t < F.clockFrom) {
+    add('now', 'clock', 'Snow stopped', `Night doesn't count. The clock starts at sunrise, ${tm(F.clockFrom)}.`, `Shovel by ${dayTm(F.DL)}`);
   }
-  if (t >= clockFrom && t < DL) {
-    add('now', 'shovel', 'Shovel now', '36 inches wide. Down to the pavement. Open the ramp.', `${dur(DL - t)} left`);
+  if (t >= F.clockFrom && t < F.DL) {
+    add('now', 'shovel', 'Shovel now', '36 inches wide. Down to the pavement. Open the ramp.', `${dur(F.DL - t)} left`);
   }
-  if (t >= DL && t < DL + 30 * HOUR) {
-    add('warn', 'phone', 'Deadline passed', `It was ${dayTm(DL)}${cityDL ? ` (the City said ${tm(cityDL)})` : ''}. Still buried? Report it: 311.`);
+  if (t >= F.DL && t < F.DL + 30 * HOUR) {
+    add('warn', 'phone', 'Deadline passed', `It was ${dayTm(F.DL)}${cityDL && F === MAIN ? ` (the City said ${tm(cityDL)})` : ''}. Still buried? Report it: 311.`);
   }
-  if (REFREEZE[i] && t >= snowStop) add('warn', 'ice', 'Refreezing now', 'It went above freezing, now it is back below. Meltwater turns to ice: salt or sand.');
-  else if (t >= DL) add('', 'ice', 'Check for ice', 'Meltwater refreezes overnight. Sand or salt it.');
+  if (REFREEZE[i] && t >= FALLS[0].stop) add('warn', 'ice', 'Refreezing now', 'It went above freezing, now it is back below. Meltwater turns to ice: salt or sand.');
+  else if (t >= F.DL) add('', 'ice', 'Check for ice', 'Meltwater refreezes overnight. Sand or salt it.');
   if (has('end') && t >= E.end) {
     if (has('lotsBy') && t < E.lotsBy) add('em', 'car', 'Emergency over', `Out of City lots by ${dayTm(E.lotsBy)}.`);
     else if (has('permitsBy') && t < E.permitsBy) add('em', 'car', 'Permit visible', `Clear your parking permit by ${dayTm(E.permitsBy)}.`);
@@ -187,7 +193,9 @@ function buildChart() {
     if (night) s += `<rect x="${xOf(i)}" y="${TOP}" width="${bw + 0.5}" height="${BOT - TOP}" fill="#0E2238"/>`;
   }
   // day labels at local noon
-  for (let i = 0; i < N; i++) { const w = wall(tOf(i)); if (w.h === 12) s += `<text x="${xOf(i)}" y="${BOT + 20}" text-anchor="middle" class="cap" font-size="${wideC ? 15 : 13}" fill="#A9C4E4">${fmt(tOf(i), { weekday: 'short' }).toUpperCase()}${wideC ? ` ${w.d}` : ''}</text>`; }
+  // long periods: label every 2nd, 3rd… day so the labels never run together
+  const every = Math.max(1, Math.ceil((wideC ? 62 : 40) / (24 * (CW - 2 * PAD) / N)));
+  for (let i = 0, nd = 0; i < N; i++) { const w = wall(tOf(i)); if (w.h === 12 && (nd++ % every === 0)) s += `<text x="${xOf(i)}" y="${BOT + 20}" text-anchor="middle" class="cap" font-size="${wideC ? 15 : 13}" fill="#A9C4E4">${fmt(tOf(i), { weekday: 'short' }).toUpperCase()}${wideC ? ` ${w.d}` : ''}</text>`; }
   // snow intensity
   S.hours.forEach((h, i) => { if (h[0]) s += `<rect x="${xOf(i)}" y="${TOP + SNOW_H - h[0] * 17}" width="${bw + 0.4}" height="${h[0] * 17}" fill="#fff" opacity="${0.35 + h[0] * 0.2}"/>`; });
   (X.warnings || []).forEach((w) => {
@@ -207,13 +215,19 @@ function buildChart() {
     order.forEach((g) => { const v = reqAt(i)[gi(g)] || 0; if (!v) return; const hh = (v / maxReq) * REQ_H; y -= hh; s += `<rect x="${xOf(i)}" y="${y}" width="${Math.max(1, bw - 0.6)}" height="${hh}" fill="${GROUP[g].color}"/>`; });
   }
   // markers
-  const marks = [[E.start, 'Emergency', '#3B82F6'], [snowStart, 'Snow starts', '#fff'], [snowStop, 'Snow stops', '#fff'], [DL, 'Deadline', '#FF8A3D'], [E.end, 'Emergency ends', '#3B82F6']]
-    .filter(([t]) => typeof t === 'number' && idxOf(t) >= 0 && idxOf(t) <= N);
+  // every snowfall gets its lines; the period's biggest one is labeled "Snow stops", later ones "More snow"
+  const marks = [[E.start, 'Emergency', '#3B82F6'], [snowStart, 'Snow starts', '#fff'], [E.end, 'Emergency ends', '#3B82F6'], [CLEAR, 'Reports die down', '#7FD4C1']];
+  FALLS.forEach((f, k) => {
+    if (k > 0) marks.push([f.start, 'More snow', '#fff']);
+    marks.push([f.stop, f === MAIN ? 'Snow stops' : '', '#fff']);
+    marks.push([f.DL, 'Deadline', '#FF8A3D']);
+  });
+  marks.splice(0, marks.length, ...marks.filter(([t]) => typeof t === 'number' && idxOf(t) >= 0 && idxOf(t) <= N));
   // Marker lines and labels; labelMarkers() places the labels once they can be measured (no overlaps).
   marks.forEach(([t, label, c]) => {
     const x = xOf(idxOf(t));
     s += `<path class="mk-line" data-x="${x}" d="M${x} ${TOP - 4} V${BOT}" stroke="${c}" stroke-width="${label === 'Deadline' ? 3 : 2}" ${label === 'Deadline' ? '' : 'stroke-dasharray="5 5"'}/>`;
-    s += `<text class="mk cap" data-x="${x}" x="${x + 4}" y="14" font-size="${wideC ? 14 : 12}" fill="${c}">${label.toUpperCase()}</text>`;
+    if (label) s += `<text class="mk cap" data-x="${x}" x="${x + 4}" y="14" font-size="${wideC ? 14 : 12}" fill="${c}">${label.toUpperCase()}</text>`;
   });
   s += `<rect id="future" x="0" y="${TOP}" width="0" height="${BOT - TOP + 2}" fill="#1A3A5F" opacity=".78"/>`;
   s += `<path id="head" d="M0 ${TOP - 6} V${BOT + 4}" stroke="#fff" stroke-width="2.5"/>`;
@@ -233,7 +247,7 @@ function labelMarkers() {
   const free = (row, a, b) => a >= 0 && b <= CW && placed.every((p) => p.row !== row || b + 6 <= p.a || a >= p.b + 6);
   // most important first, so the deadline always gets a spot; on a phone a label with no free spot is left out (the
   // buttons under the slider name the same moments)
-  const PRI = ['DEADLINE', 'SNOW STOPS', 'SNOW STARTS', 'EMERGENCY', 'EMERGENCY ENDS'];
+  const PRI = ['DEADLINE', 'SNOW STOPS', 'REPORTS DIE DOWN', 'SNOW STARTS', 'MORE SNOW', 'EMERGENCY', 'EMERGENCY ENDS'];
   const items = [...document.querySelectorAll('#chart .mk')].sort((m1, m2) => PRI.indexOf(m1.textContent) - PRI.indexOf(m2.textContent));
   items.forEach((el) => {
     el.style.display = '';
@@ -406,9 +420,11 @@ function buildLanes() {
     }
   });
   const lastBase = (LANES.length - 1) * LH + LABEL + STRIP;
-  for (let i = 0; i < N; i++) {
+  const every = Math.max(1, Math.ceil((wide ? 62 : 40) / (24 * (LW - 2 * PAD) / N))); // long periods: every 2nd, 3rd… day
+  for (let i = 0, nd = 0; i < N; i++) {
     const w = wall(tOf(i)); if (w.h !== 12) continue;
     const hol = holidayOf(tOf(i));
+    if (nd++ % every !== 0 && !hol) continue;
     s += `<text x="${lx(i)}" y="${lastBase + 17}" text-anchor="middle" class="cap" font-size="14" fill="${hol ? '#FF8A3D' : '#A9C4E4'}">${hol ? hol.toUpperCase() : `${fmt(tOf(i), { weekday: 'short' }).toUpperCase()}${wide ? ` ${w.d}` : ''}`}</text>`;
   }
   s += `<rect id="future2" x="0" y="${LABEL - 4}" width="0" height="${lastBase - LABEL + 6}" fill="#1A3A5F" opacity=".72" pointer-events="none"/>`;
@@ -594,8 +610,9 @@ function render(i) {
 }
 
 /* ---------- controls ---------- */
-const jumps = [[has('start') ? 'City declares' : 'City notice', notices.length ? declared : null], ['Emergency', E.start], ['Snow starts', snowStart], ['Heaviest', S.hours.some((h) => h[0] === 3) ? tOf(S.hours.findIndex((h) => h[0] === 3) + 1) : null], ['Snow stops', snowStop], ['Deadline', DL], ['Emergency ends', E.end], ['Day 3', DL + 48 * HOUR]];
-$('#jumps').innerHTML = jumps.filter(([, t]) => typeof t === 'number' && idxOf(t) >= 0 && idxOf(t) < N).map(([l, t]) => `<button class="chip" data-i="${Math.max(0, Math.ceil(idxOf(t)) - 1)}">${l}</button>`).join('');
+const jumps = [[has('start') ? 'City declares' : 'City notice', notices.length ? declared : null], ['Emergency', E.start], ['Snow starts', snowStart], ['Heaviest', S.hours.some((h) => h[0] === 3) ? tOf(S.hours.findIndex((h) => h[0] === 3) + 1) : null], ['Snow stops', snowStop], ['Deadline', DL], ['Emergency ends', E.end], ['Day 3', DL + 48 * HOUR],
+  ...FALLS.filter((f) => f.start > MAIN.stop).map((f) => ['More snow', f.start]), ['Reports die down', CLEAR]];
+$('#jumps').innerHTML = jumps.filter(([, t]) => typeof t === 'number' && idxOf(t) >= 0 && idxOf(t) < N).sort((a, b) => a[1] - b[1]).map(([l, t]) => `<button class="chip" data-i="${Math.max(0, Math.ceil(idxOf(t)) - 1)}">${l}</button>`).join('');
 $('#jumps').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) { stop(); render(+b.dataset.i); } });
 scrub.addEventListener('input', () => { stop(); render(+scrub.value); });
 // Grab the line on the chart (or tap anywhere on it) and drag through the hours. Called once the chart exists.

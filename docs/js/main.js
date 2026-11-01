@@ -180,22 +180,26 @@ function renderReplay() {
   const card = $('#replay-card');
   if (!card || !latestStorm) return;
   const st = latestStorm;
-  const v = st.days.map((d) => d[2].sidewalk || 0); // 2 days before to 7 days after the last day of snow
+  const v = st.days.map((d) => d[2].sidewalk || 0); // 2 days before the snow until sidewalk reports died down
   const mx = Math.max(1, ...v);
   const pk = v.indexOf(mx);
   const date = new Date(`${st.end}T12:00:00Z`).toLocaleDateString(document.documentElement.lang || 'en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
-  const bw = 32; const gap = 8; const W = 20 + 10 * (bw + gap) - gap; const base = 150; const H = 110;
+  // snow days (navy): every day of every snowfall in the period
+  const snowDays = new Set();
+  (st.snowfalls || [{ start: st.start, end: st.end }]).forEach((f) => { for (let d = new Date(`${f.start}T12:00:00Z`); d <= new Date(`${f.end}T12:00:00Z`); d.setUTCDate(d.getUTCDate() + 1)) snowDays.add(d.toISOString().slice(0, 10)); });
+  const W = 400; const step = (W - 20) / v.length; const bw = step * 0.8; const base = 150; const H = 110;
   const bars = v.map((n, k) => {
-    const h = Math.max(2, (n / mx) * H); const x = 10 + k * (bw + gap);
-    return `<rect x="${x}" y="${base - h}" width="${bw}" height="${h}" rx="4" fill="${k === 2 ? '#10243A' : '#FF8A3D'}"/>`;
+    const h = Math.max(2, (n / mx) * H); const x = 10 + k * step;
+    return `<rect x="${x.toFixed(1)}" y="${base - h}" width="${bw.toFixed(1)}" height="${h}" rx="${Math.min(4, bw / 3).toFixed(1)}" fill="${snowDays.has(st.days[k][0]) ? '#10243A' : '#FF8A3D'}"/>`;
   }).join('');
-  const px = 10 + pk * (bw + gap) + bw / 2;
-  card.href = `storms/${st.end}.html`;
+  const px = Math.min(W - 40, Math.max(40, 10 + pk * step + bw / 2));
+  const lastK = st.days.findIndex((d) => d[0] === st.end); const lx = 10 + Math.max(0, lastK) * step + bw / 2;
+  card.href = `storms/${st.id || st.end}.html`;
   const latestBtn = document.querySelector('#replay .btn:not(.ghost)'); if (latestBtn) latestBtn.href = card.href;
   card.innerHTML = `<span class="k">${t('replay.title')}</span><span class="sub">${t('replay.storm', { date, inches: st.snow })}</span>`
     + `<svg viewBox="0 0 ${W} 180" role="img" aria-label="${t('replay.title')}">${bars}`
     + `<path d="M6 ${base + 1} H${W - 6}" stroke="#C9D6E3" stroke-width="2"/>`
-    + `<text x="${10 + 2 * (bw + gap) + bw / 2}" y="${base + 22}" text-anchor="middle" class="cap" font-size="15" fill="#47607C">${t('replay.last').toUpperCase()}</text>`
+    + `<text x="${Math.min(W - 40, Math.max(40, lx)).toFixed(1)}" y="${base + 22}" text-anchor="middle" class="cap" font-size="15" fill="#47607C">${t('replay.last').toUpperCase()}</text>`
     + `<text x="${px}" y="${base - (mx / mx) * H - 8}" text-anchor="middle" class="cap" font-size="16" fill="#B93D06">${t('replay.peak', { n: mx }).toUpperCase()}</text></svg>`
     + `<span class="go">${t('replay.open')}</span>`;
 }

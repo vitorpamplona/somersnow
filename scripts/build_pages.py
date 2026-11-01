@@ -138,7 +138,10 @@ def lede(S):
                else ' The City\'s notice about the end of the emergency isn\'t online.' if not e.get('end') else '')
     som = (S.get('extra') or {}).get('snowSomerville')
     here = f' ({som["total"]} in Somerville, from volunteer observers{", partial report" if som["partial"] else ""})' if som else ''
-    return (f'{S["snowTotal"]} inches at Logan{here}. Snow from {day_tm(start)} to {day_tm(stop)}.{missing} Press play, or drag the line.').replace('..', '.')
+    n = len(S.get('snowfalls') or [1])
+    falls = f'{n} snowfalls, ' if n > 1 else ''
+    lasted = f' Sidewalk reports kept coming for {S["lasted"]} days after the {"first " if n > 1 else ""}snow stopped.' if S.get('lasted', 0) > 1 else ''
+    return (f'{falls}{S["snowTotal"]} inches at Logan{here}. Snow from {day_tm(start)} to {day_tm(stop)}.{lasted}{missing} Press play, or drag the line.').replace('..', '.')
 
 
 def winter_of(day):
@@ -146,8 +149,19 @@ def winter_of(day):
 
 
 def _peak(st):
+    """Day of the most sidewalk reports, counted from the last day of snow (only for a single snowfall)."""
     v = [d[2].get('sidewalk', 0) for d in st['days']]
-    return v.index(max(1, *v)) - 2 if max(v, default=0) else -99
+    off = (date.fromisoformat(st['end']) - date.fromisoformat(st['days'][0][0])).days
+    return v.index(max(1, *v)) - off if max(v, default=0) else -99
+
+
+def span(st):
+    """'Mar 3, 2026' for one snowfall, 'Jan 25 – Feb 10, 2026' for a period of several."""
+    if len(st.get('snowfalls', [])) <= 1:
+        return short(st['end'])
+    a, b = date.fromisoformat(st['start']), date.fromisoformat(st['end'])
+    left = f'{a:%b} {a.day}' + (f', {a.year}' if a.year != b.year else '')
+    return f'{left} – {short(st["end"])}' if a.month != b.month or a.year != b.year else f'{a:%b} {a.day}–{b.day}, {b.year}'
 
 
 def cards(storms, current=None, prefix=''):
@@ -172,23 +186,34 @@ def cards(storms, current=None, prefix=''):
         if isinstance(st, str):
             out.append(st)
             continue
+        # every day of the period's window: sidewalk reports (orange), snow days (navy), until reports died down
         v = [d[2].get('sidewalk', 0) for d in st['days']]
         mx = max(1, *v)
-        pk = v.index(mx) - 2 if max(v) else None
-        bars = ''.join(f'<rect x="{k * 20 + 2}" y="{60 - n / mx * 56:.1f}" width="16" height="{n / mx * 56:.1f}" rx="2" fill="{"#10243A" if k == 2 else "#FF8A3D"}"/>' for k, n in enumerate(v))
-        sel = st['end'] == current
+        snow_days = {f0 for f in st.get('snowfalls', [{'start': st['start'], 'end': st['end']}])
+                     for f0 in ((date.fromisoformat(f['start']) + timedelta(k)).isoformat() for k in range((date.fromisoformat(f['end']) - date.fromisoformat(f['start'])).days + 1))}
+        w = 200 / len(v)
+        bars = ''.join(f'<rect x="{k * w + w * 0.1:.1f}" y="{60 - max(n / mx * 56, 1.5 if day in snow_days else 0):.1f}" width="{w * 0.8:.1f}" height="{max(n / mx * 56, 1.5 if day in snow_days else 0):.1f}" rx="1.5" fill="{"#10243A" if day in snow_days else "#FF8A3D"}"/>'
+                       for k, ((day, _, _), n) in enumerate(zip(st['days'], v)))
+        n_falls = len(st.get('snowfalls', [1]))
+        lasted = st.get('lasted')
+        txt = (f'{st["snow"]} in' + (f' · {n_falls} snowfalls' if n_falls > 1 else '') + ' · ' +
+               (f'reports for {lasted} day{"s" if lasted != 1 else ""}' if max(v) and lasted else 'no sidewalk reports' if not max(v) else 'reports for a day'))
+        sel = st['id'] == current
         cur = ' aria-current="page"' if sel else ''
-        out.append(f'<a class="mini{" sel" if sel else ""}" href="{prefix}{st["end"]}.html"{cur}>'
-                   f'<h4>{short(st["end"])}</h4><small>{st["snow"]} in · {f'peak {mx} on day {"+" if pk >= 0 else ""}{pk}' if pk is not None else 'no sidewalk reports'}</small>'
-                   f'<svg viewBox="0 0 200 74" aria-hidden="true">{bars}<path d="M0 61 H200" stroke="#C9D6E3"/><text x="51" y="73" text-anchor="middle" font-size="10" fill="#47607C">LAST SNOW</text></svg>'
+        out.append(f'<a class="mini{" sel" if sel else ""}" href="{prefix}{st["id"]}.html"{cur}>'
+                   f'<h4>{span(st)}</h4><small>{txt}</small>'
+                   f'<svg viewBox="0 0 200 64" aria-hidden="true">{bars}<path d="M0 61 H200" stroke="#C9D6E3"/></svg>'
                    f'<span class="go">{"Showing above" if sel else "Replay this storm →"}</span></a>')
-    # counted on the storms picked by snowfall only: the ones found through 311 were picked by their reports
+    # counted on the periods picked by snowfall only: the ones found through 311 were picked by their reports
     snowy = [st for st in storms if st.get('kind', 'snow') == 'snow']
-    peaks13 = sum(1 for st in snowy if 1 <= _peak(st) <= 3)
-    big = [st for st in snowy if st['snow'] >= 6]
-    peaks_big = sum(1 for st in big if 1 <= _peak(st) <= 3)
-    lede_ = (f'In {peaks13} of {len(snowy)} storms of 3 inches or more, sidewalk reports peaked 1 to 3 days after the last day of snow '
-             f'({peaks_big} of the {len(big)} with 6 inches or more).')
+    lasted = sorted(st['lasted'] for st in snowy)
+    med = lasted[len(lasted) // 2]
+    week, two = sum(1 for x in lasted if x > 7), sum(1 for x in lasted if x > 14)
+    single = [st for st in snowy if len(st.get('snowfalls', [1])) == 1]
+    peaks13 = sum(1 for st in single if 1 <= _peak(st) <= 3)
+    lede_ = (f'After the snow stops, sidewalk reports keep coming for {med} days in a typical storm. They lasted more than a week in '
+             f'{week} of {len(snowy)} snow periods, and more than two weeks in {two}, when more snow fell before the sidewalks were clear. '
+             f'Where it snowed once, reports peaked 1 to 3 days after the snow in {peaks13} of {len(single)} storms.')
     return '\n'.join(out), lede_
 
 
@@ -196,7 +221,7 @@ def main():
     storms = load('storms.json')['storms']
     W = load('wards.json'); wards = W['wards']; survey = W.get('survey')
     bus = load('bus-stops.json')
-    ids = [st['end'] for st in storms]
+    ids = [st['id'] for st in storms]
     with open(os.path.join(ROOT, 'scripts', 'storm_page.html')) as f:
         tpl = f.read()
     # Cache-busting: browsers may keep old copies of these files for a while; a content hash in the URL
@@ -223,6 +248,17 @@ def main():
                 .replace('%%CARDS%%', cards_html).replace('%%ALL_LEDE%%', esc(all_lede)).replace('%%DATA%%', data))
         with open(os.path.join(OUT, f'{sid}.html'), 'w') as f:
             f.write(page)
+    # a snowfall that is now part of a longer period keeps its address: a small page that forwards to the period
+    alias = {a: st['id'] for st in storms for a in st.get('aliases', [])}
+    for a, to in alias.items():
+        with open(os.path.join(OUT, f'{a}.html'), 'w') as f:
+            f.write(f'<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Storm replay</title>'
+                    f'<link rel="canonical" href="{SITE}storms/{to}.html"><meta http-equiv="refresh" content="0; url={to}.html">'
+                    f'<script>location.replace("{to}.html" + location.hash)</script></head><body>'
+                    f'<p>This snowfall is part of a longer snow period: <a href="{to}.html">see the replay</a>.</p></body></html>\n')
+    for f in os.listdir(OUT):  # pages for ids that no longer exist
+        if f.endswith('.html') and f != 'index.html' and f[:-5] not in ids and f[:-5] not in alias:
+            os.remove(os.path.join(OUT, f))
     # index: every storm, newest first in the lede link
     cards_html, all_lede = cards(storms)
     latest = ids[-1]
@@ -263,7 +299,7 @@ INDEX = '''<!DOCTYPE html>
 <div class="multiples">
 %%CARDS%%
 </div>
-<p class="cite" style="margin-top:20px">Sidewalk reports to 311 per day, from 2 days before to 7 days after the last day of snow (marked). Storms with 3 inches or more at Logan, over consecutive snowy days, plus smaller snows that drew many sidewalk reports (over 3 days, 3% of the winter's total and at least 30).</p>
+<p class="cite" style="margin-top:20px">Sidewalk reports to 311 per day (orange), snow days (navy), from 2 days before the snow until reports died down: two days in a row at no more than 1/20 of the peak day (or 2 reports). Snow of half an inch or more that falls before then joins the same period. Storms with 3 inches or more at Logan, over consecutive snowy days, plus smaller snows that drew many sidewalk reports (over 3 days, 3% of the winter's total and at least 30).</p>
 </div>
 </section>
 <footer><div class="wrap"><p>By the Somerville PTAC. Not an official City page. The City's rules apply: <a href="https://www.somervillema.gov/snow">somervillema.gov/snow</a>.</p></div></footer>

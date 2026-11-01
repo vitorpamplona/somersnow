@@ -408,6 +408,68 @@ def complaint_storms(daily, by_day, storms):
     print(f'  found through 311: {len(out)} smaller storms ({", ".join(st["end"] for st in out)})')
     return out
 
+PERIOD_MAX_DAYS = 35  # a replay window (2 days before the first snow to the day after reports die down) is capped here
+
+
+def snow_periods(daily, by_day, seeds):
+    """Group snowfalls into snow periods, so a page shows the whole tail of sidewalk reports, not a fixed week.
+    A period starts with a seed snowfall (3 inches or more, or a small snow found through 311). After its last snowfall,
+    sidewalk reports have "died down" on the first of two days in a row at no more than 1/20 of the period's peak day
+    so far, or 2 reports. If another snowfall (a run of days with half an inch or more at Logan) starts before that,
+    it joins the period, emergency or not, and the count starts again after it. The window runs from 2 days before the
+    first snow to the day after reports die down, capped at PERIOD_MAX_DAYS. Id: the period's last day of snow."""
+    sw = lambda d: by_day[d].get('sidewalk', 0)
+    snowy = lambda d: daily.get(d.isoformat(), 0) >= 0.5
+    seed_at = {date.fromisoformat(st['start']): st for st in seeds}
+    periods, taken = [], set()
+    for seed in seeds:
+        if seed['end'] in taken:
+            continue
+        first = date.fromisoformat(seed['start'])
+        cap = first - timedelta(2) + timedelta(PERIOD_MAX_DAYS - 2)  # last day that fits in the window
+        falls = [dict(seed)]
+        taken.add(seed['end'])
+        while True:
+            end = date.fromisoformat(falls[-1]['end'])
+            d, peak, clear, nxt = end + timedelta(1), max(sw(first + timedelta(k)) for k in range((end - first).days + 1)), None, None
+            while d <= cap:
+                if snowy(d):
+                    nxt = d; break
+                peak = max(peak, sw(d))
+                thr = max(2, peak / 20)
+                if sw(d) <= thr and sw(d + timedelta(1)) <= thr:
+                    clear = d; break
+                d += timedelta(1)
+            if nxt is None:
+                break
+            b = nxt
+            while snowy(b + timedelta(1)):
+                b += timedelta(1)
+            span = [(nxt + timedelta(k)).isoformat() for k in range((b - nxt).days + 1)]
+            s_ = seed_at.get(nxt)
+            falls.append({'start': nxt.isoformat(), 'end': b.isoformat(), 'snow': round(sum(daily[x] for x in span), 1),
+                          'kind': s_['kind'] if s_ else 'small'})
+            if s_:
+                taken.add(s_['end'])
+        last = date.fromisoformat(falls[-1]['end'])
+        if clear is None:
+            clear = min(cap, max(last, d))
+        days_to = clear + timedelta(1)  # the window includes the day after reports die down
+        rng = [(first - timedelta(2)) + timedelta(k) for k in range((days_to - first).days + 3)]
+        periods.append({
+            'id': last.isoformat(), 'start': first.isoformat(), 'end': last.isoformat(), 'clear': clear.isoformat(),
+            'snow': round(sum(f['snow'] for f in falls), 1),
+            'kind': 'snow' if any(f['kind'] == 'snow' for f in falls) else '311',
+            'snowfalls': [{k: f[k] for k in ('start', 'end', 'snow', 'kind')} for f in falls],
+            # days of sidewalk reports from the end of the first snowfall until they died down
+            'lasted': (clear - date.fromisoformat(falls[0]['end'])).days,
+            'aliases': sorted({f['end'] for f in falls if f['kind'] != 'small'} - {last.isoformat()}),
+            'days': [[x.isoformat(), daily.get(x.isoformat(), 0), dict(by_day[x])] for x in rng],
+        })
+    print(f'  {len(seeds)} snowfalls in {len(periods)} snow periods')
+    return periods
+
+
 def main():
     print('311 requests…'); reqs = fetch_311()
     print('Snowfall…'); daily = fetch_snow_daily('2015-07-01'); winters = fetch_snow_winters()
@@ -448,7 +510,8 @@ def main():
             })
     for st in storms:
         st['kind'] = 'snow'
-    storms = sorted(storms + complaint_storms(daily, by_day, storms), key=lambda st: st['end'])
+    seeds = sorted(storms + complaint_storms(daily, by_day, storms), key=lambda st: st['end'])
+    storms = snow_periods(daily, by_day, seeds)
     write('storms.json', {'storms': storms})
 
     print('Wards…'); wards = fetch_wards(); survey = fetch_ward_survey()
@@ -471,9 +534,11 @@ def main():
     # Each storm's window: 2 days before its first snow day to 6 days after its last (06:00 to 00:00, local time).
     windows = []
     for st in storms:
-        first, last = date.fromisoformat(st['start']), date.fromisoformat(st['end'])
-        windows.append((st['end'], datetime.combine(first - timedelta(2), datetime.min.time()).replace(hour=6),
-                        datetime.combine(last + timedelta(6), datetime.min.time())))
+        first = date.fromisoformat(st['start'])
+        t0 = datetime.combine(first - timedelta(2), datetime.min.time()).replace(hour=6)
+        t1 = min(datetime.combine(date.fromisoformat(st['clear']) + timedelta(2), datetime.min.time()),
+                 datetime.combine(first - timedelta(2) + timedelta(PERIOD_MAX_DAYS), datetime.min.time()))
+        windows.append((st['id'], t0, t1))
     print('Extra sources for each storm…')
     routes = {r for s_ in bus['stops'] for r in s_['routes']}
     stop_ids = {s_['id'] for s_ in bus['stops']}
@@ -503,7 +568,6 @@ def main():
 
     MONTHS = 'January February March April May June July August September October November December'.split()
     for st, (sid, t0, t1) in zip(storms, windows):
-        first, last = date.fromisoformat(st['start']), date.fromisoformat(st['end'])
         print(f'Replay {sid}…')
         wx = fetch_hourly_weather(t0.isoformat(), t1.isoformat())
         hours = []
@@ -522,10 +586,19 @@ def main():
                 runs.append(cur); cur = []
             cur.append(k)
         if cur: runs.append(cur)
-        lo, hi = datetime.combine(first, datetime.min.time()), datetime.combine(last + timedelta(1), datetime.min.time())
-        near = [r for r in runs if r[-1] >= lo and r[0] < hi] or runs
-        real = [r for r in near if len(r) >= 3] or [max(near, key=len)]
-        start, stop = real[0][0], real[-1][-1] + timedelta(hours=1)
+        falls = []
+        for f in st['snowfalls']:  # each snowfall in the period: its own start, stop (and so deadline)
+            lo = datetime.combine(date.fromisoformat(f['start']), datetime.min.time())
+            hi = datetime.combine(date.fromisoformat(f['end']) + timedelta(1), datetime.min.time())
+            near = [r for r in runs if r[-1] >= lo and r[0] < hi]
+            if not near:
+                continue
+            real = [r for r in near if len(r) >= 3] or [max(near, key=len)]
+            falls.append({'start': real[0][0].isoformat(timespec='minutes'), 'stop': (real[-1][-1] + timedelta(hours=1)).isoformat(timespec='minutes'),
+                          'snow': f['snow']})
+        if not falls:  # no snow reported in the hourly data at all: use the days
+            falls = [{'start': f'{st["start"]}T06:00', 'stop': f'{st["end"]}T18:00', 'snow': st['snow']}]
+        start, stop = datetime.fromisoformat(falls[0]['start']), datetime.fromisoformat(falls[-1]['stop'])
         req = defaultdict(lambda: [0] * len(GROUPS))
         wards_ = defaultdict(lambda: Counter())
         order = list(GROUPS)
@@ -542,13 +615,25 @@ def main():
         title = (f'{MONTHS[a_.month - 1]} {a_.day}, {a_.year}' if a_ == b_ else
                  f'{MONTHS[a_.month - 1]} {a_.day}–{b_.day}, {a_.year}' if a_.month == b_.month else
                  f'{MONTHS[a_.month - 1]} {a_.day} – {MONTHS[b_.month - 1]} {b_.day}, {b_.year}')
+        # what the City announced, for any snowfall in the period (a typed title only fits a single snowfall)
+        city = {}
+        for k in [sid] + st['aliases']:
+            for key, val in CITY.get(k, {}).items():
+                if key == 'notices':
+                    city.setdefault('notices', []).extend(val)
+                elif key == 'title' and len(st['snowfalls']) > 1:
+                    continue
+                else:
+                    city.setdefault(key, val)
         write(f'storm-{sid}.json', {
             'id': sid, 'title': title,
             'from': t0.isoformat(timespec='minutes'), 'to': t1.isoformat(timespec='minutes'),
-            **CITY.get(sid, {}),
+            **city,
             'groups': order,
             'snowStart': start.isoformat(timespec='minutes'),
             'snowStop': stop.isoformat(timespec='minutes'),
+            'snowfalls': falls,
+            'clear': st['clear'], 'lasted': st['lasted'],
             'snowTotal': st['snow'],  # same total as the storm's card in storms.json
             'hours': hours,
             'requests': {str(i): v for i, v in sorted(req.items())},
@@ -561,6 +646,11 @@ def main():
                 'snowfall': 'NOAA daily snowfall, Boston, via ACIS (BOSthr)',
             },
         })
+    # old storm files whose snowfall is now part of a longer period (its page forwards there)
+    keep = {f'storm-{st["id"]}.json' for st in storms}
+    for f in os.listdir(OUT):
+        if f.startswith('storm-') and f.endswith('.json') and f not in keep:
+            os.remove(os.path.join(OUT, f))
     print('Pages…'); import build_pages; build_pages.main()
     print('Done.')
 

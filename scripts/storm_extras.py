@@ -237,7 +237,8 @@ def bikes(cached, windows, inside):
             continue
         first = min(date(y, m, 1) for y, m in have)
         now, base = _with_baseline(counts, t0, t1, first, have)
-        out[sid] = {'now': now, 'base': base}
+        # early winters had almost no trips from Somerville stations: too few to compare, so "not available", not zero
+        out[sid] = {'now': now, 'base': base} if sum(b for b in base if b) >= 100 else None
     return out
 
 

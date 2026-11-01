@@ -510,8 +510,9 @@ def main():
             w = wx.get(t, {})
             hours.append([w.get('snow', 0), w.get('temp'), w.get('vis'), w.get('wind')])
             t += timedelta(hours=1)
-        # The storm: snowy hours at Logan, with lulls under 6 hours counted as the same storm.
-        # Pick the run that overlaps the storm's snow days (the window can include other, smaller snows).
+        # The storm: snowy hours at Logan, with lulls under 6 hours counted as the same storm. A storm over several
+        # days can have longer lulls: it runs from the first to the last run of 3 or more snowy hours that overlaps its
+        # snow days (a passing flurry doesn't start or end it, as in live storm mode). The window can include other snows.
         snowing = [k for k, w in sorted(wx.items()) if w['snow'] and t0 <= k < t1]
         runs, cur = [], []
         for k in snowing:
@@ -521,8 +522,8 @@ def main():
         if cur: runs.append(cur)
         lo, hi = datetime.combine(first, datetime.min.time()), datetime.combine(last + timedelta(1), datetime.min.time())
         near = [r for r in runs if r[-1] >= lo and r[0] < hi] or runs
-        main_run = max(near, key=len)
-        start, stop = main_run[0], main_run[-1] + timedelta(hours=1)
+        real = [r for r in near if len(r) >= 3] or [max(near, key=len)]
+        start, stop = real[0][0], real[-1][-1] + timedelta(hours=1)
         req = defaultdict(lambda: [0] * len(GROUPS))
         wards_ = defaultdict(lambda: Counter())
         order = list(GROUPS)

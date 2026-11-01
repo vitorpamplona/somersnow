@@ -15,7 +15,9 @@ const GROUP = {
   feedback: { label: 'Feedback', color: '#47607C' },
 };
 
-const { storm: S, wards: WARD_LIST, survey: SURVEY, bus: BUS } = JSON.parse($('#storm-data').textContent);
+const { storm: S, wards: WARD_LIST, survey: SURVEY, bus: BUS, holidays: HOLIDAYS = {} } = JSON.parse($('#storm-data').textContent);
+// holidays in the window (New Year, Christmas…): the T and the streets empty on their own, so the lanes name them
+const holidayOf = (t) => { const w = wall(t); return HOLIDAYS[`${w.y}-${String(w.m).padStart(2, '0')}-${String(w.d).padStart(2, '0')}`]; };
 const WARDS = { wards: WARD_LIST };
 const X = S.extra || {};
 
@@ -130,6 +132,21 @@ function renderMessages(t, i) {
 
 // The number of message cards changes hour by hour. Reserve the tallest the phone ever gets, so scrubbing
 // never changes its height and nothing on the page jumps (on phones the chart sits right below it).
+// The line under the map's second number changes text while dragging; keep room for its longest version so the
+// page below never jumps.
+function lockLateHeight() {
+  const el = $('#m-late-l'); const keep = el.textContent; el.style.minHeight = '';
+  let h = 0;
+  for (const txt of ['The snow hasn\'t started yet. Press play or drag the line.', `came after the ${tm(DL)} deadline (8888 before it)`, `came after the deadline (it's ${dayTm(DL)})`]) {
+    el.textContent = txt; h = Math.max(h, el.offsetHeight);
+  }
+  el.textContent = keep; el.style.minHeight = `${h}px`;
+  // the counters under the lanes name a holiday when the line is on one; keep room for that longer label too
+  const t2 = $('#tally2'); t2.style.minHeight = '';
+  const hol = Array.from({ length: N }, (_, k) => k).find((k) => holidayOf(tOf(k)));
+  if (hol != null) { const cur = +scrub.value; render(hol); const hh = t2.offsetHeight; render(cur); t2.style.minHeight = `${Math.max(hh, t2.offsetHeight)}px`; }
+}
+
 function lockPhoneHeight() {
   const box = $('#msgs'); const phone = $('.phone');
   const cur = +scrub.value;
@@ -230,7 +247,7 @@ const LANES = [
   { key: 'busTrips', label: 'Bus trips on Somerville routes', note: 'bars: trips run · line: a normal week', color: '#7FD4C1', kind: 'vsBase', from: 'MBTA bus records start in 2020' },
   { key: 'busLate', label: 'How late the buses ran', note: 'median minutes late · line: a normal week', color: '#FF6B6B', kind: 'late', from: 'MBTA bus records start in 2020' },
   { key: 'subway', label: 'How slow the T ran in Somerville', note: 'bars: % slower than usual · red: under half the usual trains', color: '#7DD3FC', kind: 'slow', from: 'MBTA travel times start in 2021' },
-  { key: 'bikes', label: 'Bluebikes trips from Somerville', note: 'bars: this week · line: a normal week', color: '#F4C95D', kind: 'vsBase', from: 'no Bluebikes data' },
+  { key: 'bikes', label: 'Bluebikes trips from Somerville', note: 'bars: this week · line: a normal week', color: '#F4C95D', kind: 'vsBase', from: 'no Bluebikes data, or too few trips from Somerville that winter' },
   { key: 'web', label: 'Views of the City\'s snow pages', note: 'per day · line: a normal day', color: '#C084FC', kind: 'daily', from: 'the City\'s page-view data covers 2020 to May 2023' },
   { key: 'tows', label: 'Snow emergency tows (police)', note: 'per 8-hour shift', color: '#3B82F6', kind: 'shift', from: 'police dispatch data starts in 2017' },
   { key: 'parking', label: 'Parking calls to 311', note: 'illegal parking, towed cars', color: '#7FA7F5', kind: 'hourly' },
@@ -341,7 +358,11 @@ function buildLanes() {
     }
   });
   const lastBase = (LANES.length - 1) * LH + LABEL + STRIP;
-  for (let i = 0; i < N; i++) { const w = wall(tOf(i)); if (w.h === 12) s += `<text x="${lx(i)}" y="${lastBase + 17}" text-anchor="middle" class="cap" font-size="14" fill="#A9C4E4">${fmt(tOf(i), { weekday: 'short' }).toUpperCase()}${wide ? ` ${w.d}` : ''}</text>`; }
+  for (let i = 0; i < N; i++) {
+    const w = wall(tOf(i)); if (w.h !== 12) continue;
+    const hol = holidayOf(tOf(i));
+    s += `<text x="${lx(i)}" y="${lastBase + 17}" text-anchor="middle" class="cap" font-size="14" fill="${hol ? '#FF8A3D' : '#A9C4E4'}">${hol ? hol.toUpperCase() : `${fmt(tOf(i), { weekday: 'short' }).toUpperCase()}${wide ? ` ${w.d}` : ''}`}</text>`;
+  }
   s += `<rect id="future2" x="0" y="${LABEL - 4}" width="0" height="${lastBase - LABEL + 6}" fill="#1A3A5F" opacity=".72" pointer-events="none"/>`;
   s += `<path id="head2" d="M0 ${LABEL - 4} V${lastBase + 2}" stroke="#fff" stroke-width="2.5"/>`;
   s += labels + '</svg>';
@@ -498,7 +519,7 @@ function render(i) {
   const sumTo = (pairs) => (pairs ? pairs.filter(([k]) => k <= i).reduce((a, [, n]) => a + n, 0) : null);
   const tows = X.police ? sumTo(X.police.tows.filter(([k]) => k >= BASE - 24)) : null;
   $('#tally2').innerHTML = [
-    [pct(todayVsNormal(X.tEntries, i)), 'T entries today vs. a normal week', '#A9C4E4'],
+    [pct(todayVsNormal(X.tEntries, i)), `T entries today vs. a normal week${holidayOf(tOf(i)) ? ` (${holidayOf(tOf(i))})` : ''}`, '#A9C4E4'],
     [pct(todayVsNormal(X.buses && X.buses.trips, i)), 'Bus trips today vs. normal', '#7FD4C1'],
     [pct(todayVsNormal(X.bikes, i)), 'Bluebikes trips today vs. normal', '#F4C95D'],
     [tows ?? '–', 'Snow emergency tows so far', '#3B82F6'],
@@ -562,7 +583,7 @@ enableTips($('#lanes svg'));
 buildMap();
 enableWardTips();
 render(Math.max(0, Math.ceil(idxOf(declared)) - 1));
-lockPhoneHeight();
+lockPhoneHeight(); lockLateHeight();
 {
   let timer2 = null; let lastW = LW;
   window.addEventListener('resize', () => {
@@ -570,7 +591,7 @@ lockPhoneHeight();
     timer2 = setTimeout(() => {
       const w = Math.round($('#lanes').clientWidth);
       if (Math.abs(w - lastW) < 4) return;
-      lastW = w; buildLanes(); enableDrag($('#lanes svg')); enableTips($('#lanes svg')); render(+scrub.value); lockPhoneHeight();
+      lastW = w; buildLanes(); enableDrag($('#lanes svg')); enableTips($('#lanes svg')); render(+scrub.value); lockPhoneHeight(); lockLateHeight();
     }, 150);
   });
 }

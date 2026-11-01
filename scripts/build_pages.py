@@ -8,7 +8,7 @@ Template: scripts/storm_page.html.
 """
 import hashlib, html, json, os
 from collections import defaultdict
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, 'docs', 'data')
@@ -48,15 +48,30 @@ def esc(s):
     return html.escape(s, quote=True)
 
 
-def daily_drop(series, t0, after):
-    """The day (from `after` on) where a series fell furthest below its normal: (day, percent change)."""
+def holidays(y):
+    """Holidays that empty the T and the streets on their own (Massachusetts), so a dip isn't read as the storm."""
+    def nth(month, weekday, n):  # n-th weekday (Mon=0) of a month
+        d = date(y, month, 1)
+        return d + timedelta(days=(weekday - d.weekday()) % 7 + 7 * (n - 1))
+    return {date(y, 1, 1): 'New Year', nth(1, 0, 3): 'MLK Day', nth(2, 0, 3): "Presidents' Day", nth(4, 0, 3): "Patriots' Day",
+            nth(11, 3, 4): 'Thanksgiving', date(y, 12, 25): 'Christmas'}
+
+
+def window_holidays(S):
+    a, b = datetime.fromisoformat(S['from']).date(), datetime.fromisoformat(S['to']).date()
+    return {d.isoformat(): name for y in {a.year, b.year} for d, name in holidays(y).items() if a <= d <= b}
+
+
+def daily_drop(series, t0, after, until=None, skip=()):
+    """The day (from `after` to `until`, holidays in `skip` left out) where a series fell furthest below its normal:
+    (day, percent change)."""
     if not series:
         return None
     now, base = series['now'], series['base']
     days = defaultdict(lambda: [0.0, 0.0])
     for k, (a, b) in enumerate(zip(now, base)):
         t = t0 + timedelta(hours=k)
-        if t.date() < after.date() or b is None:
+        if t.date() < after.date() or (until and t.date() > until.date()) or t.date().isoformat() in skip or b is None:
             continue
         days[t.date()][0] += a or 0
         days[t.date()][1] += b
@@ -100,9 +115,10 @@ def facts(S):
     if pol is not None:
         tows = sum(n for _, n in pol['tows'])
         items.append(f'<li><b>{tows}</b> snow emergency tows logged by police</li>')
-        if tows: summary.append(f'{tows} snow emergency tows')
+        if tows: summary.append(f'{tows} snow emergency tow{"s" if tows != 1 else ""}')
     for key, label in (('tEntries', 'T entries at Somerville stations'), ('bikes', 'Bluebikes trips from Somerville stations')):
-        dd = daily_drop(x.get(key), t0, start)
+        # from the first snow to 3 days after it stops: later dips are more likely weekend shutdowns than the storm
+        dd = daily_drop(x.get(key), t0, start, stop + timedelta(days=3), window_holidays(S))
         if dd and dd[1] <= -0.15:
             items.append(f'<li><b>{pct(dd[1])}</b> {label} on {esc(day(datetime.combine(dd[0], datetime.min.time())))}, compared with a normal week</li>')
             if key == 'tEntries': summary.append(f'T entries {pct(dd[1])} on {dd[0]:%A}')
@@ -110,7 +126,7 @@ def facts(S):
     if al:
         items.append(f'<li><b>{len(al)}</b> MBTA alerts on Somerville routes and stations</li>')
     items.append(f'<li><b>{sidewalk}</b> sidewalk reports to 311 after the snow started</li>')
-    summary.append(f'{sidewalk} sidewalk reports to 311')
+    summary.append(f'{sidewalk} sidewalk report{"s" if sidewalk != 1 else ""} to 311')
     return '\n'.join(items), summary
 
 
@@ -204,7 +220,7 @@ def main():
             f'<a href="{ids[k + 1]}.html">{short(ids[k + 1])} →</a>' if k < len(ids) - 1 else '<span></span>',
         ])
         cards_html, all_lede = cards(storms, sid)
-        data = json.dumps({'storm': S, 'wards': wards, 'survey': survey, 'bus': {'season': bus['season'], 'stops': [{k: st[k] for k in ('name', 'lat', 'lon', 'riders', 'routes')} for st in bus['stops']], 'routes': bus.get('routes', {})}, 'ids': ids},
+        data = json.dumps({'storm': S, 'holidays': window_holidays(S), 'wards': wards, 'survey': survey, 'bus': {'season': bus['season'], 'stops': [{k: st[k] for k in ('name', 'lat', 'lon', 'riders', 'routes')} for st in bus['stops']], 'routes': bus.get('routes', {})}, 'ids': ids},
                           separators=(',', ':'), ensure_ascii=False).replace('</', '<\\/')
         desc = f'Replay the {S["title"]} storm in Somerville hour by hour: ' + ', '.join(summary) + '. By the Somerville PTAC.'
         page = (tpl.replace('%%TITLE%%', esc(S['title'])).replace('%%DESC%%', esc(desc)).replace('%%URL%%', f'{SITE}storms/{sid}.html')

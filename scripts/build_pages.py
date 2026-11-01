@@ -141,7 +141,12 @@ def lede(S):
     n = len(S.get('snowfalls') or [1])
     falls = f'{n} snowfalls, ' if n > 1 else ''
     lasted = f' Sidewalk reports kept coming for {S["lasted"]} days after the {"first " if n > 1 else ""}snow stopped.' if S.get('lasted', 0) > 1 else ''
-    return (f'{falls}{S["snowTotal"]} inches at Logan{here}. Snow from {day_tm(start)} to {day_tm(stop)}.{lasted}{missing} Press play, or drag the line.').replace('..', '.')
+    if (stop - start).days >= 2:  # a period over several days: name the dates
+        when = lambda t: f'{t:%a}, {t:%b} {t.day}, ' + day_tm(t).split(' ', 1)[1]
+        span_txt = f'Snow from {when(start)} to {when(stop)}.'
+    else:
+        span_txt = f'Snow from {day_tm(start)} to {day_tm(stop)}.'
+    return (f'{falls}{S["snowTotal"]} inches at Logan{here}. {span_txt}{lasted}{missing} Press play, or drag the line.').replace('..', '.')
 
 
 def winter_of(day):

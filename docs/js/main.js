@@ -183,7 +183,11 @@ function renderReplay() {
   const v = st.days.map((d) => d[2].sidewalk || 0); // 2 days before the snow until sidewalk reports died down
   const mx = Math.max(1, ...v);
   const pk = v.indexOf(mx);
-  const date = new Date(`${st.end}T12:00:00Z`).toLocaleDateString(document.documentElement.lang || 'en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+  const lang = document.documentElement.lang || 'en-US';
+  const fmtD = (d, o) => new Date(`${d}T12:00:00Z`).toLocaleDateString(lang, { ...o, timeZone: 'UTC' });
+  // one snowfall: its last day; a period of several: first day – last day
+  const date = (st.snowfalls || []).length > 1 ? `${fmtD(st.start, { month: 'short', day: 'numeric' })} – ${fmtD(st.end, { month: 'short', day: 'numeric', year: 'numeric' })}`
+    : fmtD(st.end, { month: 'short', day: 'numeric', year: 'numeric' });
   // snow days (navy): every day of every snowfall in the period
   const snowDays = new Set();
   (st.snowfalls || [{ start: st.start, end: st.end }]).forEach((f) => { for (let d = new Date(`${f.start}T12:00:00Z`); d <= new Date(`${f.end}T12:00:00Z`); d.setUTCDate(d.getUTCDate() + 1)) snowDays.add(d.toISOString().slice(0, 10)); });

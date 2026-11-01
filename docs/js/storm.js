@@ -195,7 +195,7 @@ function buildChart() {
   // day labels at local noon
   // long periods: label every 2nd, 3rd… day so the labels never run together
   const every = Math.max(1, Math.ceil((wideC ? 62 : 40) / (24 * (CW - 2 * PAD) / N)));
-  for (let i = 0, nd = 0; i < N; i++) { const w = wall(tOf(i)); if (w.h === 12 && (nd++ % every === 0)) s += `<text x="${xOf(i)}" y="${BOT + 20}" text-anchor="middle" class="cap" font-size="${wideC ? 15 : 13}" fill="#A9C4E4">${fmt(tOf(i), { weekday: 'short' }).toUpperCase()}${wideC ? ` ${w.d}` : ''}</text>`; }
+  for (let i = 0, nd = 0; i < N; i++) { const w = wall(tOf(i)); if (w.h === 12 && (nd++ % every === 0) && xOf(i) > 20 && xOf(i) < CW - 20) s += `<text x="${xOf(i)}" y="${BOT + 20}" text-anchor="middle" class="cap" font-size="${wideC ? 15 : 13}" fill="#A9C4E4">${every > 1 && !wideC ? `${w.m}/${w.d}` : `${fmt(tOf(i), { weekday: 'short' }).toUpperCase()}${wideC ? ` ${w.d}` : ''}`}</text>`; }
   // snow intensity
   S.hours.forEach((h, i) => { if (h[0]) s += `<rect x="${xOf(i)}" y="${TOP + SNOW_H - h[0] * 17}" width="${bw + 0.4}" height="${h[0] * 17}" fill="#fff" opacity="${0.35 + h[0] * 0.2}"/>`; });
   (X.warnings || []).forEach((w) => {
@@ -205,7 +205,8 @@ function buildChart() {
   s += `<text x="${PAD + 4}" y="${TOP + 14}" class="cap" font-size="13" fill="#A9C4E4">SNOW AT LOGAN</text>`;
   if (X.snowSomerville) {
     const txt = wideC ? `SOMERVILLE OBSERVERS: ${X.snowSomerville.total} IN${X.snowSomerville.partial ? ' (PARTIAL REPORT)' : ''}` : `SOMERVILLE: ${X.snowSomerville.total} IN${X.snowSomerville.partial ? ' (PARTIAL)' : ''}`;
-    s += `<text x="${CW - PAD - 4}" y="${TOP + 14}" text-anchor="end" class="cap" font-size="13" fill="#A9C4E4">${txt}</text>`;
+    s += wideC ? `<text x="${CW - PAD - 4}" y="${TOP + 14}" text-anchor="end" class="cap" font-size="13" fill="#A9C4E4">${txt}</text>`
+      : `<text x="${PAD + 4}" y="${TOP + 30}" class="cap" font-size="12" fill="#A9C4E4">${txt}</text>`; // phones: under "Snow at Logan"
   }
   s += `<text x="${PAD + 4}" y="${REQ_TOP + 14}" class="cap" font-size="13" fill="#A9C4E4">311 REQUESTS PER HOUR</text>`;
   // requests, stacked (sidewalk on the bottom)
@@ -217,16 +218,16 @@ function buildChart() {
   // markers
   // every snowfall gets its lines; the period's biggest one is labeled "Snow stops", later ones "More snow"
   const marks = [[E.start, 'Emergency', '#3B82F6'], [snowStart, 'Snow starts', '#fff'], [E.end, 'Emergency ends', '#3B82F6'], [CLEAR, 'Reports die down', '#7FD4C1']];
-  FALLS.forEach((f, k) => {
-    if (k > 0) marks.push([f.start, 'More snow', '#fff']);
+  FALLS.forEach((f, k) => { // only the biggest snowfall's moments are labeled; the others keep their lines
+    if (k > 0) marks.push([f.start, FALLS.length === 2 && f.start > MAIN.stop ? 'More snow' : '', '#fff']);
     marks.push([f.stop, f === MAIN ? 'Snow stops' : '', '#fff']);
-    marks.push([f.DL, 'Deadline', '#FF8A3D']);
+    marks.push([f.DL, f === MAIN ? 'Deadline' : '', '#FF8A3D']);
   });
   marks.splice(0, marks.length, ...marks.filter(([t]) => typeof t === 'number' && idxOf(t) >= 0 && idxOf(t) <= N));
   // Marker lines and labels; labelMarkers() places the labels once they can be measured (no overlaps).
   marks.forEach(([t, label, c]) => {
     const x = xOf(idxOf(t));
-    s += `<path class="mk-line" data-x="${x}" d="M${x} ${TOP - 4} V${BOT}" stroke="${c}" stroke-width="${label === 'Deadline' ? 3 : 2}" ${label === 'Deadline' ? '' : 'stroke-dasharray="5 5"'}/>`;
+    s += `<path class="mk-line" data-x="${x}" d="M${x} ${TOP - 4} V${BOT}" stroke="${c}" stroke-width="${label === 'Deadline' ? 3 : 2}" ${c === '#FF8A3D' ? '' : 'stroke-dasharray="5 5"'}${c === '#FF8A3D' && label !== 'Deadline' ? ' opacity=".7"' : ''}/>`;
     if (label) s += `<text class="mk cap" data-x="${x}" x="${x + 4}" y="14" font-size="${wideC ? 14 : 12}" fill="${c}">${label.toUpperCase()}</text>`;
   });
   s += `<rect id="future" x="0" y="${TOP}" width="0" height="${BOT - TOP + 2}" fill="#1A3A5F" opacity=".78"/>`;
@@ -424,8 +425,8 @@ function buildLanes() {
   for (let i = 0, nd = 0; i < N; i++) {
     const w = wall(tOf(i)); if (w.h !== 12) continue;
     const hol = holidayOf(tOf(i));
-    if (nd++ % every !== 0 && !hol) continue;
-    s += `<text x="${lx(i)}" y="${lastBase + 17}" text-anchor="middle" class="cap" font-size="14" fill="${hol ? '#FF8A3D' : '#A9C4E4'}">${hol ? hol.toUpperCase() : `${fmt(tOf(i), { weekday: 'short' }).toUpperCase()}${wide ? ` ${w.d}` : ''}`}</text>`;
+    if ((nd++ % every !== 0 && !hol) || lx(i) < 20 || lx(i) > LW - 20) continue;
+    s += `<text x="${lx(i)}" y="${lastBase + 17}" text-anchor="middle" class="cap" font-size="14" fill="${hol ? '#FF8A3D' : '#A9C4E4'}">${hol ? hol.toUpperCase() : every > 1 && !wide ? `${w.m}/${w.d}` : `${fmt(tOf(i), { weekday: 'short' }).toUpperCase()}${wide ? ` ${w.d}` : ''}`}</text>`;
   }
   s += `<rect id="future2" x="0" y="${LABEL - 4}" width="0" height="${lastBase - LABEL + 6}" fill="#1A3A5F" opacity=".72" pointer-events="none"/>`;
   s += `<path id="head2" d="M0 ${LABEL - 4} V${lastBase + 2}" stroke="#fff" stroke-width="2.5"/>`;

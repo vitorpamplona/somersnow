@@ -39,10 +39,18 @@
 
 <section class="replay-top dark">
 <div class="wrap">
-<div class="eyebrow">Storm replay</div>
-<h2 id="r-title" style="margin-top:14px">%%TITLE%%</h2>
-<p class="lede" id="r-lede" style="margin-top:18px">%%LEDE%%</p>
-<nav class="storm-nav" aria-label="Other storms">%%NAV%%</nav>
+<div class="r-head">
+  <div class="r-intro">
+    <div class="eyebrow">Storm replay</div>
+    <h2 id="r-title" style="margin-top:14px">%%TITLE%%</h2>
+    <p class="lede" id="r-lede" style="margin-top:18px">%%LEDE%%</p>
+    <nav class="storm-nav" aria-label="Other storms">%%NAV%%</nav>
+  </div>
+  <div class="guide-col">
+    <div class="k">What the guide would say</div>
+    <div class="phone" aria-live="polite"><div id="msgs"></div></div>
+  </div>
+</div>
 
 <div class="player">
   <button class="play" id="play" aria-label="Play"><svg viewBox="0 0 24 24" aria-hidden="true"><path id="play-ico" d="M7 4 L20 12 L7 20 Z"/></svg></button>
@@ -52,10 +60,6 @@
 </div>
 
 <div class="replay">
-  <div class="guide-col">
-    <div class="k">What the guide would say</div>
-    <div class="phone" aria-live="polite"><div id="msgs"></div></div>
-  </div>
   <div class="data-col">
     <div class="k">What was happening</div>
     <div class="panel chart-panel"><div id="chart"></div>

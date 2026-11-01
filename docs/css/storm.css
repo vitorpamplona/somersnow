@@ -1,6 +1,9 @@
 /* Storm replay page (storm.html). Builds on style.css. */
 .replay-top{padding-top:48px}
-.replay-top h2{font-size:clamp(44px,6.5vw,84px)}
+.replay-top h2{font-size:clamp(40px,5.2vw,72px)}
+/* title and intro on the left, the guide's messages on the right; charts below at full width */
+.r-head{display:grid;grid-template-columns:minmax(0,7fr) minmax(300px,5fr);gap:40px;align-items:start}
+.r-head .guide-col{padding-top:6px}
 .replay-top .lede{max-width:46ch}
 .k{font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:2px;text-transform:uppercase;color:var(--ice);margin-bottom:10px}
 
@@ -23,11 +26,11 @@
 .jumps .chip{font-size:15px;padding:6px 12px}
 
 /* layout */
-.replay{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:32px;margin-top:32px;align-items:start}
-.guide-col{position:sticky;top:76px}
+.replay{margin-top:32px}
 
 /* the phone with the guide's messages */
-.phone{background:var(--snow);color:var(--night);border-radius:32px;padding:16px;border:6px solid #0A1929;min-height:420px;box-shadow:0 10px 40px rgba(0,0,0,.35)}
+.phone{background:var(--snow);color:var(--night);border-radius:28px;padding:14px;border:6px solid #0A1929;box-shadow:0 10px 40px rgba(0,0,0,.35)}
+#msgs.scrolls{overflow-y:auto;overscroll-behavior:contain;-webkit-mask-image:linear-gradient(#000 calc(100% - 28px),transparent);mask-image:linear-gradient(#000 calc(100% - 28px),transparent)}
 .msg{display:grid;grid-template-columns:40px minmax(0,1fr);gap:4px 12px;align-items:start;background:#fff;border-radius:18px;padding:14px 16px;margin-bottom:10px;border-left:6px solid #C9D6E3;animation:msgin .35s ease}
 .msg .ico{grid-row:1/3;width:40px;height:40px;color:var(--rust)}
 .msg b{font-family:var(--display);font-weight:800;font-size:24px;text-transform:uppercase;line-height:1}
@@ -103,13 +106,11 @@
 .mini.gap small{color:var(--mute)}
 
 @media (max-width:900px){
-  .replay{grid-template-columns:1fr}
-  .guide-col{position:static}
+  .r-head{grid-template-columns:1fr;gap:24px}
   .phone{min-height:0}
   .chart-panel{padding:14px 12px 12px}
   .chart-panel .legend{gap:6px 14px;font-size:13px;line-height:1.3}
   .chart-panel .legend i{width:11px;height:11px;margin-right:5px}
-  #msgs.scrolls{overflow-y:auto;overscroll-behavior:contain;-webkit-mask-image:linear-gradient(#000 calc(100% - 28px),transparent);mask-image:linear-gradient(#000 calc(100% - 28px),transparent)}
   .map-panel{grid-template-columns:1fr}
   .tally{grid-template-columns:repeat(2,minmax(0,1fr))}
 }

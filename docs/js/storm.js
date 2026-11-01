@@ -162,15 +162,13 @@ function lockPhoneHeight() {
   const cs = getComputedStyle(phone);
   const extra = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom) + parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth) + 10;
   const mx = Math.max(...hs);
-  if (window.innerWidth < 700) {
-    // On a phone the box sits above the chart: fit 80% of the hours, and let the rare busiest hours scroll inside
-    // it, so the page neither jumps nor carries a big empty box.
-    const fit = Math.max(220, [...hs].sort((a, b) => a - b)[Math.floor(hs.length * 0.8)]);
-    if (fit < mx) { box.style.maxHeight = `${fit}px`; box.classList.add('scrolls'); }
-    phone.style.height = `${Math.ceil(Math.min(mx, fit) + extra)}px`;
-  } else {
-    phone.style.minHeight = `${Math.ceil(mx + extra)}px`;
-  }
+  // The box sits beside the title (above it on phones): fit 80% of the hours, or the height of the intro next to it
+  // if that's taller, and let the rare busiest hours scroll inside it, so the page never jumps.
+  const intro = $('.r-intro'); const side = window.innerWidth > 900 && intro ? intro.offsetHeight - 40 - extra : 0;
+  const q = window.innerWidth > 900 ? 0.8 : 0.5; // phones: room for a typical hour, the slider stays close below
+  const fit = Math.max(200, side, [...hs].sort((a, b) => a - b)[Math.floor(hs.length * q)]);
+  if (fit < mx) { box.style.maxHeight = `${fit}px`; box.classList.add('scrolls'); }
+  phone.style.height = `${Math.ceil(Math.min(mx, fit) + extra)}px`;
   renderMessages(tOf(cur + 1), cur);
 }
 
@@ -612,7 +610,7 @@ function render(i) {
 
 /* ---------- controls ---------- */
 const jumps = [[has('start') ? 'City declares' : 'City notice', notices.length ? declared : null], ['Emergency', E.start], ['Snow starts', snowStart], ['Heaviest', S.hours.some((h) => h[0] === 3) ? tOf(S.hours.findIndex((h) => h[0] === 3) + 1) : null], ['Snow stops', snowStop], ['Deadline', DL], ['Emergency ends', E.end], ['Day 3', DL + 48 * HOUR],
-  ...FALLS.filter((f) => f.start > MAIN.stop).map((f) => ['More snow', f.start]), ['Reports die down', CLEAR]];
+  ...FALLS.filter((f) => f !== MAIN && f !== FALLS[0]).map((f) => [`Snow ${fmt(f.start, { month: 'short', day: 'numeric' })}`, f.start]), ['Reports die down', CLEAR]];
 $('#jumps').innerHTML = jumps.filter(([, t]) => typeof t === 'number' && idxOf(t) >= 0 && idxOf(t) < N).sort((a, b) => a[1] - b[1]).map(([l, t]) => `<button class="chip" data-i="${Math.max(0, Math.ceil(idxOf(t)) - 1)}">${l}</button>`).join('');
 $('#jumps').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) { stop(); render(+b.dataset.i); } });
 scrub.addEventListener('input', () => { stop(); render(+scrub.value); });
@@ -641,7 +639,7 @@ $('#play').addEventListener('click', () => {
 
 /* ---------- go ---------- */
 buildChart();
-document.fonts?.ready.then(labelMarkers); // re-place labels once the web font has its real widths
+document.fonts?.ready.then(() => { labelMarkers(); lockPhoneHeight(); }); // re-place labels once the web font has its real widths
 buildLanes();
 enableDrag($('#chart svg'));
 enableDrag($('#lanes svg'));

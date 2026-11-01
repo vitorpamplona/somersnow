@@ -253,6 +253,7 @@ def alerts(cached, windows, routes, stops):
             out[sid] = None
             continue
         months = sorted({(d.year, d.month) for d in (t0, t1)})
+        rs = routes[sid] if isinstance(routes, dict) else routes  # per storm: the routes that served Somerville then
         seen = {}
         for y, m in months:
             z = files.get('2020-2023' if y <= 2023 else str(y))
@@ -265,10 +266,12 @@ def alerts(cached, windows, routes, stops):
                 for r in csv.DictReader(io.TextIOWrapper(fh, encoding='utf-8-sig')):
                     if r['alert_id'] in seen or not r.get('created_dt'):
                         continue
-                    t = _local(r['created_dt'])
+                    # MBTA archive times end in 'Z' but are Boston wall-clock time (alerts are created 7-8 a.m., almost
+                    # none 1-3 a.m.; service-day periods start 04:30), so read them as local, not UTC
+                    t = datetime.fromisoformat(r['created_dt'][:19])
                     if not (t0 <= t < t1):
                         continue
-                    if r['route_id'] in routes or r['stop_id'] in stops or r['stop_id'] in STATIONS:
+                    if r['route_id'] in rs or r['stop_id'] in stops or r['stop_id'] in STATIONS:
                         eff = r['effect']
                         head = ' '.join(r['header'].split())
                         kind = ('access' if eff == 'ACCESSIBILITY_ISSUE' else 'detour' if eff in ('DETOUR', 'STOP_MOVED', 'STOP_CLOSURE')
@@ -354,10 +357,14 @@ BUS_ZIPS = {
 _T0 = datetime(1900, 1, 1)
 
 
-def buses(cached, windows, routes):
-    """Per hour, on bus routes that serve Somerville: trips that left their first stop, and the median minutes
-    late at timepoints; each with the same hour's value on the 4 weeks before."""
-    want = {r.lstrip('0') for r in routes}
+def buses(cached, windows, som_stops, today_routes):
+    """Per hour, on the bus routes that served Somerville at the time: trips that left their first stop, and the
+    median minutes late at timepoints; each with the same hour's value on the 4 weeks before.
+    Routes change over time (the 86 and CT2 stopped in Somerville in 2020-22, the 86 not in 2026), so a route counts
+    for a storm when, in that storm's months, it is one of today's Somerville routes and ran at all, or it had a
+    timing stop inside Somerville (som_stops: today's stop ids). The data only lists timing stops, so the second
+    rule alone would miss routes like the 83 and 95. The same routes are used for the storm and its normal weeks."""
+    today = {('CT2' if r == '747' else r.lstrip('0')) for r in today_routes}  # the arrival data calls route 747 'CT2'
     need_days, months = set(), set()
     for _, t0, t1 in windows:
         if t0.year < 2020 or (t0 - timedelta(weeks=4)).year < 2020:
@@ -365,8 +372,9 @@ def buses(cached, windows, routes):
         d = (t0 - timedelta(weeks=4)).date()
         while d <= t1.date():
             need_days.add(d.isoformat()); months.add((d.year, d.month)); d += timedelta(1)
-    trips, late = Counter(), defaultdict(list)
+    trips, late = Counter(), defaultdict(list)  # keyed by (route, hour)
     have_months = set()
+    served = defaultdict(set)  # (year, month) -> routes with a timing stop in Somerville
     MON = {m: k + 1 for k, m in enumerate('Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec'.split())}
 
     def file_months(name, y):
@@ -399,6 +407,18 @@ def buses(cached, windows, routes):
                 continue
             print(f'    buses {y} {sorted(got)}…', file=sys.stderr)
             have_months.update((y, m) for m in got)
+            with z.open(f) as fh:  # pass 1: which routes stopped in Somerville that month
+                rd = csv.reader(io.TextIOWrapper(fh, encoding='utf-8-sig'))
+                head = [h.strip().lower().replace(' ', '') for h in next(rd)]
+                i_day = next(head.index(n) for n in ('service_date', 'servicedate') if n in head)
+                i_rt = next(head.index(n) for n in ('route_id', 'route') if n in head)
+                i_st = next(head.index(n) for n in ('stop_id', 'stop') if n in head)
+                for r in rd:
+                    if r[i_day][:10] in need_days:
+                        rt = r[i_rt].lstrip('0')
+                        if rt in today or r[i_st] in som_stops:
+                            served[(y, int(r[i_day][5:7]))].add(rt)
+            want = set().union(*served.values()) if served else set()
             with z.open(f) as fh:
                 rd = csv.reader(io.TextIOWrapper(fh, encoding='utf-8-sig'))
                 head = [h.strip().lower().replace(' ', '') for h in next(rd)]
@@ -414,7 +434,7 @@ def buses(cached, windows, routes):
                         continue
                     base = datetime.fromisoformat(r[i_day][:10])
                     act = base + (a_ - _T0)
-                    k = act.replace(minute=0, second=0, microsecond=0)
+                    k = (r[i_rt].lstrip('0'), act.replace(minute=0, second=0, microsecond=0))
                     if r[i_pt] == 'Startpoint':
                         trips[k] += 1
                     else:
@@ -427,8 +447,16 @@ def buses(cached, windows, routes):
             out[sid] = None
             continue
         first = date(*min(have_months), 1)
-        now, base = _with_baseline(trips, t0, t1, first)
-        med = {k: sorted(v)[len(v) // 2] for k, v in late.items() if len(v) >= 20}  # quiet hours with few buses are too noisy
+        rts = set().union(*(served[(t.year, t.month)] for t in (t0, t1 - timedelta(hours=1))))
+        tr, lt = Counter(), defaultdict(list)
+        for (rt, h), v in trips.items():
+            if rt in rts:
+                tr[h] += v
+        for (rt, h), v in late.items():
+            if rt in rts:
+                lt[h].extend(v)
+        now, base = _with_baseline(tr, t0, t1, first)
+        med = {k: sorted(v)[len(v) // 2] for k, v in lt.items() if len(v) >= 20}  # quiet hours with few buses are too noisy
         n = len(now)
         late_now = [round(med[t0 + k * HOUR], 1) if (t0 + k * HOUR) in med else None for k in range(n)]
         late_base = []
@@ -436,7 +464,8 @@ def buses(cached, windows, routes):
             t = t0 + k * HOUR
             prev = [med[t - timedelta(weeks=w)] for w in (1, 2, 3, 4) if (t - timedelta(weeks=w)) in med]
             late_base.append(round(sorted(prev)[len(prev) // 2], 1) if prev else None)
-        out[sid] = {'trips': {'now': now, 'base': base}, 'late': {'now': late_now, 'base': late_base}}
+        out[sid] = {'trips': {'now': now, 'base': base}, 'late': {'now': late_now, 'base': late_base},
+                    'routes': sorted(rts, key=lambda r: (len(r), r))}
     return out
 
 
@@ -457,7 +486,19 @@ SUBWAY_SEGMENTS = {frozenset(p) for p in [
     ('place-gilmn', 'place-mgngl'), ('place-mgngl', 'place-balsq'), ('place-balsq', 'place-mdftf')]}
 
 
-def subway(cached, windows):
+def _open_member(path, member):
+    """A text stream for one file in a zip. Some MBTA archives use a compression Python's zipfile can't read
+    (Deflate64); the system 'unzip' can."""
+    z = zipfile.ZipFile(path)
+    try:
+        return io.TextIOWrapper(z.open(member), encoding='utf-8-sig')
+    except NotImplementedError:
+        import subprocess
+        p = subprocess.Popen(['unzip', '-p', path, member], stdout=subprocess.PIPE)
+        return io.TextIOWrapper(p.stdout, encoding='utf-8-sig')
+
+
+def subway(cached, windows, get):
     """Per hour, trains on the segments above: how much slower than usual they ran (median of each train's travel
     time / that segment's median over the 4 weeks before), and how many trains ran vs. the same hour on those weeks."""
     need_days, months = set(), set()
@@ -468,10 +509,13 @@ def subway(cached, windows):
         while d <= t1.date():
             need_days.add(d.isoformat()); months.add((d.year, d.month)); d += timedelta(1)
     rides = []  # (local departure hour, segment key, travel seconds)
-    have_months = set()
+    have_months, read = set(), set()
+    # platform stop id -> station (older archives give platforms, newer ones stations)
+    parent = {s['id']: (s['relationships']['parent_station']['data'] or {}).get('id')
+              for s in json.loads(get('https://api-v3.mbta.com/stops?filter[route_type]=0,1&page[limit]=5000'))['data']}
     for y in sorted({y for y, _ in months}):
         try:
-            z = zipfile.ZipFile(cached(f'rt-{y}.zip', RT_ZIPS[y]))
+            zpath = cached(f'rt-{y}.zip', RT_ZIPS[y]); z = zipfile.ZipFile(zpath)
         except Exception as e:
             print(f'    subway {y}: {e}', file=sys.stderr)
             continue
@@ -483,17 +527,28 @@ def subway(cached, windows):
                 continue
             have_months.add((y, m))
             for f in files:
+                if f in read:  # a quarterly file covers three months: read it once
+                    continue
+                read.add(f)
                 print(f'    subway {f.rsplit("/", 1)[-1]}…', file=sys.stderr)
-                with z.open(f) as fh:
-                    rd = csv.reader(io.TextIOWrapper(fh, encoding='utf-8-sig'))
+                with _open_member(zpath, f) as fh:
+                    rd = csv.reader(fh)
                     head = next(rd); c = {h: k for k, h in enumerate(head)}
-                    i_day, i_a, i_b, i_dep, i_tt = c['service_date'], c['from_parent_station'], c['to_parent_station'], c['from_stop_departure_datetime'], c['travel_time_sec']
+                    newer = 'from_parent_station' in c  # 2025+: stations and timestamps; before: platforms and seconds
+                    i_day, i_tt = c['service_date'], c['travel_time_sec']
+                    i_a, i_b = (c['from_parent_station'], c['to_parent_station']) if newer else (c['from_stop_id'], c['to_stop_id'])
+                    # seconds after the service day's midnight (can pass 86400). The newer '..._datetime' columns end in
+                    # 'Z' but are local time (they equal the seconds column), so they are not used
+                    i_dep = c['from_stop_departure_sec'] if newer else c['start_time_sec']
                     for r in rd:
-                        a, b = r[i_a], r[i_b]
-                        if (a == b) or frozenset((a, b)) not in SUBWAY_SEGMENTS or r[i_day] not in need_days:
+                        if r[i_day] not in need_days:
+                            continue
+                        a, b = (r[i_a], r[i_b]) if newer else (parent.get(r[i_a]), parent.get(r[i_b]))
+                        if not a or not b or a == b or frozenset((a, b)) not in SUBWAY_SEGMENTS:
                             continue
                         try:
-                            t = _local(r[i_dep]); tt = float(r[i_tt])
+                            t = datetime.fromisoformat(r[i_day]) + timedelta(seconds=int(r[i_dep]))
+                            tt = float(r[i_tt])
                         except (ValueError, KeyError):
                             continue
                         if tt > 0:
@@ -519,5 +574,7 @@ def subway(cached, windows):
             slow.append(round((sorted(v)[len(v) // 2] - 1) * 100) if v and len(v) >= 4 else None)
         first = min(date(y, m, 1) for y, m in have_months)
         now, base = _with_baseline(count, t0, t1, first)
+        # overnight (no regular service in the normal weeks): the few moves then are not passenger trains
+        slow = [None if (b is None or b < 10) else v for v, b in zip(slow, base)]
         out[sid] = {'slow': slow, 'trains': {'now': now, 'base': base}, 'segments': sorted('–'.join(s) for s in typical)}
     return out

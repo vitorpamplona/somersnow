@@ -276,6 +276,60 @@ def fetch_wards():
     return sorted(wards, key=lambda w: int(w['ward']))
 
 
+def decode_polyline(s):
+    """Google encoded polyline -> [(lat, lon), ...] (MBTA shapes use it)."""
+    pts, i, lat, lon = [], 0, 0, 0
+    while i < len(s):
+        vals = []
+        for _ in range(2):
+            shift = res = 0
+            while True:
+                b = ord(s[i]) - 63; i += 1
+                res |= (b & 0x1f) << shift; shift += 5
+                if b < 0x20:
+                    break
+            vals.append(~(res >> 1) if res & 1 else res >> 1)
+        lat += vals[0]; lon += vals[1]
+        pts.append((lat / 1e5, lon / 1e5))
+    return pts
+
+
+def fetch_bus_routes(route_ids):
+    """The usual path of each bus route serving Somerville (typical patterns, both directions), clipped to a box
+    around the city and simplified. {route: {'name', 'long', 'paths': [[[lon, lat], ...], ...]}}"""
+    box = (-71.140, 42.366, -71.064, 42.424)  # a little beyond the city line; the page clips to the wards
+    names = {r['id']: r['attributes'] for r in json.loads(get('https://api-v3.mbta.com/routes', {'filter[id]': ','.join(sorted(route_ids))}))['data']}
+    out = {}
+    for rid in sorted(route_ids, key=lambda r: (len(r), r)):
+        d = json.loads(get('https://api-v3.mbta.com/route_patterns', {'filter[route]': rid, 'include': 'representative_trip.shape'}))
+        shapes = {i['id']: i['attributes']['polyline'] for i in d.get('included', []) if i['type'] == 'shape'}
+        trips = {i['id']: (i['relationships'].get('shape', {}).get('data') or {}).get('id') for i in d.get('included', []) if i['type'] == 'trip'}
+        paths = []
+        for pat in d['data']:
+            if pat['attributes'].get('typicality') != 1:
+                continue
+            shp = shapes.get(trips.get(pat['relationships']['representative_trip']['data']['id']))
+            if not shp:
+                continue
+            run = []
+            for la, lo in decode_polyline(shp):
+                if box[0] <= lo <= box[2] and box[1] <= la <= box[3]:
+                    run.append((lo, la))
+                elif run:
+                    paths.append(run); run = []
+            if run: paths.append(run)
+        keep = []
+        for run in paths:
+            if len(run) < 2:
+                continue
+            simp = simplify(run, 0.00005) if len(run) > 2 else run
+            keep.append([[round(x, 5), round(y, 5)] for x, y in simp])
+        a = names.get(rid, {})
+        out[rid] = {'name': a.get('short_name') or rid, 'long': a.get('long_name', ''), 'paths': keep}
+    print(f'  bus routes: {len(out)}, {sum(len(p) for r in out.values() for p in r["paths"])} points')
+    return out
+
+
 def fetch_bus_stops():
     stops = {s['id']: s['attributes'] for s in json.loads(get(MBTA_STOPS))['data'] if s['attributes']['municipality'] == 'Somerville'}
     with tempfile.TemporaryFile() as tmp:
@@ -342,7 +396,8 @@ def main():
 
     print('Wards…'); wards = fetch_wards(); survey = fetch_ward_survey()
     write('wards.json', {'wards': wards, 'survey': survey})
-    print('Bus stops and riders…'); bus = fetch_bus_stops(); write('bus-stops.json', bus)
+    print('Bus stops and riders…'); bus = fetch_bus_stops()
+    bus['routes'] = fetch_bus_routes({r for st in bus['stops'] for r in st['routes']}); write('bus-stops.json', bus)
 
     def in_somerville(lon, lat):
         for w in wards:
@@ -365,6 +420,14 @@ def main():
     print('Extra sources for each storm…')
     routes = {r for s_ in bus['stops'] for r in s_['routes']}
     stop_ids = {s_['id'] for s_ in bus['stops']}
+    # every bus stop inside the city today (not only the ones in the ridership file), to find which routes served it
+    som_stops = {s_['id'] for s_ in json.loads(get('https://api-v3.mbta.com/stops', {'filter[route_type]': '3', 'page[limit]': '20000'}))['data']
+                 if s_['attributes']['latitude'] and in_somerville(s_['attributes']['longitude'], s_['attributes']['latitude'])}
+    buses = storm_extras.buses(cached, windows, som_stops, routes)
+    then = {}
+    for sid, _, _ in windows:  # alerts: today's routes plus the ones that served Somerville at the time (CT2 is also 747)
+        r_ = set(routes) | set((buses.get(sid) or {}).get('routes', []))
+        then[sid] = r_ | ({'747'} if 'CT2' in r_ else set()) | ({'CT2'} if '747' in r_ else set())
     extra = {
         'warnings': storm_extras.warnings(get, windows),
         'police': storm_extras.police(get, windows),
@@ -372,11 +435,11 @@ def main():
         'calls311': storm_extras.calls311(get, windows),
         'tEntries': storm_extras.t_entries(cached, windows),
         'bikes': storm_extras.bikes(cached, windows, in_somerville),
-        'alerts': storm_extras.alerts(cached, windows, routes, stop_ids),
+        'alerts': storm_extras.alerts(cached, windows, then, stop_ids),
         'snowSomerville': storm_extras.somerville_snow(get, windows, storms),
         'web': storm_extras.web_views(get, windows),
-        'buses': storm_extras.buses(cached, windows, routes),
-        'subway': storm_extras.subway(cached, windows),
+        'buses': buses,
+        'subway': storm_extras.subway(cached, windows, get),
     }
 
     MONTHS = 'January February March April May June July August September October November December'.split()

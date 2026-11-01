@@ -65,13 +65,13 @@
     <div class="k" style="margin-top:28px">Getting around</div>
     <div class="panel lanes-panel"><div id="lanes"></div></div>
     <div class="tally" id="tally2"></div>
-    <div class="k map-k" style="margin-top:28px">Sidewalk reports by ward <span class="map-legend"><i aria-hidden="true"></i>Busiest bus stops (half of weekday riders)</span></div>
+    <div class="k map-k" style="margin-top:28px">Sidewalk reports by ward <span class="map-legend"><i aria-hidden="true"></i>Busiest bus stops<u aria-hidden="true"></u>Bus routes</span></div>
     <div class="panel map-panel">
       <div id="map"></div>
       <div class="map-side">
         <div><b id="m-total">–</b><span>sidewalk reports since the snow started</span></div>
         <div><b id="m-late">–</b><span id="m-late-l">came after the deadline</span></div>
-        <p class="cite">Under each ward: the share of residents who walked in the past week (City of Somerville Happiness Survey, a random sample, about 200 residents per ward; tap a ward for more). Dots: the 19 bus stops where half of Somerville's bus riders board (MBTA, <span id="m-season">Fall 2025</span>, average weekday; tap one for its name). 311 reports count complaints, not unshoveled sidewalks.</p>
+        <p class="cite">Under each ward: the share of residents who walked in the past week (City of Somerville Happiness Survey, a random sample, about 200 residents per ward; tap a ward for more). Lines: every bus route through the city (its usual path). Dots: every bus stop; the 19 big ones are where half of Somerville's bus riders board (MBTA, <span id="m-season">Fall 2025</span>, average weekday). Tap a stop or a route for its name. <span id="m-routes"></span> 311 reports count complaints, not unshoveled sidewalks.</p>
       </div>
     </div>
   </div>
@@ -106,7 +106,7 @@
 <li>Wards: <a href="https://data.somervillema.gov/d/ym5n-phxd">City of Somerville GIS</a>. Bus riders: <a href="https://mbta-massdot.opendata.arcgis.com/datasets/8daf4a33925a4df59183f860826d29ee">MBTA</a>.</li>
 <li>Warnings: National Weather Service, zone MAZ014, via the <a href="https://mesonet.agron.iastate.edu/vtec/">Iowa Environmental Mesonet VTEC archive</a>.</li>
 <li>Tows and disabled vehicles: <a href="https://data.somervillema.gov/d/mdb2-mgc7">Somerville police dispatch data</a> (2017 on, per 8-hour shift). Crashes: <a href="https://data.somervillema.gov/d/mtik-28va">Somerville police crash reports</a> (2018 on).</li>
-<li>T entries: <a href="https://mbta-massdot.opendata.arcgis.com/datasets/7859894afb5641ce91a2bb03599fdf5b">MBTA gated station entries</a> at stations in Somerville. MBTA alerts: <a href="https://mbta-massdot.opendata.arcgis.com/datasets/d233f1820cf54139bd18e75e30dd2c6c">MBTA service alerts archive</a> (2020 on). Bikes: <a href="https://bluebikes.com/system-data">Bluebikes trip data</a>. Buses: <a href="https://mbta-massdot.opendata.arcgis.com/datasets/9d8a8cad277545c984c1b25ed10b7d3c">MBTA bus arrival and departure times</a> (2020 on), routes serving Somerville. "Normal" is the same hour on the 4 weeks before.</li>
+<li>T entries: <a href="https://mbta-massdot.opendata.arcgis.com/datasets/7859894afb5641ce91a2bb03599fdf5b">MBTA gated station entries</a> at stations in Somerville. MBTA alerts: <a href="https://mbta-massdot.opendata.arcgis.com/datasets/d233f1820cf54139bd18e75e30dd2c6c">MBTA service alerts archive</a> (2020 on). Bikes: <a href="https://bluebikes.com/system-data">Bluebikes trip data</a>. Buses: <a href="https://mbta-massdot.opendata.arcgis.com/datasets/9d8a8cad277545c984c1b25ed10b7d3c">MBTA bus arrival and departure times</a> (2020 on), on the routes that served Somerville at the time: today's routes that ran then, plus any route with a timing stop in Somerville then (routes change: the 86 stopped in Somerville in 2020–22, not in 2026). "Normal" is the same hour on the 4 weeks before.</li>
 <li>Who walks: <a href="https://data.somervillema.gov/d/wmeh-zuz2">Somerville Happiness Survey</a>, "In the past week, which of the following transportation options did you use?" Melt and refreeze: hourly temperature at Logan; "refreezing" means back at or below 32°F within 12 hours after it was 34°F or warmer.</li>
 <li>Snow in Somerville: <a href="https://www.cocorahs.org/">CoCoRaHS</a> volunteer observers inside Somerville, via <a href="https://www.rcc-acis.org/">ACIS</a> (24 hours to about 7 a.m.). City page views: <a href="https://data.somervillema.gov/d/754v-8e35">City of Somerville website analytics</a> (top 20 pages per day, 2020 to May 2023).</li>
 <li>Deadline: 6 daylight hours after the snow stops, Sec. 12-8(a), computed with the guide's calculator.</li>

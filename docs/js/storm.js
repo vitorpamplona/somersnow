@@ -412,12 +412,18 @@ const wardMax = Math.max(1, ...Object.values(finalWard));
 const mix = (a, b, f) => { const p = (h) => [1, 3, 5].map((k) => parseInt(h.slice(k, k + 2), 16)); const [A, B] = [p(a), p(b)]; return `rgb(${A.map((v, k) => Math.round(v + (B[k] - v) * f)).join(',')})`; };
 const topStops = BUS.stops.slice(0, 19);
 function buildMap() {
-  let s = `<svg viewBox="0 0 ${MW} ${MH}" role="img" aria-label="Map of Somerville's seven wards, shaded by sidewalk reports so far, with the 19 busiest bus stops">`;
-  WARDS.wards.forEach((w) => {
-    const d = w.rings.map((r) => `M${r.map((p) => px(p).map((v) => v.toFixed(1)).join(' ')).join(' L')} Z`).join(' ');
-    s += `<path class="ward" data-w="${w.ward}" d="${d}" fill="#DCE8F5" stroke="#1A3A5F" stroke-width="3"/>`;
-  });
-  topStops.forEach((b) => { const [x, y] = px([b.lon, b.lat]); s += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(2.5 + Math.sqrt(b.riders) / 4).toFixed(1)}" fill="#10243A" stroke="#fff" stroke-width="1.5" class="stop" data-name="${attr(esc(b.name))}" data-riders="${b.riders}" data-routes="${b.routes.join(', ')}"/>`; });
+  let s = `<svg viewBox="0 0 ${MW} ${MH}" role="img" aria-label="Map of Somerville's seven wards, shaded by sidewalk reports so far, with every bus route and stop in the city">`;
+  const wardD = WARDS.wards.map((w) => [w, w.rings.map((r) => `M${r.map((p) => px(p).map((v) => v.toFixed(1)).join(' ')).join(' L')} Z`).join(' ')]);
+  s += `<defs><clipPath id="city">${wardD.map(([, d]) => `<path d="${d}"/>`).join('')}</clipPath></defs>`;
+  wardD.forEach(([w, d]) => { s += `<path class="ward" data-w="${w.ward}" d="${d}" fill="#DCE8F5" stroke="#1A3A5F" stroke-width="3"/>`; });
+  // bus routes (the usual path, both directions), clipped to the city line; a wide invisible stroke makes them easy to hover
+  const routes = Object.entries(BUS.routes || {}).filter(([, r]) => r.paths.length);
+  const rd = (r) => r.paths.map((p) => `M${p.map((q) => px(q).map((v) => v.toFixed(1)).join(' ')).join(' L')}`).join(' ');
+  s += `<g clip-path="url(#city)" fill="none" stroke-linejoin="round" stroke-linecap="round">${routes.map(([id, r]) => `<g class="route" data-r="${id}" data-long="${attr(esc(r.long))}"><path d="${rd(r)}" class="rt-line" stroke="#1A3A5F" stroke-opacity=".5" stroke-width="2.5"/><path d="${rd(r)}" stroke="transparent" stroke-width="12"/></g>`).join('')}</g>`;
+  // every stop: small dots, the busiest 19 (half of all boardings) larger, drawn last so they sit on top
+  const dot = (b, big) => { const [x, y] = px([b.lon, b.lat]); return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${big ? (2.5 + Math.sqrt(b.riders) / 4).toFixed(1) : 2.6}" fill="${big ? '#10243A' : '#fff'}" stroke="${big ? '#fff' : '#1A3A5F'}" stroke-width="${big ? 1.5 : 1.2}" class="stop${big ? ' big' : ''}" data-name="${attr(esc(b.name))}" data-riders="${b.riders}" data-routes="${b.routes.join(', ')}"/>`; };
+  BUS.stops.slice(19).forEach((b) => { s += dot(b, false); });
+  topStops.forEach((b) => { s += dot(b, true); });
   WARDS.wards.forEach((w) => {
     // label at the ward's area centroid (in screen space), so it sits inside the shape
     const ring = w.rings.reduce((a, r) => (r.length > a.length ? r : a)).map(px);
@@ -429,6 +435,14 @@ function buildMap() {
   s += '</svg>';
   $('#map').innerHTML = s;
   $('#m-season').textContent = BUS.season;
+  // Routes change: the map shows today's; say which ones also stopped in Somerville at the time of this storm.
+  const today = new Set(BUS.stops.flatMap((b) => b.routes).map((r) => (r === '747' ? 'CT2' : r)));
+  const then = (X.buses && X.buses.routes) || null;
+  const when = new Date(`${S.id}T12:00:00`).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  const gone = then ? then.filter((r) => !today.has(r)) : [];
+  $('#m-routes').textContent = !then ? `Routes and stops are today's; some ran differently in ${S.id.slice(0, 4)}.`
+    : gone.length ? `Routes and stops are today's. In ${when} the ${gone.join(' and ')} also stopped in Somerville; the bus lane above counts the routes that ran then.`
+    : '';
 }
 
 // Ward tooltips: who walks and rides transit there (Happiness Survey), and sidewalk reports so far.
@@ -436,8 +450,14 @@ let wardNow = {};
 function enableWardTips() {
   const svg = $('#map svg'); const panel = svg.closest('.panel');
   const tip = document.createElement('div'); tip.className = 'hovertip'; tip.hidden = true; tip.setAttribute('role', 'tooltip'); panel.appendChild(tip);
+  let lit = null;
+  const light = (r) => { if (lit === r) return; if (lit) lit.classList.remove('on'); lit = r; if (r) { r.classList.add('on'); r.parentNode.appendChild(r); } };
   const show = (path, e) => {
-    if (path.classList.contains('stop')) {
+    light(path.classList.contains('route') ? path : null);
+    if (path.classList.contains('route')) {
+      const n = BUS.stops.filter((b) => b.routes.includes(path.dataset.r)).length;
+      tip.innerHTML = `<b>Bus ${path.dataset.r}</b>${path.dataset.long ? `: ${path.dataset.long}` : ''}<br>${n} stops in Somerville<br><small>Usual route · MBTA</small>`;
+    } else if (path.classList.contains('stop')) {
       tip.innerHTML = `<b>${path.dataset.name}</b>: bus stop<br>${(+path.dataset.riders).toLocaleString('en-US')} weekday boardings<br><small>Routes ${path.dataset.routes} · MBTA, ${BUS.season}</small>`;
     } else {
     const k = path.dataset.w; const sv = SURVEY && SURVEY.wards[k];
@@ -449,9 +469,10 @@ function enableWardTips() {
     tip.style.left = `${Math.max(8, Math.min(pr.width - w - 8, e.clientX - pr.left - w / 2))}px`;
     tip.style.top = `${Math.max(8, e.clientY - pr.top - h - 14)}px`;
   };
-  svg.addEventListener('pointermove', (e) => { const p = e.target.closest('.stop, .ward'); if (p) show(p, e); else tip.hidden = true; });
-  svg.addEventListener('pointerdown', (e) => { const p = e.target.closest('.stop, .ward'); if (p) show(p, e); });
-  svg.addEventListener('pointerleave', () => { tip.hidden = true; });
+  const pick = (e) => e.target.closest('.stop, .route, .ward');
+  svg.addEventListener('pointermove', (e) => { const p = pick(e); if (p) show(p, e); else { tip.hidden = true; light(null); } });
+  svg.addEventListener('pointerdown', (e) => { const p = pick(e); if (p) show(p, e); });
+  svg.addEventListener('pointerleave', () => { tip.hidden = true; light(null); });
 }
 
 /* ---------- render one hour ---------- */

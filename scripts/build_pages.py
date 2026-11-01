@@ -125,9 +125,23 @@ def lede(S):
     return (f'{S["snowTotal"]} inches at Logan{here}. Snow from {day_tm(start)} to {day_tm(stop)}.{missing} Press play, or drag the line.').replace('..', '.')
 
 
+def winter_of(day):
+    return int(day[:4]) - (int(day[5:7]) < 7)
+
+
 def cards(storms, current=None, prefix=''):
     out, peaks13 = [], 0
-    for st in storms:
+    W_ = load('winters.json'); totals = dict(W_['snow'])  # winter starting year -> inches at Logan
+    for n_, st in enumerate(storms):
+        if n_:
+            # winters with no 6-inch day at Logan: say so, so the list doesn't seem to skip years
+            a, b = winter_of(storms[n_ - 1]['end']) + 1, winter_of(st['end']) - 1
+            if a <= b:
+                ws = range(a, b + 1)
+                span = f'{a}–{(a + 1) % 100:02d}' if a == b else f'{a}–{(a + 1) % 100:02d} to {b}–{(b + 1) % 100:02d}'
+                inch = ', '.join(f'{totals[w]:g}' for w in ws if w in totals)
+                out.append(f'<div class="mini gap"><h4>{"Winter" if a == b else "Winters"} {span}</h4>'
+                           f'<small>No day with 6 inches at Logan. {"Whole winter" if a == b else "Each whole winter"}: {inch} inches (the 1991–2020 median: {W_["normal"]:g}).</small></div>')
         v = [d[2].get('sidewalk', 0) for d in st['days']]
         mx = max(1, *v)
         pk = v.index(mx) - 2
@@ -166,7 +180,7 @@ def main():
             f'<a href="{ids[k + 1]}.html">{short(ids[k + 1])} →</a>' if k < len(ids) - 1 else '<span></span>',
         ])
         cards_html, all_lede = cards(storms, sid)
-        data = json.dumps({'storm': S, 'wards': wards, 'survey': survey, 'bus': {'season': bus['season'], 'stops': bus['stops'][:19]}, 'ids': ids},
+        data = json.dumps({'storm': S, 'wards': wards, 'survey': survey, 'bus': {'season': bus['season'], 'stops': [{k: st[k] for k in ('name', 'lat', 'lon', 'riders', 'routes')} for st in bus['stops']], 'routes': bus.get('routes', {})}, 'ids': ids},
                           separators=(',', ':'), ensure_ascii=False).replace('</', '<\\/')
         desc = f'Replay the {S["title"]} storm in Somerville hour by hour: ' + ', '.join(summary) + '. By the Somerville PTAC.'
         page = (tpl.replace('%%TITLE%%', esc(S['title'])).replace('%%DESC%%', esc(desc)).replace('%%URL%%', f'{SITE}storms/{sid}.html')

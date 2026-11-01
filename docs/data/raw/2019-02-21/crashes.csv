@@ -1,0 +1,13 @@
+date_hour,time,where,what,how,surface,weather,light,hurt,pedestrian,cyclist,pedestrian_where,pedestrian_doing,hit_and_run
+2019-02-17T11:00,11:37,Beacon St & Washington St,Collision with motor vehicle in traffic,"Sideswipe, opposite direction",Dry,Clear,Daylight,none,0,0,,,False
+2019-02-18T02:00,02:49,Thorpe St,Collision with parked motor vehicle,"Sideswipe, same direction",Snow,Snow,Dark - lighted roadway,none,0,0,,,False
+2019-02-19T13:00,13:57,Washington St,Collision with parked motor vehicle,"Sideswipe, same direction",Dry,Clear,Daylight,none,0,0,,,False
+2019-02-20T06:00,06:13,Columbus Av,Collision with light pole or other post/support,Single vehicle crash,Ice,Clear,Dawn,none,0,0,,,True
+2019-02-21T10:00,10:45,Nashua St,Collision with parked motor vehicle,Angle,Ice,Snow,Daylight,none,0,0,,,False
+2019-02-21T20:00,20:06,Broadway,Collision with motor vehicle in traffic,Single vehicle crash,Wet,Clear,Dark - lighted roadway,none,0,0,,,False
+2019-02-23T09:00,09:44,Bow & Warren,,,Dry,Clear,Daylight,minor,0,0,,,False
+2019-02-24T15:00,15:14,Inner Belt Rd,Collision with tree,Single vehicle crash,Wet,Clear,Daylight,none,0,0,,,False
+2019-02-24T18:00,18:20,Highland Av,Collision with pedestrian,Angle,Wet,Rain,Dark - lighted roadway,minor,1,0,In roadway,Entering or crossing specified location,False
+2019-02-25T08:00,08:15,Beacon St,Other non-collision,Angle,Snow,"Blowing, sand, snow",,possible,0,1,In roadway,"Walking, running or cycling",False
+2019-02-25T17:00,17:52,Broadway & Hinckley St,Collision with motor vehicle in traffic,Angle,Dry,Clear,Dark - lighted roadway,none,0,0,,,False
+2019-02-25T20:00,20:16,Puritan Rd,Collision with parked motor vehicle,Angle,Dry,Clear,Dark - lighted roadway,none,0,0,,,False

@@ -1,0 +1,6 @@
+name,code,from,to
+High Wind Warning,HW.W,2019-02-25T03:00,2019-02-25T19:00
+Wind Advisory,WI.Y,2019-02-25T19:01,2019-02-26T15:25
+Winter Storm Warning,WS.W,2019-03-03T19:00,2019-03-04T10:00
+Winter Weather Advisory,WW.Y,2019-02-27T19:00,2019-02-28T10:00
+Winter Weather Advisory,WW.Y,2019-03-02T01:00,2019-03-02T12:59

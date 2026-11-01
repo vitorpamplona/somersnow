@@ -1,0 +1,9 @@
+date_hour,time,where,what,how,surface,weather,light,hurt,pedestrian,cyclist,pedestrian_where,pedestrian_doing,hit_and_run
+2022-01-07T09:00,09:34,Middlesex Ave,Collision with motor vehicle in traffic,Rear-end,Ice,Cloudy,Daylight,none,0,0,,,False
+2022-01-07T10:00,10:15,Marshall St,Collision with parked motor vehicle,Angle,Snow,Snow,Daylight,none,0,0,,,False
+2022-01-08T07:00,07:36,Hinckley St,Collision with parked motor vehicle,"Sideswipe, opposite direction",Snow,,Dark - lighted roadway,none,0,0,,,False
+2022-01-08T09:00,09:39,Crocker St,Collision with parked motor vehicle,"Sideswipe, same direction",Snow,Snow,Daylight,none,0,0,,,False
+2022-01-08T14:00,14:46,Broadway,Collision with motor vehicle in traffic,Rear-end,Wet,Clear,Daylight,none,0,0,,,False
+2022-01-09T13:00,13:02,Highland Av,Collision with motor vehicle in traffic,"Sideswipe, same direction",Dry,Clear,Dark - lighted roadway,none,0,0,,,False
+2022-01-09T16:00,16:20,Cameron Av & Seven Pines Av,Collision with motor vehicle in traffic,Single vehicle crash,Wet,Rain,Dark - lighted roadway,none,0,0,,,False
+2022-01-12T09:00,09:46,Central St,Collision with parked motor vehicle,Rear-end,Dry,Cloudy,Daylight,none,0,0,,,False

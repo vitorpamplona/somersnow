@@ -1,0 +1,77 @@
+created_hour,kind,route_or_station,header
+2021-01-24T08:00,delay,96,Route 96 experiencing delays of up to 20 minutes due to police action
+2021-01-24T13:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to disabled bus
+2021-01-25T06:00,delay,90,Route 90 experiencing delays of up to 30 minutes
+2021-01-25T17:00,delay,88,Route 88 experiencing delays of up to 20 minutes
+2021-01-26T09:00,delay,80,Route 80 experiencing delays of up to 20 minutes due to traffic
+2021-01-26T10:00,detour,80,"Route 80 detoured due to construction on the Broadway Bridge from 8:00 PM Thu, Jan 28 through the end of service. Nearest connections: Boston Ave, Medford St, or Main St."
+2021-01-26T10:00,detour,89,"Route 89 detoured due to construction on the Broadway Bridge from 8 PM Thu, Jan 28 through the end of service. Nearest connections: Holland St, Elm St @ Chester, Highland"
+2021-01-26T12:00,delay,96,Route 96 experiencing delays of up to 20 minutes due to traffic
+2021-01-27T05:00,delay,86,Route 86 experiencing delays of up to 20 minutes
+2021-01-27T07:00,delay,86,Route 86 experiencing delays of up to 20 minutes due to disabled bus
+2021-01-27T11:00,delay,101,Route 101 experiencing delays of up to 25 minutes
+2021-01-27T13:00,delay,86,Route 86 experiencing delays of up to 20 minutes
+2021-01-28T08:00,delay,747,CT2 experiencing delays of up to 20 minutes due to traffic
+2021-01-28T13:00,delay,96,Route 96 experiencing delays of up to 25 minutes due to traffic
+2021-01-28T19:00,delay,96,Route 96 experiencing delays of up to 25 minutes
+2021-01-28T22:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to police action
+2021-01-29T07:00,delay,85,Route 85 experiencing delays of up to 25 minutes due to disabled bus
+2021-01-29T16:00,delay,89,Route 89 experiencing delays of up to 15 minutes due to traffic
+2021-01-30T07:00,delay,86,Route 86 experiencing delays of up to 20 minutes due to traffic
+2021-01-30T09:00,delay,101,Route 101 experiencing delays of up to 20 minutes due to traffic
+2021-01-30T10:00,detour,101,Route 101 detoured due to police action; Connections made at: Broadway @ Kensington Ave (outbound) & Broadway @ Temple St (outbound). Broadway @ Montgomery Ave (inbound) 
+2021-01-30T10:00,detour,8993,Route 89 detoured due to police action; Connections made at: Broadway @ Kensington Ave (outbound) & Broadway @ Temple St (outbound). Broadway @ Montgomery Ave (inbound) &
+2021-01-30T14:00,delay,87,Route 87 experiencing delays of up to 20 minutes due to traffic
+2021-02-01T08:00,delay,95,Route 95 experiencing delays of up to 20 minutes due to accident
+2021-02-01T12:00,delay,86,Route 86 experiencing delays of up to 20 minutes due to disabled bus
+2021-02-01T16:00,delay,80,Route 80 experiencing delays of up to 20 minutes due to traffic
+2021-02-01T23:00,delay,101,Route 101 experiencing delays of up to 25 minutes due to weather
+2021-02-02T00:00,delay,91,Route 91 experiencing delays of up to 25 minutes due to weather
+2021-02-02T05:00,delay,88,Route 88 experiencing delays of up to 20 minutes
+2021-02-02T06:00,delay,101,Route 101 experiencing delays of up to 20 minutes
+2021-02-02T06:00,delay,88,Route 88 experiencing delays of up to 20 minutes
+2021-02-02T06:00,delay,95,Route 95 experiencing delays of up to 25 minutes due to disabled bus
+2021-02-02T07:00,delay,80,Route 80 experiencing delays of up to 30 minutes
+2021-02-02T07:00,delay,87,Route 87 experiencing delays of up to 20 minutes
+2021-02-02T10:00,delay,101,Route 101 experiencing delays of more than 30 minutes
+2021-02-02T11:00,delay,96,Route 96 experiencing delays of up to 30 minutes
+2021-02-02T12:00,delay,88,Route 88 experiencing delays of up to 25 minutes
+2021-02-02T13:00,delay,86,Route 86 experiencing delays of up to 25 minutes
+2021-02-03T06:00,delay,90,Route 90 experiencing delays of up to 25 minutes
+2021-02-03T06:00,delay,94,Route 94 experiencing delays of up to 25 minutes due to traffic
+2021-02-03T11:00,delay,87,Route 87 experiencing delays of more than 30 minutes due to police action
+2021-02-03T15:00,delay,90,Route 90 experiencing delays of up to 20 minutes due to traffic
+2021-02-03T17:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to traffic
+2021-02-04T06:00,delay,96,Route 96 experiencing delays of up to 30 minutes due to disabled bus
+2021-02-04T07:00,detour,80,Route 80 detoured due to construction; Connections made at: Cross St @ Oliver St & Pearl St @ Wesley St.
+2021-02-04T13:00,delay,89,Route 89 experiencing delays of up to 25 minutes due to police action
+2021-02-04T14:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to traffic
+2021-02-04T15:00,delay,91,Route 91 experiencing delays of up to 20 minutes due to traffic
+2021-02-05T07:00,detour,80,Route 80 detoured due to construction; Connections made at: Cross St @ Oliver St & Pearl St @ Wesley St.
+2021-02-05T08:00,detour,80,Route 80 detoured due to construction; Connections made at: Cross St @ Oliver St (outbound) & Medford St @ Sycamore St (outbound). Medford St @ School St (outbound) & 422
+2021-02-05T11:00,delay,86,Route 86 experiencing delays of up to 30 minutes due to traffic
+2021-02-05T13:00,delay,80,Route 80 experiencing delays of up to 20 minutes
+2021-02-05T16:00,delay,80,Route 80 experiencing delays of up to 20 minutes due to traffic
+2021-02-05T18:00,delay,89,Route 89 experiencing delays of up to 20 minutes due to traffic
+2021-02-07T08:00,delay,101,Route 101 experiencing delays of up to 20 minutes
+2021-02-07T11:00,delay,86,Route 86 experiencing delays of up to 30 minutes due to disabled bus
+2021-02-08T07:00,delay,90,Route 90 experiencing delays of up to 20 minutes due to disabled bus
+2021-02-08T15:00,delay,96,Route 96 experiencing delays of up to 20 minutes due to disabled bus
+2021-02-08T21:00,detour,88,Route 88 detoured due to snow. Connections Medford St @ Washington St and Lechmere
+2021-02-08T22:00,delay,83,Route 83 experiencing delays of up to 25 minutes
+2021-02-09T05:00,delay,101,Route 101 experiencing delays of up to 20 minutes
+2021-02-09T15:00,delay,94,Route 94 experiencing delays of up to 20 minutes due to traffic
+2021-02-09T18:00,delay,87,Route 87 experiencing delays of up to 20 minutes due to disabled bus
+2021-02-10T05:00,delay,86,Route 86 experiencing delays of up to 20 minutes due to disabled bus
+2021-02-10T05:00,delay,89,Route 89 experiencing delays of up to 20 minutes
+2021-02-11T08:00,delay,101,Route 101 experiencing delays of up to 20 minutes due to disabled bus
+2021-02-11T08:00,delay,96,Route 96 experiencing delays of up to 20 minutes due to accident
+2021-02-11T16:00,delay,83,Route 83 experiencing delays of up to 25 minutes due to traffic
+2021-02-11T16:00,delay,89,Route 89 experiencing delays of up to 20 minutes due to disabled bus
+2021-02-12T05:00,delay,95,Route 95 experiencing delays of up to 20 minutes due to disabled bus
+2021-02-12T07:00,delay,80,Route 80 experiencing delays of up to 20 minutes due to traffic
+2021-02-12T13:00,delay,88,Route 88 experiencing delays of up to 20 minutes due to traffic
+2021-02-12T14:00,delay,91,Route 91 experiencing delays of up to 20 minutes
+2021-02-12T15:00,delay,87,Route 87 experiencing delays of up to 20 minutes due to traffic
+2021-02-12T17:00,detour,85,Route 85 snow route in effect. Nearest Connection: Summer St @ School St
+2021-02-15T08:00,delay,89,Route 89 experiencing delays of up to 30 minutes due to traffic

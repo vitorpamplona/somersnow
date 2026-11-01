@@ -1,0 +1,7 @@
+shift_start,police_shift,type,ward
+2023-02-23T08:00,Day Shift (8AM - 4PM),DISABLED MV,4
+2023-02-24T16:00,First Half (4PM - Midnight),DISABLED MV,1
+2023-02-25T00:00,Last Half (Midnight - 8AM),DISABLED MV,2
+2023-02-26T16:00,First Half (4PM - Midnight),DISABLED MV,4
+2023-03-02T08:00,Day Shift (8AM - 4PM),DISABLED MV,3
+2023-03-03T08:00,Day Shift (8AM - 4PM),DISABLED MV,2

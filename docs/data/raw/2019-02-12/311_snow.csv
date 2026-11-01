@@ -1,0 +1,157 @@
+created,group,type,ward
+2019-02-10T17:06,street,Snow removal request,6
+2019-02-11T12:12,ask,Snow emergency inquiry,6
+2019-02-11T12:26,ask,Snow emergency parking inquiry,6
+2019-02-11T12:52,ask,Snow emergency inquiry,
+2019-02-11T15:25,ask,Snow emergency inquiry,1
+2019-02-11T16:03,ask,Snow emergency inquiry,3
+2019-02-12T06:57,ask,Snow emergency inquiry,
+2019-02-12T07:07,ask,Snow emergency inquiry,
+2019-02-12T07:38,ask,Snow emergency inquiry,
+2019-02-12T07:44,ask,Snow emergency inquiry,2
+2019-02-12T08:05,ask,Snow emergency inquiry,
+2019-02-12T08:05,ask,Snow emergency inquiry,
+2019-02-12T08:21,ask,Snow emergency inquiry,7
+2019-02-12T08:26,ask,Snow emergency inquiry,2
+2019-02-12T08:31,ask,Snow emergency inquiry,3
+2019-02-12T08:33,ask,Snow emergency parking inquiry,
+2019-02-12T09:29,ask,Snow emergency inquiry,5
+2019-02-12T09:55,ask,Snow emergency inquiry,5
+2019-02-12T09:58,ask,Snow emergency inquiry,7
+2019-02-12T10:15,ask,Snow emergency parking inquiry,3
+2019-02-12T10:19,ask,Snow emergency inquiry,2
+2019-02-12T10:23,ask,Snow emergency inquiry,1
+2019-02-12T10:29,street,Sand barrel,6
+2019-02-12T10:30,street,Sand barrel,6
+2019-02-12T10:41,ask,Snow emergency inquiry,
+2019-02-12T10:42,ask,Snow emergency inquiry,5
+2019-02-12T10:42,ask,Snow emergency inquiry,
+2019-02-12T10:46,ask,Snow emergency inquiry,1
+2019-02-12T10:49,ask,Snow emergency inquiry,
+2019-02-12T10:53,ask,Snow emergency inquiry,5
+2019-02-12T10:55,ask,Snow emergency parking inquiry,6
+2019-02-12T10:57,ask,Snow emergency inquiry,
+2019-02-12T11:16,ask,Snow emergency inquiry,
+2019-02-12T11:24,ask,Snow emergency inquiry,1
+2019-02-12T11:38,ask,Snow emergency inquiry,4
+2019-02-12T11:42,ask,Snow emergency inquiry,2
+2019-02-12T11:43,ask,Snow emergency parking inquiry,
+2019-02-12T11:45,street,Snow removal request,5
+2019-02-12T11:56,ask,Snow emergency inquiry,4
+2019-02-12T12:00,ask,Snow emergency inquiry,
+2019-02-12T12:06,ask,Snow emergency inquiry,6
+2019-02-12T12:09,ask,Snow emergency inquiry,4
+2019-02-12T12:14,ask,Snow emergency inquiry,
+2019-02-12T12:24,ask,Snow emergency inquiry,1
+2019-02-12T12:35,ask,Snow emergency inquiry,5
+2019-02-12T12:41,ask,Snow emergency inquiry,
+2019-02-12T12:48,ask,Snow emergency inquiry,
+2019-02-12T13:01,ask,Snow emergency parking inquiry,2
+2019-02-12T13:09,ask,Snow emergency inquiry,
+2019-02-12T13:14,ask,Snow emergency inquiry,
+2019-02-12T13:16,ask,Snow emergency inquiry,7
+2019-02-12T13:20,ask,Snow emergency inquiry,2
+2019-02-12T13:33,ask,Snow emergency inquiry,
+2019-02-12T13:41,ask,Snow emergency inquiry,2
+2019-02-12T13:53,ask,Snow emergency parking inquiry,3
+2019-02-12T14:04,ask,Snow emergency inquiry,3
+2019-02-12T14:25,ask,Snow emergency inquiry,1
+2019-02-12T14:26,ask,Snow emergency inquiry,
+2019-02-12T14:29,ask,Snow emergency inquiry,1
+2019-02-12T14:37,street,Salting request,5
+2019-02-12T14:57,ask,Snow emergency inquiry,
+2019-02-12T15:15,street,Salting request,3
+2019-02-12T15:34,street,Salting request,3
+2019-02-12T15:39,ask,Snow emergency inquiry,
+2019-02-12T15:47,ask,Snow emergency inquiry,
+2019-02-12T15:51,ask,Snow emergency inquiry,4
+2019-02-12T16:03,ask,Snow emergency inquiry,1
+2019-02-12T16:05,ask,Snow emergency inquiry,3
+2019-02-12T16:12,ask,Snow emergency inquiry,4
+2019-02-12T16:14,street,Snow removal request,3
+2019-02-12T16:15,ask,Snow emergency inquiry,7
+2019-02-12T16:15,street,Salting request,5
+2019-02-12T16:16,ask,Snow emergency inquiry,1
+2019-02-12T16:19,ask,Snow emergency inquiry,6
+2019-02-12T16:23,street,Salting request,3
+2019-02-12T16:27,ask,Snow emergency inquiry,7
+2019-02-12T17:09,ask,Snow emergency inquiry,
+2019-02-12T17:10,street,Salting request,4
+2019-02-12T17:22,ask,Snow emergency parking inquiry,
+2019-02-12T17:54,ask,Snow emergency inquiry,4
+2019-02-12T18:09,street,Snow removal request,2
+2019-02-12T18:09,street,Salting request,1
+2019-02-12T18:22,ask,Snow emergency inquiry,
+2019-02-12T18:31,street,Snow removal request,7
+2019-02-12T18:40,street,Snow removal request,3
+2019-02-13T05:50,street,Snow removal request,3
+2019-02-13T07:40,street,Snow removal request,4
+2019-02-13T07:46,street,Salting request,1
+2019-02-13T07:48,sidewalk,Snow/sidewalk not shoveled,7
+2019-02-13T07:49,sidewalk,Snow/sidewalk not shoveled,7
+2019-02-13T07:52,sidewalk,Snow/sidewalk not shoveled,7
+2019-02-13T08:03,sidewalk,Snow/sidewalk not shoveled,4
+2019-02-13T08:29,street,Snow removal request,1
+2019-02-13T08:36,street,Snow removal request,5
+2019-02-13T08:46,street,Salting request,7
+2019-02-13T09:19,feedback,Snow related feedback,5
+2019-02-13T09:52,ask,Snow emergency inquiry,
+2019-02-13T09:54,sidewalk,Snow/sidewalk not shoveled,1
+2019-02-13T10:20,sidewalk,Snow/sidewalk not shoveled,4
+2019-02-13T10:49,street,Snow removal request,5
+2019-02-13T11:25,street,Snow removal request,2
+2019-02-13T11:45,sidewalk,Snow/sidewalk not shoveled,3
+2019-02-13T11:48,street,Snow removal request,3
+2019-02-13T11:55,street,Snow removal request,3
+2019-02-13T12:47,sidewalk,Snow/sidewalk not shoveled,3
+2019-02-13T13:23,feedback,Snow related feedback,2
+2019-02-13T13:23,sidewalk,Snow/sidewalk not shoveled,3
+2019-02-13T13:53,sidewalk,Snow/sidewalk not shoveled,5
+2019-02-13T13:59,sidewalk,Snow/sidewalk not shoveled,6
+2019-02-13T14:02,street,Salting request,5
+2019-02-13T15:00,sidewalk,Snow/sidewalk not shoveled,5
+2019-02-13T15:20,feedback,Snow related feedback,7
+2019-02-13T20:49,sidewalk,Snow/sidewalk not shoveled,1
+2019-02-13T23:34,sidewalk,Snow/sidewalk not shoveled,1
+2019-02-14T07:43,street,Salting request,7
+2019-02-14T07:51,street,Salting request,5
+2019-02-14T08:43,sidewalk,Snow/sidewalk not shoveled,6
+2019-02-14T08:48,street,Salting request,3
+2019-02-14T08:53,street,Salting request,5
+2019-02-14T08:56,street,Salting request,1
+2019-02-14T09:01,sidewalk,Snow/sidewalk not shoveled,6
+2019-02-14T09:19,sidewalk,Snow/sidewalk not shoveled,5
+2019-02-14T09:22,sidewalk,Snow/sidewalk not shoveled,5
+2019-02-14T09:26,street,Snow removal request,5
+2019-02-14T09:27,street,Snow removal request,5
+2019-02-14T09:27,sidewalk,Snow/sidewalk not shoveled,5
+2019-02-14T09:30,street,Salting request,6
+2019-02-14T09:54,sidewalk,Snow/sidewalk not shoveled,2
+2019-02-14T09:55,sidewalk,Snow/sidewalk not shoveled,6
+2019-02-14T09:56,sidewalk,Snow/sidewalk not shoveled,6
+2019-02-14T09:57,sidewalk,Snow/sidewalk not shoveled,4
+2019-02-14T09:58,sidewalk,Snow/sidewalk not shoveled,7
+2019-02-14T09:59,sidewalk,Snow/sidewalk not shoveled,7
+2019-02-14T10:08,street,Salting request,3
+2019-02-14T10:16,sidewalk,Snow/sidewalk not shoveled,1
+2019-02-14T10:29,street,Salting request,2
+2019-02-14T11:06,sidewalk,Snow/sidewalk not shoveled,3
+2019-02-14T11:15,sidewalk,Snow/sidewalk not shoveled,2
+2019-02-14T12:34,street,Salting request,5
+2019-02-14T13:21,sidewalk,Snow/sidewalk not shoveled,5
+2019-02-14T13:25,sidewalk,Snow/sidewalk not shoveled,7
+2019-02-14T14:16,sidewalk,Snow/sidewalk not shoveled,7
+2019-02-14T15:55,sidewalk,Snow/sidewalk not shoveled,2
+2019-02-14T16:30,sidewalk,Snow/sidewalk not shoveled,5
+2019-02-14T17:18,sidewalk,Snow/sidewalk not shoveled,3
+2019-02-14T17:31,sidewalk,Snow/sidewalk not shoveled,2
+2019-02-14T18:49,sidewalk,Snow/sidewalk not shoveled,3
+2019-02-15T02:12,sidewalk,Snow/sidewalk not shoveled,3
+2019-02-15T02:32,sidewalk,Snow/sidewalk not shoveled,1
+2019-02-15T08:04,sidewalk,Snow/sidewalk not shoveled,7
+2019-02-15T10:22,sidewalk,Snow/sidewalk not shoveled,6
+2019-02-15T10:25,sidewalk,Snow/sidewalk not shoveled,5
+2019-02-15T10:56,street,Snow removal request,6
+2019-02-15T15:10,street,Snow removal request,
+2019-02-17T06:42,street,Snow removal request,3
+2019-02-17T23:10,ask,Snow emergency inquiry,

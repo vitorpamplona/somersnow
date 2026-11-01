@@ -1,0 +1,13 @@
+date_hour,time,where,what,how,surface,weather,light,hurt,pedestrian,cyclist,pedestrian_where,pedestrian_doing,hit_and_run
+2022-02-12T12:00,12:46,Mcgrath Hwy & Medford St,Collision with motor vehicle in traffic,Angle,Dry,Clear,Daylight,none,0,0,,,False
+2022-02-13T21:00,21:11,Pennsylvania Av & Vermont Av,Collision with parked motor vehicle,"Sideswipe, same direction",Wet,Snow,Dark - lighted roadway,none,0,0,,,False
+2022-02-13T21:00,21:19,Hinckley St,Collision with motor vehicle in traffic,"Sideswipe, same direction",Ice,Snow,Dark - lighted roadway,none,0,0,,,False
+2022-02-14T17:00,17:00,Glen St,Collision with parked motor vehicle,"Sideswipe, same direction",Dry,Clear,Daylight,none,0,0,,,False
+2022-02-14T23:00,23:06,Highland Av,Collision with parked motor vehicle,Rear-end,Dry,Clear,Dark - lighted roadway,none,0,0,,,True
+2022-02-15T11:00,11:01,Broadway & Willow Av,Collision with motor vehicle in traffic,Angle,Dry,Clear,Daylight,none,0,0,,,False
+2022-02-16T10:00,10:34,Broadway,Collision with motor vehicle in traffic,Rear-end,Dry,Clear,Daylight,none,0,0,,,False
+2022-02-16T13:00,13:27,Grant St & Jaques St,,Angle,Dry,Clear,Daylight,possible,0,0,In roadway,"Walking, running or cycling",False
+2022-02-17T10:00,10:07,Walnut St,Collision with motor vehicle in traffic,"Sideswipe, same direction",Dry,Clear,Daylight,none,0,0,,,True
+2022-02-18T07:00,07:58,Broadway & Fenwick St,Collision with motor vehicle in traffic,Angle,Wet,Rain,Daylight,none,0,0,,,False
+2022-02-18T18:00,18:10,Union Sq,Collision with motor vehicle in traffic,Angle,Dry,Clear,Dark - lighted roadway,none,0,0,,,False
+2022-02-18T20:00,20:51,Adams St & Medford St,Collision with motor vehicle in traffic,"Sideswipe, opposite direction",Dry,Clear,Dark - lighted roadway,possible,0,0,,,False

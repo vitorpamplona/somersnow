@@ -1,0 +1,25 @@
+date_hour,time,where,what,how,surface,weather,light,hurt,pedestrian,cyclist,pedestrian_where,pedestrian_doing,hit_and_run
+2021-01-25T14:00,14:40,Pinckney St & Washington St,Collision with motor vehicle in traffic,Rear-end,Dry,Clear,Daylight,none,0,0,,,False
+2021-01-26T05:00,05:42,Medford St & School St,Collision with parked motor vehicle,"Sideswipe, same direction",Dry,Clear,Dark - lighted roadway,none,0,0,,,False
+2021-01-26T16:00,16:36,Medford St & Norwood Av,Collision with pedestrian,Single vehicle crash,Wet,Snow,Dusk,minor,1,0,Marked crosswalk at intersection,Entering or crossing specified location,False
+2021-01-28T07:00,07:30,Curtis St & Powder House Blvd,Collision with motor vehicle in traffic,Rear-end,Snow,Snow,Daylight,none,0,0,,,False
+2021-01-28T17:00,17:53,Somerville Av,Collision with motor vehicle in traffic,"Sideswipe, same direction",,Clear,Dark - lighted roadway,none,0,0,,,False
+2021-01-29T21:00,21:08,Broadway,Collision with motor vehicle in traffic,Angle,Dry,Clear,Dark - lighted roadway,none,0,0,,,False
+2021-01-30T07:00,07:36,Highland Av,Collision with parked motor vehicle,Rear-end,Dry,Clear,Daylight,none,0,0,,,False
+2021-02-01T14:00,14:49,Wellington Av,Collision with parked motor vehicle,"Sideswipe, opposite direction",Snow,Snow,Daylight,none,0,0,,,False
+2021-02-02T05:00,05:37,Edmands St,Collision with parked motor vehicle,Single vehicle crash,Wet,Snow,Dark - lighted roadway,minor,0,0,,,False
+2021-02-03T13:00,13:27,Holland St,Collision with motor vehicle in traffic,"Sideswipe, same direction",Dry,Clear,Daylight,none,0,0,,,False
+2021-02-04T09:00,09:11,Walnut St,Collision with parked motor vehicle,"Sideswipe, same direction",Wet,Cloudy,Daylight,none,0,0,,,False
+2021-02-04T09:00,09:42,Walnut St,Collision with parked motor vehicle,"Sideswipe, same direction",Dry,Clear,Daylight,none,0,0,,,False
+2021-02-05T04:00,04:18,Washington St,Collision with tree,Single vehicle crash,Ice,Clear,Dark - unknown roadway lighting,serious,0,0,,,False
+2021-02-06T01:00,01:12,Franklin St,Collision with parked motor vehicle,Rear-end,Ice,Clear,Dark - lighted roadway,none,0,0,,,True
+2021-02-06T10:00,10:24,Broadway,Collision with motor vehicle in traffic,Rear-end,Dry,Clear,Daylight,none,0,0,,,False
+2021-02-07T15:00,15:47,Partridge Av,Collision with parked motor vehicle,"Sideswipe, same direction",Snow,Snow,Daylight,none,0,0,,,False
+2021-02-07T22:00,22:02,Appleton St,Collision with parked motor vehicle,Angle,Snow,Snow,Dark - lighted roadway,none,0,0,,,False
+2021-02-08T16:00,16:00,Assembly Row,Collision with pedestrian,Single vehicle crash,Dry,Clear,Daylight,minor,2,0,Marked crosswalk at intersection,Entering or crossing specified location,False
+2021-02-08T17:00,17:14,Packard Av & Powder House Blvd,Collision with light pole or other post/support,Single vehicle crash,Wet,Cloudy,Dusk,none,0,0,,,True
+2021-02-08T17:00,17:15,Talbot Av,Collision with motor vehicle in traffic,Angle,Dry,Cloudy,Dark - lighted roadway,none,0,0,,,False
+2021-02-09T15:00,15:18,Pembroke St,Collision with parked motor vehicle,"Sideswipe, same direction",Slush,Snow,Daylight,none,0,0,,,False
+2021-02-09T18:00,18:36,Endicott Av,Collision with parked motor vehicle,"Sideswipe, opposite direction",Slush,Snow,Dark - lighted roadway,none,0,0,,,False
+2021-02-11T22:00,22:13,Highland Av,Collision with motor vehicle in traffic,"Sideswipe, same direction",Dry,Clear,Dark - lighted roadway,none,0,0,,,False
+2021-02-12T10:00,10:54,Broadway,Collision with motor vehicle in traffic,Rear-end,Dry,Clear,Daylight,none,0,0,,,False

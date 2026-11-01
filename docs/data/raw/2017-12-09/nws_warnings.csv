@@ -1,0 +1,4 @@
+name,code,from,to
+Wind Advisory,WI.Y,2017-12-13T12:00,2017-12-13T20:00
+Winter Storm Warning,WS.W,2017-12-09T04:00,2017-12-10T00:59
+Winter Weather Advisory,WW.Y,2017-12-10T00:59,2017-12-10T03:41

@@ -1,0 +1,7 @@
+date_hour,time,where,what,how,surface,weather,light,hurt,pedestrian,cyclist,pedestrian_where,pedestrian_doing,hit_and_run
+2023-01-14T10:00,10:15,Broadway & Burnham St,Collision with motor vehicle in traffic,Angle,Wet,Rain,,none,0,0,,,False
+2023-01-18T14:00,14:01,Appleton St,Collision with parked motor vehicle,"Sideswipe, opposite direction",Dry,Cloudy,Daylight,none,0,0,,,False
+2023-01-18T18:00,18:22,Mystic Av,Collision with motor vehicle in traffic,"Sideswipe, same direction",Dry,Clear,Dark - lighted roadway,none,0,0,,,False
+2023-01-19T12:00,12:52,Central St & Highland Av,Collision with light pole or other post/support,Single vehicle crash,Dry,Cloudy,Daylight,none,0,0,,,False
+2023-01-19T14:00,14:19,Alpine St,Collision with tree,Single vehicle crash,Wet,Cloudy,Daylight,none,0,0,,,False
+2023-01-19T18:00,18:56,Holland St,Collision with pedestrian,Single vehicle crash,Wet,Rain,Dark - lighted roadway,minor,0,0,In roadway,"Walking, running or cycling",False

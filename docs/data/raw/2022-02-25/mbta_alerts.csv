@@ -1,0 +1,71 @@
+created_hour,kind,route_or_station,header
+2022-02-23T07:00,detour,101,Routes 101 and 108 detoured due to construction. Connect at Malden Center and Pleasant St opp Russell St.
+2022-02-23T09:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to disabled bus
+2022-02-23T15:00,delay,101,Route 101 experiencing delays of up to 20 minutes
+2022-02-23T15:00,delay,95,Route 95 experiencing delays of up to 20 minutes due to traffic
+2022-02-24T05:00,delay,86,Route 86 experiencing delays of up to 20 minutes
+2022-02-24T11:00,delay,101,Route 101 experiencing delays of up to 20 minutes
+2022-02-24T14:00,delay,101,Route 101 experiencing delays of up to 20 minutes
+2022-02-24T15:00,delay,109,Route 109 experiencing delays of up to 20 minutes
+2022-02-24T16:00,delay,89,Route 89 experiencing delays of up to 20 minutes
+2022-02-25T06:00,delay,80,Route 80 experiencing delays of up to 20 minutes
+2022-02-25T07:00,delay,95,Route 95 experiencing delays of up to 20 minutes due to traffic
+2022-02-25T10:00,delay,80,Route 80 experiencing delays of up to 20 minutes due to traffic
+2022-02-25T13:00,delay,101,Route 101 experiencing delays of up to 25 minutes
+2022-02-25T14:00,detour,87,Route 87 detoured due to medical emergency. Connect at Somerville Ave @ Stone Ave & Somerville Ave @ Loring St
+2022-02-25T15:00,delay,109,Route 109 experiencing delays of up to 30 minutes
+2022-02-25T15:00,delay,86,Route 86 experiencing delays of up to 30 minutes
+2022-02-25T15:00,delay,89,Route 89 experiencing delays of up to 20 minutes
+2022-02-26T16:00,delay,90,Route 90 experiencing delays of up to 20 minutes due to medical emergency
+2022-02-27T14:00,delay,86,Route 86 experiencing delays of up to 25 minutes due to traffic
+2022-02-28T08:00,delay,747,CT2 experiencing delays of up to 20 minutes due to a disabled bus
+2022-02-28T12:00,delay,80,Route 80 experiencing delays of up to 25 minutes
+2022-02-28T14:00,delay,87,Route 87 experiencing delays of up to 25 minutes due to accident
+2022-02-28T15:00,delay,83,Route 83 experiencing delays of up to 20 minutes due to traffic
+2022-02-28T18:00,delay,86,Route 86 experiencing delays of up to 20 minutes
+2022-02-28T23:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to traffic
+2022-03-01T05:00,delay,101,Route 101 experiencing delays of up to 20 minutes
+2022-03-01T05:00,delay,86,Route 86 experiencing delays of up to 20 minutes
+2022-03-01T06:00,delay,89,Route 89 experiencing delays of up to 20 minutes
+2022-03-01T08:00,delay,747,CT2 experiencing delays of up to 20 minutes due to traffic
+2022-03-01T08:00,delay,86,Route 86 experiencing delays of up to 20 minutes
+2022-03-01T08:00,delay,95,Route 95 experiencing delays of up to 20 minutes due to an accident
+2022-03-01T09:00,delay,94,Route 94 experiencing delays of up to 20 minutes due to traffic
+2022-03-01T09:00,delay,95,Route 95 experiencing delays of up to 20 minutes due to traffic
+2022-03-01T13:00,delay,109,Route 109 experiencing delays of up to 20 minutes
+2022-03-02T07:00,delay,95,Route 95 experiencing delays of up to 20 minutes due to traffic
+2022-03-02T07:00,delay,96,Route 96 experiencing delays of up to 20 minutes due to traffic
+2022-03-02T08:00,delay,747,CT2 experiencing delays of up to 20 minutes due to traffic
+2022-03-02T08:00,detour,95,Route 95 detoured due to construction: Connections made at: Mystic Ave @ Middlesex Ave & Mystic Ave @ Temple Rd.
+2022-03-02T14:00,delay,86,Route 86 experiencing delays of up to 30 minutes
+2022-03-02T17:00,delay,101,Route 101 experiencing delays of up to 20 minutes due to traffic
+2022-03-02T17:00,delay,80,Route 80 experiencing delays of up to 20 minutes
+2022-03-02T17:00,delay,86,Route 86 experiencing delays of up to 20 minutes
+2022-03-02T17:00,delay,87,Route 87 experiencing delays of up to 20 minutes
+2022-03-02T18:00,delay,747,CT2 experiencing delays of up to 20 minutes due to traffic
+2022-03-02T18:00,delay,88,Route 88 experiencing delays of up to 20 minutes due to traffic
+2022-03-02T18:00,delay,89,Route 89 experiencing delays of up to 15 minutes due to traffic
+2022-03-02T18:00,delay,90,Route 90 experiencing delays of up to 15 minutes due to traffic
+2022-03-02T19:00,delay,87,Route 87 experiencing delays of up to 25 minutes
+2022-03-03T05:00,delay,87,Route 87 experiencing delays of up to 20 minutes due to traffic
+2022-03-03T05:00,delay,88,Route 88 experiencing delays of up to 20 minutes due to traffic
+2022-03-03T06:00,delay,101,Route 101 experiencing delays of up to 15 minutes
+2022-03-03T06:00,delay,89,Route 89 experiencing delays of up to 15 minutes
+2022-03-03T07:00,delay,747,CT2 experiencing delays of up to 25 minutes
+2022-03-03T07:00,detour,95,Route 95 detoured due to construction: Connections made at: Mystic Ave @ Middlesex Ave & Mystic Ave @ Temple Rd.
+2022-03-03T08:00,delay,80,Route 80 experiencing delays of up to 20 minutes due to traffic
+2022-03-03T08:00,delay,96,Route 96 experiencing delays of up to 25 minutes
+2022-03-03T15:00,delay,747,CT2 experiencing delays of up to 20 minutes due to traffic
+2022-03-03T15:00,delay,86,Route 86 experiencing delays of up to 20 minutes due to traffic
+2022-03-03T15:00,delay,87,Route 87 experiencing delays of up to 20 minutes due to traffic
+2022-03-03T15:00,delay,88,Route 88 experiencing delays of up to 25 minutes due to traffic
+2022-03-03T15:00,delay,89,Route 89 experiencing delays of up to 20 minutes due to disabled bus
+2022-03-03T16:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to traffic
+2022-03-03T21:00,delay,87,Route 87 experiencing delays of up to 20 minutes
+2022-03-04T06:00,delay,101,Route 101 experiencing delays of up to 20 minutes
+2022-03-04T14:00,delay,86,Route 86 experiencing delays of up to 20 minutes
+2022-03-04T15:00,delay,88,Route 88 experiencing delays of up to 20 minutes due to traffic
+2022-03-04T17:00,delay,109,Route 109 experiencing delays of up to 20 minutes
+2022-03-04T17:00,delay,94,Route 94 experiencing delays of up to 30 minutes
+2022-03-05T10:00,delay,80,Route 80 experiencing delays of up to 20 minutes due to traffic
+2022-03-05T12:00,delay,80,Route 80 experiencing delays of up to 20 minutes due to traffic

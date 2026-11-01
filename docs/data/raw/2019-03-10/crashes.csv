@@ -1,0 +1,30 @@
+date_hour,time,where,what,how,surface,weather,light,hurt,pedestrian,cyclist,pedestrian_where,pedestrian_doing,hit_and_run
+2019-02-27T15:00,15:42,Washington St,Collision with motor vehicle in traffic,Angle,Dry,Clear,Daylight,none,0,0,,,False
+2019-02-28T01:00,01:38,Bonner Av & Columbus Av,Collision with parked motor vehicle,Head on,Slush,Snow,Dark - lighted roadway,none,0,0,,,False
+2019-02-28T09:00,09:24,Highland Av,Collision with motor vehicle in traffic,Rear-end,Wet,Clear,Daylight,none,0,0,,,False
+2019-02-28T15:00,15:39,Broadway,Collision with pedestrian,Single vehicle crash,Dry,Clear,Daylight,none,1,0,Not in roadway,"Walking, running or cycling",False
+2019-02-28T17:00,17:25,Franklin Av & Washington St,Collision with motor vehicle in traffic,Rear-end,Dry,Clear,Dusk,possible,0,0,,,False
+2019-02-28T20:00,20:26,Mt Vernon St,Collision with parked motor vehicle,"Sideswipe, same direction",Wet,Clear,Dark - lighted roadway,none,0,0,,,False
+2019-02-28T23:00,23:34,Central St,Collision with parked motor vehicle,Angle,Dry,Clear,Dark - lighted roadway,none,0,0,,,True
+2019-03-01T11:00,11:21,Memorial Rd,Collision with motor vehicle in traffic,Rear to rear,Wet,Clear,Daylight,possible,0,0,,,False
+2019-03-01T12:00,12:13,College Ave,Collision with motor vehicle in traffic,Angle,Dry,Clear,Daylight,none,0,0,,,False
+2019-03-04T06:00,06:34,Aldersey St,Collision with parked motor vehicle,Angle,Snow,Snow,Daylight,none,0,0,,,False
+2019-03-04T09:00,09:25,North St & Powder House Blvd,Collision with motor vehicle in traffic,"Sideswipe, same direction",Snow,Snow,Daylight,none,0,0,,,False
+2019-03-05T17:00,17:44,Elm St,Collision with parked motor vehicle,"Sideswipe, same direction",Wet,Cloudy,Dark - unknown roadway lighting,none,0,0,,,False
+2019-03-05T23:00,23:55,Somerville Av,,Single vehicle crash,Dry,Clear,Dark - lighted roadway,possible,0,1,In roadway,"Walking, running or cycling",False
+2019-03-06T07:00,07:42,Highland Av,Collision with parked motor vehicle,"Sideswipe, same direction",Ice,Clear,Daylight,none,0,0,,,False
+2019-03-06T10:00,10:16,Cedar St,Collision with motor vehicle in traffic,Rear-end,Wet,Clear,Daylight,none,0,0,,,False
+2019-03-06T16:00,16:42,Cross St,Collision with parked motor vehicle,Rear-end,Wet,Clear,Daylight,none,0,0,,,False
+2019-03-08T01:00,01:04,54/47 Atherton St,Collision with parked motor vehicle,,Ice,Clear,Dark - lighted roadway,none,0,0,,,False
+2019-03-08T11:00,11:05,Grand Union Blvd & Na,Collision with motor vehicle in traffic,Angle,Dry,Clear,Daylight,possible,0,0,,,False
+2019-03-09T15:00,15:22,Summer St,Collision with parked motor vehicle,"Sideswipe, same direction",Dry,Clear,Daylight,none,0,0,Not in roadway,,True
+2019-03-09T22:00,22:45,Mystic Av,Collision with parked motor vehicle,"Sideswipe, same direction",Wet,"Sleet, hail, freezing rain or drizzle",Dark - lighted roadway,none,0,0,,,True
+2019-03-10T01:00,01:58,Assembly Row,Collision with parked motor vehicle,"Sideswipe, same direction",Dry,Clear,Dark - lighted roadway,none,0,0,,,False
+2019-03-10T09:00,09:35,Century St,Collision with parked motor vehicle,"Sideswipe, same direction",Snow,Snow,Daylight,none,0,0,,,False
+2019-03-10T10:00,10:06,Kingston St & Meacham Rd,Collision with parked motor vehicle,"Sideswipe, opposite direction",Snow,Snow,Daylight,none,0,0,,,False
+2019-03-10T10:00,10:41,Park Pl,Collision with parked motor vehicle,Rear-end,Snow,Snow,Daylight,none,0,0,,,False
+2019-03-11T09:00,09:46,Grove St & Highland Av,Collision with light pole or other post/support,"Sideswipe, same direction",Snow,Clear,Daylight,none,0,0,,,False
+2019-03-12T08:00,08:09,Highland Ave & Willow Ave,Collision with motor vehicle in traffic,,Dry,Clear,Daylight,none,0,0,,,False
+2019-03-12T08:00,08:52,Summit Ave,Collision with motor vehicle in traffic,Angle,Ice,Clear,Daylight,possible,0,0,,,False
+2019-03-13T12:00,12:31,Central St & Vernon St,Collision with light pole or other post/support,Single vehicle crash,Dry,Clear,Daylight,none,0,0,,,False
+2019-03-13T21:00,21:06,Beacon St & Calvin St,Collision with pedalcycle,Angle,Dry,Clear,Dark - lighted roadway,possible,0,1,In roadway,"Walking, running or cycling",False

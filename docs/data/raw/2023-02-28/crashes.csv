@@ -1,0 +1,10 @@
+date_hour,time,where,what,how,surface,weather,light,hurt,pedestrian,cyclist,pedestrian_where,pedestrian_doing,hit_and_run
+2023-02-21T13:00,13:33,Broadway,Collision with motor vehicle in traffic,Angle,Dry,Clear,Daylight,none,0,0,,,False
+2023-02-22T07:00,07:16,Central St & Highland Av,Collision with motor vehicle in traffic,Angle,Dry,Clear,Daylight,none,0,0,,,False
+2023-02-22T07:00,07:29,Highland Av,Collision with motor vehicle in traffic,Rear-end,Dry,Clear,Daylight,possible,0,0,,,False
+2023-02-23T07:00,07:57,Appleton St,Collision with parked motor vehicle,"Sideswipe, same direction",Snow,Cloudy,Daylight,none,0,0,,,False
+2023-02-23T16:00,16:16,Garrison Av,Collision with pedestrian,,Slush,Clear,Daylight,minor,0,0,,,False
+2023-02-23T17:00,17:45,Curtis St,Collision with motor vehicle in traffic,Head on,Wet,"Sleet, hail, freezing rain or drizzle",Dark - lighted roadway,none,0,0,,,False
+2023-02-28T11:00,11:58,Washington St,Collision with motor vehicle in traffic,Angle,Wet,Cloudy,Daylight,none,0,0,,,False
+2023-03-01T12:00,12:37,Washington St,Collision with motor vehicle in traffic,Rear-end,Wet,Clear,Daylight,none,0,0,,,False
+2023-03-02T20:00,20:02,Broadway & Willow Av,Collision with motor vehicle in traffic,Angle,Dry,Clear,Dark - lighted roadway,none,0,0,,,False

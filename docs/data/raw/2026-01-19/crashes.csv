@@ -1,0 +1,8 @@
+date_hour,time,where,what,how,surface,weather,light,hurt,pedestrian,cyclist,pedestrian_where,pedestrian_doing,hit_and_run
+2026-01-17T11:00,11:15,Holland St,Collision with pedalcycle,"Sideswipe, same direction",Dry,Clear,Daylight,minor,0,0,On-street bike lanes,Entering or crossing specified location,False
+2026-01-17T15:00,15:09,Maine Av & Maine Ter,Collision with parked motor vehicle,"Sideswipe, same direction",Wet,"Sleet, hail, freezing rain or drizzle",Daylight,none,0,0,,,False
+2026-01-18T11:00,11:22,Broadway,Collision with curb,Single vehicle crash,,Clear,Daylight,minor,0,0,,,False
+2026-01-18T21:00,21:47,Billingham St & Summit St,Collision with parked motor vehicle,Angle,Snow,Snow,Dark - lighted roadway,none,0,0,,,False
+2026-01-19T02:00,02:55,Broadway,Collision with parked motor vehicle,Angle,Snow,Snow,Dark - lighted roadway,none,0,0,,,False
+2026-01-20T13:00,13:49,Broadway,Collision with motor vehicle in traffic,Angle,Dry,Cloudy,Daylight,none,0,0,,,False
+2026-01-22T06:00,06:29,Mystic Av & Temple Rd,Collision with motor vehicle in traffic,"Sideswipe, opposite direction",Wet,Rain,Dusk,none,0,0,,,False

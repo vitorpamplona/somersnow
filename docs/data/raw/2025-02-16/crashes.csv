@@ -1,0 +1,25 @@
+date_hour,time,where,what,how,surface,weather,light,hurt,pedestrian,cyclist,pedestrian_where,pedestrian_doing,hit_and_run
+2025-02-01T08:00,08:53,College Av & Park Av,Collision with motor vehicle in traffic,"Sideswipe, opposite direction",Wet,Snow,Daylight,none,0,0,,,False
+2025-02-01T18:00,18:45,Highland Av,Collision with parked motor vehicle,Rear-end,Ice,"Sleet, hail, freezing rain or drizzle",Dark - lighted roadway,none,0,0,,,False
+2025-02-04T09:00,09:11,Cutler St & Ryan Rd,Collision with parked motor vehicle,Rear to rear,Wet,Clear,Daylight,none,0,0,,,False
+2025-02-04T10:00,10:04,Washington St & Myrtle St,Collision with pedalcycle,Single vehicle crash,Wet,Clear,Daylight,minor,0,1,On-street bike lanes,"Walking, running or cycling",False
+2025-02-05T15:00,15:22,Broadway & Garfield Av,Collision with motor vehicle in traffic,Single vehicle crash,Dry,Clear,Daylight,none,0,0,,,False
+2025-02-05T16:00,16:54,Elm St,Collision with motor vehicle in traffic,"Sideswipe, same direction",Dry,Clear,Dusk,none,0,0,,,False
+2025-02-06T08:00,08:25,Broadway,Collision with light pole or other post/support,Single vehicle crash,Wet,Cloudy,Daylight,none,0,0,,,False
+2025-02-09T16:00,16:21,Broadway & Powder House Blvd,Collision with motor vehicle in traffic,Single vehicle crash,Wet,Cloudy,Daylight,none,0,0,,,False
+2025-02-11T17:00,17:15,Summer,Collision with curb,Single vehicle crash,Dry,Clear,Dawn,none,0,0,,,False
+2025-02-14T07:00,07:53,Broadway & Wheatland St,Collision with motor vehicle in traffic,Angle,Dry,Clear,Daylight,minor,0,0,,,False
+2025-02-17T00:00,00:40,Morrison Av,Collision with parked motor vehicle,Head on,Ice,Severe crosswinds,Dark - lighted roadway,none,0,0,,,False
+2025-02-17T00:00,00:59,Boston St & Munroe St,Collision with parked motor vehicle,Head on,Ice,"Sleet, hail, freezing rain or drizzle",Dark - lighted roadway,,0,0,,,False
+2025-02-17T09:00,09:38,Lowell St,Collision with motor vehicle in traffic,Angle,Snow,Cloudy,Daylight,none,0,0,,,False
+2025-02-17T17:00,17:54,Albion St,Collision with motor vehicle in traffic,Single vehicle crash,Ice,Clear,Dark - lighted roadway,possible,1,0,In roadway,Standing,True
+2025-02-17T21:00,21:18,Warner St,Collision with motor vehicle in traffic,Head on,Ice,Clear,Dark - lighted roadway,possible,0,0,,,False
+2025-02-19T07:00,07:26,Pearl St & Franklin St,Collision with pedestrian,Single vehicle crash,Ice,Clear,Daylight,minor,1,0,In roadway,"Walking, running or cycling",False
+2025-02-19T17:00,17:26,Highland Av,Collision with motor vehicle in traffic,Angle,Ice,Clear,Dark - lighted roadway,none,0,0,,,False
+2025-02-21T07:00,07:31,Lowell St,Collision with parked motor vehicle,"Sideswipe, same direction",Ice,Cloudy,Daylight,none,0,0,,,False
+2025-02-21T15:00,15:41,Warner St,Collision with motor vehicle in traffic,Rear-end,Ice,Clear,Daylight,minor,0,0,,,False
+2025-02-23T19:00,19:06,Willoughby St,Collision with parked motor vehicle,"Sideswipe, opposite direction",,Clear,Dark - lighted roadway,none,0,0,,,False
+2025-02-25T14:00,14:59,Somerville Av,Collision with parked motor vehicle,Rear-end,Wet,Clear,Daylight,none,0,0,,,False
+2025-02-25T22:00,22:29,Prospect St,Collision with parked motor vehicle,"Sideswipe, same direction",Dry,Clear,Dark - unknown roadway lighting,minor,0,0,,,False
+2025-02-26T02:00,02:44,Washington St,Collision with parked motor vehicle,Single vehicle crash,,Clear,Dark - lighted roadway,minor,0,0,,,False
+2025-02-26T17:00,17:21,Washington St,Collision with pedalcycle,Angle,Dry,Clear,Daylight,minor,0,1,On-street bike lanes,"Walking, running or cycling",False

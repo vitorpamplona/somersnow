@@ -1,0 +1,27 @@
+date_hour,time,where,what,how,surface,weather,light,hurt,pedestrian,cyclist,pedestrian_where,pedestrian_doing,hit_and_run
+2026-02-22T18:00,18:02,Warner St,Collision with motor vehicle in traffic,Head on,Dry,Clear,Dark - lighted roadway,none,0,0,,,False
+2026-02-23T10:00,10:18,Washington St,Collision with parked motor vehicle,Head on,Snow,Snow,Daylight,none,0,0,,,False
+2026-02-23T13:00,13:38,Revolution Dr,Collision with parked motor vehicle,"Sideswipe, opposite direction",Snow,Snow,Daylight,none,0,0,,,False
+2026-02-23T15:00,15:36,Lincoln St & Perkins St,Collision with parked motor vehicle,"Sideswipe, same direction",Snow,Snow,Daylight,none,0,0,,,True
+2026-02-23T20:00,20:47,Putnam Rd,Collision with parked motor vehicle,"Sideswipe, opposite direction",Snow,Snow,Dark - lighted roadway,none,0,0,,,False
+2026-02-24T06:00,06:51,Somerville Ave,Collision with parked motor vehicle,"Sideswipe, same direction",Snow,Clear,Daylight,none,0,0,,,False
+2026-02-25T10:00,10:15,Liberty Av,Collision with parked motor vehicle,"Sideswipe, same direction",Snow,Clear,Daylight,none,0,0,,,False
+2026-02-25T15:00,15:00,Oxford Street,,Angle,Snow,Clear,Daylight,none,0,0,,,False
+2026-02-26T17:00,17:17,Elmwood St,Collision with parked motor vehicle,"Sideswipe, opposite direction",Snow,Clear,Dusk,none,0,0,,,False
+2026-02-27T15:00,15:52,Oxford St,,Single vehicle crash,Wet,Clear,Daylight,none,0,0,,,False
+2026-02-27T16:00,16:43,Prescott St,Collision with parked motor vehicle,"Sideswipe, same direction",Wet,Clear,Daylight,none,0,0,,,False
+2026-02-28T00:00,00:05,Washington St,Collision with motor vehicle in traffic,Angle,Dry,Clear,Dark - lighted roadway,none,0,0,,,False
+2026-02-28T19:00,19:11,Boston Av,Collision with parked motor vehicle,"Sideswipe, same direction",Dry,Clear,Dark - lighted roadway,none,0,0,,,False
+2026-03-01T09:00,09:42,Central,Collision with motor vehicle in traffic,"Sideswipe, same direction",Wet,"Sleet, hail, freezing rain or drizzle",Daylight,none,0,0,,,False
+2026-03-01T10:00,10:41,College Av,Collision with motor vehicle in traffic,"Sideswipe, same direction",Snow,Snow,Daylight,minor,0,0,,,False
+2026-03-03T08:00,08:50,Willow Av,Collision with parked motor vehicle,"Sideswipe, same direction",Dry,Clear,Daylight,,0,0,,,True
+2026-03-03T23:00,23:27,Broadway & Mcgrath Hwy,Collision with motor vehicle in traffic,"Sideswipe, same direction",Slush,"Sleet, hail, freezing rain or drizzle",Dark - lighted roadway,none,0,0,,,False
+2026-03-04T05:00,05:30,Broadway & Garfield Av,Collision with motor vehicle in traffic,,Ice,"Sleet, hail, freezing rain or drizzle",Dawn,none,0,0,,,False
+2026-03-04T07:00,07:36,Washington St,Collision with motor vehicle in traffic,Rear-end,Slush,Clear,Daylight,possible,0,0,,,False
+2026-03-04T09:00,09:13,Watson St,Collision with parked motor vehicle,"Sideswipe, same direction",Dry,Cloudy,Daylight,none,0,0,,,False
+2026-03-04T22:00,22:41,Sewall St,Collision with parked motor vehicle,"Sideswipe, same direction",Snow,Clear,Dark - lighted roadway,none,0,0,,,False
+2026-03-06T15:00,15:02,Lincoln St & Perkins St,Collision with motor vehicle in traffic,Angle,Wet,Cloudy,Daylight,none,0,0,,,False
+2026-03-07T02:00,02:50,Medford St,Collision with parked motor vehicle,"Sideswipe, same direction",Wet,Rain,Dark - roadway not lighted,none,0,0,,,False
+2026-03-07T11:00,11:54,Beacon St & Somerville Av,Collision with motor vehicle in traffic,Rear-end,Dry,Clear,Daylight,possible,0,0,,,True
+2026-03-07T14:00,14:19,Putnam,Collision with parked motor vehicle,"Sideswipe, same direction",Wet,Cloudy,Daylight,none,0,0,,,False
+2026-03-07T16:00,16:56,Broadway,Collision with motor vehicle in traffic,"Sideswipe, same direction",Dry,Clear,Daylight,none,0,0,,,True

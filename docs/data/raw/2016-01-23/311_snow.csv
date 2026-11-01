@@ -1,0 +1,139 @@
+created,group,type,ward
+2016-01-21T08:08,ask,Snow emergency inquiry,
+2016-01-21T08:55,ask,Snow emergency parking inquiry,7
+2016-01-21T10:19,ask,Snow emergency parking inquiry,
+2016-01-21T11:19,street,Salting request,7
+2016-01-21T11:43,ask,Snow emergency parking inquiry,5
+2016-01-21T12:10,feedback,Snow related feedback,
+2016-01-21T12:37,feedback,Snow related feedback,
+2016-01-21T15:13,ask,Snow emergency parking inquiry,
+2016-01-21T15:20,street,Sand barrel,3
+2016-01-21T15:22,street,Sand barrel,3
+2016-01-21T15:23,street,Sand barrel,3
+2016-01-21T15:23,street,Sand barrel,3
+2016-01-21T18:29,ask,Snow emergency parking inquiry,2
+2016-01-22T09:55,sidewalk,Snow/sidewalk not shoveled,6
+2016-01-22T12:57,street,Sand barrel,3
+2016-01-22T12:58,street,Sand barrel,3
+2016-01-22T15:31,feedback,Snow related feedback,
+2016-01-22T16:22,ask,Snow emergency parking inquiry,2
+2016-01-22T19:30,ask,Snow emergency inquiry,
+2016-01-22T20:30,ask,Snow emergency parking inquiry,
+2016-01-23T07:05,ask,Snow emergency inquiry,
+2016-01-23T07:40,ask,Snow emergency parking inquiry,6
+2016-01-23T08:10,street,Salting request,2
+2016-01-23T08:46,ask,Snow emergency inquiry,
+2016-01-23T10:09,ask,Snow emergency inquiry,
+2016-01-23T12:05,ask,Snow emergency inquiry,
+2016-01-23T12:34,ask,Snow emergency inquiry,
+2016-01-23T12:37,ask,Snow emergency inquiry,
+2016-01-23T12:37,ask,Snow emergency inquiry,
+2016-01-23T12:39,ask,Snow emergency inquiry,
+2016-01-23T12:47,ask,Snow emergency inquiry,
+2016-01-23T12:54,ask,Snow emergency inquiry,
+2016-01-23T12:55,ask,Snow emergency inquiry,
+2016-01-23T15:11,ask,Snow emergency inquiry,6
+2016-01-23T15:12,ask,Snow emergency parking inquiry,
+2016-01-23T16:55,ask,Snow emergency inquiry,2
+2016-01-23T16:57,ask,Snow emergency inquiry,
+2016-01-23T16:57,ask,Snow emergency inquiry,
+2016-01-23T16:59,ask,Snow emergency inquiry,
+2016-01-23T16:59,ask,Snow emergency inquiry,
+2016-01-23T17:29,ask,Snow emergency inquiry,
+2016-01-23T17:52,ask,Snow emergency inquiry,
+2016-01-23T18:18,ask,Snow emergency inquiry,6
+2016-01-23T18:34,ask,Snow emergency inquiry,
+2016-01-23T18:44,ask,Snow emergency inquiry,
+2016-01-23T18:48,ask,Snow emergency inquiry,
+2016-01-23T18:55,ask,Snow emergency inquiry,1
+2016-01-23T18:58,ask,Snow emergency inquiry,5
+2016-01-23T19:04,ask,Snow emergency inquiry,7
+2016-01-23T19:10,ask,Snow emergency inquiry,1
+2016-01-23T19:26,ask,Snow emergency inquiry,
+2016-01-23T19:33,ask,Snow emergency inquiry,
+2016-01-23T19:40,ask,Snow emergency inquiry,
+2016-01-23T20:35,ask,Snow emergency inquiry,
+2016-01-23T20:36,ask,Snow emergency inquiry,
+2016-01-23T21:08,ask,Snow emergency inquiry,
+2016-01-23T21:08,ask,Snow emergency inquiry,
+2016-01-23T21:19,ask,Snow emergency inquiry,1
+2016-01-23T21:22,ask,Snow emergency inquiry,4
+2016-01-23T21:33,street,Snow removal request,
+2016-01-23T23:02,ask,Snow emergency inquiry,
+2016-01-23T23:27,ask,Snow emergency inquiry,
+2016-01-23T23:56,ask,Snow emergency inquiry,
+2016-01-24T03:25,ask,Snow emergency inquiry,
+2016-01-24T07:26,feedback,Snow related feedback,
+2016-01-24T08:47,street,Snow removal request,5
+2016-01-24T08:59,street,Snow removal request,2
+2016-01-24T09:02,street,Salting request,5
+2016-01-24T09:20,ask,Snow emergency parking inquiry,6
+2016-01-24T09:30,street,Snow removal request,4
+2016-01-24T10:18,street,Snow removal request,3
+2016-01-24T11:12,street,Snow removal request,6
+2016-01-24T11:15,street,Snow removal request,6
+2016-01-24T12:58,street,Snow removal request,2
+2016-01-24T13:01,street,Snow removal request,6
+2016-01-24T13:03,street,Snow removal request,3
+2016-01-24T16:06,sidewalk,Snow/sidewalk not shoveled,7
+2016-01-24T21:43,sidewalk,Snow/sidewalk not shoveled,6
+2016-01-25T08:04,sidewalk,Snow/sidewalk not shoveled,1
+2016-01-25T08:49,sidewalk,Snow/sidewalk not shoveled,
+2016-01-25T08:53,sidewalk,Snow/sidewalk not shoveled,
+2016-01-25T08:54,sidewalk,Snow/sidewalk not shoveled,4
+2016-01-25T08:54,sidewalk,Snow/sidewalk not shoveled,
+2016-01-25T09:10,sidewalk,Snow/sidewalk not shoveled,1
+2016-01-25T09:11,street,Snow removal request,3
+2016-01-25T09:23,sidewalk,Snow/sidewalk not shoveled,2
+2016-01-25T09:27,sidewalk,Snow/sidewalk not shoveled,1
+2016-01-25T09:29,sidewalk,Snow/sidewalk not shoveled,4
+2016-01-25T09:33,sidewalk,Snow/sidewalk not shoveled,1
+2016-01-25T09:35,sidewalk,Snow/sidewalk not shoveled,7
+2016-01-25T09:36,sidewalk,Snow/sidewalk not shoveled,7
+2016-01-25T09:38,sidewalk,Snow/sidewalk not shoveled,6
+2016-01-25T09:40,sidewalk,Snow/sidewalk not shoveled,7
+2016-01-25T09:41,sidewalk,Snow/sidewalk not shoveled,7
+2016-01-25T09:42,sidewalk,Snow/sidewalk not shoveled,7
+2016-01-25T09:43,sidewalk,Snow/sidewalk not shoveled,7
+2016-01-25T09:50,sidewalk,Snow/sidewalk not shoveled,2
+2016-01-25T09:52,sidewalk,Snow/sidewalk not shoveled,2
+2016-01-25T09:53,sidewalk,Snow/sidewalk not shoveled,6
+2016-01-25T09:54,sidewalk,Snow/sidewalk not shoveled,6
+2016-01-25T10:15,sidewalk,Snow/sidewalk not shoveled,5
+2016-01-25T10:24,sidewalk,Snow/sidewalk not shoveled,2
+2016-01-25T10:26,street,Snow removal request,3
+2016-01-25T10:35,sidewalk,Snow/sidewalk not shoveled,4
+2016-01-25T10:55,sidewalk,Snow/sidewalk not shoveled,7
+2016-01-25T11:38,street,Snow removal request,5
+2016-01-25T11:50,sidewalk,Snow/sidewalk not shoveled,2
+2016-01-25T12:08,sidewalk,Snow/sidewalk not shoveled,7
+2016-01-25T12:55,sidewalk,Snow/sidewalk not shoveled,6
+2016-01-25T12:57,sidewalk,Snow/sidewalk not shoveled,6
+2016-01-25T13:03,sidewalk,Snow/sidewalk not shoveled,6
+2016-01-25T13:51,sidewalk,Snow/sidewalk not shoveled,4
+2016-01-25T15:31,street,Sand barrel,3
+2016-01-25T15:32,street,Sand barrel,2
+2016-01-25T15:33,street,Sand barrel,3
+2016-01-25T15:34,street,Sand barrel,3
+2016-01-25T15:36,street,Sand barrel,3
+2016-01-25T15:43,street,Sand barrel,3
+2016-01-25T15:44,street,Sand barrel,5
+2016-01-25T15:47,street,Sand barrel,5
+2016-01-25T15:48,street,Sand barrel,5
+2016-01-25T15:49,street,Sand barrel,2
+2016-01-25T15:50,street,Sand barrel,5
+2016-01-25T15:51,street,Sand barrel,2
+2016-01-25T18:29,sidewalk,Snow/sidewalk not shoveled,3
+2016-01-26T08:02,sidewalk,Snow/sidewalk not shoveled,1
+2016-01-26T08:30,sidewalk,Snow/sidewalk not shoveled,3
+2016-01-26T10:32,street,Salting request,5
+2016-01-26T10:33,street,Snow removal request,2
+2016-01-26T10:38,street,Snow removal request,1
+2016-01-26T12:47,feedback,Snow related feedback,
+2016-01-26T12:59,spacesaver,Space saver report,7
+2016-01-26T13:32,sidewalk,Snow/sidewalk not shoveled,4
+2016-01-26T14:04,sidewalk,Snow/sidewalk not shoveled,6
+2016-01-28T10:56,feedback,Snow related feedback,
+2016-01-28T11:37,ask,Snow emergency parking inquiry,
+2016-01-28T13:32,feedback,Snow related feedback,
+2016-01-28T13:55,feedback,Snow related feedback,3

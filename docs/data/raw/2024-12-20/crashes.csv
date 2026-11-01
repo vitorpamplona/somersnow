@@ -1,0 +1,13 @@
+date_hour,time,where,what,how,surface,weather,light,hurt,pedestrian,cyclist,pedestrian_where,pedestrian_doing,hit_and_run
+2024-12-19T09:00,09:36,Jaques St & Temple St,Collision with motor vehicle in traffic,Rear-end,Dry,Clear,Daylight,possible,0,0,,,False
+2024-12-19T17:00,17:03,Broadway,Collision with pedestrian,Single vehicle crash,Dry,Clear,Dusk,none,1,0,At intersection but no crosswalk,"Walking, running or cycling",False
+2024-12-20T13:00,13:52,Summer St,Collision with light pole or other post/support,Head on,Ice,Snow,Daylight,none,0,0,,,False
+2024-12-20T14:00,14:25,Lowell St,Collision with motor vehicle in traffic,Rear-end,Snow,Snow,Daylight,none,0,0,,,False
+2024-12-20T15:00,15:43,Moreland St & Mystic Av,Collision with motor vehicle in traffic,Rear-end,Wet,Snow,Dark - lighted roadway,none,0,0,,,False
+2024-12-20T15:00,15:55,Beacon St,Collision with motor vehicle in traffic,Angle,Ice,Snow,Dark - lighted roadway,none,0,0,,,False
+2024-12-20T16:00,16:32,Dane St,Collision with guardrail,Single vehicle crash,Ice,Snow,Dark - lighted roadway,minor,0,0,,,False
+2024-12-20T17:00,17:31,Meacham St,Collision with parked motor vehicle,Angle,Snow,Snow,Dark - roadway not lighted,none,0,0,,,False
+2024-12-22T10:00,10:36,Highland Av,Collision with motor vehicle in traffic,Rear-end,Slush,Clear,Daylight,none,0,0,,,False
+2024-12-26T14:00,14:26,Cutter Av & Summer St,Collision with motor vehicle in traffic,Angle,Dry,Clear,Daylight,none,0,0,,,False
+2024-12-28T11:00,11:10,Conwell St,Collision with pedestrian,Rear-end,Ice,Rain,Daylight,possible,0,0,,,False
+2024-12-28T14:00,14:24,Broadway,Collision with motor vehicle in traffic,Rear-end,Wet,Clear,Daylight,none,0,0,,,False

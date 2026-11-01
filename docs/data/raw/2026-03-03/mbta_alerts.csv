@@ -1,0 +1,130 @@
+created_hour,kind,route_or_station,header
+2026-02-21T13:00,delay,80,Route 80 is experiencing delays of up to 20 minutes due to traffic
+2026-02-21T13:00,delay,87,Route 87 is experiencing delays of up to 20 minutes due to traffic
+2026-02-21T14:00,delay,80,Route 80 is experiencing delays of up to 20 minutes due to traffic
+2026-02-21T16:00,delay,109,Route 109 is experiencing delays of up to 20 minutes due to traffic
+2026-02-21T16:00,delay,87,Route 87 is experiencing delays of up to 25 minutes due to traffic
+2026-02-21T16:00,delay,88,Route 88 is experiencing delays of up to 20 minutes due to traffic
+2026-02-21T19:00,delay,80,Route 80 is experiencing delays of up to 20 minutes due to traffic
+2026-02-21T19:00,delay,95,Route 95 is experiencing delays of up to 20 minutes due to traffic
+2026-02-21T19:00,delay,96,Route 96 is experiencing delays of up to 20 minutes due to traffic
+2026-02-21T20:00,delay,87,Route 87 is experiencing delays of up to 25 minutes due to traffic
+2026-02-21T21:00,delay,83,Route 83 is experiencing delays of up to 20 minutes due to traffic
+2026-02-22T08:00,delay,88,Route 88 is experiencing delays of up to 20 minutes due to traffic
+2026-02-22T12:00,delay,87,Route 87 is experiencing delays of up to 15 minutes due to traffic
+2026-02-22T13:00,delay,80,Route 80 is experiencing delays of up to 20 minutes due to traffic
+2026-02-22T13:00,delay,87,Route 87 is experiencing delays of up to 20 minutes due to traffic
+2026-02-22T14:00,delay,88,Route 88 is experiencing delays of up to 20 minutes due to traffic
+2026-02-22T15:00,delay,95,Route 95 is experiencing delays of up to 20 minutes due to traffic
+2026-02-22T16:00,delay,80,Route 80 is experiencing delays of up to 20 minutes due to traffic
+2026-02-22T16:00,other,747,"Bus service will be operating at reduced levels, similar to a Sunday schedule, on Monday, February 23, due to the winter storm. Riders should plan ahead, allow extra time"
+2026-02-23T05:00,delay,87,Route 87 is experiencing delays of up to 25 minutes due to weather
+2026-02-23T05:00,delay,89,Route 89 is experiencing delays of up to 20 minutes due to traffic
+2026-02-23T06:00,detour,90,Route 90 detoured due to snow. Inbound: connections can be made at 422 McGrath Hwy and Sullivan Square. Outbound: connections can be made at Sullivan Square and Highland 
+2026-02-23T07:00,delay,101,Route 101 is experiencing delays of up to 30 minutes due to traffic
+2026-02-23T07:00,delay,80,Route 80 is experiencing delays of up to 30 minutes due to weather
+2026-02-23T07:00,delay,80,Route 80 is experiencing delays of up to 30 minutes due to weather
+2026-02-23T07:00,delay,83,Route 83 is experiencing delays of up to 30 minutes due to weather
+2026-02-23T07:00,delay,85,Route 85 is experiencing delays of up to 30 minutes due to weather
+2026-02-23T07:00,delay,88,Route 88 is experiencing delays of up to 30 minutes due to weather
+2026-02-23T11:00,detour,91,"Routes CT2, 85, and 91 detoured omitting Union Sq due to a vehicle blocking the road. Riders can board a bus on Prospect St."
+2026-02-23T19:00,delay,109,Route 109 is experiencing delays of more than 30 minutes due to weather
+2026-02-24T05:00,reduced,747,CT2 and 24 other routes will not operate today due to severe weather.
+2026-02-24T06:00,delay,109,Route 109 is experiencing delays of up to 20 minutes due to traffic
+2026-02-24T06:00,delay,87,Route 87 is experiencing delays of up to 20 minutes due to traffic
+2026-02-24T06:00,detour,90,Route 90 detoured. Outbound connections at Sullivan Square and Highland Ave @ Medford St. Inbound connections at 422 McGrath Hwy and Sullivan Square.
+2026-02-24T08:00,delay,101,Route 101 is experiencing delays of up to 20 minutes due to traffic
+2026-02-24T08:00,delay,80,Route 80 is experiencing delays of up to 20 minutes due to traffic
+2026-02-24T16:00,delay,89,Route 89 is experiencing delays of up to 30 minutes due to disabled bus
+2026-02-24T18:00,delay,87,Route 87 is experiencing delays of up to 20 minutes due to disabled bus
+2026-02-24T18:00,delay,88,Route 88 is experiencing delays of up to 20 minutes due to traffic
+2026-02-25T07:00,delay,101,Route 101 is experiencing delays of up to 20 minutes due to traffic
+2026-02-25T07:00,delay,96,Route 96 is experiencing delays of up to 25 minutes due to traffic
+2026-02-25T08:00,delay,747,CT2 is experiencing delays of up to 25 minutes due to traffic
+2026-02-25T09:00,delay,87,Route 87 is experiencing delays of up to 20 minutes due to traffic
+2026-02-25T10:00,delay,80,Route 80 is experiencing delays of up to 30 minutes due to traffic
+2026-02-25T12:00,delay,88,Route 88 is experiencing delays of up to 20 minutes
+2026-02-25T16:00,delay,80,Route 80 is experiencing delays of up to 30 minutes due to disabled bus
+2026-02-25T16:00,detour,101,Route 101 detoured due to weather. The outbound connections are Broadway @ Main St and Main St @ Mayberry Ave.
+2026-02-25T17:00,delay,96,Route 96 is experiencing delays of up to 20 minutes due to traffic
+2026-02-25T22:00,delay,87,Route 87 is experiencing delays of up to 30 minutes
+2026-02-25T22:00,delay,88,Route 88 is experiencing delays of up to 25 minutes
+2026-02-26T10:00,delay,87,Route 87 is experiencing delays of up to 20 minutes due to traffic
+2026-02-26T12:00,delay,747,CT2 is experiencing delays of up to 20 minutes due to traffic.
+2026-02-26T13:00,delay,91,Route 91 is experiencing delays of up to 20 minutes due to traffic
+2026-02-26T15:00,delay,80,Route 80 is experiencing delays of up to 20 minutes due to traffic
+2026-02-26T18:00,delay,83,Route 83 is experiencing delays of up to 25 minutes due to traffic
+2026-02-26T19:00,delay,90,Route 90 is experiencing delays of up to 20 minutes due to traffic
+2026-02-26T20:00,delay,87,Route 87 is experiencing delays of up to 20 minutes due to traffic
+2026-02-27T08:00,access,109,Harvard Escalator 514 (Main lobby to Harvard Square mezzanine) unavailable due to maintenance
+2026-02-27T17:00,delay,80,Route 80 is experiencing delays of up to 20 minutes due to traffic
+2026-02-27T17:00,delay,83,Route 83 is experiencing delays of up to 20 minutes due to traffic
+2026-02-27T17:00,delay,96,Route 96 is experiencing delays of up to 25 minutes due to traffic
+2026-02-27T18:00,delay,89,Route 89 is experiencing delays of up to 20 minutes due to traffic
+2026-02-27T20:00,delay,87,Route 87 is experiencing delays of up to 20 minutes due to traffic
+2026-02-27T23:00,delay,87,Route 87 is experiencing delays of up to 25 minutes due to disabled bus
+2026-02-27T23:00,delay,88,Route 88 is experiencing delays of up to 25 minutes due to disabled bus
+2026-02-28T09:00,delay,88,Route 88 is experiencing delays of up to 25 minutes due to disabled bus
+2026-02-28T13:00,delay,87,Route 87 is experiencing delays of up to 25 minutes due to accident
+2026-02-28T19:00,delay,96,Route 96 is experiencing delays of up to 20 minutes due to traffic
+2026-02-28T20:00,delay,87,Route 87 is experiencing delays of up to 20 minutes due to traffic
+2026-03-01T08:00,delay,87,Route 87 is experiencing delays of up to 20 minutes due to traffic
+2026-03-01T08:00,delay,88,Route 88 is experiencing delays of up to 20 minutes due to traffic
+2026-03-01T15:00,access,96,Harvard Escalator 512 (Mezzanine to Harvard Square) unavailable through Fri Mar 13 due to maintenance
+2026-03-01T17:00,delay,87,Route 87 is experiencing delays of up to 20 minutes due to traffic
+2026-03-01T19:00,delay,88,Route 88 is experiencing delays of up to 20 minutes due to traffic
+2026-03-01T20:00,delay,96,Route 96 is experiencing delays of up to 20 minutes due to traffic
+2026-03-02T00:00,delay,91,Route 91 is experiencing delays of up to 20 minutes due to traffic
+2026-03-02T08:00,delay,109,Route 109 is experiencing delays of up to 20 minutes due to traffic
+2026-03-02T13:00,detour,80,Route 80 detoured due to police activity. Inbound connections are available at Medford St @ School St and 422 McGrath Hwy. Outbound connections are available at McGrath H
+2026-03-02T19:00,delay,109,Route 109 is experiencing delays of up to 20 minutes due to traffic
+2026-03-03T07:00,delay,747,CT2 is experiencing delays of up to 20 minutes due to disabled bus
+2026-03-03T09:00,delay,101,Route 101 is experiencing delays of up to 20 minutes due to traffic
+2026-03-03T11:00,delay,83,Route 83 is experiencing delays of up to 30 minutes due to traffic
+2026-03-03T12:00,delay,101,Route 101 is experiencing delays of up to 20 minutes
+2026-03-03T16:00,delay,96,Route 96 is experiencing delays of up to 25 minutes due to traffic
+2026-03-03T17:00,delay,109,Route 109 is experiencing delays of up to 30 minutes due to weather
+2026-03-03T17:00,delay,80,Route 80 is experiencing delays of up to 25 minutes due to traffic
+2026-03-03T17:00,delay,83,Route 83 is experiencing delays of up to 20 minutes due to traffic
+2026-03-03T17:00,delay,85,Route 85 is experiencing delays of up to 20 minutes due to traffic
+2026-03-03T17:00,delay,87,Route 87 is experiencing delays of up to 20 minutes due to traffic
+2026-03-03T17:00,delay,88,Route 88 is experiencing delays of up to 20 minutes due to traffic
+2026-03-03T17:00,delay,90,Route 90 is experiencing delays of up to 20 minutes due to traffic
+2026-03-03T17:00,delay,91,Route 91 is experiencing delays of up to 20 minutes due to weather
+2026-03-04T07:00,delay,101,Route 101 is experiencing delays of up to 25 minutes due to traffic
+2026-03-04T07:00,delay,80,Route 80 is experiencing delays of up to 20 minutes due to traffic
+2026-03-04T07:00,delay,88,Route 88 is experiencing delays of up to 20 minutes due to traffic
+2026-03-04T07:00,delay,96,Route 96 is experiencing delays of up to 20 minutes due to traffic
+2026-03-04T08:00,delay,109,Route 109 is experiencing delays of up to 20 minutes due to traffic
+2026-03-04T08:00,delay,90,Route 90 is experiencing delays of up to 20 minutes due to traffic
+2026-03-04T08:00,delay,94,Route 94 is experiencing delays of up to 30 minutes due to disabled bus
+2026-03-04T09:00,delay,95,Route 95 is experiencing delays of up to 20 minutes due to traffic
+2026-03-04T14:00,delay,87,Route 87 is experiencing delays of up to 20 minutes due to traffic
+2026-03-04T15:00,delay,94,Route 94 is experiencing delays of up to 30 minutes due to disabled bus
+2026-03-04T15:00,delay,95,Route 95 is experiencing delays of up to 25 minutes due to disabled bus
+2026-03-04T16:00,delay,88,Route 88 is experiencing delays of up to 25 minutes due to traffic
+2026-03-04T16:00,delay,89,Route 89 is experiencing delays of up to 20 minutes
+2026-03-04T17:00,access,747,Ruggles Elevator 728 (Lobby to lower busway center platform) unavailable due to maintenance
+2026-03-04T19:00,delay,89,Route 89 is experiencing delays of up to 25 minutes due to traffic
+2026-03-05T06:00,delay,95,Route 95 is experiencing delays of up to 20 minutes due to traffic
+2026-03-05T07:00,delay,96,Route 96 is experiencing delays of up to 25 minutes due to traffic
+2026-03-05T08:00,delay,109,Route 109 is experiencing delays of up to 20 minutes due to traffic
+2026-03-05T09:00,delay,109,Route 109 is experiencing delays of up to 30 minutes due to Fire Department activity
+2026-03-05T09:00,delay,747,CT2 is experiencing delays of up to 25 minutes due to traffic
+2026-03-05T09:00,delay,91,Route 91 is experiencing delays of up to 30 minutes due to traffic
+2026-03-05T09:00,detour,109,Route 109 detoured due to fire department activity. Connection points at Washington St @ Medford St and Sullivan Station.
+2026-03-05T11:00,delay,87,Route 87 is experiencing delays of up to 20 minutes due to traffic
+2026-03-05T15:00,delay,94,Route 94 is experiencing delays of up to 20 minutes due to traffic
+2026-03-05T17:00,delay,80,Route 80 is experiencing delays of up to 20 minutes due to traffic
+2026-03-05T17:00,delay,90,Route 90 is experiencing delays of up to 20 minutes due to traffic
+2026-03-05T18:00,delay,109,Route 109 is experiencing delays of up to 20 minutes due to traffic
+2026-03-05T20:00,delay,101,Route 101 is experiencing delays of up to 30 minutes
+2026-03-06T17:00,delay,80,Route 80 is experiencing delays of up to 20 minutes due to traffic
+2026-03-07T06:00,delay,96,Route 96 is experiencing delays of up to 20 minutes due to traffic
+2026-03-07T13:00,delay,87,Route 87 is experiencing delays of up to 20 minutes due to traffic
+2026-03-07T14:00,delay,88,Route 88 is experiencing delays of up to 15 minutes due to traffic
+2026-03-07T14:00,delay,90,Route 90 is experiencing delays of up to 20 minutes due to traffic
+2026-03-07T15:00,delay,80,Route 80 is experiencing delays of up to 20 minutes due to traffic
+2026-03-07T17:00,delay,90,Route 90 is experiencing delays of up to 25 minutes due to traffic
+2026-03-07T17:00,delay,96,Route 96 is experiencing delays of up to 20 minutes due to traffic
+2026-03-07T19:00,delay,87,Route 87 is experiencing delays of up to 25 minutes due to traffic

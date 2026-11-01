@@ -1,0 +1,415 @@
+created,type
+2022-01-28T07:06,Illegal parking
+2022-01-28T08:44,Illegal parking
+2022-01-28T09:22,Illegal parking
+2022-01-28T09:54,Car booted/towed inquiry
+2022-01-28T10:10,Illegal parking
+2022-01-28T11:00,Parking information
+2022-01-28T11:12,Illegal parking
+2022-01-28T11:13,Illegal parking
+2022-01-28T11:48,Illegal parking
+2022-01-28T11:55,Illegal parking
+2022-01-28T12:29,Trash questions
+2022-01-28T13:38,Trash questions
+2022-01-28T13:53,Illegal parking
+2022-01-28T14:32,Parking information
+2022-01-28T14:37,Illegal parking
+2022-01-28T14:40,Trash questions
+2022-01-28T14:58,Illegal parking
+2022-01-28T15:26,Illegal parking
+2022-01-28T15:30,Illegal parking
+2022-01-28T15:43,Illegal parking
+2022-01-28T15:46,Illegal parking
+2022-01-28T16:11,Illegal parking
+2022-01-28T17:30,Illegal parking
+2022-01-28T17:32,Illegal parking
+2022-01-28T17:49,Illegal parking
+2022-01-28T17:53,Illegal parking
+2022-01-28T17:54,Illegal parking
+2022-01-28T18:18,Illegal parking
+2022-01-28T18:20,Illegal parking
+2022-01-28T18:30,Illegal parking
+2022-01-28T18:41,Illegal parking
+2022-01-28T18:46,Illegal parking
+2022-01-28T21:00,Illegal parking
+2022-01-29T07:59,Illegal parking
+2022-01-29T09:14,Illegal parking
+2022-01-29T11:14,Illegal parking
+2022-01-29T11:17,Car booted/towed inquiry
+2022-01-29T11:36,Car booted/towed inquiry
+2022-01-29T19:51,Illegal parking
+2022-01-30T07:30,Illegal parking
+2022-01-30T08:23,Illegal parking
+2022-01-30T09:06,Illegal parking
+2022-01-30T10:03,Verification of sanitation schedule
+2022-01-30T10:09,Parking information
+2022-01-30T10:55,Illegal parking
+2022-01-30T10:59,Verification of sanitation schedule
+2022-01-30T11:56,Trash questions
+2022-01-30T12:23,Verification of sanitation schedule
+2022-01-30T12:43,Trash questions
+2022-01-30T13:12,Trash questions
+2022-01-30T13:29,Illegal parking
+2022-01-30T13:44,Verification of sanitation schedule
+2022-01-30T13:56,Verification of sanitation schedule
+2022-01-30T14:34,Trash questions
+2022-01-30T14:57,Verification of sanitation schedule
+2022-01-30T15:02,Verification of sanitation schedule
+2022-01-30T15:12,Illegal parking
+2022-01-30T15:42,Parking information
+2022-01-30T16:09,Trash questions
+2022-01-30T16:09,Trash questions
+2022-01-30T16:10,Verification of sanitation schedule
+2022-01-30T16:38,Verification of sanitation schedule
+2022-01-30T16:47,Verification of sanitation schedule
+2022-01-30T17:14,Illegal parking
+2022-01-30T18:23,Illegal parking
+2022-01-30T20:51,Illegal parking
+2022-01-30T21:30,Illegal parking
+2022-01-30T21:31,Illegal parking
+2022-01-30T21:35,Illegal parking
+2022-01-31T06:28,Illegal parking
+2022-01-31T08:43,Illegal parking
+2022-01-31T08:44,Parking information
+2022-01-31T08:57,Trash questions
+2022-01-31T09:14,Illegal parking
+2022-01-31T09:24,Illegal parking
+2022-01-31T09:32,Parking information
+2022-01-31T10:23,Parking information
+2022-01-31T10:56,Illegal parking
+2022-01-31T11:27,Illegal parking
+2022-01-31T11:29,Parking information
+2022-01-31T12:02,Parking information
+2022-01-31T12:14,Parking information
+2022-01-31T12:24,Trash questions
+2022-01-31T12:54,Verification of sanitation schedule
+2022-01-31T12:58,Illegal parking
+2022-01-31T13:33,Trash questions
+2022-01-31T13:50,Verification of sanitation schedule
+2022-01-31T14:13,Parking information
+2022-01-31T14:30,Parking information
+2022-01-31T15:59,Trash questions
+2022-01-31T16:00,Trash questions
+2022-01-31T16:18,Verification of sanitation schedule
+2022-01-31T16:56,Parking information
+2022-01-31T19:17,Illegal parking
+2022-02-01T08:11,Illegal parking
+2022-02-01T08:16,Illegal parking
+2022-02-01T08:19,Illegal parking
+2022-02-01T08:28,Trash questions
+2022-02-01T09:09,Illegal parking
+2022-02-01T09:14,Verification of sanitation schedule
+2022-02-01T09:47,Parking information
+2022-02-01T09:51,Trash questions
+2022-02-01T09:55,Parking information
+2022-02-01T09:56,Illegal parking
+2022-02-01T10:03,Car booted/towed inquiry
+2022-02-01T10:26,Parking information
+2022-02-01T10:31,Parking information
+2022-02-01T10:35,Illegal parking
+2022-02-01T10:54,Parking information
+2022-02-01T11:01,Illegal parking
+2022-02-01T11:24,Verification of sanitation schedule
+2022-02-01T11:25,Verification of sanitation schedule
+2022-02-01T11:29,Trash questions
+2022-02-01T11:55,Trash questions
+2022-02-01T12:07,Parking information
+2022-02-01T12:31,Parking information
+2022-02-01T12:36,Trash questions
+2022-02-01T12:42,Verification of sanitation schedule
+2022-02-01T12:55,Trash questions
+2022-02-01T13:00,Verification of sanitation schedule
+2022-02-01T15:06,Trash questions
+2022-02-01T15:24,Parking information
+2022-02-01T15:34,Verification of sanitation schedule
+2022-02-01T15:35,Illegal parking
+2022-02-01T15:35,Illegal parking
+2022-02-01T15:38,Illegal parking
+2022-02-01T15:42,Trash questions
+2022-02-01T16:33,Parking information
+2022-02-01T16:35,Illegal parking
+2022-02-01T17:07,Illegal parking
+2022-02-01T17:10,Trash questions
+2022-02-01T17:21,Illegal parking
+2022-02-01T17:57,Illegal parking
+2022-02-01T20:35,Illegal parking
+2022-02-01T22:00,Illegal parking
+2022-02-01T23:20,Illegal parking
+2022-02-02T07:28,Illegal parking
+2022-02-02T07:41,Illegal parking
+2022-02-02T08:02,Verification of sanitation schedule
+2022-02-02T09:03,Parking information
+2022-02-02T09:15,Illegal parking
+2022-02-02T09:31,Verification of sanitation schedule
+2022-02-02T09:38,Illegal parking
+2022-02-02T09:51,Illegal parking
+2022-02-02T09:51,Parking information
+2022-02-02T09:57,Parking information
+2022-02-02T09:59,Illegal parking
+2022-02-02T10:05,Parking information
+2022-02-02T10:10,Parking information
+2022-02-02T11:06,Illegal parking
+2022-02-02T11:20,Illegal parking
+2022-02-02T11:23,Parking information
+2022-02-02T12:03,Parking information
+2022-02-02T12:14,Illegal parking
+2022-02-02T12:17,Illegal parking
+2022-02-02T13:08,Illegal parking
+2022-02-02T13:32,Parking information
+2022-02-02T13:38,Verification of sanitation schedule
+2022-02-02T13:39,Illegal parking
+2022-02-02T13:50,Illegal parking
+2022-02-02T13:52,Parking information
+2022-02-02T14:06,Parking information
+2022-02-02T15:58,Illegal parking
+2022-02-02T16:53,Trash questions
+2022-02-02T17:14,Illegal parking
+2022-02-02T17:31,Illegal parking
+2022-02-02T17:42,Illegal parking
+2022-02-02T17:48,Illegal parking
+2022-02-02T18:02,Illegal parking
+2022-02-02T18:30,Illegal parking
+2022-02-02T18:42,Illegal parking
+2022-02-02T19:13,Illegal parking
+2022-02-03T06:52,Illegal parking
+2022-02-03T08:38,Illegal parking
+2022-02-03T08:42,Illegal parking
+2022-02-03T08:45,Illegal parking
+2022-02-03T08:56,Parking information
+2022-02-03T08:56,Parking information
+2022-02-03T09:05,Illegal parking
+2022-02-03T09:17,Parking information
+2022-02-03T09:20,Illegal parking
+2022-02-03T09:22,Illegal parking
+2022-02-03T09:29,Illegal parking
+2022-02-03T09:32,Illegal parking
+2022-02-03T09:34,Illegal parking
+2022-02-03T09:34,Illegal parking
+2022-02-03T10:06,Illegal parking
+2022-02-03T10:17,Illegal parking
+2022-02-03T10:36,Illegal parking
+2022-02-03T10:36,Illegal parking
+2022-02-03T10:58,Illegal parking
+2022-02-03T11:48,Illegal parking
+2022-02-03T11:48,Illegal parking
+2022-02-03T11:50,Parking information
+2022-02-03T12:13,Illegal parking
+2022-02-03T12:29,Trash questions
+2022-02-03T12:35,Parking information
+2022-02-03T12:57,Illegal parking
+2022-02-03T13:12,Parking information
+2022-02-03T13:23,Verification of sanitation schedule
+2022-02-03T13:28,Illegal parking
+2022-02-03T13:43,Trash questions
+2022-02-03T13:59,Trash questions
+2022-02-03T14:51,Illegal parking
+2022-02-03T15:45,Illegal parking
+2022-02-03T15:48,Verification of sanitation schedule
+2022-02-03T16:12,Parking information
+2022-02-03T16:14,Parking information
+2022-02-03T16:42,Parking information
+2022-02-03T17:03,Verification of sanitation schedule
+2022-02-03T17:06,Parking information
+2022-02-03T17:33,Illegal parking
+2022-02-03T17:41,Illegal parking
+2022-02-03T18:34,Illegal parking
+2022-02-03T20:06,Illegal parking
+2022-02-03T21:08,Illegal parking
+2022-02-03T21:42,Illegal parking
+2022-02-03T22:49,Illegal parking
+2022-02-04T08:43,Illegal parking
+2022-02-04T08:45,Illegal parking
+2022-02-04T08:57,Trash/recycling out too early or late
+2022-02-04T08:57,Trash/recycling out too early or late
+2022-02-04T09:06,Illegal parking
+2022-02-04T10:49,Car booted/towed inquiry
+2022-02-04T10:49,Parking information
+2022-02-04T10:51,Illegal parking
+2022-02-04T11:55,Illegal parking
+2022-02-04T12:44,Illegal parking
+2022-02-04T13:26,Illegal parking
+2022-02-04T13:31,Parking information
+2022-02-04T13:59,Parking information
+2022-02-04T14:21,Illegal parking
+2022-02-04T14:24,Illegal parking
+2022-02-04T15:00,Illegal parking
+2022-02-04T17:04,Illegal parking
+2022-02-04T18:39,Illegal parking
+2022-02-05T09:47,Illegal parking
+2022-02-05T10:11,Illegal parking
+2022-02-05T10:19,Illegal parking
+2022-02-05T10:44,Illegal parking
+2022-02-05T11:15,Illegal parking
+2022-02-05T13:11,Illegal parking
+2022-02-05T13:59,Illegal parking
+2022-02-05T14:12,Illegal parking
+2022-02-05T14:18,Trash questions
+2022-02-05T14:29,Illegal parking
+2022-02-05T15:43,Illegal parking
+2022-02-05T17:43,Illegal parking
+2022-02-05T20:49,Illegal parking
+2022-02-06T10:23,Illegal parking
+2022-02-06T10:55,Illegal parking
+2022-02-06T11:18,Illegal parking
+2022-02-06T12:24,Illegal parking
+2022-02-06T14:52,Illegal parking
+2022-02-06T14:58,Illegal parking
+2022-02-06T15:58,Car booted/towed inquiry
+2022-02-06T16:46,Illegal parking
+2022-02-06T19:26,Illegal parking
+2022-02-06T19:26,Illegal parking
+2022-02-06T19:27,Illegal parking
+2022-02-07T08:13,Illegal parking
+2022-02-07T08:15,Illegal parking
+2022-02-07T08:33,Illegal parking
+2022-02-07T08:35,Illegal parking
+2022-02-07T08:57,Illegal parking
+2022-02-07T09:36,Parking information
+2022-02-07T10:30,Illegal parking
+2022-02-07T11:20,Parking information
+2022-02-07T11:21,Illegal parking
+2022-02-07T11:23,Illegal parking
+2022-02-07T11:32,Trash questions
+2022-02-07T12:17,Parking information
+2022-02-07T12:38,Illegal parking
+2022-02-07T12:41,Car booted/towed inquiry
+2022-02-07T13:06,Illegal parking
+2022-02-07T13:11,Illegal parking
+2022-02-07T13:36,Trash questions
+2022-02-07T13:54,Parking information
+2022-02-07T14:01,Car booted/towed inquiry
+2022-02-07T14:06,Parking information
+2022-02-07T14:23,Illegal parking
+2022-02-07T14:29,Illegal parking
+2022-02-07T15:15,Illegal parking
+2022-02-07T15:48,Illegal parking
+2022-02-07T15:55,Illegal parking
+2022-02-07T16:18,Trash questions
+2022-02-07T16:33,Illegal parking
+2022-02-07T16:57,Parking information
+2022-02-07T17:06,Illegal parking
+2022-02-08T08:20,Parking information
+2022-02-08T08:29,Trash questions
+2022-02-08T09:04,Trash questions
+2022-02-08T09:07,Parking information
+2022-02-08T09:08,Trash questions
+2022-02-08T09:45,Parking information
+2022-02-08T09:54,Illegal parking
+2022-02-08T10:15,Parking information
+2022-02-08T10:32,Trash questions
+2022-02-08T11:08,Parking information
+2022-02-08T11:12,Parking information
+2022-02-08T13:15,Parking information
+2022-02-08T13:19,Illegal parking
+2022-02-08T13:30,Trash questions
+2022-02-08T14:11,Trash questions
+2022-02-08T14:16,Parking information
+2022-02-08T15:25,Trash questions
+2022-02-08T15:41,Illegal parking
+2022-02-08T19:55,Illegal parking
+2022-02-08T20:40,Illegal parking
+2022-02-09T00:13,Illegal parking
+2022-02-09T07:42,Illegal parking
+2022-02-09T07:44,Illegal parking
+2022-02-09T07:59,Illegal parking
+2022-02-09T08:10,Illegal parking
+2022-02-09T08:34,Parking information
+2022-02-09T08:38,Illegal parking
+2022-02-09T09:14,Illegal parking
+2022-02-09T09:33,Trash questions
+2022-02-09T09:51,Illegal parking
+2022-02-09T10:10,Parking information
+2022-02-09T10:28,Parking information
+2022-02-09T10:49,Illegal parking
+2022-02-09T11:08,Trash questions
+2022-02-09T11:34,Illegal parking
+2022-02-09T11:47,Illegal parking
+2022-02-09T12:11,Trash questions
+2022-02-09T12:37,Trash questions
+2022-02-09T12:45,Car booted/towed inquiry
+2022-02-09T12:53,Trash questions
+2022-02-09T13:10,Trash questions
+2022-02-09T13:15,Illegal parking
+2022-02-09T13:26,Illegal parking
+2022-02-09T13:39,Parking information
+2022-02-09T15:07,Trash questions
+2022-02-09T16:01,Illegal parking
+2022-02-09T16:07,Parking information
+2022-02-09T16:30,Trash questions
+2022-02-09T16:33,Illegal parking
+2022-02-09T16:35,Illegal parking
+2022-02-09T17:43,Illegal parking
+2022-02-10T06:48,Illegal parking
+2022-02-10T06:49,Illegal parking
+2022-02-10T06:54,Illegal parking
+2022-02-10T07:19,Illegal parking
+2022-02-10T07:35,Illegal parking
+2022-02-10T08:36,Illegal parking
+2022-02-10T09:45,Car booted/towed inquiry
+2022-02-10T09:46,Car booted/towed inquiry
+2022-02-10T10:05,Illegal parking
+2022-02-10T11:23,Illegal parking
+2022-02-10T11:57,Illegal parking
+2022-02-10T11:57,Illegal parking
+2022-02-10T12:27,Illegal parking
+2022-02-10T12:50,Parking information
+2022-02-10T12:55,Illegal parking
+2022-02-10T12:59,Illegal parking
+2022-02-10T13:02,Illegal parking
+2022-02-10T13:06,Trash questions
+2022-02-10T13:08,Trash questions
+2022-02-10T13:14,Illegal parking
+2022-02-10T13:19,Car booted/towed inquiry
+2022-02-10T13:38,Trash/recycling out too early or late
+2022-02-10T13:44,Illegal parking
+2022-02-10T14:22,Illegal parking
+2022-02-10T14:26,Illegal parking
+2022-02-10T15:06,Illegal parking
+2022-02-10T15:11,Verification of sanitation schedule
+2022-02-10T15:12,Illegal parking
+2022-02-10T16:04,Illegal parking
+2022-02-10T16:25,Illegal parking
+2022-02-10T16:40,Illegal parking
+2022-02-10T16:41,Illegal parking
+2022-02-10T17:54,Illegal parking
+2022-02-10T18:31,Illegal parking
+2022-02-10T20:52,Illegal parking
+2022-02-11T07:46,Illegal parking
+2022-02-11T07:48,Illegal parking
+2022-02-11T08:29,Illegal parking
+2022-02-11T09:01,Illegal parking
+2022-02-11T09:10,Illegal parking
+2022-02-11T09:26,Parking information
+2022-02-11T09:44,Parking information
+2022-02-11T10:08,Trash questions
+2022-02-11T10:30,Illegal parking
+2022-02-11T10:44,Parking information
+2022-02-11T11:04,Illegal parking
+2022-02-11T11:07,Parking information
+2022-02-11T11:34,Parking information
+2022-02-11T11:53,Parking information
+2022-02-11T11:54,Illegal parking
+2022-02-11T12:11,Trash questions
+2022-02-11T13:15,Trash questions
+2022-02-11T13:35,Parking information
+2022-02-11T14:11,Illegal parking
+2022-02-11T14:12,Illegal parking
+2022-02-11T14:39,Parking information
+2022-02-11T15:53,Illegal parking
+2022-02-11T16:01,Illegal parking
+2022-02-11T16:18,Parking information
+2022-02-11T16:19,Parking information
+2022-02-11T17:06,Trash questions
+2022-02-11T17:37,Trash questions
+2022-02-11T18:59,Illegal parking
+2022-02-11T19:28,Illegal parking
+2022-02-11T23:41,Illegal parking
+2022-02-12T10:01,Trash questions
+2022-02-12T10:17,Illegal parking
+2022-02-12T14:07,Illegal parking
+2022-02-12T17:17,Illegal parking
+2022-02-12T17:26,Illegal parking
+2022-02-12T17:38,Illegal parking
+2022-02-12T17:42,Illegal parking
+2022-02-12T18:44,Illegal parking
+2022-02-12T21:47,Illegal parking

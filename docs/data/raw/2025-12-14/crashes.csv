@@ -1,0 +1,11 @@
+date_hour,time,where,what,how,surface,weather,light,hurt,pedestrian,cyclist,pedestrian_where,pedestrian_doing,hit_and_run
+2025-12-13T22:00,22:00,Medford St,,Angle,Dry,Clear,Dark - lighted roadway,none,0,0,,,False
+2025-12-14T19:00,19:56,Washington St,Collision with motor vehicle in traffic,Angle,Wet,Snow,Dark - lighted roadway,minor,0,0,,,False
+2025-12-15T11:00,11:54,Bennett Ct & Prospect St,Collision with motor vehicle in traffic,Angle,Dry,Clear,Daylight,none,0,0,,,False
+2025-12-16T11:00,11:40,Central St & Somerville Av,Collision with pedalcycle,Angle,Dry,Clear,Daylight,possible,0,1,On-street bike lanes,Entering or crossing specified location,False
+2025-12-17T06:00,06:30,Thurston Street,Collision with tree,"Sideswipe, same direction",Dry,Clear,Dusk,none,0,0,,,False
+2025-12-17T06:00,06:30,Thurston Street,Collision with tree,"Sideswipe, same direction",Dry,Clear,Dusk,none,0,0,,,False
+2025-12-17T11:00,11:02,Billingham St,Collision with parked motor vehicle,"Sideswipe, same direction",Dry,Clear,Daylight,none,0,0,,,False
+2025-12-18T16:00,16:26,Porter St,Collision with parked motor vehicle,"Sideswipe, same direction",Dry,Clear,Daylight,,0,0,,,False
+2025-12-19T08:00,08:48,Broadway,Collision with parked motor vehicle,Rear-end,Wet,Cloudy,Daylight,none,0,0,,,False
+2025-12-19T23:00,23:38,Minnesota Ave,Collision with motor vehicle in traffic,Angle,Wet,Clear,Dark - lighted roadway,none,0,0,,,False

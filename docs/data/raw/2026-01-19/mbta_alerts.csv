@@ -1,0 +1,51 @@
+created_hour,kind,route_or_station,header
+2026-01-16T07:00,access,747,Ruggles Elevator 728 (Lobby to lower busway center platform) unavailable due to maintenance
+2026-01-16T07:00,delay,747,CT2 is experiencing delays of up to 20 minutes due to traffic
+2026-01-16T07:00,delay,90,Route 90 is experiencing delays of up to 20 minutes due to traffic
+2026-01-16T08:00,access,747,Ruggles Elevator 728 (Lobby to lower busway center platform) unavailable
+2026-01-16T08:00,access,747,Ruggles Elevator 728 (Lobby to lower busway center platform) unavailable due to maintenance
+2026-01-16T11:00,delay,101,Route 101 is experiencing delays of up to 20 minutes due to disabled bus
+2026-01-16T13:00,detour,89,"Broadway @ Temple St (outbound) has moved due to construction. The stop is relocated to Grant St, in front of 281 Broadway."
+2026-01-17T05:00,detour,101,Route 101 detoured. Outbound connections at Salem St @ Garfield Ave and Salem St @ Fellsway Garage. Inbound connections at Salem St @ Fellsway W and 390 Salem St.
+2026-01-17T14:00,delay,83,Route 83 is experiencing delays of up to 20 minutes due to traffic
+2026-01-17T19:00,delay,96,Route 96 is experiencing delays of up to 20 minutes due to traffic
+2026-01-18T19:00,delay,91,Route 91 is experiencing delays of up to 30 minutes due to disabled bus
+2026-01-18T20:00,delay,87,Route 87 is experiencing delays of up to 20 minutes due to traffic
+2026-01-19T10:00,delay,90,Route 90 is experiencing delays of up to 20 minutes due to traffic
+2026-01-19T11:00,delay,87,Route 87 is experiencing delays of up to 25 minutes due to disabled bus
+2026-01-19T17:00,delay,87,Route 87 is experiencing delays of up to 20 minutes due to traffic
+2026-01-19T17:00,delay,88,Route 88 is experiencing delays of up to 20 minutes due to traffic
+2026-01-20T09:00,delay,90,Route 90 is experiencing delays of up to 20 minutes due to traffic
+2026-01-20T16:00,delay,89,Route 89 is experiencing delays of up to 20 minutes due to traffic
+2026-01-20T17:00,delay,101,Route 101 is experiencing delays of up to 20 minutes due to traffic
+2026-01-20T17:00,delay,91,Route 91 is experiencing delays of up to 20 minutes due to traffic
+2026-01-20T17:00,detour,96,Route 96 detoured due to accident. The inbound connections are Salem St opp River St and Winthrop St @ Orchard St.
+2026-01-21T07:00,delay,109,Route 109 is experiencing delays of up to 20 minutes due to disabled bus
+2026-01-21T07:00,delay,96,Route 96 is experiencing delays of up to 30 minutes due to disabled bus
+2026-01-21T08:00,delay,747,CT2 is experiencing delays of up to 20 minutes due to traffic
+2026-01-21T11:00,delay,80,Route 80 is experiencing delays of up to 25 minutes due to disabled bus
+2026-01-21T15:00,delay,94,Route 94 is experiencing delays of up to 30 minutes due to traffic
+2026-01-22T08:00,delay,109,Route 109 is experiencing delays of up to 20 minutes due to traffic
+2026-01-22T08:00,delay,83,Route 83 is experiencing delays of up to 20 minutes due to traffic
+2026-01-22T17:00,delay,88,Route 88 is experiencing delays of up to 20 minutes due to traffic
+2026-01-22T18:00,delay,747,CT2 is experiencing delays of up to 20 minutes due to traffic
+2026-01-22T19:00,delay,87,Route 87 is experiencing delays of up to 20 minutes due to traffic
+2026-01-23T08:00,delay,83,Route 83 is experiencing delays of up to 20 minutes due to traffic
+2026-01-23T08:00,delay,96,Route 96 is experiencing delays of up to 30 minutes due to traffic
+2026-01-23T08:00,detour,96,Route 96 detoured. Outbound connections at Massachusetts Ave @ Davenport St and Grove St @ Highland Ave. Inbound connections Elm St @ Beech St and Massachusetts Ave @ Lin
+2026-01-23T10:00,delay,109,Route 109 is experiencing delays of up to 20 minutes due to traffic
+2026-01-23T15:00,delay,80,Route 80 is experiencing delays of up to 20 minutes due to traffic
+2026-01-23T17:00,delay,101,Route 101 is experiencing delays of up to 20 minutes due to disabled bus
+2026-01-23T17:00,delay,96,Route 96 is experiencing delays of up to 20 minutes due to traffic
+2026-01-23T18:00,delay,109,Route 109 is experiencing delays of up to 20 minutes due to traffic
+2026-01-23T18:00,delay,83,Route 83 is experiencing delays of up to 20 minutes due to traffic
+2026-01-23T18:00,delay,83,Route 83 is experiencing delays of up to 20 minutes due to traffic
+2026-01-23T18:00,delay,88,Route 88 is experiencing delays of up to 20 minutes due to traffic
+2026-01-23T18:00,delay,89,Route 89 is experiencing delays of up to 20 minutes due to traffic
+2026-01-23T22:00,detour,109,Route 109 detoured outbound due to an accident. Connections are available at Broadway @ Gledhill St and Broadway @ Estes St.
+2026-01-24T07:00,delay,88,Route 88 is experiencing delays of up to 30 minutes due to disabled bus
+2026-01-24T09:00,delay,94,Route 94 is experiencing delays of up to 20 minutes due to traffic
+2026-01-24T14:00,delay,83,Route 83 is experiencing delays of up to 20 minutes due to traffic
+2026-01-24T14:00,delay,96,Route 96 is experiencing delays of up to 20 minutes due to traffic
+2026-01-24T17:00,delay,83,Route 83 is experiencing delays of up to 20 minutes due to traffic
+2026-01-24T20:00,delay,96,Route 96 is experiencing delays of up to 25 minutes due to traffic

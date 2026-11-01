@@ -1,0 +1,11 @@
+date_hour,time,where,what,how,surface,weather,light,hurt,pedestrian,cyclist,pedestrian_where,pedestrian_doing,hit_and_run
+2025-01-10T18:00,18:09,Washington St & Washington Ter,Collision with moped,Angle,Dry,Clear,Dark - roadway not lighted,none,0,0,,,False
+2025-01-11T08:00,08:49,Bradley St & Radcliffe Rd,Collision with parked motor vehicle,"Sideswipe, same direction",Snow,Snow,Daylight,,0,0,,,False
+2025-01-11T09:00,09:29,Medford St & Partridge Av,Collision with motor vehicle in traffic,Angle,Wet,Snow,Daylight,none,0,0,,,False
+2025-01-11T16:00,16:04,Clark St,Collision with parked motor vehicle,"Sideswipe, same direction",Snow,Snow,Daylight,none,0,0,,,False
+2025-01-11T16:00,16:53,Cutter Av,Collision with pedestrian,Single vehicle crash,Snow,Snow,Dark - roadway not lighted,serious,1,0,In roadway,Entering or crossing specified location,False
+2025-01-12T07:00,07:36,Broadway,Collision with parked motor vehicle,Rear-end,Wet,Clear,Daylight,,0,0,,,True
+2025-01-12T08:00,08:18,Somerville Av,Collision with motor vehicle in traffic,Rear-end,Wet,Clear,Daylight,serious,0,0,,,False
+2025-01-13T15:00,15:56,Broadway & Cutter Ave,Collision with motor vehicle in traffic,Head on,Dry,Clear,Daylight,none,0,0,,,False
+2025-01-16T15:00,15:26,Somerville Av,Collision with motor vehicle in traffic,Head on,Dry,Clear,Daylight,none,0,0,,,False
+2025-01-17T12:00,12:30,Broadway & Cedar St,Collision with light pole or other post/support,Single vehicle crash,Dry,Clear,Daylight,none,0,0,,,False

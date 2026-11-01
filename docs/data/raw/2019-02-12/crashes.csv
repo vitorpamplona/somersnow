@@ -1,0 +1,12 @@
+date_hour,time,where,what,how,surface,weather,light,hurt,pedestrian,cyclist,pedestrian_where,pedestrian_doing,hit_and_run
+2019-02-11T12:00,12:49,Broadway,Collision with motor vehicle in traffic,"Sideswipe, same direction",Dry,Clear,Daylight,none,0,0,,,False
+2019-02-12T11:00,11:48,Franey Rd,Collision with motor vehicle in traffic,Angle,Dry,Cloudy,Daylight,none,0,0,,,False
+2019-02-12T14:00,14:41,Summer St,Collision with motor vehicle in traffic,Angle,Snow,Snow,Daylight,none,0,0,,,False
+2019-02-12T15:00,15:11,Glendale Ave & Cameron Ave,Collision with motor vehicle in traffic,Angle,Snow,Cloudy,Daylight,possible,0,0,,,False
+2019-02-12T15:00,15:50,North St,Collision with motor vehicle in traffic,"Sideswipe, same direction",Snow,Snow,Daylight,none,0,0,,,False
+2019-02-12T21:00,21:09,Prospect St & Webster Av,Collision with light pole or other post/support,Single vehicle crash,Snow,Snow,Dark - lighted roadway,none,0,0,,,False
+2019-02-13T09:00,09:53,Broadway,,,,,,none,0,0,,,True
+2019-02-13T15:00,15:24,Melvin St,Collision with other movable object,Single vehicle crash,Wet,Cloudy,Daylight,none,0,0,,,False
+2019-02-14T08:00,08:01,Park St,Collision with motor vehicle in traffic,Angle,Dry,Clear,Daylight,none,0,0,,,False
+2019-02-14T18:00,18:42,Beacon St & Miller St,Collision with motor vehicle in traffic,"Sideswipe, same direction",Dry,Clear,Dark - lighted roadway,none,0,0,,,False
+2019-02-17T11:00,11:37,Beacon St & Washington St,Collision with motor vehicle in traffic,"Sideswipe, opposite direction",Dry,Clear,Daylight,none,0,0,,,False

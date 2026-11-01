@@ -1,0 +1,2080 @@
+created,group,type,ward
+2026-02-21T09:49,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-21T09:50,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-21T09:51,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-21T09:51,street,Plowing request,4
+2026-02-21T10:05,street,Snow removal request,6
+2026-02-21T10:51,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-21T10:53,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-21T10:53,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-21T10:53,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-21T10:53,ask,Snow emergency inquiry,1
+2026-02-21T10:54,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-21T10:55,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-21T10:56,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-21T13:13,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-21T13:13,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-21T13:14,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-21T13:15,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-21T13:17,street,Plowing request,3
+2026-02-21T13:23,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-21T13:30,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-21T13:43,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-21T13:46,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-21T14:11,ask,Snow emergency inquiry,
+2026-02-21T14:23,ask,Snow emergency inquiry,
+2026-02-21T15:41,spacesaver,Space saver report,4
+2026-02-21T16:04,street,Plowing request,4
+2026-02-21T16:13,spacesaver,Space saver report,4
+2026-02-21T16:18,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-21T16:21,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-21T16:31,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-21T16:38,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-21T16:39,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-21T16:41,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-21T16:46,spacesaver,Space saver report,7
+2026-02-21T17:17,spacesaver,Space saver report,2
+2026-02-21T17:44,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-21T18:42,ask,Snow emergency inquiry,7
+2026-02-21T20:18,ask,Snow emergency inquiry,5
+2026-02-21T20:26,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-21T20:27,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-21T20:28,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-21T20:30,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-21T21:10,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-21T21:11,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-21T21:25,ask,Snow emergency inquiry,3
+2026-02-21T22:14,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-21T22:15,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-21T22:16,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-21T22:17,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-21T23:03,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-21T23:39,street,Snow removal request,7
+2026-02-22T08:11,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-22T08:31,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-22T08:54,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-22T08:56,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-22T09:10,street,Snow removal request,7
+2026-02-22T09:45,street,Plowing request,2
+2026-02-22T09:50,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-22T10:14,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-22T10:26,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-22T10:38,street,Snow removal request,5
+2026-02-22T11:00,street,Salting request,2
+2026-02-22T11:26,street,Snow removal request,6
+2026-02-22T11:53,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-22T12:06,spacesaver,Space saver report,4
+2026-02-22T12:21,ask,Snow emergency inquiry,5
+2026-02-22T12:34,ask,Snow emergency inquiry,
+2026-02-22T12:56,street,Plowing request,7
+2026-02-22T13:02,ask,Snow emergency inquiry,2
+2026-02-22T13:15,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-22T13:25,spacesaver,Space saver report,5
+2026-02-22T13:27,ask,Snow emergency inquiry,3
+2026-02-22T13:31,ask,Snow emergency inquiry,
+2026-02-22T13:34,street,Snow removal request,5
+2026-02-22T13:39,street,Snow removal request,7
+2026-02-22T13:42,street,Snow removal request,4
+2026-02-22T13:52,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-22T14:13,street,Salting request,1
+2026-02-22T15:21,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-22T15:26,ask,Snow emergency inquiry,
+2026-02-22T15:54,ask,Snow emergency inquiry,
+2026-02-22T16:22,street,Plowing request,1
+2026-02-22T16:27,ask,Snow emergency inquiry,
+2026-02-22T16:34,street,Plowing request,6
+2026-02-22T16:47,street,Plowing request,3
+2026-02-22T16:49,ask,Snow emergency inquiry,3
+2026-02-22T16:56,ask,Snow emergency inquiry,7
+2026-02-22T17:05,ask,Snow emergency inquiry,4
+2026-02-22T17:32,ask,Snow emergency inquiry,
+2026-02-22T17:47,ask,Snow emergency inquiry,
+2026-02-22T17:57,spacesaver,Space saver report,5
+2026-02-22T18:26,ask,Snow emergency inquiry,
+2026-02-22T18:54,ask,Snow emergency inquiry,5
+2026-02-22T19:52,street,Plowing request,6
+2026-02-22T21:22,street,Snow removal request,7
+2026-02-22T21:28,feedback,Snow related feedback,5
+2026-02-22T21:51,feedback,Snow related feedback,7
+2026-02-22T22:22,spacesaver,Space saver report,5
+2026-02-22T22:29,street,Snow removal request,6
+2026-02-22T22:42,feedback,Snow related feedback,4
+2026-02-23T06:13,ask,Snow emergency inquiry,7
+2026-02-23T08:40,street,Plowing request,2
+2026-02-23T09:00,feedback,Snow related feedback,5
+2026-02-23T09:01,street,Snow removal request,3
+2026-02-23T09:06,ask,Snow emergency inquiry,2
+2026-02-23T09:11,ask,Snow emergency inquiry,6
+2026-02-23T09:12,street,Plowing request,5
+2026-02-23T09:14,ask,Snow emergency inquiry,4
+2026-02-23T09:19,feedback,Snow related feedback,
+2026-02-23T09:21,feedback,Snow related feedback,2
+2026-02-23T09:31,feedback,Snow related feedback,
+2026-02-23T09:44,feedback,Snow related feedback,4
+2026-02-23T09:45,street,Salting request,6
+2026-02-23T10:03,ask,Snow emergency inquiry,4
+2026-02-23T10:20,street,Plowing request,2
+2026-02-23T10:39,ask,Snow emergency inquiry,
+2026-02-23T10:40,feedback,Snow related feedback,
+2026-02-23T10:46,street,Plowing request,4
+2026-02-23T10:48,feedback,Snow related feedback,7
+2026-02-23T11:38,ask,Snow emergency inquiry,5
+2026-02-23T11:39,street,Plowing request,4
+2026-02-23T11:51,feedback,Snow related feedback,4
+2026-02-23T12:22,street,Plowing request,4
+2026-02-23T12:22,street,Plowing request,2
+2026-02-23T12:35,street,Plowing request,1
+2026-02-23T12:39,street,Plowing request,2
+2026-02-23T12:44,feedback,Snow related feedback,4
+2026-02-23T12:47,street,Plowing request,2
+2026-02-23T13:09,street,Snow removal request,4
+2026-02-23T13:12,ask,Snow emergency inquiry,
+2026-02-23T13:38,street,Plowing request,1
+2026-02-23T13:39,feedback,Snow related feedback,4
+2026-02-23T13:58,street,Plowing request,3
+2026-02-23T14:18,street,Plowing request,3
+2026-02-23T14:23,feedback,Snow related feedback,
+2026-02-23T14:25,street,Snow removal request,6
+2026-02-23T14:26,ask,Snow emergency inquiry,6
+2026-02-23T14:28,feedback,Snow related feedback,3
+2026-02-23T14:35,street,Plowing request,1
+2026-02-23T14:37,ask,Snow emergency inquiry,4
+2026-02-23T14:37,street,Plowing request,3
+2026-02-23T14:40,street,Plowing request,4
+2026-02-23T15:15,street,Plowing request,1
+2026-02-23T15:17,feedback,Snow related feedback,7
+2026-02-23T15:19,street,Plowing request,1
+2026-02-23T15:25,street,Plowing request,7
+2026-02-23T15:27,street,Plowing request,4
+2026-02-23T15:27,street,Snow removal request,3
+2026-02-23T15:31,street,Plowing request,1
+2026-02-23T15:34,street,Plowing request,4
+2026-02-23T15:38,street,Plowing request,3
+2026-02-23T15:41,street,Plowing request,5
+2026-02-23T15:45,street,Plowing request,3
+2026-02-23T15:53,street,Plowing request,7
+2026-02-23T15:54,street,Parks/Playgrounds snow maintenance,3
+2026-02-23T15:55,ask,Snow emergency inquiry,1
+2026-02-23T15:57,ask,Snow emergency inquiry,7
+2026-02-23T16:07,street,Plowing request,7
+2026-02-23T16:08,street,Plowing request,3
+2026-02-23T16:09,feedback,Snow related feedback,3
+2026-02-23T16:14,ask,Snow emergency inquiry,
+2026-02-23T16:21,ask,Snow emergency inquiry,
+2026-02-23T16:28,street,Plowing request,5
+2026-02-23T16:38,street,Plowing request,2
+2026-02-23T16:47,feedback,Snow related feedback,3
+2026-02-23T16:48,street,Plowing request,2
+2026-02-23T17:00,ask,Snow emergency inquiry,1
+2026-02-23T17:02,street,Snow removal request,7
+2026-02-23T17:05,street,Plowing request,5
+2026-02-23T17:20,ask,Snow emergency inquiry,
+2026-02-23T17:23,ask,Snow emergency inquiry,7
+2026-02-23T17:26,street,Plowing request,3
+2026-02-23T17:29,street,Snow removal request,5
+2026-02-23T17:33,street,Plowing request,3
+2026-02-23T17:34,ask,Snow emergency inquiry,6
+2026-02-23T17:36,street,Plowing request,6
+2026-02-23T17:43,street,Plowing request,3
+2026-02-23T17:44,street,Plowing request,4
+2026-02-23T17:48,ask,Snow emergency inquiry,1
+2026-02-23T17:49,ask,Snow emergency inquiry,6
+2026-02-23T17:54,ask,Snow emergency inquiry,1
+2026-02-23T17:55,ask,Snow emergency inquiry,7
+2026-02-23T17:56,street,Plowing request,4
+2026-02-23T17:56,street,Plowing request,3
+2026-02-23T17:56,street,Plowing request,5
+2026-02-23T18:01,feedback,Snow related feedback,1
+2026-02-23T18:03,street,Snow removal request,5
+2026-02-23T18:07,street,Plowing request,3
+2026-02-23T18:09,street,Plowing request,4
+2026-02-23T18:09,feedback,Snow related feedback,3
+2026-02-23T18:11,street,Plowing request,2
+2026-02-23T18:14,street,Plowing request,3
+2026-02-23T18:16,street,Plowing request,4
+2026-02-23T18:20,ask,Snow emergency inquiry,2
+2026-02-23T18:20,street,Plowing request,3
+2026-02-23T18:23,street,Plowing request,2
+2026-02-23T18:25,street,Plowing request,3
+2026-02-23T18:27,street,Plowing request,2
+2026-02-23T18:42,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-23T18:44,ask,Snow emergency inquiry,3
+2026-02-23T18:46,street,Plowing request,5
+2026-02-23T18:47,street,Snow removal request,5
+2026-02-23T18:50,street,Plowing request,5
+2026-02-23T18:53,feedback,Snow related feedback,2
+2026-02-23T19:27,street,Snow removal request,5
+2026-02-23T19:27,feedback,Snow related feedback,1
+2026-02-23T19:42,street,Plowing request,2
+2026-02-23T19:46,street,Plowing request,7
+2026-02-23T19:46,street,Snow removal request,1
+2026-02-23T20:01,feedback,Snow related feedback,7
+2026-02-23T20:14,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-23T20:24,feedback,Snow related feedback,7
+2026-02-23T20:26,street,Plowing request,6
+2026-02-23T20:34,feedback,Snow related feedback,
+2026-02-23T20:50,feedback,Snow related feedback,
+2026-02-23T20:54,street,Plowing request,4
+2026-02-23T21:29,street,Plowing request,7
+2026-02-23T21:36,feedback,Snow related feedback,
+2026-02-23T22:10,street,Plowing request,1
+2026-02-23T22:17,street,Plowing request,7
+2026-02-23T22:51,street,Plowing request,5
+2026-02-23T22:57,street,Plowing request,2
+2026-02-23T23:45,ask,Snow emergency inquiry,
+2026-02-24T00:47,ask,Snow emergency inquiry,4
+2026-02-24T04:45,street,Plowing request,6
+2026-02-24T06:39,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-24T07:00,street,Plowing request,7
+2026-02-24T07:47,street,Plowing request,4
+2026-02-24T07:50,street,Snow removal request,5
+2026-02-24T07:52,street,Plowing request,3
+2026-02-24T07:54,street,Plowing request,6
+2026-02-24T07:56,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-24T07:57,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-24T07:59,street,Plowing request,7
+2026-02-24T08:00,street,Plowing request,6
+2026-02-24T08:02,street,Salting request,1
+2026-02-24T08:05,ask,Snow emergency inquiry,2
+2026-02-24T08:12,ask,Snow emergency inquiry,7
+2026-02-24T08:13,street,Snow removal request,1
+2026-02-24T08:15,ask,Snow emergency inquiry,3
+2026-02-24T08:16,street,Plowing request,7
+2026-02-24T08:16,ask,Snow emergency inquiry,3
+2026-02-24T08:17,street,Plowing request,1
+2026-02-24T08:20,street,Plowing request,1
+2026-02-24T08:22,street,Plowing request,7
+2026-02-24T08:23,street,Plowing request,1
+2026-02-24T08:26,street,Snow removal request,5
+2026-02-24T08:30,street,Snow removal request,5
+2026-02-24T08:38,ask,Snow emergency inquiry,5
+2026-02-24T08:39,ask,Snow emergency inquiry,7
+2026-02-24T08:40,street,Plowing request,6
+2026-02-24T08:43,ask,Snow emergency inquiry,4
+2026-02-24T08:45,street,Plowing request,4
+2026-02-24T08:48,feedback,Snow related feedback,1
+2026-02-24T08:48,ask,Snow emergency inquiry,
+2026-02-24T08:53,feedback,Snow related feedback,
+2026-02-24T08:55,street,Plowing request,4
+2026-02-24T08:55,ask,Snow emergency inquiry,
+2026-02-24T08:56,street,Plowing request,6
+2026-02-24T08:58,street,Plowing request,7
+2026-02-24T08:58,street,Plowing request,2
+2026-02-24T08:59,ask,Snow emergency inquiry,5
+2026-02-24T08:59,street,Plowing request,5
+2026-02-24T09:00,street,Snow removal request,4
+2026-02-24T09:02,spacesaver,Space saver report,7
+2026-02-24T09:04,ask,Snow emergency inquiry,4
+2026-02-24T09:04,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-24T09:06,street,Snow removal request,7
+2026-02-24T09:08,ask,Snow emergency inquiry,7
+2026-02-24T09:08,street,Plowing request,2
+2026-02-24T09:09,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-24T09:09,street,Snow removal request,2
+2026-02-24T09:12,ask,Snow emergency inquiry,1
+2026-02-24T09:14,street,Plowing request,2
+2026-02-24T09:15,street,Plowing request,5
+2026-02-24T09:16,street,Plowing request,4
+2026-02-24T09:16,ask,Snow emergency inquiry,
+2026-02-24T09:25,ask,Snow emergency inquiry,3
+2026-02-24T09:26,ask,Snow emergency inquiry,5
+2026-02-24T09:26,feedback,Snow related feedback,2
+2026-02-24T09:31,street,Snow removal request,6
+2026-02-24T09:32,street,Plowing request,4
+2026-02-24T09:32,ask,Snow emergency inquiry,6
+2026-02-24T09:34,street,Snow removal request,1
+2026-02-24T09:37,street,Snow removal request,5
+2026-02-24T09:38,ask,Snow emergency inquiry,6
+2026-02-24T09:38,street,Plowing request,6
+2026-02-24T09:40,street,Snow removal request,3
+2026-02-24T09:42,street,Plowing request,6
+2026-02-24T09:46,street,Snow removal request,6
+2026-02-24T09:46,street,Snow removal request,6
+2026-02-24T09:48,ask,Snow emergency inquiry,
+2026-02-24T09:50,street,Snow removal request,3
+2026-02-24T09:51,feedback,Snow related feedback,4
+2026-02-24T09:52,feedback,Snow related feedback,5
+2026-02-24T09:53,street,Plowing request,7
+2026-02-24T09:55,street,Plowing request,1
+2026-02-24T09:59,street,Snow removal request,6
+2026-02-24T10:05,street,Snow removal request,4
+2026-02-24T10:05,street,Salting request,5
+2026-02-24T10:06,street,Snow removal request,4
+2026-02-24T10:08,street,Snow removal request,5
+2026-02-24T10:09,feedback,Snow related feedback,5
+2026-02-24T10:12,feedback,Snow related feedback,
+2026-02-24T10:16,street,Plowing request,2
+2026-02-24T10:20,street,Plowing request,1
+2026-02-24T10:21,ask,Snow emergency inquiry,3
+2026-02-24T10:22,street,Snow removal request,2
+2026-02-24T10:23,street,Plowing request,2
+2026-02-24T10:24,street,Snow removal request,6
+2026-02-24T10:24,street,Plowing request,5
+2026-02-24T10:25,street,Snow removal request,6
+2026-02-24T10:26,street,Snow removal request,6
+2026-02-24T10:26,street,Snow removal request,3
+2026-02-24T10:26,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T10:27,street,Snow removal request,2
+2026-02-24T10:27,street,Snow removal request,1
+2026-02-24T10:27,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T10:27,street,Snow removal request,1
+2026-02-24T10:29,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T10:30,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T10:31,street,Plowing request,3
+2026-02-24T10:32,ask,Snow emergency inquiry,4
+2026-02-24T10:32,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T10:32,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T10:33,feedback,Snow related feedback,5
+2026-02-24T10:33,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T10:34,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T10:36,ask,Snow emergency inquiry,7
+2026-02-24T10:36,ask,Snow emergency inquiry,2
+2026-02-24T10:36,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T10:38,street,Snow removal request,1
+2026-02-24T10:39,ask,Snow emergency inquiry,7
+2026-02-24T10:40,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T10:41,street,Snow removal request,4
+2026-02-24T10:41,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T10:44,street,Plowing request,4
+2026-02-24T10:44,street,City/School building snow maintenance,1
+2026-02-24T10:45,street,Snow removal request,4
+2026-02-24T10:45,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T10:46,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T10:47,ask,Snow emergency inquiry,7
+2026-02-24T10:48,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T10:49,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T10:50,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T10:51,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T10:52,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T10:53,street,Salting request,1
+2026-02-24T10:53,ask,Snow emergency inquiry,
+2026-02-24T10:54,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T10:56,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T10:56,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T10:57,ask,Snow emergency inquiry,3
+2026-02-24T11:01,street,Plowing request,5
+2026-02-24T11:01,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T11:01,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T11:02,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T11:02,ask,Snow emergency inquiry,
+2026-02-24T11:03,ask,Snow emergency inquiry,4
+2026-02-24T11:07,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-24T11:07,ask,Snow emergency inquiry,3
+2026-02-24T11:09,ask,Snow emergency inquiry,4
+2026-02-24T11:16,feedback,Snow related feedback,3
+2026-02-24T11:18,street,Plowing request,7
+2026-02-24T11:18,ask,Snow emergency inquiry,3
+2026-02-24T11:19,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-24T11:23,street,Plowing request,5
+2026-02-24T11:24,street,Plowing request,6
+2026-02-24T11:24,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T11:26,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-24T11:26,street,Snow removal request,1
+2026-02-24T11:28,street,Plowing request,4
+2026-02-24T11:28,ask,Snow emergency inquiry,5
+2026-02-24T11:28,feedback,Snow related feedback,2
+2026-02-24T11:29,street,Plowing request,2
+2026-02-24T11:29,street,Snow removal request,3
+2026-02-24T11:30,street,Plowing request,6
+2026-02-24T11:30,ask,Snow emergency inquiry,1
+2026-02-24T11:32,ask,Snow emergency inquiry,1
+2026-02-24T11:35,ask,Snow emergency inquiry,7
+2026-02-24T11:37,street,Snow removal request,4
+2026-02-24T11:38,street,Plowing request,6
+2026-02-24T11:38,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T11:38,ask,Snow emergency inquiry,
+2026-02-24T11:39,street,Snow removal request,5
+2026-02-24T11:40,street,Plowing request,5
+2026-02-24T11:40,street,Plowing request,6
+2026-02-24T11:40,street,Snow removal request,2
+2026-02-24T11:40,street,Snow removal request,1
+2026-02-24T11:40,street,Snow removal request,1
+2026-02-24T11:41,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T11:42,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T11:48,feedback,Snow related feedback,3
+2026-02-24T11:50,street,Snow removal request,5
+2026-02-24T11:53,spacesaver,Space saver report,1
+2026-02-24T11:56,street,Snow removal request,5
+2026-02-24T11:56,street,Snow removal request,1
+2026-02-24T11:56,ask,Snow emergency inquiry,
+2026-02-24T11:59,street,Snow removal request,5
+2026-02-24T12:00,street,Snow removal request,1
+2026-02-24T12:01,street,Plowing request,4
+2026-02-24T12:01,ask,Snow emergency inquiry,7
+2026-02-24T12:01,ask,Snow emergency inquiry,6
+2026-02-24T12:02,street,Plowing request,5
+2026-02-24T12:10,street,Plowing request,7
+2026-02-24T12:10,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-24T12:11,spacesaver,Space saver report,6
+2026-02-24T12:12,spacesaver,Space saver report,5
+2026-02-24T12:16,street,Plowing request,4
+2026-02-24T12:16,street,Plowing request,4
+2026-02-24T12:16,ask,Snow emergency inquiry,3
+2026-02-24T12:18,street,Snow removal request,3
+2026-02-24T12:18,ask,Snow emergency inquiry,
+2026-02-24T12:21,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-24T12:23,street,Plowing request,4
+2026-02-24T12:29,ask,Snow emergency inquiry,2
+2026-02-24T12:33,ask,Snow emergency inquiry,
+2026-02-24T12:40,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-24T12:41,ask,Snow emergency inquiry,5
+2026-02-24T12:44,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-24T12:46,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-24T12:46,ask,Snow emergency inquiry,7
+2026-02-24T12:50,ask,Snow emergency inquiry,
+2026-02-24T12:52,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-24T12:53,street,Plowing request,6
+2026-02-24T12:55,ask,Snow emergency inquiry,
+2026-02-24T12:57,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-24T13:01,spacesaver,Space saver report,5
+2026-02-24T13:01,ask,Snow emergency inquiry,
+2026-02-24T13:04,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-24T13:04,ask,Snow emergency inquiry,6
+2026-02-24T13:06,street,Plowing request,1
+2026-02-24T13:06,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-24T13:07,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-24T13:10,street,Plowing request,5
+2026-02-24T13:10,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-24T13:11,ask,Snow emergency inquiry,1
+2026-02-24T13:13,ask,Snow emergency inquiry,3
+2026-02-24T13:14,ask,Snow emergency inquiry,7
+2026-02-24T13:15,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-24T13:17,ask,Snow emergency inquiry,7
+2026-02-24T13:19,street,Snow removal request,2
+2026-02-24T13:23,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-24T13:26,street,Snow removal request,3
+2026-02-24T13:28,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-24T13:29,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-24T13:31,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-24T13:31,street,Snow removal request,1
+2026-02-24T13:35,ask,Snow emergency inquiry,5
+2026-02-24T13:37,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-24T13:38,ask,Snow emergency inquiry,
+2026-02-24T13:40,street,Plowing request,1
+2026-02-24T13:42,street,Snow removal request,5
+2026-02-24T13:42,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-24T13:44,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-24T13:45,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-24T13:45,ask,Snow emergency inquiry,
+2026-02-24T13:46,ask,Snow emergency inquiry,6
+2026-02-24T13:46,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-24T13:47,street,Plowing request,5
+2026-02-24T13:47,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-24T13:48,street,Snow removal request,3
+2026-02-24T13:48,ask,Snow emergency inquiry,1
+2026-02-24T13:51,street,Plowing request,5
+2026-02-24T13:51,feedback,Snow related feedback,5
+2026-02-24T13:52,street,Snow removal request,6
+2026-02-24T13:54,ask,Snow emergency inquiry,3
+2026-02-24T13:55,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T13:55,ask,Snow emergency inquiry,3
+2026-02-24T13:56,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T13:57,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-24T13:57,street,Snow removal request,6
+2026-02-24T13:58,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-24T13:59,ask,Snow emergency inquiry,
+2026-02-24T14:00,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-24T14:01,ask,Snow emergency inquiry,3
+2026-02-24T14:01,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-24T14:04,ask,Snow emergency inquiry,
+2026-02-24T14:08,street,Plowing request,4
+2026-02-24T14:10,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-24T14:11,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-24T14:12,ask,Snow emergency inquiry,6
+2026-02-24T14:12,ask,Snow emergency inquiry,
+2026-02-24T14:17,ask,Snow emergency inquiry,6
+2026-02-24T14:18,ask,Snow emergency inquiry,5
+2026-02-24T14:20,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-24T14:21,ask,Snow emergency inquiry,3
+2026-02-24T14:24,street,Plowing request,3
+2026-02-24T14:25,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-24T14:25,ask,Snow emergency inquiry,3
+2026-02-24T14:27,ask,Snow emergency inquiry,7
+2026-02-24T14:27,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-24T14:27,ask,Snow emergency inquiry,
+2026-02-24T14:27,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-24T14:29,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-24T14:30,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-24T14:30,ask,Snow emergency inquiry,6
+2026-02-24T14:30,street,Plowing request,2
+2026-02-24T14:32,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-24T14:32,ask,Snow emergency inquiry,
+2026-02-24T14:33,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-24T14:34,ask,Snow emergency inquiry,5
+2026-02-24T14:34,ask,Snow emergency inquiry,
+2026-02-24T14:35,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-24T14:37,ask,Snow emergency inquiry,4
+2026-02-24T14:37,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-24T14:38,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-24T14:38,street,Snow removal request,5
+2026-02-24T14:38,ask,Snow emergency inquiry,
+2026-02-24T14:39,ask,Snow emergency inquiry,5
+2026-02-24T14:39,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-24T14:40,ask,Snow emergency inquiry,5
+2026-02-24T14:41,ask,Snow emergency inquiry,1
+2026-02-24T14:41,ask,Snow emergency inquiry,5
+2026-02-24T14:41,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T14:45,ask,Snow emergency inquiry,4
+2026-02-24T14:45,ask,Snow emergency inquiry,
+2026-02-24T14:48,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-24T14:49,spacesaver,Space saver report,4
+2026-02-24T14:55,street,Plowing request,2
+2026-02-24T14:57,street,Plowing request,7
+2026-02-24T15:00,ask,Snow emergency inquiry,7
+2026-02-24T15:01,street,Plowing request,5
+2026-02-24T15:03,ask,Snow emergency inquiry,6
+2026-02-24T15:03,street,Plowing request,3
+2026-02-24T15:03,ask,Snow emergency inquiry,
+2026-02-24T15:04,ask,Snow emergency inquiry,4
+2026-02-24T15:14,ask,Snow emergency inquiry,4
+2026-02-24T15:16,street,Plowing request,6
+2026-02-24T15:16,ask,Snow emergency inquiry,
+2026-02-24T15:16,ask,Snow emergency inquiry,
+2026-02-24T15:21,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-24T15:23,ask,Snow emergency inquiry,
+2026-02-24T15:28,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-24T15:29,ask,Snow emergency inquiry,6
+2026-02-24T15:33,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-24T15:33,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T15:34,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-24T15:34,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T15:35,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T15:36,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-24T15:36,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T15:37,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-24T15:38,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T15:39,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T15:40,ask,Snow emergency inquiry,1
+2026-02-24T15:41,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-24T15:41,ask,Snow emergency inquiry,
+2026-02-24T15:42,ask,Snow emergency inquiry,
+2026-02-24T15:47,ask,Snow emergency inquiry,
+2026-02-24T15:48,ask,Snow emergency inquiry,
+2026-02-24T15:49,spacesaver,Space saver report,3
+2026-02-24T15:50,street,Plowing request,3
+2026-02-24T15:50,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T15:52,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-24T15:57,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-24T16:00,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-24T16:03,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-24T16:04,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T16:05,ask,Snow emergency inquiry,
+2026-02-24T16:09,street,Plowing request,6
+2026-02-24T16:11,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-24T16:13,street,Salting request,2
+2026-02-24T16:14,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-24T16:15,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-24T16:15,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-24T16:17,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-24T16:17,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-24T16:18,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-24T16:18,ask,Snow emergency inquiry,
+2026-02-24T16:20,street,Plowing request,4
+2026-02-24T16:21,street,Plowing request,6
+2026-02-24T16:21,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-24T16:21,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-24T16:22,street,Snow removal request,5
+2026-02-24T16:27,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-24T16:27,street,Plowing request,4
+2026-02-24T16:27,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-24T16:31,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-24T16:35,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T16:36,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T16:37,ask,Snow emergency inquiry,
+2026-02-24T16:38,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T16:40,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T16:47,ask,Snow emergency inquiry,4
+2026-02-24T16:55,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T16:58,ask,Snow emergency inquiry,5
+2026-02-24T17:00,street,Snow removal request,4
+2026-02-24T17:01,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-24T17:01,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-24T17:05,ask,Snow emergency inquiry,
+2026-02-24T17:07,ask,Snow emergency inquiry,3
+2026-02-24T17:10,feedback,Snow related feedback,3
+2026-02-24T17:14,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-24T17:18,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-24T17:20,street,Plowing request,3
+2026-02-24T17:20,street,Snow removal request,3
+2026-02-24T17:21,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-24T17:25,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-24T17:28,street,Snow removal request,5
+2026-02-24T17:29,street,Plowing request,5
+2026-02-24T17:35,spacesaver,Space saver report,5
+2026-02-24T17:36,spacesaver,Space saver report,5
+2026-02-24T17:38,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-24T17:42,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-24T17:49,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-24T17:50,street,Plowing request,6
+2026-02-24T17:59,feedback,Snow related feedback,6
+2026-02-24T18:02,street,Snow removal request,4
+2026-02-24T18:02,street,Snow removal request,6
+2026-02-24T18:05,street,Snow removal request,2
+2026-02-24T18:08,ask,Snow emergency inquiry,
+2026-02-24T18:09,ask,Snow emergency inquiry,
+2026-02-24T18:12,street,Plowing request,6
+2026-02-24T18:15,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-24T18:24,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-24T18:35,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T18:37,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-24T19:18,street,Snow removal request,6
+2026-02-24T19:32,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-24T19:36,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-24T19:37,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-24T19:37,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-24T19:38,street,Snow removal request,6
+2026-02-24T19:40,spacesaver,Space saver report,5
+2026-02-24T19:52,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-24T20:05,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-24T20:12,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T20:19,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T20:27,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-24T20:51,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-24T20:54,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-24T20:56,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-24T20:57,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-24T21:09,street,Plowing request,1
+2026-02-24T21:21,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-24T21:24,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-24T21:25,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-24T21:36,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-24T21:44,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-24T21:49,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-24T21:52,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-24T22:03,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-24T22:08,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-24T23:28,street,Plowing request,2
+2026-02-24T23:42,street,Snow removal request,4
+2026-02-24T23:44,street,Snow removal request,5
+2026-02-25T05:57,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-25T06:33,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-25T06:41,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-25T06:42,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-25T06:54,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-25T07:05,street,Salting request,3
+2026-02-25T07:09,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-25T07:23,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-25T07:30,street,Snow removal request,4
+2026-02-25T07:35,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T07:44,street,Plowing request,6
+2026-02-25T07:47,street,Snow removal request,2
+2026-02-25T07:48,street,Snow removal request,6
+2026-02-25T07:50,street,Plowing request,3
+2026-02-25T07:54,street,Snow removal request,3
+2026-02-25T07:54,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-25T07:59,street,Plowing request,3
+2026-02-25T07:59,street,Snow removal request,1
+2026-02-25T08:00,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-25T08:02,street,Snow removal request,4
+2026-02-25T08:02,street,Snow removal request,2
+2026-02-25T08:04,street,Plowing request,4
+2026-02-25T08:07,street,Snow removal request,6
+2026-02-25T08:08,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-25T08:08,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-25T08:11,street,Snow removal request,2
+2026-02-25T08:15,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-25T08:15,street,Snow removal request,2
+2026-02-25T08:15,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T08:18,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T08:19,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T08:21,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T08:22,street,Salting request,2
+2026-02-25T08:25,street,Plowing request,1
+2026-02-25T08:27,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T08:28,street,Snow removal request,7
+2026-02-25T08:29,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T08:35,street,Snow removal request,3
+2026-02-25T08:36,street,Snow removal request,1
+2026-02-25T08:37,street,Plowing request,7
+2026-02-25T08:37,street,Snow removal request,1
+2026-02-25T08:37,street,Snow removal request,1
+2026-02-25T08:38,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-25T08:39,street,Snow removal request,1
+2026-02-25T08:40,street,Snow removal request,6
+2026-02-25T08:40,street,Snow removal request,5
+2026-02-25T08:41,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-25T08:42,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-25T08:43,street,Snow removal request,5
+2026-02-25T08:46,street,Snow removal request,5
+2026-02-25T08:48,street,Plowing request,2
+2026-02-25T08:49,street,Plowing request,2
+2026-02-25T08:50,street,Plowing request,2
+2026-02-25T08:51,street,Plowing request,2
+2026-02-25T08:56,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-25T09:03,street,Snow removal request,2
+2026-02-25T09:05,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T09:06,street,Snow removal request,3
+2026-02-25T09:06,street,Snow removal request,3
+2026-02-25T09:06,street,Snow removal request,3
+2026-02-25T09:07,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T09:08,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-25T09:10,street,Snow removal request,5
+2026-02-25T09:13,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-25T09:14,street,Snow removal request,4
+2026-02-25T09:16,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-25T09:17,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-25T09:17,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-25T09:21,street,Snow removal request,2
+2026-02-25T09:23,street,Plowing request,5
+2026-02-25T09:26,spacesaver,Space saver report,5
+2026-02-25T09:29,street,Snow removal request,3
+2026-02-25T09:31,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-25T09:31,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-25T09:34,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T09:35,spacesaver,Space saver report,5
+2026-02-25T09:38,street,Plowing request,2
+2026-02-25T09:41,street,Plowing request,2
+2026-02-25T09:46,street,Snow removal request,4
+2026-02-25T09:52,street,Plowing request,5
+2026-02-25T09:53,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-25T09:55,street,Snow removal request,3
+2026-02-25T09:56,spacesaver,Space saver report,1
+2026-02-25T09:56,street,Plowing request,4
+2026-02-25T09:56,street,Snow removal request,4
+2026-02-25T10:05,street,Snow removal request,7
+2026-02-25T10:05,street,Plowing request,3
+2026-02-25T10:06,street,Snow removal request,7
+2026-02-25T10:08,street,Plowing request,2
+2026-02-25T10:11,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-25T10:17,street,Plowing request,6
+2026-02-25T10:18,street,Plowing request,3
+2026-02-25T10:18,street,Plowing request,3
+2026-02-25T10:25,street,Plowing request,7
+2026-02-25T10:27,spacesaver,Space saver report,1
+2026-02-25T10:28,spacesaver,Space saver report,7
+2026-02-25T10:30,street,Snow removal request,2
+2026-02-25T10:31,street,Snow removal request,3
+2026-02-25T10:36,street,Snow removal request,6
+2026-02-25T10:40,street,Bike facility snow maintenance,2
+2026-02-25T10:44,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-25T10:57,street,Snow removal request,5
+2026-02-25T10:57,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-25T10:57,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T11:01,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T11:01,street,Snow removal request,1
+2026-02-25T11:02,street,Snow removal request,3
+2026-02-25T11:06,street,Plowing request,2
+2026-02-25T11:09,street,Plowing request,1
+2026-02-25T11:09,street,Salting request,3
+2026-02-25T11:13,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-25T11:14,street,Plowing request,7
+2026-02-25T11:20,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T11:30,spacesaver,Space saver report,4
+2026-02-25T11:39,street,Plowing request,1
+2026-02-25T11:41,street,Parks/Playgrounds snow maintenance,3
+2026-02-25T11:49,street,Snow removal request,3
+2026-02-25T11:49,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T11:54,street,Plowing request,4
+2026-02-25T12:02,street,Plowing request,4
+2026-02-25T12:06,street,Snow removal request,6
+2026-02-25T12:06,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T12:07,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T12:10,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-25T12:11,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-25T12:12,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-25T12:12,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-25T12:21,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T12:21,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-25T12:23,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T12:23,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T12:24,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T12:25,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T12:26,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T12:27,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T12:27,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T12:28,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-25T12:30,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T12:31,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T12:33,street,Plowing request,3
+2026-02-25T12:34,street,Bike facility snow maintenance,2
+2026-02-25T12:34,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T12:36,street,Plowing request,4
+2026-02-25T12:38,street,Snow removal request,4
+2026-02-25T12:38,street,Plowing request,4
+2026-02-25T12:39,street,Plowing request,3
+2026-02-25T12:39,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T12:40,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-25T12:41,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T12:42,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T12:44,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T12:44,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T12:45,street,Snow removal request,4
+2026-02-25T12:45,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T12:46,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T12:47,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T12:48,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T12:48,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T12:49,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-25T12:51,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T12:51,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T12:52,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T12:53,street,Salting request,3
+2026-02-25T12:53,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T12:54,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T12:55,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T12:56,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T12:58,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T13:02,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T13:03,street,Snow removal request,4
+2026-02-25T13:05,street,Snow removal request,4
+2026-02-25T13:06,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T13:08,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T13:08,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T13:10,street,Snow removal request,4
+2026-02-25T13:11,street,Snow removal request,1
+2026-02-25T13:12,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-25T13:16,street,Snow removal request,3
+2026-02-25T13:17,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-25T13:21,spacesaver,Space saver report,2
+2026-02-25T13:22,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-25T13:26,ask,Snow emergency inquiry,
+2026-02-25T13:27,street,Plowing request,2
+2026-02-25T13:27,street,Snow removal request,3
+2026-02-25T13:31,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T13:36,street,Plowing request,7
+2026-02-25T13:37,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-25T13:37,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T13:37,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T13:38,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-25T13:38,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T13:38,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T13:39,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T13:41,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T13:44,street,Plowing request,4
+2026-02-25T13:44,street,Snow removal request,4
+2026-02-25T13:45,street,Snow removal request,4
+2026-02-25T13:45,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-25T13:47,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-25T13:47,street,Plowing request,1
+2026-02-25T13:48,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T13:49,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T13:50,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T13:51,spacesaver,Space saver report,2
+2026-02-25T13:54,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T13:55,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T13:55,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T13:56,street,Snow removal request,1
+2026-02-25T13:56,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T13:57,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T13:58,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T13:59,street,Snow removal request,1
+2026-02-25T14:00,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T14:03,street,Snow removal request,6
+2026-02-25T14:04,spacesaver,Space saver report,2
+2026-02-25T14:05,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-25T14:05,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T14:08,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T14:08,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T14:09,street,Snow removal request,1
+2026-02-25T14:10,street,Snow removal request,4
+2026-02-25T14:10,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T14:11,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T14:24,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-25T14:25,street,Snow removal request,2
+2026-02-25T14:26,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-25T14:26,street,Snow removal request,3
+2026-02-25T14:26,street,Snow removal request,1
+2026-02-25T14:30,street,Snow removal request,3
+2026-02-25T14:39,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-25T14:40,feedback,Snow related feedback,2
+2026-02-25T14:42,street,Snow removal request,4
+2026-02-25T14:50,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-25T14:51,street,Snow removal request,3
+2026-02-25T14:53,street,Snow removal request,3
+2026-02-25T14:55,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-25T14:56,street,Plowing request,3
+2026-02-25T14:58,street,Snow removal request,5
+2026-02-25T15:00,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-25T15:03,ask,Snow emergency inquiry,
+2026-02-25T15:05,ask,Snow emergency inquiry,
+2026-02-25T15:14,spacesaver,Space saver report,5
+2026-02-25T15:15,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T15:21,street,Snow removal request,7
+2026-02-25T15:26,ask,Snow emergency inquiry,5
+2026-02-25T15:27,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T15:29,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T15:30,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T15:31,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T15:33,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T15:55,ask,Snow emergency inquiry,5
+2026-02-25T15:56,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T15:56,street,Snow removal request,2
+2026-02-25T15:59,street,Snow removal request,2
+2026-02-25T16:04,street,Snow removal request,5
+2026-02-25T16:05,street,Salting request,2
+2026-02-25T16:06,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T16:06,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T16:09,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-25T16:10,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-25T16:11,street,Snow removal request,6
+2026-02-25T16:12,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T16:13,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-25T16:13,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-25T16:14,street,Salting request,2
+2026-02-25T16:15,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-25T16:17,street,Salting request,2
+2026-02-25T16:18,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-25T16:18,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T16:19,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-25T16:24,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-25T16:25,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-25T16:25,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T16:25,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T16:26,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T16:26,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T16:27,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T16:27,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T16:28,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T16:28,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T16:29,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T16:29,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T16:29,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T16:31,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-25T16:36,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-25T16:39,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-25T16:42,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-25T16:53,street,Plowing request,5
+2026-02-25T16:55,spacesaver,Space saver report,5
+2026-02-25T16:56,spacesaver,Space saver report,2
+2026-02-25T16:56,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-25T17:06,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T17:11,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T17:12,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T17:14,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T17:15,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T17:16,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T17:17,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T17:19,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T17:27,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T17:32,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T17:33,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T17:34,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T17:36,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T17:36,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-25T17:37,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-25T17:38,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T17:39,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T17:41,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T17:43,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T17:44,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T17:45,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T17:45,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T17:47,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-25T17:48,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T17:51,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T17:53,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T17:54,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T17:54,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T17:54,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T17:55,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T17:55,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T17:56,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T17:56,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T17:57,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T17:57,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T17:58,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T17:59,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-25T18:17,ask,Snow emergency inquiry,7
+2026-02-25T18:19,spacesaver,Space saver report,3
+2026-02-25T18:20,spacesaver,Space saver report,2
+2026-02-25T18:25,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-25T18:26,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-25T18:34,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T18:34,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T18:34,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T18:35,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T18:37,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-25T18:40,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T18:41,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-25T18:44,ask,Snow emergency inquiry,5
+2026-02-25T18:49,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-25T19:01,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T19:09,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-25T19:14,street,Snow removal request,1
+2026-02-25T19:16,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T19:20,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-25T19:38,street,City/School building snow maintenance,1
+2026-02-25T19:50,street,Plowing request,7
+2026-02-25T19:50,street,Salting request,2
+2026-02-25T19:57,street,Plowing request,4
+2026-02-25T19:58,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T20:01,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-25T20:10,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T20:11,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T20:12,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T20:33,street,Snow removal request,6
+2026-02-25T20:38,street,Plowing request,6
+2026-02-25T20:38,street,Snow removal request,2
+2026-02-25T20:43,street,Bike facility snow maintenance,3
+2026-02-25T20:51,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-25T20:56,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-25T21:31,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-25T22:09,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-25T22:11,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-25T22:15,spacesaver,Space saver report,5
+2026-02-25T22:37,street,Salting request,5
+2026-02-25T22:38,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-25T23:15,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-25T23:21,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-26T06:42,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-26T06:46,street,Plowing request,1
+2026-02-26T06:48,street,Plowing request,2
+2026-02-26T06:51,street,Plowing request,3
+2026-02-26T06:54,street,Snow removal request,1
+2026-02-26T07:09,spacesaver,Space saver report,1
+2026-02-26T07:14,street,Snow removal request,3
+2026-02-26T07:33,street,Plowing request,5
+2026-02-26T07:38,street,Snow removal request,4
+2026-02-26T07:54,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T07:55,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-26T07:55,street,Snow removal request,1
+2026-02-26T08:02,street,Plowing request,3
+2026-02-26T08:03,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-26T08:03,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-26T08:04,street,Snow removal request,6
+2026-02-26T08:05,ask,Snow emergency inquiry,
+2026-02-26T08:06,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-26T08:11,street,Snow removal request,6
+2026-02-26T08:12,street,City/School building snow maintenance,2
+2026-02-26T08:12,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T08:13,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T08:25,spacesaver,Space saver report,4
+2026-02-26T08:31,street,Snow removal request,3
+2026-02-26T08:32,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-26T08:32,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-26T08:33,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-26T08:34,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-26T08:34,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-26T08:36,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T08:36,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T08:36,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T08:37,street,Snow removal request,6
+2026-02-26T08:37,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T08:37,street,Plowing request,2
+2026-02-26T08:37,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T08:37,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T08:38,street,Snow removal request,6
+2026-02-26T08:38,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-26T08:38,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T08:38,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T08:39,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T08:39,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T08:39,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T08:40,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T08:40,street,Plowing request,2
+2026-02-26T08:40,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T08:40,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T08:40,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T08:41,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-26T08:41,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-26T08:42,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T08:45,spacesaver,Space saver report,1
+2026-02-26T08:47,street,Plowing request,5
+2026-02-26T08:52,street,Snow removal request,3
+2026-02-26T08:52,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-26T08:53,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-26T08:53,street,Snow removal request,2
+2026-02-26T08:53,street,Bike facility snow maintenance,2
+2026-02-26T08:54,street,Snow removal request,3
+2026-02-26T08:55,street,Snow removal request,6
+2026-02-26T08:55,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-26T08:55,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T08:55,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T08:55,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T08:57,street,Snow removal request,3
+2026-02-26T08:57,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T08:58,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T08:59,street,Bike facility snow maintenance,3
+2026-02-26T08:59,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T09:00,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-26T09:01,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T09:02,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-26T09:04,street,Snow removal request,1
+2026-02-26T09:04,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T09:05,street,Snow removal request,2
+2026-02-26T09:05,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T09:07,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T09:07,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-26T09:10,street,Snow removal request,6
+2026-02-26T09:10,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T09:11,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T09:12,street,Bike facility snow maintenance,6
+2026-02-26T09:13,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T09:13,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T09:14,street,Snow removal request,4
+2026-02-26T09:16,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T09:16,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T09:18,street,Snow removal request,3
+2026-02-26T09:19,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-26T09:20,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-26T09:21,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-26T09:23,street,City/School building snow maintenance,1
+2026-02-26T09:28,street,Snow removal request,1
+2026-02-26T09:30,spacesaver,Space saver report,1
+2026-02-26T09:33,street,Plowing request,3
+2026-02-26T09:34,street,Snow removal request,6
+2026-02-26T09:35,street,Plowing request,4
+2026-02-26T09:37,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-26T09:38,street,Bike facility snow maintenance,3
+2026-02-26T09:39,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T09:40,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T09:40,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T09:40,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T09:41,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T09:41,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T09:42,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T09:42,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T09:43,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-26T09:43,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T09:43,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T09:44,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T09:47,street,Plowing request,6
+2026-02-26T09:47,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-26T09:51,street,Plowing request,6
+2026-02-26T09:51,feedback,Snow related feedback,3
+2026-02-26T09:55,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T09:55,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T09:57,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T09:58,street,Snow removal request,5
+2026-02-26T09:58,street,Bike facility snow maintenance,2
+2026-02-26T09:58,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T09:58,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T09:58,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T09:59,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T09:59,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T10:00,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T10:04,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T10:05,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T10:05,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T10:05,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T10:06,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T10:06,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T10:07,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T10:07,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T10:07,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-26T10:08,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T10:08,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T10:09,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T10:12,feedback,Snow related feedback,3
+2026-02-26T10:13,street,Bike facility snow maintenance,4
+2026-02-26T10:14,feedback,Snow related feedback,2
+2026-02-26T10:18,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T10:26,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-26T10:28,spacesaver,Space saver report,5
+2026-02-26T10:28,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-26T10:31,spacesaver,Space saver report,5
+2026-02-26T10:31,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-26T10:32,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-26T10:32,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-26T10:35,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-26T10:38,street,Plowing request,3
+2026-02-26T10:38,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-26T10:39,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-26T10:39,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-26T10:40,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-26T10:42,street,Snow removal request,6
+2026-02-26T10:50,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-26T10:56,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T11:00,spacesaver,Space saver report,2
+2026-02-26T11:03,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T11:11,street,Snow removal request,1
+2026-02-26T11:17,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-26T11:19,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-26T11:24,street,Snow removal request,4
+2026-02-26T11:26,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-26T11:39,spacesaver,Space saver report,6
+2026-02-26T11:40,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T11:41,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T11:41,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T11:42,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T11:42,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T11:43,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T11:43,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T11:44,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T11:44,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T11:45,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T11:45,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T11:48,street,Snow removal request,1
+2026-02-26T11:49,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-26T11:50,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-26T11:50,street,Salting request,3
+2026-02-26T11:53,street,Snow removal request,1
+2026-02-26T11:55,street,Snow removal request,3
+2026-02-26T11:57,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-26T11:59,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-26T12:00,spacesaver,Space saver report,5
+2026-02-26T12:00,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:04,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:05,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:05,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:06,street,Plowing request,4
+2026-02-26T12:09,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:10,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:11,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:12,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:13,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:13,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:14,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:14,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:18,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:18,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:19,street,Snow removal request,6
+2026-02-26T12:20,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:23,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:24,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:25,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:27,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:27,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T12:28,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:29,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:31,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:32,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:33,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:34,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-26T12:35,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:35,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:37,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:37,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:37,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T12:38,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:41,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:45,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:47,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:49,spacesaver,Space saver report,2
+2026-02-26T12:49,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:50,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:50,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T12:51,spacesaver,Space saver report,2
+2026-02-26T12:53,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:55,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:56,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:57,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T12:59,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T13:02,street,Snow removal request,2
+2026-02-26T13:03,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-26T13:11,street,Snow removal request,5
+2026-02-26T13:12,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T13:14,street,Snow removal request,5
+2026-02-26T13:15,street,Snow removal request,1
+2026-02-26T13:16,street,Snow removal request,2
+2026-02-26T13:17,street,Snow removal request,5
+2026-02-26T13:17,street,Snow removal request,5
+2026-02-26T13:18,street,Snow removal request,3
+2026-02-26T13:19,spacesaver,Space saver report,2
+2026-02-26T13:22,street,Snow removal request,2
+2026-02-26T13:32,street,Snow removal request,7
+2026-02-26T13:35,spacesaver,Space saver report,7
+2026-02-26T13:39,street,Snow removal request,4
+2026-02-26T13:39,street,Bike facility snow maintenance,2
+2026-02-26T13:42,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T13:49,street,Snow removal request,3
+2026-02-26T13:53,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T13:54,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T13:56,street,Plowing request,2
+2026-02-26T14:40,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-26T14:48,street,Snow removal request,2
+2026-02-26T14:52,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-26T14:53,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-26T14:55,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-26T14:58,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T14:59,street,Plowing request,5
+2026-02-26T14:59,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T14:59,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T14:59,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T15:00,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T15:00,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T15:01,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T15:01,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T15:02,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T15:02,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T15:03,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T15:34,spacesaver,Space saver report,1
+2026-02-26T15:50,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T15:52,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-26T15:55,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-26T15:59,spacesaver,Space saver report,7
+2026-02-26T16:04,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-26T16:06,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T16:10,street,Snow removal request,5
+2026-02-26T16:14,street,Snow removal request,1
+2026-02-26T16:26,street,Plowing request,3
+2026-02-26T16:30,street,Snow removal request,2
+2026-02-26T16:38,street,Plowing request,6
+2026-02-26T16:40,street,Snow removal request,7
+2026-02-26T16:50,street,Bike facility snow maintenance,2
+2026-02-26T16:51,street,Bike facility snow maintenance,2
+2026-02-26T17:02,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T17:03,spacesaver,Space saver report,4
+2026-02-26T17:03,spacesaver,Space saver report,4
+2026-02-26T17:03,spacesaver,Space saver report,4
+2026-02-26T17:04,spacesaver,Space saver report,4
+2026-02-26T17:04,spacesaver,Space saver report,3
+2026-02-26T17:04,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T17:05,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T17:08,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-26T17:10,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T17:13,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-26T17:17,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T17:19,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T17:20,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T17:20,spacesaver,Space saver report,4
+2026-02-26T17:21,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T17:21,street,Snow removal request,4
+2026-02-26T17:22,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T17:24,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T17:28,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T17:31,spacesaver,Space saver report,7
+2026-02-26T17:32,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T17:33,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T17:38,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-26T17:39,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-26T17:44,feedback,Snow related feedback,5
+2026-02-26T17:53,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-26T18:10,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-26T18:15,spacesaver,Space saver report,4
+2026-02-26T18:15,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T18:19,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T18:29,street,City/School building snow maintenance,5
+2026-02-26T18:47,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-26T18:47,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T18:47,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T18:54,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T19:03,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-26T19:22,feedback,Snow related feedback,1
+2026-02-26T19:39,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-26T19:42,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-26T20:00,street,Snow removal request,2
+2026-02-26T20:11,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-26T20:25,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-26T20:54,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-26T21:42,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T22:27,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T22:27,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T22:28,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T22:28,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T22:29,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T22:29,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T22:31,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T22:32,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T22:32,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T22:33,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T22:33,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T22:34,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T22:34,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T22:40,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T22:41,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T22:42,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-26T22:42,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T22:42,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T22:42,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T22:43,street,Plowing request,3
+2026-02-26T22:43,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T22:43,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T22:44,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-26T22:44,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T22:45,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-26T22:47,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-26T22:48,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T22:49,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T22:50,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T22:51,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T22:52,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T22:54,feedback,Snow related feedback,1
+2026-02-26T22:54,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T22:55,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T22:56,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T22:57,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T22:58,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T23:00,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T23:01,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T23:02,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T23:03,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T23:05,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T23:06,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T23:24,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T23:25,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T23:26,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-26T23:43,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T00:00,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T00:02,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T00:03,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T00:04,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T00:20,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T00:21,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T00:31,street,Bike facility snow maintenance,6
+2026-02-27T00:34,street,Bike facility snow maintenance,2
+2026-02-27T00:47,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-27T06:09,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-27T06:13,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T06:29,spacesaver,Space saver report,5
+2026-02-27T06:49,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-27T06:51,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-27T06:52,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T06:53,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T06:54,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T06:56,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T06:57,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T06:58,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T06:59,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T07:00,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T07:01,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T07:03,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T07:04,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T07:05,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T07:06,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T07:07,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T07:08,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T07:12,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T07:13,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T07:15,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T07:16,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T07:17,feedback,Snow related feedback,4
+2026-02-27T07:17,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T07:18,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T07:19,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T07:20,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T07:22,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T07:23,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T07:24,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T08:03,street,Plowing request,4
+2026-02-27T08:08,street,Plowing request,4
+2026-02-27T08:12,street,Plowing request,2
+2026-02-27T08:15,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-27T08:18,street,Bike facility snow maintenance,3
+2026-02-27T08:18,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-27T08:30,spacesaver,Space saver report,7
+2026-02-27T08:36,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-27T08:38,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-27T08:40,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-27T08:41,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-27T08:42,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-27T08:43,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-27T08:43,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-27T08:43,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-27T08:44,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-27T08:44,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-27T08:48,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T08:48,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-27T08:50,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-27T08:52,street,Plowing request,4
+2026-02-27T08:52,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-27T08:58,street,Bike facility snow maintenance,6
+2026-02-27T09:03,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-27T09:05,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-27T09:07,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-27T09:16,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-27T09:17,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-27T09:18,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-27T09:33,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-27T09:35,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-27T09:37,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-27T09:37,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-27T09:39,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-27T09:41,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-27T09:46,street,Plowing request,4
+2026-02-27T10:03,street,Bike facility snow maintenance,2
+2026-02-27T10:04,street,Snow removal request,1
+2026-02-27T10:05,street,Snow removal request,1
+2026-02-27T10:05,street,Snow removal request,1
+2026-02-27T10:07,street,Snow removal request,5
+2026-02-27T10:11,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-27T10:13,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-27T10:17,street,Snow removal request,6
+2026-02-27T10:45,street,Snow removal request,2
+2026-02-27T10:56,spacesaver,Space saver report,5
+2026-02-27T10:58,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T11:06,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-27T11:09,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-27T11:31,street,Plowing request,7
+2026-02-27T11:51,street,Plowing request,5
+2026-02-27T11:52,street,Bike facility snow maintenance,2
+2026-02-27T12:02,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-27T12:02,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T12:03,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T12:04,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T12:06,street,City/School building snow maintenance,5
+2026-02-27T12:07,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-27T12:11,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T12:12,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T12:13,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T12:14,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-27T12:15,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T12:16,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T12:17,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T12:18,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T12:19,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T12:34,street,Snow removal request,5
+2026-02-27T12:37,street,Snow removal request,7
+2026-02-27T12:40,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-27T12:45,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-27T13:01,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-27T13:02,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-27T13:02,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-27T13:05,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-27T13:07,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-27T13:08,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-27T13:09,street,Snow removal request,3
+2026-02-27T13:09,street,Plowing request,2
+2026-02-27T13:12,street,Plowing request,1
+2026-02-27T13:15,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-27T13:16,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T13:17,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-27T13:17,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T13:19,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-27T13:20,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-27T13:21,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-27T13:24,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-27T13:24,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-27T13:26,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-27T13:27,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-27T13:34,street,Snow removal request,2
+2026-02-27T14:00,street,Snow removal request,3
+2026-02-27T14:01,street,Plowing request,7
+2026-02-27T14:07,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T14:11,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-27T14:11,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-27T14:13,spacesaver,Space saver report,5
+2026-02-27T14:22,ask,Snow emergency inquiry,5
+2026-02-27T14:23,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T14:25,spacesaver,Space saver report,4
+2026-02-27T14:28,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-27T14:29,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-27T14:34,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-27T14:36,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-27T14:40,street,Snow removal request,2
+2026-02-27T14:48,street,Bike facility snow maintenance,5
+2026-02-27T14:57,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T14:58,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T14:59,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T15:10,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T15:11,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T15:12,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T15:14,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T15:15,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T15:16,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T15:17,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T15:18,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T15:19,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T15:21,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T15:22,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T15:23,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T15:24,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T15:25,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T15:26,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T15:28,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-27T15:28,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T15:29,street,Plowing request,4
+2026-02-27T15:29,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T15:30,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T15:31,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T15:32,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T15:34,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T15:35,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T15:36,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T15:37,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T15:38,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T15:40,street,Plowing request,4
+2026-02-27T15:40,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T15:42,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-27T15:43,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-27T15:51,street,Snow removal request,1
+2026-02-27T16:05,street,Snow removal request,5
+2026-02-27T16:13,spacesaver,Space saver report,5
+2026-02-27T16:15,spacesaver,Space saver report,7
+2026-02-27T16:22,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-27T16:24,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-27T17:07,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-27T17:39,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-27T17:41,street,Snow removal request,7
+2026-02-27T17:43,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-27T18:05,spacesaver,Space saver report,5
+2026-02-27T18:34,spacesaver,Space saver report,7
+2026-02-27T19:01,spacesaver,Space saver report,2
+2026-02-27T19:10,street,Bike facility snow maintenance,1
+2026-02-27T19:11,street,Bike facility snow maintenance,1
+2026-02-27T19:15,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-27T19:17,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T19:20,street,Bike facility snow maintenance,1
+2026-02-27T19:23,street,Snow removal request,2
+2026-02-27T19:24,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T19:35,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T19:49,sidewalk,Snow/sidewalk not shoveled,4
+2026-02-27T20:17,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T20:18,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-27T21:23,street,Salting request,6
+2026-02-27T21:30,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-27T21:31,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-27T21:32,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-27T21:52,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-28T07:50,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-28T08:30,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-28T08:47,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-28T09:22,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-28T09:24,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-28T09:25,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-28T09:31,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-28T09:32,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-28T09:36,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-28T09:38,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-28T09:39,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-28T09:42,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-28T09:43,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-28T09:45,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-28T09:49,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-28T10:08,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-28T10:08,street,Snow removal request,2
+2026-02-28T10:12,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-28T10:51,sidewalk,Snow/sidewalk not shoveled,2
+2026-02-28T11:06,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-28T11:06,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-28T11:06,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-28T11:06,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-28T11:06,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-28T11:10,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-28T11:20,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-28T11:21,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-28T11:27,street,Plowing request,3
+2026-02-28T11:32,ask,Snow emergency inquiry,5
+2026-02-28T11:44,street,Snow removal request,2
+2026-02-28T11:52,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-28T12:12,spacesaver,Space saver report,5
+2026-02-28T12:22,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-28T12:23,street,Plowing request,5
+2026-02-28T12:25,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-28T12:29,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-28T12:46,street,Snow removal request,3
+2026-02-28T13:44,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-28T13:45,sidewalk,Snow/sidewalk not shoveled,3
+2026-02-28T14:19,street,Plowing request,1
+2026-02-28T14:19,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-28T14:20,sidewalk,Snow/sidewalk not shoveled,1
+2026-02-28T14:41,spacesaver,Space saver report,6
+2026-02-28T16:29,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-28T16:30,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-28T16:36,sidewalk,Snow/sidewalk not shoveled,7
+2026-02-28T17:22,sidewalk,Snow/sidewalk not shoveled,6
+2026-02-28T18:45,street,Snow removal request,3
+2026-02-28T18:47,spacesaver,Space saver report,5
+2026-02-28T18:48,sidewalk,Snow/sidewalk not shoveled,5
+2026-02-28T18:57,street,Plowing request,3
+2026-02-28T19:02,street,Snow removal request,5
+2026-02-28T19:25,street,Bike facility snow maintenance,2
+2026-02-28T21:03,spacesaver,Space saver report,4
+2026-03-01T06:55,street,Salting request,3
+2026-03-01T09:15,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-01T09:28,sidewalk,Snow/sidewalk not shoveled,3
+2026-03-01T11:16,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-01T12:40,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-01T12:46,street,Plowing request,1
+2026-03-01T12:47,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-01T12:47,spacesaver,Space saver report,3
+2026-03-01T12:48,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-01T13:01,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-01T13:01,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-01T13:06,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-01T13:07,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-01T13:07,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-01T13:08,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-01T13:10,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-01T13:10,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-01T13:12,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-01T13:12,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-01T13:13,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-01T13:54,spacesaver,Space saver report,7
+2026-03-01T15:13,street,Bike facility snow maintenance,2
+2026-03-01T15:18,street,Bike facility snow maintenance,2
+2026-03-01T15:20,street,Bike facility snow maintenance,3
+2026-03-01T16:24,street,Bike facility snow maintenance,2
+2026-03-01T16:25,street,Bike facility snow maintenance,2
+2026-03-01T16:26,street,Bike facility snow maintenance,3
+2026-03-01T16:54,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T17:08,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-01T17:35,spacesaver,Space saver report,4
+2026-03-01T18:18,street,Plowing request,4
+2026-03-01T21:31,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T21:32,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T21:34,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T21:35,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T21:37,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T21:38,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T21:40,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T21:41,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T21:42,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T21:44,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T21:46,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T21:47,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T22:01,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T22:19,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T22:20,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T22:22,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T22:24,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T22:25,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T22:26,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T22:48,spacesaver,Space saver report,2
+2026-03-01T22:50,sidewalk,Snow/sidewalk not shoveled,3
+2026-03-01T23:01,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T23:03,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T23:17,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T23:24,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T23:25,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T23:26,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T23:27,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T23:27,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T23:28,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T23:29,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T23:30,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T23:31,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T23:32,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T23:33,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T23:34,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T23:35,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T23:36,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T23:37,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T23:38,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T23:39,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T23:40,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T23:57,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-01T23:58,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T00:14,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T00:15,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T00:16,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T00:17,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T00:35,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T00:36,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T00:53,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T00:54,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T00:55,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T01:12,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T01:25,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T01:26,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T01:27,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T01:30,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T01:31,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T01:48,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T01:49,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T01:59,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T02:00,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T02:01,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T02:18,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T02:36,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T02:37,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T02:38,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T02:55,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T03:12,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T03:13,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T03:14,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T03:31,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T03:47,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T03:48,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T03:49,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T03:50,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T04:07,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T04:24,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T04:25,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T04:26,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T04:59,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T05:00,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T05:01,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T05:02,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T05:21,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T05:39,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T05:40,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T05:56,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T06:12,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T06:13,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T06:14,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T06:15,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T06:48,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T06:49,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T07:00,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T07:01,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T07:18,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T08:53,sidewalk,Snow/sidewalk not shoveled,3
+2026-03-02T09:07,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T09:18,sidewalk,Snow/sidewalk not shoveled,4
+2026-03-02T09:19,spacesaver,Space saver report,4
+2026-03-02T10:04,street,Snow removal request,2
+2026-03-02T10:40,sidewalk,Snow/sidewalk not shoveled,5
+2026-03-02T11:11,street,Plowing request,6
+2026-03-02T12:09,ask,Snow emergency inquiry,4
+2026-03-02T12:10,spacesaver,Space saver report,5
+2026-03-02T12:14,street,Snow removal request,2
+2026-03-02T13:03,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-02T13:06,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T13:07,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T13:09,sidewalk,Snow/sidewalk not shoveled,7
+2026-03-02T13:09,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T13:15,street,Plowing request,3
+2026-03-02T13:35,sidewalk,Snow/sidewalk not shoveled,3
+2026-03-02T13:50,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-02T13:51,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-02T13:53,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-02T13:59,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-02T14:36,street,Snow removal request,1
+2026-03-02T15:16,sidewalk,Snow/sidewalk not shoveled,3
+2026-03-02T15:20,sidewalk,Snow/sidewalk not shoveled,5
+2026-03-02T15:21,spacesaver,Space saver report,7
+2026-03-02T15:30,street,Snow removal request,5
+2026-03-02T15:35,sidewalk,Snow/sidewalk not shoveled,5
+2026-03-02T17:10,street,Plowing request,2
+2026-03-02T17:12,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T17:12,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-02T17:32,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-02T19:18,sidewalk,Snow/sidewalk not shoveled,7
+2026-03-02T19:28,sidewalk,Snow/sidewalk not shoveled,7
+2026-03-02T19:57,sidewalk,Snow/sidewalk not shoveled,4
+2026-03-03T08:02,sidewalk,Snow/sidewalk not shoveled,3
+2026-03-03T08:34,sidewalk,Snow/sidewalk not shoveled,3
+2026-03-03T08:35,sidewalk,Snow/sidewalk not shoveled,3
+2026-03-03T08:55,street,Snow removal request,1
+2026-03-03T09:47,street,Snow removal request,4
+2026-03-03T09:51,street,Salting request,1
+2026-03-03T10:47,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-03T10:48,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-03T10:57,street,Snow removal request,3
+2026-03-03T11:07,street,Salting request,7
+2026-03-03T11:08,sidewalk,Snow/sidewalk not shoveled,7
+2026-03-03T11:10,spacesaver,Space saver report,1
+2026-03-03T11:19,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-03T11:22,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-03T11:24,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-03T11:25,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-03T11:29,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-03T11:30,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-03T11:33,sidewalk,Snow/sidewalk not shoveled,5
+2026-03-03T12:18,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-03T12:18,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-03T12:27,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-03T12:32,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-03T12:33,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-03T12:51,street,Bike facility snow maintenance,2
+2026-03-03T12:57,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-03T13:01,feedback,Snow related feedback,5
+2026-03-03T13:05,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-03T13:08,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-03T13:22,sidewalk,Snow/sidewalk not shoveled,5
+2026-03-03T13:33,spacesaver,Space saver report,5
+2026-03-03T13:41,street,Snow removal request,3
+2026-03-03T14:15,ask,Snow emergency inquiry,
+2026-03-03T15:16,ask,Snow emergency inquiry,5
+2026-03-03T15:33,sidewalk,Snow/sidewalk not shoveled,7
+2026-03-03T16:29,ask,Snow emergency inquiry,2
+2026-03-03T16:35,street,Salting request,5
+2026-03-03T16:48,street,Salting request,5
+2026-03-03T16:59,street,Salting request,2
+2026-03-03T17:01,ask,Snow emergency inquiry,6
+2026-03-03T17:03,street,Salting request,4
+2026-03-03T17:03,street,Salting request,3
+2026-03-03T17:06,street,Salting request,4
+2026-03-03T17:13,street,Salting request,4
+2026-03-03T17:18,street,Salting request,5
+2026-03-03T17:18,street,Plowing request,3
+2026-03-03T17:20,street,Plowing request,4
+2026-03-03T17:21,street,Plowing request,3
+2026-03-03T17:22,street,Salting request,3
+2026-03-03T17:25,street,Salting request,3
+2026-03-03T17:25,ask,Snow emergency inquiry,1
+2026-03-03T17:26,street,Salting request,1
+2026-03-03T17:32,street,Plowing request,1
+2026-03-03T17:34,spacesaver,Space saver report,6
+2026-03-03T17:39,ask,Snow emergency inquiry,
+2026-03-03T18:24,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-03T18:29,street,Salting request,5
+2026-03-03T19:01,street,Salting request,3
+2026-03-03T19:30,spacesaver,Space saver report,4
+2026-03-03T20:39,street,Snow removal request,2
+2026-03-04T06:14,street,Salting request,1
+2026-03-04T07:20,street,Salting request,5
+2026-03-04T07:35,street,Salting request,5
+2026-03-04T07:38,sidewalk,Snow/sidewalk not shoveled,4
+2026-03-04T07:51,feedback,Snow related feedback,2
+2026-03-04T07:53,street,Salting request,2
+2026-03-04T08:17,street,Salting request,5
+2026-03-04T08:26,feedback,Snow related feedback,6
+2026-03-04T08:26,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-04T08:31,feedback,Snow related feedback,4
+2026-03-04T08:57,street,Salting request,4
+2026-03-04T09:09,street,Salting request,5
+2026-03-04T09:18,street,Salting request,3
+2026-03-04T09:21,street,Plowing request,3
+2026-03-04T09:22,street,Plowing request,2
+2026-03-04T09:23,street,Plowing request,2
+2026-03-04T09:24,street,Plowing request,2
+2026-03-04T09:27,street,Snow removal request,4
+2026-03-04T09:39,spacesaver,Space saver report,4
+2026-03-04T09:49,street,Salting request,7
+2026-03-04T09:55,spacesaver,Space saver report,5
+2026-03-04T10:04,street,Snow removal request,2
+2026-03-04T10:20,sidewalk,Snow/sidewalk not shoveled,3
+2026-03-04T10:23,street,Snow removal request,2
+2026-03-04T10:35,spacesaver,Space saver report,4
+2026-03-04T10:57,street,Plowing request,2
+2026-03-04T11:09,street,Snow removal request,7
+2026-03-04T11:12,spacesaver,Space saver report,7
+2026-03-04T11:16,sidewalk,Snow/sidewalk not shoveled,3
+2026-03-04T11:26,street,Bike facility snow maintenance,4
+2026-03-04T11:41,sidewalk,Snow/sidewalk not shoveled,5
+2026-03-04T11:50,street,Snow removal request,3
+2026-03-04T11:53,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-04T11:58,street,Snow removal request,1
+2026-03-04T12:16,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:16,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:18,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:18,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:21,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:22,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:23,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:23,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:24,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:25,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:25,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:29,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:30,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:31,ask,Snow emergency inquiry,7
+2026-03-04T12:32,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:34,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:35,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:35,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:36,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:36,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:39,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:39,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:40,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-04T12:42,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:43,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:44,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:44,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:45,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:45,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:46,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:46,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:47,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:47,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:48,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:49,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:50,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:51,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:52,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:53,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:54,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:54,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:56,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:57,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:57,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T12:58,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:00,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:00,street,Plowing request,1
+2026-03-04T13:01,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:01,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:02,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:03,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:03,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:04,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:05,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:05,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:06,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:06,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:08,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:09,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:10,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:11,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:11,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:12,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:12,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:19,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:19,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:20,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:20,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:21,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:21,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:21,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:22,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:22,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:24,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:24,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:25,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:25,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:26,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:26,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:27,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:28,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:28,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:29,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:29,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T13:29,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-04T14:13,sidewalk,Snow/sidewalk not shoveled,5
+2026-03-04T14:17,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-04T15:10,spacesaver,Space saver report,1
+2026-03-04T15:21,street,Snow removal request,1
+2026-03-04T16:11,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-04T16:11,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-04T16:16,spacesaver,Space saver report,1
+2026-03-04T17:21,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T17:21,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T17:24,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T17:24,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T17:29,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T17:31,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T17:34,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T17:49,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-04T17:52,sidewalk,Snow/sidewalk not shoveled,3
+2026-03-04T20:13,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-04T21:47,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-04T22:18,street,Snow removal request,4
+2026-03-05T06:29,street,Salting request,2
+2026-03-05T06:42,sidewalk,Snow/sidewalk not shoveled,7
+2026-03-05T06:51,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-05T07:51,sidewalk,Snow/sidewalk not shoveled,5
+2026-03-05T07:55,sidewalk,Snow/sidewalk not shoveled,6
+2026-03-05T08:15,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-05T08:55,street,Snow removal request,1
+2026-03-05T09:09,street,Salting request,3
+2026-03-05T10:17,spacesaver,Space saver report,2
+2026-03-05T10:35,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-05T10:46,sidewalk,Snow/sidewalk not shoveled,7
+2026-03-05T11:44,street,Snow removal request,1
+2026-03-05T11:45,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-05T12:21,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-05T12:46,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-05T13:02,street,Bike facility snow maintenance,4
+2026-03-05T13:04,street,Bike facility snow maintenance,3
+2026-03-05T14:00,spacesaver,Space saver report,5
+2026-03-05T15:55,street,Snow removal request,4
+2026-03-05T17:14,sidewalk,Snow/sidewalk not shoveled,7
+2026-03-05T17:16,spacesaver,Space saver report,1
+2026-03-05T17:18,sidewalk,Snow/sidewalk not shoveled,5
+2026-03-05T17:30,sidewalk,Snow/sidewalk not shoveled,3
+2026-03-05T18:37,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-05T19:02,ask,Snow emergency inquiry,
+2026-03-05T20:17,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-05T22:17,sidewalk,Snow/sidewalk not shoveled,5
+2026-03-06T07:14,sidewalk,Snow/sidewalk not shoveled,7
+2026-03-06T07:58,street,Salting request,3
+2026-03-06T08:54,sidewalk,Snow/sidewalk not shoveled,5
+2026-03-06T09:04,street,Snow removal request,6
+2026-03-06T11:15,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-06T11:34,sidewalk,Snow/sidewalk not shoveled,6
+2026-03-06T12:18,street,Snow removal request,1
+2026-03-06T12:31,spacesaver,Space saver report,5
+2026-03-06T13:17,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-06T13:18,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-06T14:18,spacesaver,Space saver report,4
+2026-03-06T15:54,street,Bike facility snow maintenance,3
+2026-03-06T16:34,spacesaver,Space saver report,6
+2026-03-06T17:39,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-06T18:47,spacesaver,Space saver report,1
+2026-03-06T21:05,sidewalk,Snow/sidewalk not shoveled,3
+2026-03-07T05:54,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-07T08:14,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-07T08:51,street,Snow removal request,1
+2026-03-07T10:03,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-07T11:43,street,Bike facility snow maintenance,2
+2026-03-07T12:38,street,Snow removal request,6
+2026-03-07T14:41,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-07T14:47,street,Snow removal request,2
+2026-03-07T15:14,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-07T15:15,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-07T15:18,sidewalk,Snow/sidewalk not shoveled,1
+2026-03-07T15:48,street,Snow removal request,3
+2026-03-07T18:02,sidewalk,Snow/sidewalk not shoveled,2
+2026-03-07T18:03,sidewalk,Snow/sidewalk not shoveled,2

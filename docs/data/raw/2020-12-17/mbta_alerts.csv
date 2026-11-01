@@ -1,0 +1,82 @@
+created_hour,kind,route_or_station,header
+2020-12-15T14:00,delay,101,Route 101 experiencing delays of up to 20 minutes due to traffic
+2020-12-15T16:00,delay,95,Route 95 experiencing delays of up to 20 minutes due to traffic
+2020-12-16T05:00,delay,96,Route 96 experiencing delays of up to 20 minutes
+2020-12-16T12:00,delay,101,Route 101 experiencing delays of up to 30 minutes
+2020-12-16T19:00,delay,109,Route 109 experiencing delays of up to 20 minutes
+2020-12-16T19:00,delay,89,Route 89 experiencing delays of up to 20 minutes
+2020-12-17T03:00,detour,85,Rte 85 Snow Route in Effect: Omitting Avon St. Connect at School St and Summer St.
+2020-12-17T05:00,delay,83,Route 83 experiencing delays of up to 15 minutes due to disabled bus
+2020-12-17T05:00,delay,85,Route 85 experiencing inbound delays of up to 15 minutes due to police action; Connections made at: Avon St @ Central St & 51 Bow St
+2020-12-17T05:00,delay,87,Route 87 experiencing delays of up to 20 minutes due to traffic
+2020-12-17T05:00,detour,83,"Route 83 detoured. Connect at Mass Ave @ Walden St (IB), Mass Ave opp Walden St (OB)"
+2020-12-17T06:00,delay,101,Route 101 experiencing delays of up to 25 minutes
+2020-12-17T06:00,delay,109,Route 109 experiencing delays of up to 25 minutes due to traffic
+2020-12-17T06:00,delay,80,Route 80 experiencing delays of up to 25 minutes due to traffic
+2020-12-17T06:00,delay,86,Route 86 experiencing delays of up to 25 minutes
+2020-12-17T06:00,delay,88,Route 88 experiencing delays of up to 25 minutes
+2020-12-17T06:00,delay,89,Route 89 experiencing delays of up to 25 minutes
+2020-12-17T06:00,delay,91,Route 91 experiencing delays of up to 30 minutes due to traffic
+2020-12-17T06:00,delay,94,Route 94 experiencing delays of up to 30 minutes due to traffic
+2020-12-17T06:00,delay,96,Route 96 experiencing delays of up to 30 minutes due to traffic
+2020-12-17T16:00,delay,94,Route 94 experiencing delays of up to 20 minutes
+2020-12-17T17:00,delay,89,Route 89 experiencing delays of up to 20 minutes
+2020-12-17T19:00,delay,109,Route 109 experiencing delays of up to 20 minutes
+2020-12-17T19:00,delay,86,Route 86 experiencing delays of up to 25 minutes
+2020-12-17T19:00,delay,91,Route 91 experiencing delays of up to 20 minutes
+2020-12-17T19:00,delay,96,Route 96 experiencing delays of up to 25 minutes
+2020-12-17T22:00,delay,86,Route 86 experiencing delays of up to 25 minutes
+2020-12-18T04:00,detour,85,Rte 85 Snow Route in Effect: Omitting Avon St. Connect at School St and Summer St.
+2020-12-18T05:00,delay,101,Route 101 experiencing delays of up to 20 minutes due to disabled bus
+2020-12-18T05:00,delay,109,Route 109 experiencing delays of up to 30 minutes
+2020-12-18T06:00,delay,747,CT2 experiencing delays of up to 25 minutes
+2020-12-18T09:00,delay,101,Route 101 experiencing delays of up to 15 minutes
+2020-12-18T09:00,detour,95,"Routes 95, 101 and 134 omitting Riverside ave due to police activity."
+2020-12-18T14:00,delay,101,Route 101 experiencing delays of up to 25 minutes
+2020-12-18T14:00,delay,109,Route 109 experiencing delays of up to 20 minutes
+2020-12-18T14:00,delay,89,Route 89 experiencing delays of up to 30 minutes
+2020-12-18T16:00,delay,101,Route 101 experiencing delays of up to 20 minutes
+2020-12-18T16:00,delay,101,Route 101 experiencing delays of up to 20 minutes
+2020-12-18T16:00,delay,83,Route 83 experiencing delays of up to 20 minutes
+2020-12-18T18:00,delay,80,Route 80 experiencing delays of up to 25 minutes
+2020-12-18T19:00,delay,87,Route 87 experiencing delays of up to 25 minutes due to traffic
+2020-12-18T22:00,delay,91,Route 91 experiencing delays of up to 30 minutes
+2020-12-19T07:00,delay,90,Route 90 experiencing delays of up to 30 minutes
+2020-12-19T08:00,delay,101,Route 101 experiencing delays of up to 20 minutes
+2020-12-19T14:00,delay,87,Route 87 experiencing delays of up to 20 minutes due to accident
+2020-12-19T16:00,delay,88,Route 88 experiencing delays of up to 20 minutes due to traffic
+2020-12-19T16:00,delay,89,Route 89 experiencing delays of up to 25 minutes due to traffic
+2020-12-19T16:00,delay,91,Route 91 experiencing delays of up to 25 minutes due to traffic
+2020-12-19T17:00,delay,83,Route 83 experiencing delays of up to 20 minutes due to traffic
+2020-12-19T19:00,delay,89,Route 89 experiencing delays of up to 20 minutes due to traffic
+2020-12-19T19:00,delay,95,Route 95 experiencing delays of up to 25 minutes due to medical emergency
+2020-12-20T12:00,delay,89,Route 89 experiencing delays of up to 20 minutes due to traffic
+2020-12-20T19:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to traffic
+2020-12-21T11:00,delay,89,Route 89 experiencing delays of up to 20 minutes due to traffic
+2020-12-21T14:00,delay,90,Route 90 experiencing delays of up to 20 minutes due to traffic
+2020-12-21T16:00,delay,95,Route 95 experiencing delays of up to 25 minutes due to traffic
+2020-12-21T17:00,delay,101,Route 101 experiencing delays of up to 20 minutes
+2020-12-21T17:00,delay,109,Route 109 experiencing delays of up to 25 minutes due to traffic
+2020-12-21T17:00,delay,86,Route 86 experiencing delays of up to 20 minutes
+2020-12-21T21:00,delay,86,Route 86 experiencing delays of up to 20 minutes
+2020-12-22T07:00,delay,101,Route 101 experiencing delays of up to 20 minutes
+2020-12-22T14:00,delay,87,Route 87 experiencing delays of up to 20 minutes due to traffic
+2020-12-22T16:00,delay,87,Route 87 experiencing delays of up to 25 minutes due to traffic
+2020-12-22T16:00,delay,91,Route 91 experiencing delays of up to 30 minutes due to disabled bus
+2020-12-22T17:00,delay,109,Route 109 experiencing delays of up to 25 minutes due to traffic
+2020-12-22T17:00,delay,86,Route 86 experiencing delays of up to 20 minutes
+2020-12-22T18:00,delay,101,Route 101 experiencing delays of up to 20 minutes
+2020-12-22T19:00,delay,88,Route 88 experiencing delays of up to 20 minutes due to disabled bus
+2020-12-23T05:00,delay,101,Route 101 experiencing delays of up to 20 minutes
+2020-12-23T13:00,delay,109,Route 109 experiencing delays of up to 25 minutes due to traffic
+2020-12-23T13:00,delay,96,Route 96 experiencing delays of up to 20 minutes due to traffic
+2020-12-23T17:00,delay,101,Route 101 experiencing delays of up to 20 minutes due to traffic
+2020-12-23T20:00,delay,109,Route 109 experiencing delays of up to 20 minutes
+2020-12-23T20:00,delay,94,Route 94 experiencing delays of up to 30 minutes
+2020-12-23T20:00,delay,95,Route 95 experiencing delays of up to 25 minutes due to traffic
+2020-12-23T21:00,delay,95,Route 95 experiencing delays of up to 25 minutes
+2020-12-24T05:00,delay,94,Route 94 experiencing delays of up to 25 minutes due to traffic
+2020-12-24T07:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to disabled bus
+2020-12-24T15:00,delay,88,Route 88 experiencing delays of up to 20 minutes due to traffic
+2020-12-24T19:00,delay,88,Route 88 experiencing delays of up to 25 minutes
+2020-12-26T14:00,delay,109,Route 109 experiencing delays of up to 25 minutes due to disabled bus

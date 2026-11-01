@@ -1,0 +1,26 @@
+date_hour,time,where,what,how,surface,weather,light,hurt,pedestrian,cyclist,pedestrian_where,pedestrian_doing,hit_and_run
+2019-11-30T01:00,01:21,Glen St & Pearl St,Collision with parked motor vehicle,"Sideswipe, opposite direction",Dry,Clear,Dark - lighted roadway,none,0,0,,,False
+2019-12-01T04:00,04:58,Broadway,Collision with light pole or other post/support,Single vehicle crash,Dry,Clear,Dark - lighted roadway,none,0,0,,,False
+2019-12-01T20:00,20:31,Mcgrath Hwy,Collision with pedestrian,Angle,Snow,Snow,Dark - lighted roadway,serious,1,0,In roadway,"Walking, running or cycling",False
+2019-12-01T23:00,23:00,Elm St,,Single vehicle crash,Snow,Snow,Dark - lighted roadway,none,0,0,,,False
+2019-12-01T23:00,23:55,Bigelow St & Boston St,Collision with parked motor vehicle,"Sideswipe, opposite direction",Slush,"Sleet, hail, freezing rain or drizzle",Dark - lighted roadway,none,0,0,,,False
+2019-12-02T00:00,00:09,Cross St & Gilman St,Collision with pedestrian,Single vehicle crash,Wet,Snow,Dark - lighted roadway,possible,1,0,In roadway,"Walking, running or cycling",False
+2019-12-02T18:00,18:25,Cross St & Fountain Av,,Single vehicle crash,Snow,Snow,Dark - lighted roadway,none,0,0,,,False
+2019-12-04T14:00,14:20,Highland Av,Collision with motor vehicle in traffic,Rear-end,Wet,Cloudy,Daylight,none,0,0,,,False
+2019-12-05T10:00,10:27,Rhode Island Av,Collision with light pole or other post/support,Single vehicle crash,Dry,Clear,Daylight,possible,0,0,,,False
+2019-12-05T16:00,16:50,Union Sq,Collision with motor vehicle in traffic,Head on,Wet,Clear,Dark - lighted roadway,none,0,0,,,False
+2019-12-05T18:00,18:42,Temple St,Collision with pedalcycle,"Sideswipe, opposite direction",Wet,Clear,Dark - lighted roadway,none,0,1,In roadway,"Walking, running or cycling",False
+2019-12-05T21:00,21:08,Mcgrath Hwy,Collision with motor vehicle in traffic,Rear-end,Wet,Clear,Dark - lighted roadway,possible,0,0,,,False
+2019-12-06T10:00,10:00,Boston St,Collision with motor vehicle in traffic,Angle,Dry,Cloudy,Daylight,none,0,0,,,False
+2019-12-06T19:00,19:28,Greenwood Terr,Collision with parked motor vehicle,"Sideswipe, same direction",Wet,Rain,Dark - lighted roadway,none,0,0,,,False
+2019-12-07T12:00,12:29,Union Square,Collision with motor vehicle in traffic,Rear-end,Dry,Clear,Daylight,none,0,0,,,False
+2019-12-07T17:00,17:46,Orchard St & Russell St,Collision with pedestrian,Angle,Slush,Clear,Dark - lighted roadway,minor,1,0,At intersection but no crosswalk,Entering or crossing specified location,False
+2019-12-07T19:00,19:08,Middlesex Av,Collision with pedestrian,Angle,Dry,Clear,Dark - lighted roadway,minor,1,0,In roadway,"Walking, running or cycling",False
+2019-12-08T00:00,00:37,Cedar St,Collision with parked motor vehicle,"Sideswipe, opposite direction",Dry,Clear,Dark - lighted roadway,none,0,0,,,False
+2019-12-08T15:00,15:53,Middlesex Av,Collision with pedestrian,Angle,Dry,Cloudy,Daylight,minor,1,0,In roadway,"Walking, running or cycling",False
+2019-12-08T17:00,17:49,Broadway & Willow Av,Collision with motor vehicle in traffic,Angle,Dry,Clear,Dark - lighted roadway,none,0,0,,,False
+2019-12-10T17:00,17:28,Beacon St & Museum St,Collision with pedestrian,Angle,Wet,Rain,Dark - lighted roadway,none,1,0,Marked crosswalk at intersection,Entering or crossing specified location,False
+2019-12-11T05:00,05:03,Aldrich St,Collision with parked motor vehicle,Rear to rear,Snow,Snow,Dark - lighted roadway,none,0,0,,,False
+2019-12-11T05:00,05:59,Powder House Blvd,Collision with parked motor vehicle,"Sideswipe, same direction",Snow,Snow,Dark - lighted roadway,,0,0,,,True
+2019-12-11T11:00,11:58,Highland Av,Collision with motor vehicle in traffic,Angle,Wet,Clear,Daylight,minor,0,0,,,False
+2019-12-11T17:00,17:52,Somerville Av,Collision with motor vehicle in traffic,Angle,Wet,Cloudy,Dark - lighted roadway,possible,0,0,,,False

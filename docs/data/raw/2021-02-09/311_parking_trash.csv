@@ -1,0 +1,475 @@
+created,type
+2021-01-25T08:01,Illegal parking
+2021-01-25T08:54,Trash questions
+2021-01-25T10:36,Parking information
+2021-01-25T10:41,Trash questions
+2021-01-25T10:46,Illegal parking
+2021-01-25T10:48,Illegal parking
+2021-01-25T10:48,Trash questions
+2021-01-25T10:56,Trash questions
+2021-01-25T11:19,Parking information
+2021-01-25T11:23,Parking information
+2021-01-25T11:34,Trash questions
+2021-01-25T11:52,Parking information
+2021-01-25T11:53,Parking information
+2021-01-25T12:57,Parking information
+2021-01-25T13:21,Illegal parking
+2021-01-25T13:26,Illegal parking
+2021-01-25T13:44,Parking information
+2021-01-25T14:37,Parking information
+2021-01-25T14:53,Illegal parking
+2021-01-25T14:54,Trash questions
+2021-01-25T16:04,Trash questions
+2021-01-25T16:13,Parking information
+2021-01-25T19:13,Illegal parking
+2021-01-26T09:31,Parking information
+2021-01-26T09:57,Illegal parking
+2021-01-26T10:26,Parking information
+2021-01-26T11:25,Parking information
+2021-01-26T11:46,Parking information
+2021-01-26T12:05,Trash questions
+2021-01-26T12:10,Parking information
+2021-01-26T12:11,Trash questions
+2021-01-26T12:56,Parking information
+2021-01-26T13:01,Parking information
+2021-01-26T13:06,Illegal parking
+2021-01-26T13:07,Trash questions
+2021-01-26T13:14,Illegal parking
+2021-01-26T14:04,Parking information
+2021-01-26T14:16,Illegal parking
+2021-01-26T14:50,Trash/recycling out too early or late
+2021-01-26T14:59,Illegal parking
+2021-01-26T15:47,Parking information
+2021-01-26T16:55,Illegal parking
+2021-01-26T18:01,Verification of sanitation schedule
+2021-01-27T08:00,Trash questions
+2021-01-27T09:06,Parking information
+2021-01-27T10:23,Illegal parking
+2021-01-27T10:33,Parking information
+2021-01-27T12:04,Trash questions
+2021-01-27T12:24,Illegal parking
+2021-01-27T13:21,Trash questions
+2021-01-27T14:27,Illegal parking
+2021-01-27T15:35,Illegal parking
+2021-01-27T16:17,Parking information
+2021-01-28T08:44,Illegal parking
+2021-01-28T09:20,Parking information
+2021-01-28T09:49,Parking information
+2021-01-28T10:35,Illegal parking
+2021-01-28T11:48,Parking information
+2021-01-28T13:06,Parking information
+2021-01-28T13:51,Parking information
+2021-01-28T14:01,Parking information
+2021-01-28T14:36,Trash questions
+2021-01-28T15:13,Parking information
+2021-01-28T15:28,Illegal parking
+2021-01-28T15:48,Illegal parking
+2021-01-28T16:07,Trash questions
+2021-01-28T17:24,Parking information
+2021-01-29T09:04,Trash questions
+2021-01-29T09:21,Parking information
+2021-01-29T09:25,Parking information
+2021-01-29T10:03,Parking information
+2021-01-29T12:12,Trash/recycling out too early or late
+2021-01-29T12:13,Trash/recycling out too early or late
+2021-01-29T12:39,Illegal parking
+2021-01-29T13:13,Trash questions
+2021-01-29T13:45,Parking information
+2021-01-29T13:54,Trash questions
+2021-01-29T14:59,Trash questions
+2021-01-29T16:41,Illegal parking
+2021-01-29T16:50,Illegal parking
+2021-01-29T18:13,Illegal parking
+2021-01-29T18:39,Illegal parking
+2021-01-29T22:18,Illegal parking
+2021-01-30T12:24,Illegal parking
+2021-01-30T15:52,Illegal parking
+2021-01-31T09:28,Parking information
+2021-01-31T09:54,Illegal parking
+2021-01-31T10:00,Illegal parking
+2021-01-31T17:37,Illegal parking
+2021-01-31T17:43,Illegal parking
+2021-01-31T19:09,Illegal parking
+2021-01-31T19:51,Illegal parking
+2021-01-31T20:40,Illegal parking
+2021-02-01T01:00,Illegal parking
+2021-02-01T02:54,Illegal parking
+2021-02-01T08:20,Illegal parking
+2021-02-01T08:22,Trash questions
+2021-02-01T08:27,Trash questions
+2021-02-01T08:32,Illegal parking
+2021-02-01T08:41,Trash questions
+2021-02-01T08:48,Trash questions
+2021-02-01T08:49,Illegal parking
+2021-02-01T08:57,Illegal parking
+2021-02-01T09:08,Trash questions
+2021-02-01T09:26,Verification of sanitation schedule
+2021-02-01T09:30,Trash questions
+2021-02-01T09:37,Trash questions
+2021-02-01T09:38,Trash questions
+2021-02-01T09:42,Trash questions
+2021-02-01T09:48,Verification of sanitation schedule
+2021-02-01T09:48,Trash questions
+2021-02-01T09:49,Trash questions
+2021-02-01T09:49,Verification of sanitation schedule
+2021-02-01T10:02,Verification of sanitation schedule
+2021-02-01T10:13,Parking information
+2021-02-01T10:17,Verification of sanitation schedule
+2021-02-01T10:17,Verification of sanitation schedule
+2021-02-01T10:18,Trash questions
+2021-02-01T10:19,Illegal parking
+2021-02-01T10:21,Trash questions
+2021-02-01T10:28,Trash questions
+2021-02-01T10:32,Verification of sanitation schedule
+2021-02-01T10:42,Verification of sanitation schedule
+2021-02-01T10:48,Trash questions
+2021-02-01T10:57,Verification of sanitation schedule
+2021-02-01T11:04,Verification of sanitation schedule
+2021-02-01T11:26,Parking information
+2021-02-01T11:40,Verification of sanitation schedule
+2021-02-01T11:54,Trash questions
+2021-02-01T11:55,Trash questions
+2021-02-01T12:05,Parking information
+2021-02-01T12:10,Illegal parking
+2021-02-01T12:17,Illegal parking
+2021-02-01T12:17,Trash questions
+2021-02-01T12:19,Trash questions
+2021-02-01T12:21,Trash questions
+2021-02-01T12:28,Illegal parking
+2021-02-01T12:31,Verification of sanitation schedule
+2021-02-01T12:54,Trash questions
+2021-02-01T13:02,Verification of sanitation schedule
+2021-02-01T13:04,Illegal parking
+2021-02-01T13:06,Trash questions
+2021-02-01T13:16,Trash questions
+2021-02-01T13:17,Trash questions
+2021-02-01T13:20,Illegal parking
+2021-02-01T13:30,Verification of sanitation schedule
+2021-02-01T13:39,Trash questions
+2021-02-01T13:42,Illegal parking
+2021-02-01T13:42,Illegal parking
+2021-02-01T13:45,Illegal parking
+2021-02-01T13:45,Car booted/towed inquiry
+2021-02-01T13:46,Verification of sanitation schedule
+2021-02-01T13:47,Illegal parking
+2021-02-01T13:48,Trash questions
+2021-02-01T13:49,Trash questions
+2021-02-01T13:53,Trash questions
+2021-02-01T14:00,Trash questions
+2021-02-01T14:09,Trash questions
+2021-02-01T14:12,Trash questions
+2021-02-01T14:12,Trash questions
+2021-02-01T14:13,Trash questions
+2021-02-01T14:19,Trash questions
+2021-02-01T14:22,Trash questions
+2021-02-01T14:23,Trash questions
+2021-02-01T14:24,Trash questions
+2021-02-01T14:25,Illegal parking
+2021-02-01T14:26,Trash questions
+2021-02-01T14:27,Verification of sanitation schedule
+2021-02-01T14:28,Illegal parking
+2021-02-01T14:32,Trash questions
+2021-02-01T14:40,Trash questions
+2021-02-01T14:41,Illegal parking
+2021-02-01T14:48,Trash questions
+2021-02-01T14:49,Illegal parking
+2021-02-01T14:53,Verification of sanitation schedule
+2021-02-01T14:53,Trash questions
+2021-02-01T14:55,Verification of sanitation schedule
+2021-02-01T14:56,Trash/recycling out too early or late
+2021-02-01T15:00,Car booted/towed inquiry
+2021-02-01T15:01,Trash questions
+2021-02-01T15:02,Car booted/towed inquiry
+2021-02-01T15:03,Verification of sanitation schedule
+2021-02-01T15:09,Verification of sanitation schedule
+2021-02-01T15:10,Verification of sanitation schedule
+2021-02-01T15:11,Verification of sanitation schedule
+2021-02-01T15:16,Verification of sanitation schedule
+2021-02-01T15:19,Car booted/towed inquiry
+2021-02-01T15:22,Parking information
+2021-02-01T15:23,Verification of sanitation schedule
+2021-02-01T15:25,Illegal parking
+2021-02-01T15:27,Verification of sanitation schedule
+2021-02-01T15:32,Illegal parking
+2021-02-01T15:35,Verification of sanitation schedule
+2021-02-01T15:39,Verification of sanitation schedule
+2021-02-01T15:41,Verification of sanitation schedule
+2021-02-01T15:44,Trash questions
+2021-02-01T15:45,Verification of sanitation schedule
+2021-02-01T15:45,Verification of sanitation schedule
+2021-02-01T15:52,Verification of sanitation schedule
+2021-02-01T15:55,Verification of sanitation schedule
+2021-02-01T15:55,Trash questions
+2021-02-01T15:56,Trash questions
+2021-02-01T16:03,Verification of sanitation schedule
+2021-02-01T16:04,Trash questions
+2021-02-01T16:04,Verification of sanitation schedule
+2021-02-01T16:07,Verification of sanitation schedule
+2021-02-01T16:16,Verification of sanitation schedule
+2021-02-01T16:18,Verification of sanitation schedule
+2021-02-01T16:20,Trash questions
+2021-02-01T16:22,Parking information
+2021-02-01T16:24,Verification of sanitation schedule
+2021-02-01T16:32,Verification of sanitation schedule
+2021-02-01T16:33,Verification of sanitation schedule
+2021-02-01T16:35,Verification of sanitation schedule
+2021-02-01T16:35,Trash questions
+2021-02-01T16:38,Verification of sanitation schedule
+2021-02-01T16:55,Verification of sanitation schedule
+2021-02-01T17:01,Verification of sanitation schedule
+2021-02-01T17:04,Verification of sanitation schedule
+2021-02-01T17:05,Verification of sanitation schedule
+2021-02-01T17:06,Illegal parking
+2021-02-01T17:11,Verification of sanitation schedule
+2021-02-01T17:15,Trash questions
+2021-02-01T17:16,Verification of sanitation schedule
+2021-02-01T17:19,Verification of sanitation schedule
+2021-02-01T17:20,Verification of sanitation schedule
+2021-02-01T17:29,Verification of sanitation schedule
+2021-02-01T17:30,Car booted/towed inquiry
+2021-02-01T17:33,Illegal parking
+2021-02-01T17:39,Illegal parking
+2021-02-01T17:42,Trash questions
+2021-02-01T17:43,Trash questions
+2021-02-01T17:44,Verification of sanitation schedule
+2021-02-01T18:30,Illegal parking
+2021-02-01T18:34,Car booted/towed inquiry
+2021-02-01T18:53,Parking information
+2021-02-01T19:13,Verification of sanitation schedule
+2021-02-01T19:35,Car booted/towed inquiry
+2021-02-01T19:50,Car booted/towed inquiry
+2021-02-01T21:24,Car booted/towed inquiry
+2021-02-01T21:25,Illegal parking
+2021-02-01T21:47,Illegal parking
+2021-02-01T22:00,Verification of sanitation schedule
+2021-02-02T08:18,Illegal parking
+2021-02-02T08:43,Car booted/towed inquiry
+2021-02-02T08:53,Car booted/towed inquiry
+2021-02-02T09:09,Verification of sanitation schedule
+2021-02-02T09:25,Parking information
+2021-02-02T09:46,Parking information
+2021-02-02T10:11,Car booted/towed inquiry
+2021-02-02T10:23,Car booted/towed inquiry
+2021-02-02T10:31,Trash questions
+2021-02-02T10:42,Parking information
+2021-02-02T10:57,Verification of sanitation schedule
+2021-02-02T11:00,Trash questions
+2021-02-02T11:21,Parking information
+2021-02-02T11:27,Trash questions
+2021-02-02T11:40,Parking information
+2021-02-02T11:59,Illegal parking
+2021-02-02T12:57,Car booted/towed inquiry
+2021-02-02T13:08,Parking information
+2021-02-02T13:33,Parking information
+2021-02-02T13:57,Verification of sanitation schedule
+2021-02-02T14:11,Car booted/towed inquiry
+2021-02-02T14:18,Car booted/towed inquiry
+2021-02-02T14:24,Car booted/towed inquiry
+2021-02-02T14:27,Illegal parking
+2021-02-02T14:39,Car booted/towed inquiry
+2021-02-02T14:45,Verification of sanitation schedule
+2021-02-02T15:13,Parking information
+2021-02-02T15:25,Car booted/towed inquiry
+2021-02-02T16:04,Parking information
+2021-02-02T16:23,Verification of sanitation schedule
+2021-02-02T16:31,Verification of sanitation schedule
+2021-02-02T16:36,Illegal parking
+2021-02-02T16:45,Illegal parking
+2021-02-03T07:39,Illegal parking
+2021-02-03T08:09,Trash questions
+2021-02-03T08:10,Illegal parking
+2021-02-03T08:17,Car booted/towed inquiry
+2021-02-03T08:54,Illegal parking
+2021-02-03T09:02,Illegal parking
+2021-02-03T09:09,Illegal parking
+2021-02-03T09:33,Parking information
+2021-02-03T09:58,Parking information
+2021-02-03T10:09,Parking information
+2021-02-03T10:27,Parking information
+2021-02-03T10:28,Trash questions
+2021-02-03T10:52,Parking information
+2021-02-03T11:06,Trash questions
+2021-02-03T11:11,Trash questions
+2021-02-03T12:39,Car booted/towed inquiry
+2021-02-03T12:53,Trash questions
+2021-02-03T13:26,Trash questions
+2021-02-03T13:51,Parking information
+2021-02-03T13:51,Parking information
+2021-02-03T14:04,Parking information
+2021-02-03T14:06,Verification of sanitation schedule
+2021-02-03T14:14,Verification of sanitation schedule
+2021-02-03T14:19,Trash questions
+2021-02-03T14:31,Parking information
+2021-02-03T14:34,Trash questions
+2021-02-03T14:44,Verification of sanitation schedule
+2021-02-03T15:25,Verification of sanitation schedule
+2021-02-03T15:37,Illegal parking
+2021-02-03T15:46,Verification of sanitation schedule
+2021-02-03T22:42,Illegal parking
+2021-02-04T06:34,Trash/recycling out too early or late
+2021-02-04T07:38,Parking information
+2021-02-04T07:44,Parking information
+2021-02-04T07:48,Parking information
+2021-02-04T08:35,Parking information
+2021-02-04T08:43,Illegal parking
+2021-02-04T09:11,Trash questions
+2021-02-04T09:31,Parking information
+2021-02-04T09:38,Trash questions
+2021-02-04T09:46,Illegal parking
+2021-02-04T09:58,Trash questions
+2021-02-04T10:11,Parking information
+2021-02-04T10:26,Parking information
+2021-02-04T11:25,Parking information
+2021-02-04T11:50,Illegal parking
+2021-02-04T12:16,Parking information
+2021-02-04T12:24,Car booted/towed inquiry
+2021-02-04T12:36,Parking information
+2021-02-04T13:00,Verification of sanitation schedule
+2021-02-04T13:26,Trash questions
+2021-02-04T13:29,Parking information
+2021-02-04T14:06,Illegal parking
+2021-02-04T14:06,Parking information
+2021-02-04T15:39,Illegal parking
+2021-02-04T16:37,Parking information
+2021-02-04T17:02,Illegal parking
+2021-02-04T17:09,Illegal parking
+2021-02-04T18:42,Illegal parking
+2021-02-05T08:21,Illegal parking
+2021-02-05T08:41,Illegal parking
+2021-02-05T08:53,Illegal parking
+2021-02-05T11:08,Parking information
+2021-02-05T11:10,Trash questions
+2021-02-05T11:11,Illegal parking
+2021-02-05T11:47,Parking information
+2021-02-05T12:28,Parking information
+2021-02-05T13:13,Trash questions
+2021-02-05T13:30,Parking information
+2021-02-05T13:34,Trash questions
+2021-02-05T15:21,Car booted/towed inquiry
+2021-02-05T15:34,Parking information
+2021-02-05T16:00,Verification of sanitation schedule
+2021-02-05T17:02,Illegal parking
+2021-02-05T17:29,Illegal parking
+2021-02-06T11:51,Illegal parking
+2021-02-06T12:13,Parking information
+2021-02-06T18:51,Illegal parking
+2021-02-07T09:49,Parking information
+2021-02-07T20:32,Illegal parking
+2021-02-08T08:56,Illegal parking
+2021-02-08T09:18,Parking information
+2021-02-08T09:22,Illegal parking
+2021-02-08T09:40,Parking information
+2021-02-08T09:48,Illegal parking
+2021-02-08T10:01,Trash questions
+2021-02-08T10:03,Trash questions
+2021-02-08T10:35,Illegal parking
+2021-02-08T12:34,Illegal parking
+2021-02-08T13:02,Trash questions
+2021-02-08T13:07,Car booted/towed inquiry
+2021-02-08T13:31,Verification of sanitation schedule
+2021-02-08T14:14,Parking information
+2021-02-08T14:42,Parking information
+2021-02-08T14:53,Trash questions
+2021-02-08T15:44,Trash questions
+2021-02-08T16:06,Parking information
+2021-02-08T17:07,Illegal parking
+2021-02-08T19:41,Illegal parking
+2021-02-09T00:06,Illegal parking
+2021-02-09T08:24,Illegal parking
+2021-02-09T09:24,Trash questions
+2021-02-09T09:27,Parking information
+2021-02-09T09:33,Parking information
+2021-02-09T09:35,Parking information
+2021-02-09T09:39,Parking information
+2021-02-09T09:54,Illegal parking
+2021-02-09T10:18,Parking information
+2021-02-09T10:25,Parking information
+2021-02-09T12:14,Verification of sanitation schedule
+2021-02-09T12:18,Illegal parking
+2021-02-09T13:10,Parking information
+2021-02-09T13:21,Trash questions
+2021-02-09T14:22,Parking information
+2021-02-09T14:28,Illegal parking
+2021-02-09T14:39,Parking information
+2021-02-09T14:40,Verification of sanitation schedule
+2021-02-09T15:03,Trash questions
+2021-02-09T15:04,Parking information
+2021-02-09T15:09,Verification of sanitation schedule
+2021-02-09T15:25,Verification of sanitation schedule
+2021-02-09T15:28,Parking information
+2021-02-09T16:04,Parking information
+2021-02-09T16:05,Verification of sanitation schedule
+2021-02-09T16:24,Verification of sanitation schedule
+2021-02-09T16:47,Verification of sanitation schedule
+2021-02-09T17:09,Illegal parking
+2021-02-09T17:11,Verification of sanitation schedule
+2021-02-09T18:17,Illegal parking
+2021-02-09T18:28,Illegal parking
+2021-02-10T09:00,Illegal parking
+2021-02-10T09:09,Illegal parking
+2021-02-10T09:18,Parking information
+2021-02-10T09:22,Trash questions
+2021-02-10T09:55,Parking information
+2021-02-10T10:17,Trash questions
+2021-02-10T10:18,Parking information
+2021-02-10T11:56,Parking information
+2021-02-10T12:07,Parking information
+2021-02-10T12:09,Illegal parking
+2021-02-10T12:19,Trash questions
+2021-02-10T12:41,Illegal parking
+2021-02-10T12:44,Illegal parking
+2021-02-10T14:03,Illegal parking
+2021-02-10T14:38,Illegal parking
+2021-02-10T15:29,Parking information
+2021-02-10T15:33,Parking information
+2021-02-10T15:43,Trash questions
+2021-02-10T16:21,Verification of sanitation schedule
+2021-02-10T17:43,Illegal parking
+2021-02-10T17:59,Parking information
+2021-02-11T09:15,Parking information
+2021-02-11T09:32,Trash questions
+2021-02-11T09:34,Illegal parking
+2021-02-11T10:13,Parking information
+2021-02-11T11:05,Parking information
+2021-02-11T11:08,Verification of sanitation schedule
+2021-02-11T11:11,Trash questions
+2021-02-11T11:30,Parking information
+2021-02-11T11:42,Parking information
+2021-02-11T11:50,Parking information
+2021-02-11T12:24,Trash questions
+2021-02-11T12:26,Illegal parking
+2021-02-11T12:30,Trash questions
+2021-02-11T12:58,Illegal parking
+2021-02-11T13:36,Trash questions
+2021-02-11T13:47,Illegal parking
+2021-02-11T13:51,Parking information
+2021-02-11T14:03,Illegal parking
+2021-02-11T14:22,Parking information
+2021-02-11T15:11,Trash questions
+2021-02-11T15:17,Parking information
+2021-02-11T15:29,Parking information
+2021-02-11T15:33,Parking information
+2021-02-11T16:22,Trash questions
+2021-02-11T16:52,Parking information
+2021-02-11T16:55,Parking information
+2021-02-11T17:40,Verification of sanitation schedule
+2021-02-11T18:52,Illegal parking
+2021-02-12T09:12,Illegal parking
+2021-02-12T09:14,Trash questions
+2021-02-12T09:18,Illegal parking
+2021-02-12T10:17,Parking information
+2021-02-12T10:27,Illegal parking
+2021-02-12T11:46,Trash questions
+2021-02-12T11:57,Illegal parking
+2021-02-12T13:06,Illegal parking
+2021-02-12T13:51,Illegal parking
+2021-02-12T14:31,Parking information
+2021-02-12T15:06,Verification of sanitation schedule
+2021-02-12T16:47,Parking information
+2021-02-13T08:05,Parking information
+2021-02-13T12:31,Trash questions
+2021-02-13T13:26,Illegal parking
+2021-02-14T11:47,Illegal parking
+2021-02-14T16:56,Illegal parking
+2021-02-15T11:07,Trash questions
+2021-02-15T11:35,Car booted/towed inquiry

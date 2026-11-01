@@ -1,0 +1,71 @@
+created_hour,kind,route_or_station,header
+2020-01-16T06:00,delay,89,Route 89 experiencing delays of up to 20 minutes
+2020-01-16T07:00,delay,80,Route 80 experiencing delays of up to 30 minutes due to traffic
+2020-01-16T07:00,delay,85,Route 85 experiencing delays of up to 25 minutes due to accident
+2020-01-16T08:00,delay,83,Route 83 experiencing delays of up to 30 minutes due to traffic
+2020-01-16T16:00,delay,91,Route 91 experiencing delays of up to 20 minutes due to traffic
+2020-01-16T16:00,delay,96,Route 96 experiencing delays of up to 20 minutes due to traffic
+2020-01-16T17:00,delay,101,Route 101 experiencing delays of up to 20 minutes due to traffic
+2020-01-16T17:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to traffic
+2020-01-16T18:00,delay,90,Route 90 experiencing delays of up to 25 minutes due to disabled bus
+2020-01-17T06:00,delay,747,CT2 experiencing delays of up to 20 minutes due to traffic
+2020-01-17T09:00,delay,101,Route 101 experiencing delays of up to 20 minutes due to disabled bus
+2020-01-17T09:00,detour,86,Route 86 detoured due to construction. Connect at Harvard and Washington St @ Beacon St.
+2020-01-17T15:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to traffic
+2020-01-17T15:00,delay,91,Route 91 experiencing delays of up to 20 minutes due to traffic
+2020-01-17T16:00,delay,89,Route 89 experiencing delays of up to 20 minutes due to traffic
+2020-01-17T16:00,delay,90,Route 90 experiencing delays of up to 20 minutes due to traffic
+2020-01-18T16:00,delay,109,Route 109 experiencing delays of up to 25 minutes
+2020-01-18T18:00,delay,109,Route 109 experiencing delays of up to 25 minutes due to traffic
+2020-01-18T20:00,delay,101,Route 101 experiencing delays of up to 20 minutes due to traffic
+2020-01-18T21:00,delay,91,Route 91 experiencing delays of up to 25 minutes due to accident
+2020-01-19T15:00,delay,91,Route 91 experiencing delays of up to 20 minutes due to traffic
+2020-01-19T16:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to police action
+2020-01-19T18:00,delay,109,Route 109 experiencing delays of up to 25 minutes due to traffic
+2020-01-19T19:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to traffic
+2020-01-20T07:00,delay,101,Route 101 experiencing delays of up to 20 minutes due to traffic
+2020-01-20T08:00,delay,88,Route 88 experiencing delays of up to 20 minutes due to traffic
+2020-01-20T08:00,delay,89,Route 89 experiencing delays of up to 20 minutes due to traffic
+2020-01-20T10:00,delay,87,Route 87 experiencing delays of up to 20 minutes due to traffic
+2020-01-21T07:00,delay,83,Route 83 experiencing delays of up to 25 minutes due to traffic
+2020-01-21T08:00,delay,87,Route 87 experiencing delays of up to 25 minutes due to traffic
+2020-01-21T09:00,delay,85,Route 85 experiencing delays of up to 20 minutes due to traffic
+2020-01-21T09:00,delay,88,Route 88 experiencing delays of up to 20 minutes due to traffic
+2020-01-21T13:00,delay,90,Route 90 experiencing delays of up to 20 minutes due to traffic
+2020-01-21T15:00,delay,89,Route 89 experiencing delays of up to 20 minutes due to traffic
+2020-01-21T16:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to traffic
+2020-01-21T17:00,delay,80,Route 80 experiencing delays of up to 20 minutes due to traffic
+2020-01-21T20:00,delay,87,Route 87 experiencing delays of up to 25 minutes
+2020-01-22T09:00,delay,85,Route 85 experiencing delays of up to 20 minutes
+2020-01-22T09:00,delay,90,Route 90 experiencing delays of up to 20 minutes due to traffic
+2020-01-22T10:00,delay,89,Route 89 experiencing delays of up to 30 minutes due to accident
+2020-01-22T14:00,delay,87,Route 87 experiencing delays of up to 20 minutes due to traffic
+2020-01-22T15:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to traffic
+2020-01-22T16:00,delay,747,CT2 experiencing delays of up to 20 minutes due to accident
+2020-01-22T17:00,delay,101,Route 101 experiencing delays of up to 20 minutes due to traffic
+2020-01-22T17:00,delay,85,Route 85 experiencing delays of up to 20 minutes due to traffic
+2020-01-22T17:00,delay,96,Route 96 experiencing delays of up to 20 minutes due to traffic
+2020-01-22T18:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to traffic
+2020-01-22T20:00,delay,89,Route 89 experiencing delays of up to 20 minutes due to traffic
+2020-01-23T07:00,delay,83,Route 83 experiencing delays of up to 25 minutes due to traffic
+2020-01-23T07:00,delay,89,Route 89 experiencing delays of up to 20 minutes due to traffic
+2020-01-23T08:00,delay,87,Route 87 experiencing delays of up to 20 minutes due to traffic
+2020-01-23T08:00,delay,91,Route 91 experiencing delays of up to 25 minutes due to traffic
+2020-01-23T10:00,delay,95,Route 95 experiencing delays of up to 20 minutes due to traffic
+2020-01-23T16:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to traffic
+2020-01-23T16:00,delay,85,Route 85 experiencing delays of up to 20 minutes due to traffic
+2020-01-23T16:00,delay,96,Route 96 experiencing delays of up to 25 minutes due to traffic
+2020-01-23T18:00,delay,747,CT2 experiencing delays of up to 20 minutes due to traffic
+2020-01-24T08:00,delay,83,Route 83 experiencing delays of up to 20 minutes due to traffic
+2020-01-24T11:00,delay,85,Route 85 experiencing delays of up to 20 minutes due to traffic
+2020-01-24T14:00,delay,89,Route 89 experiencing delays of up to 25 minutes due to traffic
+2020-01-24T15:00,delay,109,Route 109 experiencing delays of up to 25 minutes due to traffic
+2020-01-24T15:00,delay,87,Route 87 experiencing delays of up to 20 minutes due to traffic
+2020-01-24T15:00,delay,88,Route 88 experiencing delays of up to 20 minutes due to traffic
+2020-01-24T15:00,delay,96,Route 96 experiencing delays of up to 25 minutes
+2020-01-24T16:00,delay,101,Route 101 experiencing delays of up to 20 minutes due to traffic
+2020-01-24T16:00,delay,83,Route 83 experiencing delays of up to 20 minutes due to traffic
+2020-01-24T17:00,delay,96,Route 96 experiencing delays of up to 20 minutes due to traffic
+2020-01-24T19:00,delay,91,Route 91 experiencing delays of up to 30 minutes due to disabled bus
+2020-01-25T20:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to traffic
+2020-01-25T21:00,delay,101,Route 101 experiencing delays of more than 30 minutes

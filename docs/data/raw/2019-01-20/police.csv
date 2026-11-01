@@ -1,0 +1,21 @@
+shift_start,police_shift,type,ward
+2019-01-18T08:00,Day Shift (8AM - 4PM),DISABLED MV,1
+2019-01-19T16:00,First Half (4PM - Midnight),SNOEMTOW,3
+2019-01-19T16:00,First Half (4PM - Midnight),SNOEMTOW,3
+2019-01-19T16:00,First Half (4PM - Midnight),SNOEMTOW,3
+2019-01-19T16:00,First Half (4PM - Midnight),SNOEMTOW,3
+2019-01-19T16:00,First Half (4PM - Midnight),SNOEMTOW,3
+2019-01-19T16:00,First Half (4PM - Midnight),SNOEMTOW,3
+2019-01-19T16:00,First Half (4PM - Midnight),SNOEMTOW,3
+2019-01-19T16:00,First Half (4PM - Midnight),SNOEMTOW,3
+2019-01-20T00:00,Last Half (Midnight - 8AM),SNOEMTOW,6
+2019-01-20T00:00,Last Half (Midnight - 8AM),SNOEMTOW,3
+2019-01-20T00:00,Last Half (Midnight - 8AM),SNOEMTOW,3
+2019-01-22T00:00,Last Half (Midnight - 8AM),DISABLED MV,7
+2019-01-22T00:00,Last Half (Midnight - 8AM),DISABLED MV,6
+2019-01-22T00:00,Last Half (Midnight - 8AM),DISABLED MV,3
+2019-01-22T08:00,Day Shift (8AM - 4PM),DISABLED MV,6
+2019-01-23T08:00,Day Shift (8AM - 4PM),DISABLED MV,5
+2019-01-24T16:00,First Half (4PM - Midnight),DISABLED MV,1
+2019-01-25T08:00,Day Shift (8AM - 4PM),DISABLED MV,4
+2019-01-26T16:00,First Half (4PM - Midnight),DISABLED MV,2

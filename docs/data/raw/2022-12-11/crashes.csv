@@ -1,0 +1,10 @@
+date_hour,time,where,what,how,surface,weather,light,hurt,pedestrian,cyclist,pedestrian_where,pedestrian_doing,hit_and_run
+2022-12-11T18:00,18:09,Cross St & Tufts St,Collision with motor vehicle in traffic,Angle,Ice,Snow,Dark - lighted roadway,possible,1,0,Sidewalk,Standing,False
+2022-12-11T19:00,19:02,Cross St & Tufts St,Collision with parked motor vehicle,Angle,Ice,Snow,Dark - lighted roadway,none,0,0,,,False
+2022-12-11T19:00,19:08,Albion St & Lowell St,,Single vehicle crash,Ice,Snow,Dark - lighted roadway,none,0,0,,,False
+2022-12-14T06:00,06:15,Broadway & Warner St,Collision with motor vehicle in traffic,Angle,Dry,Clear,Dark - lighted roadway,none,0,0,,,False
+2022-12-14T17:00,17:38,Bike Path,Collision with pedestrian,Single vehicle crash,Dry,Clear,Dark - lighted roadway,possible,1,0,Marked crosswalk at intersection,"Walking, running or cycling",False
+2022-12-14T18:00,18:14,Granite St & Somerville Av,Collision with pedestrian,Single vehicle crash,Dry,Clear,Dark - lighted roadway,possible,1,0,Marked crosswalk at intersection,"Walking, running or cycling",False
+2022-12-15T12:00,12:01,Dover St & Orchard St,Collision with motor vehicle in traffic,Angle,Wet,Cloudy,Daylight,none,0,0,,,False
+2022-12-15T18:00,18:16,Webster & Prospect St,Collision with motor vehicle in traffic,"Sideswipe, opposite direction",Wet,Rain,Dark - lighted roadway,none,0,0,,,False
+2022-12-16T11:00,11:34,Joy St & Washington St,Collision with pedalcycle,Single vehicle crash,Wet,Rain,Daylight,minor,0,1,Not in roadway,"Walking, running or cycling",False

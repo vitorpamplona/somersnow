@@ -1,0 +1,505 @@
+created,group,type,ward
+2021-01-25T14:57,ask,Snow emergency parking inquiry,1
+2021-01-26T10:34,ask,Snow emergency inquiry,2
+2021-01-26T16:26,ask,Snow emergency inquiry,5
+2021-01-26T16:49,ask,Snow emergency inquiry,6
+2021-01-26T17:08,ask,Snow emergency inquiry,4
+2021-01-26T17:12,ask,Snow emergency inquiry,
+2021-01-26T17:25,ask,Snow emergency inquiry,1
+2021-01-26T17:26,ask,Snow emergency inquiry,1
+2021-01-26T17:45,ask,Snow emergency inquiry,4
+2021-01-26T18:58,street,Salting request,4
+2021-01-26T19:22,feedback,Snow related feedback,3
+2021-01-26T20:16,street,Salting request,6
+2021-01-27T08:03,street,Snow removal request,5
+2021-01-27T08:29,street,Snow removal request,2
+2021-01-27T08:40,street,Snow removal request,3
+2021-01-27T08:51,sidewalk,Snow/sidewalk not shoveled,7
+2021-01-27T08:54,ask,Snow emergency inquiry,
+2021-01-27T09:13,street,Snow removal request,2
+2021-01-27T09:16,street,Snow removal request,5
+2021-01-27T09:55,street,Snow removal request,5
+2021-01-27T11:36,street,Snow removal request,5
+2021-01-27T13:44,ask,Snow emergency inquiry,
+2021-01-27T15:12,street,Snow removal request,5
+2021-01-27T16:35,street,Snow removal request,6
+2021-01-28T11:30,street,Salting request,3
+2021-01-28T12:14,ask,Snow emergency parking inquiry,
+2021-01-28T14:11,ask,Snow emergency parking inquiry,4
+2021-01-28T17:12,street,Snow removal request,6
+2021-01-28T17:13,street,Salting request,5
+2021-01-28T17:14,street,Snow removal request,6
+2021-01-29T08:22,ask,Snow emergency parking inquiry,2
+2021-01-29T11:00,street,Snow removal request,5
+2021-01-29T11:02,street,Snow removal request,5
+2021-01-29T11:19,sidewalk,Snow/sidewalk not shoveled,2
+2021-01-29T11:19,sidewalk,Snow/sidewalk not shoveled,2
+2021-01-29T11:20,sidewalk,Snow/sidewalk not shoveled,2
+2021-01-29T13:08,sidewalk,Snow/sidewalk not shoveled,3
+2021-01-29T13:09,street,Salting request,
+2021-01-29T13:38,sidewalk,Snow/sidewalk not shoveled,2
+2021-01-29T13:44,street,Snow removal request,3
+2021-01-30T09:44,sidewalk,Snow/sidewalk not shoveled,6
+2021-01-30T13:06,sidewalk,Snow/sidewalk not shoveled,2
+2021-01-31T08:21,sidewalk,Snow/sidewalk not shoveled,4
+2021-01-31T08:30,sidewalk,Snow/sidewalk not shoveled,5
+2021-01-31T13:43,ask,Snow emergency parking inquiry,3
+2021-01-31T14:35,ask,Snow emergency parking inquiry,
+2021-01-31T14:38,sidewalk,Snow/sidewalk not shoveled,7
+2021-01-31T18:07,sidewalk,Snow/sidewalk not shoveled,5
+2021-01-31T18:13,sidewalk,Snow/sidewalk not shoveled,2
+2021-01-31T20:30,sidewalk,Snow/sidewalk not shoveled,7
+2021-02-01T07:43,ask,Snow emergency inquiry,
+2021-02-01T08:23,ask,Snow emergency parking inquiry,6
+2021-02-01T08:24,sidewalk,Snow/sidewalk not shoveled,4
+2021-02-01T08:26,ask,Snow emergency parking inquiry,1
+2021-02-01T08:42,ask,Snow emergency parking inquiry,2
+2021-02-01T08:45,ask,Snow emergency inquiry,5
+2021-02-01T08:48,ask,Snow emergency parking inquiry,1
+2021-02-01T09:16,ask,Snow emergency inquiry,4
+2021-02-01T09:22,ask,Snow emergency parking inquiry,
+2021-02-01T09:41,ask,Snow emergency inquiry,1
+2021-02-01T09:44,ask,Snow emergency parking inquiry,
+2021-02-01T09:45,ask,Snow emergency parking inquiry,2
+2021-02-01T09:46,ask,Snow emergency parking inquiry,
+2021-02-01T09:55,street,Sand barrel,5
+2021-02-01T10:07,ask,Snow emergency parking inquiry,6
+2021-02-01T10:12,ask,Snow emergency parking inquiry,7
+2021-02-01T10:13,sidewalk,Snow/sidewalk not shoveled,5
+2021-02-01T10:17,ask,Snow emergency parking inquiry,1
+2021-02-01T10:20,ask,Snow emergency parking inquiry,5
+2021-02-01T10:30,ask,Snow emergency inquiry,
+2021-02-01T10:35,ask,Snow emergency parking inquiry,3
+2021-02-01T10:39,ask,Snow emergency parking inquiry,7
+2021-02-01T10:49,ask,Snow emergency inquiry,1
+2021-02-01T11:01,ask,Snow emergency parking inquiry,
+2021-02-01T11:05,ask,Snow emergency parking inquiry,
+2021-02-01T11:13,ask,Snow emergency parking inquiry,4
+2021-02-01T11:14,ask,Snow emergency parking inquiry,2
+2021-02-01T11:15,ask,Snow emergency parking inquiry,5
+2021-02-01T11:25,street,Snow removal request,5
+2021-02-01T11:39,ask,Snow emergency parking inquiry,7
+2021-02-01T11:54,ask,Snow emergency parking inquiry,3
+2021-02-01T12:00,ask,Snow emergency parking inquiry,3
+2021-02-01T12:10,spacesaver,Space saver report,7
+2021-02-01T12:14,street,Sand barrel,2
+2021-02-01T12:29,ask,Snow emergency parking inquiry,4
+2021-02-01T12:36,ask,Snow emergency parking inquiry,2
+2021-02-01T12:57,ask,Snow emergency parking inquiry,
+2021-02-01T13:08,ask,Snow emergency parking inquiry,
+2021-02-01T13:11,ask,Snow emergency parking inquiry,4
+2021-02-01T13:18,feedback,Snow related feedback,
+2021-02-01T13:25,sidewalk,Snow/sidewalk not shoveled,7
+2021-02-01T13:27,sidewalk,Snow/sidewalk not shoveled,7
+2021-02-01T13:28,sidewalk,Snow/sidewalk not shoveled,7
+2021-02-01T13:34,feedback,Snow related feedback,3
+2021-02-01T13:42,ask,Snow emergency parking inquiry,
+2021-02-01T13:44,ask,Snow emergency parking inquiry,1
+2021-02-01T13:54,ask,Snow emergency parking inquiry,
+2021-02-01T14:07,ask,Snow emergency parking inquiry,3
+2021-02-01T14:11,ask,Snow emergency parking inquiry,3
+2021-02-01T14:16,ask,Snow emergency parking inquiry,
+2021-02-01T14:18,ask,Snow emergency parking inquiry,2
+2021-02-01T14:30,ask,Snow emergency parking inquiry,4
+2021-02-01T14:30,feedback,Snow related feedback,2
+2021-02-01T14:33,ask,Snow emergency parking inquiry,7
+2021-02-01T14:34,spacesaver,Space saver report,4
+2021-02-01T14:34,spacesaver,Space saver report,3
+2021-02-01T14:38,ask,Snow emergency parking inquiry,
+2021-02-01T14:47,ask,Snow emergency parking inquiry,4
+2021-02-01T14:47,ask,Snow emergency parking inquiry,6
+2021-02-01T14:55,ask,Snow emergency parking inquiry,
+2021-02-01T15:00,ask,Snow emergency parking inquiry,4
+2021-02-01T15:00,ask,Snow emergency parking inquiry,2
+2021-02-01T15:04,ask,Snow emergency parking inquiry,2
+2021-02-01T15:17,ask,Snow emergency inquiry,7
+2021-02-01T15:17,ask,Snow emergency parking inquiry,
+2021-02-01T15:20,ask,Snow emergency parking inquiry,4
+2021-02-01T15:22,ask,Snow emergency parking inquiry,2
+2021-02-01T15:25,ask,Snow emergency parking inquiry,4
+2021-02-01T15:25,street,Sand barrel,3
+2021-02-01T15:28,ask,Snow emergency parking inquiry,5
+2021-02-01T15:30,ask,Snow emergency parking inquiry,4
+2021-02-01T15:38,ask,Snow emergency parking inquiry,5
+2021-02-01T15:41,feedback,Snow related feedback,
+2021-02-01T15:46,ask,Snow emergency parking inquiry,5
+2021-02-01T15:50,ask,Snow emergency inquiry,
+2021-02-01T15:57,ask,Snow emergency parking inquiry,
+2021-02-01T15:58,ask,Snow emergency parking inquiry,1
+2021-02-01T16:00,ask,Snow emergency inquiry,
+2021-02-01T16:01,ask,Snow emergency parking inquiry,
+2021-02-01T16:11,ask,Snow emergency parking inquiry,2
+2021-02-01T16:13,ask,Snow emergency parking inquiry,
+2021-02-01T16:13,ask,Snow emergency inquiry,
+2021-02-01T16:15,ask,Snow emergency parking inquiry,3
+2021-02-01T16:24,ask,Snow emergency parking inquiry,
+2021-02-01T17:05,ask,Snow emergency parking inquiry,3
+2021-02-01T17:49,ask,Snow emergency parking inquiry,4
+2021-02-01T17:50,feedback,Snow related feedback,2
+2021-02-01T18:46,street,Snow removal request,5
+2021-02-01T20:23,street,Snow removal request,4
+2021-02-01T21:25,feedback,Snow related feedback,4
+2021-02-01T23:27,sidewalk,Snow/sidewalk not shoveled,3
+2021-02-02T01:18,feedback,Snow related feedback,4
+2021-02-02T05:00,street,Snow removal request,4
+2021-02-02T06:48,feedback,Snow related feedback,3
+2021-02-02T07:08,ask,Snow emergency inquiry,2
+2021-02-02T07:32,street,Snow removal request,3
+2021-02-02T07:34,ask,Snow emergency inquiry,
+2021-02-02T07:38,ask,Snow emergency inquiry,
+2021-02-02T07:41,ask,Snow emergency inquiry,
+2021-02-02T07:53,ask,Snow emergency inquiry,
+2021-02-02T07:55,street,Snow removal request,3
+2021-02-02T08:09,sidewalk,Snow/sidewalk not shoveled,6
+2021-02-02T08:11,street,Snow removal request,3
+2021-02-02T08:16,street,Snow removal request,3
+2021-02-02T08:19,street,Sand barrel,5
+2021-02-02T08:21,ask,Snow emergency inquiry,2
+2021-02-02T08:22,ask,Snow emergency inquiry,
+2021-02-02T08:22,ask,Snow emergency parking inquiry,
+2021-02-02T08:29,ask,Snow emergency inquiry,
+2021-02-02T08:34,street,Snow removal request,4
+2021-02-02T08:34,ask,Snow emergency inquiry,
+2021-02-02T08:36,feedback,Snow related feedback,7
+2021-02-02T08:37,ask,Snow emergency inquiry,6
+2021-02-02T08:38,ask,Snow emergency inquiry,5
+2021-02-02T08:41,ask,Snow emergency inquiry,4
+2021-02-02T08:43,ask,Snow emergency inquiry,3
+2021-02-02T08:57,sidewalk,Snow/sidewalk not shoveled,2
+2021-02-02T09:04,ask,Snow emergency parking inquiry,5
+2021-02-02T09:08,ask,Snow emergency parking inquiry,5
+2021-02-02T09:08,ask,Snow emergency inquiry,6
+2021-02-02T09:09,street,Snow removal request,6
+2021-02-02T09:09,ask,Snow emergency parking inquiry,6
+2021-02-02T09:14,ask,Snow emergency parking inquiry,
+2021-02-02T09:15,ask,Snow emergency parking inquiry,
+2021-02-02T09:22,ask,Snow emergency inquiry,4
+2021-02-02T09:28,ask,Snow emergency parking inquiry,
+2021-02-02T09:29,ask,Snow emergency parking inquiry,3
+2021-02-02T09:34,street,Salting request,
+2021-02-02T09:52,street,Snow removal request,7
+2021-02-02T09:52,ask,Snow emergency parking inquiry,6
+2021-02-02T10:00,street,Snow removal request,4
+2021-02-02T10:03,feedback,Snow related feedback,2
+2021-02-02T10:12,street,Sand barrel,7
+2021-02-02T10:20,street,Snow removal request,6
+2021-02-02T10:20,street,Snow removal request,3
+2021-02-02T10:21,street,Salting request,3
+2021-02-02T10:24,street,Snow removal request,3
+2021-02-02T10:36,street,Salting request,3
+2021-02-02T10:51,ask,Snow emergency inquiry,1
+2021-02-02T10:55,street,Snow removal request,2
+2021-02-02T10:56,ask,Snow emergency parking inquiry,1
+2021-02-02T10:59,feedback,Snow related feedback,4
+2021-02-02T11:05,ask,Snow emergency parking inquiry,1
+2021-02-02T11:06,street,Salting request,3
+2021-02-02T11:07,street,Salting request,5
+2021-02-02T11:23,street,Snow removal request,2
+2021-02-02T11:24,ask,Snow emergency parking inquiry,1
+2021-02-02T11:33,street,Salting request,2
+2021-02-02T11:49,street,Snow removal request,7
+2021-02-02T11:54,street,Snow removal request,3
+2021-02-02T11:57,street,Salting request,3
+2021-02-02T12:02,street,Sand barrel,3
+2021-02-02T12:39,ask,Snow emergency parking inquiry,
+2021-02-02T13:04,street,Snow removal request,3
+2021-02-02T13:30,sidewalk,Snow/sidewalk not shoveled,4
+2021-02-02T13:36,sidewalk,Snow/sidewalk not shoveled,3
+2021-02-02T14:14,street,Salting request,5
+2021-02-02T14:34,street,Snow removal request,5
+2021-02-02T14:44,ask,Snow emergency inquiry,5
+2021-02-02T14:44,ask,Snow emergency inquiry,
+2021-02-02T14:59,ask,Snow emergency inquiry,3
+2021-02-02T15:24,street,Snow removal request,1
+2021-02-02T15:26,feedback,Snow related feedback,1
+2021-02-02T15:40,street,Snow removal request,3
+2021-02-02T15:52,ask,Snow emergency parking inquiry,
+2021-02-02T15:55,ask,Snow emergency inquiry,5
+2021-02-02T16:14,street,Snow removal request,1
+2021-02-02T16:24,street,Salting request,6
+2021-02-02T16:43,ask,Snow emergency parking inquiry,
+2021-02-02T16:43,ask,Snow emergency parking inquiry,
+2021-02-02T17:28,street,Snow removal request,6
+2021-02-02T17:41,street,Snow removal request,6
+2021-02-02T19:20,sidewalk,Snow/sidewalk not shoveled,5
+2021-02-02T20:15,street,Salting request,4
+2021-02-02T21:27,street,Snow removal request,6
+2021-02-02T22:26,street,Snow removal request,3
+2021-02-03T06:35,street,Snow removal request,2
+2021-02-03T07:37,street,Salting request,3
+2021-02-03T07:42,street,Salting request,2
+2021-02-03T07:54,street,Salting request,5
+2021-02-03T08:16,street,Salting request,1
+2021-02-03T08:26,street,Snow removal request,1
+2021-02-03T08:35,sidewalk,Snow/sidewalk not shoveled,3
+2021-02-03T08:45,street,Snow removal request,2
+2021-02-03T08:54,sidewalk,Snow/sidewalk not shoveled,6
+2021-02-03T09:30,street,Salting request,4
+2021-02-03T09:32,ask,Snow emergency parking inquiry,
+2021-02-03T09:37,sidewalk,Snow/sidewalk not shoveled,1
+2021-02-03T09:38,sidewalk,Snow/sidewalk not shoveled,1
+2021-02-03T10:04,sidewalk,Snow/sidewalk not shoveled,3
+2021-02-03T10:09,street,Snow removal request,6
+2021-02-03T10:19,street,Salting request,2
+2021-02-03T10:21,sidewalk,Snow/sidewalk not shoveled,6
+2021-02-03T10:22,street,Snow removal request,2
+2021-02-03T11:13,sidewalk,Snow/sidewalk not shoveled,5
+2021-02-03T11:26,feedback,Snow related feedback,3
+2021-02-03T11:28,sidewalk,Snow/sidewalk not shoveled,
+2021-02-03T11:40,street,Salting request,5
+2021-02-03T11:48,sidewalk,Snow/sidewalk not shoveled,3
+2021-02-03T12:00,sidewalk,Snow/sidewalk not shoveled,4
+2021-02-03T12:04,street,Snow removal request,2
+2021-02-03T12:24,street,Snow removal request,6
+2021-02-03T12:46,street,Snow removal request,5
+2021-02-03T12:59,sidewalk,Snow/sidewalk not shoveled,1
+2021-02-03T13:07,street,Snow removal request,3
+2021-02-03T13:11,street,Salting request,2
+2021-02-03T13:24,street,Snow removal request,5
+2021-02-03T14:12,street,Snow removal request,6
+2021-02-03T14:28,sidewalk,Snow/sidewalk not shoveled,6
+2021-02-03T14:44,street,Sand barrel,5
+2021-02-03T15:23,ask,Snow emergency parking inquiry,7
+2021-02-03T16:34,street,Snow removal request,5
+2021-02-03T16:34,street,Snow removal request,3
+2021-02-03T16:37,sidewalk,Snow/sidewalk not shoveled,7
+2021-02-03T16:37,street,Snow removal request,6
+2021-02-03T16:37,sidewalk,Snow/sidewalk not shoveled,3
+2021-02-03T16:43,ask,Snow emergency parking inquiry,
+2021-02-03T16:44,ask,Snow emergency parking inquiry,
+2021-02-03T17:01,sidewalk,Snow/sidewalk not shoveled,7
+2021-02-03T17:22,sidewalk,Snow/sidewalk not shoveled,5
+2021-02-03T17:24,street,Snow removal request,2
+2021-02-03T18:04,street,Snow removal request,2
+2021-02-03T18:05,street,Snow removal request,2
+2021-02-03T18:06,street,Snow removal request,3
+2021-02-03T18:07,street,Snow removal request,3
+2021-02-03T18:58,street,Snow removal request,1
+2021-02-03T19:18,street,Snow removal request,5
+2021-02-03T20:08,sidewalk,Snow/sidewalk not shoveled,3
+2021-02-04T08:08,street,Snow removal request,1
+2021-02-04T09:43,street,Snow removal request,6
+2021-02-04T09:43,street,Snow removal request,3
+2021-02-04T09:44,sidewalk,Snow/sidewalk not shoveled,4
+2021-02-04T09:45,feedback,Snow related feedback,
+2021-02-04T10:08,street,Snow removal request,2
+2021-02-04T10:38,sidewalk,Snow/sidewalk not shoveled,5
+2021-02-04T10:38,sidewalk,Snow/sidewalk not shoveled,6
+2021-02-04T10:41,sidewalk,Snow/sidewalk not shoveled,5
+2021-02-04T13:01,sidewalk,Snow/sidewalk not shoveled,4
+2021-02-04T13:03,sidewalk,Snow/sidewalk not shoveled,1
+2021-02-04T13:35,sidewalk,Snow/sidewalk not shoveled,2
+2021-02-04T14:31,street,Salting request,5
+2021-02-04T14:58,street,Snow removal request,1
+2021-02-04T15:23,street,Snow removal request,3
+2021-02-04T15:38,street,Snow removal request,2
+2021-02-04T17:15,feedback,Snow related feedback,3
+2021-02-05T07:36,street,Snow removal request,5
+2021-02-05T08:14,sidewalk,Snow/sidewalk not shoveled,5
+2021-02-05T08:28,street,Snow removal request,7
+2021-02-05T08:45,street,Snow removal request,2
+2021-02-05T09:35,street,Snow removal request,1
+2021-02-05T11:49,sidewalk,Snow/sidewalk not shoveled,3
+2021-02-05T11:57,spacesaver,Space saver report,7
+2021-02-05T12:53,street,Snow removal request,2
+2021-02-05T13:02,street,Snow removal request,3
+2021-02-05T13:06,sidewalk,Snow/sidewalk not shoveled,6
+2021-02-05T13:28,street,Snow removal request,4
+2021-02-05T15:46,ask,Snow emergency parking inquiry,3
+2021-02-05T16:57,sidewalk,Snow/sidewalk not shoveled,5
+2021-02-05T18:14,street,Snow removal request,7
+2021-02-05T19:26,sidewalk,Snow/sidewalk not shoveled,6
+2021-02-05T20:56,street,Snow removal request,3
+2021-02-06T08:12,street,Salting request,5
+2021-02-06T11:52,sidewalk,Snow/sidewalk not shoveled,1
+2021-02-06T12:08,street,Snow removal request,1
+2021-02-06T12:08,street,Snow removal request,1
+2021-02-06T12:57,street,Salting request,6
+2021-02-06T14:11,sidewalk,Snow/sidewalk not shoveled,5
+2021-02-06T15:19,street,Salting request,
+2021-02-06T16:09,sidewalk,Snow/sidewalk not shoveled,3
+2021-02-06T16:10,sidewalk,Snow/sidewalk not shoveled,1
+2021-02-06T16:11,sidewalk,Snow/sidewalk not shoveled,4
+2021-02-06T16:14,street,Snow removal request,1
+2021-02-07T07:46,ask,Snow emergency inquiry,
+2021-02-07T08:46,ask,Snow emergency inquiry,
+2021-02-07T08:49,ask,Snow emergency inquiry,
+2021-02-07T08:54,ask,Snow emergency inquiry,
+2021-02-07T10:21,ask,Snow emergency inquiry,
+2021-02-07T11:04,street,Snow removal request,5
+2021-02-07T11:24,ask,Snow emergency parking inquiry,1
+2021-02-07T11:53,sidewalk,Snow/sidewalk not shoveled,2
+2021-02-07T11:58,sidewalk,Snow/sidewalk not shoveled,4
+2021-02-07T13:24,street,Snow removal request,7
+2021-02-07T14:56,street,Salting request,4
+2021-02-07T14:57,street,Snow removal request,3
+2021-02-07T15:13,sidewalk,Snow/sidewalk not shoveled,2
+2021-02-07T15:27,sidewalk,Snow/sidewalk not shoveled,6
+2021-02-07T15:51,sidewalk,Snow/sidewalk not shoveled,5
+2021-02-07T16:23,street,Snow removal request,4
+2021-02-07T18:00,sidewalk,Snow/sidewalk not shoveled,7
+2021-02-07T20:54,sidewalk,Snow/sidewalk not shoveled,2
+2021-02-08T07:43,street,Snow removal request,3
+2021-02-08T08:02,street,Snow removal request,2
+2021-02-08T08:03,street,Snow removal request,5
+2021-02-08T08:03,sidewalk,Snow/sidewalk not shoveled,4
+2021-02-08T08:03,sidewalk,Snow/sidewalk not shoveled,1
+2021-02-08T08:04,sidewalk,Snow/sidewalk not shoveled,3
+2021-02-08T08:11,sidewalk,Snow/sidewalk not shoveled,5
+2021-02-08T08:17,street,Salting request,5
+2021-02-08T08:38,sidewalk,Snow/sidewalk not shoveled,2
+2021-02-08T08:43,street,Salting request,2
+2021-02-08T08:48,sidewalk,Snow/sidewalk not shoveled,2
+2021-02-08T08:49,street,Salting request,5
+2021-02-08T08:55,ask,Snow emergency inquiry,
+2021-02-08T08:59,ask,Snow emergency inquiry,
+2021-02-08T09:44,street,Salting request,5
+2021-02-08T10:09,street,Salting request,5
+2021-02-08T10:13,street,Salting request,5
+2021-02-08T10:15,street,Salting request,6
+2021-02-08T10:19,street,Snow removal request,7
+2021-02-08T11:04,street,Salting request,5
+2021-02-08T11:16,street,Snow removal request,2
+2021-02-08T13:08,spacesaver,Space saver report,2
+2021-02-08T13:40,street,Salting request,1
+2021-02-08T14:51,sidewalk,Snow/sidewalk not shoveled,3
+2021-02-08T14:53,spacesaver,Space saver report,6
+2021-02-08T16:14,sidewalk,Snow/sidewalk not shoveled,7
+2021-02-08T16:59,sidewalk,Snow/sidewalk not shoveled,6
+2021-02-08T17:14,sidewalk,Snow/sidewalk not shoveled,3
+2021-02-08T17:16,sidewalk,Snow/sidewalk not shoveled,3
+2021-02-08T17:25,spacesaver,Space saver report,3
+2021-02-08T17:44,street,Snow removal request,2
+2021-02-08T17:45,sidewalk,Snow/sidewalk not shoveled,6
+2021-02-08T17:45,street,Snow removal request,3
+2021-02-08T17:47,sidewalk,Snow/sidewalk not shoveled,6
+2021-02-08T20:44,street,Salting request,5
+2021-02-09T07:46,ask,Snow emergency inquiry,
+2021-02-09T08:04,street,Salting request,5
+2021-02-09T08:12,ask,Snow emergency inquiry,4
+2021-02-09T08:27,sidewalk,Snow/sidewalk not shoveled,3
+2021-02-09T08:42,sidewalk,Snow/sidewalk not shoveled,3
+2021-02-09T08:42,ask,Snow emergency inquiry,2
+2021-02-09T08:45,ask,Snow emergency inquiry,2
+2021-02-09T09:07,ask,Snow emergency inquiry,
+2021-02-09T09:10,ask,Snow emergency inquiry,1
+2021-02-09T09:40,ask,Snow emergency inquiry,6
+2021-02-09T09:54,ask,Snow emergency inquiry,
+2021-02-09T10:14,ask,Snow emergency parking inquiry,1
+2021-02-09T10:24,sidewalk,Snow/sidewalk not shoveled,6
+2021-02-09T10:53,sidewalk,Snow/sidewalk not shoveled,3
+2021-02-09T11:42,sidewalk,Snow/sidewalk not shoveled,7
+2021-02-09T11:43,sidewalk,Snow/sidewalk not shoveled,2
+2021-02-09T11:45,sidewalk,Snow/sidewalk not shoveled,2
+2021-02-09T12:03,ask,Snow emergency parking inquiry,3
+2021-02-09T12:08,ask,Snow emergency inquiry,4
+2021-02-09T12:10,ask,Snow emergency inquiry,
+2021-02-09T12:24,ask,Snow emergency inquiry,
+2021-02-09T12:39,ask,Snow emergency inquiry,
+2021-02-09T12:40,ask,Snow emergency inquiry,1
+2021-02-09T12:47,ask,Snow emergency inquiry,1
+2021-02-09T13:05,ask,Snow emergency inquiry,
+2021-02-09T13:32,ask,Snow emergency inquiry,
+2021-02-09T13:32,ask,Snow emergency inquiry,
+2021-02-09T13:50,ask,Snow emergency inquiry,1
+2021-02-09T13:59,ask,Snow emergency inquiry,
+2021-02-09T14:08,ask,Snow emergency inquiry,
+2021-02-09T14:38,ask,Snow emergency inquiry,
+2021-02-09T14:45,ask,Snow emergency parking inquiry,2
+2021-02-09T15:41,ask,Snow emergency inquiry,
+2021-02-09T15:42,ask,Snow emergency inquiry,1
+2021-02-09T15:50,ask,Snow emergency inquiry,6
+2021-02-09T16:01,ask,Snow emergency inquiry,1
+2021-02-09T16:02,feedback,Snow related feedback,3
+2021-02-09T16:03,feedback,Snow related feedback,
+2021-02-09T16:19,ask,Snow emergency inquiry,
+2021-02-09T16:22,ask,Snow emergency inquiry,7
+2021-02-09T16:24,street,Snow removal request,3
+2021-02-09T16:27,street,Salting request,3
+2021-02-09T16:39,ask,Snow emergency inquiry,1
+2021-02-09T17:23,street,Snow removal request,5
+2021-02-09T17:38,spacesaver,Space saver report,2
+2021-02-09T18:04,ask,Snow emergency inquiry,1
+2021-02-09T19:04,street,Salting request,2
+2021-02-09T20:36,street,Snow removal request,2
+2021-02-09T20:54,street,Snow removal request,5
+2021-02-09T21:13,street,Salting request,4
+2021-02-10T08:20,street,Salting request,5
+2021-02-10T09:37,sidewalk,Snow/sidewalk not shoveled,6
+2021-02-10T09:38,sidewalk,Snow/sidewalk not shoveled,6
+2021-02-10T09:42,sidewalk,Snow/sidewalk not shoveled,4
+2021-02-10T09:46,sidewalk,Snow/sidewalk not shoveled,2
+2021-02-10T10:00,sidewalk,Snow/sidewalk not shoveled,5
+2021-02-10T10:40,sidewalk,Snow/sidewalk not shoveled,2
+2021-02-10T10:58,sidewalk,Snow/sidewalk not shoveled,4
+2021-02-10T12:47,sidewalk,Snow/sidewalk not shoveled,5
+2021-02-10T14:11,sidewalk,Snow/sidewalk not shoveled,5
+2021-02-10T14:13,street,Snow removal request,7
+2021-02-10T14:36,feedback,Snow related feedback,3
+2021-02-10T14:45,feedback,Snow related feedback,
+2021-02-10T15:11,sidewalk,Snow/sidewalk not shoveled,3
+2021-02-10T15:16,sidewalk,Snow/sidewalk not shoveled,6
+2021-02-10T15:27,sidewalk,Snow/sidewalk not shoveled,7
+2021-02-10T15:49,street,Snow removal request,3
+2021-02-10T16:48,street,Snow removal request,4
+2021-02-10T17:23,street,Snow removal request,3
+2021-02-10T17:48,sidewalk,Snow/sidewalk not shoveled,5
+2021-02-10T19:08,street,Salting request,5
+2021-02-11T09:39,street,Salting request,5
+2021-02-11T10:10,sidewalk,Snow/sidewalk not shoveled,3
+2021-02-11T10:11,sidewalk,Snow/sidewalk not shoveled,1
+2021-02-11T11:11,street,Snow removal request,6
+2021-02-11T11:49,sidewalk,Snow/sidewalk not shoveled,2
+2021-02-11T12:56,street,Snow removal request,2
+2021-02-11T13:48,sidewalk,Snow/sidewalk not shoveled,1
+2021-02-11T14:13,street,Sand barrel,6
+2021-02-11T14:23,street,Snow removal request,2
+2021-02-11T14:34,sidewalk,Snow/sidewalk not shoveled,1
+2021-02-11T14:43,sidewalk,Snow/sidewalk not shoveled,5
+2021-02-11T17:07,sidewalk,Snow/sidewalk not shoveled,4
+2021-02-11T18:37,street,Snow removal request,6
+2021-02-11T18:38,street,Snow removal request,6
+2021-02-11T19:04,sidewalk,Snow/sidewalk not shoveled,4
+2021-02-11T22:14,street,Snow removal request,4
+2021-02-12T07:54,street,Salting request,3
+2021-02-12T08:56,street,Snow removal request,2
+2021-02-12T09:09,sidewalk,Snow/sidewalk not shoveled,5
+2021-02-12T11:30,sidewalk,Snow/sidewalk not shoveled,6
+2021-02-12T11:35,sidewalk,Snow/sidewalk not shoveled,4
+2021-02-12T14:24,street,Snow removal request,2
+2021-02-12T14:25,sidewalk,Snow/sidewalk not shoveled,2
+2021-02-12T16:48,sidewalk,Snow/sidewalk not shoveled,6
+2021-02-13T09:33,sidewalk,Snow/sidewalk not shoveled,1
+2021-02-13T09:54,sidewalk,Snow/sidewalk not shoveled,6
+2021-02-13T10:44,sidewalk,Snow/sidewalk not shoveled,6
+2021-02-13T10:50,sidewalk,Snow/sidewalk not shoveled,6
+2021-02-13T11:00,sidewalk,Snow/sidewalk not shoveled,5
+2021-02-13T15:01,sidewalk,Snow/sidewalk not shoveled,7
+2021-02-13T15:32,sidewalk,Snow/sidewalk not shoveled,2
+2021-02-13T15:38,sidewalk,Snow/sidewalk not shoveled,7
+2021-02-13T15:38,sidewalk,Snow/sidewalk not shoveled,2
+2021-02-13T15:41,sidewalk,Snow/sidewalk not shoveled,7
+2021-02-13T15:45,sidewalk,Snow/sidewalk not shoveled,7
+2021-02-13T15:55,sidewalk,Snow/sidewalk not shoveled,7
+2021-02-13T15:56,sidewalk,Snow/sidewalk not shoveled,7
+2021-02-13T15:57,sidewalk,Snow/sidewalk not shoveled,7
+2021-02-13T15:59,sidewalk,Snow/sidewalk not shoveled,7
+2021-02-13T16:59,sidewalk,Snow/sidewalk not shoveled,6
+2021-02-13T17:07,sidewalk,Snow/sidewalk not shoveled,1
+2021-02-14T11:13,street,Snow removal request,2
+2021-02-14T12:46,sidewalk,Snow/sidewalk not shoveled,6
+2021-02-14T14:30,spacesaver,Space saver report,2
+2021-02-14T17:31,sidewalk,Snow/sidewalk not shoveled,2
+2021-02-15T16:36,sidewalk,Snow/sidewalk not shoveled,1
+2021-02-15T17:23,street,Salting request,3
+2021-02-15T18:43,street,Salting request,7
+2021-02-15T19:02,street,Salting request,5
+2021-02-15T19:25,street,Salting request,3
+2021-02-15T19:29,sidewalk,Snow/sidewalk not shoveled,1
+2021-02-15T19:45,street,Salting request,
+2021-02-15T20:20,street,Salting request,7
+2021-02-15T20:38,street,Salting request,7
+2021-02-15T20:44,street,Salting request,7
+2021-02-15T21:15,street,Salting request,4
+2021-02-15T21:28,street,Salting request,3
+2021-02-15T22:39,street,Salting request,4

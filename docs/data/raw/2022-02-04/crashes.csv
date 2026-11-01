@@ -1,0 +1,18 @@
+date_hour,time,where,what,how,surface,weather,light,hurt,pedestrian,cyclist,pedestrian_where,pedestrian_doing,hit_and_run
+2022-01-28T16:00,16:13,Broadway,Collision with parked motor vehicle,"Sideswipe, same direction",Dry,Clear,Daylight,none,0,0,,,True
+2022-01-31T07:00,07:43,Beacon St & Sacramento St,Collision with motor vehicle in traffic,Rear-end,Snow,Clear,Daylight,possible,0,0,,,False
+2022-01-31T16:00,16:07,Unk Mcgrath Hywy,,Single vehicle crash,Ice,Clear,Daylight,possible,0,0,,,False
+2022-01-31T16:00,16:25,Broadway,Collision with motor vehicle in traffic,Angle,Slush,,Daylight,none,0,0,,,False
+2022-01-31T23:00,23:17,Myrtle St & Washington St,Collision with motor vehicle in traffic,Rear-end,Snow,Snow,Dark - lighted roadway,minor,0,0,,,False
+2022-02-01T08:00,08:15,Bonair St,Collision with parked motor vehicle,"Sideswipe, opposite direction",Slush,Clear,Daylight,none,0,0,,,False
+2022-02-03T21:00,21:43,Summer St,Collision with parked motor vehicle,Rear-end,,Clear,Dark - lighted roadway,none,0,0,,,False
+2022-02-04T06:00,06:36,Holland St,Collision with pedestrian,,Dry,Rain,Daylight,minor,1,0,Not in roadway,"Walking, running or cycling",False
+2022-02-04T18:00,18:03,Derby St,Collision with parked motor vehicle,"Sideswipe, same direction",Ice,"Sleet, hail, freezing rain or drizzle",Dark - lighted roadway,none,0,0,,,False
+2022-02-06T14:00,14:00,Middlesex Av,Collision with pedestrian,Single vehicle crash,Wet,Clear,Daylight,minor,1,0,In roadway,"Walking, running or cycling",False
+2022-02-06T16:00,16:12,Boston Av,Collision with parked motor vehicle,"Sideswipe, same direction",Ice,Clear,Daylight,none,0,0,,,True
+2022-02-07T08:00,08:49,Hudson St,Collision with parked motor vehicle,"Sideswipe, same direction",Wet,Cloudy,Daylight,,0,0,,,False
+2022-02-07T15:00,15:35,Oak St & Prospect St,Collision with motor vehicle in traffic,Angle,Dry,Cloudy,Daylight,none,0,0,,,False
+2022-02-07T18:00,18:04,Shore Dr,Collision with motor vehicle in traffic,Angle,Wet,Rain,Dark - lighted roadway,none,0,0,,,False
+2022-02-09T21:00,21:39,Highland Ave. & Grove St,Collision with motor vehicle in traffic,Angle,Dry,Clear,Dark - lighted roadway,none,0,0,,,True
+2022-02-10T08:00,08:24,Illinois Av,Collision with parked motor vehicle,"Sideswipe, same direction",Dry,Cloudy,Daylight,none,0,0,,,False
+2022-02-12T12:00,12:46,Mcgrath Hwy & Medford St,Collision with motor vehicle in traffic,Angle,Dry,Clear,Daylight,none,0,0,,,False

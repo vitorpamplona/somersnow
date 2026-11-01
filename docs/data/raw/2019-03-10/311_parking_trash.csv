@@ -1,0 +1,408 @@
+created,type
+2019-02-26T08:06,Illegal parking
+2019-02-26T08:25,Trash questions
+2019-02-26T10:18,Trash questions
+2019-02-26T11:01,Trash questions
+2019-02-26T11:22,Illegal parking
+2019-02-26T11:33,Illegal parking
+2019-02-26T11:36,Trash questions
+2019-02-26T11:36,Trash questions
+2019-02-26T12:14,Illegal parking
+2019-02-26T12:27,Parking information
+2019-02-26T13:05,Parking information
+2019-02-26T13:19,Parking information
+2019-02-26T13:32,Parking information
+2019-02-26T13:56,Parking information
+2019-02-26T15:02,Parking information
+2019-02-26T15:18,Illegal parking
+2019-02-26T15:24,Parking information
+2019-02-26T15:24,Trash questions
+2019-02-26T15:51,Parking information
+2019-02-26T16:05,Verification of sanitation schedule
+2019-02-26T16:17,Verification of sanitation schedule
+2019-02-26T16:21,Illegal parking
+2019-02-26T16:31,Trash questions
+2019-02-26T16:38,Trash questions
+2019-02-26T18:29,Verification of sanitation schedule
+2019-02-26T18:39,Illegal parking
+2019-02-27T08:56,Trash questions
+2019-02-27T09:02,Car booted/towed inquiry
+2019-02-27T09:40,Car booted/towed inquiry
+2019-02-27T10:03,Parking information
+2019-02-27T10:11,Illegal parking
+2019-02-27T12:17,Trash questions
+2019-02-27T12:37,Trash questions
+2019-02-27T13:09,Illegal parking
+2019-02-27T15:26,Car booted/towed inquiry
+2019-02-27T15:53,Parking information
+2019-02-27T16:03,Verification of sanitation schedule
+2019-02-27T16:27,Verification of sanitation schedule
+2019-02-27T16:43,Illegal parking
+2019-02-27T16:44,Parking information
+2019-02-27T17:43,Illegal parking
+2019-02-27T19:00,Illegal parking
+2019-02-27T20:37,Illegal parking
+2019-02-28T09:27,Parking information
+2019-02-28T09:28,Parking information
+2019-02-28T10:09,Parking information
+2019-02-28T10:37,Illegal parking
+2019-02-28T12:22,Illegal parking
+2019-02-28T13:31,Trash questions
+2019-02-28T13:41,Illegal parking
+2019-02-28T14:12,Parking information
+2019-02-28T15:04,Illegal parking
+2019-02-28T17:26,Illegal parking
+2019-02-28T17:28,Illegal parking
+2019-02-28T17:55,Verification of sanitation schedule
+2019-02-28T19:33,Trash questions
+2019-03-01T08:18,Car booted/towed inquiry
+2019-03-01T08:34,Illegal parking
+2019-03-01T08:49,Illegal parking
+2019-03-01T09:35,Trash questions
+2019-03-01T10:15,Trash questions
+2019-03-01T12:56,Illegal parking
+2019-03-01T13:32,Illegal parking
+2019-03-01T14:28,Parking information
+2019-03-01T15:24,Trash questions
+2019-03-01T15:30,Illegal parking
+2019-03-01T15:52,Parking information
+2019-03-01T16:36,Parking information
+2019-03-01T19:30,Illegal parking
+2019-03-01T22:09,Illegal parking
+2019-03-01T22:26,Illegal parking
+2019-03-02T00:14,Illegal parking
+2019-03-02T07:22,Illegal parking
+2019-03-02T08:42,Illegal parking
+2019-03-02T09:02,Parking information
+2019-03-02T10:51,Parking information
+2019-03-02T11:43,Illegal parking
+2019-03-02T14:34,Illegal parking
+2019-03-02T17:39,Illegal parking
+2019-03-03T11:43,Illegal parking
+2019-03-03T13:16,Illegal parking
+2019-03-03T14:33,Illegal parking
+2019-03-03T15:28,Illegal parking
+2019-03-03T16:38,Illegal parking
+2019-03-03T19:27,Illegal parking
+2019-03-03T19:35,Illegal parking
+2019-03-03T21:07,Illegal parking
+2019-03-03T21:15,Illegal parking
+2019-03-03T21:38,Illegal parking
+2019-03-03T23:18,Illegal parking
+2019-03-04T07:00,Car booted/towed inquiry
+2019-03-04T07:20,Car booted/towed inquiry
+2019-03-04T07:24,Car booted/towed inquiry
+2019-03-04T07:29,Illegal parking
+2019-03-04T07:38,Illegal parking
+2019-03-04T07:39,Car booted/towed inquiry
+2019-03-04T07:41,Illegal parking
+2019-03-04T08:16,Car booted/towed inquiry
+2019-03-04T08:18,Car booted/towed inquiry
+2019-03-04T08:19,Car booted/towed inquiry
+2019-03-04T08:23,Illegal parking
+2019-03-04T08:36,Car booted/towed inquiry
+2019-03-04T08:45,Illegal parking
+2019-03-04T08:50,Car booted/towed inquiry
+2019-03-04T09:06,Car booted/towed inquiry
+2019-03-04T09:12,Car booted/towed inquiry
+2019-03-04T09:31,Car booted/towed inquiry
+2019-03-04T09:51,Car booted/towed inquiry
+2019-03-04T09:59,Illegal parking
+2019-03-04T10:02,Illegal parking
+2019-03-04T10:13,Parking information
+2019-03-04T10:16,Illegal parking
+2019-03-04T10:20,Car booted/towed inquiry
+2019-03-04T10:21,Illegal parking
+2019-03-04T10:28,Illegal parking
+2019-03-04T10:36,Illegal parking
+2019-03-04T10:50,Car booted/towed inquiry
+2019-03-04T11:01,Illegal parking
+2019-03-04T11:01,Illegal parking
+2019-03-04T11:05,Car booted/towed inquiry
+2019-03-04T11:25,Parking information
+2019-03-04T11:28,Parking information
+2019-03-04T11:32,Car booted/towed inquiry
+2019-03-04T11:36,Parking information
+2019-03-04T11:43,Car booted/towed inquiry
+2019-03-04T11:46,Illegal parking
+2019-03-04T11:47,Trash questions
+2019-03-04T12:17,Car booted/towed inquiry
+2019-03-04T12:20,Parking information
+2019-03-04T12:33,Trash questions
+2019-03-04T12:42,Illegal parking
+2019-03-04T12:42,Car booted/towed inquiry
+2019-03-04T13:05,Car booted/towed inquiry
+2019-03-04T13:25,Car booted/towed inquiry
+2019-03-04T13:35,Car booted/towed inquiry
+2019-03-04T13:42,Parking information
+2019-03-04T13:44,Car booted/towed inquiry
+2019-03-04T13:53,Trash questions
+2019-03-04T14:30,Trash questions
+2019-03-04T14:33,Trash questions
+2019-03-04T14:51,Car booted/towed inquiry
+2019-03-04T14:56,Parking information
+2019-03-04T14:58,Illegal parking
+2019-03-04T14:58,Trash questions
+2019-03-04T14:58,Car booted/towed inquiry
+2019-03-04T15:03,Parking information
+2019-03-04T15:09,Illegal parking
+2019-03-04T15:10,Trash questions
+2019-03-04T15:11,Trash questions
+2019-03-04T15:11,Verification of sanitation schedule
+2019-03-04T15:24,Verification of sanitation schedule
+2019-03-04T15:33,Illegal parking
+2019-03-04T15:45,Parking information
+2019-03-04T15:51,Verification of sanitation schedule
+2019-03-04T15:59,Trash questions
+2019-03-04T16:25,Parking information
+2019-03-04T16:31,Illegal parking
+2019-03-04T16:39,Verification of sanitation schedule
+2019-03-04T16:39,Illegal parking
+2019-03-04T16:40,Verification of sanitation schedule
+2019-03-04T17:08,Verification of sanitation schedule
+2019-03-04T17:37,Trash questions
+2019-03-04T17:42,Verification of sanitation schedule
+2019-03-04T18:33,Verification of sanitation schedule
+2019-03-04T19:00,Verification of sanitation schedule
+2019-03-04T22:14,Illegal parking
+2019-03-05T06:59,Trash questions
+2019-03-05T07:38,Trash questions
+2019-03-05T07:57,Parking information
+2019-03-05T08:05,Trash questions
+2019-03-05T08:59,Trash questions
+2019-03-05T09:03,Trash questions
+2019-03-05T09:26,Verification of sanitation schedule
+2019-03-05T09:38,Trash questions
+2019-03-05T09:40,Trash questions
+2019-03-05T09:55,Parking information
+2019-03-05T10:11,Trash questions
+2019-03-05T10:18,Trash questions
+2019-03-05T10:24,Trash questions
+2019-03-05T10:32,Illegal parking
+2019-03-05T10:38,Trash questions
+2019-03-05T10:42,Verification of sanitation schedule
+2019-03-05T11:05,Illegal parking
+2019-03-05T11:55,Car booted/towed inquiry
+2019-03-05T12:06,Illegal parking
+2019-03-05T12:18,Verification of sanitation schedule
+2019-03-05T12:20,Trash questions
+2019-03-05T12:22,Car booted/towed inquiry
+2019-03-05T12:34,Trash questions
+2019-03-05T12:45,Verification of sanitation schedule
+2019-03-05T12:54,Parking information
+2019-03-05T13:15,Verification of sanitation schedule
+2019-03-05T13:23,Verification of sanitation schedule
+2019-03-05T13:51,Illegal parking
+2019-03-05T15:04,Parking information
+2019-03-05T16:19,Illegal parking
+2019-03-05T17:06,Illegal parking
+2019-03-05T17:18,Verification of sanitation schedule
+2019-03-05T17:23,Illegal parking
+2019-03-05T17:27,Verification of sanitation schedule
+2019-03-05T17:32,Trash questions
+2019-03-05T18:08,Verification of sanitation schedule
+2019-03-05T18:28,Verification of sanitation schedule
+2019-03-05T18:55,Illegal parking
+2019-03-05T18:56,Verification of sanitation schedule
+2019-03-05T20:48,Illegal parking
+2019-03-06T07:02,Illegal parking
+2019-03-06T08:22,Illegal parking
+2019-03-06T08:33,Illegal parking
+2019-03-06T09:06,Trash questions
+2019-03-06T09:09,Illegal parking
+2019-03-06T10:05,Car booted/towed inquiry
+2019-03-06T11:09,Illegal parking
+2019-03-06T11:17,Illegal parking
+2019-03-06T11:49,Car booted/towed inquiry
+2019-03-06T12:58,Illegal parking
+2019-03-06T13:11,Illegal parking
+2019-03-06T13:25,Trash questions
+2019-03-06T13:37,Verification of sanitation schedule
+2019-03-06T13:49,Illegal parking
+2019-03-06T13:52,Illegal parking
+2019-03-06T14:05,Trash questions
+2019-03-06T14:16,Trash questions
+2019-03-06T14:18,Parking information
+2019-03-06T14:34,Trash questions
+2019-03-06T15:47,Trash questions
+2019-03-06T15:48,Illegal parking
+2019-03-06T15:51,Verification of sanitation schedule
+2019-03-06T16:20,Trash questions
+2019-03-06T16:29,Verification of sanitation schedule
+2019-03-06T17:07,Illegal parking
+2019-03-06T17:14,Illegal parking
+2019-03-06T17:39,Illegal parking
+2019-03-06T20:53,Illegal parking
+2019-03-07T06:26,Illegal parking
+2019-03-07T06:54,Illegal parking
+2019-03-07T07:16,Illegal parking
+2019-03-07T08:00,Trash questions
+2019-03-07T08:29,Illegal parking
+2019-03-07T08:43,Illegal parking
+2019-03-07T09:16,Trash questions
+2019-03-07T09:52,Illegal parking
+2019-03-07T09:59,Parking information
+2019-03-07T10:10,Parking information
+2019-03-07T10:16,Parking information
+2019-03-07T10:17,Illegal parking
+2019-03-07T11:23,Trash questions
+2019-03-07T11:44,Parking information
+2019-03-07T12:38,Trash questions
+2019-03-07T12:49,Illegal parking
+2019-03-07T12:53,Trash questions
+2019-03-07T13:16,Illegal parking
+2019-03-07T13:24,Verification of sanitation schedule
+2019-03-07T13:53,Trash questions
+2019-03-07T14:17,Parking information
+2019-03-07T14:32,Illegal parking
+2019-03-07T14:40,Parking information
+2019-03-07T14:44,Parking information
+2019-03-07T15:26,Trash questions
+2019-03-07T15:54,Trash questions
+2019-03-07T15:55,Illegal parking
+2019-03-07T16:51,Illegal parking
+2019-03-07T17:06,Illegal parking
+2019-03-07T17:07,Verification of sanitation schedule
+2019-03-07T17:59,Illegal parking
+2019-03-07T18:29,Verification of sanitation schedule
+2019-03-07T19:10,Illegal parking
+2019-03-07T19:19,Verification of sanitation schedule
+2019-03-07T20:06,Trash questions
+2019-03-07T20:53,Car booted/towed inquiry
+2019-03-07T20:56,Illegal parking
+2019-03-08T07:05,Illegal parking
+2019-03-08T08:19,Parking information
+2019-03-08T08:42,Car booted/towed inquiry
+2019-03-08T08:44,Car booted/towed inquiry
+2019-03-08T09:09,Illegal parking
+2019-03-08T09:39,Car booted/towed inquiry
+2019-03-08T09:55,Illegal parking
+2019-03-08T09:56,Illegal parking
+2019-03-08T10:09,Illegal parking
+2019-03-08T10:12,Parking information
+2019-03-08T10:29,Parking information
+2019-03-08T11:25,Illegal parking
+2019-03-08T11:33,Illegal parking
+2019-03-08T11:48,Trash questions
+2019-03-08T12:00,Trash questions
+2019-03-08T12:23,Illegal parking
+2019-03-08T12:46,Trash questions
+2019-03-08T13:56,Trash questions
+2019-03-08T14:21,Illegal parking
+2019-03-08T14:24,Parking information
+2019-03-08T14:32,Trash questions
+2019-03-08T14:38,Parking information
+2019-03-08T15:26,Illegal parking
+2019-03-08T16:15,Parking information
+2019-03-08T16:49,Illegal parking
+2019-03-08T17:52,Illegal parking
+2019-03-08T17:57,Illegal parking
+2019-03-08T18:20,Illegal parking
+2019-03-08T20:05,Illegal parking
+2019-03-08T22:03,Illegal parking
+2019-03-09T08:08,Illegal parking
+2019-03-09T11:21,Parking information
+2019-03-09T12:19,Trash questions
+2019-03-09T14:35,Illegal parking
+2019-03-09T15:44,Illegal parking
+2019-03-10T11:54,Illegal parking
+2019-03-10T17:17,Illegal parking
+2019-03-11T07:17,Illegal parking
+2019-03-11T07:22,Illegal parking
+2019-03-11T08:00,Illegal parking
+2019-03-11T08:21,Parking information
+2019-03-11T09:19,Illegal parking
+2019-03-11T10:01,Illegal parking
+2019-03-11T11:08,Trash questions
+2019-03-11T12:04,Illegal parking
+2019-03-11T12:09,Trash questions
+2019-03-11T12:47,Parking information
+2019-03-11T15:20,Trash questions
+2019-03-11T15:23,Trash questions
+2019-03-11T15:49,Parking information
+2019-03-11T15:52,Trash questions
+2019-03-11T15:53,Illegal parking
+2019-03-11T17:17,Illegal parking
+2019-03-11T17:21,Illegal parking
+2019-03-12T00:02,Illegal parking
+2019-03-12T09:02,Car booted/towed inquiry
+2019-03-12T09:39,Parking information
+2019-03-12T09:44,Trash questions
+2019-03-12T09:59,Verification of sanitation schedule
+2019-03-12T10:15,Trash questions
+2019-03-12T10:20,Parking information
+2019-03-12T10:32,Trash questions
+2019-03-12T10:57,Trash questions
+2019-03-12T11:05,Parking information
+2019-03-12T11:17,Car booted/towed inquiry
+2019-03-12T11:34,Verification of sanitation schedule
+2019-03-12T12:01,Parking information
+2019-03-12T12:11,Illegal parking
+2019-03-12T13:13,Trash questions
+2019-03-12T13:25,Car booted/towed inquiry
+2019-03-12T13:42,Parking information
+2019-03-12T13:47,Parking information
+2019-03-12T14:38,Trash questions
+2019-03-12T14:58,Trash questions
+2019-03-12T15:42,Parking information
+2019-03-12T15:53,Parking information
+2019-03-12T15:59,Parking information
+2019-03-12T16:25,Trash questions
+2019-03-12T16:30,Car booted/towed inquiry
+2019-03-12T16:32,Parking information
+2019-03-12T17:01,Verification of sanitation schedule
+2019-03-12T17:10,Parking information
+2019-03-12T17:13,Parking information
+2019-03-12T17:19,Parking information
+2019-03-12T18:23,Illegal parking
+2019-03-12T18:25,Illegal parking
+2019-03-12T18:57,Parking information
+2019-03-12T23:33,Car booted/towed inquiry
+2019-03-13T07:59,Illegal parking
+2019-03-13T08:32,Trash questions
+2019-03-13T09:14,Illegal parking
+2019-03-13T09:15,Illegal parking
+2019-03-13T09:18,Car booted/towed inquiry
+2019-03-13T09:24,Illegal parking
+2019-03-13T09:56,Car booted/towed inquiry
+2019-03-13T10:11,Parking information
+2019-03-13T10:58,Illegal parking
+2019-03-13T11:10,Trash questions
+2019-03-13T11:40,Parking information
+2019-03-13T11:46,Illegal parking
+2019-03-13T12:20,Illegal parking
+2019-03-13T12:49,Illegal parking
+2019-03-13T12:55,Car booted/towed inquiry
+2019-03-13T13:03,Trash questions
+2019-03-13T13:26,Parking information
+2019-03-13T15:07,Parking information
+2019-03-13T15:20,Parking information
+2019-03-13T15:21,Illegal parking
+2019-03-13T15:42,Illegal parking
+2019-03-13T15:50,Parking information
+2019-03-13T15:52,Trash questions
+2019-03-13T15:56,Illegal parking
+2019-03-13T16:43,Illegal parking
+2019-03-13T18:51,Verification of sanitation schedule
+2019-03-14T08:09,Illegal parking
+2019-03-14T09:18,Illegal parking
+2019-03-14T10:29,Trash questions
+2019-03-14T10:54,Parking information
+2019-03-14T11:11,Parking information
+2019-03-14T13:07,Trash questions
+2019-03-14T13:20,Illegal parking
+2019-03-14T13:31,Parking information
+2019-03-14T13:38,Parking information
+2019-03-14T13:57,Car booted/towed inquiry
+2019-03-14T14:00,Trash questions
+2019-03-14T14:33,Trash questions
+2019-03-14T14:41,Parking information
+2019-03-14T14:44,Trash questions
+2019-03-14T14:47,Trash questions
+2019-03-14T14:53,Parking information
+2019-03-14T15:21,Parking information
+2019-03-14T15:32,Parking information
+2019-03-14T16:39,Parking information
+2019-03-14T18:01,Illegal parking
+2019-03-14T18:08,Parking information
+2019-03-14T20:15,Illegal parking

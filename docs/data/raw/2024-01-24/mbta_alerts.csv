@@ -1,0 +1,157 @@
+created_hour,kind,route_or_station,header
+2024-01-14T14:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to traffic
+2024-01-14T15:00,delay,86,Route 86 experiencing delays of up to 20 minutes due to traffic
+2024-01-14T15:00,delay,96,Route 96 experiencing delays of up to 30 minutes due to traffic
+2024-01-14T23:00,delay,94,Route 94 experiencing delays of up to 20 minutes due to disabled bus
+2024-01-15T07:00,delay,101,Route 101 experiencing delays of up to 30 minutes
+2024-01-15T07:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to traffic
+2024-01-15T14:00,delay,101,Route 101 experiencing delays of up to 20 minutes due to traffic
+2024-01-15T15:00,delay,83,Route 83 experiencing delays of up to 20 minutes due to traffic
+2024-01-15T17:00,delay,90,Route 90 experiencing delays of up to 25 minutes due to traffic
+2024-01-15T20:00,delay,101,Route 101 experiencing delays of up to 30 minutes
+2024-01-15T23:00,delay,101,Route 101 experiencing delays of up to 25 minutes due to traffic
+2024-01-16T06:00,delay,101,Route 101 experiencing delays of up to 20 minutes
+2024-01-16T06:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to traffic
+2024-01-16T07:00,detour,83,Route 83 detoured due to construction- Prospect St @ Bishop Allen Dr (outbound) & Western Ave @ Green St (inbound)
+2024-01-16T07:00,detour,91,Route 91 detoured due to construction. Connect at Prospect St @ Bishop Allen Dr (outbound) & Western Ave @ Green St (inbound)
+2024-01-16T11:00,delay,747,CT2 experiencing delays of up to 25 minutes due to traffic
+2024-01-16T13:00,delay,83,Route 83 experiencing delays of up to 20 minutes due to traffic
+2024-01-16T13:00,delay,95,Route 95 experiencing delays of up to 20 minutes
+2024-01-16T14:00,delay,86,Route 86 experiencing delays of up to 20 minutes
+2024-01-16T15:00,delay,95,Route 95 experiencing delays of up to 20 minutes due to disabled bus
+2024-01-16T15:00,detour,87,Route 87 detoured due to fire. Inbound: connections can be made at Elm St @ Beech St and Somerville Ave @ Sacramento St. Outbound: connections can be made at Elm St @ Han
+2024-01-16T16:00,delay,87,Route 87 experiencing delays of up to 20 minutes due to traffic
+2024-01-16T16:00,delay,87,Route 87 experiencing delays of up to 25 minutes due to traffic
+2024-01-16T16:00,delay,88,Route 88 experiencing delays of up to 20 minutes due to traffic
+2024-01-16T17:00,delay,83,Route 83 experiencing delays of up to 20 minutes due to traffic
+2024-01-16T18:00,delay,90,Route 90 experiencing delays of up to 20 minutes due to traffic
+2024-01-16T19:00,delay,86,Route 86 experiencing delays of up to 20 minutes due to traffic
+2024-01-17T07:00,delay,101,Route 101 experiencing delays of up to 15 minutes due to traffic
+2024-01-17T07:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to traffic
+2024-01-17T07:00,detour,83,Route 83 detoured due to construction- Prospect St @ Bishop Allen Dr (outbound) & Western Ave @ Green St (inbound)
+2024-01-17T08:00,delay,747,CT2 experiencing delays of up to 20 minutes due to traffic
+2024-01-17T08:00,delay,83,Route 83 experiencing delays of up to 20 minutes due to traffic
+2024-01-17T13:00,delay,90,Route 90 experiencing delays of up to 20 minutes due to traffic
+2024-01-17T13:00,delay,95,Route 95 experiencing delays of up to 20 minutes due to traffic
+2024-01-17T14:00,delay,83,Route 83 experiencing delays of up to 20 minutes due to traffic
+2024-01-17T14:00,delay,87,Route 87 experiencing delays of up to 20 minutes due to traffic
+2024-01-17T14:00,delay,88,Route 88 experiencing delays of up to 20 minutes due to traffic
+2024-01-17T15:00,delay,109,Route 109 experiencing delays of up to 20 minutes
+2024-01-17T15:00,delay,95,Route 95 experiencing delays of up to 20 minutes due to traffic
+2024-01-17T16:00,delay,83,Route 83 experiencing delays of up to 25 minutes due to traffic
+2024-01-17T16:00,delay,83,Route 83 experiencing delays of up to 30 minutes due to traffic
+2024-01-17T16:00,delay,86,Route 70 experiencing delays of up to 25 minutes due to traffic
+2024-01-17T16:00,delay,87,Route 87 experiencing delays of up to 15 minutes due to traffic
+2024-01-17T16:00,delay,89,Route 89 experiencing delays of up to 25 minutes due to traffic
+2024-01-17T17:00,delay,747,CT2 experiencing delays of up to 20 minutes due to traffic
+2024-01-17T17:00,delay,80,Route 80 experiencing delays of up to 30 minutes due to traffic
+2024-01-17T17:00,delay,85,Route 85 experiencing delays of up to 20 minutes due to traffic
+2024-01-17T17:00,delay,87,Route 87 experiencing delays of up to 20 minutes due to traffic
+2024-01-17T17:00,delay,88,Route 88 experiencing delays of up to 20 minutes due to traffic
+2024-01-17T18:00,delay,96,Route 96 experiencing delays of up to 20 minutes due to traffic
+2024-01-17T19:00,delay,80,Route 80 experiencing delays of up to 20 minutes due to traffic
+2024-01-17T19:00,delay,83,Route 83 experiencing delays of up to 20 minutes due to traffic
+2024-01-17T19:00,delay,86,Route 86 experiencing delays of up to 30 minutes due to traffic
+2024-01-17T19:00,delay,88,Route 88 experiencing delays of up to 20 minutes due to traffic
+2024-01-17T20:00,delay,101,Route 101 experiencing delays of up to 20 minutes due to traffic
+2024-01-18T06:00,delay,101,Route 101 experiencing delays of up to 20 minutes due to traffic
+2024-01-18T07:00,delay,87,Route 87 experiencing delays of up to 20 minutes
+2024-01-18T07:00,delay,91,Route 91 experiencing delays of up to 20 minutes due to traffic
+2024-01-18T07:00,detour,83,Route 83 detoured due to construction- Prospect St @ Bishop Allen Dr (outbound) & Western Ave @ Green St (inbound)
+2024-01-18T07:00,detour,91,Route 91 detoured due to construction. Connect at Prospect St @ Bishop Allen Dr (outbound) & Western Ave @ Green St (inbound)
+2024-01-18T09:00,delay,747,CT2 experiencing delays of up to 15 minutes due to traffic
+2024-01-18T13:00,reduced,83,The following stop is closed from Monday Jan 22 through Tuesday Jan 23 due to construction: Magazine St @ Green St. Please board route 83 and 91 buses from Prospect St @ 
+2024-01-18T14:00,delay,87,Route 87 experiencing delays of up to 20 minutes due to traffic
+2024-01-18T15:00,delay,101,Route 101 experiencing delays of up to 20 minutes due to traffic
+2024-01-18T15:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to traffic
+2024-01-18T15:00,delay,88,Route 88 experiencing delays of up to 20 minutes due to traffic
+2024-01-18T16:00,delay,95,Route 95 experiencing delays of up to 20 minutes due to traffic
+2024-01-18T17:00,delay,89,Route 89 experiencing delays of up to 20 minutes due to traffic
+2024-01-18T17:00,detour,83,Route 83 detoured from Tue Jan 16 to Fri Jan 19 due to construction - Omitting Magazine St @ Green Street. Connections can be made at Western Ave @ Green St or River St @
+2024-01-18T18:00,delay,83,Route 83 experiencing delays of up to 20 minutes due to traffic
+2024-01-18T18:00,delay,86,Route 86 experiencing delays of up to 20 minutes due to traffic
+2024-01-18T18:00,delay,88,Route 88 experiencing delays of up to 20 minutes due to traffic
+2024-01-18T18:00,delay,90,Route 90 experiencing delays of up to 25 minutes due to traffic
+2024-01-18T18:00,delay,95,Route 95 experiencing delays of up to 20 minutes due to traffic
+2024-01-18T18:00,delay,96,Route 96 experiencing delays of up to 20 minutes due to traffic
+2024-01-18T19:00,delay,86,Route 86 experiencing delays of up to 30 minutes due to traffic
+2024-01-18T19:00,delay,87,Route 87 experiencing delays of up to 30 minutes due to traffic
+2024-01-19T07:00,delay,89,Route 89 experiencing delays of up to 20 minutes
+2024-01-19T08:00,delay,101,Route 101 experiencing delays of up to 20 minutes
+2024-01-19T08:00,delay,109,Route 109 experiencing delays of up to 20 minutes
+2024-01-19T08:00,delay,747,CT2 experiencing delays of up to 20 minutes due to traffic
+2024-01-19T08:00,delay,86,Route 86 experiencing delays of up to 20 minutes
+2024-01-19T08:00,delay,91,Route 91 experiencing delays of up to 20 minutes due to traffic
+2024-01-19T12:00,delay,95,Route 95 experiencing delays of up to 30 minutes
+2024-01-19T13:00,delay,101,Route 101 experiencing delays of up to 20 minutes
+2024-01-19T14:00,delay,747,CT2 experiencing delays of up to 25 minutes due to traffic
+2024-01-19T14:00,delay,91,Route 91 experiencing delays of up to 30 minutes
+2024-01-19T15:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to traffic
+2024-01-19T15:00,delay,86,Route 86 experiencing delays of up to 20 minutes due to traffic
+2024-01-19T16:00,delay,89,Route 89 experiencing delays of up to 30 minutes
+2024-01-20T00:00,delay,86,Route 86 experiencing delays of up to 20 minutes due to traffic
+2024-01-20T13:00,delay,80,Route 80 experiencing delays of up to 30 minutes due to traffic
+2024-01-20T16:00,delay,86,Route 86 experiencing delays of up to 20 minutes
+2024-01-20T18:00,delay,87,Route 87 experiencing delays of up to 20 minutes due to traffic
+2024-01-20T18:00,delay,88,Route 88 experiencing delays of up to 30 minutes due to traffic
+2024-01-20T21:00,delay,80,Route 80 experiencing delays of up to 30 minutes due to traffic
+2024-01-20T21:00,delay,83,Route 83 experiencing delays of up to 25 minutes due to traffic
+2024-01-21T14:00,delay,94,Route 94 experiencing delays of up to 20 minutes due to traffic
+2024-01-21T15:00,delay,96,Route 96 experiencing delays of up to 20 minutes due to traffic
+2024-01-21T17:00,delay,87,Route 87 experiencing delays of up to 20 minutes due to traffic
+2024-01-21T17:00,delay,95,Route 95 experiencing delays of up to 25 minutes due to traffic
+2024-01-22T05:00,delay,88,Route 88 experiencing delays of up to 20 minutes due to disabled bus
+2024-01-22T07:00,delay,747,CT2 experiencing delays of up to 20 minutes due to traffic
+2024-01-22T07:00,detour,83,Route 83 detoured omitting the central square Busway. Outbound: connect at Prospect St @ Bishop Allen Dr. Inbound: connect at Western Ave @ Green St & Prospect St @ Bisho
+2024-01-22T07:00,detour,91,Route 91 detoured omitting the central square Busway. Outbound: connect at Prospect St @ Bishop Allen Dr. Inbound: connect at Western Ave @ Green St & Prospect St @ Bisho
+2024-01-22T09:00,delay,89,Route 89 experiencing delays of up to 25 minutes due to traffic
+2024-01-22T13:00,delay,87,Route 87 experiencing delays of up to 20 minutes due to traffic
+2024-01-22T14:00,delay,101,Route 101 experiencing delays of up to 20 minutes
+2024-01-22T14:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to traffic
+2024-01-22T18:00,delay,89,Route 89 experiencing delays of up to 20 minutes due to traffic
+2024-01-23T06:00,delay,101,Route 101 experiencing delays of up to 20 minutes due to disabled bus
+2024-01-23T07:00,delay,101,Route 101 experiencing delays of up to 20 minutes due to traffic
+2024-01-23T07:00,delay,89,Route 89 experiencing delays of up to 20 minutes due to traffic
+2024-01-23T08:00,delay,747,CT2 experiencing delays of up to 20 minutes due to traffic
+2024-01-23T13:00,delay,747,CT2 experiencing delays of up to 25 minutes due to disabled bus
+2024-01-23T17:00,delay,101,Route 101 experiencing delays of up to 20 minutes due to traffic
+2024-01-23T18:00,delay,747,CT2 experiencing delays of up to 25 minutes due to traffic
+2024-01-23T18:00,delay,86,Route 86 experiencing delays of up to 20 minutes due to traffic
+2024-01-23T18:00,delay,94,Route 94 experiencing delays of up to 20 minutes due to disabled bus
+2024-01-23T19:00,delay,101,Route 101 experiencing delays of up to 20 minutes due to traffic
+2024-01-24T07:00,delay,109,Route 109 experiencing delays of up to 20 minutes
+2024-01-24T07:00,delay,89,Route 89 experiencing delays of up to 20 minutes due to traffic
+2024-01-24T08:00,delay,101,Route 101 experiencing delays of up to 20 minutes due to traffic
+2024-01-24T08:00,delay,88,Route 88 experiencing delays of up to 20 minutes due to disabled bus
+2024-01-24T09:00,delay,86,Route 86 experiencing delays of up to 20 minutes due to traffic
+2024-01-24T09:00,delay,96,Route 96 experiencing delays of up to 20 minutes due to traffic
+2024-01-24T12:00,delay,89,Route 89 experiencing delays of up to 20 minutes due to traffic
+2024-01-24T14:00,delay,747,CT2 experiencing delays of up to 20 minutes due to traffic
+2024-01-24T16:00,delay,101,Route 101 experiencing delays of up to 25 minutes
+2024-01-24T16:00,delay,747,CT2 experiencing delays of up to 20 minutes due to traffic
+2024-01-24T16:00,delay,94,Route 94 experiencing delays of up to 20 minutes due to traffic
+2024-01-24T17:00,delay,101,Route 101 experiencing delays of up to 20 minutes due to traffic
+2024-01-24T17:00,delay,86,Route 86 experiencing delays of up to 20 minutes due to traffic
+2024-01-24T19:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to traffic
+2024-01-24T19:00,delay,96,Route 96 experiencing delays of up to 20 minutes due to traffic
+2024-01-24T20:00,delay,87,Route 87 experiencing delays of up to 25 minutes due to traffic
+2024-01-25T05:00,delay,101,Route 101 experiencing delays of up to 25 minutes due to disabled bus
+2024-01-25T08:00,delay,101,Route 101 experiencing delays of up to 20 minutes due to traffic
+2024-01-25T09:00,delay,747,CT2 experiencing delays of up to 20 minutes due to traffic
+2024-01-25T09:00,delay,83,Route 83 experiencing delays of up to 20 minutes due to traffic
+2024-01-25T10:00,delay,94,Route 94 experiencing delays of up to 20 minutes due to traffic
+2024-01-25T11:00,delay,89,Route 89 experiencing delays of up to 20 minutes due to traffic
+2024-01-25T13:00,delay,89,Route 89 experiencing delays of up to 25 minutes due to traffic
+2024-01-25T15:00,delay,747,CT2 experiencing delays of up to 20 minutes due to traffic
+2024-01-25T16:00,delay,89,Route 89 experiencing delays of up to 20 minutes due to disabled bus
+2024-01-25T16:00,delay,91,Route 91 experiencing delays of up to 20 minutes due to disabled bus
+2024-01-25T16:00,delay,91,Route 91 experiencing delays of up to 30 minutes due to disabled bus
+2024-01-25T17:00,delay,94,Route 94 experiencing delays of up to 20 minutes due to traffic
+2024-01-25T17:00,delay,95,Route 95 experiencing delays of up to 20 minutes due to traffic
+2024-01-25T18:00,delay,747,CT2 experiencing delays of up to 20 minutes due to traffic
+2024-01-26T07:00,delay,747,CT2 experiencing delays of up to 20 minutes due to traffic
+2024-01-26T07:00,delay,95,Route 95 experiencing delays of up to 20 minutes due to traffic
+2024-01-26T08:00,delay,101,Route 101 experiencing delays of up to 20 minutes due to traffic
+2024-01-26T15:00,delay,747,CT2 experiencing delays of up to 25 minutes due to traffic
+2024-01-26T17:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to traffic
+2024-01-26T19:00,delay,86,Route 86 experiencing delays of up to 20 minutes due to traffic

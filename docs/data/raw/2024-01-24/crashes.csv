@@ -1,0 +1,20 @@
+date_hour,time,where,what,how,surface,weather,light,hurt,pedestrian,cyclist,pedestrian_where,pedestrian_doing,hit_and_run
+2024-01-15T15:00,15:15,Cross Street E,Collision with parked motor vehicle,"Sideswipe, same direction",Dry,Clear,Daylight,none,0,0,,,False
+2024-01-16T01:00,01:54,Webster Ave,Collision with motor vehicle in traffic,Head on,Snow,Snow,Dark - lighted roadway,possible,0,0,,,False
+2024-01-16T09:00,09:19,Tower St,Collision with light pole or other post/support,Single vehicle crash,Snow,Snow,Daylight,possible,0,0,,,False
+2024-01-16T11:00,11:16,Lake St,Collision with parked motor vehicle,"Sideswipe, same direction",Snow,Snow,Daylight,none,0,0,,,False
+2024-01-16T11:00,11:41,Porter St,Collision with tree,Single vehicle crash,Slush,Snow,Daylight,none,0,0,,,False
+2024-01-16T12:00,12:01,Porter St,Collision with utility pole,Single vehicle crash,Snow,Snow,Daylight,none,0,0,,,False
+2024-01-16T12:00,12:25,Highland Av,Collision with curb,Single vehicle crash,Slush,Snow,Daylight,none,0,0,,,False
+2024-01-17T11:00,11:59,Cutter Av & Summer St,Collision with motor vehicle in traffic,Angle,Dry,Clear,Daylight,none,0,0,,,False
+2024-01-18T19:00,19:24,School St & Somerville Av,Collision with motor vehicle in traffic,Rear-end,Dry,Clear,Dark - lighted roadway,none,0,0,,,False
+2024-01-18T19:00,19:30,Osgood St,Collision with parked motor vehicle,Angle,Dry,Clear,Dark - lighted roadway,none,0,0,,,False
+2024-01-20T11:00,11:52,Memorial Rd & Temple Street,Collision with motor vehicle in traffic,Head on,Dry,Clear,Daylight,minor,0,0,,,False
+2024-01-20T14:00,14:07,Broadway,Collision with motor vehicle in traffic,Angle,Dry,Clear,Daylight,none,0,0,,,False
+2024-01-21T15:00,15:59,Chester St & Orchard St,Collision with motor vehicle in traffic,Angle,"Sand, mud, dirt, oil, gravel",Cloudy,Dusk,none,0,0,,,False
+2024-01-21T21:00,21:43,Highland Av,Collision with parked motor vehicle,Rear-end,Dry,Clear,Dark - lighted roadway,none,0,0,,,False
+2024-01-22T07:00,07:28,Central St,Collision with parked motor vehicle,"Sideswipe, same direction",Dry,Clear,Daylight,none,0,0,,,False
+2024-01-23T10:00,10:19,Park Av,Collision with parked motor vehicle,Angle,Dry,Cloudy,Daylight,none,0,0,,,False
+2024-01-23T10:00,10:43,Wallace St,Collision with parked motor vehicle,Rear-end,Dry,Cloudy,Daylight,none,0,0,,,False
+2024-01-24T13:00,13:16,Broadway & Lincoln St,Collision with pedestrian,Single vehicle crash,Wet,Cloudy,Daylight,possible,1,0,Marked crosswalk at intersection,Entering or crossing specified location,False
+2024-01-25T08:00,08:44,Hinckley St & Wilton St,Collision with light pole or other post/support,Rear-end,Dry,Cloudy,Daylight,none,0,0,,,False

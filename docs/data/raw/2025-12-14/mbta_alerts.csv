@@ -1,0 +1,73 @@
+created_hour,kind,route_or_station,header
+2025-12-12T14:00,delay,83,Route 83 is experiencing delays of up to 20 minutes due to disabled bus
+2025-12-12T20:00,delay,87,Route 87 is experiencing delays of up to 25 minutes due to traffic
+2025-12-12T20:00,delay,88,Route 88 is experiencing delays of up to 20 minutes due to traffic
+2025-12-12T20:00,detour,80,"Route 80 detoured on Sun, Dec 14, from 9 AM to 1 PM for the Jingle Bell Run. Connections made at Medford St @ Broadway & Powder House Sq"
+2025-12-12T20:00,detour,87,"Route 87 detoured on Sun, Dec 14, from 9 AM to 1 PM for the Jingle Bell Run. Connections made at: Somerville Ave @ Lowell St/Sacramento St and Clarendon Hill."
+2025-12-12T20:00,detour,88,"Routes 88 detoured on Sun, Dec 14, from 9 AM to 1 PM, for the Jingle Bell Run. Connections made at: McGrath Hwy @ Poplar St (outbound) and McGrath Hwy @ Washington St (in"
+2025-12-12T20:00,detour,89,"Route 89 detoured on Sun, Dec 14, from 9 AM to 1 PM for the Jingle Bell Run. Connections made at: Connections made at: Broadway @ Medford St."
+2025-12-12T20:00,detour,94,"Route 94 detoured on Sun, Dec 14, from 9 AM to 1 PM for the Jingle Bell Run. Connections made at: College Ave @ Powder House Square."
+2025-12-12T20:00,detour,96,"Route 96 detoured on Sun, Dec 14, from 9 AM to 1 PM for the Jingle Bell Run. Connections made at: Boston St @ Winthrop St & Massachusetts Ave @ Beech St."
+2025-12-13T14:00,delay,80,Route 80 is experiencing delays of up to 20 minutes due to traffic
+2025-12-13T14:00,delay,88,Route 88 is experiencing delays of up to 25 minutes due to traffic
+2025-12-13T16:00,delay,87,Route 87 is experiencing delays of up to 25 minutes due to traffic
+2025-12-13T16:00,delay,88,Route 88 is experiencing delays of up to 20 minutes due to traffic
+2025-12-13T17:00,delay,96,Route 96 is experiencing delays of up to 20 minutes due to traffic
+2025-12-13T18:00,delay,87,Route 87 is experiencing delays of up to 20 minutes due to medical emergency
+2025-12-13T19:00,delay,88,Route 88 is experiencing delays of up to 20 minutes due to medical emergency
+2025-12-14T10:00,delay,90,Route 90 is experiencing delays of up to 20 minutes due to traffic
+2025-12-14T11:00,delay,87,Route 87 is experiencing delays of up to 25 minutes due to traffic
+2025-12-14T15:00,delay,95,Route 95 is experiencing delays of up to 25 minutes due to disabled bus
+2025-12-14T18:00,delay,80,Route 80 is experiencing delays of up to 20 minutes due to traffic
+2025-12-14T18:00,delay,88,Route 88 is experiencing delays of up to 25 minutes due to traffic
+2025-12-14T20:00,delay,87,Route 87 is experiencing delays of up to 20 minutes due to traffic
+2025-12-15T00:00,delay,83,Route 83 is experiencing delays of up to 30 minutes
+2025-12-15T06:00,delay,87,Route 87 is experiencing delays of up to 20 minutes due to traffic
+2025-12-15T12:00,delay,747,CT2 is experiencing delays of up to 20 minutes due to traffic
+2025-12-15T15:00,delay,83,Route 83 is experiencing delays of up to 25 minutes
+2025-12-15T17:00,delay,747,CT2 is experiencing delays of up to 20 minutes due to traffic
+2025-12-15T17:00,delay,89,Route 89 is experiencing delays of up to 25 minutes due to traffic
+2025-12-15T18:00,delay,101,Route 101 is experiencing delays of up to 20 minutes due to traffic
+2025-12-15T18:00,delay,85,Route 85 is experiencing delays of up to 25 minutes
+2025-12-15T19:00,delay,89,Route 89 is experiencing delays of up to 25 minutes due to traffic
+2025-12-15T20:00,delay,80,Route 80 is experiencing delays of up to 30 minutes
+2025-12-15T20:00,delay,88,Route 88 is experiencing delays of up to 25 minutes due to disabled bus
+2025-12-16T08:00,delay,83,Route 83 is experiencing delays of up to 20 minutes due to traffic
+2025-12-16T10:00,delay,87,Route 87 is experiencing delays of up to 20 minutes due to traffic
+2025-12-16T13:00,delay,96,Route 96 is experiencing delays of up to 20 minutes due to traffic
+2025-12-16T14:00,delay,101,Route 101 is experiencing delays of up to 30 minutes
+2025-12-16T15:00,delay,109,Route 109 is experiencing delays of up to 30 minutes due to traffic
+2025-12-16T16:00,delay,96,Route 96 is experiencing delays of up to 30 minutes due to traffic
+2025-12-16T17:00,delay,90,Route 90 is experiencing delays of up to 20 minutes due to traffic
+2025-12-16T17:00,delay,91,Route 91 is experiencing delays of up to 20 minutes due to traffic
+2025-12-16T18:00,delay,80,Route 80 is experiencing delays of up to 30 minutes due to traffic
+2025-12-16T18:00,delay,85,Route 85 is experiencing delays of up to 25 minutes due to traffic
+2025-12-16T18:00,delay,87,Route 87 is experiencing delays of up to 20 minutes due to traffic
+2025-12-16T18:00,delay,88,Route 88 is experiencing delays of up to 30 minutes due to traffic
+2025-12-16T18:00,delay,89,Route 89 is experiencing delays of up to 25 minutes due to traffic
+2025-12-17T08:00,delay,88,Route 88 is experiencing delays of up to 20 minutes due to accident
+2025-12-17T10:00,delay,87,Route 87 is experiencing delays of up to 20 minutes due to traffic
+2025-12-17T11:00,delay,90,Route 90 is experiencing delays of up to 25 minutes
+2025-12-17T12:00,delay,89,Route 89 is experiencing delays of up to 20 minutes due to traffic
+2025-12-17T14:00,delay,109,Route 109 is experiencing delays of up to 20 minutes due to traffic
+2025-12-17T14:00,delay,83,Route 83 is experiencing delays of up to 20 minutes due to traffic
+2025-12-17T14:00,delay,88,Route 88 is experiencing delays of up to 20 minutes due to traffic
+2025-12-17T16:00,delay,87,Route 87 is experiencing delays of up to 20 minutes due to disabled bus
+2025-12-17T18:00,delay,109,Route 109 is experiencing delays of up to 20 minutes due to traffic
+2025-12-17T18:00,delay,85,Route 85 is experiencing delays of up to 30 minutes
+2025-12-17T18:00,delay,89,Route 89 is experiencing delays of up to 25 minutes due to traffic
+2025-12-17T20:00,delay,80,Route 80 is experiencing delays of up to 20 minutes due to traffic
+2025-12-17T22:00,delay,80,Route 80 is experiencing delays of up to 20 minutes due to disabled bus
+2025-12-18T09:00,delay,101,Route 101 is experiencing delays of up to 20 minutes
+2025-12-18T09:00,delay,747,CT2 is experiencing delays of up to 20 minutes due to traffic
+2025-12-18T12:00,delay,87,Route 87 is experiencing delays of up to 20 minutes due to traffic
+2025-12-18T14:00,delay,83,Route 83 is experiencing delays of up to 20 minutes due to traffic
+2025-12-18T15:00,delay,91,Route 91 is experiencing delays of up to 20 minutes due to traffic
+2025-12-18T15:00,delay,96,Route 96 is experiencing delays of up to 20 minutes due to traffic
+2025-12-18T16:00,delay,88,Route 88 is experiencing delays of up to 30 minutes due to traffic
+2025-12-18T17:00,delay,109,Route 109 is experiencing delays of up to 20 minutes due to traffic
+2025-12-18T17:00,delay,87,Route 87 is experiencing delays of up to 25 minutes due to traffic
+2025-12-19T10:00,delay,91,Route 91 is experiencing delays of up to 20 minutes due to traffic
+2025-12-19T13:00,detour,88,Route 88 detoured. The outbound connections are Highland Ave opp Putnam St and Grove St @ Highland Ave. The inbound connections are Highland Ave @ Central St and 422 McGr
+2025-12-19T13:00,detour,90,Route 90 detoured. The outbound connections are Highland Ave opp Putnam St and Grove St @ Highland Ave. The inbound connections are Highland Ave @ Central St and 422 McGr
+2025-12-19T14:00,delay,80,Route 80 is experiencing delays of up to 20 minutes due to disabled bus

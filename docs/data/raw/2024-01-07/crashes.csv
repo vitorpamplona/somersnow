@@ -1,0 +1,8 @@
+date_hour,time,where,what,how,surface,weather,light,hurt,pedestrian,cyclist,pedestrian_where,pedestrian_doing,hit_and_run
+2024-01-07T12:00,12:55,College Av & Kidder Av,Collision with motor vehicle in traffic,Rear-end,Snow,Snow,Daylight,none,0,0,,,False
+2024-01-07T15:00,15:56,Bedford St & South St,Collision with parked motor vehicle,"Sideswipe, opposite direction",Slush,Snow,Dark - unknown roadway lighting,none,0,0,,,False
+2024-01-08T11:00,11:20,Broadway,Collision with motor vehicle in traffic,Rear-end,Wet,Clear,Daylight,none,0,0,,,False
+2024-01-08T13:00,13:23,Sawyer Av,,Single vehicle crash,Wet,Clear,Daylight,none,0,0,,,False
+2024-01-09T18:00,18:11,Broadway & Michigan Av,Collision with pedalcycle,Angle,Wet,Rain,Dark - lighted roadway,none,0,1,In roadway,"Walking, running or cycling",False
+2024-01-09T23:00,23:29,Putnam St,Collision with parked motor vehicle,Rear-end,Wet,Rain,Dark - lighted roadway,none,0,0,,,False
+2024-01-10T11:00,11:52,Cedar St & Highland Av,Collision with pedestrian,Single vehicle crash,Dry,Cloudy,Daylight,possible,0,0,In roadway,Entering or crossing specified location,False

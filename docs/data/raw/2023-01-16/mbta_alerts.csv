@@ -1,0 +1,56 @@
+created_hour,kind,route_or_station,header
+2023-01-13T07:00,delay,109,Route 109 experiencing delays of up to 20 minutes
+2023-01-13T07:00,delay,747,CT2 experiencing delays of up to 20 minutes due to traffic
+2023-01-13T07:00,detour,747,CT2 detoured and is omitting Vassar St @ Mass Ave. Connect outbound at Vassar St opp Pacific St Extension & Ames St @ Broadway. Inbound at Ames St @ Main St & Vassar St @
+2023-01-13T09:00,delay,89,Route 89 experiencing delays of up to 20 minutes due to a disabled bus
+2023-01-13T11:00,detour,747,CT2 outbound detoured due to construction. Connect at: Hampshire St @ Cardinal Medeiros Ave & Prospect St @ Bennett Ct
+2023-01-13T15:00,delay,747,CT2 experiencing delays of up to 20 minutes due to traffic
+2023-01-13T15:00,reduced,85,The outbound bus stop at Columbia St @ Cambridge St is closed from Tue 1/17 until Fri 1/27 due to road work.
+2023-01-13T16:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to traffic
+2023-01-13T16:00,delay,89,Route 89 experiencing delays of up to 20 minutes
+2023-01-13T16:00,delay,91,Route 91 experiencing delays of up to 30 minutes due to medical emergency
+2023-01-13T19:00,delay,88,Route 88 experiencing delays of up to 25 minutes
+2023-01-13T19:00,delay,94,Route 94 experiencing delays of up to 20 minutes due to traffic
+2023-01-13T21:00,delay,86,Route 86 experiencing delays of up to 30 minutes
+2023-01-14T14:00,delay,88,Route 88 experiencing delays of up to 25 minutes
+2023-01-15T13:00,delay,95,Route 95 experiencing delays of up to 20 minutes due to traffic
+2023-01-16T07:00,delay,86,Route 86 experiencing delays of up to 25 minutes
+2023-01-16T08:00,detour,85,Rte 85 Snow Route in Effect: Omitting Avon St. Connect at School St and Summer St.
+2023-01-16T09:00,delay,90,Route 90 experiencing delays of up to 20 minutes due to traffic
+2023-01-16T10:00,delay,87,Route 87 experiencing delays of up to 25 minutes due to a disabled bus
+2023-01-16T20:00,delay,80,Route 80 experiencing delays of up to 25 minutes due to disabled bus
+2023-01-17T06:00,delay,109,Route 109 experiencing delays of up to 20 minutes
+2023-01-17T06:00,delay,87,Route 87 experiencing delays of up to 20 minutes due to traffic
+2023-01-17T06:00,delay,88,Route 88 experiencing delays of up to 20 minutes due to traffic
+2023-01-17T08:00,delay,94,Route 94 experiencing delays of up to 25 minutes due to a disabled bus
+2023-01-17T09:00,delay,89,Route 89 experiencing delays of up to 20 minutes due to traffic
+2023-01-17T09:00,detour,747,CT2 outbound detoured due to construction. Connect at: Hampshire St @ Cardinal Medeiros Ave & Prospect St @ Bennett Ct
+2023-01-17T14:00,reduced,90,The following inbound stop is closed from Thu Jan 19 through Fri Jan 20: Highland Ave @ Central St
+2023-01-17T15:00,delay,86,Route 86 experiencing delays of up to 20 minutes
+2023-01-17T15:00,delay,94,Route 94 experiencing delays of up to 20 minutes due to traffic
+2023-01-17T15:00,delay,96,Route 96 experiencing delays of up to 20 minutes due to traffic
+2023-01-17T17:00,delay,101,Route 101 experiencing delays of up to 20 minutes due to traffic
+2023-01-17T17:00,delay,85,Route 85 experiencing delays of up to 20 minutes due to traffic
+2023-01-17T17:00,delay,90,Route 90 experiencing delays of up to 20 minutes due to traffic
+2023-01-17T20:00,delay,83,Route 83 experiencing delays of up to 20 minutes due to traffic
+2023-01-18T07:00,delay,109,Route 109 experiencing delays of up to 20 minutes
+2023-01-18T07:00,delay,89,Route 89 experiencing delays of up to 25 minutes
+2023-01-18T08:00,delay,101,Route 101 experiencing delays of up to 25 minutes
+2023-01-18T08:00,delay,747,CT2 experiencing delays of up to 20 minutes due to traffic
+2023-01-18T08:00,delay,95,Route 95 experiencing delays of up to 20 minutes due to a disabled bus
+2023-01-18T09:00,delay,96,Route 96 experiencing delays of up to 20 minutes due to a disabled bus
+2023-01-18T10:00,delay,86,Route 86 experiencing delays of up to 30 minutes due to a disabled bus
+2023-01-18T14:00,delay,85,Route 85 experiencing delays of up to 20 minutes due to traffic
+2023-01-18T17:00,delay,96,Route 96 experiencing delays of up to 20 minutes due to traffic
+2023-01-18T18:00,delay,747,CT2 experiencing delays of up to 20 minutes due to traffic
+2023-01-18T18:00,delay,87,Route 87 experiencing delays of up to 20 minutes due to disabled bus
+2023-01-19T06:00,delay,101,Route 101 experiencing delays of up to 25 minutes
+2023-01-19T07:00,delay,109,Route 109 experiencing delays of up to 20 minutes
+2023-01-19T07:00,delay,83,Route 83 experiencing delays of up to 20 minutes due to traffic
+2023-01-19T07:00,delay,89,Route 89 experiencing delays of up to 30 minutes
+2023-01-19T08:00,detour,747,CT2 outbound detoured due to construction. Connect at: Hampshire St @ Cardinal Medeiros Ave & Prospect St @ Bennett Ct
+2023-01-19T14:00,delay,86,Route 86 experiencing delays of up to 20 minutes
+2023-01-19T15:00,delay,85,Route 85 experiencing delays of up to 30 minutes due to traffic
+2023-01-19T17:00,delay,747,CT2 experiencing delays of up to 25 minutes due to traffic
+2023-01-19T17:00,delay,87,Route 87 experiencing delays of up to 20 minutes due to disabled bus
+2023-01-19T19:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to traffic

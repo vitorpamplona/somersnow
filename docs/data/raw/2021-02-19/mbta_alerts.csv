@@ -1,0 +1,38 @@
+created_hour,kind,route_or_station,header
+2021-02-16T06:00,delay,85,Route 85 experiencing delays of up to 20 minutes due to traffic
+2021-02-16T06:00,delay,94,Route 94 experiencing delays of up to 25 minutes due to disabled bus
+2021-02-16T06:00,detour,85,Route 85 detoured due to snow on Avon Street. Connect at Summer St opp Carter Terr (outbound) and Summer St @ Vinal Ave (inbound).
+2021-02-16T11:00,detour,85,Route 85 detoured due to snow on Avon Street. Connect at Summer St opp Carter Terr (outbound) and Summer St @ Vinal Ave (inbound).
+2021-02-17T17:00,delay,101,Route 101 experiencing delays of up to 25 minutes due to traffic
+2021-02-17T22:00,delay,95,Route 95 experiencing delays of up to 20 minutes due to traffic
+2021-02-18T05:00,delay,94,Route 94 experiencing delays of up to 20 minutes due to traffic
+2021-02-18T12:00,delay,90,Route 90 experiencing delays of up to 20 minutes
+2021-02-18T14:00,delay,87,Route 87 experiencing delays of up to 20 minutes
+2021-02-18T14:00,delay,95,Route 95 experiencing delays of up to 20 minutes due to traffic
+2021-02-18T15:00,delay,91,Route 91 experiencing delays of up to 20 minutes due to traffic
+2021-02-18T16:00,delay,85,Route 85 experiencing delays of up to 25 minutes due to accident
+2021-02-19T04:00,detour,85,Route 85 snow route in effect. Nearest Connection: Summer St @ School St
+2021-02-19T04:00,detour,85,Rte 85 Snow Route in Effect: Omitting Avon St. Connect at School St and Summer St.
+2021-02-19T07:00,delay,88,Route 88 experiencing delays of up to 20 minutes
+2021-02-19T09:00,delay,90,Route 90 experiencing delays of up to 25 minutes due to accident
+2021-02-19T12:00,delay,94,Route 94 experiencing delays of up to 20 minutes due to disabled bus
+2021-02-19T21:00,delay,88,Route 88 experiencing delays of up to 20 minutes due to traffic
+2021-02-19T22:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to traffic
+2021-02-19T22:00,delay,88,Route 88 experiencing delays of up to 20 minutes due to traffic
+2021-02-19T22:00,delay,90,Route 90 experiencing delays of up to 25 minutes due to traffic
+2021-02-19T23:00,delay,89,Route 89 experiencing delays of up to 20 minutes due to traffic
+2021-02-20T00:00,delay,101,Route 101 experiencing delays of up to 20 minutes
+2021-02-20T14:00,delay,91,Route 91 experiencing delays of up to 20 minutes
+2021-02-22T06:00,delay,89,Route 89 experiencing delays of up to 20 minutes
+2021-02-22T08:00,delay,96,Route 96 experiencing delays of up to 20 minutes due to disabled bus
+2021-02-22T13:00,delay,88,Route 88 experiencing delays of up to 20 minutes due to traffic
+2021-02-22T14:00,delay,80,Route 80 experiencing delays of up to 20 minutes due to traffic
+2021-02-22T16:00,delay,101,Route 101 experiencing delays of up to 30 minutes due to disabled bus
+2021-02-23T18:00,delay,87,Route 87 experiencing delays of up to 20 minutes due to traffic
+2021-02-24T09:00,delay,90,Route 90 experiencing delays of up to 20 minutes due to traffic
+2021-02-24T16:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to traffic
+2021-02-24T17:00,delay,94,Route 94 experiencing delays of up to 20 minutes due to traffic
+2021-02-25T00:00,detour,87,Route 87 detoured due to construction. Nearest connections: McGrath Hwy @ Poplar St & Bow St @ Warren Ave.
+2021-02-25T13:00,detour,94,Routes 94 and 96 outbound are omitting College Ave between Davis and the Powder House rotary due to a gas leak. Connections can be made at Davis Station and College Ave. 
+2021-02-25T14:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to accident
+2021-02-25T17:00,detour,8993,Route 89 detoured due to construction; Connections made at: Davis & Broadway opp Warner St - Powder House Sq.

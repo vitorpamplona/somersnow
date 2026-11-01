@@ -1,0 +1,84 @@
+created_hour,kind,route_or_station,header
+2025-01-18T13:00,delay,87,Route 87 is experiencing delays of up to 20 minutes due to traffic
+2025-01-18T14:00,delay,88,Route 88 is experiencing delays of up to 20 minutes due to traffic
+2025-01-18T14:00,delay,90,Route 90 is experiencing delays of up to 20 minutes due to traffic
+2025-01-18T18:00,delay,95,Route 95 is experiencing delays of up to 20 minutes due to traffic
+2025-01-18T19:00,delay,80,Route 80 is experiencing delays of up to 25 minutes due to disabled bus
+2025-01-18T19:00,delay,96,Route 96 is experiencing delays of up to 20 minutes due to traffic
+2025-01-20T12:00,delay,101,Route 101 is experiencing delays of up to 25 minutes due to traffic
+2025-01-20T12:00,delay,109,Route 109 is experiencing delays of up to 25 minutes due to Redline Shuttle
+2025-01-20T12:00,delay,87,Route 87 is experiencing delays of up to 25 minutes
+2025-01-20T12:00,delay,89,Route 89 is experiencing delays of up to 20 minutes due to traffic
+2025-01-20T15:00,access,747,Ruggles Elevator 851 (Forsyth Street to upper lobby) unavailable due to maintenance
+2025-01-20T18:00,delay,87,Route 87 is experiencing delays of up to 25 minutes due to disabled bus
+2025-01-20T20:00,delay,101,Route 101 is experiencing delays of up to 20 minutes due to traffic
+2025-01-21T09:00,delay,89,Route 89 is experiencing delays of up to 20 minutes due to traffic
+2025-01-21T13:00,delay,88,Route 88 is experiencing delays of up to 20 minutes due to disabled bus
+2025-01-21T13:00,delay,90,Route 90 is experiencing delays of up to 20 minutes due to disabled bus
+2025-01-21T17:00,delay,80,Route 80 is experiencing delays of up to 20 minutes
+2025-01-21T17:00,delay,87,Route 87 is experiencing delays of up to 20 minutes
+2025-01-21T17:00,delay,88,Route 88 is experiencing delays of up to 20 minutes due to traffic
+2025-01-21T17:00,delay,89,Route 89 is experiencing delays of up to 20 minutes due to traffic
+2025-01-21T19:00,delay,747,CT2 is experiencing delays of up to 20 minutes due to traffic
+2025-01-22T08:00,delay,747,CT2 is experiencing delays of up to 25 minutes due to accident
+2025-01-22T08:00,delay,94,Route 94 is experiencing delays of up to 20 minutes due to traffic
+2025-01-22T10:00,delay,83,Route 83 is experiencing delays of up to 20 minutes due to traffic
+2025-01-22T10:00,delay,87,Route 87 is experiencing delays of up to 20 minutes due to traffic
+2025-01-22T10:00,delay,89,Route 89 is experiencing delays of up to 20 minutes due to traffic
+2025-01-22T12:00,detour,109,"The Sullivan Square upper busway will be closed from 8:30 PM to the end of service on Jan 31- Feb 2 and Feb 14 - 17, please board all buses on the lower level."
+2025-01-22T15:00,delay,101,Route 101 is experiencing delays of up to 20 minutes due to disabled bus
+2025-01-22T17:00,delay,85,Route 85 is experiencing delays of up to 20 minutes due to traffic
+2025-01-22T17:00,delay,88,Route 88 is experiencing delays of up to 20 minutes due to traffic
+2025-01-22T18:00,delay,109,Route 109 is experiencing delays of up to 20 minutes due to traffic
+2025-01-22T18:00,delay,83,Route 83 is experiencing delays of up to 20 minutes due to construction
+2025-01-22T18:00,detour,109,Route 109 detoured outbound due to construction. Connection points available via Somerville Ave opp Stone Ave & Washington St @ Caldwell Ave.
+2025-01-23T09:00,delay,87,Route 87 is experiencing delays of up to 20 minutes
+2025-01-23T10:00,delay,88,Route 88 is experiencing delays of up to 20 minutes due to traffic
+2025-01-23T10:00,detour,747,CT2 INBOUND ONLY detoured due to construction. INBOUND connections can be made on Vassar St @ Pacific St Extension or on Mountfort St @ Lenox St.
+2025-01-23T16:00,delay,109,Route 109 is experiencing delays of up to 20 minutes due to traffic
+2025-01-23T17:00,access,109,Harvard Escalator 514 (Main lobby to Harvard Square mezzanine) unavailable due to maintenance
+2025-01-24T04:00,delay,109,Route 109 is experiencing delays of up to 20 minutes due to disabled bus
+2025-01-24T11:00,delay,94,Route 94 is experiencing delays of up to 20 minutes due to traffic
+2025-01-24T12:00,delay,87,Route 87 is experiencing delays of up to 30 minutes due to disabled bus
+2025-01-24T16:00,delay,83,Route 83 is experiencing delays of up to 20 minutes due to traffic
+2025-01-25T11:00,delay,91,Route 91 is experiencing delays of up to 20 minutes due to disabled bus
+2025-01-25T13:00,delay,87,Route 87 is experiencing delays of up to 20 minutes due to traffic
+2025-01-25T13:00,delay,87,Route 87 is experiencing delays of up to 20 minutes due to traffic
+2025-01-25T16:00,delay,89,Route 89 is experiencing delays of up to 25 minutes due to disabled bus
+2025-01-25T16:00,delay,95,Route 95 is experiencing delays of up to 30 minutes due to traffic
+2025-01-25T17:00,delay,95,Route 95 is experiencing delays of up to 20 minutes due to traffic
+2025-01-25T18:00,detour,87,Route 87 detoured due to fire. The nearest inbound connections are Elm St @ Russell St and Somerville Ave @ Sacramento St.
+2025-01-25T21:00,access,747,Ruggles Elevator 848 (Lobby to lower busway side platform) unavailable due to maintenance
+2025-01-26T15:00,delay,88,Route 88 is experiencing delays of up to 15 minutes due to an accident
+2025-01-27T11:00,delay,101,Route 101 is experiencing delays of up to 20 minutes due to traffic
+2025-01-27T11:00,delay,89,Route 89 is experiencing delays of up to 20 minutes due to traffic
+2025-01-27T12:00,delay,109,Route 109 is experiencing delays of up to 20 minutes due to an accident
+2025-01-27T14:00,delay,109,Route 109 is experiencing delays of up to 20 minutes due to traffic
+2025-01-27T16:00,delay,109,Route 109 is experiencing delays of up to 20 minutes due to traffic
+2025-01-28T08:00,access,747,Ruggles Elevator 848 (Lobby to lower busway side platform) unavailable due to maintenance
+2025-01-28T08:00,delay,109,Route 109 is experiencing delays of up to 25 minutes due to traffic
+2025-01-28T08:00,delay,89,Route 89 is experiencing delays of up to 20 minutes due to traffic
+2025-01-28T10:00,delay,101,Route 101 is experiencing delays of up to 20 minutes due to traffic
+2025-01-28T11:00,delay,95,Route 95 is experiencing delays of up to 20 minutes due to disabled bus
+2025-01-28T12:00,delay,95,Route 95 is experiencing delays of more than 30 minutes due to disabled bus
+2025-01-28T13:00,access,109,Harvard Escalator 513 (Harvard Square to mezzanine) unavailable due to maintenance
+2025-01-28T15:00,delay,109,Route 109 is experiencing delays of up to 20 minutes due to traffic
+2025-01-28T16:00,delay,91,Route 91 is experiencing delays of up to 20 minutes due to traffic
+2025-01-28T18:00,delay,89,Route 89 is experiencing delays of up to 20 minutes due to traffic
+2025-01-29T05:00,delay,101,Route 101 is experiencing delays of up to 25 minutes due to traffic
+2025-01-29T08:00,delay,91,Route 91 is experiencing delays of up to 20 minutes due to traffic
+2025-01-29T08:00,delay,91,Route 91 is experiencing delays of up to 25 minutes due to traffic
+2025-01-29T09:00,delay,89,Route 89 is experiencing delays of up to 20 minutes due to traffic
+2025-01-30T15:00,detour,83,"Route 83 OUTBOUND detoured due to fire. OUTBOUND service on Broadway will omit Fayette St, Highland Ave, and Ellery St. Connections can be made on Broadway at Felton St."
+2025-01-30T16:00,delay,109,Route 109 is experiencing delays of up to 20 minutes due to traffic
+2025-01-30T16:00,delay,88,Route 88 is experiencing delays of up to 20 minutes due to traffic
+2025-01-30T16:00,delay,89,Route 89 is experiencing delays of up to 20 minutes due to traffic
+2025-01-30T16:00,delay,90,Route 90 is experiencing delays of up to 20 minutes due to traffic
+2025-01-30T17:00,delay,89,Route 89 is experiencing delays of up to 20 minutes due to traffic
+2025-01-30T18:00,detour,88,Route 88 detoured due to police action. The nearest inbound connections are Holland St @ Dover St and Medford St @ Highland Ave. The nearest outbound connections are High
+2025-01-30T18:00,detour,90,Route 90 detoured due to police action. The nearest outbound connections are Highland Ave @ Walnut St and Davis. The nearest inbound connection points are Davis and Medfo
+2025-01-31T15:00,delay,109,Route 109 is experiencing delays of up to 20 minutes due to traffic
+2025-01-31T15:00,delay,747,CT2 is experiencing delays of up to 25 minutes due to traffic
+2025-01-31T15:00,delay,89,Route 89 is experiencing delays of up to 25 minutes due to traffic
+2025-01-31T17:00,delay,747,CT2 is experiencing delays of up to 20 minutes due to traffic
+2025-01-31T23:00,delay,91,Route 91 is experiencing delays of up to 25 minutes due to accident

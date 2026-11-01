@@ -1,0 +1,241 @@
+created,group,type,ward
+2018-03-05T11:20,ask,Snow emergency inquiry,
+2018-03-05T11:30,ask,Snow emergency parking inquiry,4
+2018-03-05T18:03,ask,Snow emergency inquiry,
+2018-03-06T08:21,ask,Snow emergency inquiry,5
+2018-03-06T11:10,ask,Snow emergency inquiry,5
+2018-03-06T12:16,ask,Snow emergency parking inquiry,
+2018-03-06T12:26,ask,Snow emergency inquiry,
+2018-03-06T13:00,ask,Snow emergency inquiry,
+2018-03-06T15:10,ask,Snow emergency inquiry,3
+2018-03-06T16:11,ask,Snow emergency inquiry,4
+2018-03-06T17:03,ask,Snow emergency inquiry,1
+2018-03-06T17:06,ask,Snow emergency inquiry,
+2018-03-06T17:26,ask,Snow emergency inquiry,
+2018-03-06T18:17,ask,Snow emergency inquiry,
+2018-03-06T18:21,ask,Snow emergency inquiry,6
+2018-03-06T18:52,ask,Snow emergency inquiry,
+2018-03-06T18:55,ask,Snow emergency inquiry,
+2018-03-06T21:05,ask,Snow emergency inquiry,
+2018-03-06T21:05,ask,Snow emergency inquiry,
+2018-03-07T05:44,ask,Snow emergency inquiry,
+2018-03-07T08:05,ask,Snow emergency inquiry,
+2018-03-07T08:45,ask,Snow emergency inquiry,
+2018-03-07T09:37,ask,Snow emergency inquiry,4
+2018-03-07T09:40,ask,Snow emergency inquiry,1
+2018-03-07T11:22,ask,Snow emergency inquiry,7
+2018-03-07T11:27,ask,Snow emergency inquiry,
+2018-03-07T12:13,ask,Snow emergency parking inquiry,
+2018-03-07T12:14,ask,Snow emergency inquiry,
+2018-03-07T12:37,ask,Snow emergency inquiry,
+2018-03-07T12:57,ask,Snow emergency inquiry,2
+2018-03-07T12:58,ask,Snow emergency inquiry,
+2018-03-07T13:34,ask,Snow emergency parking inquiry,
+2018-03-07T13:48,ask,Snow emergency inquiry,
+2018-03-07T13:58,ask,Snow emergency inquiry,
+2018-03-07T15:05,ask,Snow emergency inquiry,
+2018-03-07T15:08,ask,Snow emergency parking inquiry,
+2018-03-07T15:14,ask,Snow emergency inquiry,
+2018-03-07T16:07,ask,Snow emergency inquiry,
+2018-03-07T16:27,ask,Snow emergency inquiry,4
+2018-03-07T16:37,ask,Snow emergency inquiry,3
+2018-03-07T16:42,ask,Snow emergency inquiry,
+2018-03-07T16:47,ask,Snow emergency inquiry,
+2018-03-07T16:53,ask,Snow emergency inquiry,
+2018-03-07T16:56,ask,Snow emergency inquiry,
+2018-03-07T17:00,ask,Snow emergency inquiry,4
+2018-03-07T17:04,ask,Snow emergency parking inquiry,
+2018-03-07T17:05,ask,Snow emergency inquiry,5
+2018-03-07T17:11,ask,Snow emergency inquiry,
+2018-03-07T17:15,ask,Snow emergency inquiry,
+2018-03-07T17:19,ask,Snow emergency inquiry,3
+2018-03-07T17:24,ask,Snow emergency inquiry,
+2018-03-07T17:32,ask,Snow emergency parking inquiry,
+2018-03-07T17:37,ask,Snow emergency inquiry,
+2018-03-07T17:42,ask,Snow emergency inquiry,4
+2018-03-07T17:44,ask,Snow emergency inquiry,7
+2018-03-07T17:46,ask,Snow emergency inquiry,1
+2018-03-07T17:49,ask,Snow emergency parking inquiry,
+2018-03-07T17:50,ask,Snow emergency inquiry,
+2018-03-07T17:59,ask,Snow emergency inquiry,
+2018-03-07T17:59,ask,Snow emergency parking inquiry,
+2018-03-07T18:14,ask,Snow emergency inquiry,
+2018-03-07T18:18,ask,Snow emergency inquiry,
+2018-03-07T18:27,ask,Snow emergency inquiry,
+2018-03-07T18:40,ask,Snow emergency inquiry,
+2018-03-07T18:46,ask,Snow emergency inquiry,
+2018-03-07T18:54,ask,Snow emergency inquiry,2
+2018-03-07T18:59,ask,Snow emergency inquiry,
+2018-03-07T20:14,ask,Snow emergency inquiry,
+2018-03-07T20:46,ask,Snow emergency inquiry,
+2018-03-07T20:47,ask,Snow emergency inquiry,
+2018-03-07T21:13,street,Salting request,3
+2018-03-07T21:16,street,Salting request,3
+2018-03-07T21:22,ask,Snow emergency inquiry,
+2018-03-07T22:14,street,Snow removal request,7
+2018-03-07T22:32,ask,Snow emergency inquiry,
+2018-03-07T22:50,ask,Snow emergency inquiry,
+2018-03-07T22:54,ask,Snow emergency inquiry,
+2018-03-07T23:30,street,Snow removal request,3
+2018-03-08T00:32,street,Snow removal request,7
+2018-03-08T06:19,street,Snow removal request,4
+2018-03-08T07:36,sidewalk,Snow/sidewalk not shoveled,5
+2018-03-08T08:43,street,Salting request,4
+2018-03-08T09:05,street,Snow removal request,1
+2018-03-08T09:12,feedback,Snow related feedback,5
+2018-03-08T09:21,street,Salting request,5
+2018-03-08T09:37,street,Snow removal request,2
+2018-03-08T09:45,street,Snow removal request,2
+2018-03-08T10:11,ask,Snow emergency parking inquiry,
+2018-03-08T10:29,feedback,Snow related feedback,4
+2018-03-08T10:30,sidewalk,Snow/sidewalk not shoveled,2
+2018-03-08T10:37,street,Snow removal request,1
+2018-03-08T10:57,feedback,Snow related feedback,5
+2018-03-08T11:59,feedback,Snow related feedback,2
+2018-03-08T12:25,street,Salting request,5
+2018-03-08T12:30,street,Snow removal request,5
+2018-03-08T12:30,street,Snow removal request,7
+2018-03-08T12:43,street,Snow removal request,7
+2018-03-08T12:59,ask,Snow emergency inquiry,3
+2018-03-08T13:52,ask,Snow emergency inquiry,6
+2018-03-08T14:06,street,Snow removal request,1
+2018-03-08T14:10,sidewalk,Snow/sidewalk not shoveled,3
+2018-03-08T15:29,feedback,Snow related feedback,
+2018-03-08T16:50,sidewalk,Snow/sidewalk not shoveled,7
+2018-03-08T19:57,sidewalk,Snow/sidewalk not shoveled,5
+2018-03-08T19:58,ask,Snow emergency parking inquiry,
+2018-03-08T20:31,sidewalk,Snow/sidewalk not shoveled,5
+2018-03-09T03:45,sidewalk,Snow/sidewalk not shoveled,6
+2018-03-09T07:38,street,Salting request,3
+2018-03-09T07:45,sidewalk,Snow/sidewalk not shoveled,5
+2018-03-09T07:46,sidewalk,Snow/sidewalk not shoveled,2
+2018-03-09T08:05,sidewalk,Snow/sidewalk not shoveled,6
+2018-03-09T08:06,sidewalk,Snow/sidewalk not shoveled,6
+2018-03-09T08:38,sidewalk,Snow/sidewalk not shoveled,4
+2018-03-09T08:53,sidewalk,Snow/sidewalk not shoveled,3
+2018-03-09T08:54,sidewalk,Snow/sidewalk not shoveled,7
+2018-03-09T08:54,sidewalk,Snow/sidewalk not shoveled,3
+2018-03-09T09:02,sidewalk,Snow/sidewalk not shoveled,2
+2018-03-09T09:35,street,Snow removal request,2
+2018-03-09T09:49,sidewalk,Snow/sidewalk not shoveled,7
+2018-03-09T09:49,sidewalk,Snow/sidewalk not shoveled,7
+2018-03-09T09:50,sidewalk,Snow/sidewalk not shoveled,7
+2018-03-09T09:51,sidewalk,Snow/sidewalk not shoveled,7
+2018-03-09T10:25,sidewalk,Snow/sidewalk not shoveled,7
+2018-03-09T12:13,sidewalk,Snow/sidewalk not shoveled,3
+2018-03-09T12:23,sidewalk,Snow/sidewalk not shoveled,2
+2018-03-09T15:32,spacesaver,Space saver report,2
+2018-03-09T15:46,sidewalk,Snow/sidewalk not shoveled,5
+2018-03-09T15:59,sidewalk,Snow/sidewalk not shoveled,7
+2018-03-09T16:17,sidewalk,Snow/sidewalk not shoveled,6
+2018-03-09T17:08,sidewalk,Snow/sidewalk not shoveled,2
+2018-03-09T17:17,sidewalk,Snow/sidewalk not shoveled,5
+2018-03-09T18:45,sidewalk,Snow/sidewalk not shoveled,5
+2018-03-10T08:35,sidewalk,Snow/sidewalk not shoveled,1
+2018-03-10T10:27,sidewalk,Snow/sidewalk not shoveled,7
+2018-03-10T11:03,sidewalk,Snow/sidewalk not shoveled,1
+2018-03-10T12:54,street,Snow removal request,1
+2018-03-10T13:26,spacesaver,Space saver report,2
+2018-03-10T16:14,street,Snow removal request,5
+2018-03-11T13:52,sidewalk,Snow/sidewalk not shoveled,3
+2018-03-12T07:12,sidewalk,Snow/sidewalk not shoveled,6
+2018-03-12T08:50,ask,Snow emergency inquiry,
+2018-03-12T09:16,ask,Snow emergency inquiry,6
+2018-03-12T09:20,ask,Snow emergency parking inquiry,
+2018-03-12T09:41,ask,Snow emergency inquiry,5
+2018-03-12T09:42,ask,Snow emergency inquiry,
+2018-03-12T09:52,ask,Snow emergency parking inquiry,4
+2018-03-12T10:00,ask,Snow emergency inquiry,1
+2018-03-12T10:32,ask,Snow emergency parking inquiry,
+2018-03-12T10:42,ask,Snow emergency inquiry,
+2018-03-12T11:16,ask,Snow emergency inquiry,
+2018-03-12T11:20,ask,Snow emergency inquiry,
+2018-03-12T11:23,ask,Snow emergency parking inquiry,2
+2018-03-12T11:23,ask,Snow emergency inquiry,
+2018-03-12T11:33,ask,Snow emergency inquiry,3
+2018-03-12T12:00,ask,Snow emergency inquiry,5
+2018-03-12T12:08,ask,Snow emergency inquiry,6
+2018-03-12T12:09,ask,Snow emergency inquiry,2
+2018-03-12T12:12,ask,Snow emergency inquiry,
+2018-03-12T12:16,ask,Snow emergency inquiry,3
+2018-03-12T12:17,ask,Snow emergency parking inquiry,1
+2018-03-12T12:25,ask,Snow emergency inquiry,5
+2018-03-12T12:27,ask,Snow emergency inquiry,5
+2018-03-12T12:36,ask,Snow emergency parking inquiry,4
+2018-03-12T12:37,ask,Snow emergency inquiry,4
+2018-03-12T12:38,ask,Snow emergency inquiry,6
+2018-03-12T12:39,ask,Snow emergency parking inquiry,3
+2018-03-12T12:41,ask,Snow emergency inquiry,
+2018-03-12T12:42,ask,Snow emergency inquiry,
+2018-03-12T12:43,ask,Snow emergency parking inquiry,
+2018-03-12T12:44,ask,Snow emergency parking inquiry,2
+2018-03-12T12:45,ask,Snow emergency parking inquiry,
+2018-03-12T12:47,ask,Snow emergency parking inquiry,2
+2018-03-12T12:48,ask,Snow emergency parking inquiry,
+2018-03-12T12:53,ask,Snow emergency parking inquiry,2
+2018-03-12T12:53,ask,Snow emergency parking inquiry,
+2018-03-12T13:00,ask,Snow emergency parking inquiry,
+2018-03-12T13:07,ask,Snow emergency parking inquiry,
+2018-03-12T13:08,ask,Snow emergency inquiry,6
+2018-03-12T13:13,ask,Snow emergency parking inquiry,
+2018-03-12T13:19,ask,Snow emergency parking inquiry,
+2018-03-12T13:20,ask,Snow emergency parking inquiry,
+2018-03-12T13:46,ask,Snow emergency parking inquiry,
+2018-03-12T13:50,ask,Snow emergency parking inquiry,
+2018-03-12T14:03,ask,Snow emergency parking inquiry,4
+2018-03-12T14:29,ask,Snow emergency parking inquiry,
+2018-03-12T14:35,ask,Snow emergency parking inquiry,
+2018-03-12T14:50,ask,Snow emergency parking inquiry,5
+2018-03-12T14:50,ask,Snow emergency parking inquiry,
+2018-03-12T14:51,ask,Snow emergency parking inquiry,
+2018-03-12T14:57,ask,Snow emergency parking inquiry,4
+2018-03-12T14:59,ask,Snow emergency parking inquiry,5
+2018-03-12T14:59,ask,Snow emergency parking inquiry,
+2018-03-12T15:06,ask,Snow emergency parking inquiry,
+2018-03-12T15:19,ask,Snow emergency inquiry,
+2018-03-12T15:22,ask,Snow emergency inquiry,4
+2018-03-12T15:22,ask,Snow emergency inquiry,4
+2018-03-12T15:44,ask,Snow emergency parking inquiry,4
+2018-03-12T15:50,ask,Snow emergency parking inquiry,
+2018-03-12T15:59,ask,Snow emergency parking inquiry,
+2018-03-12T16:11,ask,Snow emergency inquiry,
+2018-03-12T16:13,ask,Snow emergency parking inquiry,
+2018-03-12T16:17,ask,Snow emergency parking inquiry,3
+2018-03-12T16:23,ask,Snow emergency parking inquiry,5
+2018-03-12T16:23,ask,Snow emergency parking inquiry,
+2018-03-12T16:27,ask,Snow emergency parking inquiry,
+2018-03-12T16:28,ask,Snow emergency parking inquiry,
+2018-03-12T16:32,ask,Snow emergency parking inquiry,4
+2018-03-12T16:38,ask,Snow emergency parking inquiry,3
+2018-03-12T16:41,ask,Snow emergency parking inquiry,4
+2018-03-12T16:56,ask,Snow emergency parking inquiry,2
+2018-03-12T17:08,ask,Snow emergency parking inquiry,2
+2018-03-12T17:36,feedback,Snow related feedback,
+2018-03-12T17:44,ask,Snow emergency parking inquiry,1
+2018-03-12T17:55,ask,Snow emergency parking inquiry,4
+2018-03-12T17:55,ask,Snow emergency parking inquiry,5
+2018-03-12T18:03,ask,Snow emergency parking inquiry,
+2018-03-12T18:17,ask,Snow emergency parking inquiry,2
+2018-03-12T18:22,ask,Snow emergency parking inquiry,2
+2018-03-12T18:23,ask,Snow emergency parking inquiry,1
+2018-03-12T18:37,ask,Snow emergency parking inquiry,3
+2018-03-12T18:55,ask,Snow emergency inquiry,4
+2018-03-12T19:00,ask,Snow emergency parking inquiry,
+2018-03-12T19:01,ask,Snow emergency parking inquiry,
+2018-03-12T19:26,ask,Snow emergency inquiry,
+2018-03-12T19:29,ask,Snow emergency inquiry,
+2018-03-12T19:37,street,Snow removal request,2
+2018-03-12T19:55,ask,Snow emergency inquiry,
+2018-03-12T21:00,ask,Snow emergency inquiry,
+2018-03-12T21:10,ask,Snow emergency inquiry,
+2018-03-12T21:11,ask,Snow emergency inquiry,
+2018-03-12T21:19,ask,Snow emergency inquiry,
+2018-03-12T21:19,ask,Snow emergency inquiry,
+2018-03-12T21:25,ask,Snow emergency inquiry,
+2018-03-12T21:26,ask,Snow emergency parking inquiry,
+2018-03-12T21:30,ask,Snow emergency inquiry,
+2018-03-12T21:40,ask,Snow emergency parking inquiry,
+2018-03-12T21:51,ask,Snow emergency inquiry,
+2018-03-12T22:50,ask,Snow emergency inquiry,
+2018-03-12T22:52,ask,Snow emergency parking inquiry,
+2018-03-12T23:42,ask,Snow emergency parking inquiry,

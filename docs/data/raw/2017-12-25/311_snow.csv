@@ -1,0 +1,316 @@
+created,group,type,ward
+2017-12-23T07:02,street,Salting request,6
+2017-12-23T07:02,street,Salting request,2
+2017-12-23T07:42,ask,Snow emergency inquiry,
+2017-12-23T07:51,street,Salting request,1
+2017-12-23T08:52,street,Salting request,4
+2017-12-23T09:21,street,Salting request,3
+2017-12-23T09:33,street,Salting request,3
+2017-12-23T09:52,street,Salting request,
+2017-12-23T09:54,street,Salting request,5
+2017-12-23T09:56,street,Salting request,3
+2017-12-23T09:59,street,Salting request,1
+2017-12-23T10:00,street,Salting request,4
+2017-12-23T10:03,street,Salting request,1
+2017-12-23T10:11,street,Salting request,1
+2017-12-23T10:13,street,Salting request,7
+2017-12-23T10:21,street,Salting request,3
+2017-12-23T10:23,street,Salting request,5
+2017-12-23T10:24,street,Salting request,7
+2017-12-23T10:27,street,Salting request,5
+2017-12-23T10:28,street,Salting request,5
+2017-12-23T10:29,street,Salting request,6
+2017-12-23T10:30,street,Salting request,1
+2017-12-23T10:37,street,Salting request,1
+2017-12-23T10:38,street,Salting request,1
+2017-12-23T10:42,street,Salting request,1
+2017-12-23T10:45,street,Salting request,2
+2017-12-23T10:52,street,Salting request,3
+2017-12-23T10:53,street,Salting request,1
+2017-12-23T10:57,street,Salting request,6
+2017-12-23T10:58,street,Salting request,1
+2017-12-23T10:59,street,Salting request,7
+2017-12-23T11:00,street,Salting request,6
+2017-12-23T11:12,street,Snow removal request,6
+2017-12-23T11:17,street,Salting request,2
+2017-12-23T11:18,street,Salting request,1
+2017-12-23T11:36,street,Salting request,3
+2017-12-23T11:38,street,Salting request,7
+2017-12-23T11:39,street,Salting request,1
+2017-12-23T11:52,sidewalk,Snow/sidewalk not shoveled,2
+2017-12-23T11:52,street,Salting request,1
+2017-12-23T12:01,street,Salting request,7
+2017-12-23T12:02,street,Salting request,2
+2017-12-23T12:04,street,Salting request,2
+2017-12-23T12:07,street,Salting request,6
+2017-12-23T12:10,street,Salting request,7
+2017-12-23T12:21,street,Salting request,2
+2017-12-23T12:23,street,Salting request,2
+2017-12-23T12:25,street,Salting request,4
+2017-12-23T12:33,street,Salting request,2
+2017-12-23T12:39,street,Salting request,3
+2017-12-23T12:42,street,Salting request,5
+2017-12-23T13:16,street,Salting request,5
+2017-12-23T14:18,street,Salting request,5
+2017-12-23T14:44,street,Salting request,7
+2017-12-23T15:10,street,Salting request,5
+2017-12-23T16:32,street,Sand barrel,4
+2017-12-23T17:06,street,Salting request,5
+2017-12-23T18:06,street,Salting request,6
+2017-12-23T18:30,street,Salting request,7
+2017-12-24T07:06,street,Salting request,2
+2017-12-24T08:26,street,Salting request,3
+2017-12-24T08:27,street,Salting request,2
+2017-12-24T09:06,street,Salting request,7
+2017-12-24T09:07,street,Sand barrel,5
+2017-12-24T09:49,sidewalk,Snow/sidewalk not shoveled,3
+2017-12-24T10:02,sidewalk,Snow/sidewalk not shoveled,4
+2017-12-24T10:23,street,Salting request,3
+2017-12-24T10:27,street,Snow removal request,3
+2017-12-24T10:34,street,Salting request,5
+2017-12-24T11:03,street,Salting request,5
+2017-12-24T11:22,street,Salting request,4
+2017-12-24T13:15,street,Sand barrel,5
+2017-12-24T13:36,sidewalk,Snow/sidewalk not shoveled,7
+2017-12-25T09:57,street,Salting request,6
+2017-12-25T12:19,feedback,Snow related feedback,3
+2017-12-25T12:36,street,Snow removal request,1
+2017-12-25T12:38,street,Snow removal request,5
+2017-12-25T12:39,street,Snow removal request,4
+2017-12-25T12:57,street,Snow removal request,4
+2017-12-25T13:02,street,Salting request,5
+2017-12-25T13:06,street,Snow removal request,5
+2017-12-25T13:18,street,Snow removal request,2
+2017-12-25T13:22,street,Snow removal request,4
+2017-12-25T13:24,street,Snow removal request,5
+2017-12-25T13:59,street,Snow removal request,5
+2017-12-25T14:04,street,Snow removal request,
+2017-12-25T14:12,street,Snow removal request,3
+2017-12-25T14:14,street,Snow removal request,7
+2017-12-25T14:52,street,Snow removal request,7
+2017-12-25T15:24,street,Snow removal request,2
+2017-12-25T15:44,street,Snow removal request,2
+2017-12-25T16:34,street,Salting request,2
+2017-12-25T19:14,spacesaver,Space saver report,4
+2017-12-25T19:23,street,Salting request,7
+2017-12-25T19:46,sidewalk,Snow/sidewalk not shoveled,7
+2017-12-25T19:49,street,Snow removal request,7
+2017-12-25T19:50,street,Snow removal request,7
+2017-12-25T19:51,sidewalk,Snow/sidewalk not shoveled,7
+2017-12-25T19:52,street,Snow removal request,7
+2017-12-25T19:55,street,Snow removal request,7
+2017-12-25T19:58,street,Snow removal request,2
+2017-12-25T20:11,street,Snow removal request,3
+2017-12-25T21:03,street,Snow removal request,3
+2017-12-25T23:01,street,Snow removal request,6
+2017-12-25T23:03,sidewalk,Snow/sidewalk not shoveled,7
+2017-12-26T00:00,sidewalk,Snow/sidewalk not shoveled,1
+2017-12-26T00:01,sidewalk,Snow/sidewalk not shoveled,4
+2017-12-26T00:03,sidewalk,Snow/sidewalk not shoveled,4
+2017-12-26T06:38,street,Salting request,5
+2017-12-26T07:08,street,Salting request,2
+2017-12-26T07:13,ask,Snow emergency inquiry,
+2017-12-26T07:18,ask,Snow emergency inquiry,
+2017-12-26T07:46,street,Snow removal request,6
+2017-12-26T08:00,street,Salting request,5
+2017-12-26T08:04,street,Snow removal request,2
+2017-12-26T08:05,street,Snow removal request,5
+2017-12-26T08:08,sidewalk,Snow/sidewalk not shoveled,3
+2017-12-26T08:54,sidewalk,Snow/sidewalk not shoveled,7
+2017-12-26T08:57,sidewalk,Snow/sidewalk not shoveled,6
+2017-12-26T08:57,street,Snow removal request,3
+2017-12-26T08:58,feedback,Snow related feedback,3
+2017-12-26T09:13,sidewalk,Snow/sidewalk not shoveled,5
+2017-12-26T09:21,sidewalk,Snow/sidewalk not shoveled,2
+2017-12-26T09:23,street,Snow removal request,4
+2017-12-26T09:23,street,Salting request,5
+2017-12-26T09:24,sidewalk,Snow/sidewalk not shoveled,2
+2017-12-26T09:25,street,Salting request,4
+2017-12-26T09:25,street,Snow removal request,7
+2017-12-26T09:25,ask,Snow emergency inquiry,
+2017-12-26T09:26,sidewalk,Snow/sidewalk not shoveled,2
+2017-12-26T09:34,feedback,Snow related feedback,3
+2017-12-26T09:38,sidewalk,Snow/sidewalk not shoveled,2
+2017-12-26T09:40,sidewalk,Snow/sidewalk not shoveled,2
+2017-12-26T09:47,street,Snow removal request,5
+2017-12-26T09:58,sidewalk,Snow/sidewalk not shoveled,4
+2017-12-26T10:00,street,Snow removal request,6
+2017-12-26T10:14,feedback,Snow related feedback,4
+2017-12-26T10:17,sidewalk,Snow/sidewalk not shoveled,
+2017-12-26T10:21,street,Snow removal request,1
+2017-12-26T10:27,sidewalk,Snow/sidewalk not shoveled,1
+2017-12-26T10:37,street,Salting request,2
+2017-12-26T11:24,sidewalk,Snow/sidewalk not shoveled,6
+2017-12-26T11:25,sidewalk,Snow/sidewalk not shoveled,6
+2017-12-26T11:25,sidewalk,Snow/sidewalk not shoveled,6
+2017-12-26T11:49,street,Snow removal request,4
+2017-12-26T11:50,street,Snow removal request,6
+2017-12-26T12:25,street,Snow removal request,1
+2017-12-26T13:02,sidewalk,Snow/sidewalk not shoveled,7
+2017-12-26T13:30,street,Snow removal request,2
+2017-12-26T13:32,sidewalk,Snow/sidewalk not shoveled,4
+2017-12-26T13:32,sidewalk,Snow/sidewalk not shoveled,7
+2017-12-26T13:32,sidewalk,Snow/sidewalk not shoveled,2
+2017-12-26T13:35,ask,Snow emergency parking inquiry,3
+2017-12-26T13:35,street,Snow removal request,2
+2017-12-26T13:37,sidewalk,Snow/sidewalk not shoveled,4
+2017-12-26T13:42,sidewalk,Snow/sidewalk not shoveled,5
+2017-12-26T13:43,sidewalk,Snow/sidewalk not shoveled,5
+2017-12-26T13:44,street,Snow removal request,4
+2017-12-26T13:49,sidewalk,Snow/sidewalk not shoveled,4
+2017-12-26T13:52,sidewalk,Snow/sidewalk not shoveled,4
+2017-12-26T13:54,street,Salting request,5
+2017-12-26T13:57,sidewalk,Snow/sidewalk not shoveled,2
+2017-12-26T14:00,street,Salting request,5
+2017-12-26T14:01,sidewalk,Snow/sidewalk not shoveled,4
+2017-12-26T14:13,sidewalk,Snow/sidewalk not shoveled,2
+2017-12-26T14:15,sidewalk,Snow/sidewalk not shoveled,2
+2017-12-26T14:19,street,Snow removal request,5
+2017-12-26T14:21,sidewalk,Snow/sidewalk not shoveled,6
+2017-12-26T14:21,street,Salting request,5
+2017-12-26T14:31,street,Salting request,7
+2017-12-26T14:36,street,Salting request,3
+2017-12-26T14:46,street,Salting request,3
+2017-12-26T15:13,street,Snow removal request,5
+2017-12-26T15:27,feedback,Snow related feedback,5
+2017-12-26T15:37,sidewalk,Snow/sidewalk not shoveled,2
+2017-12-26T15:38,sidewalk,Snow/sidewalk not shoveled,2
+2017-12-26T15:56,sidewalk,Snow/sidewalk not shoveled,2
+2017-12-26T15:57,sidewalk,Snow/sidewalk not shoveled,2
+2017-12-26T15:59,street,Snow removal request,5
+2017-12-26T16:02,street,Snow removal request,3
+2017-12-26T16:05,street,Salting request,6
+2017-12-26T16:20,sidewalk,Snow/sidewalk not shoveled,3
+2017-12-26T16:36,ask,Snow emergency inquiry,
+2017-12-26T16:46,sidewalk,Snow/sidewalk not shoveled,6
+2017-12-26T17:19,sidewalk,Snow/sidewalk not shoveled,7
+2017-12-26T18:23,street,Snow removal request,3
+2017-12-26T18:42,street,Snow removal request,7
+2017-12-26T18:47,sidewalk,Snow/sidewalk not shoveled,1
+2017-12-26T20:13,street,Snow removal request,6
+2017-12-26T22:59,street,Snow removal request,4
+2017-12-27T08:18,sidewalk,Snow/sidewalk not shoveled,6
+2017-12-27T08:33,sidewalk,Snow/sidewalk not shoveled,7
+2017-12-27T08:42,sidewalk,Snow/sidewalk not shoveled,6
+2017-12-27T08:48,sidewalk,Snow/sidewalk not shoveled,6
+2017-12-27T08:49,sidewalk,Snow/sidewalk not shoveled,6
+2017-12-27T08:49,sidewalk,Snow/sidewalk not shoveled,6
+2017-12-27T08:50,sidewalk,Snow/sidewalk not shoveled,6
+2017-12-27T08:58,sidewalk,Snow/sidewalk not shoveled,4
+2017-12-27T09:06,sidewalk,Snow/sidewalk not shoveled,6
+2017-12-27T09:07,street,Salting request,
+2017-12-27T09:10,feedback,Snow related feedback,3
+2017-12-27T09:15,street,Salting request,6
+2017-12-27T09:15,street,Snow removal request,2
+2017-12-27T09:20,street,Snow removal request,2
+2017-12-27T09:28,sidewalk,Snow/sidewalk not shoveled,1
+2017-12-27T09:51,street,Snow removal request,3
+2017-12-27T10:04,street,Sand barrel,4
+2017-12-27T10:06,sidewalk,Snow/sidewalk not shoveled,1
+2017-12-27T10:19,sidewalk,Snow/sidewalk not shoveled,5
+2017-12-27T10:19,sidewalk,Snow/sidewalk not shoveled,2
+2017-12-27T10:56,sidewalk,Snow/sidewalk not shoveled,4
+2017-12-27T10:57,street,Salting request,6
+2017-12-27T11:06,sidewalk,Snow/sidewalk not shoveled,1
+2017-12-27T11:22,feedback,Snow related feedback,7
+2017-12-27T11:27,street,Snow removal request,6
+2017-12-27T11:43,sidewalk,Snow/sidewalk not shoveled,
+2017-12-27T11:55,street,Snow removal request,7
+2017-12-27T11:58,street,Snow removal request,7
+2017-12-27T12:34,sidewalk,Snow/sidewalk not shoveled,6
+2017-12-27T12:35,sidewalk,Snow/sidewalk not shoveled,6
+2017-12-27T12:35,sidewalk,Snow/sidewalk not shoveled,6
+2017-12-27T13:27,street,Snow removal request,1
+2017-12-27T13:44,street,Salting request,6
+2017-12-27T13:49,sidewalk,Snow/sidewalk not shoveled,5
+2017-12-27T14:01,sidewalk,Snow/sidewalk not shoveled,2
+2017-12-27T14:34,sidewalk,Snow/sidewalk not shoveled,2
+2017-12-27T14:38,ask,Snow emergency parking inquiry,
+2017-12-27T15:27,sidewalk,Snow/sidewalk not shoveled,5
+2017-12-27T15:47,sidewalk,Snow/sidewalk not shoveled,5
+2017-12-27T16:45,street,Salting request,5
+2017-12-27T18:36,sidewalk,Snow/sidewalk not shoveled,5
+2017-12-27T18:39,sidewalk,Snow/sidewalk not shoveled,5
+2017-12-27T18:41,sidewalk,Snow/sidewalk not shoveled,5
+2017-12-27T22:39,street,Salting request,5
+2017-12-28T07:57,street,Snow removal request,6
+2017-12-28T08:04,sidewalk,Snow/sidewalk not shoveled,3
+2017-12-28T08:07,sidewalk,Snow/sidewalk not shoveled,3
+2017-12-28T08:25,sidewalk,Snow/sidewalk not shoveled,5
+2017-12-28T08:58,street,Snow removal request,5
+2017-12-28T09:05,street,Salting request,6
+2017-12-28T09:07,street,Salting request,6
+2017-12-28T09:09,street,Snow removal request,7
+2017-12-28T09:35,sidewalk,Snow/sidewalk not shoveled,2
+2017-12-28T09:44,sidewalk,Snow/sidewalk not shoveled,5
+2017-12-28T09:48,street,Salting request,6
+2017-12-28T09:54,sidewalk,Snow/sidewalk not shoveled,6
+2017-12-28T11:50,sidewalk,Snow/sidewalk not shoveled,4
+2017-12-28T13:27,ask,Snow emergency parking inquiry,5
+2017-12-28T13:28,ask,Snow emergency inquiry,4
+2017-12-28T13:37,street,Salting request,6
+2017-12-28T13:51,sidewalk,Snow/sidewalk not shoveled,3
+2017-12-28T14:10,sidewalk,Snow/sidewalk not shoveled,7
+2017-12-28T14:11,street,Salting request,1
+2017-12-28T14:55,street,Salting request,6
+2017-12-28T15:24,sidewalk,Snow/sidewalk not shoveled,7
+2017-12-28T15:31,street,Salting request,5
+2017-12-28T15:35,street,Snow removal request,2
+2017-12-28T15:36,sidewalk,Snow/sidewalk not shoveled,5
+2017-12-28T15:37,sidewalk,Snow/sidewalk not shoveled,4
+2017-12-28T15:38,sidewalk,Snow/sidewalk not shoveled,5
+2017-12-28T15:39,sidewalk,Snow/sidewalk not shoveled,5
+2017-12-28T15:57,street,Salting request,3
+2017-12-28T16:08,sidewalk,Snow/sidewalk not shoveled,2
+2017-12-28T16:08,sidewalk,Snow/sidewalk not shoveled,2
+2017-12-28T16:09,sidewalk,Snow/sidewalk not shoveled,2
+2017-12-28T16:09,sidewalk,Snow/sidewalk not shoveled,1
+2017-12-28T16:18,sidewalk,Snow/sidewalk not shoveled,2
+2017-12-28T18:13,sidewalk,Snow/sidewalk not shoveled,5
+2017-12-28T18:57,sidewalk,Snow/sidewalk not shoveled,2
+2017-12-28T18:58,sidewalk,Snow/sidewalk not shoveled,2
+2017-12-28T23:08,street,Snow removal request,3
+2017-12-29T08:46,sidewalk,Snow/sidewalk not shoveled,7
+2017-12-29T08:51,sidewalk,Snow/sidewalk not shoveled,7
+2017-12-29T08:52,sidewalk,Snow/sidewalk not shoveled,7
+2017-12-29T08:58,sidewalk,Snow/sidewalk not shoveled,2
+2017-12-29T09:29,street,Salting request,5
+2017-12-29T09:31,street,Salting request,5
+2017-12-29T09:33,street,Salting request,6
+2017-12-29T10:32,sidewalk,Snow/sidewalk not shoveled,2
+2017-12-29T10:55,sidewalk,Snow/sidewalk not shoveled,6
+2017-12-29T10:56,street,Sand barrel,4
+2017-12-29T10:57,sidewalk,Snow/sidewalk not shoveled,4
+2017-12-29T10:57,sidewalk,Snow/sidewalk not shoveled,6
+2017-12-29T11:03,sidewalk,Snow/sidewalk not shoveled,6
+2017-12-29T11:11,street,Sand barrel,6
+2017-12-29T11:25,sidewalk,Snow/sidewalk not shoveled,2
+2017-12-29T12:01,sidewalk,Snow/sidewalk not shoveled,5
+2017-12-29T12:06,sidewalk,Snow/sidewalk not shoveled,5
+2017-12-29T12:19,street,Salting request,5
+2017-12-29T13:18,street,Snow removal request,1
+2017-12-29T13:46,sidewalk,Snow/sidewalk not shoveled,1
+2017-12-29T15:04,ask,Snow emergency parking inquiry,
+2017-12-29T15:14,street,Sand barrel,7
+2017-12-29T15:15,street,Salting request,7
+2017-12-29T15:19,sidewalk,Snow/sidewalk not shoveled,3
+2017-12-29T15:21,sidewalk,Snow/sidewalk not shoveled,5
+2017-12-29T15:24,sidewalk,Snow/sidewalk not shoveled,5
+2017-12-29T16:17,sidewalk,Snow/sidewalk not shoveled,6
+2017-12-29T16:19,sidewalk,Snow/sidewalk not shoveled,3
+2017-12-29T16:31,sidewalk,Snow/sidewalk not shoveled,4
+2017-12-29T18:52,street,Salting request,7
+2017-12-29T19:18,sidewalk,Snow/sidewalk not shoveled,6
+2017-12-29T19:19,sidewalk,Snow/sidewalk not shoveled,6
+2017-12-30T08:42,sidewalk,Snow/sidewalk not shoveled,5
+2017-12-30T09:40,street,Snow removal request,2
+2017-12-30T12:17,sidewalk,Snow/sidewalk not shoveled,6
+2017-12-30T12:17,sidewalk,Snow/sidewalk not shoveled,6
+2017-12-30T12:29,street,Salting request,6
+2017-12-30T12:42,street,Snow removal request,3
+2017-12-31T13:55,sidewalk,Snow/sidewalk not shoveled,5
+2017-12-31T15:47,street,Snow removal request,2
+2018-01-01T00:36,street,Snow removal request,3
+2018-01-01T14:51,ask,Snow emergency inquiry,1
+2018-01-01T17:33,street,Snow removal request,1
+2018-01-01T17:50,street,Snow removal request,3

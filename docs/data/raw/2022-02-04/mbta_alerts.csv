@@ -1,0 +1,151 @@
+created_hour,kind,route_or_station,header
+2022-01-27T06:00,delay,87,Route 87 experiencing delays of up to 20 minutes due to a disabled bus
+2022-01-27T06:00,delay,88,Route 88 experiencing delays of up to 20 minutes due to a disabled bus
+2022-01-27T06:00,delay,95,Route 95 experiencing delays of up to 20 minutes due to a disabled bus
+2022-01-27T07:00,delay,94,Route 94 experiencing delays of up to 20 minutes due to a disabled bus
+2022-01-27T07:00,delay,96,Route 96 experiencing delays of up to 20 minutes due to a disabled bus
+2022-01-27T08:00,delay,747,CT2 experiencing delays of up to 20 minutes due to traffic
+2022-01-27T12:00,delay,95,Route 95 experiencing delays of up to 30 minutes
+2022-01-27T18:00,delay,747,CT2 experiencing delays of up to 20 minutes due to traffic
+2022-01-27T22:00,delay,89,Route 89 experiencing delays of up to 15 minutes due to traffic
+2022-01-28T05:00,delay,101,Route 101 experiencing delays of up to 20 minutes
+2022-01-28T08:00,delay,747,CT2 experiencing delays of up to 20 minutes due to traffic
+2022-01-28T09:00,delay,95,Route 95 experiencing delays of up to 20 minutes due to traffic
+2022-01-28T14:00,delay,101,Route 101 experiencing delays of up to 25 minutes due to traffic
+2022-01-28T15:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to traffic
+2022-01-28T15:00,delay,747,CT2 experiencing delays of up to 20 minutes due to traffic
+2022-01-28T15:00,delay,89,Route 89 experiencing delays of up to 20 minutes due to traffic
+2022-01-28T15:00,reduced,85,Route 85 stop Summer St @ Vinal Ave closed on Fri 2/11 from 6:30 AM to 4:00 PM. Use Summer St @ School St or 51 Bow St as alternates.
+2022-01-29T05:00,detour,85,Rte 85 Snow Route in Effect: Omitting Avon St. Connect at School St and Summer St.
+2022-01-29T06:00,delay,87,Route 87 experiencing delays of up to 30 minutes
+2022-01-29T06:00,delay,88,Route 88 experiencing delays of up to 30 minutes
+2022-01-29T08:00,delay,83,Route 83 experiencing delays of up to 30 minutes
+2022-01-29T09:00,delay,86,Route 86 experiencing delays of up to 20 minutes
+2022-01-29T09:00,delay,91,Route 91 experiencing delays of up to 25 minutes due to a disabled bus
+2022-01-29T10:00,delay,109,Route 109 experiencing delays of up to 25 minutes
+2022-01-29T10:00,delay,86,Route 86 experiencing delays of up to 25 minutes
+2022-01-29T11:00,delay,101,Route 101 experiencing delays of up to 30 minutes due to disabled bus
+2022-01-29T14:00,detour,101,Malden Center Bus Notice: All buses are picking up and dropping off in the east busway.
+2022-01-29T15:00,delay,101,Route 101 experiencing delays of more than 30 minutes
+2022-01-29T15:00,delay,90,Route 90 experiencing delays of more than 30 minutes
+2022-01-29T15:00,delay,91,Route 91 experiencing delays of more than 30 minutes
+2022-01-29T16:00,delay,80,Route 80 experiencing delays of more than 30 minutes due to disabled bus
+2022-01-29T16:00,delay,94,Route 94 experiencing delays of more than 30 minutes
+2022-01-29T17:00,delay,87,Route 87 experiencing delays of more than 30 minutes
+2022-01-30T06:00,delay,96,Route 96 experiencing delays of up to 15 minutes due to traffic
+2022-01-30T07:00,delay,91,Route 91 experiencing delays of up to 20 minutes due to traffic
+2022-01-30T08:00,delay,88,Route 88 experiencing delays of up to 20 minutes due to traffic
+2022-01-30T09:00,delay,86,Route 86 experiencing delays of up to 25 minutes
+2022-01-30T09:00,delay,94,Route 94 experiencing delays of up to 15 minutes
+2022-01-30T14:00,delay,83,Route 83 experiencing delays of up to 20 minutes due to traffic
+2022-01-30T14:00,delay,88,Route 88 experiencing delays of up to 20 minutes due to traffic
+2022-01-30T15:00,delay,87,Route 87 experiencing delays of more than 30 minutes due to traffic
+2022-01-30T20:00,delay,87,Route 87 experiencing delays of up to 30 minutes due to traffic
+2022-01-30T23:00,delay,88,Route 88 experiencing delays of up to 25 minutes
+2022-01-31T05:00,detour,85,Rte 85 Snow Route in Effect: Omitting Avon St. Connect at School St and Summer St.
+2022-01-31T07:00,delay,101,Route 101 experiencing delays of up to 25 minutes due to traffic
+2022-01-31T07:00,delay,87,Route 87 experiencing delays of up to 20 minutes
+2022-01-31T07:00,delay,89,Route 89 experiencing delays of up to 20 minutes due to disabled bus
+2022-01-31T07:00,delay,96,Route 96 experiencing delays of up to 25 minutes due to traffic
+2022-01-31T08:00,delay,86,Route 86 experiencing delays of up to 20 minutes due to an accident
+2022-01-31T08:00,delay,88,Route 88 experiencing delays of up to 20 minutes due to traffic
+2022-01-31T09:00,delay,89,Route 89 experiencing delays of up to 25 minutes due to traffic
+2022-01-31T09:00,delay,94,Route 94 experiencing delays of up to 20 minutes due to traffic
+2022-01-31T10:00,delay,80,Route 80 experiencing delays of up to 20 minutes due to traffic
+2022-01-31T13:00,other,85,"Route 85 notice: The stop at Avon St @ School Street will be permanently closed beginning Sun, Mar 13. Please use Summer St @ School St or Avon St @ Central St as alterna"
+2022-01-31T14:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to tie replacement
+2022-01-31T15:00,delay,83,Route 83 experiencing delays of up to 20 minutes due to traffic
+2022-01-31T15:00,delay,87,Route 87 experiencing delays of up to 20 minutes due to traffic
+2022-01-31T15:00,delay,88,Route 88 experiencing delays of up to 20 minutes due to traffic
+2022-01-31T15:00,delay,91,Route 91 experiencing delays of up to 20 minutes due to traffic
+2022-01-31T16:00,delay,101,Route 101 experiencing delays of up to 20 minutes due to traffic
+2022-01-31T17:00,delay,109,Route 109 experiencing delays of up to 20 minutes
+2022-01-31T17:00,delay,86,Route 86 experiencing delays of up to 20 minutes due to traffic
+2022-02-01T08:00,delay,101,Route 101 experiencing delays of up to 25 minutes due to traffic
+2022-02-01T08:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to traffic
+2022-02-01T08:00,delay,747,CT2 experiencing delays of up to 20 minutes due to traffic
+2022-02-01T08:00,delay,80,Route 80 experiencing delays of up to 25 minutes due to traffic
+2022-02-01T08:00,delay,94,Route 94 experiencing delays of up to 25 minutes due to traffic
+2022-02-01T12:00,delay,87,Route 87 experiencing delays of up to 20 minutes due to a disabled bus
+2022-02-01T12:00,delay,88,Route 88 experiencing delays of up to 25 minutes due to a disabled bus
+2022-02-01T14:00,delay,80,Route 80 experiencing delays of up to 25 minutes due to traffic
+2022-02-01T14:00,delay,87,Route 87 experiencing delays of up to 20 minutes due to traffic
+2022-02-01T15:00,delay,747,CT2 experiencing delays of up to 25 minutes due to traffic
+2022-02-01T15:00,delay,88,Route 88 experiencing delays of up to 20 minutes due to traffic
+2022-02-01T16:00,delay,83,Route 83 experiencing delays of up to 20 minutes due to traffic
+2022-02-01T16:00,delay,89,Route 89 experiencing delays of up to 20 minutes due to traffic
+2022-02-01T16:00,delay,90,Route 90 experiencing delays of up to 20 minutes due to traffic
+2022-02-01T16:00,detour,85,Rte 85 Snow Route in Effect: Omitting Avon St. Connect at School St and Summer St.
+2022-02-01T17:00,delay,101,Route 101 experiencing delays of up to 20 minutes due to traffic
+2022-02-01T17:00,delay,85,Route 85 experiencing delays of up to 20 minutes due to traffic
+2022-02-01T18:00,delay,88,Route 88 experiencing delays of up to 15 minutes due to traffic
+2022-02-02T06:00,delay,747,CT2 experiencing delays of up to 25 minutes due to traffic
+2022-02-02T07:00,delay,101,Route 101 experiencing delays of up to 20 minutes due to traffic
+2022-02-02T08:00,delay,80,Route 80 experiencing delays of up to 25 minutes due to traffic
+2022-02-02T08:00,delay,87,Route 87 experiencing delays of up to 20 minutes due to traffic
+2022-02-02T08:00,delay,88,Route 88 experiencing delays of up to 20 minutes due to traffic
+2022-02-02T08:00,delay,94,Route 94 experiencing delays of up to 15 minutes due to accident
+2022-02-02T10:00,delay,89,Route 89 experiencing delays of up to 15 minutes due to traffic
+2022-02-02T10:00,delay,90,Route 90 experiencing delays of up to 20 minutes due to traffic
+2022-02-02T15:00,delay,747,CT2 experiencing delays of up to 20 minutes due to traffic
+2022-02-02T16:00,delay,101,Route 101 experiencing delays of up to 20 minutes due to traffic
+2022-02-02T16:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to traffic
+2022-02-02T16:00,delay,89,Route 89 experiencing delays of up to 20 minutes due to traffic
+2022-02-02T16:00,delay,90,Route 90 experiencing delays of up to 20 minutes due to traffic
+2022-02-03T05:00,delay,86,Route 86 experiencing delays of up to 20 minutes
+2022-02-03T06:00,delay,747,CT2 experiencing delays of up to 20 minutes
+2022-02-03T06:00,delay,86,Route 86 experiencing delays of up to 20 minutes due to a disabled bus
+2022-02-03T08:00,delay,101,Route 101 experiencing delays of up to 15 minutes due to traffic
+2022-02-03T08:00,delay,89,Route 89 experiencing delays of up to 15 minutes due to traffic
+2022-02-03T14:00,delay,87,Route 87 experiencing delays of up to 20 minutes due to traffic
+2022-02-03T14:00,delay,88,Route 88 experiencing delays of up to 20 minutes due to traffic
+2022-02-03T16:00,delay,101,Route 101 experiencing delays of up to 20 minutes due to traffic
+2022-02-03T17:00,delay,747,CT2 experiencing delays of up to 25 minutes due to traffic
+2022-02-03T18:00,delay,80,Route 80 experiencing delays of up to 20 minutes due to traffic
+2022-02-03T18:00,delay,83,Route 83 experiencing delays of up to 25 minutes due to accident
+2022-02-03T18:00,delay,88,Route 88 experiencing delays of up to 20 minutes due to traffic
+2022-02-03T18:00,delay,90,Route 90 experiencing delays of up to 20 minutes due to traffic
+2022-02-03T18:00,delay,96,Route 96 experiencing delays of up to 20 minutes due to traffic
+2022-02-04T06:00,delay,747,CT2 experiencing delays of up to 25 minutes
+2022-02-04T06:00,delay,86,Route 86 experiencing delays of up to 20 minutes
+2022-02-04T08:00,delay,91,Route 91 experiencing delays of up to 20 minutes due to disabled bus
+2022-02-04T14:00,delay,86,Route 86 experiencing delays of up to 20 minutes
+2022-02-04T15:00,delay,747,CT2 experiencing delays of up to 25 minutes due to traffic
+2022-02-04T18:00,delay,83,Route 83 experiencing delays of up to 20 minutes due to traffic
+2022-02-04T20:00,delay,87,Route 87 experiencing delays of up to 25 minutes due to accident
+2022-02-04T21:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to traffic
+2022-02-05T06:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to traffic
+2022-02-05T14:00,delay,109,Route 109 experiencing delays of up to 20 minutes due to traffic
+2022-02-07T07:00,delay,94,Route 94 experiencing delays of up to 20 minutes due to a disabled bus
+2022-02-07T15:00,delay,86,Route 86 experiencing delays of up to 20 minutes
+2022-02-07T16:00,delay,101,Route 101 experiencing delays of up to 20 minutes due to traffic
+2022-02-07T17:00,delay,80,Route 80 experiencing delays of up to 20 minutes due to traffic
+2022-02-07T17:00,delay,88,Route 88 experiencing delays of up to 20 minutes due to traffic
+2022-02-07T17:00,delay,89,Route 89 experiencing delays of up to 20 minutes due to traffic
+2022-02-07T19:00,delay,85,Route 85 experiencing delays of up to 15 minutes due to traffic
+2022-02-08T06:00,delay,747,CT2 experiencing delays of more than 30 minutes due to traffic
+2022-02-08T08:00,delay,109,Route 109 experiencing delays of up to 15 minutes due to traffic
+2022-02-08T17:00,delay,101,Route 101 experiencing delays of up to 20 minutes due to traffic
+2022-02-08T17:00,delay,89,Route 89 experiencing delays of up to 20 minutes due to medical emergency
+2022-02-08T18:00,delay,85,Route 85 experiencing delays of up to 20 minutes due to traffic
+2022-02-09T06:00,delay,747,CT2 experiencing delays of up to 25 minutes
+2022-02-09T07:00,delay,86,Route 86 experiencing delays of up to 20 minutes
+2022-02-09T10:00,delay,95,Route 95 experiencing delays of up to 20 minutes due to traffic
+2022-02-09T15:00,delay,747,CT2 experiencing delays of up to 20 minutes due to traffic
+2022-02-09T17:00,delay,101,Route 101 experiencing delays of up to 20 minutes due to traffic
+2022-02-10T09:00,delay,86,Route 86 experiencing delays of up to 25 minutes
+2022-02-10T15:00,delay,101,Route 101 experiencing delays of up to 20 minutes due to traffic
+2022-02-10T20:00,delay,95,Route 95 experiencing delays of up to 20 minutes due to traffic
+2022-02-10T20:00,delay,95,Route 95 experiencing delays of up to 20 minutes due to traffic
+2022-02-10T22:00,detour,85,"Route 85 will bypass Avon St @ Central St & Avon St @ School St, effective Tue 2/15 thru Fri 2/18 due to tree trimming. Last outbound stop: Summer St opp Carter Terr; Fir"
+2022-02-11T07:00,delay,747,CT2 experiencing delays of up to 20 minutes
+2022-02-11T12:00,delay,90,Route 90 experiencing delays of up to 20 minutes due to traffic
+2022-02-11T12:00,detour,80,Route 80 detoured due to an accident. Nearest connections: McGrath Hwy @ Twin City Plaza or Pearl St @ McGrath Hwy.
+2022-02-11T12:00,detour,88,Route 88 detoured due to an accident. Nearest connections: Medford St @ Highland Ave or McGrath Hwy @ Twin City Plaza.
+2022-02-11T13:00,delay,101,Route 101 experiencing delays of up to 25 minutes
+2022-02-11T15:00,delay,109,Route 109 experiencing delays of up to 25 minutes due to traffic
+2022-02-11T18:00,delay,89,Route 89 experiencing delays of up to 20 minutes due to traffic
+2022-02-11T20:00,delay,109,Route 109 experiencing delays of up to 25 minutes
+2022-02-12T06:00,delay,86,Route 86 experiencing delays of up to 25 minutes
+2022-02-12T11:00,delay,86,Route 86 experiencing delays of up to 25 minutes
+2022-02-12T13:00,delay,89,Route 89 experiencing delays of up to 20 minutes due to traffic

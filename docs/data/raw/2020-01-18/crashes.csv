@@ -1,0 +1,10 @@
+date_hour,time,where,what,how,surface,weather,light,hurt,pedestrian,cyclist,pedestrian_where,pedestrian_doing,hit_and_run
+2020-01-18T20:00,20:42,Washington St,Collision with motor vehicle in traffic,Head on,Snow,Snow,Dark - lighted roadway,possible,0,0,,,False
+2020-01-19T00:00,00:17,Derby St,Collision with parked motor vehicle,"Sideswipe, same direction",Snow,Snow,Dark - lighted roadway,none,0,0,,,False
+2020-01-20T19:00,19:25,Albion St & Lowell St,Collision with motor vehicle in traffic,Angle,Dry,Clear,Dark - lighted roadway,none,0,0,,,False
+2020-01-22T09:00,09:57,Hanson St,Collision with parked motor vehicle,"Sideswipe, same direction",Dry,Clear,Daylight,none,0,0,,,False
+2020-01-22T13:00,13:00,Franey Rd & Ryan Rd,Collision with parked motor vehicle,Angle,Dry,Clear,Daylight,none,0,0,,,True
+2020-01-23T08:00,08:04,Broadway & Holland St,Collision with motor vehicle in traffic,Rear-end,Dry,Clear,Daylight,none,0,0,,,False
+2020-01-23T12:00,12:14,Highland Rd,Collision with parked motor vehicle,Single vehicle crash,Dry,Clear,Daylight,none,0,0,,,False
+2020-01-24T08:00,08:19,Broadway,Collision with motor vehicle in traffic,Rear-end,Dry,Clear,Daylight,possible,0,0,,,False
+2020-01-24T20:00,20:50,Broadway,Collision with motor vehicle in traffic,Rear-end,Dry,Clear,Dark - lighted roadway,minor,0,0,,,False

@@ -1,0 +1,18 @@
+date_hour,time,where,what,how,surface,weather,light,hurt,pedestrian,cyclist,pedestrian_where,pedestrian_doing,hit_and_run
+2020-12-16T15:00,15:01,Holland St,Collision with motor vehicle in traffic,Angle,Dry,Cloudy,Daylight,none,0,0,,,False
+2020-12-17T01:00,01:05,Somerville Av,Collision with parked motor vehicle,Angle,Snow,Snow,Dark - lighted roadway,none,0,0,,,False
+2020-12-17T19:00,19:53,Washington St,Collision with motor vehicle in traffic,Rear-end,Snow,,Dark - lighted roadway,none,0,0,,,False
+2020-12-18T10:00,10:08,Pearl St & Walnut St,Collision with motor vehicle in traffic,Angle,Slush,Cloudy,Daylight,none,0,0,,,False
+2020-12-18T10:00,10:48,Somerville Av,Collision with pedestrian,Angle,Slush,Cloudy,Daylight,possible,0,0,,,False
+2020-12-18T11:00,11:18,Somerville Av,Collision with motor vehicle in traffic,Angle,Slush,Cloudy,Daylight,none,0,0,,,False
+2020-12-18T16:00,16:46,Washington St & Joy St,Collision with motor vehicle in traffic,Angle,Wet,Clear,Dusk,none,0,0,,,False
+2020-12-20T20:00,20:18,Broadway,Collision with motor vehicle in traffic,Rear-end,Wet,,Dark - lighted roadway,none,0,0,,,False
+2020-12-22T09:00,09:52,Broadway & Walnut St,Collision with pedestrian,Single vehicle crash,Wet,Clear,Daylight,minor,1,0,,,False
+2020-12-22T11:00,11:56,Cross Street,Collision with parked motor vehicle,"Sideswipe, same direction",Wet,Clear,Daylight,minor,0,0,,,False
+2020-12-22T16:00,16:39,Somerville Ave & Ibbetson St,Collision with motor vehicle in traffic,Rear-end,Wet,Clear,Dusk,none,0,0,,,False
+2020-12-22T20:00,20:57,Adrian St,Collision with parked motor vehicle,"Sideswipe, same direction",Snow,Cloudy,Dark - lighted roadway,none,0,0,,,False
+2020-12-23T13:00,13:37,Barton St & Broadway,Collision with motor vehicle in traffic,Angle,Dry,Clear,Daylight,none,0,0,,,False
+2020-12-24T16:00,16:11,Lake St,Collision with motor vehicle in traffic,Head on,Snow,Rain,Dusk,minor,0,0,,,False
+2020-12-25T19:00,19:59,Franklin Av & Washington St,Collision with parked motor vehicle,"Sideswipe, opposite direction",Wet,Rain,Dark - lighted roadway,none,0,0,,,False
+2020-12-26T01:00,01:09,Clarendon Av,Collision with parked motor vehicle,"Sideswipe, same direction",Dry,Clear,Dark - lighted roadway,none,0,0,,,False
+2020-12-26T06:00,06:01,Somerville Av,Other non-collision,,Dry,Clear,Dark - lighted roadway,none,0,0,,,False

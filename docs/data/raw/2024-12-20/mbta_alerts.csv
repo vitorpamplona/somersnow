@@ -1,0 +1,64 @@
+created_hour,kind,route_or_station,header
+2024-12-18T07:00,delay,109,Route 109 is experiencing delays of up to 20 minutes due to disabled bus
+2024-12-18T09:00,delay,91,Route 91 is experiencing delays of up to 20 minutes due to traffic
+2024-12-18T14:00,delay,101,Route 101 is experiencing delays of up to 20 minutes due to traffic
+2024-12-18T14:00,delay,109,Route 109 is experiencing delays of up to 20 minutes due to traffic
+2024-12-18T16:00,delay,89,Route 89 is experiencing delays of up to 20 minutes due to traffic
+2024-12-18T16:00,delay,91,Route 91 is experiencing delays of up to 20 minutes due to traffic
+2024-12-18T16:00,delay,95,Route 95 is experiencing delays of up to 20 minutes due to traffic
+2024-12-18T17:00,delay,91,Route 91 is experiencing delays of up to 25 minutes due to traffic
+2024-12-18T17:00,delay,96,Route 96 is experiencing delays of up to 25 minutes due to traffic
+2024-12-18T18:00,delay,80,Route 80 is experiencing delays of up to 20 minutes due to traffic
+2024-12-18T18:00,delay,90,Route 90 is experiencing delays of up to 20 minutes due to traffic
+2024-12-19T06:00,delay,86,Route 86 is experiencing delays of up to 20 minutes due to disabled bus
+2024-12-19T06:00,delay,94,Route 94 is experiencing delays of up to 20 minutes due to traffic
+2024-12-19T13:00,delay,109,Route 109 is experiencing delays of up to 30 minutes due to traffic
+2024-12-19T15:00,delay,88,Route 88 is experiencing delays of up to 20 minutes due to traffic
+2024-12-19T15:00,delay,89,Route 89 is experiencing delays of up to 20 minutes due to traffic
+2024-12-19T16:00,delay,83,Route 83 is experiencing delays of up to 20 minutes due to traffic
+2024-12-19T17:00,delay,101,Route 101 is experiencing delays of up to 20 minutes due to traffic
+2024-12-19T17:00,delay,80,Route 80 is experiencing delays of up to 25 minutes due to traffic
+2024-12-19T17:00,delay,85,Route 85 is experiencing delays of up to 20 minutes due to traffic
+2024-12-19T17:00,delay,91,Route 91 is experiencing delays of up to 20 minutes
+2024-12-19T18:00,delay,86,Route 86 is experiencing delays of up to 20 minutes due to traffic
+2024-12-19T19:00,delay,109,Route 109 is experiencing delays of up to 20 minutes due to traffic
+2024-12-19T20:00,access,109,Harvard Elevator 821 (Lobby to Harvard Square) unavailable due to maintenance
+2024-12-20T09:00,delay,95,Route 95 is experiencing delays of up to 20 minutes due to traffic
+2024-12-20T11:00,delay,101,Route 101 is experiencing delays of up to 25 minutes due to traffic
+2024-12-20T11:00,delay,109,Route 109 is experiencing delays of up to 25 minutes due to traffic
+2024-12-20T11:00,delay,88,Route 88 is experiencing delays of up to 20 minutes due to traffic
+2024-12-20T11:00,delay,94,Route 94 is experiencing delays of up to 20 minutes due to traffic
+2024-12-20T12:00,delay,89,Route 89 is experiencing delays of up to 20 minutes due to traffic
+2024-12-20T14:00,delay,80,Route 80 is experiencing delays of up to 20 minutes due to traffic
+2024-12-20T14:00,delay,83,Route 83 is experiencing delays of up to 20 minutes due to traffic
+2024-12-20T15:00,delay,90,Route 90 is experiencing delays of up to 20 minutes due to traffic
+2024-12-20T16:00,delay,88,Route 88 is experiencing delays of more than 30 minutes
+2024-12-20T17:00,delay,747,All local bus routes are experiencing delays of about 25 minutes due to weather.
+2024-12-21T06:00,delay,95,Route 95 is experiencing delays of up to 30 minutes due to traffic
+2024-12-21T11:00,delay,109,Route 109 is experiencing delays of up to 20 minutes due to traffic
+2024-12-21T14:00,delay,86,Route 86 is experiencing delays of up to 20 minutes due to traffic
+2024-12-21T15:00,delay,87,Route 87 is experiencing delays of up to 20 minutes due to traffic
+2024-12-21T15:00,delay,95,Route 95 is experiencing delays of up to 25 minutes due to traffic
+2024-12-21T18:00,delay,90,Route 90 is experiencing delays of up to 30 minutes due to traffic
+2024-12-21T20:00,delay,89,Route 89 is experiencing delays of up to 20 minutes due to traffic
+2024-12-23T08:00,delay,87,Route 87 is experiencing delays of up to 25 minutes due to traffic
+2024-12-23T10:00,detour,109,Route 109 detoured due to construction (inbound only). Connections can be made at Lynn St @ Beach St (Berth A) and Broadway @ Eastern Ave.
+2024-12-23T10:00,detour,747,CT2 outbound detoured from Ames St. Outbound bus stop Ames St @ Broadway has been relocated to Galileo Way @ Main St.
+2024-12-23T13:00,delay,109,Route 109 is experiencing delays of up to 20 minutes due to traffic
+2024-12-23T13:00,delay,96,Route 96 is experiencing delays of up to 30 minutes due to traffic
+2024-12-23T14:00,delay,101,Route 101 is experiencing delays of up to 20 minutes due to traffic
+2024-12-23T14:00,delay,83,Route 83 is experiencing delays of up to 30 minutes due to traffic
+2024-12-23T16:00,delay,89,Route 89 is experiencing delays of up to 20 minutes due to traffic
+2024-12-23T16:00,delay,90,Route 90 is experiencing delays of up to 20 minutes due to traffic
+2024-12-23T17:00,delay,95,Route 95 is experiencing delays of up to 20 minutes due to traffic
+2024-12-23T20:00,delay,94,Route 94 is experiencing delays of up to 20 minutes due to traffic
+2024-12-24T07:00,delay,83,Route 83 is experiencing delays of up to 20 minutes due to accident
+2024-12-24T12:00,delay,109,Route 109 is experiencing delays of up to 20 minutes due to traffic
+2024-12-26T12:00,delay,101,Route 101 is experiencing delays of up to 20 minutes due to traffic
+2024-12-26T16:00,delay,96,Route 96 is experiencing delays of up to 20 minutes due to traffic
+2024-12-27T05:00,access,747,Ruggles Escalator 138 (Forsyth Street to upper lobby) unavailable due to maintenance
+2024-12-27T11:00,delay,94,Route 94 is experiencing delays of up to 20 minutes due to traffic
+2024-12-27T14:00,delay,109,Route 109 is experiencing delays of up to 20 minutes due to traffic
+2024-12-27T14:00,delay,109,Route 109 is experiencing delays of up to 20 minutes due to traffic
+2024-12-27T15:00,access,86,Harvard Elevator 973 (Upper busway to Brattle Square) unavailable due to maintenance
+2024-12-29T16:00,delay,91,Route 91 is experiencing delays of up to 20 minutes due to a disabled bus.

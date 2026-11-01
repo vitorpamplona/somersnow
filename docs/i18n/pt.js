@@ -27,7 +27,7 @@ export default {
     "top.01": "Inverno 2026/27 · Somerville, MA",
     "top.02": "Neve &amp; gelo<br/>na <em>calçada</em>",
     "top.03": "O ônibus só é bom se o caminho até ele for bom.",
-    "top.04": "<b>6</b><span>Horas de luz do dia</span>",
+    "top.04": "<b>6</b><span>Horas para limpar</span>",
     "top.05": "<b>36″</b><span>Largura do caminho</span>",
     "top.06": "<b>0″</b><span>De neve ou gelo</span>",
     "top.07": "Rampa até a faixa",

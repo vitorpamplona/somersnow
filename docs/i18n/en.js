@@ -25,7 +25,7 @@ export default {
     "top.01": "Winter 2026/27 · Somerville, MA",
     "top.02": "Snow &amp; ice<br/>on the <em>sidewalk</em>",
     "top.03": "A bus is only as good as the walk to it.",
-    "top.04": "<b>6</b><span>Daylight hours</span>",
+    "top.04": "<b>6</b><span>Hours to shovel</span>",
     "top.05": "<b>36″</b><span>Wide path</span>",
     "top.06": "<b>0″</b><span>Snow or ice left</span>",
     "top.07": "Ramp to crosswalk",

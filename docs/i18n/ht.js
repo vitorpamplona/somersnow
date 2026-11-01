@@ -27,7 +27,7 @@ export default {
     "top.01": "Ivè 2026/27 · Somerville, MA",
     "top.02": "Nèj &amp; glas<br/>sou <em>twotwa</em> a",
     "top.03": "Yon bis vo sa chemen pou rive jwenn li vo.",
-    "top.04": "<b>6</b><span>Èdtan lajounen</span>",
+    "top.04": "<b>6</b><span>Èdtan pou pele</span>",
     "top.05": "<b>36″</b><span>Lajè chemen an</span>",
     "top.06": "<b>0″</b><span>Nèj oswa glas ki rete</span>",
     "top.07": "Ranp jis nan pasaj pyeton",

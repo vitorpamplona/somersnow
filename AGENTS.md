@@ -13,9 +13,10 @@ A public guide to Somerville, MA's sidewalk snow and ice rules, for people who w
 | `docs/i18n/en.js` | Every English string: `page` (mirrors the `data-i18n` tags) and `ui` (text scripts write). |
 | `docs/i18n/languages.js` | Languages in the switcher. The switcher stays hidden while only English is listed. |
 | `docs/i18n/drafts.js` + `es.js`, `pt.js`, `ht.js`, `ne.js` | AI-drafted translations awaiting native-speaker review. Not in the switcher; preview with `?lang=es` (a banner marks them as drafts). Review checklist: `research/translation-review.md`. Add new English keys to these too, or they fall back to English. |
-| `docs/js/deadline.js` | Pure sunrise/sunset + 6-daylight-hour deadline math. Covered by `test/`. |
+| `docs/js/deadline.js` | Pure sunrise/sunset + 6-daylight-hour deadline math. Covered by `test/deadline.test.js`. |
 | `docs/js/shovel.js` | The animated street corner for "Down to the pavement" (steps 1–5). Each step plays one short animation; CSS under "shovel scene" in `style.css`. |
 | `docs/js/corner.js` | The street-corner SVG for the "Who clears this?" map. |
+| `docs/js/live.js` | Live "storm mode": an orange banner above the hero, shown only while snow is on the way, falling, or just ended (hidden otherwise). Reads the National Weather Service API in the browser (forecast grid BOX 70,102 snowfall, active alerts for zone MAZ014, Logan KBOS observations), refreshed every 15 minutes. Phases: forecast → snowing (estimated deadline if it stops when forecast) → stopped ("Shovel by" from `deadline.js`, countdown, "Add to my calendar" .ics) → deadline passed (311, ice, space savers) for 30 hours. A passing flurry (under 3 snowy reports) doesn't start the clock. Everything is labeled an estimate; the City's snow emergency has no feed, so the banner says how to check. Preview with `?live=forecast`, `?live=snowing`, `?live=stopped` or `?live=passed` (marked "Demo"). Logic in `liveState()`, tested in `test/live.test.js`. Text: `ui.live` in `en.js`. |
 | `docs/js/main.js` | Wires the page: steps, who-clears map, calculator (starts at "just now" from Oct 1 to May 1), salt slider, fines, share-this-card links, nav. |
 | `cards/src/` | The 34 phone-size (1080×1920) social cards as standalone HTML (the editable source). |
 | `docs/cards/` | Rendered PNGs, served by the site with a gallery at `docs/cards.html`. `cards.json` lists them in story order. Regenerate with `npm run cards` (or `npm run cards -- 23-fines` for one). |
@@ -78,6 +79,7 @@ The guide teaches the rules; `docs/storms/` shows what actually happens in a sto
 ## History
 
 - Site: guide sections, cards, research, then (Oct–Nov 2026) the animated "Down to the pavement" corner, the redrawn "Who clears this?" map, shorter phone layout, "What's happening?" buttons, share-this-card links, printable flyer, calculator starting "just now", draft translations, and the "Replay a past storm" section.
+- Live storm mode on the main guide (Nov 2026).
 - Storm replays: one storm (Feb 2026), then all 15 big storms with fixed pages, then "Getting around" (T, Bluebikes, tows, parking calls, alerts, crashes), then buses, Somerville snowfall and City page views. The git log has the details.
 
 ## Voice and design rules

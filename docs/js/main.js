@@ -3,6 +3,7 @@ import { shovelScene } from './shovel.js';
 import { snowfall } from './snowfall.js';
 import { deadline, sunTimes, wall, zoned, SOMERVILLE } from './deadline.js';
 import { t, listeners, initLanguage } from './i18n.js';
+import { liveState, fetchLive, demoInput, icsFor } from './live.js';
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -199,8 +200,65 @@ function renderReplay() {
     + `<span class="go">${t('replay.open')}</span>`;
 }
 
+/* ---------- Live storm mode (js/live.js): a banner while snow is on the way, falling or just ended ---------- */
+let liveInput = null;
+const liveDemo = new URLSearchParams(location.search).get('live');
+const durTxt = (ms) => { const h = Math.floor(ms / 36e5); const m = Math.round((ms % 36e5) / 6e4); return h ? `${h} h ${m} min` : `${m} min`; };
+const dayTime = (ms) => `${fmt(ms, { weekday: 'short' })} ${niceTime(ms)}`;
+function renderLive() {
+  const box = $('#live');
+  if (!box || !liveInput) return;
+  const now = liveDemo ? liveInput.now : Date.now();
+  const st = liveState({ ...liveInput, now });
+  $$('.now a').forEach((a) => a.classList.remove('lit'));
+  if (st.phase === 'quiet') { box.hidden = true; return; }
+  const lit = { forecast: '#saltsand', snowing: '#saltsand', stopped: '#deadline' }[st.phase];
+  if (lit) $(`.now a[href="${lit}"]`)?.classList.add('lit');
+  const alert = st.alerts[0] ? `<p class="live-alert">${t('live.alert', { event: st.alerts[0].event })}</p>` : '';
+  let title = ''; let line = ''; let big = ''; let todo = []; let note = ''; let actions = '';
+  const calendar = (dl) => `<button class="btn" data-ics="${dl}">${t('live.calendar')}</button>`;
+  if (st.phase === 'forecast') {
+    title = t('live.forecastTitle');
+    line = st.forecastStart ? (st.inches >= 1 ? t('live.forecastInches', { inches: Math.round(st.inches), when: dayTime(st.forecastStart) }) : t('live.forecastMaybe', { when: dayTime(st.forecastStart) })) : '';
+    todo = ['todoSalt', 'todoCar', 'todoAlerts']; note = t('live.forecastNote');
+  } else if (st.phase === 'snowing') {
+    title = t('live.snowingTitle'); line = t('live.snowingLine');
+    if (st.estimatedDeadline) { big = `<p class="live-if">${t('live.snowingIf', { stop: dayTime(st.estimatedStop) })}</p><div class="live-big"><span>${t('live.shovelBy')}</span> <b>${dayTime(st.estimatedDeadline)}</b></div>`; actions = calendar(st.estimatedDeadline); note = t('live.estimate'); }
+    todo = ['todoCar', 'todoHeart', 'todoAlerts'];
+  } else if (st.phase === 'stopped') {
+    title = t('live.stoppedTitle', { when: dayTime(st.stop) });
+    big = `<div class="live-big"><span>${t('live.shovelBy')}</span> <b>${dayTime(st.deadline)}</b></div><p class="live-if">${t('live.left', { dur: durTxt(st.deadline - now) })}</p>`;
+    line = st.moreSnow ? t('live.moreSnow', { when: dayTime(st.moreSnow) }) : '';
+    actions = calendar(st.deadline); note = t('live.estimate');
+    todo = ['todoPath', 'todoRamp', 'todoSand'];
+  } else {
+    title = t('live.passedTitle'); line = t('live.passedLine', { when: dayTime(st.deadline) });
+    actions = `<a class="btn" href="tel:6176663311">${t('live.call')}</a>`;
+    todo = ['todoReport', 'todoIce', 'todoSpace'];
+  }
+  box.innerHTML = (`<div class="wrap live-grid"><div class="live-main">
+    <div class="live-tag"><i aria-hidden="true"></i>${liveDemo ? t('live.demo') : t('live.tag')}</div>
+    <h2>${title}</h2>${alert}${line ? `<p class="live-line">${line}</p>` : ''}${big}
+    ${actions ? `<div class="live-actions">${actions}</div>` : ''}
+    <p class="live-note">${note}${note ? ' ' : ''}${liveDemo ? '' : t('live.updated', { time: niceTime(now) })}</p>
+  </div><ul class="live-todo">${todo.map((k) => `<li>${t(`live.${k}`)}</li>`).join('')}</ul></div>`).replace(/\.\.(?=[\s<]|$)/g, '.'); // a time ending a sentence: 'a.m..' -> 'a.m.'
+  box.hidden = false;
+}
+$('#live')?.addEventListener('click', (e) => {
+  const b = e.target.closest('[data-ics]'); if (!b) return;
+  const blob = new Blob([icsFor(+b.dataset.ics, t('live.icsTitle'), t('live.icsDetails'))], { type: 'text/calendar' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'shovel-deadline.ics';
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+});
+async function loadLive() {
+  try { liveInput = liveDemo ? demoInput(liveDemo) : await fetchLive(); } catch { liveInput = null; }
+  renderLive();
+}
+loadLive();
+if (!liveDemo) { setInterval(loadLive, 15 * 60e3); setInterval(renderLive, 60e3); }
+
 /* ---------- Render, and re-render when the language changes ---------- */
-function renderAll() { renderKeys(); pick(whoSel); renderDeadline(); renderSalt(); renderFines(); renderReplay(); }
+function renderAll() { renderKeys(); pick(whoSel); renderDeadline(); renderSalt(); renderFines(); renderReplay(); renderLive(); }
 listeners.add(renderAll);
 renderAll();
 initLanguage($('.bar .wrap'));

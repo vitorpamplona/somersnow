@@ -13,6 +13,8 @@ The City's snow page has no translated snow rules to borrow terms from (its lang
 
 The "Replay a past storm" section (`header.10`, `replay.01`–`07`, `ui.replay.*`) and the footer link `footer.storm`. Check these with the rest.
 
+**Not translated yet:** the live storm-mode banner (`ui.live` in `en.js`, about 30 short strings). Until it's translated, draft pages show it in English. Preview it with `?lang=es&live=stopped`.
+
 ## Ask the reviewer to check
 
 **All languages**

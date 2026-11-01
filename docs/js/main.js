@@ -173,7 +173,7 @@ const secIO = new IntersectionObserver((es) => es.forEach((e) => {
 }), { rootMargin: '-40% 0px -55% 0px' });
 links.forEach((a) => { const s = $(a.getAttribute('href')); if (s) secIO.observe(s); });
 
-/* ---------- Replay teaser: the latest big storm's sidewalk reports by day (data/storms.json, from npm run data) ---------- */
+/* ---------- Replay teaser: the latest storm's sidewalk reports by day (data/storms.json, from npm run data) ---------- */
 let latestStorm = null;
 fetch('data/storms.json').then((r) => r.json()).then((d) => { latestStorm = d.storms[d.storms.length - 1]; renderReplay(); }).catch(() => {});
 function renderReplay() {

@@ -360,6 +360,54 @@ def fetch_bus_stops():
 
 # ---------- build ----------
 
+
+def complaint_storms(daily, by_day, storms):
+    """Smaller snows that 311 shows were a problem anyway ("found through 311"). Outside every snow storm's window,
+    a run of days where sidewalk reports over 3 days reach 3% of that winter's sidewalk reports (and at least 30).
+    A share of the winter, not a fixed count, because reporting grew several times over after 2023. The storm is the
+    latest run of days with half an inch or more at Logan in the 4 days before the burst or during it (its last day
+    is the id, as for snow storms). Bursts with no such snow are skipped (ice from rain, or a late wave)."""
+    sw = {d: c.get('sidewalk', 0) for d, c in by_day.items()}
+    win = lambda d: d.year - (d.month < 7)
+    total = Counter()
+    for d, n in sw.items():
+        total[win(d)] += n
+    taken = set()
+    for st in storms:
+        d, b = date.fromisoformat(st['start']) - timedelta(2), date.fromisoformat(st['end']) + timedelta(7)
+        while d <= b:
+            taken.add(d); d += timedelta(1)
+    bursts, d, end = [], min(sw), max(sw)
+    while d <= end:
+        s3 = sum(sw.get(d + timedelta(k), 0) for k in range(3))
+        if total[win(d)] and s3 >= max(30, 0.03 * total[win(d)]) and not any(d + timedelta(k) in taken for k in range(3)):
+            if bursts and (d - bursts[-1][1]).days <= 3:
+                bursts[-1][1] = d
+            else:
+                bursts.append([d, d])
+        d += timedelta(1)
+    out, used = [], set()
+    for a, b in bursts:
+        snowy = [a - timedelta(k) for k in range(-(b - a).days, 5)]
+        snowy = sorted(x for x in snowy if daily.get(x.isoformat(), 0) >= 0.5)
+        if not snowy:
+            print(f'  311 burst {a}–{b}: no snow day of 0.5 in at Logan, skipped')
+            continue
+        e = s_ = snowy[-1]
+        while daily.get((s_ - timedelta(1)).isoformat(), 0) >= 0.5:
+            s_ -= timedelta(1)
+        if e in used:
+            continue
+        used.add(e)
+        span = [(s_ + timedelta(k)).isoformat() for k in range((e - s_).days + 1)]
+        out.append({
+            'start': s_.isoformat(), 'end': e.isoformat(), 'snow': round(sum(daily[x] for x in span), 1), 'kind': '311',
+            'days': [[(e + timedelta(k)).isoformat(), daily.get((e + timedelta(k)).isoformat(), 0), dict(by_day[e + timedelta(k)])]
+                     for k in range(-2, 8)],
+        })
+    print(f'  found through 311: {len(out)} smaller storms ({", ".join(st["end"] for st in out)})')
+    return out
+
 def main():
     print('311 requests…'); reqs = fetch_311()
     print('Snowfall…'); daily = fetch_snow_daily('2015-07-01'); winters = fetch_snow_winters()
@@ -398,6 +446,9 @@ def main():
                 'days': [[(b + timedelta(k)).isoformat(), daily.get((b + timedelta(k)).isoformat(), 0), dict(by_day[b + timedelta(k)])]
                          for k in range(-2, 8)],
             })
+    for st in storms:
+        st['kind'] = 'snow'
+    storms = sorted(storms + complaint_storms(daily, by_day, storms), key=lambda st: st['end'])
     write('storms.json', {'storms': storms})
 
     print('Wards…'); wards = fetch_wards(); survey = fetch_ward_survey()

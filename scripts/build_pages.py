@@ -114,7 +114,7 @@ def facts(S):
     return '\n'.join(items), summary
 
 
-def lede(S):
+def lede(S, kind='snow'):
     start, stop = datetime.fromisoformat(S['snowStart']), datetime.fromisoformat(S['snowStop'])
     e = S.get('emergency')
     missing = (' The City\'s snow emergency notices for this storm aren\'t online, so parking messages are left out.' if not e
@@ -122,7 +122,8 @@ def lede(S):
                else ' The City\'s notice about the end of the emergency isn\'t online.' if not e.get('end') else '')
     som = (S.get('extra') or {}).get('snowSomerville')
     here = f' ({som["total"]} in Somerville, from volunteer observers{", partial report" if som["partial"] else ""})' if som else ''
-    return (f'{S["snowTotal"]} inches at Logan{here}. Snow from {day_tm(start)} to {day_tm(stop)}.{missing} Press play, or drag the line.').replace('..', '.')
+    why = ('Found through 311: a small snow, but sidewalk reports jumped in the days after. ' if kind == '311' else '')
+    return (f'{why}{S["snowTotal"]} inches at Logan{here}. Snow from {day_tm(start)} to {day_tm(stop)}.{missing} Press play, or drag the line.').replace('..', '.')
 
 
 def winter_of(day):
@@ -158,19 +159,24 @@ def cards(storms, current=None, prefix=''):
             continue
         v = [d[2].get('sidewalk', 0) for d in st['days']]
         mx = max(1, *v)
-        pk = v.index(mx) - 2
+        pk = v.index(mx) - 2 if max(v) else None
         bars = ''.join(f'<rect x="{k * 20 + 2}" y="{60 - n / mx * 56:.1f}" width="16" height="{n / mx * 56:.1f}" rx="2" fill="{"#10243A" if k == 2 else "#FF8A3D"}"/>' for k, n in enumerate(v))
         sel = st['end'] == current
         cur = ' aria-current="page"' if sel else ''
+        tag = '<span class="tag">Found through 311</span>' if st.get('kind') == '311' else ''
         out.append(f'<a class="mini{" sel" if sel else ""}" href="{prefix}{st["end"]}.html"{cur}>'
-                   f'<h4>{short(st["end"])}</h4><small>{st["snow"]} in · peak {mx} on day {"+" if pk >= 0 else ""}{pk}</small>'
+                   f'{tag}<h4>{short(st["end"])}</h4><small>{st["snow"]} in · {f'peak {mx} on day {"+" if pk >= 0 else ""}{pk}' if pk is not None else 'no sidewalk reports'}</small>'
                    f'<svg viewBox="0 0 200 74" aria-hidden="true">{bars}<path d="M0 61 H200" stroke="#C9D6E3"/><text x="51" y="73" text-anchor="middle" font-size="10" fill="#47607C">LAST SNOW</text></svg>'
                    f'<span class="go">{"Showing above" if sel else "Replay this storm →"}</span></a>')
-    peaks13 = sum(1 for st in storms if 1 <= _peak(st) <= 3)
-    big = [st for st in storms if st['snow'] >= 6]
+    # counted on the storms picked by snowfall only: the ones found through 311 were picked by their reports
+    snowy = [st for st in storms if st.get('kind', 'snow') == 'snow']
+    peaks13 = sum(1 for st in snowy if 1 <= _peak(st) <= 3)
+    big = [st for st in snowy if st['snow'] >= 6]
     peaks_big = sum(1 for st in big if 1 <= _peak(st) <= 3)
-    lede_ = (f'In {peaks13} of {len(storms)} storms, sidewalk reports peaked 1 to 3 days after the last day of snow '
-             f'({peaks_big} of the {len(big)} with 6 inches or more).')
+    n311 = len(storms) - len(snowy)
+    lede_ = (f'In {peaks13} of {len(snowy)} storms of 3 inches or more, sidewalk reports peaked 1 to 3 days after the last day of snow '
+             f'({peaks_big} of the {len(big)} with 6 inches or more).'
+             + (f' {n311} smaller snows are here too, found through 311: they left sidewalks bad enough that reports jumped.' if n311 else ''))
     return '\n'.join(out), lede_
 
 
@@ -188,6 +194,7 @@ def main():
             v = hashlib.sha1(f.read()).hexdigest()[:8]
         tpl = tpl.replace(f'../{rel}"', f'../{rel}?v={v}"')
     os.makedirs(OUT, exist_ok=True)
+    kinds = {st['end']: st.get('kind', 'snow') for st in storms}
     for k, sid in enumerate(ids):
         S = load(f'storm-{sid}.json')
         _, summary = facts(S)
@@ -201,7 +208,7 @@ def main():
                           separators=(',', ':'), ensure_ascii=False).replace('</', '<\\/')
         desc = f'Replay the {S["title"]} storm in Somerville hour by hour: ' + ', '.join(summary) + '. By the Somerville PTAC.'
         page = (tpl.replace('%%TITLE%%', esc(S['title'])).replace('%%DESC%%', esc(desc)).replace('%%URL%%', f'{SITE}storms/{sid}.html')
-                .replace('%%LEDE%%', esc(lede(S))).replace('%%NAV%%', nav)
+                .replace('%%LEDE%%', esc(lede(S, kinds.get(sid, 'snow')))).replace('%%NAV%%', nav)
                 .replace('%%CARDS%%', cards_html).replace('%%ALL_LEDE%%', esc(all_lede)).replace('%%DATA%%', data))
         with open(os.path.join(OUT, f'{sid}.html'), 'w') as f:
             f.write(page)
@@ -245,7 +252,7 @@ INDEX = '''<!DOCTYPE html>
 <div class="multiples">
 %%CARDS%%
 </div>
-<p class="cite" style="margin-top:20px">Sidewalk reports to 311 per day, from 2 days before to 7 days after the last day of snow (marked). Storms with 3 inches or more at Logan, over consecutive snowy days. Small storms count: they leave ice too.</p>
+<p class="cite" style="margin-top:20px">Sidewalk reports to 311 per day, from 2 days before to 7 days after the last day of snow (marked). Storms with 3 inches or more at Logan, over consecutive snowy days, plus smaller snows found through 311: days when sidewalk reports over 3 days reached 3% of the winter's total (and at least 30).</p>
 </div>
 </section>
 <footer><div class="wrap"><p>By the Somerville PTAC. Not an official City page. The City's rules apply: <a href="https://www.somervillema.gov/snow">somervillema.gov/snow</a>.</p></div></footer>

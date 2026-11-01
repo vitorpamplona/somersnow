@@ -80,8 +80,15 @@
 #map .stop{cursor:pointer}
 #map .wl text{paint-order:stroke;stroke-width:3.5px;stroke-linejoin:round}
 #map .route{cursor:pointer}
-#map .route.on .rt-line{stroke:#B93D06;stroke-opacity:1;stroke-width:4}
-.map-legend u{display:inline-block;width:18px;height:0;border-top:3px solid #A9C4E4;margin:0 6px 0 14px;vertical-align:4px}
+#map .route.on .rt-line{stroke-width:3.6}
+#map svg.picking .route:not(.sel),#map svg.picking .rcase:not(.sel){opacity:.12}
+#map svg.picking .route.sel .rt-line{stroke-width:4.2}
+#map svg.picking .rcase.sel{stroke-width:6.4}
+.route-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.rchip{display:inline-flex;align-items:center;gap:6px;font:600 14px var(--body);color:#DCE8F5;background:transparent;border:1.5px solid rgba(169,196,228,.35);border-radius:999px;padding:4px 10px 4px 7px;cursor:pointer}
+.rchip i{width:14px;height:4px;border-radius:2px;display:inline-block}
+.rchip[aria-pressed="true"]{background:#DCE8F5;color:#10243A;border-color:#DCE8F5}
+.map-legend u{display:inline-block;width:18px;height:0;border-top:3px solid #7C3AED;margin:0 6px 0 14px;vertical-align:4px}
 .map-panel{position:relative;display:grid;grid-template-columns:minmax(0,3fr) minmax(220px,1fr);gap:24px;align-items:center;padding:18px}
 #map svg{width:100%;height:auto;max-height:640px;display:block;margin:0 auto}
 .map-side{display:flex;flex-direction:column;gap:12px}

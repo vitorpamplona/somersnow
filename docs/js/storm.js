@@ -533,7 +533,8 @@ function todayVsNormal(series, i) {
 
 /* ---------- ward map ---------- */
 const lat0 = 42.39; const kx = Math.cos(lat0 * Math.PI / 180);
-const allPts = WARDS.wards.flatMap((w) => w.rings.flat());
+// the map frames the wards plus each bus route's run out to its next stop beyond the city line
+const allPts = WARDS.wards.flatMap((w) => w.rings.flat()).concat(Object.values(BUS.routes || {}).flatMap((r) => r.paths.flat()));
 const minX = Math.min(...allPts.map((p) => p[0] * kx)); const maxX = Math.max(...allPts.map((p) => p[0] * kx));
 const minY = Math.min(...allPts.map((p) => p[1])); const maxY = Math.max(...allPts.map((p) => p[1]));
 const MW = 640; const sc = (MW - 20) / (maxX - minX); const MH = Math.round((maxY - minY) * sc + 20);
@@ -542,15 +543,46 @@ const finalWard = wardSince(N - 1);
 const wardMax = Math.max(1, ...Object.values(finalWard));
 const mix = (a, b, f) => { const p = (h) => [1, 3, 5].map((k) => parseInt(h.slice(k, k + 2), 16)); const [A, B] = [p(a), p(b)]; return `rgb(${A.map((v, k) => Math.round(v + (B[k] - v) * f)).join(',')})`; };
 const topStops = BUS.stops.slice(0, 19);
+// 15 distinct route colors, none orange or light blue (those shade the wards)
+const ROUTE_COLORS = ['#2563EB', '#7C3AED', '#059669', '#DB2777', '#0891B2', '#65A30D', '#9333EA', '#0D9488', '#4F46E5', '#BE185D', '#15803D', '#1E40AF', '#475569', '#A21CAF', '#0369A1'];
+const routeColor = {};
+Object.keys(BUS.routes || {}).sort((a, b) => a.length - b.length || a.localeCompare(b)).forEach((id, k) => { routeColor[id] = ROUTE_COLORS[k % ROUTE_COLORS.length]; });
+// Each route's paths in map units, pushed sideways where routes share a street: every point looks up which routes
+// pass nearby, takes its place in that sorted list, and is offset by its rank (smoothed, so bundles join and part gently).
+function routeLines() {
+  const routes = Object.entries(BUS.routes || {}).filter(([, r]) => r.paths.length);
+  const STEP = 2.5; const CELL = 7; const GAP = 2.7;
+  const resample = (p) => { const out = []; for (let k = 0; k + 1 < p.length; k++) { const [a, b] = [p[k], p[k + 1]]; const n = Math.max(1, Math.ceil(Math.hypot(b[0] - a[0], b[1] - a[1]) / STEP)); for (let j = 0; j < n; j++) out.push([a[0] + (b[0] - a[0]) * j / n, a[1] + (b[1] - a[1]) * j / n]); } out.push(p[p.length - 1]); return out; };
+  const geo = routes.map(([id, r]) => [id, r, r.paths.map((p) => resample(p.map(px)))]);
+  const cells = new Map(); const key = (x, y) => `${Math.round(x / CELL)},${Math.round(y / CELL)}`;
+  geo.forEach(([id, , ps]) => ps.forEach((p) => p.forEach(([x, y]) => { const k = key(x, y); if (!cells.has(k)) cells.set(k, new Set()); cells.get(k).add(id); })));
+  const order = Object.keys(routeColor);
+  const near = (x, y) => { const set = new Set(); const cx = Math.round(x / CELL); const cy = Math.round(y / CELL); for (let i = -1; i <= 1; i++) for (let j = -1; j <= 1; j++) (cells.get(`${cx + i},${cy + j}`) || []).forEach((r) => set.add(r)); return [...set].sort((a, b) => order.indexOf(a) - order.indexOf(b)); };
+  return geo.map(([id, r, ps]) => {
+    const d = ps.map((p) => {
+      const off = p.map(([x, y]) => { const here = near(x, y); return (here.indexOf(id) - (here.length - 1) / 2) * GAP; });
+      const sm = off.map((_, i) => { let a = 0; let n = 0; for (let j = Math.max(0, i - 4); j <= Math.min(off.length - 1, i + 4); j++) { a += off[j]; n++; } return a / n; });
+      return 'M' + p.map(([x, y], i) => {
+        const [x0, y0] = p[Math.max(0, i - 1)]; const [x1, y1] = p[Math.min(p.length - 1, i + 1)];
+        let nx = -(y1 - y0); let ny = x1 - x0; const len = Math.hypot(nx, ny) || 1; nx /= len; ny /= len;
+        if (nx < 0 || (nx === 0 && ny < 0)) { nx = -nx; ny = -ny; } // the same side whichever way the bus runs
+        return `${(x + nx * sm[i]).toFixed(1)} ${(y + ny * sm[i]).toFixed(1)}`;
+      }).join(' L');
+    }).join(' ');
+    return [id, d, r, routeColor[id]];
+  });
+}
 function buildMap() {
   let s = `<svg viewBox="0 0 ${MW} ${MH}" role="img" aria-label="Map of Somerville's seven wards, shaded by sidewalk reports so far, with every bus route and stop in the city">`;
   const wardD = WARDS.wards.map((w) => [w, w.rings.map((r) => `M${r.map((p) => px(p).map((v) => v.toFixed(1)).join(' ')).join(' L')} Z`).join(' ')]);
-  s += `<defs><clipPath id="city">${wardD.map(([, d]) => `<path d="${d}"/>`).join('')}</clipPath></defs>`;
   wardD.forEach(([w, d]) => { s += `<path class="ward" data-w="${w.ward}" d="${d}" fill="#DCE8F5" stroke="#1A3A5F" stroke-width="3"/>`; });
-  // bus routes (the usual path, both directions), clipped to the city line; a wide invisible stroke makes them easy to hover
-  const routes = Object.entries(BUS.routes || {}).filter(([, r]) => r.paths.length);
-  const rd = (r) => r.paths.map((p) => `M${p.map((q) => px(q).map((v) => v.toFixed(1)).join(' ')).join(' L')}`).join(' ');
-  s += `<g clip-path="url(#city)" fill="none" stroke-linejoin="round" stroke-linecap="round">${routes.map(([id, r]) => `<g class="route" data-r="${id}" data-long="${attr(esc(r.long))}"><path d="${rd(r)}" class="rt-line" stroke="#1A3A5F" stroke-opacity=".5" stroke-width="2.5"/><path d="${rd(r)}" stroke="transparent" stroke-width="12"/></g>`).join('')}</g>`;
+  // bus routes (the usual path, both directions), out to the next stop beyond the city line, one color each; where
+  // routes share a street they run side by side like a subway map; a wide invisible stroke makes each easy to tap
+  const lines = routeLines();
+  s += `<g class="rcases" fill="none" stroke="#fff" stroke-width="4.4" stroke-linejoin="round" stroke-linecap="round" opacity=".9">${lines.map(([id, d]) => `<path class="rcase" data-r="${id}" d="${d}"/>`).join('')}</g>`;
+  s += `<g class="rlines" fill="none" stroke-linejoin="round" stroke-linecap="round">${lines.map(([id, d, r, color]) => `<g class="route" data-r="${id}" data-long="${attr(esc(r.long))}"><path d="${d}" class="rt-line" stroke="${color}" stroke-width="2.4"/>`
+    + r.ends.map((e) => { const [x, y] = px(e); return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3" fill="#fff" stroke="${color}" stroke-width="1.6"/>`; }).join('')
+    + `<path d="${d}" stroke="transparent" stroke-width="12"/></g>`).join('')}</g>`;
   // every stop: small dots, the busiest 19 (half of all boardings) larger, drawn last so they sit on top
   const dot = (b, big) => { const [x, y] = px([b.lon, b.lat]); return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${big ? (2.5 + Math.sqrt(b.riders) / 4).toFixed(1) : 2.6}" fill="${big ? '#10243A' : '#fff'}" stroke="${big ? '#fff' : '#1A3A5F'}" stroke-width="${big ? 1.5 : 1.2}" class="stop${big ? ' big' : ''}" data-name="${attr(esc(b.name))}" data-riders="${b.riders}" data-routes="${b.routes.join(', ')}"/>`; };
   BUS.stops.slice(19).forEach((b) => { s += dot(b, false); });
@@ -566,6 +598,8 @@ function buildMap() {
   s += '</svg>';
   $('#map').innerHTML = s;
   $('#m-season').textContent = BUS.season;
+  $('#map-routes').innerHTML = Object.entries(BUS.routes || {}).filter(([, r]) => r.paths.length)
+    .map(([id]) => `<button class="rchip" data-r="${id}" aria-pressed="false"><i style="background:${routeColor[id]}"></i>${id}</button>`).join('');
   // Routes change: the map shows today's; say which ones also stopped in Somerville at the time of this storm.
   const today = new Set(BUS.stops.flatMap((b) => b.routes).map((r) => (r === '747' ? 'CT2' : r)));
   const then = (X.buses && X.buses.routes) || null;
@@ -581,11 +615,22 @@ function enableWardTips() {
   const tip = document.createElement('div'); tip.className = 'hovertip'; tip.hidden = true; tip.setAttribute('role', 'tooltip'); panel.appendChild(tip);
   let lit = null;
   const light = (r) => { if (lit === r) return; if (lit) lit.classList.remove('on'); lit = r; if (r) { r.classList.add('on'); r.parentNode.appendChild(r); } };
+  // tap a route (on the map or its button) to keep it highlighted and dim the others; tap again to clear
+  let sel = null;
+  const choose = (id) => {
+    sel = sel === id ? null : id;
+    svg.classList.toggle('picking', !!sel);
+    svg.querySelectorAll('[data-r]').forEach((el) => el.classList.toggle('sel', el.dataset.r === sel));
+    if (sel) { const g = svg.querySelector(`.route[data-r="${sel}"]`); g.parentNode.appendChild(g); }
+    document.querySelectorAll('#map-routes .rchip').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.r === sel)));
+  };
+  $('#map-routes').addEventListener('click', (e) => { const b = e.target.closest('.rchip'); if (b) choose(b.dataset.r); });
+  svg.addEventListener('click', (e) => { const r = e.target.closest('.route'); if (r) choose(r.dataset.r); });
   const show = (path, e) => {
     light(path.classList.contains('route') ? path : null);
     if (path.classList.contains('route')) {
       const n = BUS.stops.filter((b) => b.routes.includes(path.dataset.r)).length;
-      tip.innerHTML = `<b>Bus ${path.dataset.r}</b>${path.dataset.long ? `: ${path.dataset.long}` : ''}<br>${n} stops in Somerville<br><small>Usual route · MBTA</small>`;
+      tip.innerHTML = `<b>Bus ${path.dataset.r}</b>${path.dataset.long ? `: ${path.dataset.long}` : ''}<br>${n} stops in Somerville<br><small>Usual route, to the next stop outside the city · tap to ${sel === path.dataset.r ? 'clear' : 'highlight'}</small>`;
     } else if (path.classList.contains('stop')) {
       tip.innerHTML = `<b>${path.dataset.name}</b>: bus stop<br>${(+path.dataset.riders).toLocaleString('en-US')} weekday boardings<br><small>Routes ${path.dataset.routes} · MBTA, ${BUS.season}</small>`;
     } else {

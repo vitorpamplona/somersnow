@@ -71,11 +71,11 @@
     <div class="panel lanes-panel"><div id="lanes"></div></div>
     <div class="k map-k" style="margin-top:28px">Sidewalk reports by ward <span class="map-legend"><i aria-hidden="true"></i>Busiest bus stops<u aria-hidden="true"></u>Bus routes</span></div>
     <div class="panel map-panel">
-      <div id="map"></div>
+      <div><div id="map"></div><div class="route-chips" id="map-routes" role="group" aria-label="Highlight a bus route"></div></div>
       <div class="map-side">
         <div><b id="m-total">–</b><span>sidewalk reports since the snow started</span></div>
         <div><b id="m-late">–</b><span id="m-late-l">came after the deadline</span></div>
-        <p class="cite">Under each ward: the share who walked last week (Happiness Survey). Lines: bus routes today. Dots: bus stops; the big ones are the 19 busiest. Tap for details. <span id="m-season" hidden>Fall 2025</span><span id="m-routes"></span></p>
+        <p class="cite">Under each ward: the share who walked last week (Happiness Survey). Lines: bus routes today, one color each, side by side where they share a street; tap one, or its number, to highlight it. Dots: bus stops; the big ones are the 19 busiest. Tap for details. <span id="m-season" hidden>Fall 2025</span><span id="m-routes"></span></p>
       </div>
     </div>
   </div>

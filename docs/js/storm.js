@@ -114,7 +114,7 @@ function messages(t, i) {
     add('now', 'clock', 'Snow stopped', `Night doesn't count. The clock starts at sunrise, ${tm(F.clockFrom)}.`, `Shovel by ${dayTm(F.DL)}`);
   }
   if (t >= F.clockFrom && t < F.DL) {
-    add('now', 'shovel', 'Shovel now', '36 inches wide. Down to the pavement. Open the ramp.', `${dur(F.DL - t)} left`);
+    add('now', 'shovel', 'Shovel now', '3 feet wide. Down to the pavement. Open the ramp.', `${dur(F.DL - t)} left`);
   }
   if (t >= F.DL && t < F.DL + 30 * HOUR) {
     add('warn', 'phone', 'Deadline passed', `It was ${dayTm(F.DL)}${cityDL && F === MAIN ? ` (the City said ${tm(cityDL)})` : ''}. Still buried? Report it: 311.`);

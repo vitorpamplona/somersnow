@@ -28,7 +28,7 @@ export default {
     "top.02": "Neve &amp; gelo<br/>na <em>calçada</em>",
     "top.03": "O ônibus só é bom se o caminho até ele for bom.",
     "top.04": "<b>6</b><span>Horas para limpar</span>",
-    "top.05": "<b>36″</b><span>Largura do caminho</span>",
+    "top.05": "<b>3 pés</b><span>Largura do caminho</span>",
     "top.06": "<b>0″</b><span>De neve ou gelo</span>",
     "top.07": "Rampa até a faixa",
     "top.08": "Feito pelo PTAC de Somerville. Não é uma página oficial da Prefeitura.",
@@ -54,7 +54,7 @@ export default {
     "shovel.02": "Até o<br/>chão",
     "shovel.03": "A neve para. O prazo começa.",
     "shovel.04": "Imóvel de esquina? As duas calçadas.",
-    "shovel.05": "36 polegadas de largura",
+    "shovel.05": "3 pés de largura",
     "shovel.06": "Chão limpo, de ponta a ponta.",
     "shovel.07": "Abra a rampa",
     "shovel.08": "Até a faixa de pedestres.",
@@ -175,7 +175,7 @@ export default {
         "t": "Calçada",
         "who": "Donos e inquilinos",
         "tag": "A lei",
-        "b": "36 polegadas de largura. Chão limpo. 6 horas de luz do dia.",
+        "b": "3 pés de largura. Chão limpo. 6 horas de luz do dia.",
         "c": "Seção 12-8(a)"
       },
       "corner": {

@@ -28,7 +28,7 @@ export default {
     "top.02": "Nèj &amp; glas<br/>sou <em>twotwa</em> a",
     "top.03": "Yon bis vo sa chemen pou rive jwenn li vo.",
     "top.04": "<b>6</b><span>Èdtan pou pele</span>",
-    "top.05": "<b>36″</b><span>Lajè chemen an</span>",
+    "top.05": "<b>3 pye</b><span>Lajè chemen an</span>",
     "top.06": "<b>0″</b><span>Nèj oswa glas ki rete</span>",
     "top.07": "Ranp jis nan pasaj pyeton",
     "top.08": "Se Somerville PTAC ki fè l. Se pa yon paj ofisyèl Vil la.",
@@ -54,7 +54,7 @@ export default {
     "shovel.02": "Jis rive sou<br/>beton an",
     "shovel.03": "Nèj la sispann. Revèy la kòmanse.",
     "shovel.04": "Kay sou kwen? De twotwa yo.",
-    "shovel.05": "36 pous lajè",
+    "shovel.05": "3 pye lajè",
     "shovel.06": "Beton an parèt, de bout.",
     "shovel.07": "Louvri ranp lan",
     "shovel.08": "Jis rive nan pasaj pyeton an.",
@@ -175,7 +175,7 @@ export default {
         "t": "Twotwa",
         "who": "Pwopriyetè & lokatè",
         "tag": "Lalwa",
-        "b": "36 pous lajè. Beton an parèt. 6 èdtan lajounen.",
+        "b": "3 pye lajè. Beton an parèt. 6 èdtan lajounen.",
         "c": "Sek. 12-8(a)"
       },
       "corner": {

@@ -26,7 +26,7 @@ export default {
     "top.02": "Snow &amp; ice<br/>on the <em>sidewalk</em>",
     "top.03": "A bus is only as good as the walk to it.",
     "top.04": "<b>6</b><span>Hours to shovel</span>",
-    "top.05": "<b>36″</b><span>Wide path</span>",
+    "top.05": "<b>3 FT</b><span>Wide path</span>",
     "top.06": "<b>0″</b><span>Snow or ice left</span>",
     "top.07": "Ramp to crosswalk",
     "top.08": "By the Somerville PTAC. Not an official City page.",
@@ -52,7 +52,7 @@ export default {
     "shovel.02": "Down to the<br/>pavement",
     "shovel.03": "Snow stops. Clock starts.",
     "shovel.04": "Corner lot? Both sidewalks.",
-    "shovel.05": "36 inches wide",
+    "shovel.05": "3 feet wide",
     "shovel.06": "Bare pavement, end to end.",
     "shovel.07": "Open the ramp",
     "shovel.08": "All the way to the crosswalk.",
@@ -180,7 +180,7 @@ export default {
         "t": "Sidewalk",
         "who": "Owners & tenants",
         "tag": "The law",
-        "b": "36 inches wide. Bare pavement. 6 daylight hours.",
+        "b": "3 feet wide. Bare pavement. 6 daylight hours.",
         "c": "Sec. 12-8(a)"
       },
       "corner": {
@@ -286,14 +286,14 @@ export default {
       "todoCar": "<b>Snow emergency?</b> Blue lights: 4 hours to move to the even side.",
       "todoAlerts": "<b>Get City Alerts.</b> <a href=\"https://www.somervillema.gov/alerts\">somervillema.gov/alerts</a>",
       "todoHeart": "<b>Push, don't lift.</b> Heavy snow strains the heart.",
-      "todoPath": "<b>36 inches wide,</b> down to the pavement.",
+      "todoPath": "<b>3 feet wide,</b> down to the pavement.",
       "todoRamp": "<b>Open the curb ramp</b> to the crosswalk.",
       "todoSand": "<b>Ice won't come off?</b> Salt or sand it.",
       "todoIce": "<b>Check for ice.</b> Meltwater refreezes overnight.",
       "todoReport": "<b>311</b> or 617-666-3311, or the 311Somerville app.",
       "todoSpace": "<b>Space savers</b> are banned. $100.",
       "icsTitle": "Shovel the sidewalk (deadline)",
-      "icsDetails": "36 inches wide, down to the pavement, curb ramp to the crosswalk. Estimate from the Somerville Snow Guide (PTAC): the City may announce a different time."
+      "icsDetails": "3 feet wide, down to the pavement, curb ramp to the crosswalk. Estimate from the Somerville Snow Guide (PTAC): the City may announce a different time."
     },
     "replay": {
       "title": "Sidewalk reports to 311, per day",

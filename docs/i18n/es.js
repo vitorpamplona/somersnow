@@ -28,7 +28,7 @@ export default {
     "top.02": "Nieve y hielo<br/>en la <em>acera</em>",
     "top.03": "Un bus solo sirve si puedes llegar caminando.",
     "top.04": "<b>6</b><span>Horas para palear</span>",
-    "top.05": "<b>36″</b><span>De ancho</span>",
+    "top.05": "<b>3 pies</b><span>De ancho</span>",
     "top.06": "<b>0″</b><span>De nieve o hielo</span>",
     "top.07": "Rampa hasta el cruce",
     "top.08": "Por el PTAC de Somerville. No es una página oficial de la Ciudad.",
@@ -54,7 +54,7 @@ export default {
     "shovel.02": "Hasta el<br/>pavimento",
     "shovel.03": "Deja de nevar. Corre el reloj.",
     "shovel.04": "¿Casa de esquina? Las dos aceras.",
-    "shovel.05": "36 pulgadas de ancho",
+    "shovel.05": "3 pies de ancho",
     "shovel.06": "Pavimento limpio, de punta a punta.",
     "shovel.07": "Abre la rampa",
     "shovel.08": "Hasta el cruce peatonal.",
@@ -175,7 +175,7 @@ export default {
         "t": "Acera",
         "who": "Dueños e inquilinos",
         "tag": "La ley",
-        "b": "36 pulgadas de ancho. Pavimento limpio. 6 horas de luz.",
+        "b": "3 pies de ancho. Pavimento limpio. 6 horas de luz.",
         "c": "Sec. 12-8(a)"
       },
       "corner": {

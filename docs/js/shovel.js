@@ -81,7 +81,7 @@ export function shovelScene(id) {
     + mound('m-bus', [[112, 336, 34, 22], [146, 340, 30, 20], [128, 352, 42, 16]], 128, 3.0)
     + mound('m-hyd', [[404, 334, 26, 22], [424, 338, 22, 18], [412, 350, 32, 14]], 412, 3.6);
 
-  return `<svg id="${id}" class="scene" viewBox="0 0 800 560" data-s="0" role="img" aria-label="Illustration of a street corner after a snowstorm. It changes with each step: snow covers the sidewalks, a 36-inch path is shoveled to bare pavement and the bus stop and hydrant are dug out, the curb ramp is opened to the crosswalk, ice is sanded, and a plow buries the bus stop, hydrant and ramp, which are cleared again.">
+  return `<svg id="${id}" class="scene" viewBox="0 0 800 560" data-s="0" role="img" aria-label="Illustration of a street corner after a snowstorm. It changes with each step: snow covers the sidewalks, a 3-foot path is shoveled to bare pavement and the bus stop and hydrant are dug out, the curb ramp is opened to the crosswalk, ice is sanded, and a plow buries the bus stop, hydrant and ramp, which are cleared again.">
   <defs><clipPath id="${id}-clip"><rect width="800" height="560"/></clipPath></defs>
   <g clip-path="url(#${id}-clip)">
   <rect width="800" height="560" fill="#10243A"/>

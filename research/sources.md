@@ -7,13 +7,17 @@ Pages marked * were seen only as search-result excerpts, not opened in full. Che
 - [Snow Info: Emergency Policies, Parking Rules, Shoveling Requirements](https://www.somervillema.gov/snow)
 - [Off-Street Parking Lots (for Snow Emergencies)](https://www.somervillema.gov/snow/off-street-parking)
 - [Winter Sidewalk Snow Clearing Pilot](https://www.somervillema.gov/departments/programs/sidewalk-snow-clearing-pilot)
-- [Sidewalk Clearing Reminder](https://www.somervillema.gov/news/sidewalk-clearing-reminder) *
+- [Sidewalk Clearing Reminder](https://www.somervillema.gov/news/sidewalk-clearing-reminder) (March 5, 2023: no snow emergency; deadline 1 p.m., six daylight hours after the snow ended)
 - Somerville Code of Ordinances: Ch. 12 (Sec. 12-2, 12-8 as amended by Ord. 2025-25, 12-9, 12-18) and Sec. 1-11. PDFs in [source-files/](source-files/); excerpts in [ordinance.md](ordinance.md). Official code on [Municode](https://library.municode.com/ma/somerville/codes/code_of_ordinances).
 - Pre-2025 text of Sec. 12-8, third-party reprint: [Bento Snow Removal](https://www.bentosnowremoval.com/somerville-ma)
 - [Ordinance No. 2010-01, fine schedule](https://online.encodeplus.com/regs/somerville-ma-coo/doclibrary.aspx?id=9df92a28-03fd-4c7f-b03c-f40766480aba) *
 - [Committee discussion of the curb-ramp amendment, Dec 2, 2025 (citizenportal.ai)](https://citizenportal.ai/articles/7669908/massachusetts/middlesex-county/somerville-city/somerville-committee-asks-analyst-to-draft-commercial-only-curb-ramp-snow-clearing-language)
 - [PTAC: Bus Network Redesign proposed amendments, June 2026](https://s3.amazonaws.com/somervillema-live/s3fs-public/PTAC_BNRProposedAmendments_June2026.pdf) *
 - [Somerville services (311 data), data.gov](https://catalog.data.gov/dataset/somerville-services)
+
+## PTAC
+
+- PTAC letter to Mayor Ballantyne, "Improve Snow Clearing on Somerville Sidewalks", March 25, 2025: [PDF](source-files/ptac-letter-2025-03-25.pdf)
 
 ## Commonwealth of Massachusetts
 

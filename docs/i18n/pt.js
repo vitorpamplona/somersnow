@@ -217,7 +217,7 @@ export default {
         "t": "Hidrante",
         "who": "Bons vizinhos",
         "tag": "Ajude, por favor",
-        "b": "Limpe 3 pés em volta. Cada segundo conta.",
+        "b": "As equipes da Prefeitura os desobstruem. Se puder, ajude: 3 pés em volta.",
         "c": "Página de neve da Prefeitura"
       },
       "drain": {

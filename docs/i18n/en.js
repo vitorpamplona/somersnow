@@ -222,7 +222,7 @@ export default {
         "t": "Hydrant",
         "who": "Good neighbors",
         "tag": "Please help",
-        "b": "Clear 3 feet all around. Seconds count.",
+        "b": "City crews dig them out. If you can, help: 3 feet all around.",
         "c": "City snow page"
       },
       "drain": {

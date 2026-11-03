@@ -217,7 +217,7 @@ export default {
         "t": "Hidrante",
         "who": "Buenos vecinos",
         "tag": "Ayuda, por favor",
-        "b": "Limpia 3 pies a la redonda. Cada segundo cuenta.",
+        "b": "Las cuadrillas de la Ciudad los despejan. Si puedes, ayuda: 3 pies a la redonda.",
         "c": "Página de nieve de la Ciudad"
       },
       "drain": {

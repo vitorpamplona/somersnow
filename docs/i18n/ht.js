@@ -217,7 +217,7 @@ export default {
         "t": "Bouch ponpye",
         "who": "Bon vwazen",
         "tag": "Tanpri ede",
-        "b": "Netwaye 3 pye tout otou. Chak segonn konte.",
+        "b": "Ekip Vil la retire nèj sou yo. Si ou kapab, ede: 3 pye tout otou.",
         "c": "Paj nèj Vil la"
       },
       "drain": {

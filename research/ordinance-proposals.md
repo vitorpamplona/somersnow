@@ -2,7 +2,7 @@
 
 Somerville Pedestrian & Transit Advisory Committee (PTAC) · Nov 3, 2026
 
-Copy of the PTAC Claude Doc ("Proposal" tab) as of November 3, 2026. The live doc is the working version: https://claude.ai/artifact/7vG43e3w32sGB4efaCwyZE. The chart appears here as a table.
+Copy of the PTAC Claude Doc ("Proposal" tab). The live doc is the working version: https://claude.ai/artifact/7vG43e3w32sGB4efaCwyZE. The chart appears here as a table.
 
 Dear Members of the City Council,
 
@@ -109,19 +109,17 @@ Every change we propose, written as ordinance text for the City's legislative co
 
 **(c) Curb ramps with no abutter.** The City shall clear curb ramps and crosswalk openings that no private property abuts, and reopen any curb ramp its plows bury, within 24 hours after the event ends or the plow passes.
 
-**(d) Priority corridors.** On corridors the City Council names by order, starting with Broadway and School Street, City crews shall clear sidewalks, curb ramps and bus stops within six hours after the event ends, without waiting for owners or tickets. The City budget pays for it as a pilot of City clearing; owners on these corridors are not billed for snow the City clears.
+**(d) Ice melt and pre-treatment.** The City shall offer residents free sand or ice melt at published locations, announce it each November, and pre-treat bus stops, curb ramps and City sidewalks on priority routes before forecast ice.
 
-**(e) Ice melt and pre-treatment.** The City shall offer residents free sand or ice melt at published locations, announce it each November, and pre-treat bus stops, curb ramps and City sidewalks on priority routes before forecast ice.
+**(e) Winter plan.** By November 1 each year, the Commissioner of Public Works shall publish a winter plan: the clearing order; a target time for each layer (streets, bus stops, curb ramps, City sidewalks, Community Path); and a map of every bus stop and curb ramp showing who clears it.
 
-**(f) Winter plan.** By November 1 each year, the Commissioner of Public Works shall publish a winter plan: the clearing order; a target time for each layer (streets, bus stops, curb ramps, City sidewalks, Community Path); and a map of every bus stop and curb ramp showing who clears it.
+**(f) Clearing log.** City crews shall record the time each bus stop, curb ramp and City frontage is cleared.
 
-**(g) Clearing log.** City crews shall record the time each bus stop, curb ramp and City frontage is cleared.
+**(g) Lead official.** The Mayor shall name one official to lead sidewalk snow clearing across departments, responsible for the winter plan, public education, enforcement data and the report under Section 12-8B.
 
-**(h) Lead official.** The Mayor shall name one official to lead sidewalk snow clearing across departments, responsible for the winter plan, public education, enforcement data and the report under Section 12-8B.
+**(h) Agreements.** The City shall seek written agreements with the MBTA, the Massachusetts Department of Transportation and the Department of Conservation and Recreation on who clears their bus stops, station entrances and sidewalks in the city, and by when, including how stops stay passable while buses run during a storm, and shall publish them.
 
-**(i) Agreements.** The City shall seek written agreements with the MBTA, the Massachusetts Department of Transportation and the Department of Conservation and Recreation on who clears their bus stops, station entrances and sidewalks in the city, and by when, including how stops stay passable while buses run during a storm, and shall publish them.
-
-**(j) Push buttons and accessible parking.** The City shall keep pedestrian push buttons at signals reachable from the cleared curb ramp, and clear accessible parking spaces on its streets and in its lots, including snow emergency lots, within 24 hours after the event ends.
+**(i) Push buttons and accessible parking.** The City shall keep pedestrian push buttons at signals reachable from the cleared curb ramp, and clear accessible parking spaces on its streets and in its lots, including snow emergency lots, within 24 hours after the event ends.
 
 **Sec. 12-8B. Notices, reporting and open data.**
 
@@ -131,7 +129,7 @@ Every change we propose, written as ordinance text for the City's legislative co
 
 **(c) 311 outcomes.** A 311 request about an uncleared sidewalk shall be closed with its outcome: clear on inspection, ticket, cleared by the City, or not found.
 
-**(d) Open data.** From November through April, the City shall publish weekly on its open data portal: inspections and tickets under Sections 12-2, 12-8, 12-9 and 12-18, with date, time, street and ward but no house number; City clearing and liens under Section 12-8(c); the clearing log under Section 12-8A(g); and each declared snow emergency with its start and end times.
+**(d) Open data.** From November through April, the City shall publish weekly on its open data portal: inspections and tickets under Sections 12-2, 12-8, 12-9 and 12-18, with date, time, street and ward but no house number; City clearing and liens under Section 12-8(c); the clearing log under Section 12-8A(f); and each declared snow emergency with its start and end times.
 
 **(e) Annual report.** By June 30 each year, the Commissioner of Public Works and the Director of Inspectional Services shall report to the City Council on the preceding winter: complaints, inspections, tickets, City clearings and liens, and the time taken to clear each layer under Section 12-8A, by ward and by event, alongside each event's snowfall. The report may be included in the annual report under Section 12-116.6.
 
@@ -540,12 +538,6 @@ Residents have a clearing deadline; the City's own frontages, bus stops and ramp
 - *Proposed:* "The City shall seek written agreements with the MBTA, MassDOT and DCR on who clears their stops, stations and sidewalks in Somerville, and by when, and publish them."
 - *Why:* The City lists State property last in its clearing order, with no contact. PTAC could not find who clears the sidewalks along McGrath Highway or the Green Line station entrances.
 
-**Corridors the City clears first**
-
-- *Today:* None. The Broadway and School St pilot adds enforcement, and City crews clear late sidewalks after owners miss the deadline.
-- *Proposed:* "On corridors the City Council names, starting with Broadway and School St, City crews clear sidewalks, curb ramps and bus stops within 6 hours after the event ends, without waiting for owners or tickets. The City budget pays for it as a pilot of City clearing."
-- *Why:* PTAC's March 2025 letter asked the pilot to move from enforcement to clearing: people shouldn't walk past uncleared sidewalks for hours while tickets are written. It also tests what City clearing of every sidewalk would cost.
-
 **Free ice melt and pre-treatment**
 
 - *Today:* None in the code. 311 takes "Sand barrel" requests (500 since 2015).
@@ -566,8 +558,8 @@ Residents have a clearing deadline; the City's own frontages, bus stops and ramp
 
 **Who is affected**
 
-- **Everyone:** a published plan and schedule for City sidewalks, bus stops and ramps, one person to call, and free sand or ice melt. On named corridors the City clears first, at no charge to owners.
-- **City staff:** binding deadlines and more crew hours, with liability questions for the Law Department; planning and logging time; crews on Broadway and School St within 6 hours; buying and spreading ice melt. One lead coordinates DPW, ISD and Mobility. Crews also keep signal push buttons reachable and accessible parking spaces clear.
+- **Everyone:** a published plan and schedule for City sidewalks, bus stops and ramps, one person to call, and free sand or ice melt.
+- **City staff:** binding deadlines and more crew hours, with liability questions for the Law Department; planning and logging time; buying and spreading ice melt. One lead coordinates DPW, ISD and Mobility. Crews also keep signal push buttons reachable and accessible parking spaces clear.
 
 ### Sec. 12-9: snow into streets, bike lanes and bus stops
 

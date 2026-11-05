@@ -44,7 +44,7 @@ Source: City 311 "Snow/sidewalk not shoveled" requests, summed over the 16 days 
 
 - **Owners** open the path by the deadline, keep it open until the ice is gone, and reopen it after refreezes and plows. No lease can make a tenant shovel or pay. ([details](#sec-12-8-the-path))
 - **The City** clears its own sidewalks, bus stops and ramps on a schedule, re-inspects ticketed sidewalks within 24 hours, clears and bills what stays blocked, names one official in charge, and publishes the results. ([details](#new-sec-12-8a-the-citys-own-sidewalks-bus-stops-and-ramps))
-- **Builders and absent owners** keep sidewalks and detours clear as a condition of every permit; vacant property files a winter contact, or the City clears it and bills the owner. ([details](#sec-12-8-construction-sites-and-vacant-property))
+- **Builders** keep sidewalks and detours clear as a condition of every permit. ([details](#sec-12-8-construction-sites))
 
 ### 3. Expand accessibility protections
 
@@ -87,7 +87,6 @@ One change per row: what the code or City practice says today, and what the prop
 | Builders | No snow rule for detours. | Signed, cane-detectable 48-inch detours, kept clear. |
 | Builders | Ordinary fines. | $300 tickets; clearing fee from the deposit. |
 | Builders | Tickets don't touch the project. | 3 tickets can hold the next inspection. |
-| Vacant owners | No contact on file. | File a winter contact, or the City clears and bills. |
 | Inspectors | Find who is "in charge". | Ticket the owner of record. |
 | Inspectors | Track 1st, 2nd and 3rd offenses. | Two flat fines, no counting. |
 | Inspectors | Ordinance silent on warnings. | Must ticket; no warnings. |
@@ -154,7 +153,7 @@ Every change we propose, written as ordinance text for the City's legislative co
 
 **(j) Fines.** Each ticket under this section is $150 for an owner-occupied home (one with the residential tax exemption) and $300 for any other property, for untreated ice, and while a building, demolition or sidewalk-opening permit is open, issued to the owner, in accordance with Section 1-11. Each day a violation continues is a new offense.
 
-**(k) Construction and vacant property.** (1) Every permit to place a dumpster, obstruct or open a sidewalk, or build or demolish, includes this condition: keep the sidewalk, or the permitted detour, clear by the deadlines of this section; breaking it violates this section and the permit. (2) A permit that closes a sidewalk shall provide an accessible detour at least 48 inches wide, signed before the closure and edged with barriers a cane can detect, which the permit holder keeps clear of snow and ice. (3) The clearing fee under subsection (c) is drawn from the permit's deposit or bond, and the holder restores it within 5 business days. (4) After 3 tickets under this section on one permit, Inspectional Services may hold the project's next inspection until the sidewalk is clear and the tickets are paid. (5) By November 1, the owner of vacant land or a vacant building shall file with the City the name and 24-hour phone number of the person who clears it; if no one is filed, or a deadline is missed, the City clears the frontage after every event for the rest of the winter and charges the clearing fee each time.
+**(k) Construction.** (1) Every permit to place a dumpster, obstruct or open a sidewalk, or build or demolish, includes this condition: keep the sidewalk, or the permitted detour, clear by the deadlines of this section; breaking it violates this section and the permit. (2) A permit that closes a sidewalk shall provide an accessible detour at least 48 inches wide, signed before the closure and edged with barriers a cane can detect, which the permit holder keeps clear of snow and ice. (3) The clearing fee under subsection (c) is drawn from the permit's deposit or bond, and the holder restores it within 5 business days. (4) After 3 tickets under this section on one permit, Inspectional Services may hold the project's next inspection until the sidewalk is clear and the tickets are paid.
 
 **(l) Accessible parking.** The owner of a property with a parking lot shall clear its accessible parking spaces, their access aisles and the route to the entrance whenever the lot is cleared.
 
@@ -442,9 +441,9 @@ A cleared sidewalk is useless if the corner is a snowbank. Extend the ramp duty 
 - **Landlords and other owners:** the same on their corners and stops (owners of commercial buildings already must clear ramps); owners of parking lots also clear accessible spaces, aisles and the route to the door when the lot is plowed.
 - **City staff:** fewer ramps, bus stops and hydrants for City crews to clear.
 
-### Sec. 12-8: construction sites and vacant property
+### Sec. 12-8: construction sites
 
-Both are covered in principle today, since the duty falls on whoever is "in charge of land or a building". In practice no one is around to do it, and the permits that let a site use the sidewalk say nothing about winter. Tie the duty to the permit, and give vacant property a default: the City clears and bills.
+Construction sites are covered in principle today, since the duty falls on whoever is "in charge of land or a building". In practice no one is around to do it, and the permits that let a site use the sidewalk say nothing about winter. Tie the duty to the permit.
 
 **Winter permit condition**
 
@@ -470,16 +469,10 @@ Both are covered in principle today, since the duty falls on whoever is "in char
 - *Proposed:* "After 3 tickets under this section on one permit, Inspectional Services may hold the project's next inspection until the sidewalk is clear and the tickets are paid."
 - *Why:* A delayed inspection costs a project far more than any ticket the state allows. The Law Department should confirm this use of the permit.
 
-**Vacant land and buildings**
-
-- *Today:* Covered as "land or a building", with no one to reach.
-- *Proposed:* "By November 1, the owner of vacant land or a vacant building shall file with the City the name and 24-hour phone number of the person who clears it. If no one is filed, or a deadline is missed, the City clears the frontage after every event for the rest of the winter and charges the clearing fee each time."
-- *Why:* No investigation and no chase: one filing, or the City does the work and the lien collects it.
-
 **Who is affected**
 
-- **Developers and vacant-property owners:** winter permit conditions, signed detours, deposit draws and $300 tickets; vacant owners file a winter contact or pay the clearing fee after each storm.
-- **City staff:** add the condition to permits, track tickets per permit, and clear vacant frontages.
+- **Developers:** winter permit conditions, signed detours, deposit draws and $300 tickets.
+- **City staff:** add the condition to permits and track tickets per permit.
 
 ### Sec. 12-8: extensions, being away, and help
 

@@ -30,7 +30,7 @@ Source: City 311 "Snow/sidewalk not shoveled" requests after the 16 days since 2
 | Tickets with no follow-up | 894 tickets and 1,552 complaints from Nov 2024 to Feb 19, 2025, but no public record of whether any ticketed sidewalk was cleared; 754 sidewalk complaints were closed on a single day, Feb 6, 2026 | City spokesperson, [Boston.com](https://www.boston.com/news/neighborhoods/2025/02/21/boston-neighboring-cities-cracking-down-uncleared-sidewalks-ice); [City 311 open data](https://data.somervillema.gov/d/4pyi-uqq6) |
 | Twice as slow as Boston | Boston gives 3 daylight hours after the snow stops; Somerville gives 6 | [Boston: rules for clearing snow](https://www.boston.gov/departments/public-works/rules-clearing-snow); Sec. 12-8(a) |
 | Corners left out | Curb ramps are required only of commercial buildings (since Dec 11, 2025), though the City's snow page tells all owners they are responsible | Sec. 12-8(a)(1); [City snow page](https://www.somervillema.gov/snow) |
-| Room for a wider path | 98% of mapped sidewalk miles in Somerville are 4 ft wide or more | [MassDOT Road Inventory 2025](https://gis.massdot.state.ma.us/arcgis/rest/services/Roads/RoadInventoryYearEndFiles/FeatureServer/11) |
+| Room for a wider path | MassDOT records a width of 4 ft or more for 98% of Somerville's sidewalk miles that have a recorded width (in whole feet; the clear path around poles, trees and hydrants can be narrower) | [MassDOT Road Inventory 2025](https://gis.massdot.state.ma.us/arcgis/rest/services/Roads/RoadInventoryYearEndFiles/FeatureServer/11) |
 
 ## What we ask
 
@@ -378,7 +378,7 @@ Widen the path to 4 feet, make bare pavement the rule and sand the stopgap, and 
 
 - *Today:* "a path of travel with a minimum width of thirty-six inches"
 - *Proposed:* "at least 48 inches wide (or the whole sidewalk where it is narrower)"
-- *Why:* PTAC's March 2025 letter asked for the entire width, as in Minneapolis; we propose one number instead, which is easier to follow and to measure. 36 inches is the bare minimum for one wheelchair, with no room to pass or turn. Federal guidelines set 48 inches for new and altered public sidewalks (PROWAG R302.2, 2023); 36 inches is the ADA minimum for a walking surface. Boston requires 42 inches; Worcester requires 4 ft. Somerville's own code already keeps 4 ft clear of newsracks (Sec. 12-69(1)). 98% of Somerville's mapped sidewalk miles are 4 ft or wider.
+- *Why:* PTAC's March 2025 letter asked for the entire width, as in Minneapolis; we propose one number instead, which is easier to follow and to measure. 36 inches is the bare minimum for one wheelchair, with no room to pass or turn. Federal guidelines set 48 inches for new and altered public sidewalks (PROWAG R302.2, 2023); 36 inches is the ADA minimum for a walking surface. Boston requires 42 inches; Worcester requires 4 ft. Somerville's own code already keeps 4 ft clear of newsracks (Sec. 12-69(1)). MassDOT records a sidewalk width of 4 feet or more for 98% of Somerville's sidewalk miles that have a recorded width (2025 Road Inventory, in whole feet). The clear path around poles, trees and hydrants can be narrower, which is why the rule allows the whole sidewalk where it is narrower.
 
 **Finish**
 

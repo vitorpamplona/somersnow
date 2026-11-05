@@ -42,7 +42,7 @@ Source: City 311 "Snow/sidewalk not shoveled" requests, summed over the 16 days 
 
 ### 2. Clear duties for everyone
 
-- **Owners** open the path by the deadline, keep it open until the ice is gone, and reopen it after refreezes and plows. No lease can make a tenant shovel or pay. ([details](#sec-12-8-the-path))
+- **Owners** open the path by the deadline, keep it open until the ice is gone, and reopen it after refreezes and plows. The City tickets and bills only the owner, whatever a lease says. ([details](#sec-12-8-the-path))
 - **The City** clears its own sidewalks, bus stops and ramps on a schedule, re-inspects ticketed sidewalks within 24 hours, clears and bills what stays blocked, names one official in charge (Sec. 12-8B), and publishes the results. ([details](#new-sec-12-8a-the-citys-own-sidewalks-bus-stops-and-ramps))
 - **Builders** keep sidewalks and detours clear as a condition of every permit. ([details](#sec-12-8-construction-sites))
 
@@ -75,7 +75,7 @@ One change per row: what the code or City practice says today, and what the prop
 | Other owners | First ticket $100 or $150. | $300 per ticket. |
 | Eligible seniors and disabled owners | Can hire teen shovelers. | Free help, no fines. |
 | Tenants | Can be ticketed. | Never ticketed. |
-| Tenants | A lease can assign the sidewalk. | No lease can make you shovel or pay. |
+| Tenants | A lease can assign the sidewalk. | The City bills only the owner, whatever the lease says. |
 | Tenants | No contact required. | A contact name each October. |
 | Everyone | Only your own sidewalk is off-limits for snow. | No snow on any walk, ramp, stop, hydrant or drain. |
 | Everyone | Snow in streets if the day's mean tops 40°F. | Only above 40°F at the time; never in bike lanes. |
@@ -86,7 +86,7 @@ One change per row: what the code or City practice says today, and what the prop
 | Builders | No winter permit conditions. | Every permit requires clear sidewalks. |
 | Builders | No snow rule for detours. | Signed, cane-detectable 48-inch detours, kept clear. |
 | Builders | Ordinary fines. | $300 tickets; clearing fee from the deposit. |
-| Builders | Tickets don't touch the project. | 3 tickets can hold the next inspection. |
+| Builders | Tickets don't touch the project. | 3 tickets can suspend the sidewalk permit. |
 | Inspectors | Find who is "in charge". | Ticket the owner of record. |
 | Inspectors | Track 1st, 2nd and 3rd offenses. | Two flat fines, no counting. |
 | Inspectors | Ordinance silent on warnings. | Must ticket; no warnings. |
@@ -121,7 +121,7 @@ Every change we propose, written as ordinance text for the City's legislative co
 
 (2) In this section and in Sections 12-8A and 12-8B: "Sidewalk" means the paved way between the property line and the curb, including curb ramps, the landing at the top of a ramp, and driveway crossings. "Winter weather event" means snow, sleet or freezing rain; it ends when it stops falling in the city, at the time stated in the City's notice under Section 12-8B or, without a notice, when it stops. "Priority routes" means bus routes, squares and school walking routes, as named in the winter plan under Section 12-8A(e). "Frontage" means each side of a lot along a street. "Bus stop" means the sidewalk and curb within 10 feet of a bus stop sign. "Untreated ice" means ice on a sidewalk or curb ramp with no sand or de-icer on it after the deadline. "Clear path" means a continuous path along the whole frontage, at least 48 inches wide (or the whole sidewalk where it is narrower), down to bare pavement, connecting to the paths of neighboring properties, curb ramps and bus stops.
 
-(3) The responsible person is the owner of record of the land or building, as shown in the City's assessing records; for a condominium, it is the organization of unit owners. Tickets, bills and liens under this section go to the owner. The owner may hire a contractor, but no lease may make a tenant shovel or pay a ticket or clearing fee. The duty covers every sidewalk the property abuts, including both sides of a corner lot.
+(3) The responsible person is the owner of record of the land or building, as shown in the City's assessing records; for a condominium, it is the organization of unit owners. Tickets, bills and liens under this section go to the owner. The owner may hire a contractor, but the duty stays with the owner for enforcement, whatever a lease or other agreement says: the City tickets and bills only the owner. The duty covers every sidewalk the property abuts, including both sides of a corner lot.
 
 **(b) Deadlines.**
 
@@ -153,9 +153,11 @@ Every change we propose, written as ordinance text for the City's legislative co
 
 **(j) Fines.** Each ticket under this section is $150 for a building of one to three units where at least one unit has the residential tax exemption, and $300 for any other property. Any property pays $300 for untreated ice, and while a permit listed in subsection (k)(1) is open on it. Tickets go to the owner, in accordance with Section 1-11. Each day a violation continues is a new offense.
 
-**(k) Construction.** (1) Every permit to place a dumpster, obstruct or open a sidewalk, or build or demolish, includes this condition: keep the sidewalk, or the permitted detour, clear by the deadlines of this section; breaking it violates this section and the permit. (2) A permit that closes a sidewalk shall provide an accessible detour at least 48 inches wide, signed before the closure and edged with barriers a cane can detect, which the permit holder keeps clear of snow and ice. (3) The clearing fee under subsection (c) is drawn from the permit's deposit or bond, and the holder restores it within 5 business days. (4) After 3 tickets under this section on one permit, Inspectional Services may hold the project's next inspection until the sidewalk is clear and the tickets are paid.
+**(k) Construction.** (1) Every permit to place a dumpster, obstruct or open a sidewalk, or build or demolish, includes this condition: keep the sidewalk, or the permitted detour, clear by the deadlines of this section; breaking it violates this section and the permit. (2) A permit that closes a sidewalk shall provide an accessible detour at least 48 inches wide, signed before the closure and edged with barriers a cane can detect, which the permit holder keeps clear of snow and ice. (3) The clearing fee under subsection (c) is drawn from the permit's deposit or bond, and the holder restores it within 5 business days. (4) After 3 tickets under this section on one permit, the City may suspend a dumpster, obstruction or sidewalk-opening permit until the sidewalk is clear and the tickets are paid; unpaid tickets may also lead to the denial or suspension of a building permit under Section 1-11(c), after notice and a hearing.
 
 **(l) Accessible parking.** The owner of a property with a parking lot shall clear its accessible parking spaces, their access aisles and the route to the entrance whenever the lot is cleared.
+
+**(m) Liability.** The duties in this section and in Sections 12-8A and 12-8B are enforced by the City. They create no private right of action and do not enlarge the liability of the City or of any owner beyond what state law provides.
 
 **Sec. 12-8A. City sidewalks, bus stops and curb ramps.**
 
@@ -195,7 +197,7 @@ Every change we propose, written as ordinance text for the City's legislative co
 
 **Sec. 12-2. Water run-off, ice from buildings and washing cars.**
 
-**(a)** No building, awning or other projection may shed or discharge water onto a sidewalk, curb ramp or bus stop. This includes roofs, gutters and downspouts, and discharge from sump pumps, heat pumps, furnaces, boilers and air conditioners. Water shall be piped under the sidewalk to the street or a drain, or onto the owner's own ground.
+**(a)** No building, awning or other projection may shed or discharge water onto a sidewalk, curb ramp or bus stop. This includes roofs, gutters and downspouts, and discharge from sump pumps, heat pumps, furnaces, boilers and air conditioners. Water shall be piped under the sidewalk to the gutter, or onto the owner's own ground.
 
 **(b)** Unchanged (washing cars, and other water flowing onto streets and sidewalks).
 
@@ -225,9 +227,9 @@ Every change we propose, written as ordinance text for the City's legislative co
 
 **In the table in subsection (b),** replace the rows for Sec. 12-8 and Sec. 12-9 with one row for Water run-off and ice from buildings (Sec. 12-2), Snow and ice on sidewalks (Sec. 12-8) and Snow and ice placed in streets (Sec. 12-9): $150 per offense for a building of one to three units where at least one unit has the residential tax exemption; $300 per offense for any other property, and for any property for untreated ice or while a permit listed in Section 12-8(k)(1) is open on it. Enforcing personnel: DPW commissioner; inspectional services; traffic and parking. Rename the Sec. 12-18 row "Obstacles in streets and sidewalks" (fine unchanged).
 
-**Add a subsection on snow and ice tickets:** (1) A ticket under Sections 12-2, 12-8, 12-9 or 12-18(f) names the owner of record, from the City's assessing records (for a condominium, the organization of unit owners), and is mailed to the owner's tax-bill address; the inspector need not find out who lives in, rents or manages the property. (2) An inspector who finds a violation shall issue a ticket. There are no warnings, except for a property registered in the snow assistance program under Section 12-8(e). (3) Within 24 hours after the deadline for every winter weather event with an inch or more of snow, or with sleet or freezing rain, inspectors shall check the priority routes, whether or not anyone complained. (4) Tickets and notices include how to pay, appeal and get help, in the languages in which the City publishes its snow rules. (5) Fines and clearing charges under Section 12-8 shall fund the snow assistance program and City clearing of curb ramps and bus stops, subject to appropriation.
+**Add a subsection on snow and ice tickets:** (1) A ticket under Sections 12-2, 12-8, 12-9 or 12-18(f) names the owner of record, from the City's assessing records (for a condominium, the organization of unit owners), and, unless handed to the owner, is mailed to the owner's tax-bill address within 15 days; the inspector need not find out who lives in, rents or manages the property. (2) An inspector who finds a violation shall issue a ticket. There are no warnings, except for a property registered in the snow assistance program under Section 12-8(e). (3) Within 24 hours after the deadline for every winter weather event with an inch or more of snow, or with sleet or freezing rain, inspectors shall check the priority routes, whether or not anyone complained. (4) Tickets and notices include how to pay, appeal and get help, in the languages in which the City publishes its snow rules. (5) Fines and clearing charges under Section 12-8 shall fund the snow assistance program and City clearing of curb ramps and bus stops, subject to appropriation.
 
-We would welcome the opportunity to discuss these proposals with the Council and with City staff, and to share the data behind them. The attachments explain each change and who it affects, list the requests that fall outside the ordinance, and give our sources.
+We would welcome the opportunity to discuss these proposals with the Council and with City staff, and to share the data behind them. The attachments explain each change and who it affects, list the requests that fall outside the ordinance, check each proposal against state law, and give our sources.
 
 Thank you for your consideration.
 
@@ -280,8 +282,8 @@ Name the terms the rule depends on, and put one name on every ticket: the owner 
 **Who is responsible**
 
 - *Today:* "A person, including an owner, occupant, tenant, or agent, in charge of land or a building"
-- *Proposed:* "The owner of record of the land or building, as shown in the City's assessing records; for a condominium, the organization of unit owners. Tickets, bills and liens under this section go to the owner. The owner may hire a contractor, but no lease may make a tenant shovel or pay a ticket or clearing fee."
-- *Why:* Finding out who controls a property (owner, tenant, manager, business) takes an investigation the City can't afford on a $100 ticket, and a ticket to the wrong person starts an appeal. The owner is in the City's records in seconds, the lien already attaches to the property, and no lease can pass the shoveling, a ticket or a fee to a tenant, as PTAC's March 2025 letter asked. A tenant may be unable to shovel, and has no say over a contractor who misses. State law aims the sidewalk penalty at "the owner of abutting property or his agent" (M.G.L. c. 40 §21(3)). Washington, DC lets an owner delegate in writing but keeps the owner liable. This extends the State Sanitary Code's rule to the sidewalk: it keeps shared exits with the landlord and lets a lease shift only a tenant's own exit, in writing ([105 CMR 410.260](https://www.law.cornell.edu/regulations/massachusetts/105-CMR-410-260)).
+- *Proposed:* "The owner of record of the land or building, as shown in the City's assessing records; for a condominium, the organization of unit owners. Tickets, bills and liens under this section go to the owner. The owner may hire a contractor, but the duty stays with the owner for enforcement, whatever a lease or other agreement says: the City tickets and bills only the owner."
+- *Why:* Finding out who controls a property (owner, tenant, manager, business) takes an investigation the City can't afford on a $100 ticket, and a ticket to the wrong person starts an appeal. The owner is in the City's records in seconds, the lien already attaches to the property, and the City never tickets or bills a tenant, as PTAC's March 2025 letter asked. A tenant may be unable to shovel, and has no say over a contractor who misses. State law aims the sidewalk penalty at "the owner of abutting property or his agent" (M.G.L. c. 40 §21(3)). Washington, DC lets an owner delegate in writing but keeps the owner liable. A city can't rewrite leases (Attachment C), so this binds the City's enforcement, and Attachment B asks the state to protect tenants in the lease itself. It mirrors the State Sanitary Code, which keeps shared exits with the landlord and lets a lease shift only a tenant's own exit, in writing ([105 CMR 410.260](https://www.law.cornell.edu/regulations/massachusetts/105-CMR-410-260)).
 
 **Which sidewalks**
 
@@ -298,7 +300,7 @@ Name the terms the rule depends on, and put one name on every ticket: the owner 
 **Who is affected**
 
 - **Homeowners:** no change; they get their own tickets, as today. Condominium associations get the ticket for their building, as they already handle its shared parts.
-- **Tenants:** never made to shovel, ticketed or charged.
+- **Tenants:** never ticketed or billed by the City.
 - **Landlords and other owners:** shovel or hire someone for every rental, pay every ticket, and send tenants one notice each October. The cost may show up in rents.
 - **City staff:** no more investigating who is in charge, and fewer appeals over the wrong person.
 
@@ -472,8 +474,8 @@ Construction sites are covered in principle today, since the duty falls on whoev
 **Holding the permit**
 
 - *Today:* Sec. 1-11(c): unpaid fines may block local licenses and permits.
-- *Proposed:* "After 3 tickets under this section on one permit, Inspectional Services may hold the project's next inspection until the sidewalk is clear and the tickets are paid."
-- *Why:* A delayed inspection costs a project far more than any ticket the state allows. The Law Department should confirm this use of the permit.
+- *Proposed:* "After 3 tickets under this section on one permit, the City may suspend a dumpster, obstruction or sidewalk-opening permit until the sidewalk is clear and the tickets are paid; unpaid tickets may also lead to the denial or suspension of a building permit under Section 1-11(c), after notice and a hearing."
+- *Why:* A suspended dumpster or sidewalk permit costs a project far more than any ticket the state allows, and the City issues those permits itself. Holding building inspections instead would run into the State Building Code (Attachment C).
 
 **Who is affected**
 
@@ -643,7 +645,7 @@ Water from a building freezes on the sidewalk on sunny days, not only during sto
 **What's banned**
 
 - *Today:* (a) "No person shall suffer his or her building or awning or other projection thereon to shed water on any sidewalk or street to the injury or inconvenience of travelers."
-- *Proposed:* "No building, awning or other projection may shed or discharge water onto a sidewalk, curb ramp or bus stop. This includes roofs, gutters and downspouts, and discharge from sump pumps, heat pumps, furnaces, boilers and air conditioners. Water shall be piped under the sidewalk to the street or a drain, or onto the owner's own ground."
+- *Proposed:* "No building, awning or other projection may shed or discharge water onto a sidewalk, curb ramp or bus stop. This includes roofs, gutters and downspouts, and discharge from sump pumps, heat pumps, furnaces, boilers and air conditioners. Water shall be piped under the sidewalk to the gutter, or onto the owner's own ground."
 - *Why:* "To the injury or inconvenience of travelers" invites argument after someone has already fallen. Naming the sources tells owners what to check. Auburn's bylaw (2017 text) names sump pumps and drains. Like today's rule, it applies all year: an air conditioner dripping onto the sidewalk in July is covered too.
 
 **Other discharge**
@@ -727,7 +729,7 @@ Make the ticket automatic and the amount simple: inspectors must ticket every vi
 **Who gets the ticket**
 
 - *Today:* Not stated; any "person ... in charge" can be fined.
-- *Proposed:* "A ticket names the owner of record, from the City's assessing records (for a condominium, the organization of unit owners), and is mailed to the owner's tax-bill address. The inspector need not find out who lives in, rents or manages the property."
+- *Proposed:* "A ticket names the owner of record, from the City's assessing records (for a condominium, the organization of unit owners), and, unless handed to the owner, is mailed to the owner's tax-bill address within 15 days. The inspector need not find out who lives in, rents or manages the property."
 - *Why:* One name, found in seconds: no investigation, no appeals over the wrong person, and absentee owners learn of the problem.
 
 **Duty to ticket**
@@ -836,14 +838,40 @@ A few limits sit in state law or with other agencies. The Council can't change t
 | Topic | What limits Somerville today | What to ask for |
 | --- | --- | --- |
 | Fine cap | A ticket can't exceed $300 ([M.G.L. c. 40 §21D](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleVII/Chapter40/Section21D)), and an ordinance penalty can't exceed $300 per offense ([c. 40 §21](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleVII/Chapter40/Section21)). | A home rule petition, as Boston obtained in [Acts of 2016, c. 352](https://malegislature.gov/Laws/SessionLaws/Acts/2016/Chapter352): higher fines for commercial properties, large landlords and construction sites that fail repeatedly, not for small homes. Boston's act allows up to $1,500. |
-| Legal basis | Sec. 12-8 cites both c. 40 §21 and [c. 85 §5](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXIV/Chapter85/Section5). c. 85 §5 caps a city's penalty at $50; c. 40 §21(3) aims the penalty at "the owner of abutting property or his agent". | The Law Department confirms which statute supports each proposal, that ticketing only the owner of record fits c. 40 §21(3), that a flat clearing fee counts as a charge for the City's work, outside the $300 ticket cap, and that Inspectional Services may hold a project's inspections over unpaid sidewalk tickets. |
+| Legal basis | Sec. 12-8 cites both c. 40 §21 and [c. 85 §5](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXIV/Chapter85/Section5). c. 85 §5 caps a city's penalty at $50; c. 40 §21(3) aims the penalty at "the owner of abutting property or his agent". | The Law Department confirms PTAC's reading in Attachment C, starting with the duties at the street edge, the clearing fee and lien, and which local-option statutes the City has accepted. |
+| Tenants and leases | A city can't rewrite leases (Home Rule Amendment, art. 89 §7(5)). The State Sanitary Code lets a written lease shift snow duty only for exits a tenant alone uses, and it doesn't reach the public sidewalk (105 CMR 410.260). | The Department of Public Health extends that rule to the abutting public sidewalk, or the Legislature voids lease clauses that pass sidewalk snow duty, tickets or clearing fees to tenants. |
 | MBTA bus stops and stations | The MBTA clears stops on its listed frequent routes within 24 hours; in Somerville, routes 77, 104 and 109; who clears Green Line station entrances is not published. | A written agreement listing every Somerville stop and station entrance, who clears it and by when, including while buses run during a storm (Sec. 12-8A). Monthly counts from the MBTA's bus cameras of vehicles blocking stops on Somerville routes, once tickets start on Jan 1, 2027. |
 | State roads | The City lists State property last in its clearing order, with no contact. | Agreements with MassDOT and DCR for the sidewalks along McGrath Highway, Alewife Brook Parkway and other state roads, with the same deadlines. |
 | Business districts | Each small business hires its own contractor, if any. | City help for business associations to hire shared snow contractors for whole districts (PTAC letter, item 8). |
 | Winter-ready sidewalks | Not part of this ordinance. | Winter in the City's sidewalk design standards: drainage at ramps, grading and materials that shed water, and a look at heated sidewalks in the busiest squares (PTAC letter, item 11). |
 | City clearing of every sidewalk | Owners clear their own frontage; a few US cities clear all sidewalks themselves. | A Council order for a cost and feasibility study of City clearing of every sidewalk, with funding options, as Minneapolis has done (PTAC letter, item 13). |
 
-## Attachment C: Sources
+## Attachment C: State law check
+
+PTAC wrote these rules for Somerville, not to copy the state or other cities. For each proposal we asked one question: could a state law or the State Constitution stop the City from doing it? Where the answer was yes or maybe, we changed the wording to keep the goal and stay within the City's powers. This is PTAC's reading of the law, not legal advice; the Law Department should confirm it before the Council votes.
+
+**How courts decide.** A city ordinance stands unless it is in "a sharp conflict" with a state law: the Legislature clearly meant to leave no room for local rules, or the state law's purpose can't be met alongside the local one (Bloom v. Worcester, 1973). The State Constitution adds one limit: a city may not "enact private or civil law governing civil relationships except as an incident to an exercise of an independent municipal power" (Home Rule Amendment, art. 89 §7(5)). Leases fall under that limit: "An ordinance which affects the landlord-tenant relationship is a 'private or civil law governing civil relationships'" (Bannerman v. Fall River, 1984).
+
+| Proposal | What state law says | Our reading | What we did |
+| --- | --- | --- | --- |
+| Tickets go only to the owner of record (Sec. 12-8(a)(3), 1-11) | c. 40 §21(3) lets cities require sidewalk snow removal, and the penalty "shall apply to the owner of abutting property or his agent having charge thereof". c. 85 §5, which today's Sec. 12-8 also cites, says "owner or occupant" but caps a city's fine at $50. | Supported. Owner-only fits the $300 statute better than today's text, which tickets tenants. | Kept. Sec. 12-8 should cite c. 40 §21(3), not c. 85 §5. |
+| Condos: the association gets the ticket | c. 183A §14 lets a city charge "assessments, rates and charges of every nature" to the organization of unit owners, with any lien split among the units by their percentages. §10 makes it "subject to suit" over the common areas, which include the land. | Supported: the association is the owners' agent in charge of the frontage. | Kept. An unpaid fee becomes a lien split across the units. |
+| $150 and $300 tickets | c. 40 §21 caps penalties at $300 per offense, and c. 40 §21D caps a ticket at $300. c. 40U §5, if the City used it for snow, caps tickets at $200. c. 59 §5C grants the residential exemption per parcel, condo units included. | Within the cap under §21D. The $150 test is a lookup in assessing records. | Kept. Tickets go under §21D. |
+| Tickets by mail | c. 40 §21D: hand the ticket over "if possible"; otherwise mail it "to the offender's last known address, within fifteen days after said violation". | Works: under the ordinance, the owner is the offender. | Added "within 15 days" to Sec. 1-11. |
+| "No lease may make a tenant shovel or pay" (earlier draft) | Leases are civil law under art. 89 §7(5) (Marshal House v. Rent Review Board, 1970; Bannerman). The State Sanitary Code lets a written lease shift snow duty only for exits under the tenant's "exclusive use and control" (105 CMR 410.260(D)(4)); it doesn't reach the public sidewalk. | The riskiest line in the draft: it rewrote lease terms. Ticketing only the owner gets the same result for enforcement without touching the lease. | Rewritten: the duty stays with the owner for enforcement, whatever a lease says. Attachment B asks the state to protect tenants in the lease itself. |
+| Tenant contact notice (Sec. 12-8(i)) | No state rule on it. | A notice duty on the owner, part of the snow rule; it changes no lease term. | Kept. |
+| Ramps, crosswalk openings, bus stops, hydrants (Sec. 12-8(g)) | c. 40 §21(3) speaks of "sidewalks, within the limits of the public ways"; no statute addresses the street edge, for or against. c. 85 §7B fines pushing snow onto a state highway "so as to impede the flow of traffic". | Within the City's general home rule power (art. 89 §6), since no statute conflicts, but untested: the least certain part of the draft. Snow from a cut goes onto the owner's property (Sec. 12-8(h)), never into the road. | Kept. The first question for the Law Department. |
+| Flat clearing fee and lien (Sec. 12-8(c)) | A fee must pay for a service and be "reasonable and proportional" to its cost (Emerson College v. Boston, 1984; Silva v. Attleboro, 2009). c. 85 §6 lets a city that accepts it charge abutters "the whole or any part of the cost" of clearing their sidewalks. Liens: Somerville's own Acts of 1996, c. 252 (cited in Sec. 1-11(c)), or c. 40 §58, with a council vote for each type of charge. | Valid as written: charged only where City crews cleared, at average cost. | Kept. |
+| Construction: holding inspections (earlier draft of Sec. 12-8(k)(4)) | The State Building Code is "intended to occupy the field of building regulation" (St. George Greek Orthodox Cathedral v. Springfield Fire Department, 2012). c. 40 §57 lets a city that accepts it deny or suspend a building permit for unpaid fines, after notice, a hearing and an offer of a payment plan. | Holding building inspections over tickets risks preemption. Dumpster, obstruction and sidewalk-opening permits are the City's own (Sec. 12-12, 12-20, 12-77). | Rewritten: after 3 tickets the City may suspend the sidewalk permit; unpaid tickets reach the building permit only through Sec. 1-11(c), with notice and a hearing. |
+| Fines for the assistance program (Sec. 1-11) | Fines "enure to the city or town for such use as said city or town may direct" (c. 40 §21D), but every receipt goes to the treasury and needs an appropriation (c. 44 §53). c. 40 §5B, if accepted, lets a city dedicate a receipt to a fund without appropriation. | "Subject to appropriation", as drafted, is allowed. Skipping appropriation would need §5B, if the state's Division of Local Services agrees fines qualify. | Kept. |
+| City deadlines: "shall clear" (Sec. 12-8(c), 12-8A) | A city "shall not be liable" for injury from snow or ice on a public way that is otherwise reasonably safe (c. 84 §17). The Tort Claims Act shields discretionary choices (c. 258 §10(b)); a fixed duty has less of that cover. | §17 still applies; firm deadlines may narrow one defense. | Added Sec. 12-8(m): the duties are enforced by the City and create no new right to sue the City or an owner. |
+| Water from buildings (Sec. 12-2(a)) | The MWRA bars groundwater and roof runoff from its sewers (360 CMR 10.023). | "Piped to a drain" could send sump water into a sewer. | Rewritten: piped to the gutter or onto the owner's own ground. |
+| Roof snow and ice (Sec. 12-2(d)) | c. 40 §21(2) and (4) let cities require owners to prevent and remove snow and ice falling from roofs. | Expressly allowed. | Kept. |
+| Everything else: deadline, width, morning clearing, notices, data, winter plan, space savers, bins, accessible parking, City duties | No conflicting statute found. c. 40U §5, where a city uses it, asks only that a snow ordinance be "specific as to the width of the area to be cleared and the standards for clearance". | Within the City's power. | Kept. |
+
+**For the Law Department.** Confirm which local-option statutes the City has accepted: c. 40 §57 (permits and unpaid fines), c. 40 §5B (dedicated funds) and c. 85 §6 (clearing charges); which lien power the clearing fee uses; and whether the duties at the street edge rest on general home rule power, since no statute speaks to them.
+
+## Attachment D: Sources
 
 Peer-city text marked 2012 or 2017 comes from compilations that reprint each town's code as it stood then (the MAPC Snow Removal Toolkit, 2012, and a 2017 statewide compilation); current codes may differ.
 
@@ -892,3 +920,10 @@ Peer-city text marked 2012 or 2017 comes from compilations that reprint each tow
 * City sidewalk reminder outside an emergency: [Sidewalk Clearing Reminder](https://www.somervillema.gov/news/sidewalk-clearing-reminder)
 
 - PTAC letter to the Mayor, "Improve Snow Clearing on Somerville Sidewalks", Mar 25, 2025: [PDF](https://github.com/vitorpamplona/somersnow/blob/main/research/source-files/ptac-letter-2025-03-25.pdf)
+
+**Massachusetts law checked in Attachment C**
+
+- Home Rule Amendment, art. 89 §6–7: [Constitution](https://malegislature.gov/Laws/Constitution)
+- M.G.L. [c. 40 §5B](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleVII/Chapter40/Section5B), [§21](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleVII/Chapter40/Section21), [§21D](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleVII/Chapter40/Section21D), [§57](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleVII/Chapter40/Section57), [§58](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleVII/Chapter40/Section58); [c. 40U §5](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleVII/Chapter40U/Section5); [c. 44 §53](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleVII/Chapter44/Section53); [c. 59 §5C](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleIX/Chapter59/Section5C); [c. 84 §17](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXIV/Chapter84/Section17); [c. 85 §5](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXIV/Chapter85/Section5), [§6](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXIV/Chapter85/Section6), [§7B](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXIV/Chapter85/Section7B); [c. 183A §10](https://malegislature.gov/Laws/GeneralLaws/PartII/TitleI/Chapter183A/Section10), [§14](https://malegislature.gov/Laws/GeneralLaws/PartII/TitleI/Chapter183A/Section14); [c. 258 §10](https://malegislature.gov/Laws/GeneralLaws/PartIII/TitleIV/Chapter258/Section10)
+- [105 CMR 410.260](https://www.law.cornell.edu/regulations/massachusetts/105-CMR-410-260) (State Sanitary Code); [360 CMR 10.023](https://www.law.cornell.edu/regulations/massachusetts/360-CMR-10-023) (MWRA sewer use)
+- Court cases (Caselaw Access Project): [Marshal House v. Rent Review Board, 357 Mass. 709 (1970)](https://static.case.law/mass/357/cases/0709-01.json); [Bloom v. Worcester, 363 Mass. 136 (1973)](https://static.case.law/mass/363/cases/0136-01.json); [Bannerman v. Fall River, 391 Mass. 328 (1984)](https://static.case.law/mass/391/cases/0328-01.json); [Emerson College v. Boston, 391 Mass. 415 (1984)](https://static.case.law/mass/391/cases/0415-01.json); [Silva v. Attleboro, 454 Mass. 165 (2009)](https://static.case.law/mass/454/cases/0165-01.json); [St. George Greek Orthodox Cathedral v. Fire Department of Springfield, 462 Mass. 120 (2012)](https://static.case.law/mass/462/cases/0120-01.json)

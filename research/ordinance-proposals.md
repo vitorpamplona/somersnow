@@ -35,7 +35,7 @@ Source: City 311 "Snow/sidewalk not shoveled" requests, summed over the 16 days 
 
 ### 1. Simplify the code
 
-- **One deadline, the same as Boston.** 3 hours of daylight after the snow stops; snow that stops at night is due 3 hours after sunrise. The City states each storm's deadline as a clock time. ([details](#sec-12-8-the-deadline))
+- **One deadline, the same as Boston.** 3 hours of daylight after the snow stops; snow that stops at night is due 3 hours after sunrise, and so is snow still falling in the morning, except during a snow emergency. The City states each storm's deadline as a clock time. ([details](#sec-12-8-the-deadline))
 - **One name on every ticket.** The owner of record, found in seconds in City records. No investigating who is in charge, and no appeals over the wrong person. ([details](#sec-12-8-definitions-and-who-is-responsible))
 - **Tickets without judgment calls.** Two fine levels read from City records, no offense history to track, no warnings to weigh, and a flat fee when the City has to clear. ([details](#sec-1-11-fines-inspections-and-follow-up))
 - **Plain words for what is already intended.** Define sidewalk, winter weather event, clear path and priority routes; name contractors, downspouts and space savers instead of leaving them to interpretation. ([Sec. 12-9](#sec-12-9-snow-into-streets-bike-lanes-and-bus-stops), [12-2](#sec-12-2-water-and-ice-from-buildings), [12-18](#sec-12-18-space-savers-and-objects-in-the-path))
@@ -62,7 +62,7 @@ One change per row: what the code or City practice says today, and what the prop
 | Owners | 6 daylight hours to clear. | 3 daylight hours, as in Boston. |
 | Owners | Work out the deadline yourself. | The City posts the deadline time. |
 | Owners | No notice required after a storm. | A notice after every storm of 1 inch or more, or with ice. |
-| Owners | No duty while a long storm lasts. | Clear each morning if it lasts over 12 hours. |
+| Owners | No duty while a long storm lasts. | Clear each morning while it snows, except in a snow emergency. |
 | Owners | 36-inch path. | 48-inch (4-foot) path. |
 | Owners | Sand where clearing is impractical. | Bare pavement; sand only on ice. |
 | Owners | Duty ends at the deadline. | Re-clear after refreezes and plows. |
@@ -119,7 +119,7 @@ Every change we propose, written as ordinance text for the City's legislative co
 
 (1) Sidewalks, curb ramps, crosswalks and bus stops are part of the city's transportation network. This section keeps them passable in winter for everyone, including people who use wheelchairs, walkers, canes or strollers. The City's goal is that they are fully passable within 24 hours after each event.
 
-(2) In this section and in Sections 12-8A and 12-8B: "Sidewalk" means the paved way between the property line and the curb, including curb ramps, the landing at the top of a ramp, and driveway crossings. "Winter weather event" means snow, sleet or freezing rain; it begins when it starts falling in the city and ends when it stops, at the time stated in the City's notice under Section 12-8B or, without a notice, when it stops. "Priority routes" means bus routes, squares and school walking routes, as named in the winter plan under Section 12-8A(e). "Frontage" means each side of a lot along a street. "Bus stop" means the sidewalk and curb within 10 feet of a bus stop sign. "Untreated ice" means ice on a sidewalk or curb ramp with no sand or de-icer on it after the deadline. "Clear path" means a continuous path along the whole frontage, at least 48 inches wide (or the whole sidewalk where it is narrower), down to bare pavement, connecting to the paths of neighboring properties, curb ramps and bus stops.
+(2) In this section and in Sections 12-8A and 12-8B: "Sidewalk" means the paved way between the property line and the curb, including curb ramps, the landing at the top of a ramp, and driveway crossings. "Winter weather event" means snow, sleet or freezing rain; it ends when it stops falling in the city, at the time stated in the City's notice under Section 12-8B or, without a notice, when it stops. "Priority routes" means bus routes, squares and school walking routes, as named in the winter plan under Section 12-8A(e). "Frontage" means each side of a lot along a street. "Bus stop" means the sidewalk and curb within 10 feet of a bus stop sign. "Untreated ice" means ice on a sidewalk or curb ramp with no sand or de-icer on it after the deadline. "Clear path" means a continuous path along the whole frontage, at least 48 inches wide (or the whole sidewalk where it is narrower), down to bare pavement, connecting to the paths of neighboring properties, curb ramps and bus stops.
 
 (3) The responsible person is the owner of record of the land or building, as shown in the City's assessing records; for a condominium, it is the organization of unit owners. Tickets, bills and liens under this section go to the owner. The owner may hire a contractor, but no lease may make a tenant shovel or pay a ticket or clearing fee. The duty covers every sidewalk the property abuts, including both sides of a corner lot.
 
@@ -135,7 +135,7 @@ Every change we propose, written as ordinance text for the City's legislative co
 
 (5) Being away does not excuse the duty. A responsible person who will be away shall arrange for someone else to clear.
 
-(6) During an event that lasts more than 12 hours, the responsible person shall also clear and treat the path within three hours after sunrise each day it continues.
+(6) While snow, sleet or freezing rain keeps falling, the responsible person shall also clear and treat the path within three hours after each sunrise, except while a snow emergency declared by the City is in effect.
 
 **(c) City clearing, re-inspection and cost.** An inspector who finds a violation of this section shall issue a ticket to the owner; there are no warnings, except for a property registered under subsection (e). The inspector shall re-inspect within 24 hours. A frontage still not clear gets a new ticket, as a new offense under Section 1-11(a), and the Commissioner of Public Works shall clear it within the next 24 hours, starting with priority routes and corners. The owner pays, in addition to the tickets, a flat clearing fee per frontage and per curb ramp that the City sets to match its average cost; an unpaid fee becomes a lien on the property.
 
@@ -262,7 +262,7 @@ Name the terms the rule depends on, and put one name on every ticket: the owner 
 **Weather event**
 
 - *Today:* "following the conclusion of a weather event" (not defined).
-- *Proposed:* "Winter weather event: snow, sleet or freezing rain. It begins when it starts falling in the city and ends when it stops, at the time stated in the City's notice under Sec. 12-8B, or, without a notice, when it stops."
+- *Proposed:* "Winter weather event: snow, sleet or freezing rain. It ends when it stops falling in the city, at the time stated in the City's notice under Sec. 12-8B, or, without a notice, when it stops."
 - *Why:* Freezing rain or sleet fell in 22 of 44 snow periods since 2016. A published end time ends arguments over when the clock started. Ice that forms later from melting is not an event, since no one can see when it formed: the duty to keep the path treated covers it, and untreated ice is a $300 ticket.
 
 **Clear path**
@@ -327,8 +327,8 @@ Keep today's rule and change one number: **3 hours of daylight** after the snow 
 **Long snowfalls**
 
 - *Today:* None: the clock starts only when the event ends.
-- *Proposed:* "During an event that lasts more than 12 hours, the responsible person shall also clear and treat the path within three hours after sunrise each day it continues."
-- *Why:* Two days of light snow set no deadline at all today, while schools and shops stay open. PTAC's March 2025 letter asked for clearing during long, light snowfalls, when packed snow turns to ice.
+- *Proposed:* "While snow, sleet or freezing rain keeps falling, the responsible person shall also clear and treat the path within three hours after each sunrise, except while a snow emergency declared by the City is in effect."
+- *Why:* Two days of light snow set no deadline at all today, while schools and shops stay open. PTAC's March 2025 letter asked for clearing during long, light snowfalls: people keep walking, and their steps pack soft snow into ice. One time to remember: if it is still snowing in the morning, clear by 3 hours after sunrise. During a declared snow emergency the morning duty pauses, so no one is pushed out into a dangerous storm; the regular deadline after the snow stops still applies.
 
 **Today's rule vs. proposed, for a storm on Jan 15** (both from [PTAC's deadline calculator](https://vitorpamplona.com/somersnow/#deadline), which follows Sec. 12-8):
 
@@ -352,7 +352,7 @@ Keep today's rule and change one number: **3 hours of daylight** after the snow 
 
 **Who is affected**
 
-- **All owners:** clear sooner than today (about 3 hours sooner for snow that stops at night, more for snow that stops in the afternoon), and again each morning during storms longer than 12 hours.
+- **All owners:** clear sooner than today (about 3 hours sooner for snow that stops at night, more for snow that stops in the afternoon), and each morning while snow keeps falling, except during a snow emergency.
 - **City staff:** one rule shared with Boston; state each deadline as a clock time in the notice; more inspections during long storms.
 
 ### Sec. 12-8: the path

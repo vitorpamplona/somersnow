@@ -23,7 +23,7 @@ Pages marked * were seen only as search-result excerpts, not opened in full. Che
 
 - [M.G.L. c. 85, § 5: snow and ice removal from sidewalks](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXIV/Chapter85/Section5)
 - [M.G.L. c. 40, § 21: town by-laws on snow and ice](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleVII/Chapter40/Section21)
-- [105 CMR 410.260: means of egress (State Sanitary Code)](https://www.law.cornell.edu/regulations/massachusetts/105-CMR-410-260) *
+- [105 CMR 410.260: means of egress (State Sanitary Code)](https://www.law.cornell.edu/regulations/massachusetts/105-CMR-410-260)
 - [Snow removal and accessibility in Massachusetts](https://www.mass.gov/info-details/snow-removal-and-accessibility-in-massachusetts)
 - [Winter storm safety tips (MEMA)](https://www.mass.gov/info-details/winter-storm-safety-tips)
 - [Massachusetts law about snow and ice](https://mass.gov/info-details/massachusetts-law-about-snow-and-ice)

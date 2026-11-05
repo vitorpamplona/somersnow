@@ -68,7 +68,7 @@ The guide teaches the rules; `docs/storms/` shows what actually happens in a sto
 | Bluebikes trips from stations inside Somerville | Bluebikes system data | all (no winter trips in 2016–17) |
 | Subway: % slower than usual and trains run, Red/Orange/Green Line segments in Somerville (Alewife–Davis–Porter, Sullivan–Assembly–Wellington, Green Line Extension) | MBTA rapid transit travel times (about 1–1.5 GB a year, cached) | Jan 2022 on (Green Line Extension from late 2022) |
 | Melt and refreeze (back at or below 32°F within 12 h after 34°F+) and salting requests | Logan hourly temperature; 311 "Salting request" | all |
-| Freezing rain, freezing drizzle and sleet (ice pellets), per hour, 0–3 (`hours[i][4]`): light blue on the chart, a "Freezing rain" card in the guide panel | Logan report codes FZRA, FZDZ, PL (same IEM ASOS reports) | all (22 of 44 periods have some) |
+| Freezing rain, freezing drizzle and sleet (ice pellets), per hour, 0–3 (`hours[i][4]`): light blue on the chart, a "Freezing rain" card in the guide panel | Logan report codes FZRA, FZDZ, PL (same IEM ASOS reports) | all (20 of 44 periods have some) |
 | Snow on the ground each morning (`extra.snowDepth`, "Snow on the ground" lane) | CoCoRaHS via ACIS: Medford 1.2 W, else Winchester 0.7 SE (`snow_depth()`); Logan stopped reporting depth, Somerville's stations report it too rarely | all |
 | Who walked / rode transit in the past week, by ward | Happiness Survey `wmeh-zuz2` (2025, random sample, ~200 per ward) | ward map |
 | City snow emergency times and notices | somervillema.gov news, typed into `CITY` in `fetch_data.py` | Feb 2022 (end only), Jan 2026 (start only), Feb 2026 (both) |

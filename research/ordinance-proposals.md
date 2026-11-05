@@ -2,11 +2,11 @@
 
 Somerville Pedestrian & Transit Advisory Committee (PTAC) · Nov 3, 2026
 
-Copy of the PTAC Claude Doc ("Proposal" tab). The live doc is the working version: https://claude.ai/artifact/7vG43e3w32sGB4efaCwyZE. The chart appears here as a table.
+Copy of the PTAC Claude Doc ("Proposal" tab). The live doc is the working version: https://claude.ai/artifact/7vG43e3w32sGB4efaCwyZE (the chart appears here as a table).
 
 Dear Members of the City Council,
 
-On behalf of the Somerville Pedestrian and Transit Advisory Committee (PTAC), thank you for your continued attention to walking and transit in our city. In March 2025, PTAC wrote to Mayor Ballantyne, with copies to each of you, about the condition of our sidewalks in winter. We write now with a specific request.
+On behalf of the Somerville Pedestrian and Transit Advisory Committee (PTAC), thank you for your continued attention to walking and transit in our city. In March 2025, PTAC wrote to Mayor Ballantyne, with copies to the City Council, about the condition of our sidewalks in winter. We write now with a specific request.
 
 We respectfully ask the Council to amend Somerville's sidewalk snow ordinances so that they are simpler to follow, clear about every duty, and more protective of residents with disabilities at the places people most often get stuck: corners, bus stops and ice. Today the rules are hard to follow and harder to enforce. Complaints to 311 peak two to three days after the snow stops, long after the deadline, and nothing in the code makes sure a ticketed sidewalk is ever cleared.
 
@@ -14,18 +14,18 @@ We respectfully ask the Council to amend Somerville's sidewalk snow ordinances s
 
 The deadline is measured in hours, but the danger lasts for days, and the people it strands are the ones who can least avoid it: wheelchair users, older residents, parents with strollers, and everyone walking to a bus.
 
-**Complaints peak 2 to 3 days after the snow, long after the deadline** (chart in the live doc). Sidewalk complaints to 311 in the days after each of the 16 days with 6+ inches of snow since 2015; today's deadline falls the same day, or the next day by about 1 p.m.
+**Complaints peak 2 to 3 days after the snow, long after the deadline** (chart in the live doc). Sidewalk complaints to 311 after the 16 days with 6+ inches of snow since 2015, each counted once; today's deadline falls the same day, or the next day by about 1 p.m.
 
 | Snow day | Day 1 | Day 2 | Day 3 | Day 4 | Day 5 |
 | --- | --- | --- | --- | --- | --- |
-| 88 | 629 | 1,012 | 1,041 | 751 | 394 |
+| 88 | 602 | 899 | 762 | 558 | 263 |
 
-Source: City 311 "Snow/sidewalk not shoveled" requests, summed over the 16 days since 2015 with 6+ inches of snow at Boston Logan (PTAC analysis of City open data; method in research/data-sources.md).
+Source: City 311 "Snow/sidewalk not shoveled" requests after the 16 days since 2015 with 6+ inches of snow at Boston Logan, each counted once, for the most recent of those days (PTAC analysis of City open data; method in research/data-sources.md).
 
 | What we see | Number | Source |
 | --- | --- | --- |
 | Falls, not crashes, hurt most walkers | In Sweden, more than 30 pedestrians are injured in falls for every one hit by a vehicle; two thirds of severely injured pedestrians slipped on ice or snow, and about 70% of those hurt in severe falls are women. In Malmö, Helsingborg and Lund, 70–80% of a winter's falls came on its worst days; keeping slippery spells short could cut those injuries by about 30%. | [Berntman, Lund University, 2015](https://lup.lub.lu.se/search/files/3934697/8194817.pdf); [Berntman, Frank & Modén, 2012](https://lucris.lub.lu.se/ws/files/6151586/2295991.pdf) |
-| Ice outlasts the storm | PTAC members found ice on sidewalks up to 7 days after the snow in winter 2024–25; freezing rain or sleet fell in 22 of 44 snow periods since 2016 | [PTAC letter to the Mayor, Mar 25, 2025](https://github.com/vitorpamplona/somersnow/blob/main/research/source-files/ptac-letter-2025-03-25.pdf); [PTAC storm replays](https://vitorpamplona.com/somersnow/storms/) |
+| Ice outlasts the storm | PTAC members found ice on sidewalks up to 7 days after the snow in winter 2024–25; freezing rain or sleet fell in 20 of 44 snow periods since December 2015 | [PTAC letter to the Mayor, Mar 25, 2025](https://github.com/vitorpamplona/somersnow/blob/main/research/source-files/ptac-letter-2025-03-25.pdf); [PTAC storm replays](https://vitorpamplona.com/somersnow/storms/) |
 | Complaints keep coming | For 6 days after a typical storm; more than a week in 15 of the 35 periods with a snowfall of 3 inches or more | PTAC storm replays (City 311 data) |
 | Tickets with no follow-up | 894 tickets and 1,552 complaints from Nov 2024 to Feb 19, 2025, but no public record of whether any ticketed sidewalk was cleared; 754 sidewalk complaints were closed on a single day, Feb 6, 2026 | City spokesperson, [Boston.com](https://www.boston.com/news/neighborhoods/2025/02/21/boston-neighboring-cities-cracking-down-uncleared-sidewalks-ice); [City 311 open data](https://data.somervillema.gov/d/4pyi-uqq6) |
 | Twice as slow as Boston | Boston gives 3 daylight hours after the snow stops; Somerville gives 6 | [Boston: rules for clearing snow](https://www.boston.gov/departments/public-works/rules-clearing-snow); Sec. 12-8(a) |
@@ -75,7 +75,7 @@ One change per row: what the code or City practice says today, and what the prop
 | Owner-occupants | First ticket $100. | $150 per ticket (1–3 units). |
 | Other owners | First ticket $100 or $150. | $300 per ticket. |
 | Eligible seniors and disabled owners | Can hire teen shovelers. | Free help, no fines. |
-| Tenants | Can be ticketed. | Never ticketed. |
+| Tenants | Can be ticketed. | Never ticketed for sidewalk snow. |
 | Tenants | A lease can assign the sidewalk. | The City bills only the owner, whatever the lease says. |
 | Tenants | No contact required. | A contact name each October. |
 | Everyone | Only your own sidewalk is off-limits for snow. | No snow on any walk, ramp, stop, hydrant or drain. |
@@ -98,10 +98,10 @@ One change per row: what the code or City practice says today, and what the prop
 | DPW | City "may" clear, no time set. | Must clear within 24 hours of a second ticket; corners on priority routes within 12 hours of the first. |
 | DPW | Bills its actual expense. | Flat fee per 25 feet, at average cost. |
 | DPW | No deadline for City sidewalks. | Same deadline as residents. |
-| DPW | Bus stops after streets. | Within 24 hours, with an 8×5 ft boarding area. |
+| DPW | Bus stops after streets. | Within 24 hours, with an 8-by-5-foot boarding area. |
 | DPW | No deadline for ramps no one abuts or crossing islands. | Cleared within 24 hours. |
 | DPW | Push buttons and accessible parking not addressed. | Cleared within 24 hours. |
-| DPW | Ice melt not required. | Free sand or ice melt; pre-treat before ice. |
+| DPW | De-icer not required. | Free sand or de-icer; pre-treat before ice. |
 | DPW | No clearing log. | Log every stop and ramp cleared, by GPS, on a public map. |
 | City leadership | No winter plan required. | A draft plan by October 1, final by November 1. |
 | City leadership | No single lead named. | One official coordinates all of it. |
@@ -121,15 +121,15 @@ Every change we propose, written as ordinance text for the City's legislative co
 
 (1) Sidewalks, curb ramps, crosswalks and bus stops are part of the city's transportation network. This section keeps them passable in winter for everyone, including people who use wheelchairs, walkers, canes or strollers. The City's goal is that they are fully passable within 24 hours after each event.
 
-(2) In this section and in Sections 12-8A and 12-8B: "Sidewalk" means the paved way between the property line and the curb, including curb ramps, the landing at the top of a ramp, and driveway crossings. "Winter weather event" means snow, sleet or freezing rain; it ends when it stops falling in the city, at the time stated in the City's notice under Section 12-8B or, without a notice, when it stops. "Priority routes" means bus routes, squares and school walking routes, as named in the winter plan under Section 12-8A(e). "Frontage" means each side of a lot along a street. "Bus stop" means the sidewalk, curb and gutter within 10 feet of a bus stop sign and, at a shelter, 3 feet on each open side of the shelter and the sidewalk out to the curb. "Untreated ice" means ice on a sidewalk or curb ramp that, after the deadline, is not level and completely covered with sand or a de-icer. "Clear path" means a continuous path along the whole frontage, at least 48 inches wide (or the whole sidewalk where it is narrower), down to bare pavement, connecting to the paths of neighboring properties, curb ramps and bus stops.
+(2) In this section and in Sections 12-8A, 12-8B, 12-2, 12-9, 12-18 and 1-11: "Sidewalk" means the paved way between the property line and the curb, including curb ramps, the landing at the top of a ramp, and driveway crossings. "Winter weather event" means snow, sleet or freezing rain; it ends when it stops falling in the city, at the time stated in the City's notice under Section 12-8B or, without a notice, when it stops. Snowfall is measured as the National Weather Service reports it for Boston (Logan Airport). "Winter" means October 1 through May 1. "Snow emergency" means a snow emergency the City declares by City Alert. "Priority routes" means the bus routes, squares and school walking routes named in the winter plan under Section 12-8A(e). "Frontage" means each side of a lot along a street. "City frontage" means a sidewalk the City clears under Section 12-8A(a). "Crosswalk opening" means the opening through a plow bank required by Section 12-8(g)(2). "Bus stop" means the sidewalk, curb and gutter along the curb within 10 feet on either side of a bus stop sign and, at a shelter, 3 feet on each open side of the shelter and the sidewalk out to the curb. "Untreated ice" means ice on a sidewalk or curb ramp that, after the deadline that applies to it, is not both level and completely covered with sand or a de-icer. "Clear path" means a continuous path along the whole frontage, at least 48 inches wide (or the whole sidewalk where it is narrower), down to bare pavement, connecting to the paths of neighboring properties, curb ramps and bus stops.
 
 (3) The responsible person is the owner of record of the land or building, as shown in the City's assessing records; for a condominium, it is the organization of unit owners. Tickets, bills and liens under this section go to the owner. The owner may hire a contractor, but the duty stays with the owner for enforcement, whatever a lease or other agreement says: the City tickets and bills only the owner. The duty covers every sidewalk the property abuts, including both sides of a corner lot.
 
 **(b) Deadlines.**
 
-(1) The responsible person shall open the clear path within three hours after the event ends, counting only hours between sunrise and sunset. If the event ends after dark, the three hours start at sunrise.
+(1) The responsible person shall open the clear path within 3 hours after the event ends, counting only hours between sunrise and sunset. If the event ends after sunset, the 3 hours start at sunrise.
 
-(2) The City's notice under Section 12-8B states each event's deadline as a clock time.
+(2) For each event that needs a notice under Section 12-8B(b), the notice states its deadline as a clock time.
 
 (3) These deadlines apply after every event, whether or not a snow emergency is declared, and on weekends and holidays. Snow that drifts back onto a cleared path, and snow a plow pushes onto a cleared path or curb ramp, start a new deadline, counted from when the drift forms or the plow passes. Ice that forms later from melting and refreezing is covered by subsection (f).
 
@@ -137,39 +137,41 @@ Every change we propose, written as ordinance text for the City's legislative co
 
 (5) Being away does not excuse the duty. A responsible person who will be away shall arrange for someone else to clear.
 
-(6) While snow, sleet or freezing rain keeps falling, the responsible person shall also clear and treat the path within three hours after each sunrise, except while a snow emergency declared by the City is in effect.
+(6) While snow, sleet or freezing rain keeps falling, the responsible person shall also clear and treat the path within 3 hours after each sunrise, except while a snow emergency is in effect.
 
-**(c) City clearing, re-inspection and cost.** An inspector who finds a violation of this section shall issue a ticket to the owner; there are no warnings, except for a property registered under subsection (e). The inspector shall re-inspect within 24 hours. A frontage still not clear gets a new ticket, as a new offense under Section 1-11(a), and the Commissioner of Public Works shall clear it within the next 24 hours, starting with priority routes and corners. On priority routes, a blocked curb ramp or crosswalk opening is cleared within 12 hours after the ticket, without waiting for the re-inspection. The owner pays, in addition to the tickets, a flat clearing fee for each 25 feet of frontage, or part of it, and for each curb ramp that the City sets to match its average cost; an unpaid fee becomes a lien on the property. A ticket does not bar City clearing and the fee, and City clearing does not bar a ticket.
+**(c) City clearing, re-inspection and cost.** An inspector who finds a violation of this section shall issue a ticket to the owner. There are no warnings. The inspector shall re-inspect within 24 hours after the ticket. A frontage still not clear gets a new ticket, as a new offense under Section 1-11(a), and the Commissioner of Public Works shall clear it within the next 24 hours, starting with priority routes and corners. On priority routes, a blocked curb ramp or crosswalk opening is cleared within 12 hours after the ticket, without waiting for the re-inspection. For what the City clears, the owner pays, in addition to the tickets, a flat clearing fee, set by the City to match its average cost, for each 25 feet of frontage or part of it and for each curb ramp; an unpaid fee becomes a lien on the property (for a condominium, on the units in proportion to their shares). A ticket does not bar City clearing and the fee, and City clearing does not bar a ticket.
 
 **(d) Collections.** The city treasurer with the approval of the mayor may in civil actions prosecute and adjust claims inuring to the city under the provisions of this section. (Unchanged.)
 
-**(e) Snow assistance.** The City shall run a snow assistance program. An owner-occupant who is 65 or older or has a disability, and whose household income is below a limit the City sets, may register by December 1. The City or its volunteers clear registered frontages, curb ramps included, and a registered owner is not fined while registered. The City shall keep a public sign-up for neighbors who adopt a curb ramp, a bus stop or a registered neighbor's frontage. The City may fund neighborhood organizations to clear registered frontages. Volunteers and funded organizations are not City employees, and the City does not guarantee their work.
+**(e) Snow assistance.** The City shall run a snow assistance program. An owner-occupant of a building of 1 to 3 units who is 65 or older or has a disability, and whose household income is below a limit the City sets, may register the building at any time; registering by December 1 covers the whole winter. The City, its volunteers or organizations it funds clear registered frontages, curb ramps included, at no charge to the owner, within 24 hours after each event ends. A registered property is not ticketed or warned under this section while registered. The City shall keep a public sign-up for neighbors who adopt a curb ramp, a bus stop or a registered neighbor's frontage. The City may fund neighborhood organizations for this work. Volunteers and funded organizations are not City employees, and the City does not guarantee their work.
 
-**(f) The clear path.** Remove snow and ice down to bare pavement, whatever its source: snowfall, roofs, plows, wind or a neighbor. Ice that cannot be removed shall be treated with sand or a de-icer by the deadline and removed as soon as it can be. Treating ice does not replace removing snow. Keep the clear path open and treated until the snow and ice are gone, including ice that forms later from melting and refreezing.
+**(f) The clear path.** Remove snow and ice down to bare pavement, whatever its source: snowfall, roofs, plows, wind or a neighbor. Ice that cannot be removed shall be treated with sand or a de-icer by the deadline and removed as soon as it can be. Treating ice does not replace removing snow. Keep the clear path open and treated until the snow and ice are gone. Ice that forms after an event, from melting and refreezing or from water off a building, shall be treated by 3 hours after the next sunrise.
 
-**(g) Corners, crosswalks and bus stops.** (1) The responsible person for a property abutting a curb ramp, including each ramp at a corner lot, shall clear the ramp, its landing, its raised warning surface, and a clear area at least 48 inches square at its bottom in the street, by the same deadline and to the same standard as the sidewalk. (2) Where a plow bank separates a curb ramp or corner from a crosswalk, the responsible person shall cut an opening at least 48 inches wide through it to the street, in line with the crosswalk. (3) At a bus stop, the clear path continues to the curb at the bus stop sign, at least 48 inches wide. (4) The responsible person shall keep a 3-foot circle clear around any hydrant on its frontage, by the same deadline as the sidewalk.
+**(g) Corners, crosswalks and bus stops.** (1) The responsible person for a property abutting a curb ramp, including each ramp at a corner lot, shall clear the ramp, its landing, its raised warning surface, and a clear area at least 48 inches square at its bottom in the street, by the same deadline and to the same standard as the sidewalk. (2) Where a plow bank separates a curb ramp or corner from a crosswalk, the responsible person shall cut an opening at least 48 inches wide through it to the street, in line with the crosswalk. (3) At a bus stop, the clear path continues to the curb at the bus stop sign, at least 48 inches wide. (4) The responsible person shall keep snow cleared 3 feet on every side of any hydrant on its frontage, by the same deadline as the sidewalk.
 
-**(h) Where snow may not go.** No person, including a contractor clearing a driveway, parking lot or sidewalk, may place snow or ice on any sidewalk, curb ramp, crosswalk or bus stop, within 3 feet of a hydrant, on a storm drain, against a pole with a pedestrian push button, or in an accessible parking space or its access aisle. Snow goes onto the owner's own property, or the owner has it hauled away. It may also go into the tree strip where it does not narrow the clear path or block the view of people crossing at a corner.
+**(h) Where snow may not go.** No person, including a contractor clearing a driveway, parking lot or sidewalk, may place snow or ice on any sidewalk, curb ramp, crosswalk or bus stop, within 3 feet of a hydrant, on a storm drain, against a pole with a pedestrian push button, or in an accessible parking space or its access aisle. Snow goes onto the owner's own property, or the owner has it hauled away. It may also go into the planted strip between the sidewalk and the curb where it does not narrow the clear path or block the view of people crossing at a corner. A ticket under this subsection goes to the owner of the property the snow or ice came from.
 
-**(i) Contact for tenants.** Each October, the owner of a rental building shall give occupants, in writing, the name and phone number of the owner or the contractor the owner has hired to clear the sidewalk and curb ramps, so they can report a missed walk during a storm.
+**(i) Contact for tenants.** Each October, the owner of a building with one or more rented units shall give occupants, in writing, the name and phone number of the owner or the contractor the owner has hired to clear the sidewalk and curb ramps, so they can report a missed walk during a storm.
 
-**(j) Fines.** Each ticket under this section is $150 for a building of one to three units where at least one unit has the residential tax exemption, and $300 for any other property. Any property pays $300 for untreated ice, and while a permit listed in subsection (k)(1) is open on it. Tickets go to the owner, in accordance with Section 1-11. Each day a violation continues is a new offense.
+**(j) Fines.** Each ticket under this section is $150 for a building of 1 to 3 units where at least one unit has the residential tax exemption, and $300 for any other property. Any property pays $300 for untreated ice, or while a permit listed in subsection (k)(1) is open on it. Tickets go to the owner, in accordance with Section 1-11. Each day a violation continues is a new offense.
 
-**(k) Construction.** (1) Every permit to place a dumpster, obstruct or open a sidewalk, or build or demolish, includes this condition: keep the sidewalk, or the permitted detour, clear by the deadlines of this section; breaking it violates this section and the permit. (2) A permit that closes a sidewalk shall provide an accessible detour at least 48 inches wide, signed before the closure and edged with barriers a cane can detect, which the permit holder keeps clear of snow and ice. (3) The clearing fee under subsection (c) is drawn from the permit's deposit or bond, and the holder restores it within 5 business days. (4) After 3 tickets under this section on one permit, the City may suspend a dumpster, obstruction or sidewalk-opening permit until the sidewalk is clear and the tickets are paid; unpaid tickets may also lead to the denial or suspension of a building permit under Section 1-11(c), after notice and a hearing.
+**(k) Construction.** (1) Every permit to place a dumpster, obstruct or open a sidewalk, or build or demolish, includes this condition: keep the sidewalk, or the permitted detour, clear by the deadlines of this section; breaking it violates this section and the permit. (2) A permit that closes a sidewalk shall provide an accessible detour at least 48 inches wide, signed before the closure and edged with barriers a cane can detect, which the permit holder keeps clear of snow and ice. (3) On a permitted site, the clearing fee under subsection (c) is drawn from the permit's deposit or bond, and the permit holder restores it within 5 business days. (4) After 3 tickets under this section for the property while the permit is open, the City may suspend a dumpster, obstruction or sidewalk-opening permit until the sidewalk is clear and the tickets are paid; unpaid tickets may also lead to the denial or suspension of a building permit under Section 1-11(c), after notice and a hearing.
 
 **(l) Accessible parking.** The owner of a property with a parking lot shall clear its accessible parking spaces, their access aisles and the route to the entrance whenever the lot is cleared.
 
 **(m) Liability.** The duties in this section and in Sections 12-8A and 12-8B are enforced by the City. They create no private right of action and do not enlarge the liability of the City or of any owner beyond what state law provides.
 
+**State law reference.** M.G.L. c. 40, §21(2)–(4) and §21D, replacing today's reference to c. 85, §5, which caps a city's fine at $50.
+
 **Sec. 12-8A. City sidewalks, bus stops and curb ramps.**
 
-**(a) City property.** The City shall meet the deadlines and standard of Section 12-8 on every sidewalk abutting City land or buildings, including schools, parks, libraries, fire stations and parking lots, and on the bridges and Community Path segments it maintains. Inspectors check City frontages as they do any other, and record each one found not clear.
+**(a) City property.** The City shall meet the deadlines and standard of Section 12-8 on every sidewalk abutting City land or buildings, including schools, parks, libraries, fire stations and parking lots, and on the bridges and Community Path segments it maintains. Inspectors check City frontages as they do any other, and record each one found not clear; the City clears it within the next 24 hours.
 
-**(b) Bus stops.** The City shall clear each bus stop it is responsible for, including the path to the curb, a boarding area at least 8 feet deep from the curb and 5 feet wide, and any shelter or bench, within 24 hours after a winter weather event ends, and stops on priority routes within 12 hours. While an event lasts, stops on routes that are running shall be kept passable at least once each morning and afternoon.
+**(b) Bus stops.** At each bus stop the winter plan under subsection (e) shows as the City's, the City shall clear a boarding area at least 8 feet deep from the curb (or the whole sidewalk where it is narrower) and 5 feet wide, and any shelter or bench, within 24 hours after a winter weather event ends, and within 12 hours on priority routes. While an event lasts, stops on routes that are running shall be kept passable at least once each morning and afternoon.
 
-**(c) Curb ramps with no abutter and crossing islands.** The City shall clear curb ramps and crosswalk openings that no private property abuts, pedestrian refuge islands, and openings through the snow ridges plows leave between bike lanes and crosswalks, and reopen any curb ramp its plows bury, within 24 hours after the event ends or the plow passes.
+**(c) Curb ramps with no abutter and crossing islands.** The City shall clear curb ramps and crosswalk openings that no private property abuts, pedestrian refuge islands, and openings through the snow ridges plows leave between bike lanes and crosswalks, within 24 hours after the event ends, and again within 24 hours after its plows bury them. Where private property abuts a curb ramp, the owner re-clears it under Section 12-8(b)(3).
 
-**(d) Ice melt and pre-treatment.** The City shall offer residents free sand or ice melt at published locations, announce it each November, and pre-treat bus stops, curb ramps and City sidewalks on priority routes before forecast ice.
+**(d) De-icer and pre-treatment.** The City shall offer residents free sand or de-icer at published locations, announce it each November, and pre-treat bus stops, curb ramps and City sidewalks on priority routes before forecast ice.
 
 **(e) Winter plan.** By October 1 each year, the lead official, with the Commissioner of Public Works, shall publish a draft winter plan for public comment, and the final plan by November 1: the priority routes, with the criteria used to choose them and any changes from the year before; the clearing order; a target time for clearing streets; and a map of every bus stop showing who clears it.
 
@@ -181,29 +183,31 @@ Every change we propose, written as ordinance text for the City's legislative co
 
 **Sec. 12-8B. Coordination, notices and reporting.**
 
-**(a) Lead official.** The Mayor shall name one official to coordinate the City's entire snow and ice clearing strategy, on private and public land, across departments, including Public Works, Inspectional Services, Traffic and Parking, 311 and Mobility. The lead official is responsible for the winter plan under Section 12-8A(e), public education, the notices and season guide under this section, enforcement and its data, and the yearly report.
+**(a) Lead official.** The Mayor shall name one official to coordinate the City's entire snow and ice clearing strategy, on private and public land, across departments, including Public Works, Inspectional Services, Traffic and Parking, 311 and Mobility. The lead official is responsible for the winter plan under Section 12-8A(e), public education, the notices and season guide under this section, enforcement and its data, and the annual report under subsection (f).
 
-**(b) Deadline notice.** For every winter weather event with an inch or more of snow, or with sleet or freezing rain, the City shall announce, by City Alert and on its website, the time the event ended and the clearing deadline as a clock time, in the languages in which it publishes its snow rules and in formats accessible to people with disabilities. Extensions under Section 12-8(b)(4) shall be announced the same way and also on social media, the City's cable channel, email lists and the emergency phone system.
+**(b) Deadline notice.** For every winter weather event with 1 inch or more of snow, or with sleet or freezing rain, the City shall announce, by City Alert and on its website, the time the event ended and the clearing deadline as a clock time, in the languages in which it publishes its snow rules and in formats accessible to people with disabilities. Extensions under Section 12-8(b)(4) shall be announced the same way and also on social media, the City's cable channel, email lists and the emergency phone system.
 
 **(c) Season guide.** Each November, the City shall send every household and business the sidewalk rules, with the water or tax bill or by mail, including photographs of acceptable and unacceptable clearing; the duties of owners and permit holders; suitable tools and de-icers; the snow assistance and teen shoveler programs; and how to hire and oversee a snow contractor.
 
-**(d) 311 outcomes.** A 311 request about an uncleared sidewalk shall be closed with its outcome: clear on inspection, ticket, cleared by the City, or not found.
+**(d) 311 outcomes.** A 311 request about an uncleared sidewalk shall be closed with its outcome: clear on inspection, ticket, cleared by the City, registered property cleared by the City, City frontage, or not found.
 
 **(e) Season data.** By May 1 each year, with the report under subsection (f), the City shall publish on its open data portal the records of the preceding winter: inspections and tickets under Sections 12-2, 12-8, 12-9 and 12-18(e) and (f), with date, time, street and ward but no house number; City clearing and liens under Section 12-8(c); the clearing log under Section 12-8A(f); and each declared snow emergency with its start and end times.
 
 **(f) Annual report.** By May 1 each year, the lead official, with the Commissioner of Public Works and the Director of Inspectional Services, shall report to the City Council and the Commission for Persons with Disabilities on the preceding winter: complaints, inspections, tickets, City clearings and liens, City frontages found not clear, and the time taken to clear bus stops, curb ramps and City frontages, from the clearing log under Section 12-8A(f), by ward and by event, alongside each event's snowfall. The report may be included in the annual report under Section 12-116.6. The lead official shall review the report each year with the Commission.
 
-**(g) Blocked accessible routes.** 311 shall offer a request type for a blocked curb ramp, crosswalk opening, bus stop or path that keeps a person with a disability from leaving home or reaching transit. These requests go to the City's ADA Coordinator and shall be answered within 12 hours.
+**(g) Blocked accessible routes.** 311 shall offer a request type for a blocked curb ramp, crosswalk opening, bus stop or path that keeps a person with a disability from leaving home or reaching transit. These requests go to the City's ADA Coordinator, and the person who asked gets a response, with a time for clearing, within 12 hours.
 
 **(h) Accessible formats.** Notices, the season guide and open data under this section shall be provided in formats accessible to people with disabilities.
 
 **Sec. 12-2. Water run-off, ice from buildings and washing cars.**
 
+Retitled from "Water run-off and washing cars".
+
 **(a)** No building, awning or other projection may shed or discharge water onto a sidewalk, curb ramp or bus stop. This includes roofs, gutters and downspouts, and discharge from sump pumps, heat pumps, furnaces, boilers and air conditioners. Water shall be piped under the sidewalk to the gutter, or onto the owner's own ground.
 
 **(b)** Unchanged (washing cars, and other water flowing onto streets and sidewalks).
 
-**(c)** Ice formed by water from a building is the owner's to treat and remove under Section 12-8, whenever it forms.
+**(c)** Ice formed by water from a building is the owner's to treat and remove under Section 12-8(f).
 
 **(d)** The owner shall promptly remove snow and ice that could fall onto a sidewalk from a roof, awning or sign, and mark the danger until it is removed.
 
@@ -211,27 +215,29 @@ Every change we propose, written as ordinance text for the City's legislative co
 
 **Sec. 12-9. Snow and ice placed in streets.**
 
+Retitled from "Shoveling snow on streets".
+
 **(a)** No person, including a contractor clearing a driveway, parking lot or sidewalk, shall place snow or ice from private land, or from the sidewalk, curb ramp or driveway apron abutting it, onto a street, bike lane, bus stop, crosswalk or curb ramp.
 
-**(b)** On a street only, and never in a bike lane, bus stop, crosswalk or curb ramp, snow or ice may be broken up and spread no more than three inches thick, in daylight, when the air temperature at that time is above 40 degrees Fahrenheit.
+**(b)** On a street only, and never in a bike lane, bus stop, crosswalk or curb ramp, snow or ice may be broken up and spread no more than 3 inches thick, in daylight, when the air temperature at that time is above 40 degrees Fahrenheit.
 
 **(c)** A ticket under this section goes to the owner of the property the snow or ice came from, or whose sidewalk it was cleared from, in accordance with Section 1-11.
 
-**(d)** The Commissioner of Public Works may remove snow or ice placed in violation of this section and charge the owner the clearing fee under Section 12-8(c). A ticket does not bar the removal and fee, and the removal does not bar a ticket.
+**(d)** The Commissioner of Public Works may remove snow or ice placed in violation of this section and charge the owner a fee the City sets to match its cost. A ticket does not bar the removal and fee, and the removal does not bar a ticket.
 
 **Sec. 12-18. Obstacles in streets and sidewalks.** Retitled from "Obstacles in streets or sidewalks at night"; subsections (a) through (d) unchanged. Add:
 
 **(e)** No person may place a chair, cone or any other object in a street to hold a parking space. The City may remove and discard it at once. Each object is a separate offense.
 
-**(f)** No object, including a trash or recycling bin, may stand in a clear path, curb ramp or bus stop required by Section 12-8. On collection day, bins go at the curb edge in front of any snowbank. A ticket under this subsection goes to the owner of record of the property the object stands in front of, in accordance with Section 1-11.
+**(f)** No object, including a trash or recycling bin, may stand in a clear path, curb ramp or bus stop required by Section 12-8. On collection day, bins go at the curb edge in front of any snowbank, but not in a bus stop, on a curb ramp or in the clear area at its bottom. A ticket under this subsection goes to the owner of record of the property the object stands in front of, in accordance with Section 1-11.
 
 **Sec. 1-11. Penalties and violations (amendments).**
 
 **In subsection (a),** strike "except that snow removal violations shall be counted from October 1 through May 1 of the following year", which the flat fines below make unnecessary.
 
-**In the table in subsection (b),** replace the rows for Sec. 12-8 and Sec. 12-9 with one row for Water run-off and ice from buildings (Sec. 12-2), Snow and ice on sidewalks (Sec. 12-8) and Snow and ice placed in streets (Sec. 12-9): $150 per offense for a building of one to three units where at least one unit has the residential tax exemption; $300 per offense for any other property, and for any property for untreated ice or while a permit listed in Section 12-8(k)(1) is open on it. Enforcing personnel: DPW commissioner; inspectional services; traffic and parking. Rename the Sec. 12-18 row "Obstacles in streets and sidewalks" (fine unchanged).
+**In the table in subsection (b),** replace the rows for Sec. 12-8 and Sec. 12-9 with one row for Water run-off and ice from buildings (Sec. 12-2), Snow and ice on sidewalks (Sec. 12-8) and Snow and ice placed in streets (Sec. 12-9): $150 per offense for a building of 1 to 3 units where at least one unit has the residential tax exemption; $300 per offense for any other property, and for any property for untreated ice or while a permit listed in Section 12-8(k)(1) is open on it. Enforcing personnel: DPW commissioner; inspectional services; traffic and parking. Rename the Sec. 12-18 row "Obstacles in streets and sidewalks" (fine unchanged).
 
-**Add a subsection on snow and ice tickets:** (1) A ticket under Sections 12-2, 12-8, 12-9 or 12-18(f) names the owner of record, from the City's assessing records (for a condominium, the organization of unit owners), and, unless handed to the owner, is mailed to the owner's tax-bill address within 15 days; the inspector need not find out who lives in, rents or manages the property. (2) An inspector who finds a violation shall issue a ticket. There are no warnings, except for a property registered in the snow assistance program under Section 12-8(e). (3) Within 24 hours after the deadline for every winter weather event with an inch or more of snow, or with sleet or freezing rain, inspectors shall check the priority routes, whether or not anyone complained. (4) Tickets and notices include how to pay, appeal and get help, in the languages in which the City publishes its snow rules. (5) Fines and clearing charges under Section 12-8 shall fund the snow assistance program and City clearing of curb ramps and bus stops, subject to appropriation. (6) A business that holds a City license or permit and gets 3 or more tickets under Section 12-8 in one winter may have that license or permit suspended or not renewed by the authority that issued it, after notice and a hearing.
+**Add subsection (d), snow and ice tickets:** (1) A ticket under Sections 12-2, 12-8, 12-9 or 12-18(f) names the owner of record, from the City's assessing records (for a condominium, the organization of unit owners), and, unless handed to the owner, is mailed within 15 days to the owner's tax-bill address (for a condominium, to the association's trustees or managing agent); the inspector need not find out who lives in, rents or manages the property. (2) An inspector who finds a violation shall issue a ticket. There are no warnings. A property registered in the snow assistance program under Section 12-8(e) is not ticketed while registered. (3) Within 24 hours after the deadline for every winter weather event with 1 inch or more of snow, or with sleet or freezing rain, inspectors shall check the priority routes, whether or not anyone complained. (4) Tickets and notices include how to pay, appeal and get help, in the languages in which the City publishes its snow rules. (5) Fines and clearing charges under Section 12-8 shall fund the snow assistance program and City clearing of curb ramps and bus stops, subject to appropriation. (6) If 3 or more tickets under Section 12-8 are issued in one winter for a property where a business operates under a City license or permit, the authority that issued the license or permit may suspend it or refuse to renew it, after notice and a hearing.
 
 We would welcome the opportunity to discuss these proposals with the Council and with City staff, and to share the data behind them. The attachments explain each change and who it affects, list the requests that fall outside the ordinance, check each proposal against state law, and give our sources.
 
@@ -262,32 +268,32 @@ Name the terms the rule depends on, and put one name on every ticket: the owner 
 **Sidewalk**
 
 - *Today:* Not defined.
-- *Proposed:* "Sidewalk: the paved way between the property line and the curb, including curb ramps, the landing at the top of a ramp, and driveway crossings."
+- *Proposed:* "'Sidewalk' means the paved way between the property line and the curb, including curb ramps, the landing at the top of a ramp, and driveway crossings."
 - *Why:* WalkBoston's statewide review names corners and ramps as the worst trouble spots in winter. Today the code never mentions ramps for homes; naming them in the definition removes doubt.
 
-**Weather event**
+**Winter weather event**
 
 - *Today:* "following the conclusion of a weather event" (not defined).
-- *Proposed:* "Winter weather event: snow, sleet or freezing rain. It ends when it stops falling in the city, at the time stated in the City's notice under Sec. 12-8B, or, without a notice, when it stops."
-- *Why:* Freezing rain or sleet fell in 22 of 44 snow periods since 2016. A published end time ends arguments over when the clock started. Ice that forms later from melting is not an event, since no one can see when it formed: the duty to keep the path treated covers it, and untreated ice is a $300 ticket.
+- *Proposed:* "'Winter weather event' means snow, sleet or freezing rain; it ends when it stops falling in the city, at the time stated in the City's notice under Section 12-8B or, without a notice, when it stops. Snowfall is measured as the National Weather Service reports it for Boston (Logan Airport)."
+- *Why:* Freezing rain or sleet fell in 20 of 44 snow periods since December 2015. A published end time ends arguments over when the clock started. Ice that forms later from melting is not an event, since no one can see when it formed: the duty to keep the path treated covers it, and untreated ice is a $300 ticket.
 
 **Clear path**
 
 - *Today:* "a path of travel with a minimum width of thirty-six inches"
-- *Proposed:* "Clear path: a continuous path along the whole frontage, at least 48 inches wide (or the whole sidewalk where it is narrower), down to bare pavement, connecting to the paths of neighboring properties, curb ramps and bus stops."
+- *Proposed:* "'Clear path' means a continuous path along the whole frontage, at least 48 inches wide (or the whole sidewalk where it is narrower), down to bare pavement, connecting to the paths of neighboring properties, curb ramps and bus stops."
 - *Why:* Width explained under "The path". "Continuous" and "connecting" stop the gap-at-the-property-line problem.
 
 **Other terms**
 
 - *Today:* None.
-- *Proposed:* "Priority routes: bus routes, squares and school walking routes, as named in the winter plan under Sec. 12-8A(e). Frontage: each side of a lot along a street. Bus stop: the sidewalk, curb and gutter within 10 feet of a bus stop sign and, at a shelter, 3 feet on each open side of the shelter and the sidewalk out to the curb. Untreated ice: ice on a sidewalk or curb ramp that, after the deadline, is not level and completely covered with sand or a de-icer." These apply in Sec. 12-8, 12-8A and 12-8B.
+- *Proposed:* "'Winter' means October 1 through May 1. 'Snow emergency' means a snow emergency the City declares by City Alert. 'Priority routes' means the bus routes, squares and school walking routes named in the winter plan under Section 12-8A(e). 'Frontage' means each side of a lot along a street. 'City frontage' means a sidewalk the City clears under Section 12-8A(a). 'Crosswalk opening' means the opening through a plow bank required by Section 12-8(g)(2). 'Bus stop' means the sidewalk, curb and gutter along the curb within 10 feet on either side of a bus stop sign and, at a shelter, 3 feet on each open side of the shelter and the sidewalk out to the curb. 'Untreated ice' means ice on a sidewalk or curb ramp that, after the deadline that applies to it, is not both level and completely covered with sand or a de-icer."
 - *Why:* Each term sets a duty, a fee or a fine: where inspectors patrol and crews start, how many clearing fees a corner lot pays (one per 25 feet of each side), where snow may not go at a stop, and when the $300 ice ticket applies. The winter plan names the routes, so they can change without amending the ordinance. The ice test follows Boston's code, where ice passes if it is "made level and completely covered with sand" (CBC 16-12.16(B)). The bus stop includes the gutter, where riders step, and the space around shelters, as in New York City's code (Admin. Code 16-124.1(a)).
 
 **Who is responsible**
 
 - *Today:* "A person, including an owner, occupant, tenant, or agent, in charge of land or a building"
-- *Proposed:* "The owner of record of the land or building, as shown in the City's assessing records; for a condominium, the organization of unit owners. Tickets, bills and liens under this section go to the owner. The owner may hire a contractor, but the duty stays with the owner for enforcement, whatever a lease or other agreement says: the City tickets and bills only the owner."
-- *Why:* Finding out who controls a property (owner, tenant, manager, business) takes an investigation the City can't afford on a $100 ticket, and a ticket to the wrong person starts an appeal. The owner is in the City's records in seconds, the lien already attaches to the property, and the City never tickets or bills a tenant, as PTAC's March 2025 letter asked. A tenant may be unable to shovel, and has no say over a contractor who misses. State law aims the sidewalk penalty at "the owner of abutting property or his agent" (M.G.L. c. 40 §21(3)). Washington, DC lets an owner delegate in writing but keeps the owner liable; Boston tickets a tenant only when a written lease expressly assigns the duty (CBC 16-12.16). A city can't rewrite leases (Attachment C), so this binds the City's enforcement, and Attachment B asks the state to protect tenants in the lease itself. It mirrors the State Sanitary Code, which keeps shared exits with the landlord and lets a lease shift only a tenant's own exit, in writing ([105 CMR 410.260](https://www.law.cornell.edu/regulations/massachusetts/105-CMR-410-260)).
+- *Proposed:* "The responsible person is the owner of record of the land or building, as shown in the City's assessing records; for a condominium, it is the organization of unit owners. Tickets, bills and liens under this section go to the owner. The owner may hire a contractor, but the duty stays with the owner for enforcement, whatever a lease or other agreement says: the City tickets and bills only the owner."
+- *Why:* Finding out who controls a property (owner, tenant, manager, business) takes an investigation the City can't afford on a $100 ticket, and a ticket to the wrong person starts an appeal. The owner is in the City's records in seconds, the lien already attaches to the property, and the City never tickets or bills a tenant, answering the March 2025 letter's request that fines not be passed on to tenants. A tenant may be unable to shovel, and has no say over a contractor who misses. State law aims the sidewalk penalty at "the owner of abutting property or his agent" (M.G.L. c. 40 §21(3)). Washington, DC lets an owner delegate in writing but keeps the owner liable; Boston tickets a tenant only when a written lease expressly assigns the duty (CBC 16-12.16). A city can't rewrite leases (Attachment C), so this binds the City's enforcement, and Attachment B asks the state to protect tenants in the lease itself. It mirrors the State Sanitary Code, which keeps shared exits with the landlord and lets a lease shift only a tenant's own exit, in writing ([105 CMR 410.260](https://www.law.cornell.edu/regulations/massachusetts/105-CMR-410-260)).
 
 **Which sidewalks**
 
@@ -298,13 +304,13 @@ Name the terms the rule depends on, and put one name on every ticket: the owner 
 **Contact for tenants**
 
 - *Today:* None.
-- *Proposed:* "Each October, the owner of a rental building shall give occupants, in writing, the name and phone number of the owner or the contractor the owner has hired to clear the sidewalk and curb ramps, so they can report a missed walk during a storm."
+- *Proposed:* "Each October, the owner of a building with one or more rented units shall give occupants, in writing, the name and phone number of the owner or the contractor the owner has hired to clear the sidewalk and curb ramps, so they can report a missed walk during a storm."
 - *Why:* Nothing in the code or a standard lease tells tenants who clears. Since the owner gets the ticket, a written note each fall tells tenants whom to call when a walk is missed.
 
 **Who is affected**
 
 - **Homeowners:** no change; they get their own tickets, as today. Condominium associations get the ticket for their building, as they already handle its shared parts.
-- **Tenants:** never ticketed or billed by the City.
+- **Tenants:** never ticketed or billed by the City for sidewalk snow.
 - **Landlords and other owners:** shovel or hire someone for every rental, pay every ticket, and send tenants one notice each October. The cost may show up in rents.
 - **City staff:** no more investigating who is in charge, and fewer appeals over the wrong person.
 
@@ -315,14 +321,14 @@ Keep today's rule and change one number: **3 hours of daylight** after the snow 
 **The deadline**
 
 - *Today:* "may not ... allow it to remain ... for more than six hours between sunrise and sunset following the conclusion of a weather event"
-- *Proposed:* "... for more than three hours between sunrise and sunset after the event ends." In practice: 3 hours after the snow stops, or 3 hours after sunrise if it stops after dark.
+- *Proposed:* "The responsible person shall open the clear path within 3 hours after the event ends, counting only hours between sunrise and sunset. If the event ends after sunset, the 3 hours start at sunrise."
 - *Why:* Boston's rule, next door: one number, and one rule for residents, landlords and contractors who work in both cities. Today's 6 hours is twice Boston's. PTAC's March 2025 letter asked for 4; matching Boston is simpler to explain.
 
 **A clock time in every notice**
 
 - *Today:* None.
-- *Proposed:* "The City's notice under Sec. 12-8B states each event's deadline as a clock time."
-- *Why:* No one should have to compute sunrise. The City already rounds its own notices (12:24 became 12:30; 12:28 became "1 p.m."), so it should simply state the time.
+- *Proposed:* "For each event that needs a notice under Section 12-8B(b), the notice states its deadline as a clock time."
+- *Why:* No one should have to compute sunrise. The City's own notices already give a time: 12:30 p.m. in February 2022 and "1 p.m." in February 2026, where PTAC's calculator gives 12:24 and 12:28. The rule should require it every time.
 
 **Every event**
 
@@ -333,7 +339,7 @@ Keep today's rule and change one number: **3 hours of daylight** after the snow 
 **Long snowfalls**
 
 - *Today:* None: the clock starts only when the event ends.
-- *Proposed:* "While snow, sleet or freezing rain keeps falling, the responsible person shall also clear and treat the path within three hours after each sunrise, except while a snow emergency declared by the City is in effect."
+- *Proposed:* "While snow, sleet or freezing rain keeps falling, the responsible person shall also clear and treat the path within 3 hours after each sunrise, except while a snow emergency is in effect."
 - *Why:* Two days of light snow set no deadline at all today, while schools and shops stay open. PTAC's March 2025 letter asked for clearing during long, light snowfalls: people keep walking, and their steps pack soft snow into ice. One time to remember: if it is still snowing in the morning, clear by 3 hours after sunrise. During a declared snow emergency the morning duty pauses, so no one is pushed out into a dangerous storm; the regular deadline after the snow stops still applies.
 
 **Today's rule vs. proposed, for a storm on Jan 15** (both from [PTAC's deadline calculator](https://vitorpamplona.com/somersnow/#deadline), which follows Sec. 12-8):
@@ -350,14 +356,14 @@ Keep today's rule and change one number: **3 hours of daylight** after the snow 
 
 | City | Deadline after the snow stops |
 | --- | --- |
-| Boston | 3 hours; 3 hours after sunrise if it stops overnight |
-| New York City | 4 hours, not counting 9 p.m. to 7 a.m. |
+| Boston | 3 hours; 3 hours after sunrise if it stops overnight (CBC 16-12.16) |
+| New York City | 4 hours, not counting 9 p.m. to 7 a.m. (Admin. Code 16-123(a)) |
 | Worcester | 10 hours |
 | Washington, DC | the first 8 hours of daylight |
-| Brookline | 3 daylight hours for businesses and buildings of 5+ units; 24 hours for homes of up to 4 units (By-laws Art. 7.7, 2022) |
+| Brookline | 3 daylight hours in business and industrial districts and for buildings of 5+ units; 24 hours for homes of up to 4 units (By-laws Art. 7.7, 2022) |
 | Minneapolis | 4 daytime hours (8 a.m. to 5 p.m.); 24 hours for 1–2 family homes (Code 445.20) |
 | Madison | noon the day after (General Ordinances 10.28) |
-| Cambridge | 12 hours after daytime snow; by 1 p.m. after overnight snow; ice within 6 hours |
+| Cambridge | 12 hours after daytime snow; by 1 p.m. after overnight snow; ice within 6 hours (Municipal Code 12.16.110) |
 
 **Who is affected**
 
@@ -383,19 +389,19 @@ Widen the path to 4 feet, make bare pavement the rule and sand the stopgap, and 
 **Keeping it clear**
 
 - *Today:* None: the duty ends at the deadline.
-- *Proposed:* "Keep the clear path open and treated until the snow and ice are gone, including ice that forms later from melting and refreezing. Snow that drifts back starts a new deadline under subsection (b)."
+- *Proposed:* "Keep the clear path open and treated until the snow and ice are gone. Ice that forms after an event, from melting and refreezing or from water off a building, shall be treated by 3 hours after the next sunrise."
 - *Why:* Reports keep coming for a median of 6 days after the snow. Melt-and-refreeze ice causes slips long after the storm; PTAC members found ice on sidewalks up to 7 days after the snow in winter 2024–25.
 
 **Plow re-burial**
 
 - *Today:* None.
-- *Proposed:* "Snow a plow pushes onto a cleared path or curb ramp starts a new deadline under subsection (b), counted from when the plow passes."
-- *Why:* Residents ask whether the clock restarts. This answers yes, and gives them a fair deadline. Brookline gives owners 6 more hours to re-clear corners the Town's plows fill in (Art. 7.7.2).
+- *Proposed:* "Snow that drifts back onto a cleared path, and snow a plow pushes onto a cleared path or curb ramp, start a new deadline, counted from when the drift forms or the plow passes."
+- *Why:* Residents ask whether the clock restarts. This answers yes, and gives them a fair deadline. Brookline gives owners of buildings with more than 4 units 6 more hours to re-clear corners the Town's plows fill in (Art. 7.7.2).
 
 **Where snow goes**
 
 - *Today:* "may not place snow or ice ... on an abutting sidewalk"
-- *Proposed:* "No person, including a contractor clearing a driveway, parking lot or sidewalk, may place snow or ice on any sidewalk, curb ramp, crosswalk or bus stop, within 3 feet of a hydrant, on a storm drain, against a pole with a pedestrian push button, or in an accessible parking space or its access aisle. Snow goes onto the owner's own property, or the owner has it hauled away. It may also go into the tree strip where it does not narrow the clear path or block the view of people crossing at a corner."
+- *Proposed:* "No person, including a contractor clearing a driveway, parking lot or sidewalk, may place snow or ice on any sidewalk, curb ramp, crosswalk or bus stop, within 3 feet of a hydrant, on a storm drain, against a pole with a pedestrian push button, or in an accessible parking space or its access aisle. Snow goes onto the owner's own property, or the owner has it hauled away. It may also go into the planted strip between the sidewalk and the curb where it does not narrow the clear path or block the view of people crossing at a corner. A ticket under this subsection goes to the owner of the property the snow or ice came from."
 - *Why:* Today the ban covers only one's own abutting sidewalk, not contractors who push lot snow across a walk. Boston bans placing snow from private property on any sidewalk, curb ramp or street (CBC 16-12.16(E)); Brookline bans it on any street or sidewalk, with a $250 fine (Art. 7.7.4–7.7.5). Piles at corners hide children and wheelchair users from drivers. Snow piled against a signal pole puts the crossing button out of reach; federal guidelines place it within 5 feet of the ramp (PROWAG R307).
 
 **Who is affected**
@@ -411,48 +417,48 @@ A cleared sidewalk is useless if the corner is a snowbank. Extend the ramp duty 
 **Curb ramps**
 
 - *Today:* (a)(1): only "a building with exclusively commercial units or a building with ground floor commercial units abutting an accessible curb ramp shall also clear the curb ramp to provide ... clear and direct access to the crosswalk"
-- *Proposed:* "The responsible person for any property abutting a curb ramp, including each ramp at a corner lot, shall clear the ramp, its landing, its raised warning surface, and a clear area at least 48 inches square at its bottom in the street, by the same deadline and to the same standard as the sidewalk." Owners who qualify get help under (e) instead of a fine.
-- *Why:* Ramps sit at corners, and many corners are homes, where the ordinance requires no one to clear them. The City's snow page already tells residents and businesses they are "responsible for" clearing "accessible ramps that abut their property", a duty the ordinance places only on businesses. Brookline's by-law requires every owner, homes included, to keep corner and midblock curb ramps clear (Art. 7.7, amended 2022); Madison's requires corner owners to clear the sidewalk bordering the crosswalk, "including the curb ramp" (General Ordinances 10.28(1)); Boston's code gives curb ramps the same 3-hour deadline as sidewalks (CBC 16-12.16(C)); Cambridge tells corner owners they must, and New York City's snow guidance asks the same; Worcester asks. Ord. 2025-25 (Dec 2025) covered businesses only; this finishes the job. The raised warning domes tell people who are blind where the street begins, and federal guidelines call for a 48-inch-square clear area at the bottom of every ramp (PROWAG R305, R304.2.4).
+- *Proposed:* "The responsible person for a property abutting a curb ramp, including each ramp at a corner lot, shall clear the ramp, its landing, its raised warning surface, and a clear area at least 48 inches square at its bottom in the street, by the same deadline and to the same standard as the sidewalk." Owners who qualify get help under (e) instead of a ticket.
+- *Why:* Ramps sit at corners, and many corners are homes, where the ordinance requires no one to clear them. The City's snow page already tells residents and businesses they are "responsible for" clearing "accessible ramps that abut their property", a duty the ordinance places only on businesses. Brookline's by-law requires every owner, homes included, to keep corner and midblock curb ramps clear (Art. 7.7, amended 2022); Madison's requires corner owners to clear the sidewalk bordering the crosswalk, "including the curb ramp" (General Ordinances 10.28(1)); Boston's code gives curb ramps the same 3-hour deadline as sidewalks (CBC 16-12.16(C)), though its ramp fine covers only non-residential property; Cambridge tells corner owners they must, and New York City's 311 rules require the same; Worcester asks. Ord. 2025-25 (Dec 2025) covered businesses only; this finishes the job. The raised warning domes tell people who are blind where the street begins, and federal guidelines call for a 48-inch-square clear area at the bottom of every ramp (PROWAG R305, R304.2.4).
 
 **Crosswalk opening**
 
 - *Today:* Implied only for businesses ("clear and direct access to the crosswalk").
-- *Proposed:* "Where a plow bank separates the ramp or corner from a crosswalk, cut an opening at least 48 inches wide through it to the street, in line with the crosswalk."
+- *Proposed:* "Where a plow bank separates a curb ramp or corner from a crosswalk, the responsible person shall cut an opening at least 48 inches wide through it to the street, in line with the crosswalk."
 - *Why:* A clear ramp that ends at a 3-foot plow bank still traps a wheelchair. Boston's code (CBC 16-12.16(C)) requires a 42-inch path at curb ramps "from the sidewalk to the street"; Brookline asks for crosswalk openings, and Cambridge holds owners responsible for crosswalk access and tickets them (74 tickets in 2025–26).
 
 **Bus stops (abutters)**
 
 - *Today:* None.
 - *Proposed:* "At a bus stop, the clear path continues to the curb at the bus stop sign, at least 48 inches wide."
-- *Why:* Riders step off into snowbanks. In Somerville the MBTA clears stops only on routes 77, 104 and 109, within 24 hours; the City clears its 281 stops third in its clearing order, after streets and City lots, with no time set. Ann Arbor makes abutters clear bus stop pads, and New York City's snow guidance asks owners to clear the walk at bus stops.
+- *Why:* Riders step off into snowbanks. In Somerville the MBTA clears stops only on routes 77, 104 and 109, within 24 hours; the City clears its 281 stops third in its clearing order, after streets and City lots, with no time set. Ann Arbor makes abutters clear bus stop pads, and New York City's 311 rules require owners to clear the walk at bus stops.
 
 **Bus stops (City)**
 
 - *Today:* None.
-- *Proposed:* See new Sec. 12-8A: the City clears every stop it is responsible for within 24 hours and publishes which stops are its job and which are the MBTA's.
+- *Proposed:* See new Sec. 12-8A(b): the City clears the boarding area at the stops the winter plan shows as its own within 24 hours, and the plan's map shows which stops are the City's and which are the MBTA's.
 - *Why:* The City counts 281 stops it clears; the MBTA lists 207 stops in Somerville. Which stops are whose job is not published, so a rider can't tell who to call, or when to expect it.
 
 **Hydrants**
 
 - *Today:* None. The City's snow page says crews shovel out hydrants and welcomes help from residents who are able "(3 feet in all directions)".
-- *Proposed:* "No person may place snow within 3 feet of a hydrant. The responsible person shall keep a 3-foot circle clear around any hydrant on its frontage, by the same deadline as the sidewalk."
-- *Why:* Longmeadow's bylaw (2017 text) requires the adjacent owner to clear a hydrant within 24 hours; New York City's snow guidance asks owners to clear around hydrants. Owners already clear the sidewalk beside the hydrant; the circle adds a few minutes of shoveling and spares City crews the digging.
+- *Proposed:* "No person … may place snow or ice … within 3 feet of a hydrant" and "The responsible person shall keep snow cleared 3 feet on every side of any hydrant on its frontage, by the same deadline as the sidewalk."
+- *Why:* Longmeadow's bylaw (2017 text) requires the adjacent owner to clear a hydrant within 24 hours; New York City's 311 rules require owners to clear around hydrants. Owners already clear the sidewalk beside the hydrant; the circle adds a few minutes of shoveling and spares City crews the digging.
 
 **Storm drains**
 
 - *Today:* None.
-- *Proposed:* "No person may place snow or ice on a storm drain."
+- *Proposed:* "No person … may place snow or ice … on a storm drain"
 - *Why:* Meltwater that can't drain refreezes across the ramp and crosswalk.
 
 **Accessible parking**
 
 - *Today:* None for snow.
-- *Proposed:* "The owner of a property with a parking lot shall clear its accessible parking spaces, their access aisles and the route to the entrance whenever the lot is cleared. No person may pile snow in an accessible space or aisle."
+- *Proposed:* "The owner of a property with a parking lot shall clear its accessible parking spaces, their access aisles and the route to the entrance whenever the lot is cleared" and "No person … may place snow or ice … in an accessible parking space or its access aisle"
 - *Why:* Federal rules already require businesses to keep accessible features usable (28 CFR 36.211). The Justice Department's guidance says to clear accessible spaces "whenever plowing or clearing the rest of the parking area" and not to pile snow in them. Putting it in the code lets inspectors enforce it.
 
 **Who is affected**
 
-- **Homeowners:** corner homes clear their ramps and a crosswalk opening; the few at bus stops clear a 48-inch path to the curb; owners with a hydrant clear a 3-foot circle around it. Eligible seniors and owners with disabilities get help instead.
+- **Homeowners:** corner homes clear their ramps and a crosswalk opening; the few at bus stops clear a 48-inch path to the curb; owners with a hydrant keep 3 feet clear on every side of it. Eligible seniors and owners with disabilities get help instead.
 - **Landlords and other owners:** the same on their corners and stops (owners of commercial buildings already must clear ramps); owners of parking lots also clear accessible spaces, aisles and the route to the door when the lot is plowed.
 - **City staff:** fewer ramps, bus stops and hydrants for City crews to clear.
 
@@ -463,7 +469,7 @@ Construction sites are covered in principle today, since the duty falls on whoev
 **Winter permit condition**
 
 - *Today:* The ordinance sets no winter conditions for dumpster (Sec. 12-77), obstruction (Sec. 12-12) or sidewalk-opening (Sec. 12-20) permits; any conditions are left to each permit.
-- *Proposed:* "Every permit to place a dumpster, obstruct or open a sidewalk, or build or demolish, includes this condition: keep the sidewalk, or the permitted detour, clear by the deadlines of this section. Breaking it violates this section and the permit."
+- *Proposed:* "Every permit to place a dumpster, obstruct or open a sidewalk, or build or demolish, includes this condition: keep the sidewalk, or the permitted detour, clear by the deadlines of this section; breaking it violates this section and the permit."
 - *Why:* Sec. 12-77 already treats breaking a permit condition as a violation; this puts snow in the conditions.
 
 **Sidewalk closures**
@@ -475,14 +481,14 @@ Construction sites are covered in principle today, since the duty falls on whoev
 **Paying for City clearing**
 
 - *Today:* None.
-- *Proposed:* "The clearing fee under subsection (c) is drawn from the permit's deposit or bond. The holder restores it within 5 business days."
+- *Proposed:* "On a permitted site, the clearing fee under subsection (c) is drawn from the permit's deposit or bond, and the permit holder restores it within 5 business days."
 - *Why:* The City gets paid without sending a bill. Sec. 12-20 already holds a $500 deposit and a $5,000 bond for sidewalk openings.
 
 **Holding the permit**
 
 - *Today:* Sec. 1-11(c): unpaid fines may block local licenses and permits.
-- *Proposed:* "After 3 tickets under this section on one permit, the City may suspend a dumpster, obstruction or sidewalk-opening permit until the sidewalk is clear and the tickets are paid; unpaid tickets may also lead to the denial or suspension of a building permit under Section 1-11(c), after notice and a hearing."
-- *Why:* A suspended dumpster or sidewalk permit costs a project far more than any ticket the state allows, and the City issues those permits itself. Holding building inspections instead would run into the State Building Code (Attachment C). Minneapolis makes a business's failure to clear grounds to revoke its City license (Code 445.40).
+- *Proposed:* "After 3 tickets under this section for the property while the permit is open, the City may suspend a dumpster, obstruction or sidewalk-opening permit until the sidewalk is clear and the tickets are paid; unpaid tickets may also lead to the denial or suspension of a building permit under Section 1-11(c), after notice and a hearing."
+- *Why:* A suspended dumpster or sidewalk permit costs a project far more than any ticket the state allows, and the City issues those permits itself. Holding building inspections instead would run into the State Building Code (Attachment C). Minneapolis makes failure to clear grounds to revoke the City license of a business whose licensed operation needs a driveway or curb cut (Code 445.40).
 
 **Who is affected**
 
@@ -496,7 +502,7 @@ Announce extensions in public, say plainly that being away is no excuse, and pai
 **Extensions**
 
 - *Today:* "or as otherwise extended by the city in its discretion"
-- *Proposed:* "The City may extend a deadline only by a public notice under Sec. 12-8B, issued before the deadline passes, that states the new deadline as a date and time."
+- *Proposed:* "The City may extend a deadline only by a public notice under Section 12-8B, issued before the deadline passes, that states the new deadline as a date and time."
 - *Why:* The code doesn't say how or where an extension is announced, so residents can't know whether one applies to them. Brookline's by-law requires any delay to be posted on the Town's home page and sent through social media, cable TV, email lists and the emergency phone system (Art. 7.7.6).
 
 **Being away**
@@ -507,14 +513,14 @@ Announce extensions in public, say plainly that being away is no excuse, and pai
 
 **Help for those who can't**
 
-- *Today:* None. The City runs a paid teen-shoveler program ($25, or $60 for a corner lot, in 2024/25).
-- *Proposed:* "(e) The City shall run a snow assistance program. An owner-occupant who is 65 or older or has a disability, and whose household income is below a limit the City sets, may register by December 1. The City or its volunteers clear registered frontages, ramps included. A registered owner is not fined while registered."
+- *Today:* None. The City runs a paid teen-shoveler program ($25, or $60 for a corner lot, in 2024/25, per The Somerville Times).
+- *Proposed:* "The City shall run a snow assistance program. An owner-occupant of a building of 1 to 3 units who is 65 or older or has a disability, and whose household income is below a limit the City sets, may register the building at any time; registering by December 1 covers the whole winter. The City, its volunteers or organizations it funds clear registered frontages, curb ramps included, at no charge to the owner, within 24 hours after each event ends. A registered property is not ticketed or warned under this section while registered."
 - *Why:* A wider duty (corner ramps, a wider path, continuing ice) must not fall on residents who physically can't do it. Cambridge's City staff clear the sidewalk for some low-income older or disabled homeowners (41 homes in 2025–26). Washington, DC does not fine residential owners who are 65 or older or have a disability.
 
 **Volunteers**
 
 - *Today:* None.
-- *Proposed:* "The City shall keep a public sign-up for neighbors who adopt a ramp, bus stop or a registered neighbor's frontage. The City may fund neighborhood organizations to clear registered frontages. Volunteers and funded organizations are not City employees, and the City does not guarantee their work."
+- *Proposed:* "The City shall keep a public sign-up for neighbors who adopt a curb ramp, a bus stop or a registered neighbor's frontage. The City may fund neighborhood organizations for this work. Volunteers and funded organizations are not City employees, and the City does not guarantee their work."
 - *Why:* A public list lets the City know which ramps and stops are covered, send help where none is, and thank the volunteers. Paying neighborhood groups is an option, not a mandate: Minneapolis has paid neighborhood associations to clear sidewalks in its winter pilots, and all its 2024 pilots together cost about $230,000 (Axios, June 2025). New York City's code has its Sanitation Department help community groups run volunteer registries for residents who can't shovel (Admin. Code 16-135). Like New York's law, it says volunteers are not City employees and the City does not guarantee their work (16-135(c)).
 
 **Who is affected**
@@ -529,20 +535,20 @@ A ticket doesn't clear ice. Turn "may clear" into a set time for re-inspection a
 **City clearing**
 
 - *Today:* "Upon neglect or violation of the duty ... such duty may be performed by the superintendent of highways at the expense of the person liable"
-- *Proposed:* "If the re-inspection finds the path still blocked, the inspector issues a new ticket and the Commissioner of Public Works shall clear it within the next 24 hours, starting with priority routes and corners. On priority routes, a blocked curb ramp or crosswalk opening is cleared within 12 hours after the ticket, without waiting for the re-inspection."
-- *Why:* "May" with no time sets no expectation: residents can't tell whether or when the City will step in. The City's own snow page gives two different start times. "Superintendent of highways" is an old title. The City clears after the second ticket, so every owner gets a day to fix a first miss, and the re-inspection the ticket already requires tells DPW which walks to clear. Corners on priority routes can't wait two days, so the City opens them within 12 hours of the first ticket, as Cambridge's Council asked of its own crews in 2018. New York City's code lets the City clear a neglected sidewalk and add the cost to the owner's next tax bill (Admin. Code 16-123(d)–(e)). Minneapolis may clear any sidewalk still covered 24 hours after the snow stops and assess unpaid bills on the property (Code 445.35), and Madison charges its clearing to the property as a special charge (General Ordinances 10.28(2)).
+- *Proposed:* "A frontage still not clear gets a new ticket, as a new offense under Section 1-11(a), and the Commissioner of Public Works shall clear it within the next 24 hours, starting with priority routes and corners. On priority routes, a blocked curb ramp or crosswalk opening is cleared within 12 hours after the ticket, without waiting for the re-inspection."
+- *Why:* "May" with no time sets no expectation: residents can't tell whether or when the City will step in. The City's own snow page gives two different start times. "Superintendent of highways" is an old title. The City clears after the second ticket, so every owner gets a day to fix a first miss, and the re-inspection the ticket already requires tells DPW which walks to clear. Corners on priority routes can't wait two days, so the City opens them within 12 hours of the first ticket, an idea Cambridge's Council asked the City to explore in 2018. New York City's code lets the City clear a neglected sidewalk and add the cost to the owner's next tax bill (Admin. Code 16-123(d)–(e)). Minneapolis may clear any sidewalk still covered 24 hours after the snow stops and assess unpaid bills on the property (Code 445.35), and Madison charges its clearing to the property as a special charge (General Ordinances 10.28(2)).
 
 **Re-inspection**
 
 - *Today:* None.
-- *Proposed:* "An inspector who issues a ticket shall re-inspect within 24 hours. A frontage still not clear gets a new ticket, as a new offense under Sec. 1-11(a)."
+- *Proposed:* "An inspector who finds a violation of this section shall issue a ticket to the owner. There are no warnings. The inspector shall re-inspect within 24 hours after the ticket."
 - *Why:* Ticketing (ISD) and clearing (DPW) sit in different departments, and the ordinance sets no handoff between them. Sec. 1-11(a) already counts each day as a new offense; this makes it happen.
 
 **Cost**
 
 - *Today:* "at the expense of the person liable ... and the city may place a lien against the property for expenses incurred"
-- *Proposed:* "The owner pays a flat clearing fee for each 25 feet of frontage, or part of it, and for each curb ramp, set by the City to match its average cost, on top of the ticket. Unpaid fees become a municipal charges lien. A ticket does not bar City clearing and the fee, and City clearing does not bar a ticket."
-- *Why:* A flat fee is known in advance and needs no invoice per job; set it to cover the City's average cost. Charging by each 25 feet, the way New York City counts a "lot" for snow violations (Admin. Code 16-123(g)), keeps a long corner frontage from costing the same as a narrow one. Saying that the ticket and the clearing don't bar each other, as Madison's code does (General Ordinances 10.28(2)), stops an owner from arguing one replaces the other. Unpaid fees become a lien, as Sec. 1-11(c) already allows.
+- *Proposed:* "For what the City clears, the owner pays, in addition to the tickets, a flat clearing fee, set by the City to match its average cost, for each 25 feet of frontage or part of it and for each curb ramp; an unpaid fee becomes a lien on the property (for a condominium, on the units in proportion to their shares). A ticket does not bar City clearing and the fee, and City clearing does not bar a ticket."
+- *Why:* A flat fee is known in advance and needs no invoice per job; set it to cover the City's average cost. Charging by each 25 feet, the way New York City counts a "lot" for snow violations (Admin. Code 16-123(g)), keeps a long corner frontage from costing the same as a narrow one. Saying that the ticket and the clearing don't bar each other, as Madison's code does (General Ordinances 10.28(2)), stops an owner from arguing one replaces the other. Unpaid fees become a lien, as today's Sec. 12-8(c) already allows for the City's clearing costs.
 
 **Collections**
 
@@ -562,25 +568,25 @@ Residents have a clearing deadline; the City's own frontages, bus stops and ramp
 **City property**
 
 - *Today:* None. Sec. 12-8 names "a person ... in charge of land or a building"; whether it binds the City is unclear.
-- *Proposed:* "The City shall meet the deadlines and standard of Sec. 12-8 on every sidewalk abutting City land or buildings, including schools, parks, libraries, fire stations and parking lots, and on the bridges and Community Path segments it maintains. Inspectors check City frontages as they do any other, and record each one found not clear."
-- *Why:* The rule residents follow should be the rule the City follows; today the ordinance is silent on City frontages. Washington, DC's code makes the city clear its own sidewalks and crosswalks within 8 daylight hours. Boston tickets its own properties too ("We fine ourselves for City-owned properties too"), and once its parks crews logged their clearing, violations at City-owned properties fell from 150–200 per storm to 8.
+- *Proposed:* "The City shall meet the deadlines and standard of Section 12-8 on every sidewalk abutting City land or buildings, including schools, parks, libraries, fire stations and parking lots, and on the bridges and Community Path segments it maintains. Inspectors check City frontages as they do any other, and record each one found not clear; the City clears it within the next 24 hours."
+- *Why:* The rule residents follow should be the rule the City follows; today the ordinance is silent on City frontages. Washington, DC's code makes the city clear its own sidewalks and crosswalks within 8 daylight hours. Boston tickets its own properties too ("We fine ourselves for City-owned properties too," Boston Public Works, "Rules for clearing snow"), and once its parks crews logged their clearing, violations at City-owned properties fell from 150–200 per storm to 8.
 
 **Bus stops**
 
 - *Today:* None. The snow page says the City clears 281 stops, "divided into 4 Routes", third in its clearing order, after streets and City lots.
-- *Proposed:* "The City shall clear each bus stop it is responsible for (the path to the curb, a boarding area at least 8 feet deep from the curb and 5 feet wide, and any shelter or bench) within 24 hours after the event ends, and stops on priority routes within 12 hours. While an event lasts, stops on routes that are running are kept passable at least once each morning and afternoon."
+- *Proposed:* "At each bus stop the winter plan under subsection (e) shows as the City's, the City shall clear a boarding area at least 8 feet deep from the curb (or the whole sidewalk where it is narrower) and 5 feet wide, and any shelter or bench, within 24 hours after a winter weather event ends, and within 12 hours on priority routes. While an event lasts, stops on routes that are running shall be kept passable at least once each morning and afternoon."
 - *Why:* Riders need a time they can count on. The MBTA already commits to 24 hours for the stops it clears. PTAC's March 2025 letter asked that stops be clear whenever buses are running. The 8-by-5-foot boarding area is the federal standard for a bus stop (2010 ADA Standards 810.2.2; PROWAG R309). Ottawa's volunteer winter audits asked for cleared benches too, for riders who can't stand while they wait (Council on Aging of Ottawa, 2022).
 
 **Ramps with no owner to clear them**
 
 - *Today:* None.
-- *Proposed:* "The City shall clear curb ramps and crosswalk openings that no private property abuts, pedestrian refuge islands, and openings through the snow ridges plows leave between bike lanes and crosswalks, and reopen any curb ramp its plows bury, within 24 hours after the event ends or the plow passes."
-- *Why:* The City's snow page lists curb cuts and intersection landings among the City's work, with no deadline and no list of which ones. Cambridge's Council made crossing islands a priority in 2025, and its crews now open islands and the ridges beside separated bike lanes at crosswalks.
+- *Proposed:* "The City shall clear curb ramps and crosswalk openings that no private property abuts, pedestrian refuge islands, and openings through the snow ridges plows leave between bike lanes and crosswalks, within 24 hours after the event ends, and again within 24 hours after its plows bury them. Where private property abuts a curb ramp, the owner re-clears it under Section 12-8(b)(3)."
+- *Why:* The City's snow page lists curb cuts and intersection landings among the City's work, with no deadline and no list of which ones. Cambridge's Council made crossing islands a priority in 2025, and its Public Works department committed that year to opening crossing islands and the snow ridges beside separated bike lanes at crosswalks.
 
 **A plan with times**
 
 - *Today:* None. The snow page lists an eight-step clearing order with no times.
-- *Proposed:* "By October 1 each year, the lead official, with the Commissioner of Public Works, shall publish a draft winter plan for public comment, and the final plan by November 1: the priority routes, with the criteria used to choose them and any changes from the year before, the clearing order, a target time for clearing streets, and a map of every bus stop showing who clears it."
+- *Proposed:* "By October 1 each year, the lead official, with the Commissioner of Public Works, shall publish a draft winter plan for public comment, and the final plan by November 1: the priority routes, with the criteria used to choose them and any changes from the year before; the clearing order; a target time for clearing streets; and a map of every bus stop showing who clears it."
 - *Why:* Naming the priority routes tells inspectors and crews where to start. Bus stops, ramps and City sidewalks already get deadlines in this section; streets get a target time. Today residents can't tell whether a stop is late or not on any list. New York City's code requires a snow plan for each borough every November 15, with a map of priority streets, how curb cuts, pedestrian medians, crosswalks and bus stops will be cleared, and the official responsible, after a draft goes out for comment by October 1 (Admin. Code 16-124.1).
 
 **Proof of clearing**
@@ -592,13 +598,13 @@ Residents have a clearing deadline; the City's own frontages, bus stops and ramp
 **State and MBTA property**
 
 - *Today:* None.
-- *Proposed:* "The City shall seek written agreements with the MBTA, MassDOT and DCR on who clears their bus stops, station entrances and sidewalks in the city, and by when, including how stops stay passable while buses run during a storm, and shall publish them."
+- *Proposed:* "The City shall seek written agreements with the MBTA, the Massachusetts Department of Transportation and the Department of Conservation and Recreation on who clears their bus stops, station entrances and sidewalks in the city, and by when, including how stops stay passable while buses run during a storm, and shall publish them."
 - *Why:* The City lists State property last in its clearing order, with no contact. PTAC could not find who clears the sidewalks along McGrath Highway or the Green Line station entrances.
 
-**Free ice melt and pre-treatment**
+**Free de-icer and pre-treatment**
 
 - *Today:* None in the code. 311 takes "Sand barrel" requests (500 since 2015).
-- *Proposed:* "The City shall offer residents free sand or ice melt at published locations, announce it each November, and pre-treat bus stops, curb ramps and City sidewalks on priority routes before forecast ice."
+- *Proposed:* "The City shall offer residents free sand or de-icer at published locations, announce it each November, and pre-treat bus stops, curb ramps and City sidewalks on priority routes before forecast ice."
 - *Why:* PTAC's March 2025 letter asked for free ice melt and more pre-treatment. Ice causes the worst falls, and treating early is cheaper than chipping later.
 
 **Signal push buttons and accessible parking**
@@ -609,8 +615,8 @@ Residents have a clearing deadline; the City's own frontages, bus stops and ramp
 
 **Who is affected**
 
-- **Everyone:** a published plan and schedule for City sidewalks, bus stops and ramps, and free sand or ice melt.
-- **City staff:** binding deadlines and more crew hours, with liability questions for the Law Department; planning time, GPS on machines and a public map; buying and spreading ice melt. Crews also keep signal push buttons reachable and accessible parking spaces clear.
+- **Everyone:** a published plan and schedule for City sidewalks, bus stops and ramps, and free sand or de-icer.
+- **City staff:** binding deadlines and more crew hours, with liability questions for the Law Department; planning time, GPS on machines and a public map; buying and spreading sand and de-icer. Crews also keep signal push buttons reachable and accessible parking spaces clear.
 
 ### Sec. 12-9: snow into streets, bike lanes and bus stops
 
@@ -631,13 +637,13 @@ Keep the ban, name contractors, add bike lanes, bus stops, crosswalks and ramps,
 **Exception**
 
 - *Today:* "unless said snow or ice is broken up and spread evenly, to a thickness of no more than three inches, during daylight hours, when the mean temperature for that day is above 40 degrees Fahrenheit"
-- *Proposed:* "On a street only (never a bike lane, bus stop, crosswalk or ramp): snow broken up and spread no more than 3 inches thick, in daylight, when the air temperature at that time is above 40°F."
+- *Proposed:* "On a street only, and never in a bike lane, bus stop, crosswalk or curb ramp, snow or ice may be broken up and spread no more than 3 inches thick, in daylight, when the air temperature at that time is above 40 degrees Fahrenheit."
 - *Why:* A day's mean temperature is known only after the day ends, so no one can follow or enforce the current test.
 
 **Fines**
 
 - *Today:* "(b) ... fined in accordance with section 1-11"
-- *Proposed:* Keep, and add: "The ticket goes to the owner of the property the snow came from, or whose sidewalk it was cleared from. The City may remove snow placed in violation and charge the owner the clearing fee."
+- *Proposed:* Keep, and add: "A ticket under this section goes to the owner of the property the snow or ice came from, or whose sidewalk it was cleared from, in accordance with Section 1-11." and "The Commissioner of Public Works may remove snow or ice placed in violation of this section and charge the owner a fee the City sets to match its cost. A ticket does not bar the removal and fee, and the removal does not bar a ticket."
 - *Why:* One name to find, as in Sec. 12-8. The owner recovers from a careless contractor by contract. Madison removes illegally placed snow and charges the owner (General Ordinances 10.23(3)).
 
 **Who is affected**
@@ -664,19 +670,19 @@ Water from a building freezes on the sidewalk on sunny days, not only during sto
 **Ice from a building**
 
 - *Today:* None. Sec. 12-8 applies only after a weather event.
-- *Proposed:* "Ice formed by water from a building is the owner's to treat and remove under Sec. 12-8, whenever it forms."
+- *Proposed:* "Ice formed by water from a building is the owner's to treat and remove under Section 12-8(f)."
 - *Why:* Downspout ice forms on sunny days after the storm, when no deadline is running.
 
 **Falling ice and snow**
 
 - *Today:* None.
-- *Proposed:* "The owner shall promptly remove snow and ice that could fall onto the sidewalk from a roof, awning or sign, and mark the danger until it is removed."
+- *Proposed:* "The owner shall promptly remove snow and ice that could fall onto a sidewalk from a roof, awning or sign, and mark the danger until it is removed."
 - *Why:* Icicles and roof slides hit people on the sidewalk below. State law lets cities require this (M.G.L. c. 40 §21(2)); Chelsea's ordinance (2012 text) gives owners 24 hours.
 
 **Fines**
 
 - *Today:* Sec. 12-2 has no row in the Sec. 1-11(b) fine schedule.
-- *Proposed:* "Add Sec. 12-2 to Sec. 1-11(b), with the same fines and enforcing personnel as Sec. 12-8."
+- *Proposed:* "Whoever violates this section shall be fined in accordance with Section 1-11." Sec. 12-2 joins the Sec. 12-8 row of the fine schedule in Section 1-11(b).
 - *Why:* Without a row in the fine schedule, inspectors have no ticket to write for a downspout icing the sidewalk.
 
 **Who is affected**
@@ -703,7 +709,7 @@ The City treats space savers as illegal under a section titled "at night" that n
 **Objects in the path**
 
 - *Today:* Covered only in general by (a).
-- *Proposed:* "No object, including a trash or recycling bin, may stand in a clear path, curb ramp or bus stop required by Sec. 12-8. On collection day, bins go at the curb edge in front of any snowbank. A ticket under this subsection goes to the owner of record of the property the object stands in front of."
+- *Proposed:* "No object, including a trash or recycling bin, may stand in a clear path, curb ramp or bus stop required by Section 12-8. On collection day, bins go at the curb edge in front of any snowbank, but not in a bus stop, on a curb ramp or in the clear area at its bottom. A ticket under this subsection goes to the owner of record of the property the object stands in front of, in accordance with Section 1-11."
 - *Why:* Bins left in the cleared strip push wheelchairs into the street. The ticket goes to the owner, as for the sidewalk itself, so no one has to find out whose bin it is. Boston and Brookline ask for bins at the street edge, not behind snowbanks, so crews can collect them; this rule also keeps them out of the walking path.
 
 **Fine**
@@ -724,32 +730,32 @@ Make the ticket automatic and the amount simple: inspectors must ticket every vi
 **Fine amounts**
 
 - *Today:* 12-8 and 12-9: 1–3 units $100 / $200 / $300; 4+ units and businesses $150 / $300. Counted per property, Oct 1 to May 1.
-- *Proposed:* "Each ticket under Sec. 12-2, 12-8 and 12-9 is $150 for a building of one to three units where at least one unit has the residential tax exemption, and $300 for any other property: rentals with no owner living there, larger buildings, businesses, vacant property and construction sites. Untreated ice is $300 for any property. If the City clears under Sec. 12-8(c), the owner also pays the clearing fee."
+- *Proposed:* "$150 per offense for a building of 1 to 3 units where at least one unit has the residential tax exemption; $300 per offense for any other property, and for any property for untreated ice or while a permit listed in Section 12-8(k)(1) is open on it." (one row in Section 1-11(b) for Sec. 12-2, 12-8 and 12-9)
 - *Why:* Two amounts, both read from City records in seconds, and no offense history to look up (today's 1st/2nd/3rd count runs per property from Oct 1 to May 1). PTAC's March 2025 letter asked for higher fines for ice, landlords and developers; $300 is the state cap. Repeat failures still add up: a new ticket each day, plus the clearing fee. The line follows today's split between 1–3 unit and larger buildings, and the residential exemption shows whether an owner lives there.
 
 **Construction sites**
 
 - *Today:* Same fines as any property of its type.
-- *Proposed:* "While a permit listed in Sec. 12-8(k)(1) is open on the property (dumpster, sidewalk obstruction or opening, building or demolition), each ticket is $300, the state cap."
+- *Proposed:* "Any property pays $300 for untreated ice, or while a permit listed in subsection (k)(1) is open on it." Those permits cover dumpsters, sidewalk obstructions and openings, building and demolition.
 - *Why:* Sites have crews and equipment, so a missed deadline is a choice. Even an owner-occupied home pays $300 while a permit is open, and the permit is easy to check: it is open or it isn't. The bigger lever is the permit itself (see construction sites under Sec. 12-8).
 
 **Who gets the ticket**
 
 - *Today:* Not stated; any "person ... in charge" can be fined.
-- *Proposed:* "A ticket names the owner of record, from the City's assessing records (for a condominium, the organization of unit owners), and, unless handed to the owner, is mailed to the owner's tax-bill address within 15 days. The inspector need not find out who lives in, rents or manages the property."
+- *Proposed:* "A ticket under Sections 12-2, 12-8, 12-9 or 12-18(f) names the owner of record, from the City's assessing records (for a condominium, the organization of unit owners), and, unless handed to the owner, is mailed within 15 days to the owner's tax-bill address (for a condominium, to the association's trustees or managing agent); the inspector need not find out who lives in, rents or manages the property."
 - *Why:* One name, found in seconds: no investigation, no appeals over the wrong person, and absentee owners learn of the problem.
 
 **Duty to ticket**
 
 - *Today:* Not in the code (in practice, "the citations range from a warning to up to $300", CBS Boston, Feb 19, 2025).
-- *Proposed:* "An inspector who finds a violation shall issue a ticket. No warnings. The only exception is a property registered in the snow assistance program under Sec. 12-8(e)."
+- *Proposed:* "An inspector who finds a violation shall issue a ticket. There are no warnings. A property registered in the snow assistance program under Section 12-8(e) is not ticketed while registered."
 - *Why:* Takes the decision off inspectors and the administration: when neighbors push back, the answer is the ordinance, not someone's discretion. Exceptions are settled in advance, by registration, not on the sidewalk. Madison tells residents it "will not issue warnings before writing a citation" (City of Madison, Nov 2025).
 
 **Where inspectors look**
 
 - *Today:* Not stated.
-- *Proposed:* "Within 24 hours after the deadline for every winter weather event with an inch or more of snow, or with sleet or freezing rain, inspectors shall check the priority routes, whether or not anyone complained."
-- *Why:* Complaints follow who reports: in 2025/26, Ward 1 filed 1,010 sidewalk reports and Ward 7 filed 142. Blocks where no one calls get no inspection today. Every storm of an inch or more counts, small ones included: residents tell PTAC that small storms leave the worst ice.
+- *Proposed:* "Within 24 hours after the deadline for every winter weather event with 1 inch or more of snow, or with sleet or freezing rain, inspectors shall check the priority routes, whether or not anyone complained."
+- *Why:* Complaints follow who reports: in 2025/26, Ward 1 filed 1,010 sidewalk reports and Ward 7 filed 142. Blocks where no one calls get no inspection today. Every storm of 1 inch or more counts, small ones included: residents tell PTAC that small storms leave the worst ice.
 
 **Repeat tickets**
 
@@ -760,13 +766,13 @@ Make the ticket automatic and the amount simple: inspectors must ticket every vi
 **Language**
 
 - *Today:* Not stated.
-- *Proposed:* "Tickets and notices include how to pay, appeal and get help, in the languages the City publishes its snow rules in."
-- *Why:* The City already publishes the rules in 9 languages; the ticket should match.
+- *Proposed:* "Tickets and notices include how to pay, appeal and get help, in the languages in which the City publishes its snow rules."
+- *Why:* The City already publishes its snow rules in several languages; the ticket should match.
 
 **Where the money goes**
 
 - *Today:* Not stated.
-- *Proposed:* "Fines and clearing charges under Sec. 12-8 shall fund the snow assistance program and City clearing of ramps and bus stops, subject to appropriation."
+- *Proposed:* "Fines and clearing charges under Section 12-8 shall fund the snow assistance program and City clearing of curb ramps and bus stops, subject to appropriation."
 - *Why:* Ties enforcement to help. Fines normally go to the City's general fund, so this needs a dedicated fund set up by the Council and Mayor; the Law Department should advise on the form.
 
 **Unpaid fines**
@@ -778,8 +784,8 @@ Make the ticket automatic and the amount simple: inspectors must ticket every vi
 **Business licenses**
 
 - *Today:* Only unpaid fines can touch a license (Sec. 1-11(c)).
-- *Proposed:* "A business that holds a City license or permit and gets 3 or more tickets under Sec. 12-8 in one winter may have that license or permit suspended or not renewed by the authority that issued it, after notice and a hearing."
-- *Why:* A shop or parking lot that depends on a City license has every reason to hire a reliable contractor. Minneapolis makes a business's failure to clear grounds to revoke its City license (Code 445.40). The 3-ticket threshold and the hearing keep one bad storm from costing anyone a license.
+- *Proposed:* "If 3 or more tickets under Section 12-8 are issued in one winter for a property where a business operates under a City license or permit, the authority that issued the license or permit may suspend it or refuse to renew it, after notice and a hearing."
+- *Why:* A shop or parking lot that depends on a City license has every reason to hire a reliable contractor. Minneapolis makes failure to clear grounds to revoke the City license of a business whose licensed operation needs a driveway or curb cut (Code 445.40). The 3-ticket threshold and the hearing keep one bad storm from costing anyone a license.
 
 **Who is affected**
 
@@ -794,43 +800,43 @@ Put one official in charge of the whole effort, tell people the deadline every t
 **One lead**
 
 - *Today:* Enforcement is split among DPW, Inspectional Services and Traffic and Parking (Sec. 1-11(b)), with no lead named.
-- *Proposed:* "The Mayor shall name one official to coordinate the City's entire snow and ice clearing strategy, on private and public land, across departments: the winter plan, public education, notices, enforcement and its data, and the yearly report."
+- *Proposed:* "The Mayor shall name one official to coordinate the City's entire snow and ice clearing strategy, on private and public land, across departments, including Public Works, Inspectional Services, Traffic and Parking, 311 and Mobility. The lead official is responsible for the winter plan under Section 12-8A(e), public education, the notices and season guide under this section, enforcement and its data, and the annual report under subsection (f)."
 - *Why:* PTAC's March 2025 letter asked for one team to lead. What owners do and what City crews do add up to one result, and someone has to answer for both. Residents, the Council and PTAC would have one person to call.
 
 **Deadline notice**
 
 - *Today:* None required by the code. The City posts snow emergency notices and occasional sidewalk reminders.
-- *Proposed:* "For every winter weather event with an inch or more of snow, or with sleet or freezing rain, the City shall announce, by City Alert and on its website, the time the event ended and the clearing deadline as a clock time, in the languages in which it publishes its snow rules and in formats accessible to people with disabilities."
-- *Why:* Residents tell PTAC that small storms leave the worst ice, and the code requires no notice for any storm. The City has done this before: a March 5, 2023 reminder (no emergency) gave the deadline as 1 p.m., and the Feb 2026 emergency notices stated one too. Do it for every storm of an inch or more, and for ice.
+- *Proposed:* "For every winter weather event with 1 inch or more of snow, or with sleet or freezing rain, the City shall announce, by City Alert and on its website, the time the event ended and the clearing deadline as a clock time, in the languages in which it publishes its snow rules and in formats accessible to people with disabilities."
+- *Why:* Residents tell PTAC that small storms leave the worst ice, and the code requires no notice for any storm. The City has done this before: a March 5, 2023 reminder (no emergency) gave the deadline as 1 p.m., and the Feb 2026 emergency notices stated one too. Do it for every storm of 1 inch or more, and for ice.
 
-**Season reminder**
+**Season guide**
 
 - *Today:* None.
-- *Proposed:* "Each November, the City shall send every household and business the sidewalk rules, with the water or tax bill or by mail, including photos of acceptable and unacceptable clearing; the duties of owners and permit holders; suitable tools and de-icers; the snow assistance and teen shoveler programs; and how to hire and oversee a snow contractor."
+- *Proposed:* "Each November, the City shall send every household and business the sidewalk rules, with the water or tax bill or by mail, including photographs of acceptable and unacceptable clearing; the duties of owners and permit holders; suitable tools and de-icers; the snow assistance and teen shoveler programs; and how to hire and oversee a snow contractor."
 - *Why:* Residents tell PTAC the first December storm is when people relearn the rules; a November mailing reaches them first, including everyone who moved in since last winter. PTAC's March 2025 letter asked for this content, noting that the City's snow materials focus on cars.
 
 **How a 311 report ends**
 
 - *Today:* Every sidewalk report reads "Closed".
-- *Proposed:* "A 311 sidewalk request shall close with its outcome: clear on inspection, ticket, cleared by the City, or not found."
+- *Proposed:* "A 311 request about an uncleared sidewalk shall be closed with its outcome: clear on inspection, ticket, cleared by the City, registered property cleared by the City, City frontage, or not found."
 - *Why:* Today "Closed" can mean anything; 754 cases were closed on one day, Feb 6, 2026, 663 of them over a month old.
 
 **Open data**
 
 - *Today:* 311 requests only.
-- *Proposed:* "By May 1, with the yearly report, the City shall publish the records of the preceding winter: inspections and tickets under Sec. 12-2, 12-8, 12-9 and 12-18(e) and (f) (date, time, street and ward, without house numbers); City clearing and liens under Sec. 12-8(c); the clearing log under Sec. 12-8A(f); and each snow emergency with start and end times."
-- *Why:* None of this is public today. Patterns (blocks that fail every storm, wards no one inspects) stay invisible. Publishing once, with the yearly report, means one export a year instead of a weekly chore.
+- *Proposed:* "By May 1 each year, with the report under subsection (f), the City shall publish on its open data portal the records of the preceding winter: inspections and tickets under Sections 12-2, 12-8, 12-9 and 12-18(e) and (f), with date, time, street and ward but no house number; City clearing and liens under Section 12-8(c); the clearing log under Section 12-8A(f); and each declared snow emergency with its start and end times."
+- *Why:* None of this is public today. Patterns (blocks that fail every storm, wards no one inspects) stay invisible. Publishing once, with the annual report, means one export a year.
 
-**Yearly report**
+**Annual report**
 
 - *Today:* None.
-- *Proposed:* "By May 1, the lead official, with the Commissioner of Public Works and the Director of Inspectional Services, shall report to the City Council and the Commission for Persons with Disabilities: complaints, inspections, tickets, City clearings and liens, City frontages found not clear, and time to clear bus stops, curb ramps and City frontages, from the clearing log, by ward and by event, next to each event's snowfall, and review it each year with the Commission."
-- *Why:* Lets the Council see whether these changes work, and adjust. Brookline's by-law has required a yearly report on education, enforcement and help since at least 2012 (Art. 7.7.7). Cambridge's public works department reviews each winter with its disability commission. It can join the yearly pedestrian report the Council already receives under Sec. 12-116.6, which tracks the City's ADA Transition Plan goals.
+- *Proposed:* "By May 1 each year, the lead official, with the Commissioner of Public Works and the Director of Inspectional Services, shall report to the City Council and the Commission for Persons with Disabilities on the preceding winter: complaints, inspections, tickets, City clearings and liens, City frontages found not clear, and the time taken to clear bus stops, curb ramps and City frontages, from the clearing log under Section 12-8A(f), by ward and by event, alongside each event's snowfall. The report may be included in the annual report under Section 12-116.6. The lead official shall review the report each year with the Commission."
+- *Why:* Lets the Council see whether these changes work, and adjust. Brookline's by-law has required a yearly report on education, enforcement and help since at least 2012 (Art. 7.7.7). Cambridge's public works department reviews each winter with its disability commission. It can join the Complete Streets progress report the Council already receives under Sec. 12-116.6, which also tracks the City's ADA Transition Plan goals.
 
 **Blocked accessible routes**
 
 - *Today:* None. Every 311 sidewalk report goes into the same queue.
-- *Proposed:* "311 shall offer a request type for a blocked curb ramp, crosswalk opening, bus stop or path that keeps a person with a disability from leaving home or reaching transit. These requests go to the City's ADA Coordinator and shall be answered within 12 hours."
+- *Proposed:* "311 shall offer a request type for a blocked curb ramp, crosswalk opening, bus stop or path that keeps a person with a disability from leaving home or reaching transit. These requests go to the City's ADA Coordinator, and the person who asked gets a response, with a time for clearing, within 12 hours."
 - *Why:* A blocked ramp can keep a wheelchair user at home for days. The City must already name an ADA Coordinator and keep a way to resolve complaints (28 CFR 35.107); this gives winter complaints a fast lane.
 
 **Accessible formats**
@@ -867,20 +873,20 @@ PTAC wrote these rules for Somerville, not to copy the state or other cities. Fo
 
 | Proposal | What state law says | Our reading | What we did |
 | --- | --- | --- | --- |
-| Tickets go only to the owner of record (Sec. 12-8(a)(3), 1-11) | c. 40 §21(3) lets cities require sidewalk snow removal, and the penalty "shall apply to the owner of abutting property or his agent having charge thereof". c. 85 §5, which today's Sec. 12-8 also cites, says "owner or occupant" but caps a city's fine at $50. | Supported. Owner-only fits the $300 statute better than today's text, which tickets tenants. | Kept. Sec. 12-8 should cite c. 40 §21(3), not c. 85 §5. |
-| Condos: the association gets the ticket | c. 183A §14 lets a city charge "assessments, rates and charges of every nature" to the organization of unit owners, with any lien split among the units by their percentages. §10 makes it "subject to suit" over the common areas, which include the land. | Supported: the association is the owners' agent in charge of the frontage. | Kept. An unpaid fee becomes a lien split across the units. |
+| Tickets go only to the owner of record (Sec. 12-8(a)(3), 1-11) | c. 40 §21(3) lets cities require sidewalk snow removal, and the penalty "shall apply to the owner of abutting property or his agent having charge thereof". c. 85 §5, which today's Sec. 12-8 also cites, says "owner or occupant" but caps a city's fine at $50. | Supported. Owner-only fits the $300 statute better than today's text, which tickets tenants. | Kept. The proposed text now cites c. 40 §21, not c. 85 §5. |
+| Condos: the association gets the ticket | c. 183A §14 lets a city charge "all other assessments, … rates and charges of every nature" to the organization of unit owners, with any lien split among the units by their percentages. §10 makes it "subject to suit" over the common areas, which include the land. | Supported: the association is the owners' agent in charge of the frontage. | Kept. An unpaid fee becomes a lien split across the units. |
 | $150 and $300 tickets | c. 40 §21 caps penalties at $300 per offense, and c. 40 §21D caps a ticket at $300. c. 40U §5, if the City used it for snow, caps tickets at $200. c. 59 §5C grants the residential exemption per parcel, condo units included. | Within the cap under §21D. The $150 test is a lookup in assessing records. | Kept. Tickets go under §21D. |
 | Tickets by mail | c. 40 §21D: hand the ticket over "if possible"; otherwise mail it "to the offender's last known address, within fifteen days after said violation". | Works: under the ordinance, the owner is the offender. | Added "within 15 days" to Sec. 1-11. |
-| "No lease may make a tenant shovel or pay" (earlier draft) | Leases are civil law under art. 89 §7(5) (Marshal House v. Rent Review Board, 1970; Bannerman). The State Sanitary Code lets a written lease shift snow duty only for exits under the tenant's "exclusive use and control" (105 CMR 410.260(D)(4)); it doesn't reach the public sidewalk. | The riskiest line in the draft: it rewrote lease terms. Ticketing only the owner gets the same result for enforcement without touching the lease. | Rewritten: the duty stays with the owner for enforcement, whatever a lease says. Attachment B asks the state to protect tenants in the lease itself. |
+| "No lease may make a tenant shovel or pay" (an approach we considered and dropped) | Leases are civil law under art. 89 §7(5) (Marshal House v. Rent Review Board, 1970; Bannerman). The State Sanitary Code lets a written lease shift snow duty only for exits under the tenant's "exclusive use and control" (105 CMR 410.260(D)(4)); it doesn't reach the public sidewalk. | The riskiest line in the draft: it rewrote lease terms. Ticketing only the owner gets the same result for enforcement without touching the lease. | Rewritten: the duty stays with the owner for enforcement, whatever a lease says. Attachment B asks the state to protect tenants in the lease itself. |
 | Tenant contact notice (Sec. 12-8(i)) | No state rule on it. | A notice duty on the owner, part of the snow rule; it changes no lease term. | Kept. |
 | Ramps, crosswalk openings, bus stops, hydrants (Sec. 12-8(g)) | c. 40 §21(3) speaks of "sidewalks, within the limits of the public ways"; no statute addresses the street edge, for or against. c. 85 §7B fines pushing snow onto a state highway "so as to impede the flow of traffic". | Within the City's general home rule power (art. 89 §6), since no statute conflicts, but untested: the least certain part of the draft. Snow from a cut goes onto the owner's property (Sec. 12-8(h)), never into the road. | Kept. The first question for the Law Department. |
-| Flat clearing fee and lien (Sec. 12-8(c)) | A fee must pay for a service and be "reasonable and proportional" to its cost (Emerson College v. Boston, 1984; Silva v. Attleboro, 2009). c. 85 §6 lets a city that accepts it charge abutters "the whole or any part of the cost" of clearing their sidewalks. Liens: Somerville's own Acts of 1996, c. 252 (cited in Sec. 1-11(c)), or c. 40 §58, with a council vote for each type of charge. | Valid as written: charged only where City crews cleared, at average cost. | Kept. |
-| Construction: holding inspections (earlier draft of Sec. 12-8(k)(4)) | The State Building Code is "intended to occupy the field of building regulation" (St. George Greek Orthodox Cathedral v. Springfield Fire Department, 2012). c. 40 §57 lets a city that accepts it deny or suspend a building permit for unpaid fines, after notice, a hearing and an offer of a payment plan. | Holding building inspections over tickets risks preemption. Dumpster, obstruction and sidewalk-opening permits are the City's own (Sec. 12-12, 12-20, 12-77). | Rewritten: after 3 tickets the City may suspend the sidewalk permit; unpaid tickets reach the building permit only through Sec. 1-11(c), with notice and a hearing. |
+| Flat clearing fee and lien (Sec. 12-8(c)) | A fee must pay for a service and be reasonable and roughly proportional to its cost (Emerson College v. Boston, 1984; Silva v. Attleboro, 2009). c. 85 §6 lets a city that accepts it charge abutters "the whole or any part of the cost" of clearing their sidewalks. Liens: Somerville's own Acts of 1996, c. 252 (cited in Sec. 1-11(c)), or c. 40 §58, with a council vote for each type of charge. | Valid as written: charged only where City crews cleared, at average cost. | Kept. |
+| Construction: holding inspections (an approach we considered and dropped) | The State Building Code is "intended to occupy the field of building regulation" (St. George Greek Orthodox Cathedral v. Fire Department of Springfield, 2012). c. 40 §57 lets a city that accepts it deny or suspend a building permit for unpaid fines, after notice, a hearing and an offer of a payment plan. | Holding building inspections over tickets risks preemption. Dumpster, obstruction and sidewalk-opening permits are the City's own (Sec. 12-12, 12-20, 12-77). | Rewritten: after 3 tickets the City may suspend the sidewalk permit; unpaid tickets reach the building permit only through Sec. 1-11(c), with notice and a hearing. |
 | Fines for the assistance program (Sec. 1-11) | Fines "enure to the city or town for such use as said city or town may direct" (c. 40 §21D), but every receipt goes to the treasury and needs an appropriation (c. 44 §53). c. 40 §5B, if accepted, lets a city dedicate a receipt to a fund without appropriation. | "Subject to appropriation", as drafted, is allowed. Skipping appropriation would need §5B, if the state's Division of Local Services agrees fines qualify. | Kept. |
 | City deadlines: "shall clear" (Sec. 12-8(c), 12-8A) | A city "shall not be liable" for injury from snow or ice on a public way that is otherwise reasonably safe (c. 84 §17). The Tort Claims Act shields discretionary choices (c. 258 §10(b)); a fixed duty has less of that cover. | §17 still applies; firm deadlines may narrow one defense. | Added Sec. 12-8(m): the duties are enforced by the City and create no new right to sue the City or an owner. |
 | Water from buildings (Sec. 12-2(a)) | The MWRA bars groundwater and roof runoff from its sewers (360 CMR 10.023). | "Piped to a drain" could send sump water into a sewer. | Rewritten: piped to the gutter or onto the owner's own ground. |
 | Roof snow and ice (Sec. 12-2(d)) | c. 40 §21(2) and (4) let cities require owners to prevent and remove snow and ice falling from roofs. | Expressly allowed. | Kept. |
-| Business licenses (Sec. 1-11, new (6)) | c. 40 §57 covers licenses only for unpaid charges. Suspending a license for repeated violations rests on the power that grants each license: the City's own ordinances, or the state law behind licenses such as liquor licenses. | Likely allowed for licenses and permits the City grants under its own ordinances; less certain for state-defined licenses. | Added, with a 3-ticket threshold, notice and a hearing. For the Law Department to confirm which licenses it reaches. |
+| Business licenses (new Sec. 1-11(d)(6)) | c. 40 §57 covers licenses only for unpaid charges. Suspending a license for repeated violations rests on the power that grants each license: the City's own ordinances, or the state law behind licenses such as liquor licenses. | Likely allowed for licenses and permits the City grants under its own ordinances; less certain for state-defined licenses. | Added, with a 3-ticket threshold, notice and a hearing. For the Law Department to confirm which licenses it reaches. |
 | Everything else: deadline, width, morning clearing, notices, data, winter plan, space savers, bins, accessible parking, City duties | No conflicting statute found. c. 40U §5, where a city uses it, asks only that a snow ordinance be "specific as to the width of the area to be cleared and the standards for clearance". | Within the City's power. | Kept. |
 
 **For the Law Department.** Confirm which local-option statutes the City has accepted: c. 40 §57 (permits and unpaid fines), c. 40 §5B (dedicated funds) and c. 85 §6 (clearing charges); which lien power the clearing fee uses; and whether the duties at the street edge rest on general home rule power, since no statute speaks to them.
@@ -903,11 +909,11 @@ Peer-city text marked 2012 or 2017 comes from compilations that reprint each tow
 
 - [M.G.L. c. 40 §21](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleVII/Chapter40/Section21), [§21D](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleVII/Chapter40/Section21D); [c. 85 §5](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXIV/Chapter85/Section5); [Acts of 2016, c. 352](https://malegislature.gov/Laws/SessionLaws/Acts/2016/Chapter352) (Boston)
 - [105 CMR 410.260](https://www.law.cornell.edu/regulations/massachusetts/105-CMR-410-260) (State Sanitary Code, means of egress)
-- [PROWAG, R302.2 and R302.3](https://www.access-board.gov/prowag/technical.html) (US Access Board, 2023); [2010 ADA Standards, 403.5](https://www.access-board.gov/ada/)
+- [PROWAG, R302.2](https://www.access-board.gov/prowag/technical.html) (US Access Board, 2023); [2010 ADA Standards, 403.5](https://www.access-board.gov/ada/) and 810.2.2
 
 * ADA regulations: [28 CFR 35.107](https://www.law.cornell.edu/cfr/text/28/35.107) (ADA Coordinator and complaints), [35.133](https://www.law.cornell.edu/cfr/text/28/35.133) (maintaining accessible features), [35.160](https://www.law.cornell.edu/cfr/text/28/35.160) (effective communication), [35.200](https://www.law.cornell.edu/cfr/text/28/35.200) (web accessibility), [36.211](https://www.law.cornell.edu/cfr/text/28/36.211) (businesses' accessible features)
 * U.S. Department of Justice, *Maintaining Accessible Features in Retail Establishments* (2009): [copy](https://www.corada.com/documents/doj-acc-features-retail/accessible-parking)
-* [PROWAG R304–R309](https://www.access-board.gov/prowag/technical.html) (curb ramps, detectable warnings, push buttons, transit stops)
+* [PROWAG R303–R309](https://www.access-board.gov/prowag/technical.html) (curb ramps, detectable warnings, push buttons, transit stops)
 
 **Other cities**
 
@@ -926,7 +932,7 @@ Peer-city text marked 2012 or 2017 comes from compilations that reprint each tow
 - MBTA bus stops in Somerville (207): [MBTA V3 API](https://api-v3.mbta.com/); City count of 281 stops: [City snow page](https://www.somervillema.gov/snow)
 - [MBTA: bus service during winter storms](https://www.mbta.com/winter-weather/bus-service-during-winter-storms) (routes whose stops the MBTA clears)
 - MBTA bus cameras, tickets from Jan 1, 2027: [Boston.com, Sept 25, 2026](https://www.boston.com/news/local-news/2026/09/25/mbta-cameras-aimed-at-bus-lane-blockers-go-live-next-week-heres-what-to-know/)
-- [Boston Analytics Team: snow removal dashboard](https://www.boston.gov/departments/analytics-team/snow-removal-dashboard) (parks, 30 hours to 6)
+- [Boston Analytics Team: snow removal dashboard](https://www.boston.gov/departments/analytics-team/snow-removal-dashboard) (parks: inspection time 30 hours to 6; violations at City-owned properties 150–200 per storm to 8)
 - [Boston 311: trash when it snows](https://www.boston.gov/departments/311/what-do-your-trash-when-it-snows) (bins)
 - Resident feedback on small storms and the first December storm: comments to PTAC from residents
 
@@ -944,8 +950,8 @@ Peer-city text marked 2012 or 2017 comes from compilations that reprint each tow
 
 **Peer-city check (November 2026)**
 
-- Boston: [Managing winter and snow](https://www.boston.gov/managing-winter-and-snow) (the City fines its own properties); [Public Works violations](https://data.boston.gov/dataset/public-works-violations) (every ticket, published daily)
-- Cambridge: [Commission for Persons with Disabilities minutes, Jan 9, 2025](https://www.cambridgema.gov/-/media/files/dhsp/disabilities/minutes/2025/january9.pdf) (current text of Municipal Code 12.16.110); [Public Works memo on the 2025–26 winter, Mar 18, 2026](https://cambridgema.primegov.com/api/compilemeetingattachmenthistory/historyattachment/?historyId=5f5bfb57-f6ec-41b0-85e0-94636104e9dd) (crosswalk tickets, exemption program); [Commission minutes with Public Works, Jan 8, 2026](https://cambridgema.gov/-/media/Files/DHSP/Disabilities/Minutes/2026/january8.pdf) (yearly winter review); [Policy Order 2025 #23](https://cambridgema.iqm2.com/Citizens/FileOpen.aspx?Type=30&ID=104677&MeetingID=4644) (crossing islands); [Policy Order 2018 #10](https://cambridgema.iqm2.com/Citizens/FileOpen.aspx?Type=30&ID=28557&MeetingID=2062) (City clearing of key crossings while a ticket is pending)
+- Boston: [Managing winter and snow](https://www.boston.gov/managing-winter-and-snow) (space savers: 48 hours after an emergency; banned in the South End and Bay Village); [Public Works violations](https://data.boston.gov/dataset/public-works-violations) (every ticket, published daily)
+- Cambridge: [Commission for Persons with Disabilities minutes, Jan 9, 2025](https://www.cambridgema.gov/-/media/files/dhsp/disabilities/minutes/2025/january9.pdf) (the Commission's review of the snow rules); [Public Works memo on the 2025–26 winter, Mar 18, 2026](https://cambridgema.primegov.com/api/compilemeetingattachmenthistory/historyattachment/?historyId=5f5bfb57-f6ec-41b0-85e0-94636104e9dd) (crosswalk tickets, exemption program); [Commission minutes with Public Works, Jan 8, 2026](https://cambridgema.gov/-/media/Files/DHSP/Disabilities/Minutes/2026/january8.pdf) (yearly winter review); [Policy Order 2025 #23](https://cambridgema.iqm2.com/Citizens/FileOpen.aspx?Type=30&ID=104677&MeetingID=4644) (crossing islands); [Policy Order 2018 #10](https://cambridgema.iqm2.com/Citizens/FileOpen.aspx?Type=30&ID=28557&MeetingID=2062) (City clearing of key crossings while a ticket is pending)
 - Brookline: [DPW Winter Guide, 2014](https://police.brooklinema.gov/DocumentCenter/View/130) (crosswalk openings, absence, bins); [Town By-Laws through May 28, 2013](https://police.brooklinema.gov/DocumentCenter/View/129) (Art. 7.7 as of 2013)
 
 **Winter falls and cities that clear well**
@@ -965,3 +971,9 @@ Peer-city text marked 2012 or 2017 comes from compilations that reprint each tow
 
 * Minneapolis Code of Ordinances, Title 17: Chapter 445 (snow and ice removal), 427.150 (snow in streets), special service districts: [PDF](https://github.com/vitorpamplona/somersnow/blob/main/research/source-files/minneapolis-code-snow.pdf)
 * Madison General Ordinances, Chapter 10: 10.23 (snow placed on streets, sidewalks, bike paths), 10.28 (sidewalk snow and ice), 10.29 (downspouts): [PDF](https://github.com/vitorpamplona/somersnow/blob/main/research/source-files/madison-mgo-ch10.pdf); [City of Madison, "Get your shovels ready" (Nov 28, 2025)](https://www.cityofmadison.com/news/2025-11-28/get-your-shovels-ready-reminder-of-city-sidewalk-clearing-rules) (no warnings)
+
+**Other sources cited in the letter**
+
+- City of Somerville notices with a clearing time: [snow emergency ends Feb 26, 2022](https://www.somervillema.gov/news/somerville-snow-emergency-will-end-saturday-february-26-8-am%E2%80%8B%E2%80%8B%E2%80%8B-move-cars-city-lots-10-am) (shovel by 12:30 p.m.); [snow emergency ends Feb 24, 2026](https://www.somervillema.gov/news/somerville-snow-emergency-will-end-tuesday-february-24-8-pm) ("1 p.m."); [Sidewalk Clearing Reminder, March 5, 2023](https://www.somervillema.gov/news/sidewalk-clearing-reminder)
+- The Somerville Times, [2024/2025 snow season reminders and teen shoveling program](https://www.thesomervilletimes.com/archives/137130) (teen shoveler prices)
+- Cambridge Public Works, [report on Council Awaiting Report 25-14, March 2025](https://cambridgema.iqm2.com/Citizens/FileOpen.aspx?Type=4&ID=23684&MeetingID=4646) (crossing islands and bike-lane snow ridges)

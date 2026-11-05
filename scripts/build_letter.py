@@ -103,7 +103,7 @@ while i < len(lines):
         head, vals = table_rows(lines[i + 1:j])[:2]
         rows = list(zip(head, (int(v.replace(',', '')) for v in vals)))
         body.append('<figure class="chart"><figcaption class="ct">Sidewalk complaints peak 2 to 3 days after the snow, long after the deadline</figcaption>'
-                    f'<div class="cs">Complaints to 311 in the days after each of the 16 days with 6+ inches of snow since 2015 ({sum(v for _, v in rows):,} in all)</div>'
+                    f'<div class="cs">Complaints to 311 after the 16 days with 6+ inches of snow since 2015, each counted once ({sum(v for _, v in rows):,} in all)</div>'
                     f'{chart_svg(rows)}<div class="src">Source: {inline(source)}</div></figure>')
         i = j + 1
         continue

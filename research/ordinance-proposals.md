@@ -102,7 +102,7 @@ One change per row: what the code or City practice says today, and what the prop
 | DPW | Ice melt not required. | Free sand or ice melt; pre-treat before ice. |
 | DPW | No clearing log. | Log every stop and ramp cleared. |
 | City leadership | No winter plan required. | A published plan by November 1. |
-| City leadership | No single lead named. | One official leads. |
+| City leadership | No single lead named. | One official coordinates all of it. |
 | City leadership | MBTA and state duties unwritten. | Written, published agreements. |
 | 311 | No outcome required. | Each case closes with its outcome. |
 | 311 | No ADA request type. | ADA Coordinator answers within 12 hours. |
@@ -111,7 +111,7 @@ One change per row: what the code or City practice says today, and what the prop
 
 ## The proposed text
 
-Every change we propose, written as ordinance text for the City's legislative counsel to put into final form: the sidewalk rule (Sec. 12-8), the City's own duties (new Sec. 12-8A), notices and data (new Sec. 12-8B), and the related changes to Sec. 12-2, 12-9, 12-18 and 1-11. Attachment A explains each change from today's text and who it affects.
+Every change we propose, written as ordinance text for the City's legislative counsel to put into final form: the sidewalk rule (Sec. 12-8), the City's own duties (new Sec. 12-8A), coordination, notices and data (new Sec. 12-8B), and the related changes to Sec. 12-2, 12-9, 12-18 and 1-11. Attachment A explains each change from today's text and who it affects.
 
 **Sec. 12-8. Snow and ice on sidewalks.**
 
@@ -167,31 +167,31 @@ Every change we propose, written as ordinance text for the City's legislative co
 
 **(d) Ice melt and pre-treatment.** The City shall offer residents free sand or ice melt at published locations, announce it each November, and pre-treat bus stops, curb ramps and City sidewalks on priority routes before forecast ice.
 
-**(e) Winter plan.** By November 1 each year, the Commissioner of Public Works shall publish a winter plan: the clearing order; a target time for each layer (streets, bus stops, curb ramps, City sidewalks, Community Path); and a map of every bus stop showing who clears it.
+**(e) Winter plan.** By November 1 each year, the lead official, with the Commissioner of Public Works, shall publish a winter plan: the clearing order; a target time for each layer (streets, bus stops, curb ramps, City sidewalks, Community Path); and a map of every bus stop showing who clears it.
 
 **(f) Clearing log.** City crews shall record the time each bus stop, curb ramp and City frontage is cleared.
 
-**(g) Lead official.** The Mayor shall name one official to lead sidewalk snow clearing across departments, responsible for the winter plan, public education, enforcement data and the report under Section 12-8B.
+**(g) Agreements.** The City shall seek written agreements with the MBTA, the Massachusetts Department of Transportation and the Department of Conservation and Recreation on who clears their bus stops, station entrances and sidewalks in the city, and by when, including how stops stay passable while buses run during a storm, and shall publish them.
 
-**(h) Agreements.** The City shall seek written agreements with the MBTA, the Massachusetts Department of Transportation and the Department of Conservation and Recreation on who clears their bus stops, station entrances and sidewalks in the city, and by when, including how stops stay passable while buses run during a storm, and shall publish them.
+**(h) Push buttons and accessible parking.** The City shall keep pedestrian push buttons at signals reachable from the cleared curb ramp, and clear accessible parking spaces on its streets and in its lots, including snow emergency lots, within 24 hours after the event ends.
 
-**(i) Push buttons and accessible parking.** The City shall keep pedestrian push buttons at signals reachable from the cleared curb ramp, and clear accessible parking spaces on its streets and in its lots, including snow emergency lots, within 24 hours after the event ends.
+**Sec. 12-8B. Coordination, notices and reporting.**
 
-**Sec. 12-8B. Notices, reporting and open data.**
+**(a) Lead official.** The Mayor shall name one official to coordinate the City's entire snow and ice clearing strategy, on private and public land, across departments, including Public Works, Inspectional Services, Traffic and Parking, 311 and Mobility. The lead official is responsible for the winter plan under Section 12-8A(e), public education, the notices and season guide under this section, enforcement and its data, and the yearly report.
 
-**(a) Deadline notice.** For every winter weather event, the City shall announce, by City Alert and on its website, the time the event ended and the clearing deadline as a clock time, in the languages in which it publishes its snow rules and in formats accessible to people with disabilities. Extensions under Section 12-8(b)(4) shall be announced the same way.
+**(b) Deadline notice.** For every winter weather event, the City shall announce, by City Alert and on its website, the time the event ended and the clearing deadline as a clock time, in the languages in which it publishes its snow rules and in formats accessible to people with disabilities. Extensions under Section 12-8(b)(4) shall be announced the same way.
 
-**(b) Season guide.** Each November, the City shall send every household and business the sidewalk rules, with the water or tax bill or by mail, including photographs of acceptable and unacceptable clearing; the duties of owners and permit holders; suitable tools and de-icers; the snow assistance and teen shoveler programs; and how to hire and oversee a snow contractor.
+**(c) Season guide.** Each November, the City shall send every household and business the sidewalk rules, with the water or tax bill or by mail, including photographs of acceptable and unacceptable clearing; the duties of owners and permit holders; suitable tools and de-icers; the snow assistance and teen shoveler programs; and how to hire and oversee a snow contractor.
 
-**(c) 311 outcomes.** A 311 request about an uncleared sidewalk shall be closed with its outcome: clear on inspection, ticket, cleared by the City, or not found.
+**(d) 311 outcomes.** A 311 request about an uncleared sidewalk shall be closed with its outcome: clear on inspection, ticket, cleared by the City, or not found.
 
-**(d) Season data.** By May 1 each year, with the report under subsection (e), the City shall publish on its open data portal the records of the preceding winter: inspections and tickets under Sections 12-2, 12-8, 12-9 and 12-18, with date, time, street and ward but no house number; City clearing and liens under Section 12-8(c); the clearing log under Section 12-8A(f); and each declared snow emergency with its start and end times.
+**(e) Season data.** By May 1 each year, with the report under subsection (f), the City shall publish on its open data portal the records of the preceding winter: inspections and tickets under Sections 12-2, 12-8, 12-9 and 12-18, with date, time, street and ward but no house number; City clearing and liens under Section 12-8(c); the clearing log under Section 12-8A(f); and each declared snow emergency with its start and end times.
 
-**(e) Annual report.** By May 1 each year, the Commissioner of Public Works and the Director of Inspectional Services shall report to the City Council on the preceding winter: complaints, inspections, tickets, City clearings and liens, and the time taken to clear each layer under Section 12-8A, by ward and by event, alongside each event's snowfall. The report may be included in the annual report under Section 12-116.6.
+**(f) Annual report.** By May 1 each year, the lead official, with the Commissioner of Public Works and the Director of Inspectional Services, shall report to the City Council on the preceding winter: complaints, inspections, tickets, City clearings and liens, and the time taken to clear each layer under Section 12-8A, by ward and by event, alongside each event's snowfall. The report may be included in the annual report under Section 12-116.6.
 
-**(f) Blocked accessible routes.** 311 shall offer a request type for a blocked curb ramp, crosswalk opening, bus stop or path that keeps a person with a disability from leaving home or reaching transit. These requests go to the City's ADA Coordinator and shall be answered within 12 hours.
+**(g) Blocked accessible routes.** 311 shall offer a request type for a blocked curb ramp, crosswalk opening, bus stop or path that keeps a person with a disability from leaving home or reaching transit. These requests go to the City's ADA Coordinator and shall be answered within 12 hours.
 
-**(g) Accessible formats.** Notices, the season guide and open data under this section shall be provided in formats accessible to people with disabilities.
+**(h) Accessible formats.** Notices, the season guide and open data under this section shall be provided in formats accessible to people with disabilities.
 
 **Sec. 12-2. Water run-off, ice from buildings and washing cars.**
 
@@ -565,7 +565,7 @@ Residents have a clearing deadline; the City's own frontages, bus stops and ramp
 **A plan with times**
 
 - *Today:* None. The snow page lists an eight-step clearing order with no times.
-- *Proposed:* "By November 1 each year, the Commissioner of Public Works shall publish a winter plan: the clearing order, a target time for each layer (streets, bus stops, ramps, City sidewalks, Community Path), and a map of every bus stop showing who clears it."
+- *Proposed:* "By November 1 each year, the lead official, with the Commissioner of Public Works, shall publish a winter plan: the clearing order, a target time for each layer (streets, bus stops, ramps, City sidewalks, Community Path), and a map of every bus stop showing who clears it."
 - *Why:* Residents can plan around a schedule; today they can't tell whether a stop is late or not on any list.
 
 **Proof of clearing**
@@ -586,12 +586,6 @@ Residents have a clearing deadline; the City's own frontages, bus stops and ramp
 - *Proposed:* "The City shall offer residents free sand or ice melt at published locations, announce it each November, and pre-treat bus stops, curb ramps and City sidewalks on priority routes before forecast ice."
 - *Why:* PTAC's March 2025 letter asked for free ice melt and more pre-treatment. Ice causes the worst falls, and treating early is cheaper than chipping later.
 
-**One lead**
-
-- *Today:* Enforcement is split among DPW, Inspectional Services and Traffic and Parking (Sec. 1-11(b)), with no lead named.
-- *Proposed:* "The Mayor shall name one official to lead sidewalk snow clearing across departments: the winter plan, education, enforcement data and the yearly report."
-- *Why:* PTAC's March 2025 letter asked for one team to lead. Residents, the Council and PTAC would have one person to call.
-
 **Signal push buttons and accessible parking**
 
 - *Today:* None.
@@ -600,8 +594,8 @@ Residents have a clearing deadline; the City's own frontages, bus stops and ramp
 
 **Who is affected**
 
-- **Everyone:** a published plan and schedule for City sidewalks, bus stops and ramps, one person to call, and free sand or ice melt.
-- **City staff:** binding deadlines and more crew hours, with liability questions for the Law Department; planning and logging time; buying and spreading ice melt. One lead coordinates DPW, ISD and Mobility. Crews also keep signal push buttons reachable and accessible parking spaces clear.
+- **Everyone:** a published plan and schedule for City sidewalks, bus stops and ramps, and free sand or ice melt.
+- **City staff:** binding deadlines and more crew hours, with liability questions for the Law Department; planning and logging time; buying and spreading ice melt. Crews also keep signal push buttons reachable and accessible parking spaces clear.
 
 ### Sec. 12-9: snow into streets, bike lanes and bus stops
 
@@ -772,9 +766,15 @@ Make the ticket automatic and the amount simple: inspectors must ticket every vi
 - **Owners of rentals, business properties and construction sites:** $300 instead of $100 or $150 for a first ticket.
 - **City staff:** no judgment calls on the sidewalk and no offense history to track, but more tickets to process and more inspector hours, since every storm counts, small ones included.
 
-### New Sec. 12-8B: notices, reporting and open data
+### New Sec. 12-8B: coordination, notices and reporting
 
-Tell people the deadline every time it snows, and publish what enforcement and City crews actually did, so the Council can judge whether the rules work.
+Put one official in charge of the whole effort, tell people the deadline every time it snows, and publish what enforcement and City crews actually did, so the Council can judge whether the rules work.
+
+**One lead**
+
+- *Today:* Enforcement is split among DPW, Inspectional Services and Traffic and Parking (Sec. 1-11(b)), with no lead named.
+- *Proposed:* "The Mayor shall name one official to coordinate the City's entire snow and ice clearing strategy, on private and public land, across departments: the winter plan, public education, notices, enforcement and its data, and the yearly report."
+- *Why:* PTAC's March 2025 letter asked for one team to lead. What owners do and what City crews do add up to one result, and someone has to answer for both. Residents, the Council and PTAC would have one person to call.
 
 **Deadline notice**
 
@@ -803,7 +803,7 @@ Tell people the deadline every time it snows, and publish what enforcement and C
 **Yearly report**
 
 - *Today:* None.
-- *Proposed:* "By May 1, the Commissioner of Public Works and the Director of Inspectional Services shall report to the City Council: complaints, inspections, tickets, City clearings and liens, and time to clear each layer under Sec. 12-8A, by ward and by event, next to each event's snowfall."
+- *Proposed:* "By May 1, the lead official, with the Commissioner of Public Works and the Director of Inspectional Services, shall report to the City Council: complaints, inspections, tickets, City clearings and liens, and time to clear each layer under Sec. 12-8A, by ward and by event, next to each event's snowfall."
 - *Why:* Lets the Council see whether these changes work, and adjust. Brookline's bylaw (2012 text) required a yearly report on education, enforcement and help. It can join the yearly pedestrian report the Council already receives under Sec. 12-116.6, which tracks the City's ADA Transition Plan goals.
 
 **Blocked accessible routes**
@@ -820,8 +820,8 @@ Tell people the deadline every time it snows, and publish what enforcement and C
 
 **Who is affected**
 
-- **Everyone:** told the deadline after every storm, and a guide each November.
-- **City staff:** the notices, a mailing, 311 close codes, and a yearly report with its data, all in accessible formats; the ADA Coordinator answers urgent blocked-route requests within 12 hours.
+- **Everyone:** one official to call, the deadline after every storm, and a guide each November.
+- **City staff:** one lead official coordinating departments; the notices, a mailing, 311 close codes, and a yearly report with its data, all in accessible formats; the ADA Coordinator answers urgent blocked-route requests within 12 hours.
 
 ## Attachment B: Beyond the ordinance
 

@@ -237,9 +237,7 @@ Respectfully,
 
 The Somerville Pedestrian and Transit Advisory Committee (PTAC)
 
-&#91;Roster from the March 2025 letter: confirm current members and officers before sending.\]
-
-Alessandra Seiter, Chair · Vitor Pamplona, Vice Chair · Brenda Marvin, Secretary · Satoko Hirai, Digital Communications Officer · Ted Alexander · Ginny Alverson · Caroline Bodager · Meredith Brown · Laura Evans · Christopher Ferry · Preston Gutelius · Steven Mulder · Barbara Myers · Bianca Norkunas · Zach Rosenberg · Robert Stanzel · Carole Voulgaris
+Alessandra Seiter, Chair · Vitor Pamplona, Vice Chair · Brenda Marvin, Secretary · Ted Alexander · Ginny Alverson · Meredith Brown · Rachel Chiquoine · Laura Evans · Christopher Ferry · Susan Foley · Christopher Friend · Preston Gutelius · Satoko Hirai · Sebastian Lopes-Filho · Steven Mulder · Barbara Myers · Zach Rosenberg · Andrew Rosenfeld · Mackenzie Webb
 
 CC: Mayor Jake Wilson; Department of Public Works (DPW); Inspectional Services Department (ISD); OSPCD Mobility; Commission for Persons with Disabilities
 

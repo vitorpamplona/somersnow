@@ -106,7 +106,7 @@ One change per row: what the code or City practice says today, and what the prop
 | City leadership | MBTA and state duties unwritten. | Written, published agreements. |
 | 311 | No outcome required. | Each case closes with its outcome. |
 | 311 | No ADA request type. | ADA Coordinator answers within 12 hours. |
-| Public | No public ticket data. | Weekly open data. |
+| Public | No public ticket data. | Ticket and clearing data each May. |
 | City Council | No winter report. | A report every May 1. |
 
 ## The proposed text
@@ -167,7 +167,7 @@ Every change we propose, written as ordinance text for the City's legislative co
 
 **(d) Ice melt and pre-treatment.** The City shall offer residents free sand or ice melt at published locations, announce it each November, and pre-treat bus stops, curb ramps and City sidewalks on priority routes before forecast ice.
 
-**(e) Winter plan.** By November 1 each year, the Commissioner of Public Works shall publish a winter plan: the clearing order; a target time for each layer (streets, bus stops, curb ramps, City sidewalks, Community Path); and a map of every bus stop and curb ramp showing who clears it.
+**(e) Winter plan.** By November 1 each year, the Commissioner of Public Works shall publish a winter plan: the clearing order; a target time for each layer (streets, bus stops, curb ramps, City sidewalks, Community Path); and a map of every bus stop showing who clears it.
 
 **(f) Clearing log.** City crews shall record the time each bus stop, curb ramp and City frontage is cleared.
 
@@ -185,7 +185,7 @@ Every change we propose, written as ordinance text for the City's legislative co
 
 **(c) 311 outcomes.** A 311 request about an uncleared sidewalk shall be closed with its outcome: clear on inspection, ticket, cleared by the City, or not found.
 
-**(d) Open data.** From November through April, the City shall publish weekly on its open data portal: inspections and tickets under Sections 12-2, 12-8, 12-9 and 12-18, with date, time, street and ward but no house number; City clearing and liens under Section 12-8(c); the clearing log under Section 12-8A(f); and each declared snow emergency with its start and end times.
+**(d) Season data.** By May 1 each year, with the report under subsection (e), the City shall publish on its open data portal the records of the preceding winter: inspections and tickets under Sections 12-2, 12-8, 12-9 and 12-18, with date, time, street and ward but no house number; City clearing and liens under Section 12-8(c); the clearing log under Section 12-8A(f); and each declared snow emergency with its start and end times.
 
 **(e) Annual report.** By May 1 each year, the Commissioner of Public Works and the Director of Inspectional Services shall report to the City Council on the preceding winter: complaints, inspections, tickets, City clearings and liens, and the time taken to clear each layer under Section 12-8A, by ward and by event, alongside each event's snowfall. The report may be included in the annual report under Section 12-116.6.
 
@@ -565,7 +565,7 @@ Residents have a clearing deadline; the City's own frontages, bus stops and ramp
 **A plan with times**
 
 - *Today:* None. The snow page lists an eight-step clearing order with no times.
-- *Proposed:* "By November 1 each year, the Commissioner of Public Works shall publish a winter plan: the clearing order, a target time for each layer (streets, bus stops, ramps, City sidewalks, Community Path), and a map of every bus stop and curb ramp showing who clears it."
+- *Proposed:* "By November 1 each year, the Commissioner of Public Works shall publish a winter plan: the clearing order, a target time for each layer (streets, bus stops, ramps, City sidewalks, Community Path), and a map of every bus stop showing who clears it."
 - *Why:* Residents can plan around a schedule; today they can't tell whether a stop is late or not on any list.
 
 **Proof of clearing**
@@ -797,8 +797,8 @@ Tell people the deadline every time it snows, and publish what enforcement and C
 **Open data**
 
 - *Today:* 311 requests only.
-- *Proposed:* "The City shall publish, weekly from November to April: inspections and tickets under Sec. 12-2, 12-8, 12-9 and 12-18 (date, time, street and ward, without house numbers); City clearing and liens under Sec. 12-8(c); the clearing log of Sec. 12-8A; and each snow emergency with start and end times."
-- *Why:* None of this is public today. Patterns (blocks that fail every storm, wards no one inspects) stay invisible.
+- *Proposed:* "By May 1, with the yearly report, the City shall publish the records of the preceding winter: inspections and tickets under Sec. 12-2, 12-8, 12-9 and 12-18 (date, time, street and ward, without house numbers); City clearing and liens under Sec. 12-8(c); the clearing log of Sec. 12-8A; and each snow emergency with start and end times."
+- *Why:* None of this is public today. Patterns (blocks that fail every storm, wards no one inspects) stay invisible. Publishing once, with the yearly report, means one export a year instead of a weekly chore.
 
 **Yearly report**
 
@@ -821,7 +821,7 @@ Tell people the deadline every time it snows, and publish what enforcement and C
 **Who is affected**
 
 - **Everyone:** told the deadline after every storm, and a guide each November.
-- **City staff:** the notices, a mailing, 311 close codes, weekly data and a yearly report, all in accessible formats; the ADA Coordinator answers urgent blocked-route requests within 12 hours.
+- **City staff:** the notices, a mailing, 311 close codes, and a yearly report with its data, all in accessible formats; the ADA Coordinator answers urgent blocked-route requests within 12 hours.
 
 ## Attachment B: Beyond the ordinance
 

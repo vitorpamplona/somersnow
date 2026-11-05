@@ -108,7 +108,7 @@ One change per row: what the code or City practice says today, and what the prop
 | 311 | No outcome required. | Each case closes with its outcome. |
 | 311 | No ADA request type. | ADA Coordinator answers within 12 hours. |
 | Public | No public ticket data. | Weekly open data. |
-| City Council | No winter report. | A report every June 30. |
+| City Council | No winter report. | A report every May 1. |
 
 ## The proposed text
 
@@ -188,7 +188,7 @@ Every change we propose, written as ordinance text for the City's legislative co
 
 **(d) Open data.** From November through April, the City shall publish weekly on its open data portal: inspections and tickets under Sections 12-2, 12-8, 12-9 and 12-18, with date, time, street and ward but no house number; City clearing and liens under Section 12-8(c); the clearing log under Section 12-8A(f); and each declared snow emergency with its start and end times.
 
-**(e) Annual report.** By June 30 each year, the Commissioner of Public Works and the Director of Inspectional Services shall report to the City Council on the preceding winter: complaints, inspections, tickets, City clearings and liens, and the time taken to clear each layer under Section 12-8A, by ward and by event, alongside each event's snowfall. The report may be included in the annual report under Section 12-116.6.
+**(e) Annual report.** By May 1 each year, the Commissioner of Public Works and the Director of Inspectional Services shall report to the City Council on the preceding winter: complaints, inspections, tickets, City clearings and liens, and the time taken to clear each layer under Section 12-8A, by ward and by event, alongside each event's snowfall. The report may be included in the annual report under Section 12-116.6.
 
 **(f) Blocked accessible routes.** 311 shall offer a request type for a blocked curb ramp, crosswalk opening, bus stop or path that keeps a person with a disability from leaving home or reaching transit. These requests go to the City's ADA Coordinator and shall be answered within 12 hours.
 
@@ -810,7 +810,7 @@ Tell people the deadline every time it snows, and publish what enforcement and C
 **Yearly report**
 
 - *Today:* None.
-- *Proposed:* "By June 30, the Commissioner of Public Works and the Director of Inspectional Services shall report to the City Council: complaints, inspections, tickets, City clearings and liens, and time to clear each layer under Sec. 12-8A, by ward and by event, next to each event's snowfall."
+- *Proposed:* "By May 1, the Commissioner of Public Works and the Director of Inspectional Services shall report to the City Council: complaints, inspections, tickets, City clearings and liens, and time to clear each layer under Sec. 12-8A, by ward and by event, next to each event's snowfall."
 - *Why:* Lets the Council see whether these changes work, and adjust. Brookline's bylaw (2012 text) required a yearly report on education, enforcement and help. It can join the yearly pedestrian report the Council already receives under Sec. 12-116.6, which tracks the City's ADA Transition Plan goals.
 
 **Blocked accessible routes**

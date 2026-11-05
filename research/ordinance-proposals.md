@@ -48,7 +48,7 @@ Source: City 311 "Snow/sidewalk not shoveled" requests, summed over the 16 days 
 
 ### 3. Expand accessibility protections
 
-- **A path a wheelchair can use.** The full walking width, never under 48 inches, down to bare pavement, with ice treated within 2 daylight hours. ([details](#sec-12-8-the-path))
+- **A path a wheelchair can use.** At least 4 feet wide, down to bare pavement, and kept clear until the ice is gone. ([details](#sec-12-8-the-path))
 - **Open corners and bus stops.** Every corner property clears its curb ramp, its raised warning surface and an opening to the crosswalk; the path reaches the curb at bus stops; construction detours are signed and detectable by cane. ([details](#sec-12-8-corners-crosswalks-bus-stops-hydrants-and-drains))
 - **ADA standards in winter.** The 8-by-5-foot boarding area at bus stops, signal push buttons kept reachable, accessible parking cleared, notices in accessible formats, and a 311 fast lane to the City's ADA Coordinator when someone is stuck. ([details](#new-sec-12-8a-the-citys-own-sidewalks-bus-stops-and-ramps))
 - **Help instead of fines** for eligible seniors and residents with disabilities who can't shovel. ([details](#sec-12-8-extensions-being-away-and-help))
@@ -63,9 +63,8 @@ One change per row: what the code or City practice says today, and what the prop
 | Owners | Work out the deadline yourself. | The City posts the deadline time. |
 | Owners | No notice required after a storm. | A notice after every storm. |
 | Owners | No duty while a long storm lasts. | Clear each morning if it lasts over 12 hours. |
-| Owners | 36-inch path. | Full walking width, at least 48 inches. |
+| Owners | 36-inch path. | 48-inch (4-foot) path. |
 | Owners | Sand where clearing is impractical. | Bare pavement; sand only on ice. |
-| Owners | Ice on the same clock as snow. | Treat ice within 2 daylight hours. |
 | Owners | Duty ends at the deadline. | Re-clear after refreezes and plows. |
 | Owners | Home corner ramps: a City request. | Corner owners clear ramps to the crosswalk. |
 | Owners | City crews dig out hydrants. | Keep 3 feet around hydrants clear. |
@@ -121,7 +120,7 @@ Every change we propose, written as ordinance text for the City's legislative co
 
 (1) Sidewalks, curb ramps, crosswalks and bus stops are part of the city's transportation network. This section keeps them passable in winter for everyone, including people who use wheelchairs, walkers, canes or strollers. The City's goal is that they are fully passable within 24 hours after each event.
 
-(2) In this section: "Sidewalk" means the paved way between the property line and the curb, including curb ramps, the landing at the top of a ramp, and driveway crossings. "Winter weather event" means snow, sleet or freezing rain, or ice formed when meltwater refreezes; it ends when snow, sleet or freezing rain stops falling in the city, at the time stated in the City's notice under Section 12-8B or, without a notice, when it stops. "Clear path" means a continuous path along the whole frontage, the full width of the walking surface, never less than 48 inches (or the whole sidewalk where it is narrower), down to bare pavement, connecting to the paths of neighboring properties, curb ramps and bus stops.
+(2) In this section: "Sidewalk" means the paved way between the property line and the curb, including curb ramps, the landing at the top of a ramp, and driveway crossings. "Winter weather event" means snow, sleet or freezing rain, or ice formed when meltwater refreezes; it ends when snow, sleet or freezing rain stops falling in the city, at the time stated in the City's notice under Section 12-8B or, without a notice, when it stops. "Clear path" means a continuous path along the whole frontage, at least 48 inches wide (or the whole sidewalk where it is narrower), down to bare pavement, connecting to the paths of neighboring properties, curb ramps and bus stops.
 
 (3) The responsible person is the owner of record of the land or building, as shown in the City's assessing records. Tickets, bills and liens under this section go to the owner. The owner may hire a contractor, but no lease may make a tenant shovel or pay a ticket or clearing fee. The duty covers every sidewalk the property abuts, including both sides of a corner lot.
 
@@ -145,7 +144,7 @@ Every change we propose, written as ordinance text for the City's legislative co
 
 **(e) Snow assistance.** The City shall run a snow assistance program. An owner-occupant who is 65 or older or has a disability, and whose household income is below a limit the City sets, may register by December 1. The City or its volunteers clear registered frontages, curb ramps included, and a registered owner is not fined while registered. The City shall keep a public sign-up for neighbors who adopt a curb ramp, a bus stop or a registered neighbor's frontage.
 
-**(f) The clear path.** Remove snow and ice down to bare pavement. Ice that cannot be removed shall be treated with sand or a de-icer by the deadline and removed as soon as it can be. Treating ice does not replace removing snow. Ice on a sidewalk or curb ramp shall be treated within two daylight hours after the event ends or the ice forms. Keep the clear path open and treated until the snow and ice are gone.
+**(f) The clear path.** Remove snow and ice down to bare pavement. Ice that cannot be removed shall be treated with sand or a de-icer by the deadline and removed as soon as it can be. Treating ice does not replace removing snow. Keep the clear path open and treated until the snow and ice are gone.
 
 **(g) Corners, crosswalks and bus stops.** (1) The responsible person for a property abutting a curb ramp, including each ramp at a corner lot, shall clear the ramp, its landing, its raised warning surface, and a clear area at least 48 inches square at its bottom in the street, by the same deadline and to the same standard as the sidewalk. (2) Where a plow bank separates a curb ramp or corner from a crosswalk, the responsible person shall cut an opening at least 48 inches wide through it to the street, in line with the crosswalk. (3) At a bus stop, the clear path continues to the curb at the bus stop sign, at least 48 inches wide. (4) The responsible person shall keep a 3-foot circle clear around any hydrant on its frontage, by the same deadline as the sidewalk.
 
@@ -270,7 +269,7 @@ Name the terms the rule depends on, and put one name on every ticket: the owner 
 **Clear path**
 
 - *Today:* "a path of travel with a minimum width of thirty-six inches"
-- *Proposed:* "Clear path: a continuous path along the whole frontage, the full width of the walking surface, never less than 48 inches (or the whole sidewalk where it is narrower), down to bare pavement, connecting to the paths of neighboring properties, curb ramps and bus stops."
+- *Proposed:* "Clear path: a continuous path along the whole frontage, at least 48 inches wide (or the whole sidewalk where it is narrower), down to bare pavement, connecting to the paths of neighboring properties, curb ramps and bus stops."
 - *Why:* Width explained under "The path". "Continuous" and "connecting" stop the gap-at-the-property-line problem.
 
 **Who is responsible**
@@ -353,13 +352,13 @@ Keep today's rule and change one number: **3 hours of daylight** after the snow 
 
 ### Sec. 12-8: the path
 
-Widen the path to the full walking width, never under 48 inches, make bare pavement the rule and sand the stopgap, and make the duty last until the ice is gone, including ice that forms later and snow the plow pushes back.
+Widen the path to 4 feet, make bare pavement the rule and sand the stopgap, and make the duty last until the ice is gone, including ice that forms later and snow the plow pushes back.
 
 **Width**
 
 - *Today:* "a path of travel with a minimum width of thirty-six inches"
-- *Proposed:* "the full width of the walking surface, never less than 48 inches (or the whole sidewalk where it is narrower)"
-- *Why:* PTAC's March 2025 letter asked for the entire width, as in Minneapolis. 36 inches is the bare minimum for one wheelchair, with no room to pass or turn. Federal guidelines set 48 inches for new and altered public sidewalks (PROWAG R302.2, 2023); 36 inches is the ADA minimum for a walking surface. Boston asks for 42 inches; Worcester and New York City require 4 ft. Somerville's own code already keeps 4 ft clear of newsracks (Sec. 12-69(1)). 98% of Somerville's mapped sidewalk miles are 4 ft or wider.
+- *Proposed:* "at least 48 inches wide (or the whole sidewalk where it is narrower)"
+- *Why:* PTAC's March 2025 letter asked for the entire width, as in Minneapolis; we propose one number instead, which is easier to follow and to measure. 36 inches is the bare minimum for one wheelchair, with no room to pass or turn. Federal guidelines set 48 inches for new and altered public sidewalks (PROWAG R302.2, 2023); 36 inches is the ADA minimum for a walking surface. Boston asks for 42 inches; Worcester and New York City require 4 ft. Somerville's own code already keeps 4 ft clear of newsracks (Sec. 12-69(1)). 98% of Somerville's mapped sidewalk miles are 4 ft or wider.
 
 **Finish**
 
@@ -371,7 +370,7 @@ Widen the path to the full walking width, never under 48 inches, make bare pavem
 
 - *Today:* None: the duty ends at the deadline.
 - *Proposed:* "Keep the clear path open and treated until the snow and ice are gone. Ice that forms later from melting and refreezing, and snow that drifts back, are new events under subsection (b), counted from when they form."
-- *Why:* Reports keep coming for a median of 6 days after the snow. Melt-and-refreeze ice causes slips long after the storm.
+- *Why:* Reports keep coming for a median of 6 days after the snow. Melt-and-refreeze ice causes slips long after the storm; PTAC members found ice on sidewalks up to 7 days after the snow in winter 2024–25.
 
 **Plow re-burial**
 
@@ -385,15 +384,9 @@ Widen the path to the full walking width, never under 48 inches, make bare pavem
 - *Proposed:* "No person, including a contractor clearing a driveway, parking lot or sidewalk, may place snow or ice on any sidewalk, curb ramp, crosswalk or bus stop, within 3 feet of a hydrant, on a storm drain, against a pole with a pedestrian push button, or in an accessible parking space or its access aisle. Snow goes onto the owner's own property, or the owner has it hauled away. It may also go into the tree strip where it does not narrow the clear path or block the view of people crossing at a corner."
 - *Why:* Today the ban covers only one's own abutting sidewalk, not contractors who push lot snow across a walk. Piles at corners hide children and wheelchair users from drivers. Snow piled against a signal pole puts the crossing button out of reach; federal guidelines place it within 5 feet of the ramp (PROWAG R307).
 
-**Ice first**
-
-- *Today:* None: ice has the same deadline as snow.
-- *Proposed:* "Ice on a sidewalk or curb ramp shall be treated with sand or a de-icer within 2 daylight hours after the event ends or the ice forms."
-- *Why:* Ice causes the worst falls. PTAC's March 2025 letter asked that enforcement on ice start sooner and cost more; members found ice on sidewalks up to 7 days after the snow in winter 2024–25.
-
 **Who is affected**
 
-- **All owners:** wider shoveling (most mapped sidewalks are 5 to 7 ft); sand or salt on hand; a return trip after refreezes and plows; snow piled on their own property or hauled away at their cost, which matters most on small lots. Parking-lot contractors can't push snow across walks; some will haul it.
+- **All owners:** a 4-ft path instead of 3 ft; sand or salt on hand; a return trip after refreezes and plows; snow piled on their own property or hauled away at their cost, which matters most on small lots. Parking-lot contractors can't push snow across walks; some will haul it.
 - **Tenants and everyone on foot:** a wider, safer path.
 - **City staff:** fewer hydrants and drains to dig out.
 

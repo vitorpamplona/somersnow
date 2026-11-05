@@ -24,6 +24,7 @@ Source: City 311 "Snow/sidewalk not shoveled" requests, summed over the 16 days 
 
 | What we see | Number | Source |
 | --- | --- | --- |
+| Falls, not crashes, hurt most walkers | In Sweden, more than 30 pedestrians are injured in falls for every one hit by a vehicle; two thirds of severely injured pedestrians slipped on ice or snow, and about 70% of those hurt in severe falls are women. In Malmö, Helsingborg and Lund, 70–80% of a winter's falls came on its worst days; keeping slippery spells short could cut those injuries by about 30%. | [Berntman, Lund University, 2015](https://lup.lub.lu.se/search/files/3934697/8194817.pdf); [Berntman, Frank & Modén, 2012](https://lucris.lub.lu.se/ws/files/6151586/2295991.pdf) |
 | Ice outlasts the storm | PTAC members found ice on sidewalks up to 7 days after the snow in winter 2024–25; freezing rain or sleet fell in 22 of 44 snow periods since 2016 | [PTAC letter to the Mayor, Mar 25, 2025](https://github.com/vitorpamplona/somersnow/blob/main/research/source-files/ptac-letter-2025-03-25.pdf); [PTAC storm replays](https://vitorpamplona.com/somersnow/storms/) |
 | Complaints keep coming | For 6 days after a typical storm; more than a week in 15 of the 35 periods with a snowfall of 3 inches or more | PTAC storm replays (City 311 data) |
 | Tickets with no follow-up | 894 tickets and 1,552 complaints from Nov 2024 to Feb 19, 2025, but no public record of whether any ticketed sidewalk was cleared; 754 sidewalk complaints were closed on a single day, Feb 6, 2026 | City spokesperson, [Boston.com](https://www.boston.com/news/neighborhoods/2025/02/21/boston-neighboring-cities-cracking-down-uncleared-sidewalks-ice); [City 311 open data](https://data.somervillema.gov/d/4pyi-uqq6) |
@@ -100,7 +101,7 @@ One change per row: what the code or City practice says today, and what the prop
 | DPW | No deadline for ramps no one abuts or crossing islands. | Cleared within 24 hours. |
 | DPW | Push buttons and accessible parking not addressed. | Cleared within 24 hours. |
 | DPW | Ice melt not required. | Free sand or ice melt; pre-treat before ice. |
-| DPW | No clearing log. | Log every stop and ramp cleared. |
+| DPW | No clearing log. | Log every stop and ramp cleared, by GPS, on a public map. |
 | City leadership | No winter plan required. | A published plan by November 1. |
 | City leadership | No single lead named. | One official coordinates all of it. |
 | City leadership | MBTA and state duties unwritten. | Written, published agreements. |
@@ -141,7 +142,7 @@ Every change we propose, written as ordinance text for the City's legislative co
 
 **(d) Collections.** The city treasurer with the approval of the mayor may in civil actions prosecute and adjust claims inuring to the city under the provisions of this section. (Unchanged.)
 
-**(e) Snow assistance.** The City shall run a snow assistance program. An owner-occupant who is 65 or older or has a disability, and whose household income is below a limit the City sets, may register by December 1. The City or its volunteers clear registered frontages, curb ramps included, and a registered owner is not fined while registered. The City shall keep a public sign-up for neighbors who adopt a curb ramp, a bus stop or a registered neighbor's frontage.
+**(e) Snow assistance.** The City shall run a snow assistance program. An owner-occupant who is 65 or older or has a disability, and whose household income is below a limit the City sets, may register by December 1. The City or its volunteers clear registered frontages, curb ramps included, and a registered owner is not fined while registered. The City shall keep a public sign-up for neighbors who adopt a curb ramp, a bus stop or a registered neighbor's frontage. The City may fund neighborhood organizations to clear registered frontages.
 
 **(f) The clear path.** Remove snow and ice down to bare pavement. Ice that cannot be removed shall be treated with sand or a de-icer by the deadline and removed as soon as it can be. Treating ice does not replace removing snow. Keep the clear path open and treated until the snow and ice are gone, including ice that forms later from melting and refreezing.
 
@@ -163,7 +164,7 @@ Every change we propose, written as ordinance text for the City's legislative co
 
 **(a) City property.** The City shall meet the deadlines and standard of Section 12-8 on every sidewalk abutting City land or buildings, including schools, parks, libraries, fire stations and parking lots, and on the bridges and Community Path segments it maintains. Inspectors check City frontages as they do any other, and record each one found not clear.
 
-**(b) Bus stops.** The City shall clear each bus stop it is responsible for, including the path to the curb, a boarding area at least 8 feet deep from the curb and 5 feet wide, and any shelter, within 24 hours after a winter weather event ends, and stops on priority routes within 12 hours. While an event lasts, stops on routes that are running shall be kept passable at least once each morning and afternoon.
+**(b) Bus stops.** The City shall clear each bus stop it is responsible for, including the path to the curb, a boarding area at least 8 feet deep from the curb and 5 feet wide, and any shelter or bench, within 24 hours after a winter weather event ends, and stops on priority routes within 12 hours. While an event lasts, stops on routes that are running shall be kept passable at least once each morning and afternoon.
 
 **(c) Curb ramps with no abutter and crossing islands.** The City shall clear curb ramps and crosswalk openings that no private property abuts, pedestrian refuge islands, and openings through the snow ridges plows leave between bike lanes and crosswalks, and reopen any curb ramp its plows bury, within 24 hours after the event ends or the plow passes.
 
@@ -171,7 +172,7 @@ Every change we propose, written as ordinance text for the City's legislative co
 
 **(e) Winter plan.** By November 1 each year, the lead official, with the Commissioner of Public Works, shall publish a winter plan: the priority routes; the clearing order; a target time for clearing streets; and a map of every bus stop showing who clears it.
 
-**(f) Clearing log.** City crews shall record the time each bus stop, curb ramp and City frontage is cleared.
+**(f) Clearing log.** City crews and contractors shall record the time each bus stop, curb ramp and City frontage is cleared, by GPS on their machines where available. During and after each event, the City shall show this progress on a public map, marking a place cleared only once it is. Snow clearing contracts shall pay less when the contractor misses the standard.
 
 **(g) Agreements.** The City shall seek written agreements with the MBTA, the Massachusetts Department of Transportation and the Department of Conservation and Recreation on who clears their bus stops, station entrances and sidewalks in the city, and by when, including how stops stay passable while buses run during a storm, and shall publish them.
 
@@ -507,13 +508,13 @@ Announce extensions in public, say plainly that being away is no excuse, and pai
 **Volunteers**
 
 - *Today:* None.
-- *Proposed:* "The City shall keep a public sign-up for neighbors who adopt a ramp, bus stop or a registered neighbor's frontage."
-- *Why:* A public list lets the City know which ramps and stops are covered, send help where none is, and thank the volunteers.
+- *Proposed:* "The City shall keep a public sign-up for neighbors who adopt a ramp, bus stop or a registered neighbor's frontage. The City may fund neighborhood organizations to clear registered frontages."
+- *Why:* A public list lets the City know which ramps and stops are covered, send help where none is, and thank the volunteers. Paying neighborhood groups is an option, not a mandate: Minneapolis has paid neighborhood associations to clear sidewalks in its winter pilots, and all its 2024 pilots together cost about $230,000 (Axios, June 2025).
 
 **Who is affected**
 
 - **All owners:** arrange help before traveling. Eligible owners in the assistance program are cleared and not fined.
-- **City staff:** post a notice for each extension and see fewer appeals; run a new assistance program (registration, crews or volunteers, a budget).
+- **City staff:** post a notice for each extension and see fewer appeals; run a new assistance program (registration, crews, volunteers or funded neighborhood groups, a budget).
 
 ### Sec. 12-8(c): when the City clears and bills
 
@@ -561,8 +562,8 @@ Residents have a clearing deadline; the City's own frontages, bus stops and ramp
 **Bus stops**
 
 - *Today:* None. The snow page says the City clears 281 stops, "divided into 4 Routes", third in its clearing order, after streets and City lots.
-- *Proposed:* "The City shall clear each bus stop it is responsible for (the path to the curb, a boarding area at least 8 feet deep from the curb and 5 feet wide, and any shelter) within 24 hours after the event ends, and stops on priority routes within 12 hours. While an event lasts, stops on routes that are running are kept passable at least once each morning and afternoon."
-- *Why:* Riders need a time they can count on. The MBTA already commits to 24 hours for the stops it clears. PTAC's March 2025 letter asked that stops be clear whenever buses are running. The 8-by-5-foot boarding area is the federal standard for a bus stop (2010 ADA Standards 810.2.2; PROWAG R309).
+- *Proposed:* "The City shall clear each bus stop it is responsible for (the path to the curb, a boarding area at least 8 feet deep from the curb and 5 feet wide, and any shelter or bench) within 24 hours after the event ends, and stops on priority routes within 12 hours. While an event lasts, stops on routes that are running are kept passable at least once each morning and afternoon."
+- *Why:* Riders need a time they can count on. The MBTA already commits to 24 hours for the stops it clears. PTAC's March 2025 letter asked that stops be clear whenever buses are running. The 8-by-5-foot boarding area is the federal standard for a bus stop (2010 ADA Standards 810.2.2; PROWAG R309). Ottawa's volunteer winter audits asked for cleared benches too, for riders who can't stand while they wait (Council on Aging of Ottawa, 2022).
 
 **Ramps with no owner to clear them**
 
@@ -579,8 +580,8 @@ Residents have a clearing deadline; the City's own frontages, bus stops and ramp
 **Proof of clearing**
 
 - *Today:* None.
-- *Proposed:* "City crews shall record the time each bus stop, curb ramp and City frontage is cleared."
-- *Why:* Boston's parks crews did this with a simple form; inspection time per storm fell from 30 hours to 6 (Boston Analytics Team).
+- *Proposed:* "City crews and contractors shall record the time each bus stop, curb ramp and City frontage is cleared, by GPS on their machines where available. During and after each event, the City shall show this progress on a public map, marking a place cleared only once it is. Snow clearing contracts shall pay less when the contractor misses the standard."
+- *Why:* Boston's parks crews did this with a simple form; inspection time per storm fell from 30 hours to 6 (Boston Analytics Team). GPS makes the log automatic, so crews don't stop to fill in forms. Toronto's public plow map drew 230,000 views in one winter; its lesson is to show a street as cleared only when it is (City of Toronto staff report, Nov 2025).
 
 **State and MBTA property**
 
@@ -603,7 +604,7 @@ Residents have a clearing deadline; the City's own frontages, bus stops and ramp
 **Who is affected**
 
 - **Everyone:** a published plan and schedule for City sidewalks, bus stops and ramps, and free sand or ice melt.
-- **City staff:** binding deadlines and more crew hours, with liability questions for the Law Department; planning and logging time; buying and spreading ice melt. Crews also keep signal push buttons reachable and accessible parking spaces clear.
+- **City staff:** binding deadlines and more crew hours, with liability questions for the Law Department; planning time, GPS on machines and a public map; buying and spreading ice melt. Crews also keep signal push buttons reachable and accessible parking spaces clear.
 
 ### Sec. 12-9: snow into streets, bike lanes and bus stops
 
@@ -933,3 +934,11 @@ Peer-city text marked 2012 or 2017 comes from compilations that reprint each tow
 - Boston: [Managing winter and snow](https://www.boston.gov/managing-winter-and-snow) (the City fines its own properties); [Public Works violations](https://data.boston.gov/dataset/public-works-violations) (every ticket, published daily)
 - Cambridge: [Commission for Persons with Disabilities minutes, Jan 9, 2025](https://www.cambridgema.gov/-/media/files/dhsp/disabilities/minutes/2025/january9.pdf) (current text of Municipal Code 12.16.110); [Public Works memo on the 2025–26 winter, Mar 18, 2026](https://cambridgema.primegov.com/api/compilemeetingattachmenthistory/historyattachment/?historyId=5f5bfb57-f6ec-41b0-85e0-94636104e9dd) (crosswalk tickets, exemption program); [Commission minutes with Public Works, Jan 8, 2026](https://cambridgema.gov/-/media/Files/DHSP/Disabilities/Minutes/2026/january8.pdf) (yearly winter review); [Policy Order 2025 #23](https://cambridgema.iqm2.com/Citizens/FileOpen.aspx?Type=30&ID=104677&MeetingID=4644) (crossing islands); [Policy Order 2018 #10](https://cambridgema.iqm2.com/Citizens/FileOpen.aspx?Type=30&ID=28557&MeetingID=2062) (City clearing of key crossings while a ticket is pending)
 - Brookline: [DPW Winter Guide, 2014](https://police.brooklinema.gov/DocumentCenter/View/130) (crosswalk openings, absence, bins); [Town By-Laws through May 28, 2013](https://police.brooklinema.gov/DocumentCenter/View/129) (Art. 7.7; Brookline's current by-law pages could not be opened by automated tools)
+
+**Winter falls and cities that clear well**
+
+- Berntman, *Pedestrians injured in accidental falls* (Lund University, 2015): [PDF](https://lup.lub.lu.se/search/files/3934697/8194817.pdf) (falls vs. collisions; ice and snow; share of women)
+- Berntman, Frank & Modén, winter falls in Malmö, Helsingborg and Lund, 2010–11 (Lund University, 2012): [PDF](https://lucris.lub.lu.se/ws/files/6151586/2295991.pdf) (falls on the worst days; about 30% fewer injuries possible)
+- City of Toronto, sidewalk winter maintenance staff report (Nov 21, 2025): [PDF](https://www.toronto.ca/legdocs/mmis/2026/ie/bgrd/backgroundfile-286717.pdf) (public plow map)
+- Council on Aging of Ottawa, *Snow Mole Report* (2022): [PDF](https://coaottawa.ca/wp-content/uploads/documents/SNOW-MOLE-Report-2022-FINAL.pdf) (benches, ramps, push buttons)
+- Axios Twin Cities, "Minneapolis' sidewalk shoveling push was light lift" (June 24, 2025): [article](https://www.axios.com/local/twin-cities/2025/06/24/minneapolis-sidewalk-snow-clearing-cost) (pilot costs)

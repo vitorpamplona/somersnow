@@ -35,7 +35,7 @@ Pages marked * were seen only as search-result excerpts, not opened in full. Che
 
 ## Other cities
 
-- Codes read in full (copies in [source-files/](source-files/), saved Nov 2026): Boston City Code 16-12.16 ([PDF](source-files/boston-code-ch16.pdf)); Brookline General By-Laws Art. 7.7, as amended 2022 ([PDF](source-files/brookline-bylaw-7-7.pdf)); Cambridge Municipal Code 12.16.110 and 12.16.160 ([DOCX](source-files/cambridge-code-12-16.docx)); New York City Administrative Code 16-123, 16-124.1, 16-135 ([PDF](source-files/nyc-admin-code-16-ch1.pdf))
+- Codes read in full (copies in [source-files/](source-files/), saved Nov 2026): Boston City Code 16-12.16 ([PDF](source-files/boston-code-ch16.pdf)); Brookline General By-Laws Art. 7.7, as amended 2022 ([PDF](source-files/brookline-bylaw-7-7.pdf)); Cambridge Municipal Code 12.16.110 and 12.16.160 ([DOCX](source-files/cambridge-code-12-16.docx)); New York City Administrative Code 16-123, 16-124.1, 16-135 ([PDF](source-files/nyc-admin-code-16-ch1.pdf)); Minneapolis Code ch. 445 and 427.150 ([PDF](source-files/minneapolis-code-snow.pdf)); Madison General Ordinances 10.23, 10.28, 10.29 ([PDF](source-files/madison-mgo-ch10.pdf))
 - [Boston: Winter in Boston](https://www.boston.gov/winter-boston)
 - [Boston: Winter Weather Guide 2025–2026](https://www.boston.gov/sites/default/files/file/2025/12/English_0.pdf)
 - [Boston Analytics Team: Snow Removal Dashboard](https://www.boston.gov/departments/analytics-team/snow-removal-dashboard)

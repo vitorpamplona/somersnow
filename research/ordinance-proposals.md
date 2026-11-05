@@ -352,6 +352,8 @@ Keep today's rule and change one number: **3 hours of daylight** after the snow 
 | Worcester | 10 hours |
 | Washington, DC | the first 8 hours of daylight |
 | Brookline | 3 daylight hours for businesses and buildings of 5+ units; 24 hours for homes of up to 4 units (By-laws Art. 7.7, 2022) |
+| Minneapolis | 4 daytime hours (8 a.m. to 5 p.m.); 24 hours for 1–2 family homes (Code 445.20) |
+| Madison | noon the day after (General Ordinances 10.28) |
 | Cambridge | 12 hours after daytime snow; by 1 p.m. after overnight snow; ice within 6 hours |
 
 **Who is affected**
@@ -407,7 +409,7 @@ A cleared sidewalk is useless if the corner is a snowbank. Extend the ramp duty 
 
 - *Today:* (a)(1): only "a building with exclusively commercial units or a building with ground floor commercial units abutting an accessible curb ramp shall also clear the curb ramp to provide ... clear and direct access to the crosswalk"
 - *Proposed:* "The responsible person for any property abutting a curb ramp, including each ramp at a corner lot, shall clear the ramp, its landing, its raised warning surface, and a clear area at least 48 inches square at its bottom in the street, by the same deadline and to the same standard as the sidewalk." Owners who qualify get help under (e) instead of a fine.
-- *Why:* Ramps sit at corners, and many corners are homes, where the ordinance requires no one to clear them. The City's snow page already tells residents and businesses they are "responsible for" clearing "accessible ramps that abut their property", a duty the ordinance places only on businesses. Brookline's by-law requires every owner, homes included, to keep corner and midblock curb ramps clear (Art. 7.7, amended 2022); Boston's code gives curb ramps the same 3-hour deadline as sidewalks (CBC 16-12.16(C)); Cambridge tells corner owners they must, and New York City's snow guidance asks the same; Worcester asks. Ord. 2025-25 (Dec 2025) covered businesses only; this finishes the job. The raised warning domes tell people who are blind where the street begins, and federal guidelines call for a 48-inch-square clear area at the bottom of every ramp (PROWAG R305, R304.2.4).
+- *Why:* Ramps sit at corners, and many corners are homes, where the ordinance requires no one to clear them. The City's snow page already tells residents and businesses they are "responsible for" clearing "accessible ramps that abut their property", a duty the ordinance places only on businesses. Brookline's by-law requires every owner, homes included, to keep corner and midblock curb ramps clear (Art. 7.7, amended 2022); Madison's requires corner owners to clear the sidewalk bordering the crosswalk, "including the curb ramp" (General Ordinances 10.28(1)); Boston's code gives curb ramps the same 3-hour deadline as sidewalks (CBC 16-12.16(C)); Cambridge tells corner owners they must, and New York City's snow guidance asks the same; Worcester asks. Ord. 2025-25 (Dec 2025) covered businesses only; this finishes the job. The raised warning domes tell people who are blind where the street begins, and federal guidelines call for a 48-inch-square clear area at the bottom of every ramp (PROWAG R305, R304.2.4).
 
 **Crosswalk opening**
 
@@ -477,7 +479,7 @@ Construction sites are covered in principle today, since the duty falls on whoev
 
 - *Today:* Sec. 1-11(c): unpaid fines may block local licenses and permits.
 - *Proposed:* "After 3 tickets under this section on one permit, the City may suspend a dumpster, obstruction or sidewalk-opening permit until the sidewalk is clear and the tickets are paid; unpaid tickets may also lead to the denial or suspension of a building permit under Section 1-11(c), after notice and a hearing."
-- *Why:* A suspended dumpster or sidewalk permit costs a project far more than any ticket the state allows, and the City issues those permits itself. Holding building inspections instead would run into the State Building Code (Attachment C).
+- *Why:* A suspended dumpster or sidewalk permit costs a project far more than any ticket the state allows, and the City issues those permits itself. Holding building inspections instead would run into the State Building Code (Attachment C). Minneapolis makes a business's failure to clear grounds to revoke its City license (Code 445.40).
 
 **Who is affected**
 
@@ -525,7 +527,7 @@ A ticket doesn't clear ice. Turn "may clear" into a set time for re-inspection a
 
 - *Today:* "Upon neglect or violation of the duty ... such duty may be performed by the superintendent of highways at the expense of the person liable"
 - *Proposed:* "If the re-inspection finds the path still blocked, the inspector issues a new ticket and the Commissioner of Public Works shall clear it within the next 24 hours, starting with priority routes and corners. On priority routes, a blocked curb ramp or crosswalk opening is cleared within 12 hours after the ticket, without waiting for the re-inspection."
-- *Why:* "May" with no time sets no expectation: residents can't tell whether or when the City will step in. The City's own snow page gives two different start times. "Superintendent of highways" is an old title. The City clears after the second ticket, so every owner gets a day to fix a first miss, and the re-inspection the ticket already requires tells DPW which walks to clear. Corners on priority routes can't wait two days, so the City opens them within 12 hours of the first ticket, as Cambridge's Council asked of its own crews in 2018. New York City's code lets the City clear a neglected sidewalk and add the cost to the owner's next tax bill (Admin. Code 16-123(d)–(e)).
+- *Why:* "May" with no time sets no expectation: residents can't tell whether or when the City will step in. The City's own snow page gives two different start times. "Superintendent of highways" is an old title. The City clears after the second ticket, so every owner gets a day to fix a first miss, and the re-inspection the ticket already requires tells DPW which walks to clear. Corners on priority routes can't wait two days, so the City opens them within 12 hours of the first ticket, as Cambridge's Council asked of its own crews in 2018. New York City's code lets the City clear a neglected sidewalk and add the cost to the owner's next tax bill (Admin. Code 16-123(d)–(e)). Minneapolis may clear any sidewalk still covered 24 hours after the snow stops and assess unpaid bills on the property (Code 445.35), and Madison charges its clearing to the property as a special charge (General Ordinances 10.28(2)).
 
 **Re-inspection**
 
@@ -621,7 +623,7 @@ Keep the ban, name contractors, add bike lanes, bus stops, crosswalks and ramps,
 
 - *Today:* "in any public way"
 - *Proposed:* "onto a street, bike lane, bus stop, crosswalk or curb ramp"
-- *Why:* Snow pushed into a bike lane or bus stop stays there long after the street is plowed, because no one is assigned to clear it.
+- *Why:* Snow pushed into a bike lane or bus stop stays there long after the street is plowed, because no one is assigned to clear it. Madison bans putting private snow on any sidewalk, street or bike path, and the City removes it at the owner's cost (General Ordinances 10.23).
 
 **Exception**
 
@@ -648,7 +650,7 @@ Water from a building freezes on the sidewalk on sunny days, not only during sto
 
 - *Today:* (a) "No person shall suffer his or her building or awning or other projection thereon to shed water on any sidewalk or street to the injury or inconvenience of travelers."
 - *Proposed:* "No building, awning or other projection may shed or discharge water onto a sidewalk, curb ramp or bus stop. This includes roofs, gutters and downspouts, and discharge from sump pumps, heat pumps, furnaces, boilers and air conditioners. Water shall be piped under the sidewalk to the gutter, or onto the owner's own ground."
-- *Why:* "To the injury or inconvenience of travelers" invites argument after someone has already fallen. Naming the sources tells owners what to check. Auburn's bylaw (2017 text) names sump pumps and drains; Cambridge bans roof leaders that send water across the sidewalk (Municipal Code 12.16.070). Like today's rule, it applies all year: an air conditioner dripping onto the sidewalk in July is covered too.
+- *Why:* "To the injury or inconvenience of travelers" invites argument after someone has already fallen. Naming the sources tells owners what to check. Auburn's bylaw (2017 text) names sump pumps and drains; Cambridge bans roof leaders that send water across the sidewalk (Municipal Code 12.16.070), and Madison bans downspouts that empty onto the sidewalk (General Ordinances 10.29). Like today's rule, it applies all year: an air conditioner dripping onto the sidewalk in July is covered too.
 
 **Other discharge**
 
@@ -738,7 +740,7 @@ Make the ticket automatic and the amount simple: inspectors must ticket every vi
 
 - *Today:* Not in the code (in practice, "the citations range from a warning to up to $300", CBS Boston, Feb 19, 2025).
 - *Proposed:* "An inspector who finds a violation shall issue a ticket. No warnings. The only exception is a property registered in the snow assistance program under Sec. 12-8(e)."
-- *Why:* Takes the decision off inspectors and the administration: when neighbors push back, the answer is the ordinance, not someone's discretion. Exceptions are settled in advance, by registration, not on the sidewalk.
+- *Why:* Takes the decision off inspectors and the administration: when neighbors push back, the answer is the ordinance, not someone's discretion. Exceptions are settled in advance, by registration, not on the sidewalk. Madison tells residents it "will not issue warnings before writing a citation" (City of Madison, Nov 2025).
 
 **Where inspectors look**
 
@@ -844,7 +846,7 @@ A few limits sit in state law or with other agencies. The Council can't change t
 | Tenants and leases | A city can't rewrite leases (Home Rule Amendment, art. 89 §7(5)). The State Sanitary Code lets a written lease shift snow duty only for exits a tenant alone uses, and it doesn't reach the public sidewalk (105 CMR 410.260). | The Department of Public Health extends that rule to the abutting public sidewalk, or the Legislature voids lease clauses that pass sidewalk snow duty, tickets or clearing fees to tenants. |
 | MBTA bus stops and stations | The MBTA clears stops on its listed frequent routes within 24 hours; in Somerville, routes 77, 104 and 109; who clears Green Line station entrances is not published. | A written agreement listing every Somerville stop and station entrance, who clears it and by when, including while buses run during a storm (Sec. 12-8A). Monthly counts from the MBTA's bus cameras of vehicles blocking stops on Somerville routes, once tickets start on Jan 1, 2027. |
 | State roads | The City lists State property last in its clearing order, with no contact. | Agreements with MassDOT and DCR for the sidewalks along McGrath Highway, Alewife Brook Parkway and other state roads, with the same deadlines. |
-| Business districts | Each small business hires its own contractor, if any. | City help for business associations to hire shared snow contractors for whole districts (PTAC letter, item 8). |
+| Business districts | Each small business hires its own contractor, if any. | City help for business associations to hire shared snow contractors for whole districts (PTAC letter, item 8). Minneapolis's special service districts pay for snow removal in commercial districts through a charge on the district's properties (e.g., Uptown, Code ch. 438). |
 | Winter-ready sidewalks | Not part of this ordinance. | Winter in the City's sidewalk design standards: drainage at ramps, grading and materials that shed water, and a look at heated sidewalks in the busiest squares (PTAC letter, item 11). |
 | City clearing of every sidewalk | Owners clear their own frontage; a few US cities clear all sidewalks themselves. | A Council order for a cost and feasibility study of City clearing of every sidewalk, with funding options, as Minneapolis has done (PTAC letter, item 13). |
 
@@ -950,3 +952,6 @@ Peer-city text marked 2012 or 2017 comes from compilations that reprint each tow
 - Brookline General By-Laws, Article 7.7 (as amended Nov 15, 2022): [PDF](https://github.com/vitorpamplona/somersnow/blob/main/research/source-files/brookline-bylaw-7-7.pdf)
 - Cambridge Municipal Code, Chapter 12.16 (12.16.070, 12.16.110, 12.16.160): [DOCX](https://github.com/vitorpamplona/somersnow/blob/main/research/source-files/cambridge-code-12-16.docx)
 - New York City Administrative Code, Title 16, Chapter 1 (16-123, 16-124.1, 16-135): [PDF](https://github.com/vitorpamplona/somersnow/blob/main/research/source-files/nyc-admin-code-16-ch1.pdf)
+
+* Minneapolis Code of Ordinances, Title 17: Chapter 445 (snow and ice removal), 427.150 (snow in streets), special service districts: [PDF](https://github.com/vitorpamplona/somersnow/blob/main/research/source-files/minneapolis-code-snow.pdf)
+* Madison General Ordinances, Chapter 10: 10.23 (snow placed on streets, sidewalks, bike paths), 10.28 (sidewalk snow and ice), 10.29 (downspouts): [PDF](https://github.com/vitorpamplona/somersnow/blob/main/research/source-files/madison-mgo-ch10.pdf); [City of Madison, "Get your shovels ready" (Nov 28, 2025)](https://www.cityofmadison.com/news/2025-11-28/get-your-shovels-ready-reminder-of-city-sidewalk-clearing-rules) (no warnings)

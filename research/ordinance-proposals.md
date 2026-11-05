@@ -53,6 +53,64 @@ Source: City 311 "Snow/sidewalk not shoveled" requests, summed over the 16 days 
 - **ADA standards in winter.** The 8-by-5-foot boarding area at bus stops, signal push buttons kept reachable, accessible parking cleared, notices in accessible formats, and a 311 fast lane to the City's ADA Coordinator when someone is stuck. ([details](#new-sec-12-8a-the-citys-own-sidewalks-bus-stops-and-ramps))
 - **Help instead of fines** for eligible seniors and residents with disabilities who can't shovel. ([details](#sec-12-8-extensions-being-away-and-help))
 
+## Proposed improvements at a glance
+
+One change per row: what the code or City practice says today, and what the proposed text would do.
+
+| Who | Today | Proposed |
+| --- | --- | --- |
+| Owners | 6 daylight hours to clear. | 3 daylight hours, as in Boston. |
+| Owners | Work out the deadline yourself. | The City posts the deadline time. |
+| Owners | No notice required after a storm. | A notice after every storm. |
+| Owners | No duty while a long storm lasts. | Clear each morning if it lasts over 12 hours. |
+| Owners | 36-inch path. | Full walking width, at least 48 inches. |
+| Owners | Sand where clearing is impractical. | Bare pavement; sand only on ice. |
+| Owners | Ice on the same clock as snow. | Treat ice within 2 daylight hours. |
+| Owners | Duty ends at the deadline. | Re-clear after refreezes and plows. |
+| Owners | Home corner ramps: a City request. | Corner owners clear ramps to the crosswalk. |
+| Owners | City crews dig out hydrants. | Keep 3 feet around hydrants clear. |
+| Owners | No duty at bus stops. | Clear the path to the curb. |
+| Owners | Roof water rule only. | Sump pumps, furnaces and A/C named too. |
+| Owners | Being away not addressed. | Being away is no excuse. |
+| Owner-occupants | First ticket $100. | $150 per ticket. |
+| Other owners | First ticket $100 or $150. | $300 per ticket. |
+| Eligible seniors and disabled owners | Can hire teen shovelers. | Free help, no fines. |
+| Tenants | Can be ticketed. | Never ticketed. |
+| Tenants | A lease can assign the sidewalk. | No lease can make you shovel or pay. |
+| Tenants | No contact required. | A contact name each October. |
+| Everyone | Only your own sidewalk is off-limits for snow. | No snow on any walk, ramp, stop, hydrant or drain. |
+| Everyone | Snow in streets if the day's mean tops 40°F. | Only above 40°F at the time; never in bike lanes. |
+| Everyone | Space savers not named. | Space savers banned and discarded. |
+| Everyone | Bins not addressed. | Bins stay out of the path. |
+| Everyone | No yearly guide required. | A guide every November. |
+| Lot owners | No rule for accessible spaces. | Clear them when the lot is plowed. |
+| Builders | No winter permit conditions. | Every permit requires clear sidewalks. |
+| Builders | No snow rule for detours. | Signed, cane-detectable 48-inch detours, kept clear. |
+| Builders | Ordinary fines. | $300 tickets; clearing fee from the deposit. |
+| Builders | Tickets don't touch the project. | 3 tickets can hold the next inspection. |
+| Vacant owners | No contact on file. | File a winter contact, or the City clears and bills. |
+| Inspectors | Find who is "in charge". | Ticket the owner of record. |
+| Inspectors | Track 1st, 2nd and 3rd offenses. | Two flat fines, no counting. |
+| Inspectors | Ordinance silent on warnings. | Must ticket; no warnings. |
+| Inspectors | No check without a complaint. | Check bus routes, squares and school routes after every storm. |
+| Inspectors | No re-inspection required. | Re-inspect within 24 hours. |
+| Inspectors | Ticket languages not set. | Tickets in the City's languages. |
+| DPW | City "may" clear, no time set. | Must clear 24 hours after the deadline. |
+| DPW | Bills its actual expense. | Flat fee at average cost. |
+| DPW | No deadline for City sidewalks. | Same deadline as residents. |
+| DPW | Bus stops after streets. | Within 24 hours, with an 8×5 ft boarding area. |
+| DPW | No deadline for ramps no one abuts. | Cleared within 24 hours. |
+| DPW | Push buttons and accessible parking not addressed. | Cleared within 24 hours. |
+| DPW | Ice melt not required. | Free sand or ice melt; pre-treat before ice. |
+| DPW | No clearing log. | Log every stop and ramp cleared. |
+| City leadership | No winter plan required. | A published plan by November 1. |
+| City leadership | No single lead named. | One official leads. |
+| City leadership | MBTA and state duties unwritten. | Written, published agreements. |
+| 311 | No outcome required. | Each case closes with its outcome. |
+| 311 | No ADA request type. | ADA Coordinator answers within 12 hours. |
+| Public | No public ticket data. | Weekly open data. |
+| City Council | No winter report. | A report every June 30. |
+
 ## The proposed text
 
 Every change we propose, written as ordinance text for the City's legislative counsel to put into final form: the sidewalk rule (Sec. 12-8), the City's own duties (new Sec. 12-8A), notices and data (new Sec. 12-8B), and the related changes to Sec. 12-2, 12-9, 12-18 and 1-11. Attachment A explains each change from today's text and who it affects.

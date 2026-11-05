@@ -138,7 +138,7 @@ Hourly weather comes from the [Iowa Environmental Mesonet ASOS archive](https://
 | **MBTA bus arrival/departure 2026** | [CSV, 318 MB](https://mbta-massdot.opendata.arcgis.com/datasets/9d8a8cad277545c984c1b25ed10b7d3c) | Not processed yet: would give on-time performance per Somerville route during the storm | minutes |
 | **Boston 311** (2026) | [data.boston.gov](https://data.boston.gov/dataset/311-service-requests), SQL API | 2,484 "Unshoveled Sidewalk" and 3,223 plowing requests Feb 22–Mar 1. A neighbor to compare the complaint wave with. | minutes |
 | NWS spotter reports (PNS) | [IEM AFOS](https://mesonet.agron.iastate.edu/cgi-bin/afos/retrieve.py?pil=PNSBOX) | No Somerville report; nearest partial: Arlington 11.8" by 2:09 p.m. Mon | — |
-| Cambridge snow and ice code cases `6qf3-rbkf` | Cambridge open data | Has violation types (ramp blocked, icy, path under 4 ft), but the data ends in 2020 | — |
+| Cambridge snow and ice code cases `6qf3-rbkf` | Cambridge open data | Has violation types (ramp blocked, icy, path under 4 ft, no crosswalk access); Dec 2019 – Mar 2026 (2,240 cases; checked Nov 5, 2026) | — |
 
 ## In the replays (Nov 1, 2026)
 

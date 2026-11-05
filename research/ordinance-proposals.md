@@ -93,11 +93,11 @@ One change per row: what the code or City practice says today, and what the prop
 | Inspectors | No check without a complaint. | Check priority routes after every storm of 1 inch or more. |
 | Inspectors | No re-inspection required. | Re-inspect within 24 hours. |
 | Inspectors | Ticket languages not set. | Tickets in the City's languages. |
-| DPW | City "may" clear, no time set. | Must clear within 24 hours of a second ticket. |
+| DPW | City "may" clear, no time set. | Must clear within 24 hours of a second ticket; corners on priority routes within 12 hours of the first. |
 | DPW | Bills its actual expense. | Flat fee at average cost. |
 | DPW | No deadline for City sidewalks. | Same deadline as residents. |
 | DPW | Bus stops after streets. | Within 24 hours, with an 8×5 ft boarding area. |
-| DPW | No deadline for ramps no one abuts. | Cleared within 24 hours. |
+| DPW | No deadline for ramps no one abuts or crossing islands. | Cleared within 24 hours. |
 | DPW | Push buttons and accessible parking not addressed. | Cleared within 24 hours. |
 | DPW | Ice melt not required. | Free sand or ice melt; pre-treat before ice. |
 | DPW | No clearing log. | Log every stop and ramp cleared. |
@@ -107,7 +107,7 @@ One change per row: what the code or City practice says today, and what the prop
 | 311 | No outcome required. | Each case closes with its outcome. |
 | 311 | No ADA request type. | ADA Coordinator answers within 12 hours. |
 | Public | No public ticket data. | Ticket and clearing data each May. |
-| City Council | No winter report. | A report every May 1. |
+| City Council | No winter report. | A report every May 1, reviewed with the disability commission. |
 
 ## The proposed text
 
@@ -137,7 +137,7 @@ Every change we propose, written as ordinance text for the City's legislative co
 
 (6) While snow, sleet or freezing rain keeps falling, the responsible person shall also clear and treat the path within three hours after each sunrise, except while a snow emergency declared by the City is in effect.
 
-**(c) City clearing, re-inspection and cost.** An inspector who finds a violation of this section shall issue a ticket to the owner; there are no warnings, except for a property registered under subsection (e). The inspector shall re-inspect within 24 hours. A frontage still not clear gets a new ticket, as a new offense under Section 1-11(a), and the Commissioner of Public Works shall clear it within the next 24 hours, starting with priority routes and corners. The owner pays, in addition to the tickets, a flat clearing fee per frontage and per curb ramp that the City sets to match its average cost; an unpaid fee becomes a lien on the property.
+**(c) City clearing, re-inspection and cost.** An inspector who finds a violation of this section shall issue a ticket to the owner; there are no warnings, except for a property registered under subsection (e). The inspector shall re-inspect within 24 hours. A frontage still not clear gets a new ticket, as a new offense under Section 1-11(a), and the Commissioner of Public Works shall clear it within the next 24 hours, starting with priority routes and corners. On priority routes, a blocked curb ramp or crosswalk opening is cleared within 12 hours after the ticket, without waiting for the re-inspection. The owner pays, in addition to the tickets, a flat clearing fee per frontage and per curb ramp that the City sets to match its average cost; an unpaid fee becomes a lien on the property.
 
 **(d) Collections.** The city treasurer with the approval of the mayor may in civil actions prosecute and adjust claims inuring to the city under the provisions of this section. (Unchanged.)
 
@@ -161,11 +161,11 @@ Every change we propose, written as ordinance text for the City's legislative co
 
 **Sec. 12-8A. City sidewalks, bus stops and curb ramps.**
 
-**(a) City property.** The City shall meet the deadlines and standard of Section 12-8 on every sidewalk abutting City land or buildings, including schools, parks, libraries, fire stations and parking lots, and on the bridges and Community Path segments it maintains.
+**(a) City property.** The City shall meet the deadlines and standard of Section 12-8 on every sidewalk abutting City land or buildings, including schools, parks, libraries, fire stations and parking lots, and on the bridges and Community Path segments it maintains. Inspectors check City frontages as they do any other, and record each one found not clear.
 
 **(b) Bus stops.** The City shall clear each bus stop it is responsible for, including the path to the curb, a boarding area at least 8 feet deep from the curb and 5 feet wide, and any shelter, within 24 hours after a winter weather event ends, and stops on priority routes within 12 hours. While an event lasts, stops on routes that are running shall be kept passable at least once each morning and afternoon.
 
-**(c) Curb ramps with no abutter.** The City shall clear curb ramps and crosswalk openings that no private property abuts, and reopen any curb ramp its plows bury, within 24 hours after the event ends or the plow passes.
+**(c) Curb ramps with no abutter and crossing islands.** The City shall clear curb ramps and crosswalk openings that no private property abuts, pedestrian refuge islands, and openings through the snow ridges plows leave between bike lanes and crosswalks, and reopen any curb ramp its plows bury, within 24 hours after the event ends or the plow passes.
 
 **(d) Ice melt and pre-treatment.** The City shall offer residents free sand or ice melt at published locations, announce it each November, and pre-treat bus stops, curb ramps and City sidewalks on priority routes before forecast ice.
 
@@ -189,7 +189,7 @@ Every change we propose, written as ordinance text for the City's legislative co
 
 **(e) Season data.** By May 1 each year, with the report under subsection (f), the City shall publish on its open data portal the records of the preceding winter: inspections and tickets under Sections 12-2, 12-8, 12-9 and 12-18(e) and (f), with date, time, street and ward but no house number; City clearing and liens under Section 12-8(c); the clearing log under Section 12-8A(f); and each declared snow emergency with its start and end times.
 
-**(f) Annual report.** By May 1 each year, the lead official, with the Commissioner of Public Works and the Director of Inspectional Services, shall report to the City Council on the preceding winter: complaints, inspections, tickets, City clearings and liens, and the time taken to clear bus stops, curb ramps and City frontages, from the clearing log under Section 12-8A(f), by ward and by event, alongside each event's snowfall. The report may be included in the annual report under Section 12-116.6.
+**(f) Annual report.** By May 1 each year, the lead official, with the Commissioner of Public Works and the Director of Inspectional Services, shall report to the City Council and the Commission for Persons with Disabilities on the preceding winter: complaints, inspections, tickets, City clearings and liens, City frontages found not clear, and the time taken to clear bus stops, curb ramps and City frontages, from the clearing log under Section 12-8A(f), by ward and by event, alongside each event's snowfall. The report may be included in the annual report under Section 12-116.6. The lead official shall review the report each year with the Commission.
 
 **(g) Blocked accessible routes.** 311 shall offer a request type for a blocked curb ramp, crosswalk opening, bus stop or path that keeps a person with a disability from leaving home or reaching transit. These requests go to the City's ADA Coordinator and shall be answered within 12 hours.
 
@@ -350,7 +350,7 @@ Keep today's rule and change one number: **3 hours of daylight** after the snow 
 | New York City | 4 hours (stops 7 a.m.–5 p.m.); 14 hours (5–9 p.m.); by 11 a.m. (9 p.m.–7 a.m.) |
 | Worcester | 10 hours |
 | Washington, DC | the first 8 hours of daylight |
-| Cambridge | 12 hours after daytime snow; by 1 p.m. after overnight snow (2012 code text) |
+| Cambridge | 12 hours after daytime snow; by 1 p.m. after overnight snow; ice within 6 hours |
 
 **Who is affected**
 
@@ -365,7 +365,7 @@ Widen the path to 4 feet, make bare pavement the rule and sand the stopgap, and 
 
 - *Today:* "a path of travel with a minimum width of thirty-six inches"
 - *Proposed:* "at least 48 inches wide (or the whole sidewalk where it is narrower)"
-- *Why:* PTAC's March 2025 letter asked for the entire width, as in Minneapolis; we propose one number instead, which is easier to follow and to measure. 36 inches is the bare minimum for one wheelchair, with no room to pass or turn. Federal guidelines set 48 inches for new and altered public sidewalks (PROWAG R302.2, 2023); 36 inches is the ADA minimum for a walking surface. Boston asks for 42 inches; Worcester and New York City require 4 ft. Somerville's own code already keeps 4 ft clear of newsracks (Sec. 12-69(1)). 98% of Somerville's mapped sidewalk miles are 4 ft or wider.
+- *Why:* PTAC's March 2025 letter asked for the entire width, as in Minneapolis; we propose one number instead, which is easier to follow and to measure. 36 inches is the bare minimum for one wheelchair, with no room to pass or turn. Federal guidelines set 48 inches for new and altered public sidewalks (PROWAG R302.2, 2023); 36 inches is the ADA minimum for a walking surface. Boston requires 42 inches; Worcester and New York City require 4 ft. Somerville's own code already keeps 4 ft clear of newsracks (Sec. 12-69(1)). 98% of Somerville's mapped sidewalk miles are 4 ft or wider.
 
 **Finish**
 
@@ -411,7 +411,7 @@ A cleared sidewalk is useless if the corner is a snowbank. Extend the ramp duty 
 
 - *Today:* Implied only for businesses ("clear and direct access to the crosswalk").
 - *Proposed:* "Where a plow bank separates the ramp or corner from a crosswalk, cut an opening at least 48 inches wide through it to the street, in line with the crosswalk."
-- *Why:* A clear ramp that ends at a 3-foot plow bank still traps a wheelchair. Boston's code (2017 text) required a 42-inch path at curb ramps "from the sidewalk to the street"; Brookline and Cambridge ask for crosswalk openings.
+- *Why:* A clear ramp that ends at a 3-foot plow bank still traps a wheelchair. Boston's code (2017 text) required a 42-inch path at curb ramps "from the sidewalk to the street"; Brookline asks for crosswalk openings, and Cambridge holds owners responsible for crosswalk access and tickets them (74 tickets in 2025–26).
 
 **Bus stops (abutters)**
 
@@ -502,7 +502,7 @@ Announce extensions in public, say plainly that being away is no excuse, and pai
 
 - *Today:* None. The City runs a paid teen-shoveler program ($25, or $60 for a corner lot, in 2024/25).
 - *Proposed:* "(e) The City shall run a snow assistance program. An owner-occupant who is 65 or older or has a disability, and whose household income is below a limit the City sets, may register by December 1. The City or its volunteers clear registered frontages, ramps included. A registered owner is not fined while registered."
-- *Why:* A wider duty (corner ramps, a wider path, continuing ice) must not fall on residents who physically can't do it. Cambridge's City crews clear for homeowners over 60 or with a disability who meet income limits. Washington, DC does not fine residential owners who are 65 or older or have a disability.
+- *Why:* A wider duty (corner ramps, a wider path, continuing ice) must not fall on residents who physically can't do it. Cambridge's City staff clear the sidewalk for some low-income older or disabled homeowners (41 homes in 2025–26). Washington, DC does not fine residential owners who are 65 or older or have a disability.
 
 **Volunteers**
 
@@ -522,8 +522,8 @@ A ticket doesn't clear ice. Turn "may clear" into a set time for re-inspection a
 **City clearing**
 
 - *Today:* "Upon neglect or violation of the duty ... such duty may be performed by the superintendent of highways at the expense of the person liable"
-- *Proposed:* "If the re-inspection finds the path still blocked, the inspector issues a new ticket and the Commissioner of Public Works shall clear it within the next 24 hours, starting with priority routes and corners."
-- *Why:* "May" with no time sets no expectation: residents can't tell whether or when the City will step in. The City's own snow page gives two different start times. "Superintendent of highways" is an old title. The City clears after the second ticket, so every owner gets a day to fix a first miss, and the re-inspection the ticket already requires tells DPW which walks to clear.
+- *Proposed:* "If the re-inspection finds the path still blocked, the inspector issues a new ticket and the Commissioner of Public Works shall clear it within the next 24 hours, starting with priority routes and corners. On priority routes, a blocked curb ramp or crosswalk opening is cleared within 12 hours after the ticket, without waiting for the re-inspection."
+- *Why:* "May" with no time sets no expectation: residents can't tell whether or when the City will step in. The City's own snow page gives two different start times. "Superintendent of highways" is an old title. The City clears after the second ticket, so every owner gets a day to fix a first miss, and the re-inspection the ticket already requires tells DPW which walks to clear. Corners on priority routes can't wait two days, so the City opens them within 12 hours of the first ticket, as Cambridge's Council asked of its own crews in 2018.
 
 **Re-inspection**
 
@@ -555,8 +555,8 @@ Residents have a clearing deadline; the City's own frontages, bus stops and ramp
 **City property**
 
 - *Today:* None. Sec. 12-8 names "a person ... in charge of land or a building"; whether it binds the City is unclear.
-- *Proposed:* "The City shall meet the deadlines and standard of Sec. 12-8 on every sidewalk abutting City land or buildings, including schools, parks, libraries, fire stations and parking lots, and on the bridges and Community Path segments it maintains."
-- *Why:* The rule residents follow should be the rule the City follows; today the ordinance is silent on City frontages. Washington, DC's code makes the city clear its own sidewalks and crosswalks within 8 daylight hours.
+- *Proposed:* "The City shall meet the deadlines and standard of Sec. 12-8 on every sidewalk abutting City land or buildings, including schools, parks, libraries, fire stations and parking lots, and on the bridges and Community Path segments it maintains. Inspectors check City frontages as they do any other, and record each one found not clear."
+- *Why:* The rule residents follow should be the rule the City follows; today the ordinance is silent on City frontages. Washington, DC's code makes the city clear its own sidewalks and crosswalks within 8 daylight hours. Boston tickets its own properties too ("We fine ourselves for City-owned properties too"), and once its parks crews logged their clearing, violations at City-owned properties fell from 150–200 per storm to 8.
 
 **Bus stops**
 
@@ -567,8 +567,8 @@ Residents have a clearing deadline; the City's own frontages, bus stops and ramp
 **Ramps with no owner to clear them**
 
 - *Today:* None.
-- *Proposed:* "The City shall clear curb ramps and crosswalk openings that no private property abuts, and reopen any curb ramp its plows bury, within 24 hours after the event ends or the plow passes."
-- *Why:* The City's snow page lists curb cuts and intersection landings among the City's work, with no deadline and no list of which ones.
+- *Proposed:* "The City shall clear curb ramps and crosswalk openings that no private property abuts, pedestrian refuge islands, and openings through the snow ridges plows leave between bike lanes and crosswalks, and reopen any curb ramp its plows bury, within 24 hours after the event ends or the plow passes."
+- *Why:* The City's snow page lists curb cuts and intersection landings among the City's work, with no deadline and no list of which ones. Cambridge's Council made crossing islands a priority in 2025, and its crews now open islands and the ridges beside separated bike lanes at crosswalks.
 
 **A plan with times**
 
@@ -697,7 +697,7 @@ The City treats space savers as illegal under a section titled "at night" that n
 
 - *Today:* Covered only in general by (a).
 - *Proposed:* "No object, including a trash or recycling bin, may stand in a clear path, curb ramp or bus stop required by Sec. 12-8. On collection day, bins go at the curb edge in front of any snowbank. A ticket under this subsection goes to the owner of record of the property the object stands in front of."
-- *Why:* Bins left in the cleared strip push wheelchairs into the street. The ticket goes to the owner, as for the sidewalk itself, so no one has to find out whose bin it is. Boston and Brookline give the same advice on bins.
+- *Why:* Bins left in the cleared strip push wheelchairs into the street. The ticket goes to the owner, as for the sidewalk itself, so no one has to find out whose bin it is. Boston and Brookline ask for bins at the street edge, not behind snowbanks, so crews can collect them; this rule also keeps them out of the walking path.
 
 **Fine**
 
@@ -811,8 +811,8 @@ Put one official in charge of the whole effort, tell people the deadline every t
 **Yearly report**
 
 - *Today:* None.
-- *Proposed:* "By May 1, the lead official, with the Commissioner of Public Works and the Director of Inspectional Services, shall report to the City Council: complaints, inspections, tickets, City clearings and liens, and time to clear bus stops, curb ramps and City frontages, from the clearing log, by ward and by event, next to each event's snowfall."
-- *Why:* Lets the Council see whether these changes work, and adjust. Brookline's bylaw (2012 text) required a yearly report on education, enforcement and help. It can join the yearly pedestrian report the Council already receives under Sec. 12-116.6, which tracks the City's ADA Transition Plan goals.
+- *Proposed:* "By May 1, the lead official, with the Commissioner of Public Works and the Director of Inspectional Services, shall report to the City Council and the Commission for Persons with Disabilities: complaints, inspections, tickets, City clearings and liens, City frontages found not clear, and time to clear bus stops, curb ramps and City frontages, from the clearing log, by ward and by event, next to each event's snowfall, and review it each year with the Commission."
+- *Why:* Lets the Council see whether these changes work, and adjust. Brookline's by-law has required a yearly report on education, enforcement and help since at least 2012 (Art. 7.7). Cambridge's public works department reviews each winter with its disability commission. It can join the yearly pedestrian report the Council already receives under Sec. 12-116.6, which tracks the City's ADA Transition Plan goals.
 
 **Blocked accessible routes**
 
@@ -837,7 +837,7 @@ A few limits sit in state law or with other agencies. The Council can't change t
 
 | Topic | What limits Somerville today | What to ask for |
 | --- | --- | --- |
-| Fine cap | A ticket can't exceed $300 ([M.G.L. c. 40 §21D](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleVII/Chapter40/Section21D)), and an ordinance penalty can't exceed $300 per offense ([c. 40 §21](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleVII/Chapter40/Section21)). | A home rule petition, as Boston obtained in [Acts of 2016, c. 352](https://malegislature.gov/Laws/SessionLaws/Acts/2016/Chapter352): higher fines for commercial properties, large landlords and construction sites that fail repeatedly, not for small homes. Boston's act allows up to $1,500. |
+| Fine cap | A ticket can't exceed $300 ([M.G.L. c. 40 §21D](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleVII/Chapter40/Section21D)), and an ordinance penalty can't exceed $300 per offense ([c. 40 §21](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleVII/Chapter40/Section21)). | A home rule petition, as Boston obtained in [Acts of 2016, c. 352](https://malegislature.gov/Laws/SessionLaws/Acts/2016/Chapter352): higher fines for commercial properties, large landlords and construction sites that fail repeatedly, not for small homes. Boston's act allows up to $1,500 for commercial snow removal that dumps snow on a public way and for owners who fail to clear, but not for buildings of 6 or fewer units. |
 | Legal basis | Sec. 12-8 cites both c. 40 §21 and [c. 85 §5](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXIV/Chapter85/Section5). c. 85 §5 caps a city's penalty at $50; c. 40 §21(3) aims the penalty at "the owner of abutting property or his agent". | The Law Department confirms PTAC's reading in Attachment C, starting with the duties at the street edge, the clearing fee and lien, and which local-option statutes the City has accepted. |
 | Tenants and leases | A city can't rewrite leases (Home Rule Amendment, art. 89 §7(5)). The State Sanitary Code lets a written lease shift snow duty only for exits a tenant alone uses, and it doesn't reach the public sidewalk (105 CMR 410.260). | The Department of Public Health extends that rule to the abutting public sidewalk, or the Legislature voids lease clauses that pass sidewalk snow duty, tickets or clearing fees to tenants. |
 | MBTA bus stops and stations | The MBTA clears stops on its listed frequent routes within 24 hours; in Somerville, routes 77, 104 and 109; who clears Green Line station entrances is not published. | A written agreement listing every Somerville stop and station entrance, who clears it and by when, including while buses run during a storm (Sec. 12-8A). Monthly counts from the MBTA's bus cameras of vehicles blocking stops on Somerville routes, once tickets start on Jan 1, 2027. |
@@ -898,8 +898,8 @@ Peer-city text marked 2012 or 2017 comes from compilations that reprint each tow
 **Other cities**
 
 - Boston: [rules for clearing snow](https://www.boston.gov/departments/public-works/rules-clearing-snow); [Winter in Boston](https://www.boston.gov/winter-boston) (space savers); CBC 16-12.16 (2017 text, in the [2017 compilation](https://naticktown.novusagenda.com/agendapublic/AttachmentViewer.ashx?AttachmentID=9390&ItemID=4080))
-- Cambridge: [snow center](https://www.cambridgema.gov/SNOW) (corner ramps, absence, fines, Snow Exemption Program); Municipal Code 12.16.110 (2012 text, in the [MAPC Snow Removal Toolkit](https://www.mapc.org/wp-content/uploads/2017/11/Snow-Removal-ToolkitFINAL1.10.12.pdf))
-- Brookline: [2024 Winter Guide](https://www.brooklinema.gov/DocumentCenter/View/53279/2024-Winter-Guide); Bylaw 7.7.6 yearly report (2012 text, MAPC Toolkit)
+- Cambridge: [snow center](https://www.cambridgema.gov/SNOW) (corner ramps, absence, fines, Snow Exemption Program); Municipal Code 12.16.110 (text unchanged since the [MAPC Snow Removal Toolkit](https://www.mapc.org/wp-content/uploads/2017/11/Snow-Removal-ToolkitFINAL1.10.12.pdf))
+- Brookline: [2024 Winter Guide](https://www.brooklinema.gov/DocumentCenter/View/53279/2024-Winter-Guide); By-law 7.7.6 yearly report (2012 text, MAPC Toolkit; renumbered 7.7.7 by 2016)
 - [Worcester: snow removal](https://www.worcesterma.gov/streets/winter-weather/snow-removal)
 - Longmeadow §4-310(b) (hydrants) and Auburn §13.04 (sump pumps): 2017 compilation; Chelsea §6-124(b) (roofs): MAPC Toolkit
 - New York City: [DSNY snow laws](https://www.nyc.gov/site/dsny/what-we-do/snow-response/snow-laws.page); [NYC 311: sidewalk snow](https://portal.311.nyc.gov/article/?kanumber=KA-01397) (bus stops, corners)
@@ -927,3 +927,9 @@ Peer-city text marked 2012 or 2017 comes from compilations that reprint each tow
 - M.G.L. [c. 40 §5B](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleVII/Chapter40/Section5B), [§21](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleVII/Chapter40/Section21), [§21D](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleVII/Chapter40/Section21D), [§57](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleVII/Chapter40/Section57), [§58](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleVII/Chapter40/Section58); [c. 40U §5](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleVII/Chapter40U/Section5); [c. 44 §53](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleVII/Chapter44/Section53); [c. 59 §5C](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleIX/Chapter59/Section5C); [c. 84 §17](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXIV/Chapter84/Section17); [c. 85 §5](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXIV/Chapter85/Section5), [§6](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXIV/Chapter85/Section6), [§7B](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXIV/Chapter85/Section7B); [c. 183A §10](https://malegislature.gov/Laws/GeneralLaws/PartII/TitleI/Chapter183A/Section10), [§14](https://malegislature.gov/Laws/GeneralLaws/PartII/TitleI/Chapter183A/Section14); [c. 258 §10](https://malegislature.gov/Laws/GeneralLaws/PartIII/TitleIV/Chapter258/Section10)
 - [105 CMR 410.260](https://www.law.cornell.edu/regulations/massachusetts/105-CMR-410-260) (State Sanitary Code); [360 CMR 10.023](https://www.law.cornell.edu/regulations/massachusetts/360-CMR-10-023) (MWRA sewer use)
 - Court cases (Caselaw Access Project): [Marshal House v. Rent Review Board, 357 Mass. 709 (1970)](https://static.case.law/mass/357/cases/0709-01.json); [Bloom v. Worcester, 363 Mass. 136 (1973)](https://static.case.law/mass/363/cases/0136-01.json); [Bannerman v. Fall River, 391 Mass. 328 (1984)](https://static.case.law/mass/391/cases/0328-01.json); [Emerson College v. Boston, 391 Mass. 415 (1984)](https://static.case.law/mass/391/cases/0415-01.json); [Silva v. Attleboro, 454 Mass. 165 (2009)](https://static.case.law/mass/454/cases/0165-01.json); [St. George Greek Orthodox Cathedral v. Fire Department of Springfield, 462 Mass. 120 (2012)](https://static.case.law/mass/462/cases/0120-01.json)
+
+**Peer-city check (November 2026)**
+
+- Boston: [Managing winter and snow](https://www.boston.gov/managing-winter-and-snow) (the City fines its own properties); [Public Works violations](https://data.boston.gov/dataset/public-works-violations) (every ticket, published daily)
+- Cambridge: [Commission for Persons with Disabilities minutes, Jan 9, 2025](https://www.cambridgema.gov/-/media/files/dhsp/disabilities/minutes/2025/january9.pdf) (current text of Municipal Code 12.16.110); [Public Works memo on the 2025–26 winter, Mar 18, 2026](https://cambridgema.primegov.com/api/compilemeetingattachmenthistory/historyattachment/?historyId=5f5bfb57-f6ec-41b0-85e0-94636104e9dd) (crosswalk tickets, exemption program); [Commission minutes with Public Works, Jan 8, 2026](https://cambridgema.gov/-/media/Files/DHSP/Disabilities/Minutes/2026/january8.pdf) (yearly winter review); [Policy Order 2025 #23](https://cambridgema.iqm2.com/Citizens/FileOpen.aspx?Type=30&ID=104677&MeetingID=4644) (crossing islands); [Policy Order 2018 #10](https://cambridgema.iqm2.com/Citizens/FileOpen.aspx?Type=30&ID=28557&MeetingID=2062) (City clearing of key crossings while a ticket is pending)
+- Brookline: [DPW Winter Guide, 2014](https://police.brooklinema.gov/DocumentCenter/View/130) (crosswalk openings, absence, bins); [Town By-Laws through May 28, 2013](https://police.brooklinema.gov/DocumentCenter/View/129) (Art. 7.7; Brookline's current by-law pages could not be opened by automated tools)

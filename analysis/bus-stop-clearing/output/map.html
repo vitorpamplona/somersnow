@@ -52,7 +52,10 @@ th,td{text-align:left;padding:8px 10px;border-bottom:1px solid rgba(169,196,228,
 th{font-family:var(--display);text-transform:uppercase;letter-spacing:1px;color:var(--ice);font-size:15px}
 td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
 .tw{overflow-x:auto}
-.crew{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.crew{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.cmap{width:100%;height:auto;display:block;background:#0E2034;border-radius:10px;margin:8px 0 4px}
+.crewkey{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;font-size:14px;color:var(--snow);margin:6px 0 12px}
+.crewkey span{display:inline-flex;align-items:center;gap:6px}
 .crew ol{margin:6px 0 0;padding-left:20px;font-size:14px}
 .crew li{margin-bottom:6px}
 .crew small{color:var(--ice)}
@@ -60,7 +63,7 @@ td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
 a{color:var(--orange)}
 .bar{background:#0A1929;border-bottom:1px solid rgba(169,196,228,.2)}.bar div{max-width:1100px;margin:0 auto;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px}.bar a{color:#fff;text-decoration:none}.bar .brand{font-family:var(--display);font-weight:800;font-size:22px;text-transform:uppercase;letter-spacing:1px}.bar .brand span{color:var(--orange)}.bar nav a{color:var(--ice);font-size:15px}
 footer{margin-top:40px;color:var(--ice);font-size:14px;border-top:1px solid rgba(169,196,228,.3);padding-top:14px}
-@media (max-width:760px){.mapwrap{grid-template-columns:1fr}.read{margin-left:0;width:100%}}
+@media (max-width:760px){.crew{grid-template-columns:1fr}.mapwrap{grid-template-columns:1fr}.read{margin-left:0;width:100%}}
 </style>
 </head>
 <body>
@@ -102,7 +105,13 @@ footer{margin-top:40px;color:var(--ice);font-size:14px;border-top:1px solid rgba
   <div class="why" id="why"></div>
 
   <h2>The first stretches each crew takes</h2>
-  <p class="note">Ridership first. A stretch is the stops a crew clears without putting the bobcat back on the trailer.</p>
+  <p class="note">Ridership first. A stretch is the stops a crew clears without putting the bobcat back on the trailer. Each map traces one crew's whole day; the numbers mark its first five stretches, listed below it.</p>
+  <div class="crewkey">
+    <span><svg width="64" height="12"><defs><linearGradient id="dayg"><stop offset="0" stop-color="#B93D06"/><stop offset="1" stop-color="#47607C"/></linearGradient></defs><rect width="64" height="12" rx="6" fill="url(#dayg)"/></svg>Early in the day → late</span>
+    <span><svg width="30" height="12"><path d="M2 6 H28" stroke="#B93D06" stroke-width="3"/></svg>Drives to the next stop</span>
+    <span><svg width="30" height="12"><path d="M2 6 H28" stroke="#B93D06" stroke-width="2" stroke-dasharray="4 3"/></svg>Trailer move</span>
+    <span><svg width="22" height="22"><circle cx="11" cy="11" r="10" fill="#10243A" stroke="#fff" stroke-width="1.5"/><text x="11" y="15.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text></svg>Stretch number</span>
+  </div>
   <div class="crew" id="crews"></div>
 
   <h2>If our assumptions are off</h2>
@@ -236,10 +245,33 @@ $('#why').innerHTML = [
 // crews: split each crew's run into stretches at every trailer move
 const crews = {};
 D.seq.ridership.forEach(([crew, id, how]) => { const c = (crews[crew] = crews[crew] || []); if (how === 'trailer' || !c.length) c.push([]); c[c.length - 1].push(byId[id]); });
-$('#crews').innerHTML = Object.entries(crews).map(([n, sts]) => `<div class="panel"><div class="k">Crew ${n}</div><ol>${sts.slice(0, 5).map((st) => {
-  const riders = st.reduce((a, b) => a + b.r, 0), end = st[st.length - 1].ridership.h;
-  return `<li>${st[0].n}${st.length > 1 ? ' → ' + st[st.length - 1].n : ''}<br><small>${st.length} stop${st.length > 1 ? 's' : ''}, ${riders.toLocaleString()} boardings, done by hour ${end.toFixed(1)}</small></li>`;
-}).join('')}</ol></div>`).join('');
+// each crew's day on a small map: early stops rust, late ones slate; drives solid, trailer moves dashed
+const base = D.wards.map((rs) => rs.map((r) => `<path d="${pathD(r)}Z" fill="#DCE8F5" stroke="#1A3A5F" stroke-width="1.5" vector-effect="non-scaling-stroke"/>`).join('')).join('')
+  + '<g clip-path="url(#city)" fill="none" stroke="#fff" stroke-width="1.6" vector-effect="non-scaling-stroke">' + Object.values(D.routes).map((ps) => ps.map((p) => `<path d="${pathD(p)}" vector-effect="non-scaling-stroke"/>`).join('')).join('') + '</g>';
+const mix = (f) => { const a = [0xB9, 0x3D, 0x06], b = [0x47, 0x60, 0x7C]; return '#' + a.map((v, i) => Math.round(v + (b[i] - v) * f).toString(16).padStart(2, '0')).join(''); };
+const dayEnd = Math.max(...D.stops.map((b) => b.ridership.h));
+function crewMap(sts) {
+  let lines = '', dots = '', labels = '';
+  sts.forEach((st, k) => st.forEach((b, i) => {
+    const prev = i ? st[i - 1] : (k ? sts[k - 1][sts[k - 1].length - 1] : null);
+    const [x, y] = px(b.x, b.y), col = mix(b.ridership.h / dayEnd);
+    if (prev) {
+      const [x0, y0] = px(prev.x, prev.y);
+      lines += i ? `<path d="M${x0.toFixed(1)} ${y0.toFixed(1)}L${x.toFixed(1)} ${y.toFixed(1)}" stroke="${col}" stroke-width="4" vector-effect="non-scaling-stroke"/>`
+        : `<path d="M${x0.toFixed(1)} ${y0.toFixed(1)}L${x.toFixed(1)} ${y.toFixed(1)}" stroke="${col}" stroke-width="1.6" stroke-dasharray="5 4" opacity=".8" vector-effect="non-scaling-stroke"/>`;
+    }
+    dots += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(5 + Math.sqrt(b.r) / 2).toFixed(1)}" fill="${col}" stroke="#fff" stroke-width="1.2" vector-effect="non-scaling-stroke"/>`;
+    if (i === 0 && k < 5) labels += `<g transform="translate(${x.toFixed(1)} ${(y - 26).toFixed(1)})"><circle r="17" fill="#10243A" stroke="#fff" stroke-width="1.5" vector-effect="non-scaling-stroke"/><text y="7" text-anchor="middle" font-size="20" font-weight="700" fill="#fff" font-family="Barlow, sans-serif">${k + 1}</text></g>`;
+  }));
+  return `<svg class="cmap" viewBox="-20 -40 ${W + 40} ${H + 60}" role="img" aria-label="This crew's day on the map">${base}<g fill="none" stroke-linecap="round">${lines}</g>${dots}${labels}</svg>`;
+}
+$('#crews').innerHTML = Object.entries(crews).map(([n, sts]) => {
+  const all = sts.flat(), last = all[all.length - 1].ridership.h, more = sts.length - 5;
+  return `<div class="panel"><div class="k">Crew ${n}</div>${crewMap(sts)}<ol>${sts.slice(0, 5).map((st) => {
+    const riders = st.reduce((a, b) => a + b.r, 0), end = st[st.length - 1].ridership.h;
+    return `<li>${st[0].n}${st.length > 1 ? ' → ' + st[st.length - 1].n : ''}<br><small>${st.length} stop${st.length > 1 ? 's' : ''}, ${riders.toLocaleString()} boardings, done by hour ${end.toFixed(1)}</small></li>`;
+  }).join('')}</ol><p class="note">${more > 0 ? `Then ${more} more stretch${more > 1 ? 'es' : ''}. ` : ''}${all.length} stops in all, the last clear by hour ${last.toFixed(1)}.</p></div>`;
+}).join('');
 
 $('#sens').innerHTML = '<tr><th>Change</th><th>Average wait</th><th>Riders\' stops clear after 4 h</th><th>All stops clear</th><th>Trailer moves</th></tr>'
   + [{ label: 'As modeled', route: { wait: R.avg_wait_h, h4: R.share_by[4], finish: R.finish_h, trailers: R.trailer_moves }, ridership: { wait: F.avg_wait_h, h4: F.share_by[4], finish: F.finish_h, trailers: F.trailer_moves } }, ...D.sens]

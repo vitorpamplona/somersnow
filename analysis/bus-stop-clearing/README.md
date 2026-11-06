@@ -13,7 +13,7 @@ The most riders at a clear stop, as fast as possible. We measure it as the **ave
 1. **Riders are bunched.** Half of the weekday boardings at the stops the City clears happen at 15 of its 189 stops. The 3 busiest (Davis, Clarendon Hill Busway, Holland St @ Dover St) see more riders than the 151 quietest stops together.
 2. **Follow the street.** The bobcats drive along the bus routes, stop to stop. A crew never drives past a waiting stop: it clears it. It may drive through stops that are already clear.
 3. **One side, then back.** Each side of the street is its own run, driven the way the bus goes. A crew keeps going while the next stop ahead waits; then it crosses the road and clears the other side on the way back. It never backs up over a stretch it just cleared.
-4. **Busiest run first.** Crews start at busy stops at least 1.2 km apart. When a run is done, a crew heads where the next few waiting stops along the street (up to 8) clear the most riders per minute of driving and clearing.
+4. **Busiest run first, and your own.** Crews start at busy stops at least 1.2 km apart. When a run is done, a crew heads where the next few waiting stops along the street (up to 8) clear the most riders per minute of driving and clearing. It leaves other crews their work: the stops just ahead of another crew, and the far side of the street another crew just cleared (its way back). So a crew doesn't drive down a street another crew just cleared to take stops that crew would reach anyway.
 5. **Then the nearest.** Once stops with 70% of riders are clear, each crew takes the nearest waiting stop along the street, so no one drives across town for the last few.
 
 ## Result
@@ -22,13 +22,13 @@ Same 4 crews, same stops, same streets, different order (hours of work from when
 
 | | Route by route (today, as modeled) | Riders first |
 | --- | --- | --- |
-| Average wait for a rider's stop | 7.3 h | 4.4 h |
+| Average wait for a rider's stop | 7.3 h | 4.3 h |
 | Riders' stops clear after 2 h | 9% | 47% |
-| Riders' stops clear after 4 h | 16% | 62% |
-| All stops clear | 22.9 h | 19.7 h |
-| Distance driven | 92 km | 86 km |
+| Riders' stops clear after 4 h | 16% | 64% |
+| All stops clear | 22.9 h | 20.2 h |
+| Distance driven | 92 km | 84 km |
 
-Riders first gets riders their stop sooner, finishes sooner and drives less. It holds when any one assumption changes (2 or 6 crews, 10 or 30 minutes a stop, a bobcat at 3 or 8 mph): the average wait drops by about 40% or more, and every stop is clear sooner or within half an hour of route by route (with 2 crews, 24 minutes later). `output/summary.md` also has the same comparison for 1 to 10 crews.
+Riders first gets riders their stop sooner, finishes sooner and drives less. It holds when any one assumption changes (2 or 6 crews, 10 or 30 minutes a stop, a bobcat at 3 or 8 mph): the average wait drops by about 40% or more, and every stop is clear sooner, every time. `output/summary.md` also has the same comparison for 1 to 10 crews.
 
 ## How the model works
 
@@ -39,7 +39,7 @@ Riders first gets riders their stop sooner, finishes sooner and drives less. It 
 - **Driving:** about 5 mph. **Clearing:** 20 minutes a stop (boarding area, shelter, bench).
 - **Start:** each crew begins at its first stop at hour 0. Getting the bobcats there from the yard isn't counted; it is the same for both plans.
 - **Route by route:** a stand-in for today's practice, since the City's 4 routes aren't published: whole bus routes, stop by stop in the order the bus runs, in route-number order, split among 4 crews so each has about the same number of stops.
-- **Riders first:** the rules above. The 1.2 km spacing, the 8-stop lookahead and the 70% switch were picked by trying a few values; they give sensible starting points and beat route by route on every measure.
+- **Riders first:** the rules above. The 1.2 km spacing, the 8-stop lookahead (also how far ahead another crew's run is left to it) and the 70% switch were picked by trying a few values; they give sensible starting points and beat route by route on every measure.
 
 Every assumption is at the top of `build.py` (`A = {...}`); change one and rebuild. A build takes about a second, and the same inputs always give the same plan.
 

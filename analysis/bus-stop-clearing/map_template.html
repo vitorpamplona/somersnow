@@ -269,6 +269,7 @@ $('#why').innerHTML = [
   ['Follow the street', `The bobcats drive along the bus routes at about ${mph} mph, stop to stop. A crew never drives past a waiting stop: it clears it.`],
   ['One side, then back', `Each side of the street is its own run, driven the way the bus goes. A crew keeps going while the next stop ahead waits; then it crosses the road (${A.turn_min} minutes to turn around) and clears the other side on the way back. It never backs up over a stretch it just cleared.`],
   ['Busiest run first', `Crews start at busy stops spread across the city. When a run is done, a crew heads where the next few waiting stops along the street clear the most riders per minute: the driving plus ${A.service_min} minutes a stop.`],
+  ['Leave others their work', 'A crew skips the stops just ahead of another crew, and the far side of a street another crew just cleared: that crew clears it on its way back. So no crew drives down a cleared street to take stops another crew would reach anyway.'],
   ['Then the nearest', `Once stops with ${Math.round(A.sweep_after * 100)}% of riders are clear, each crew takes the nearest waiting stop, so no one drives across town for the last few. That keeps driving below route by route.`],
 ].map(([h, p]) => `<div><b>${h}</b>${p}</div>`).join('');
 

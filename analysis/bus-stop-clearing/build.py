@@ -91,8 +91,28 @@ def route_orders(stops, routes):
             if off < 120:
                 on.setdefault(i, []).append((along, s['id']))
         for i in sorted(on):
-            out.append((rid, sorted(on[i])))
+            out.append((rid, r['paths'][i], sorted(on[i])))
     return out
+
+
+def slice_path(path, x, y):
+    """The piece of a polyline between distances x and y along it."""
+    def at(p, q, t):
+        return [p[0] + (q[0] - p[0]) * t, p[1] + (q[1] - p[1]) * t]
+    pts, along = [], 0.0
+    for p, q in zip(path, path[1:]):
+        seg = meters(p, q)
+        if seg and along + seg >= x and along <= y:
+            if not pts:
+                pts.append(at(p, q, max(0.0, (x - along) / seg)))
+            if along + seg >= y:
+                pts.append(at(p, q, (y - along) / seg)); break
+            pts.append(list(q))
+        along += seg
+    return [[round(a, 5), round(b, 5)] for a, b in pts]
+
+
+GEO = {}                                          # (a, b) -> the street shape of the link from a to b
 
 
 def street_network(allstops, routes):
@@ -101,14 +121,19 @@ def street_network(allstops, routes):
     closest stops, so every stop can be reached."""
     G = {s['id']: {} for s in allstops}
 
-    def link(a, b, m):
+    GEO.clear()
+
+    def link(a, b, m, shape=None):
         if a != b and (b not in G[a] or m < G[a][b]):
             G[a][b] = G[b][a] = m
-    for _, seq in route_orders(allstops, routes):
+            GEO.pop((a, b), None); GEO.pop((b, a), None)
+            if shape and len(shape) > 2:
+                GEO[(a, b)] = shape
+    for _, path, seq in route_orders(allstops, routes):
         for (x, a), (y, b) in zip(seq, seq[1:]):
             m = max(y - x, meters(P[a], P[b]))
             if m <= A['max_link_m']:
-                link(a, b, m)
+                link(a, b, m, slice_path(path, x, y))
     ids = list(G)
     for i, a in enumerate(ids):
         for b in ids[i + 1:]:
@@ -163,7 +188,7 @@ def route_by_route(G, stops, orders):
     """Whole routes, in route-number order, split among the crews so each has about the
     same number of stops; each stop counted on its first route."""
     seen, routes = set(), {}
-    for rid, seq in orders:
+    for rid, _, seq in orders:
         for _, sid in seq:
             if sid in R and sid not in seen:
                 seen.add(sid); routes.setdefault(rid, []).append(sid)
@@ -349,6 +374,7 @@ if __name__ == '__main__':
         'wards': [w['rings'] for w in wards],
         'routes': {k: v['paths'] for k, v in bs['routes'].items() if v['paths']},
         'nodes': {s['id']: [s['lon'], s['lat']] for s in allstops},
+        'geo': {f'{a}|{b}': g for (a, b), g in GEO.items()},
         'stops': [{'id': s['id'], 'n': s['name'], 'x': s['lon'], 'y': s['lat'], 'r': s['riders'], 'rt': s['routes'],
                    **{k: {'h': round(next(e['h'] for day in plans[k] for e in day if e['stop'] == s['id']), 2)} for k in plans}} for s in stops],
         'mbta': [{'n': s['name'], 'x': s['lon'], 'y': s['lat'], 'r': s['riders']} for s in mbta],

@@ -34,6 +34,7 @@ Riders first gets riders their stop sooner, finishes sooner and drives less. It 
 
 - **Stops:** the MBTA bus stops in Somerville with their average weekday boardings (Fall 2025). The 18 stops on route 109 are left out: the MBTA clears all of them itself. They stay on the street network, so crews can drive past them.
 - **Streets:** each stop is linked to the next stop along every bus route that serves it, at the route's own length, and to any stop within 60 m (across the street). Stops more than 900 m apart on a route aren't linked: a gap that long means stops in between were matched to the route's other direction, and the link would let a crew skip them. Where the bus routes leave pieces unconnected, the closest stops are linked (4 links). Crews drive the shortest way along these links.
+- **On the map:** each link is drawn along the bus route's own shape between the two stops, so trails follow the street and share it where routes do (links across the street and the 4 joining links are straight).
 - **Driving:** about 5 mph. **Clearing:** 20 minutes a stop (boarding area, shelter, bench).
 - **Start:** each crew begins at its first stop at hour 0. Getting the bobcats there from the yard isn't counted; it is the same for both plans.
 - **Route by route:** a stand-in for today's practice, since the City's 4 routes aren't published: whole bus routes, stop by stop in the order the bus runs, in route-number order, split among 4 crews so each has about the same number of stops.

@@ -6,9 +6,9 @@ Copy of the PTAC Claude Doc ("Proposal" tab). The live doc is the working versio
 
 Dear Members of the City Council,
 
-On behalf of the Somerville Pedestrian and Transit Advisory Committee (PTAC), thank you for your continued attention to walking and transit in our city. In March 2025, PTAC wrote to Mayor Ballantyne, with copies to the City Council, about the condition of our sidewalks in winter. We write now with a specific request.
+On behalf of the Somerville Pedestrian and Transit Advisory Committee (PTAC), thank you for your continued attention to walking and transit in our city. In March 2025, PTAC wrote to Mayor Ballantyne, with copies to the City Council, after finding ice on sidewalks up to 7 days after the snow that winter. That letter made 13 recommendations, from stricter rules for ice to one team leading snow clearing. Since then, the Council has required commercial buildings to clear their curb ramps (Ord. 2025-25). Most of the other recommendations need changes to the ordinances themselves, so this letter turns them into proposed text.
 
-We respectfully ask the Council to amend Somerville's sidewalk snow ordinances so that they are simpler to follow, clear about every duty, and more protective of residents with disabilities at the places people most often get stuck: corners, bus stops and ice. Today the rules are hard to follow and harder to enforce. Complaints to 311 peak two to three days after the snow stops, long after the deadline, and nothing in the code makes sure a ticketed sidewalk is ever cleared.
+We respectfully ask the Council to amend Somerville's sidewalk snow ordinances so that they are simpler to follow, clear about every duty, and more protective of residents with disabilities at the places people most often get stuck: corners, bus stops and ice. Today the rules are hard to follow and harder to enforce. Complaints to 311 peak two to three days after the snow stops, long after the deadline, and nothing in the code makes sure a ticketed sidewalk is ever cleared. Below we explain why this matters and what we ask, followed by the proposed text. Attachment A explains each change, and Attachment B covers what the ordinance can't do alone.
 
 ## Why it matters
 

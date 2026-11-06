@@ -130,17 +130,7 @@ Every change we propose, written as ordinance text for the City's legislative co
 
 **(e) Where snow may not go.** No person, including a contractor clearing a driveway, parking lot or sidewalk, may place snow or ice on any sidewalk, curb ramp, crosswalk or bus stop, within 3 feet of a hydrant, on a storm drain, against a pole with a pedestrian push button, or in an accessible parking space or its access aisle. Snow goes onto the owner's own property, or the owner has it hauled away. It may also go into the planted strip between the sidewalk and the curb where it does not narrow the clear path or block the view of people crossing at a corner. A ticket under this subsection goes to the owner of the property the snow or ice came from.
 
-**(f) Deadlines.**
-
-(1) The owner shall open the clear path within 3 hours after the storm ends, counting only hours between sunrise and sunset. If the storm ends after sunset, the 3 hours start at sunrise.
-
-(2) For each storm that needs a notice under Section 12-8B(b), the notice states its deadline as a clock time.
-
-(3) These deadlines apply after every storm, whether or not a snow emergency is declared, and on weekends and holidays. Snow a plow pushes onto a cleared path or curb ramp starts a new deadline under (1), counted from when the plow passes. Ice that forms later from melting and refreezing is covered by subsection (c).
-
-(4) The City may extend a deadline only by a public notice under Section 12-8B, issued before the deadline passes, that states the new deadline as a date and time.
-
-(5) While snow, sleet or freezing rain keeps falling, the owner shall also clear and treat the path within 3 hours after each sunrise, except while a snow emergency is in effect.
+**(f) Deadlines.** (1) The owner shall open the clear path within 3 hours after the storm ends, counting only hours between sunrise and sunset. If the storm ends after sunset, the 3 hours start at sunrise. (2) For each storm that needs a notice under Section 12-8B(b), the notice states its deadline as a clock time. (3) These deadlines apply after every storm, whether or not a snow emergency is declared, and on weekends and holidays. Snow a plow pushes onto a cleared path or curb ramp starts a new deadline under (1), counted from when the plow passes. Ice that forms later from melting and refreezing is covered by subsection (c). (4) The City may extend a deadline only by a public notice under Section 12-8B, issued before the deadline passes, that states the new deadline as a date and time. (5) While snow, sleet or freezing rain keeps falling, the owner shall also clear and treat the path within 3 hours after each sunrise, except while a snow emergency is in effect.
 
 **(g) Snow assistance.** The City shall run a snow assistance program. An owner who lives in a 1- to 3-unit building, is 65 or older or has a disability, and earns less than a limit the City sets may register at any time. Registering by December 1 covers the whole winter season. The City, its volunteers or organizations it funds clear registered frontages, curb ramps included, at no charge to the owner, within 24 hours after each storm ends. A registered property is not ticketed or warned under this section while registered. The City shall keep a public sign-up for neighbors who adopt a curb ramp, a bus stop or a registered neighbor's frontage. The City may fund neighborhood organizations for this work. Volunteers and funded organizations are not City employees, and the City does not guarantee their work.
 

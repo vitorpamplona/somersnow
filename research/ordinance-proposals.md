@@ -77,7 +77,6 @@ One change per row: what the code or City practice says today, and what the prop
 | Eligible seniors and disabled owners | Can hire teen shovelers. | Free help, no fines. |
 | Tenants | Can be ticketed. | Never ticketed for sidewalk snow. |
 | Tenants | A lease can assign the sidewalk. | The City bills only the owner, whatever the lease says. |
-| Tenants | No contact required. | A contact name each October. |
 | Everyone | Only your own sidewalk is off-limits for snow. | No snow on any walk, ramp, stop, hydrant or drain. |
 | Everyone | Snow in streets if the day's mean tops 40°F. | Only above 40°F at the time; never in bike lanes. |
 | Everyone | Space savers not named. | Space savers banned and discarded. |
@@ -151,15 +150,13 @@ Every change we propose, written as ordinance text for the City's legislative co
 
 **(h) Where snow may not go.** No person, including a contractor clearing a driveway, parking lot or sidewalk, may place snow or ice on any sidewalk, curb ramp, crosswalk or bus stop, within 3 feet of a hydrant, on a storm drain, against a pole with a pedestrian push button, or in an accessible parking space or its access aisle. Snow goes onto the owner's own property, or the owner has it hauled away. It may also go into the planted strip between the sidewalk and the curb where it does not narrow the clear path or block the view of people crossing at a corner. A ticket under this subsection goes to the owner of the property the snow or ice came from.
 
-**(i) Contact for tenants.** Each October, the owner of a building with rented units shall tell occupants in writing who clears the sidewalk and curb ramps, and how to reach them.
+**(i) Fines.** Each ticket under this section is $150 for a building of 1 to 3 units where at least one unit has the residential tax exemption, and $300 for any other property. Any property pays $300 for ice left after its deadline without being leveled and covered with sand or de-icer, or while a permit listed in subsection (j)(1) is open on it. Each day a violation continues is a new offense.
 
-**(j) Fines.** Each ticket under this section is $150 for a building of 1 to 3 units where at least one unit has the residential tax exemption, and $300 for any other property. Any property pays $300 for ice left after its deadline without being leveled and covered with sand or de-icer, or while a permit listed in subsection (k)(1) is open on it. Each day a violation continues is a new offense.
+**(j) Construction.** (1) Every permit to place a dumpster, obstruct or open a sidewalk, or build or demolish, includes this condition: keep the sidewalk, or the permitted detour, clear by the deadlines of this section; breaking it violates this section and the permit. (2) A permit that closes a sidewalk shall provide an accessible detour at least 48 inches wide, signed before the closure and edged with barriers a cane can detect, which the permit holder keeps clear of snow and ice. (3) On a permitted site, the clearing fee under subsection (c) is drawn from the permit's deposit or bond, and the permit holder restores it within 5 business days. (4) After 3 tickets for the property while a permit is open, the City may suspend a dumpster, obstruction or sidewalk-opening permit until the sidewalk is clear and the tickets are paid. Unpaid tickets may also block a building permit under Section 1-11(c), after notice and a hearing.
 
-**(k) Construction.** (1) Every permit to place a dumpster, obstruct or open a sidewalk, or build or demolish, includes this condition: keep the sidewalk, or the permitted detour, clear by the deadlines of this section; breaking it violates this section and the permit. (2) A permit that closes a sidewalk shall provide an accessible detour at least 48 inches wide, signed before the closure and edged with barriers a cane can detect, which the permit holder keeps clear of snow and ice. (3) On a permitted site, the clearing fee under subsection (c) is drawn from the permit's deposit or bond, and the permit holder restores it within 5 business days. (4) After 3 tickets for the property while a permit is open, the City may suspend a dumpster, obstruction or sidewalk-opening permit until the sidewalk is clear and the tickets are paid. Unpaid tickets may also block a building permit under Section 1-11(c), after notice and a hearing.
+**(k) Accessible parking.** The owner of a property with a parking lot shall clear its accessible parking spaces, their access aisles and the route to the entrance whenever the lot is cleared.
 
-**(l) Accessible parking.** The owner of a property with a parking lot shall clear its accessible parking spaces, their access aisles and the route to the entrance whenever the lot is cleared.
-
-**(m) Liability.** The duties in this section and in Sections 12-8A and 12-8B are enforced by the City. They create no private right of action and do not enlarge the liability of the City or of any owner beyond what state law provides.
+**(l) Liability.** The duties in this section and in Sections 12-8A and 12-8B are enforced by the City. They create no private right of action and do not enlarge the liability of the City or of any owner beyond what state law provides.
 
 **State law reference.** M.G.L. c. 40, §21(2)–(4) and §21D, replacing today's reference to c. 85, §5, which caps a city's fine at $50.
 
@@ -187,7 +184,7 @@ Every change we propose, written as ordinance text for the City's legislative co
 
 **(b) Deadline notice.** After each storm with 1 inch or more of snow, or with sleet or freezing rain, the City shall announce by City Alert and on its website when it ended and the clearing deadline as a clock time, in the languages of its snow rules. Extensions under Section 12-8(b)(4) shall be announced the same way and also on social media, the City's cable channel, email lists and the emergency phone system.
 
-**(c) Season guide.** Each November, the City shall send every household and business the sidewalk rules, with the water or tax bill or by mail, including photographs of acceptable and unacceptable clearing; the duties of owners and permit holders; suitable tools and de-icers; the snow assistance and teen shoveler programs; and how to hire and oversee a snow contractor.
+**(c) Season guide.** Each November, the City shall send every household and business the sidewalk rules, with the water or tax bill or by mail, including photographs of acceptable and unacceptable clearing; the duties of owners and permit holders, and that tenants are not ticketed; how to report a missed sidewalk to 311; suitable tools and de-icers; the snow assistance and teen shoveler programs; and how to hire and oversee a snow contractor.
 
 **(d) 311 outcomes.** A 311 request about an uncleared sidewalk shall be closed with its outcome: clear on inspection, ticket, cleared by the City, registered property cleared by the City, City frontage, or not found.
 
@@ -235,7 +232,7 @@ Retitled from "Shoveling snow on streets".
 
 **In subsection (a),** strike "except that snow removal violations shall be counted from October 1 through May 1 of the following year", which the flat fines below make unnecessary.
 
-**In the table in subsection (b),** replace the Sec. 12-8 and 12-9 rows with one row for Sec. 12-2, 12-8 and 12-9: $150 for a building of 1 to 3 units where at least one unit has the residential exemption; $300 for any other property, and for any property for ice not leveled and covered with sand or de-icer by its deadline, or while a Section 12-8(k)(1) permit is open. Enforcing personnel: DPW commissioner; inspectional services; traffic and parking. Rename the Sec. 12-18 row "Obstacles in streets and sidewalks" (fine unchanged).
+**In the table in subsection (b),** replace the Sec. 12-8 and 12-9 rows with one row for Sec. 12-2, 12-8 and 12-9: $150 for a building of 1 to 3 units where at least one unit has the residential exemption; $300 for any other property, and for any property for ice not leveled and covered with sand or de-icer by its deadline, or while a Section 12-8(j)(1) permit is open. Enforcing personnel: DPW commissioner; inspectional services; traffic and parking. Rename the Sec. 12-18 row "Obstacles in streets and sidewalks" (fine unchanged).
 
 **Add subsection (d), snow and ice tickets:** (1) A ticket under Sections 12-2, 12-8, 12-9 or 12-18(f) names the owner. If not handed over, it is mailed within 15 days to the tax-bill address, or to a condominium's trustees or managing agent. The inspector need not find out who lives in or manages the property. (2) An inspector who finds a violation shall issue a ticket. There are no warnings. A property registered in the snow assistance program under Section 12-8(e) is not ticketed while registered. (3) Within 24 hours after the deadline for every storm with 1 inch or more of snow, or with sleet or freezing rain, inspectors shall check the priority routes, whether or not anyone complained. (4) Tickets and notices include how to pay, appeal and get help, in the languages in which the City publishes its snow rules. (5) Fines and clearing charges under Section 12-8 shall fund the snow assistance program and City clearing of curb ramps and bus stops, subject to appropriation. (6) If 3 or more Section 12-8 tickets are issued in one winter season for a property where a business holds a City license or permit, the issuing authority may suspend or refuse to renew it, after notice and a hearing.
 
@@ -301,17 +298,11 @@ Name the terms the rule depends on, and put one name on every ticket: the owner 
 - *Proposed:* "every sidewalk the property abuts, including both sides of a corner lot"
 - *Why:* "An abutting sidewalk" is singular; naming both sides of a corner lot removes an easy argument on appeal.
 
-**Contact for tenants**
-
-- *Today:* None.
-- *Proposed:* "Each October, the owner of a building with rented units shall tell occupants in writing who clears the sidewalk and curb ramps, and how to reach them."
-- *Why:* Nothing in the code or a standard lease tells tenants who clears. Since the owner gets the ticket, a written note each fall tells tenants whom to call when a walk is missed.
-
 **Who is affected**
 
 - **Homeowners:** no change; they get their own tickets, as today. Condominium associations get the ticket for their building, as they already handle its shared parts.
 - **Tenants:** never ticketed or billed by the City for sidewalk snow.
-- **Landlords and other owners:** shovel or hire someone for every rental, pay every ticket, and send tenants one notice each October. The cost may show up in rents.
+- **Landlords and other owners:** shovel or hire someone for every rental, and pay every ticket. The cost may show up in rents.
 - **City staff:** no more investigating who is in charge, and fewer appeals over the wrong person.
 
 ### Sec. 12-8: the deadline
@@ -730,13 +721,13 @@ Make the ticket automatic and the amount simple: inspectors must ticket every vi
 **Fine amounts**
 
 - *Today:* 12-8 and 12-9: 1–3 units $100 / $200 / $300; 4+ units and businesses $150 / $300. Counted per property, Oct 1 to May 1.
-- *Proposed:* "$150 for a building of 1 to 3 units where at least one unit has the residential exemption; $300 for any other property, and for any property for ice not leveled and covered with sand or de-icer by its deadline, or while a Section 12-8(k)(1) permit is open." (one row in Section 1-11(b) for Sec. 12-2, 12-8 and 12-9)
+- *Proposed:* "$150 for a building of 1 to 3 units where at least one unit has the residential exemption; $300 for any other property, and for any property for ice not leveled and covered with sand or de-icer by its deadline, or while a Section 12-8(j)(1) permit is open." (one row in Section 1-11(b) for Sec. 12-2, 12-8 and 12-9)
 - *Why:* Two amounts, both read from City records in seconds, and no offense history to look up (today's 1st/2nd/3rd count runs per property from Oct 1 to May 1). PTAC's March 2025 letter asked for higher fines for ice, landlords and developers; $300 is the state cap. Repeat failures still add up: a new ticket each day, plus the clearing fee. The line follows today's split between 1–3 unit and larger buildings, and the residential exemption shows whether an owner lives there.
 
 **Construction sites**
 
 - *Today:* Same fines as any property of its type.
-- *Proposed:* "Any property pays $300 for ice left after its deadline without being leveled and covered with sand or de-icer, or while a permit listed in subsection (k)(1) is open on it." Those permits cover dumpsters, sidewalk obstructions and openings, building and demolition.
+- *Proposed:* "Any property pays $300 for ice left after its deadline without being leveled and covered with sand or de-icer, or while a permit listed in subsection (j)(1) is open on it." Those permits cover dumpsters, sidewalk obstructions and openings, building and demolition.
 - *Why:* Sites have crews and equipment, so a missed deadline is a choice. Even an owner-occupied home pays $300 while a permit is open, and the permit is easy to check: it is open or it isn't. The ice test follows Boston's code, where ice passes if it is "made level and completely covered with sand" (CBC 16-12.16(B)). The bigger lever is the permit itself (see construction sites under Sec. 12-8).
 
 **Who gets the ticket**
@@ -812,7 +803,7 @@ Put one official in charge of the whole effort, tell people the deadline every t
 **Season guide**
 
 - *Today:* None.
-- *Proposed:* "Each November, the City shall send every household and business the sidewalk rules, with the water or tax bill or by mail, including photographs of acceptable and unacceptable clearing; the duties of owners and permit holders; suitable tools and de-icers; the snow assistance and teen shoveler programs; and how to hire and oversee a snow contractor."
+- *Proposed:* "Each November, the City shall send every household and business the sidewalk rules, with the water or tax bill or by mail, including photographs of acceptable and unacceptable clearing; the duties of owners and permit holders, and that tenants are not ticketed; how to report a missed sidewalk to 311; suitable tools and de-icers; the snow assistance and teen shoveler programs; and how to hire and oversee a snow contractor."
 - *Why:* Residents tell PTAC the first December storm is when people relearn the rules; a November mailing reaches them first, including everyone who moved in since last winter. PTAC's March 2025 letter asked for this content, noting that the City's snow materials focus on cars.
 
 **How a 311 report ends**
@@ -878,12 +869,11 @@ PTAC wrote these rules for Somerville, not to copy the state or other cities. Fo
 | $150 and $300 tickets | c. 40 §21 caps penalties at $300 per offense, and c. 40 §21D caps a ticket at $300. c. 40U §5, if the City used it for snow, caps tickets at $200. c. 59 §5C grants the residential exemption per parcel, condo units included. | Within the cap under §21D. The $150 test is a lookup in assessing records. | Kept. Tickets go under §21D. |
 | Tickets by mail | c. 40 §21D: hand the ticket over "if possible"; otherwise mail it "to the offender's last known address, within fifteen days after said violation". | Works: under the ordinance, the owner is the offender. | Added "within 15 days" to Sec. 1-11. |
 | "No lease may make a tenant shovel or pay" (an approach we considered and dropped) | Leases are civil law under art. 89 §7(5) (Marshal House v. Rent Review Board, 1970; Bannerman). The State Sanitary Code lets a written lease shift snow duty only for exits under the tenant's "exclusive use and control" (105 CMR 410.260(D)(4)); it doesn't reach the public sidewalk. | The riskiest line in the draft: it rewrote lease terms. Ticketing only the owner gets the same result for enforcement without touching the lease. | Rewritten: the duty stays with the owner for enforcement, whatever a lease says. Attachment B asks the state to protect tenants in the lease itself. |
-| Tenant contact notice (Sec. 12-8(i)) | No state rule on it. | A notice duty on the owner, part of the snow rule; it changes no lease term. | Kept. |
 | Ramps, crosswalk openings, bus stops, hydrants (Sec. 12-8(g)) | c. 40 §21(3) speaks of "sidewalks, within the limits of the public ways"; no statute addresses the street edge, for or against. c. 85 §7B fines pushing snow onto a state highway "so as to impede the flow of traffic". | Within the City's general home rule power (art. 89 §6), since no statute conflicts, but untested: the least certain part of the draft. Snow from a cut goes onto the owner's property (Sec. 12-8(h)), never into the road. | Kept. The first question for the Law Department. |
 | Flat clearing fee and lien (Sec. 12-8(c)) | A fee must pay for a service and be reasonable and roughly proportional to its cost (Emerson College v. Boston, 1984; Silva v. Attleboro, 2009). c. 85 §6 lets a city that accepts it charge abutters "the whole or any part of the cost" of clearing their sidewalks. Liens: Somerville's own Acts of 1996, c. 252 (cited in Sec. 1-11(c)), or c. 40 §58, with a council vote for each type of charge. | Valid as written: charged only where City crews cleared, at average cost. | Kept. |
 | Construction: holding inspections (an approach we considered and dropped) | The State Building Code is "intended to occupy the field of building regulation" (St. George Greek Orthodox Cathedral v. Fire Department of Springfield, 2012). c. 40 §57 lets a city that accepts it deny or suspend a building permit for unpaid fines, after notice, a hearing and an offer of a payment plan. | Holding building inspections over tickets risks preemption. Dumpster, obstruction and sidewalk-opening permits are the City's own (Sec. 12-12, 12-20, 12-77). | Rewritten: after 3 tickets the City may suspend the sidewalk permit; unpaid tickets reach the building permit only through Sec. 1-11(c), with notice and a hearing. |
 | Fines for the assistance program (Sec. 1-11) | Fines "enure to the city or town for such use as said city or town may direct" (c. 40 §21D), but every receipt goes to the treasury and needs an appropriation (c. 44 §53). c. 40 §5B, if accepted, lets a city dedicate a receipt to a fund without appropriation. | "Subject to appropriation", as drafted, is allowed. Skipping appropriation would need §5B, if the state's Division of Local Services agrees fines qualify. | Kept. |
-| City deadlines: "shall clear" (Sec. 12-8(c), 12-8A) | A city "shall not be liable" for injury from snow or ice on a public way that is otherwise reasonably safe (c. 84 §17). The Tort Claims Act shields discretionary choices (c. 258 §10(b)); a fixed duty has less of that cover. | §17 still applies; firm deadlines may narrow one defense. | Added Sec. 12-8(m): the duties are enforced by the City and create no new right to sue the City or an owner. |
+| City deadlines: "shall clear" (Sec. 12-8(c), 12-8A) | A city "shall not be liable" for injury from snow or ice on a public way that is otherwise reasonably safe (c. 84 §17). The Tort Claims Act shields discretionary choices (c. 258 §10(b)); a fixed duty has less of that cover. | §17 still applies; firm deadlines may narrow one defense. | Added Sec. 12-8(l): the duties are enforced by the City and create no new right to sue the City or an owner. |
 | Water from buildings (Sec. 12-2(a)) | The MWRA bars groundwater and roof runoff from its sewers (360 CMR 10.023). | "Piped to a drain" could send sump water into a sewer. | Rewritten: piped to the gutter or onto the owner's own ground. |
 | Roof snow and ice (Sec. 12-2(d)) | c. 40 §21(2) and (4) let cities require owners to prevent and remove snow and ice falling from roofs. | Expressly allowed. | Kept. |
 | Business licenses (new Sec. 1-11(d)(6)) | c. 40 §57 covers licenses only for unpaid charges. Suspending a license for repeated violations rests on the power that grants each license: the City's own ordinances, or the state law behind licenses such as liquor licenses. | Likely allowed for licenses and permits the City grants under its own ordinances; less certain for state-defined licenses. | Added, with a 3-ticket threshold, notice and a hearing. For the Law Department to confirm which licenses it reaches. |

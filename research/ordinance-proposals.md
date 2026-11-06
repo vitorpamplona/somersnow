@@ -131,7 +131,7 @@ Every change we propose, written as ordinance text for the City's legislative co
 
 (2) For each storm that needs a notice under Section 12-8B(b), the notice states its deadline as a clock time.
 
-(3) These deadlines apply after every storm, whether or not a snow emergency is declared, and on weekends and holidays. Snow that drifts back onto a cleared path, and snow a plow pushes onto a cleared path or curb ramp, start a new deadline, counted from when the drift forms or the plow passes. Ice that forms later from melting and refreezing is covered by subsection (f).
+(3) These deadlines apply after every storm, whether or not a snow emergency is declared, and on weekends and holidays. Snow a plow pushes onto a cleared path or curb ramp starts a new deadline under (1), counted from when the plow passes. Ice that forms later from melting and refreezing is covered by subsection (f).
 
 (4) The City may extend a deadline only by a public notice under Section 12-8B, issued before the deadline passes, that states the new deadline as a date and time.
 
@@ -395,8 +395,8 @@ Widen the path to 4 feet, make bare pavement the rule and sand the stopgap, and 
 **Plow re-burial**
 
 - *Today:* None.
-- *Proposed:* "Snow that drifts back onto a cleared path, and snow a plow pushes onto a cleared path or curb ramp, start a new deadline, counted from when the drift forms or the plow passes."
-- *Why:* Residents ask whether the clock restarts. This answers yes, and gives them a fair deadline. Brookline gives owners of buildings with more than 4 units 6 more hours to re-clear corners the Town's plows fill in (Art. 7.7.2).
+- *Proposed:* "Snow a plow pushes onto a cleared path or curb ramp starts a new deadline under (1), counted from when the plow passes."
+- *Why:* Residents ask whether the clock restarts. For plow snow, this answers yes, with the same deadline. Drifts don't restart it: no one can tell when a drift formed, so it would be an excuse no inspector could check. Snow an owner puts back is already banned by (h). Brookline gives owners of buildings with more than 4 units 6 more hours to re-clear corners the Town's plows fill in (Art. 7.7.2).
 
 **Where snow goes**
 

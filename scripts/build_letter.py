@@ -39,7 +39,7 @@ def table_rows(block):
 
 
 def chart_svg(rows):
-    W, H, left, base, h = 680, 270, 20, 220, 150
+    W, H, left, base, h = 680, 212, 20, 170, 108
     band = (W - 2 * left) / len(rows)
     bw = band * 0.56
     peak = max(v for _, v in rows)

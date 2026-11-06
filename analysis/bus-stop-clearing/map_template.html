@@ -31,6 +31,8 @@ h2{font-family:var(--display);font-weight:800;font-size:30px;text-transform:uppe
 .seg{display:inline-flex;background:var(--navy);border-radius:999px;padding:4px}
 .seg button{border:0;background:none;color:var(--ice);font:600 15px var(--body);padding:8px 14px;border-radius:999px;cursor:pointer}
 .seg button[aria-pressed=true]{background:var(--orange);color:var(--navy)}
+.seglab{align-self:center;padding:0 6px 0 10px;color:var(--ice);font:600 13px var(--body);text-transform:uppercase;letter-spacing:1px}
+#crewseg button{padding:8px 12px}
 .play{width:44px;height:44px;border-radius:50%;border:0;background:var(--orange);cursor:pointer;display:flex;align-items:center;justify-content:center}
 .read{font-family:var(--display);font-weight:700;font-size:22px;letter-spacing:.5px;margin-left:auto;font-variant-numeric:tabular-nums}
 .read b{color:var(--orange)}
@@ -76,11 +78,12 @@ footer{margin-top:40px;color:var(--ice);font-size:14px;border-top:1px solid rgba
 
   <section class="panel" aria-label="Map of the clearing order">
     <div class="controls">
-      <div class="seg" role="group" aria-label="Plan">
+      <div class="seg" role="group" aria-label="Plan" id="planseg">
         <button data-p="riders" aria-pressed="true">Riders first</button>
         <button data-p="route" aria-pressed="false">Route by route</button>
       </div>
       <button class="play" id="play" aria-label="Play"><svg width="18" height="18" viewBox="0 0 18 18"><path id="pi" d="M4 2 L16 9 L4 16 Z" fill="#10243A"/></svg></button>
+      <div class="seg" role="group" aria-label="Which crew to show" id="crewseg"></div>
       <div class="read" id="read"></div>
     </div>
     <input type="range" id="t" min="0" max="24" step="0.1" value="0" aria-label="Hours of work">
@@ -169,14 +172,18 @@ map.innerHTML = s;
 
 // the street shape between two linked stops (along the bus route), or a straight line
 const street = (a, b) => D.geo[a + '|' + b] || (D.geo[b + '|' + a] ? [...D.geo[b + '|' + a]].reverse() : [D.nodes[a], D.nodes[b]]);
-let plan = 'riders', T = 0;
+let plan = 'riders', T = 0, crew = 0;
 const maxH = Math.ceil(Math.max(R.finish_h, F.finish_h));
 $('#t').max = maxH;
 function draw() {
-  D.stops.forEach((b) => { document.getElementById('s' + b.id).setAttribute('fill', b[plan].h <= T ? '#FF8A3D' : '#fff'); });
-  // each crew's drive so far
+  D.stops.forEach((b) => {
+    const el = document.getElementById('s' + b.id);
+    el.setAttribute('fill', b[plan].h <= T ? '#FF8A3D' : '#fff');
+    el.setAttribute('opacity', crew && b[plan].c !== crew ? '.2' : '1');
+  });
   // each crew's drive so far, along the street (through the stops it passes)
-  $('#trails').innerHTML = D.days[plan].map((day) => {
+  $('#trails').innerHTML = D.days[plan].map((day, k) => {
+    if (crew && k + 1 !== crew) return '';
     const pts = [];
     let at = null;
     day.forEach(([sid, path, h]) => {
@@ -188,14 +195,22 @@ function draw() {
   }).join('');
   const share = D.curve[plan].reduce((a, [h, v]) => (h <= T + 1e-9 ? v : a), 0);
   const nclear = D.stops.filter((b) => b[plan].h <= T).length;
-  $('#read').innerHTML = `Hour ${T.toFixed(1)} · <b>${Math.round(share * 100)}%</b> of riders · ${nclear} of ${D.nstops} stops`;
+  const mine = D.stops.filter((b) => b[plan].c === crew), mineDone = mine.filter((b) => b[plan].h <= T).length;
+  $('#read').innerHTML = `Hour ${T.toFixed(1)} · <b>${Math.round(share * 100)}%</b> of riders · `
+    + (crew ? `crew ${crew}: ${mineDone} of ${mine.length} stops` : `${nclear} of ${D.nstops} stops`);
   $('#sidenote').textContent = plan === 'riders'
     ? `Each crew follows the street and clears every waiting stop it reaches, finishing each corner before it moves on. It heads where the next few stops clear the most riders per minute; once stops with ${Math.round(A.sweep_after * 100)}% of riders are clear, it takes the nearest waiting stop.`
     : 'Crews work whole routes, stop by stop, in route-number order. The City\'s own 4 routes are not published, so this is our stand-in.';
   drawChart();
 }
-document.querySelectorAll('.seg button').forEach((b) => b.addEventListener('click', () => {
-  plan = b.dataset.p; document.querySelectorAll('.seg button').forEach((x) => x.setAttribute('aria-pressed', x === b)); draw();
+document.querySelectorAll('#planseg button').forEach((b) => b.addEventListener('click', () => {
+  plan = b.dataset.p; document.querySelectorAll('#planseg button').forEach((x) => x.setAttribute('aria-pressed', x === b)); draw();
+}));
+// show all crews, or one: its trail and its stops
+$('#crewseg').innerHTML = '<span class="seglab">Crew</span>' + ['All', ...D.days.riders.map((_, k) => String(k + 1))]
+  .map((t, k) => `<button data-c="${k}" aria-pressed="${k === 0}" aria-label="${k ? 'Show crew ' + k : 'Show all crews'}">${t}</button>`).join('');
+document.querySelectorAll('#crewseg button').forEach((b) => b.addEventListener('click', () => {
+  crew = +b.dataset.c; document.querySelectorAll('#crewseg button').forEach((x) => x.setAttribute('aria-pressed', x === b)); draw();
 }));
 $('#t').addEventListener('input', (e) => { T = +e.target.value; stop(); draw(); });
 let timer = null;
@@ -214,7 +229,7 @@ map.addEventListener('pointermove', (e) => {
   if (!el) { tip.style.display = 'none'; return; }
   let html;
   if (el.dataset.m) html = `<b>${el.dataset.n}</b>${el.dataset.r} weekday boardings · route 109, cleared by the MBTA`;
-  else { const b = byId[el.id.slice(1)]; html = `<b>${b.n}</b>${b.r} weekday boardings · routes ${b.rt.join(', ')}<br>Riders first: clear at hour ${b.riders.h.toFixed(1)}<br>Route by route: hour ${b.route.h.toFixed(1)}`; }
+  else { const b = byId[el.id.slice(1)]; html = `<b>${b.n}</b>${b.r} weekday boardings · routes ${b.rt.join(', ')}<br>Riders first: crew ${b.riders.c}, clear at hour ${b.riders.h.toFixed(1)}<br>Route by route: crew ${b.route.c}, hour ${b.route.h.toFixed(1)}`; }
   tip.innerHTML = html; tip.style.display = 'block';
   tip.style.left = Math.min(window.innerWidth - 270, e.clientX + 14) + 'px'; tip.style.top = (e.clientY + 14) + 'px';
 });

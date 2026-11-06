@@ -376,7 +376,7 @@ if __name__ == '__main__':
         'nodes': {s['id']: [s['lon'], s['lat']] for s in allstops},
         'geo': {f'{a}|{b}': g for (a, b), g in GEO.items()},
         'stops': [{'id': s['id'], 'n': s['name'], 'x': s['lon'], 'y': s['lat'], 'r': s['riders'], 'rt': s['routes'],
-                   **{k: {'h': round(next(e['h'] for day in plans[k] for e in day if e['stop'] == s['id']), 2)} for k in plans}} for s in stops],
+                   **{k: next({'h': round(e['h'], 2), 'c': c + 1} for c, day in enumerate(plans[k]) for e in day if e['stop'] == s['id']) for k in plans}} for s in stops],
         'mbta': [{'n': s['name'], 'x': s['lon'], 'y': s['lat'], 'r': s['riders']} for s in mbta],
         'days': {k: [[[e['stop'], e['path'], round(e['h'], 3), round(e['m'])] for e in day] for day in days] for k, days in plans.items()},
         'curve': {k: curve(v, total) for k, v in plans.items()},

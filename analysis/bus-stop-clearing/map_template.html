@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Which Bus Stops First?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#10243A;--panel:#1A3A5F;--snow:#EEF3F7;--orange:#FF8A3D;--rust:#B93D06;--ice:#A9C4E4;--mute:#47607C;--ward:#DCE8F5;
+  --display:'Barlow Condensed',Arial Narrow,sans-serif;--body:'Barlow',Arial,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--navy);color:#fff;font:16px/1.5 var(--body)}
+main{max-width:1100px;margin:0 auto;padding:28px 16px 60px}
+.k{font-family:var(--display);font-weight:700;font-size:15px;letter-spacing:2px;text-transform:uppercase;color:var(--ice)}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(40px,7vw,68px);line-height:.95;text-transform:uppercase;margin:8px 0 12px}
+h2{font-family:var(--display);font-weight:800;font-size:30px;text-transform:uppercase;margin:44px 0 10px;line-height:1}
+.lede{font-size:20px;max-width:760px;color:var(--snow);margin:0}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:26px 0}
+.tile{background:var(--panel);border-radius:14px;padding:14px 16px}
+.tile .v{font-family:var(--display);font-weight:800;font-size:40px;line-height:1;font-variant-numeric:tabular-nums}
+.tile .v s{color:var(--ice);opacity:.7;font-size:28px;text-decoration:none}
+.tile .v b{color:var(--orange)}
+.tile .l{color:var(--ice);font-size:14px;margin-top:4px}
+.panel{background:var(--panel);border-radius:18px;padding:16px}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:10px}
+.seg{display:inline-flex;background:var(--navy);border-radius:999px;padding:4px}
+.seg button{border:0;background:none;color:var(--ice);font:600 15px var(--body);padding:8px 14px;border-radius:999px;cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--orange);color:var(--navy)}
+.play{width:44px;height:44px;border-radius:50%;border:0;background:var(--orange);cursor:pointer;display:flex;align-items:center;justify-content:center}
+.read{font-family:var(--display);font-weight:700;font-size:22px;letter-spacing:.5px;margin-left:auto;font-variant-numeric:tabular-nums}
+.read b{color:var(--orange)}
+#t{width:100%;accent-color:var(--orange);margin:2px 0 8px}
+.mapwrap{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:16px;align-items:start}
+#map{width:100%;height:auto;display:block;background:#0E2034;border-radius:12px}
+.side{font-size:14px;color:var(--snow)}
+.side h3{font-family:var(--display);font-size:18px;text-transform:uppercase;letter-spacing:1px;margin:0 0 6px;color:var(--ice)}
+.lg{display:flex;align-items:center;gap:8px;margin:6px 0}
+.lg svg{flex:none}
+#tip{position:fixed;pointer-events:none;background:var(--snow);color:var(--navy);border-radius:10px;padding:8px 10px;font-size:14px;max-width:260px;box-shadow:0 6px 24px rgba(0,0,0,.35);display:none;z-index:5}
+#tip b{display:block}
+#chart{width:100%;height:auto;display:block}
+.why{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.why div{background:var(--panel);border-radius:14px;padding:14px 16px}
+.why b{display:block;font-family:var(--display);font-size:22px;text-transform:uppercase;line-height:1.05;margin-bottom:4px;color:var(--orange)}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid rgba(169,196,228,.25);vertical-align:top}
+th{font-family:var(--display);text-transform:uppercase;letter-spacing:1px;color:var(--ice);font-size:15px}
+td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
+.tw{overflow-x:auto}
+.crew{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.crew ol{margin:6px 0 0;padding-left:20px;font-size:14px}
+.crew li{margin-bottom:6px}
+.crew small{color:var(--ice)}
+.note{color:var(--ice);font-size:14px}
+a{color:var(--orange)}
+footer{margin-top:40px;color:var(--ice);font-size:14px;border-top:1px solid rgba(169,196,228,.3);padding-top:14px}
+@media (max-width:760px){.mapwrap{grid-template-columns:1fr}.read{margin-left:0;width:100%}}
+</style>
+</head>
+<body>
+<main>
+  <div class="k">PTAC analysis · not a City plan</div>
+  <h1>Which bus stops first?</h1>
+  <p class="lede" id="lede"></p>
+  <div class="tiles" id="tiles"></div>
+
+  <section class="panel" aria-label="Map of the clearing order">
+    <div class="controls">
+      <div class="seg" role="group" aria-label="Plan">
+        <button data-p="ridership" aria-pressed="true">Ridership first</button>
+        <button data-p="route" aria-pressed="false">Route by route</button>
+      </div>
+      <button class="play" id="play" aria-label="Play"><svg width="18" height="18" viewBox="0 0 18 18"><path id="pi" d="M4 2 L16 9 L4 16 Z" fill="#10243A"/></svg></button>
+      <div class="read" id="read"></div>
+    </div>
+    <input type="range" id="t" min="0" max="24" step="0.1" value="0" aria-label="Hours of work">
+    <div class="mapwrap">
+      <svg id="map" role="img" aria-label="Somerville bus stops, cleared in plan order"></svg>
+      <div class="side">
+        <h3>How to read it</h3>
+        <div class="lg"><svg width="30" height="22"><circle cx="11" cy="11" r="9" fill="#fff" stroke="#10243A" stroke-width="1.5"/></svg>Waiting. Bigger = more weekday boardings.</div>
+        <div class="lg"><svg width="30" height="22"><circle cx="11" cy="11" r="9" fill="#FF8A3D" stroke="#10243A" stroke-width="1.5"/></svg>Cleared.</div>
+        <div class="lg"><svg width="30" height="22"><rect x="5" y="5" width="12" height="12" fill="#A9C4E4" stroke="#10243A" stroke-width="1.5"/></svg>Route 109: the MBTA clears it.</div>
+        <div class="lg"><svg width="30" height="22"><path d="M2 11 H28" stroke="#B93D06" stroke-width="3"/></svg>Bobcat drives to the next stop.</div>
+        <div class="lg"><svg width="30" height="22"><path d="M2 11 H28" stroke="#B93D06" stroke-width="2" stroke-dasharray="4 4"/></svg>Bobcat goes on a trailer (30 min).</div>
+        <p class="note" id="sidenote"></p>
+      </div>
+    </div>
+  </section>
+
+  <h2>Riders whose stop is clear</h2>
+  <div class="panel"><svg id="chart" role="img" aria-label="Share of riders whose stop is clear, by hour, for both plans"></svg></div>
+
+  <h2>Why this order</h2>
+  <div class="why" id="why"></div>
+
+  <h2>The first stretches each crew takes</h2>
+  <p class="note">Ridership first. A stretch is the stops a crew clears without putting the bobcat back on the trailer.</p>
+  <div class="crew" id="crews"></div>
+
+  <h2>If our assumptions are off</h2>
+  <p class="note">Each row changes one assumption. Ridership first still gets riders their stop sooner, and finishes the same time or sooner.</p>
+  <div class="tw"><table id="sens"></table></div>
+
+  <h2>Assumptions</h2>
+  <div class="tw"><table id="assume"></table></div>
+
+  <h2>What we need from the City</h2>
+  <ul id="ask"></ul>
+
+  <footer>
+    Made by the Somerville Pedestrian &amp; Transit Advisory Committee (PTAC). Not an official City page.
+    Sources: weekday boardings by stop, <span id="season"></span> (<a href="https://mbta-massdot.opendata.arcgis.com/">MBTA open data</a>);
+    stops and routes (<a href="https://api-v3.mbta.com/">MBTA V3 API</a>); route 109 cleared by the MBTA
+    (<a href="https://www.mbta.com/winter-weather/bus-service-during-winter-storms">MBTA: bus service during winter storms</a>);
+    281 stops in 4 routes (<a href="https://www.somervillema.gov/snow">City snow page</a>); ward outlines (City GIS).
+    Built by <code>analysis/bus-stop-clearing/build.py</code>; every number on this page comes from it.
+  </footer>
+</main>
+<div id="tip"></div>
+<script>
+const D = /*DATA*/null;
+const $ = (s) => document.querySelector(s);
+const S = D.stats, A = D.A, R = S.route, F = S.ridership;
+const pct = (x) => Math.round(x) + '%';
+const hrs = (h) => h.toFixed(1) + ' h';
+
+$('#lede').textContent = `After a storm, the City clears its bus stops route by route, stop by stop. Most riders use a few stops: half of the ${D.total.toLocaleString()} weekday boardings at the stops the City clears happen at just ${D.half} of its ${D.nstops} stops. Sending the same crews to the busiest stretches of street first would get the average rider a clear stop ${hrs(R.avg_wait_h - F.avg_wait_h)} sooner, and still finish ${F.finish_h <= R.finish_h ? 'as soon or sooner' : 'about as soon'}.`;
+const tile = (old, now, l) => `<div class="tile"><div class="v"><s>${old}</s> → <b>${now}</b></div><div class="l">${l}</div></div>`;
+$('#tiles').innerHTML = tile(hrs(R.avg_wait_h), hrs(F.avg_wait_h), "Average wait for a rider's stop")
+  + tile(pct(R.share_by[4]), pct(F.share_by[4]), "Riders' stops clear after 4 hours of work")
+  + tile(hrs(R.finish_h), hrs(F.finish_h), 'Until every stop is clear')
+  + tile(R.trailer_moves, F.trailer_moves, 'Trailer moves');
+
+// ---------- map ----------
+const W = 760, PAD = 14;
+let minx = 1e9, maxx = -1e9, miny = 1e9, maxy = -1e9;
+D.wards.forEach((rs) => rs.forEach((r) => r.forEach(([x, y]) => { minx = Math.min(minx, x); maxx = Math.max(maxx, x); miny = Math.min(miny, y); maxy = Math.max(maxy, y); })));
+const kx = Math.cos(((miny + maxy) / 2) * Math.PI / 180), sc = (W - 2 * PAD) / ((maxx - minx) * kx);
+const H = Math.round((maxy - miny) * sc + 2 * PAD);
+const px = (x, y) => [PAD + (x - minx) * kx * sc, PAD + (maxy - y) * sc];
+const map = $('#map'); map.setAttribute('viewBox', `0 0 ${W} ${H}`);
+const pathD = (pts) => pts.map(([x, y], i) => (i ? 'L' : 'M') + px(x, y).map((v) => v.toFixed(1)).join(' ')).join('');
+let s = '<defs><clipPath id="city">' + D.wards.map((rs) => rs.map((r) => `<path d="${pathD(r)}Z"/>`).join('')).join('') + '</clipPath></defs>';
+s += D.wards.map((rs) => rs.map((r) => `<path d="${pathD(r)}Z" fill="#DCE8F5" stroke="#1A3A5F" stroke-width="2.5"/>`).join('')).join('');
+s += '<g clip-path="url(#city)" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round" opacity=".9">' + Object.values(D.routes).map((ps) => ps.map((p) => `<path d="${pathD(p)}"/>`).join('')).join('') + '</g>';
+s += '<g id="trails" fill="none" stroke="#B93D06" stroke-linecap="round"></g>';
+s += D.mbta.map((b) => { const [x, y] = px(b.x, b.y); return `<rect x="${(x - 4).toFixed(1)}" y="${(y - 4).toFixed(1)}" width="8" height="8" fill="#A9C4E4" stroke="#10243A" stroke-width="1.2" data-n="${b.n}" data-r="${b.r}" data-m="1"/>`; }).join('');
+const byId = {};
+s += '<g id="stops">' + [...D.stops].sort((a, b) => b.r - a.r).map((b) => { byId[b.id] = b; const [x, y] = px(b.x, b.y); return `<circle id="s${b.id}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(2.6 + Math.sqrt(b.r) / 3.2).toFixed(1)}" fill="#fff" stroke="#10243A" stroke-width="1.3"/>`; }).join('') + '</g>';
+map.innerHTML = s;
+
+let plan = 'ridership', T = 0;
+const maxH = Math.ceil(Math.max(R.finish_h, F.finish_h));
+$('#t').max = maxH;
+function draw() {
+  const P = D.stats[plan];
+  D.stops.forEach((b) => { document.getElementById('s' + b.id).setAttribute('fill', b[plan].h <= T ? '#FF8A3D' : '#fff'); });
+  // each crew's trail so far: solid where it drove, dashed where it went on the trailer
+  let t = '', last = {};
+  D.seq[plan].forEach(([crew, id, how]) => {
+    const b = byId[id];
+    if (b[plan].h <= T && last[crew]) {
+      const [x1, y1] = px(last[crew].x, last[crew].y), [x2, y2] = px(b.x, b.y);
+      t += `<path d="M${x1.toFixed(1)} ${y1.toFixed(1)}L${x2.toFixed(1)} ${y2.toFixed(1)}" stroke-width="${how === 'drive' ? 3 : 1.6}"${how === 'drive' ? '' : ' stroke-dasharray="4 4" opacity=".75"'}/>`;
+    }
+    if (b[plan].h <= T) last[crew] = b;
+  });
+  $('#trails').innerHTML = t;
+  const share = D.curve[plan].reduce((a, [h, v]) => (h <= T + 1e-9 ? v : a), 0);
+  const nclear = D.stops.filter((b) => b[plan].h <= T).length;
+  $('#read').innerHTML = `Hour ${T.toFixed(1)} · <b>${Math.round(share * 100)}%</b> of riders · ${nclear} of ${D.nstops} stops`;
+  $('#sidenote').textContent = plan === 'ridership'
+    ? 'Crews start at the busiest stretches, follow the street from stop to stop, and only trailer when the next good stretch is too far to drive.'
+    : 'Crews work whole routes, stop by stop, in route-number order. The City\'s own 4 routes are not published, so this is our stand-in.';
+  drawChart();
+}
+document.querySelectorAll('.seg button').forEach((b) => b.addEventListener('click', () => {
+  plan = b.dataset.p; document.querySelectorAll('.seg button').forEach((x) => x.setAttribute('aria-pressed', x === b)); draw();
+}));
+$('#t').addEventListener('input', (e) => { T = +e.target.value; stop(); draw(); });
+let timer = null;
+function stop() { if (timer) { cancelAnimationFrame(timer); timer = null; $('#pi').setAttribute('d', 'M4 2 L16 9 L4 16 Z'); } }
+$('#play').addEventListener('click', () => {
+  if (timer) return stop();
+  if (T >= maxH) T = 0;
+  $('#pi').setAttribute('d', 'M4 2 H7 V16 H4 Z M11 2 H14 V16 H11 Z');
+  let prev = performance.now();
+  const step = (now) => { T = Math.min(maxH, T + (now - prev) / 1000 * 1.6); prev = now; $('#t').value = T; draw(); if (T < maxH) timer = requestAnimationFrame(step); else stop(); };
+  timer = requestAnimationFrame(step);
+});
+const tip = $('#tip');
+map.addEventListener('pointermove', (e) => {
+  const el = e.target.closest('circle, rect[data-n]');
+  if (!el) { tip.style.display = 'none'; return; }
+  let html;
+  if (el.dataset.m) html = `<b>${el.dataset.n}</b>${el.dataset.r} weekday boardings · route 109, cleared by the MBTA`;
+  else { const b = byId[el.id.slice(1)]; html = `<b>${b.n}</b>${b.r} weekday boardings · routes ${b.rt.join(', ')}<br>Ridership first: clear at hour ${b.ridership.h.toFixed(1)}<br>Route by route: hour ${b.route.h.toFixed(1)}`; }
+  tip.innerHTML = html; tip.style.display = 'block';
+  tip.style.left = Math.min(window.innerWidth - 270, e.clientX + 14) + 'px'; tip.style.top = (e.clientY + 14) + 'px';
+});
+map.addEventListener('pointerleave', () => { tip.style.display = 'none'; });
+
+// ---------- chart ----------
+function drawChart() {
+  const CW = 760, CH = 300, L = 46, Rm = 16, Tm = 16, B = 40;
+  const x = (h) => L + h / maxH * (CW - L - Rm), y = (v) => Tm + (1 - v) * (CH - Tm - B);
+  let c = '';
+  [0, .25, .5, .75, 1].forEach((v) => { c += `<path d="M${L} ${y(v)}H${CW - Rm}" stroke="rgba(169,196,228,.25)"/><text x="${L - 8}" y="${y(v) + 5}" text-anchor="end" fill="#A9C4E4" font-size="13">${v * 100}%</text>`; });
+  for (let h = 0; h <= maxH; h += 4) c += `<text x="${x(h)}" y="${CH - B + 20}" text-anchor="middle" fill="#A9C4E4" font-size="13">${h} h</text>`;
+  c += `<text x="${(L + CW - Rm) / 2}" y="${CH - 4}" text-anchor="middle" fill="#A9C4E4" font-size="13">Hours of work</text>`;
+  const line = (k, col, w) => `<path d="${D.curve[k].map(([h, v], i) => (i ? 'L' : 'M') + x(h).toFixed(1) + ' ' + y(v).toFixed(1)).join('')}" fill="none" stroke="${col}" stroke-width="${w}" stroke-linejoin="round"/>`;
+  c += line('route', '#A9C4E4', plan === 'route' ? 4 : 2.5) + line('ridership', '#FF8A3D', plan === 'ridership' ? 4 : 2.5);
+  const lab = (k, col, txt) => { const p = D.curve[k].find(([h]) => h >= 4) || D.curve[k][D.curve[k].length - 1]; return `<text x="${x(p[0]) + 8}" y="${y(p[1]) + (k === 'route' ? 18 : -10)}" fill="${col}" font-size="15" font-weight="600">${txt}</text>`; };
+  c += lab('ridership', '#FF8A3D', 'Ridership first') + lab('route', '#A9C4E4', 'Route by route');
+  c += `<path d="M${x(T)} ${Tm}V${CH - B}" stroke="#fff" stroke-width="2"/>`;
+  const ch = $('#chart'); ch.setAttribute('viewBox', `0 0 ${CW} ${CH}`); ch.innerHTML = c;
+}
+
+// ---------- text ----------
+$('#season').textContent = D.season;
+$('#why').innerHTML = [
+  ['Riders are bunched', `Half of the weekday boardings happen at ${D.half} of the ${D.nstops} stops the City clears. The 3 busiest (${D.top3.names.join(', ')}) see more riders than the ${D.top3.quiet} quietest stops together.`],
+  ['Moving a bobcat costs time', `Putting a bobcat on a trailer and moving it takes about ${A.trailer_min} minutes. So crews clear stretches of street, driving from stop to stop, as they do today.`],
+  ['Busiest stretch first', `When a crew finishes a stretch, it takes the stretch that clears the most riders' stops per minute, counting the drive or the ${A.trailer_min}-minute trailer move to get there.`],
+  ['Then sweep the rest', `Once stops with ${Math.round(A.sweep_after * 100)}% of riders are taken, each crew clears the nearest stretch left, whole. That cuts trailer moves to ${F.trailer_moves}, against ${R.trailer_moves} for route by route.`],
+].map(([h, p]) => `<div><b>${h}</b>${p}</div>`).join('');
+
+// crews: split each crew's run into stretches at every trailer move
+const crews = {};
+D.seq.ridership.forEach(([crew, id, how]) => { const c = (crews[crew] = crews[crew] || []); if (how === 'trailer' || !c.length) c.push([]); c[c.length - 1].push(byId[id]); });
+$('#crews').innerHTML = Object.entries(crews).map(([n, sts]) => `<div class="panel"><div class="k">Crew ${n}</div><ol>${sts.slice(0, 5).map((st) => {
+  const riders = st.reduce((a, b) => a + b.r, 0), end = st[st.length - 1].ridership.h;
+  return `<li>${st[0].n}${st.length > 1 ? ' → ' + st[st.length - 1].n : ''}<br><small>${st.length} stop${st.length > 1 ? 's' : ''}, ${riders.toLocaleString()} boardings, done by hour ${end.toFixed(1)}</small></li>`;
+}).join('')}</ol></div>`).join('');
+
+$('#sens').innerHTML = '<tr><th>Change</th><th>Average wait</th><th>Riders\' stops clear after 4 h</th><th>All stops clear</th><th>Trailer moves</th></tr>'
+  + [{ label: 'As modeled', route: { wait: R.avg_wait_h, h4: R.share_by[4], finish: R.finish_h, trailers: R.trailer_moves }, ridership: { wait: F.avg_wait_h, h4: F.share_by[4], finish: F.finish_h, trailers: F.trailer_moves } }, ...D.sens]
+    .map((r) => `<tr><td>${r.label}</td><td class="n">${hrs(r.route.wait)} → <b>${hrs(r.ridership.wait)}</b></td><td class="n">${pct(r.route.h4)} → <b>${pct(r.ridership.h4)}</b></td><td class="n">${hrs(r.route.finish)} → <b>${hrs(r.ridership.finish)}</b></td><td class="n">${r.route.trailers} → <b>${r.ridership.trailers}</b></td></tr>`).join('');
+
+$('#assume').innerHTML = '<tr><th>Assumption</th><th>Value</th><th>Why</th></tr>' + [
+  ['Crews on bus stops', A.crews, 'The City clears its stops in "4 Routes" (snow page). The real number of bobcats is not published.'],
+  ['Time to clear one stop', A.service_min + ' min', 'Boarding area, shelter and bench. A guess: please correct it.'],
+  ['Bobcat speed on the street', '5 mph', 'A slow, safe speed for a small loader in traffic.'],
+  ['Longest drive between stops', (A.drive_max_m / 1000).toFixed(1) + ' km', 'Farther than this, the bobcat goes on a trailer.'],
+  ['Trailer move', A.trailer_min + ' min', 'Load, haul and unload.'],
+  ['Stops the MBTA clears', 'Route ' + A.mbta_routes.join(', '), `All ${D.nmbta} stops on route 109. The MBTA also clears some stops on 77 and 104; it doesn't say which, so we leave them to the City.`],
+  ['Which stops', D.nstops + ' MBTA stops', 'The City says it clears 281. We can only rank the stops the MBTA lists in Somerville.'],
+  ['Boardings', D.season + ' weekdays', 'People getting on. Stops where people mostly get off rank lower than their real use.'],
+].map((r) => `<tr><td>${r[0]}</td><td class="n">${r[1]}</td><td>${r[2]}</td></tr>`).join('');
+
+$('#ask').innerHTML = [
+  'The list of the 281 stops the City clears, and its 4 routes.',
+  'How many bobcats and crews work on bus stops, and how long a stop takes.',
+  'Whether the MBTA\'s stops on routes 77 and 104 are on the City\'s list.',
+  'The yard the crews start from, and where the trailers wait.',
+].map((x) => `<li>${x}</li>`).join('');
+
+draw();
+</script>
+</body>
+</html>

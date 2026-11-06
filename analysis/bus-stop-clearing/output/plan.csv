@@ -1,0 +1,379 @@
+plan,order,crew,stop_id,stop,routes,weekday_boardings,arrive_by,move_minutes,clear_by_hour
+route,1,1,2605,McGrath Hwy opp Twin City Plaza,80 87 88,88,trailer,30,0.83
+route,2,2,2599,Somerville Ave opp Mansfield St,87,5,trailer,30,0.83
+route,3,3,2513,Webster Ave @ Norfolk St,85,4,trailer,30,0.83
+route,4,4,2430,Somerville Ave @ Massachusetts Ave,83,66,trailer,30,0.83
+route,5,4,2460,Somerville Ave @ White St (Porter Sq),83,13,drive,0.2,1.17
+route,6,2,12610,Somerville Ave @ Merriam St,87,40,drive,1.3,1.19
+route,7,1,2607,McGrath Hwy @ Poplar St,80 87 88,63,drive,5.7,1.26
+route,8,3,2510,Somerville Ave @ Hawkins St,85 87,26,drive,5.8,1.26
+route,9,4,2431,Somerville Ave opp Beacon Terr,83,3,drive,1.6,1.53
+route,10,3,26131,Bow St @ Warren Ave,85 87,61,drive,0.7,1.61
+route,11,1,2659,McGrath Hwy @ Alston St,80 88 90,88,drive,4.4,1.67
+route,12,4,2459,Somerville Ave @ Mossland St,83,0,drive,0.1,1.87
+route,13,3,2512,25 Webster Ave @ Newton St,85 91,19,drive,2.6,1.98
+route,14,2,2594,Somerville Ave opp School St,87,38,trailer,30,2.02
+route,15,1,2392,Cross St @ Alston St,80 90,4,drive,1.7,2.03
+route,16,4,2432,Somerville Ave opp Elm St,83,5,drive,2.9,2.25
+route,17,3,2528,Webster Ave @ Prospect St,85,0,drive,1.8,2.35
+route,18,2,2593,Somerville Ave opp Loring St,87,35,drive,2.1,2.39
+route,19,1,23921,Cross St @ Fountain Ave,80 90,11,drive,1.4,2.39
+route,20,4,24581,Somerville Ave @ Elm St,83,2,drive,0.2,2.58
+route,21,1,2394,Pearl St @ Cross St,80,26,drive,2.4,2.76
+route,22,4,2621,Somerville Ave @ Lowell St,83 87,33,drive,2.3,2.95
+route,23,1,2395,Pearl St @ McGrath Hwy,80,3,drive,2.0,3.13
+route,24,3,2718,Broadway @ Austin St,89 90 101,91,trailer,30,3.18
+route,25,2,2584,Elm St @ Beech St,87 96,16,trailer,30,3.22
+route,26,4,2589,Somerville Ave @ Sacramento St,83 87,46,drive,0.1,3.29
+route,27,1,2391,Pearl St @ McGrath Hwy,80,10,drive,0.5,3.47
+route,28,3,2719,Broadway @ Illinois Ave,89 90 101,77,drive,2.1,3.55
+route,29,2,2583,Elm St @ Russell St,87 96,21,drive,2.6,3.6
+route,30,4,2620,Somerville Ave @ Spring St,83 87,64,drive,2.0,3.66
+route,31,1,2390,Pearl St @ Walnut St,80,8,drive,2.1,3.84
+route,32,3,2721,Broadway @ Cross St,89 101,146,drive,2.4,3.92
+route,33,2,2628,Grove St @ Highland Ave,87 88 89 90 94 96,11,drive,2.6,3.98
+route,34,4,2590,594 Somerville Ave,83 87,55,drive,0.4,4.0
+route,35,1,2389,Pearl St @ Skilton Ave,80,6,drive,1.2,4.19
+route,36,3,2723,Broadway @ Fellsway W,89 101,73,drive,4.1,4.32
+route,37,2,5104,Davis,87 88 89 90 94 96,1574,drive,1.5,4.33
+route,38,4,2618,Somerville Ave @ Central St,83 87,36,drive,1.8,4.36
+route,39,2,2581,Holland St @ Dover St,87 88,232,drive,0.9,4.68
+route,40,3,2725,Broadway @ Grant St,89 101,120,drive,1.8,4.69
+route,41,4,2591,Somerville Ave opp Central St,83 87,15,drive,0.1,4.69
+route,42,1,2736,Broadway @ Boston Ave - Ball Sq,80 89,25,trailer,30,5.02
+route,43,2,2580,Holland St @ Jay St,87 88,24,drive,3.0,5.07
+route,44,3,2726,Broadway @ Winter Hill Plaza,89 101,33,drive,3.0,5.07
+route,45,4,2433,Park St @ Beacon St,83,20,drive,3.4,5.08
+route,46,1,2737,Broadway @ Pearson Rd,80 89,4,drive,1.6,5.38
+route,47,2,2579,Holland St @ Cameron Ave,87 88,79,drive,1.9,5.43
+route,48,3,2729,Broadway @ Main St,89 101,107,drive,2.4,5.44
+route,49,4,2435,Beacon St @ Washington St,83,15,drive,2.6,5.46
+route,50,1,2695,Broadway opp Warner St - Powder House Sq,80 89 194,36,drive,1.7,5.74
+route,51,4,2436,Beacon St @ Smith Ave,83,13,drive,1.8,5.82
+route,52,3,2731,Broadway opp Glenwood Rd,89,19,drive,3.4,5.83
+route,53,1,2738,Broadway @ Warner St - Powder House Sq,80 89,9,drive,0.2,6.08
+route,54,4,2457,Beacon St @ Park St,83,6,drive,4.2,6.23
+route,55,2,12636,Broadway opp Clarendon Hill Busway,87,11,trailer,30,6.26
+route,56,1,2405,College Ave @ Warner St,80 94 96,12,drive,0.9,6.43
+route,57,4,2455,Beacon St @ Washington St,83,10,drive,2.9,6.61
+route,58,2,2637,Clarendon Hill Busway,87 88 89 194,497,drive,0.7,6.61
+route,59,3,5012,College Ave @ Broadway,89 94 96,19,trailer,30,6.67
+route,60,1,2406,College Ave @ Dearborn Rd,80 94 96,15,drive,3.8,6.83
+route,61,2,2636,Broadway @ North St,87,5,drive,0.5,6.95
+route,62,4,2454,Beacon St @ Calvin St,83,10,drive,1.2,6.96
+route,63,3,5014,College Ave @ William St,89 94 96,5,drive,2.6,7.04
+route,64,2,2715,Broadway @ Belknap St,87 88 89,3,drive,1.2,7.3
+route,65,4,2437,Beacon St @ Cooney St,83,15,drive,1.4,7.32
+route,66,3,5015,College Ave @ Highland Ave,89 94 96,21,drive,2.9,7.43
+route,67,2,2575,Broadway @ Garrison Ave,87 88 89 194,122,drive,0.2,7.64
+route,68,1,2414,Boston Ave @ Mystic Valley Pkwy,80 94,8,trailer,30,7.66
+route,69,4,2453,45 Beacon St,83,36,drive,0.7,7.67
+route,70,3,5019,College Ave @ Francesca Ave,89 94 96,17,drive,3.2,7.81
+route,71,2,2576,Broadway @ Weston Ave,87 88 89 194,84,drive,1.6,8.0
+route,72,1,2372,Boston Ave @ Mystic Valley Pkwy,80 94 101,38,drive,0.6,8.0
+route,73,2,2635,Broadway @ Dickson St,87 88 89,2,drive,0.2,8.34
+route,74,4,2671,Highland Ave @ Cedar St,88 90,22,trailer,30,8.5
+route,75,3,2733,Broadway @ Medford St - Magoun Sq,89,59,trailer,30,8.65
+route,76,2,2577,Broadway @ Holland St - Teele Sq,87 88,119,drive,1.1,8.69
+route,77,1,2380,College Ave @ Professors Row,80 94 96,60,trailer,30,8.83
+route,78,4,2672,Highland Ave @ Cherry St,88 90,5,drive,1.5,8.86
+route,79,3,2700,Broadway @ Medford St - Magoun Sq,89 194,61,drive,0.1,8.98
+route,80,2,2634,Broadway @ Curtis St,87 88 89,11,drive,0.1,9.02
+route,81,4,2673,Highland Ave @ Willow Ave,88 90,4,drive,2.6,9.23
+route,82,1,2381,College Ave @ Powder House Sq,80 94 96,21,drive,4.2,9.24
+route,83,2,2632,Holland St opp Cameron Ave,87 88,10,drive,2.5,9.4
+route,84,4,2674,Highland Ave @ Cutter Ave,88 90,36,drive,2.1,9.6
+route,85,1,2696,Broadway @ Bay State Ave,80 89 194,3,drive,2.2,9.61
+route,86,2,2631,Holland St @ Simpson Ave,87 88,19,drive,2.4,9.77
+route,87,3,2707,Broadway @ Montgomery Ave,89 101 194,103,trailer,30,9.81
+route,88,4,2675,Highland Ave @ Willow Ave,88 90,21,drive,2.5,9.98
+route,89,1,2697,Broadway @ Josephine Ave - Ball Sq,80 89 194,36,drive,2.3,9.98
+route,90,2,2582,Elm St @ Chester St,87 88 89 90 94 96,194,drive,5.1,10.19
+route,91,3,2710,Broadway @ Cross St,89 101 194,95,drive,3.5,10.21
+route,92,4,2676,Highland Ave @ Cherry St,88 90,34,drive,2.3,10.35
+route,93,1,2698,Broadway @ Cedar St,80 89 194,19,drive,3.5,10.37
+route,94,2,2627,Elm St @ Cutter Ave,87 96,11,drive,1.7,10.55
+route,95,3,2711,Broadway @ Glen St,89 90 101 194,82,drive,2.4,10.58
+route,96,4,2677,Highland Ave @ Cedar St,88 90,31,drive,1.8,10.71
+route,97,1,2735,Broadway @ Alfred St,80 89,13,drive,0.2,10.71
+route,98,2,2626,Elm St @ Saint James Ave,87 96,8,drive,2.3,10.92
+route,99,3,2713,Broadway @ Lincoln St,89 90 101 194,25,drive,2.8,10.96
+route,100,1,2734,Broadway @ William St,80 89,27,drive,1.4,11.07
+route,101,4,2670,263 Highland Ave,88 90,11,drive,1.4,11.07
+route,102,2,2586,Elm St @ Porter Sq Shopping Ctr,87,89,drive,2.8,11.3
+route,103,3,2714,Broadway @ Mt Vernon St,89 90 95 101 194,6,drive,1.7,11.32
+route,104,4,2678,Highland Ave @ Conwell St,88 90,10,drive,0.1,11.4
+route,105,1,2699,Broadway @ Hinckley St - Magoun Sq,80 89 194,12,drive,0.7,11.41
+route,106,2,2625,Elm St @ Hancock St,87,59,drive,0.1,11.64
+route,107,4,2669,235 Highland Ave,88 90,26,drive,1.3,11.76
+route,108,1,12699,Medford St @ Broadway - Magoun Sq,80,14,drive,0.9,11.76
+route,109,2,2623,Elm St @ Cedar St,87,4,drive,2.4,12.01
+route,110,4,2679,Highland Ave @ Tower St,88 90,35,drive,0.5,12.1
+route,111,1,2404,Medford St @ Broadway - Magoun Sq,80,11,drive,0.5,12.1
+route,112,3,2691,Broadway opp Packard Ave,89 194,7,trailer,30,12.16
+route,113,2,2622,Elm St @ Porter St,87,8,drive,2.1,12.38
+route,114,4,2668,Highland Ave @ Lowell St,88 90,27,drive,0.9,12.45
+route,115,1,23841,Medford St @ Glenwood Rd,80,10,drive,2.7,12.48
+route,116,3,2743,Broadway @ Packard Ave,89,0,drive,0.3,12.49
+route,117,4,2680,Highland Ave @ Lowell St,88 90,17,drive,0.1,12.78
+route,118,1,2402,Medford St @ Bartlett St,80,1,drive,0.4,12.82
+route,119,3,2742,Broadway @ Mason St,89,0,drive,1.8,12.86
+route,120,4,2681,Highland Ave @ Benton Rd,88 90,14,drive,2.3,13.15
+route,121,1,2401,Medford St @ Central St,80,5,drive,2.0,13.19
+route,122,3,2692,Broadway @ Simpson Ave,89 194,2,drive,0.7,13.2
+route,123,2,2617,Somerville Ave @ Loring St,87,36,trailer,30,13.21
+route,124,4,2667,Highland Ave @ Benton Rd,88 90,20,drive,0.2,13.49
+route,125,1,2385,Medford St @ Central St,80,7,drive,0.1,13.52
+route,126,3,2693,Broadway @ Billingham St,89 194,1,drive,2.4,13.57
+route,127,2,12616,Somerville Ave @ School St,87,70,drive,1.9,13.58
+route,128,4,2682,Highland Ave @ Central St,88 90,40,drive,1.4,13.85
+route,129,1,2400,Medford St @ Sycamore St,80,5,drive,1.8,13.88
+route,130,3,2740,Broadway @ Walker St,89,0,drive,1.0,13.92
+route,131,2,12615,Somerville Ave @ Church St,87,52,drive,1.3,13.93
+route,132,4,2666,Highland Ave @ Central St,88 90,50,drive,0.1,14.18
+route,133,1,2386,Medford St @ Sycamore St,80,5,drive,0.1,14.22
+route,134,4,2683,Highland Ave @ Trull Ln,88 90,9,drive,2.0,14.55
+route,135,1,2388,Medford St @ School St,80,6,drive,2.7,14.6
+route,136,3,2702,Broadway @ Bartlett St,89 194,22,trailer,30,14.76
+route,137,2,2598,Somerville Ave @ Linden St,87,8,trailer,30,14.77
+route,138,4,2665,125 Highland Ave,88 90,24,drive,0.2,14.89
+route,139,1,2398,Medford St @ School St,80,12,drive,0.2,14.94
+route,140,3,2703,Broadway opp Main St,89 194,40,drive,1.9,15.12
+route,141,4,2684,Highland Ave @ School St,88 90,13,drive,1.9,15.25
+route,142,1,2397,Pearl St @ Bradley St,80,5,drive,2.1,15.3
+route,143,3,2704,Broadway @ Thurston St,89 101 194,78,drive,2.1,15.49
+route,144,4,2664,Highland Ave @ School St,88 90,48,drive,0.2,15.59
+route,145,2,2587,Elm St @ Mossland St,87,13,trailer,30,15.6
+route,146,1,2396,Pearl St @ Walnut St,80,11,drive,1.6,15.66
+route,147,3,2706,Broadway @ Marshall St,89 101 194,199,drive,3.0,15.87
+route,148,4,2662,Highland Ave opp Putnam St,88 90,149,drive,1.7,15.95
+route,149,2,2588,Elm St opp Porter St,87,10,drive,2.3,15.97
+route,150,1,23951,Pearl St @ Wesley St,80,4,drive,1.5,16.02
+route,151,4,2686,Highland Ave @ Vinal Ave,88 90,23,drive,0.8,16.3
+route,152,1,2689,422 McGrath Hwy,80 88 90,9,drive,4.5,16.43
+route,153,4,2687,Highland Ave @ Walnut St,88 90,37,drive,1.3,16.65
+route,154,3,28746,Grand Union Blvd opp Artisan Way,90,53,trailer,30,16.71
+route,155,2,2595,Somerville Ave @ Carlton St,87,16,trailer,30,16.81
+route,156,1,2690,McGrath Hwy @ Washington St,80 88,16,drive,2.6,16.81
+route,157,4,2661,Highland Ave @ Walnut St,88 90,66,drive,0.2,16.99
+route,158,3,28745,Grand Union Blvd @ Canal St,90,0,drive,0.6,17.05
+route,159,1,2600,McGrath Hwy @ Medford St,80 87 88,11,drive,3.7,17.2
+route,160,4,2660,Highland Ave @ Medford St,88 90,31,drive,1.1,17.34
+route,161,3,28742,Grand Union Blvd @ Foley St,90,0,drive,1.7,17.41
+route,162,1,12530,Prospect St @ Webster Ave,91,8,drive,5.4,17.63
+route,163,2,2875,Mystic Ave @ North Union St,95,3,trailer,30,17.64
+route,164,4,2688,Medford St @ Highland Ave,88 90,17,drive,0.9,17.69
+route,165,1,2531,Prospect St @ Union Sq - Green Line,91 747,29,drive,2.1,17.99
+route,166,2,42876,Mystic Ave @ Plaza Entrance - Home Depot,95,3,drive,2.0,18.01
+route,167,3,2748,Cross St @ Broadway,90,16,trailer,30,18.24
+route,168,1,12512,Prospect St @ Oak St,91,5,drive,2.8,18.37
+route,169,2,2936,Mystic Ave @ I-93 Underpass,95,21,drive,5.1,18.42
+route,170,3,2749,Cross St @ Otis St,90,7,drive,1.6,18.6
+route,171,2,2879,Mystic Ave @ Temple Rd,95,13,drive,5.0,18.84
+route,172,3,2750,Cross St @ Pearl St,90,20,drive,1.6,18.97
+route,173,1,5302,Main St opp Moreland St,101,14,trailer,30,19.21
+route,174,2,2880,Mystic Ave @ Shore Dr,95,13,drive,2.5,19.22
+route,175,3,2753,Cross St @ Auburn Ave,90,6,drive,2.5,19.34
+route,176,1,5305,Main St @ Moreland St,101,5,drive,0.1,19.54
+route,177,2,2897,Mystic Ave @ Moreland St,95,16,drive,4.4,19.62
+route,178,3,2754,Cross St @ Chester Ave,90,2,drive,1.4,19.7
+route,179,1,5303,Main St @ Broadway,101,31,drive,1.6,19.9
+route,180,2,2898,Mystic Ave @ Mystic Apartments,95,15,drive,1.7,19.98
+route,181,3,2745,Cross St @ Pearl St,90,9,drive,4.0,20.1
+route,182,2,2899,Mystic Ave opp Shore Dr,95,67,drive,2.8,20.37
+route,183,3,2746,Cross St @ Ellsworth St,90,3,drive,1.6,20.46
+route,184,2,2900,Mystic Ave @ Temple Rd,95,37,drive,2.5,20.74
+route,185,3,2747,Cross St @ Broadway,90,5,drive,1.6,20.82
+route,186,2,2901,Mystic Ave @ Wheatland St,95,18,drive,2.0,21.11
+route,187,2,2902,Mystic Ave @ Garfield Ave,95,9,drive,3.4,21.5
+route,188,3,28743,Grand Union Blvd @ Foley St,90,12,trailer,30,21.65
+route,189,3,5021,College Ave @ Broadway - Powder House Sq,94 96,9,trailer,30,22.49
+ridership,1,1,5104,Davis,87 88 89 90 94 96,1574,trailer,30,0.83
+ridership,2,2,2637,Clarendon Hill Busway,87 88 89 194,497,trailer,30,0.83
+ridership,3,3,2581,Holland St @ Dover St,87 88,232,trailer,30,0.83
+ridership,4,4,2706,Broadway @ Marshall St,89 101 194,199,trailer,30,0.83
+ridership,5,1,2582,Elm St @ Chester St,87 88 89 90 94 96,194,drive,1.7,1.19
+ridership,6,2,2575,Broadway @ Garrison Ave,87 88 89 194,122,drive,1.7,1.2
+ridership,7,4,2707,Broadway @ Montgomery Ave,89 101 194,103,drive,2.7,1.21
+ridership,8,2,2577,Broadway @ Holland St - Teele Sq,87 88,119,drive,2.9,1.58
+ridership,9,4,2710,Broadway @ Cross St,89 101 194,95,drive,3.5,1.6
+ridership,10,3,2718,Broadway @ Austin St,89 90 101,91,trailer,30,1.67
+ridership,11,2,2576,Broadway @ Weston Ave,87 88 89 194,84,drive,1.3,1.93
+ridership,12,4,2711,Broadway @ Glen St,89 90 101 194,82,drive,2.4,1.98
+ridership,13,1,2662,Highland Ave opp Putnam St,88 90,149,trailer,30,2.03
+ridership,14,3,2719,Broadway @ Illinois Ave,89 90 101,77,drive,2.1,2.04
+ridership,15,2,2579,Holland St @ Cameron Ave,87 88,79,drive,4.0,2.33
+ridership,16,1,2661,Highland Ave @ Walnut St,88 90,66,drive,2.3,2.4
+ridership,17,3,2721,Broadway @ Cross St,89 101,146,drive,2.4,2.41
+ridership,18,3,2723,Broadway @ Fellsway W,89 101,73,drive,4.1,2.81
+ridership,19,4,2605,McGrath Hwy opp Twin City Plaza,80 87 88,88,trailer,30,2.81
+ridership,20,1,26131,Bow St @ Warren Ave,85 87,61,drive,5.6,2.83
+ridership,21,2,2729,Broadway @ Main St,89 101,107,trailer,30,3.16
+ridership,22,3,2725,Broadway @ Grant St,89 101,120,drive,1.8,3.17
+ridership,23,4,2607,McGrath Hwy @ Poplar St,80 87 88,63,drive,5.7,3.24
+ridership,24,1,12616,Somerville Ave @ School St,87,70,drive,4.6,3.24
+ridership,25,2,2704,Broadway @ Thurston St,89 101 194,78,drive,1.5,3.52
+ridership,26,3,2726,Broadway @ Winter Hill Plaza,89 101,33,drive,3.0,3.56
+ridership,27,1,12615,Somerville Ave @ Church St,87,52,drive,1.3,3.59
+ridership,28,4,2659,McGrath Hwy @ Alston St,80 88 90,88,drive,4.4,3.65
+ridership,29,2,2703,Broadway opp Main St,89 194,40,drive,2.1,3.89
+ridership,30,1,2617,Somerville Ave @ Loring St,87,36,drive,3.2,3.98
+ridership,31,3,2731,Broadway opp Glenwood Rd,89,19,drive,5.8,3.99
+ridership,32,4,2392,Cross St @ Alston St,80 90,4,drive,1.7,4.01
+ridership,33,2,2702,Broadway @ Bartlett St,89 194,22,drive,1.9,4.26
+ridership,34,1,2618,Somerville Ave @ Central St,83 87,36,drive,2.5,4.35
+ridership,35,3,5302,Main St opp Moreland St,101,14,drive,1.8,4.35
+ridership,36,4,23921,Cross St @ Fountain Ave,80 90,11,drive,1.4,4.36
+ridership,37,2,5305,Main St @ Moreland St,101,5,drive,1.3,4.61
+ridership,38,1,2620,Somerville Ave @ Spring St,83 87,64,drive,2.2,4.72
+ridership,39,4,2394,Pearl St @ Cross St,80,26,drive,2.4,4.74
+ridership,40,3,2700,Broadway @ Medford St - Magoun Sq,89 194,61,drive,4.4,4.76
+ridership,41,2,5303,Main St @ Broadway,101,31,drive,1.6,4.97
+ridership,42,1,2621,Somerville Ave @ Lowell St,83 87,33,drive,2.0,5.09
+ridership,43,3,2733,Broadway @ Medford St - Magoun Sq,89,59,drive,0.1,5.09
+ridership,44,4,2395,Pearl St @ McGrath Hwy,80,3,drive,2.0,5.1
+ridership,45,3,2699,Broadway @ Hinckley St - Magoun Sq,80 89 194,12,drive,0.9,5.44
+ridership,46,4,2391,Pearl St @ McGrath Hwy,80,10,drive,0.5,5.45
+ridership,47,1,2622,Elm St @ Porter St,87,8,drive,2.2,5.46
+ridership,48,3,2734,Broadway @ William St,80 89,27,drive,0.7,5.78
+ridership,49,2,2713,Broadway @ Lincoln St,89 90 101 194,25,trailer,30,5.8
+ridership,50,4,2390,Pearl St @ Walnut St,80,8,drive,2.1,5.81
+ridership,51,1,2623,Elm St @ Cedar St,87,4,drive,2.1,5.83
+ridership,52,3,2735,Broadway @ Alfred St,80 89,13,drive,1.4,6.14
+ridership,53,4,2389,Pearl St @ Skilton Ave,80,6,drive,1.2,6.17
+ridership,54,2,2714,Broadway @ Mt Vernon St,89 90 95 101 194,6,drive,1.7,6.17
+ridership,55,1,2625,Elm St @ Hancock St,87,59,drive,2.4,6.2
+ridership,56,3,2698,Broadway @ Cedar St,80 89 194,19,drive,0.2,6.48
+ridership,57,2,2875,Mystic Ave @ North Union St,95,3,drive,1.6,6.53
+ridership,58,1,2586,Elm St @ Porter Sq Shopping Ctr,87,89,drive,0.1,6.54
+ridership,59,3,2697,Broadway @ Josephine Ave - Ball Sq,80 89 194,36,drive,3.5,6.87
+ridership,60,2,42876,Mystic Ave @ Plaza Entrance - Home Depot,95,3,drive,2.0,6.89
+ridership,61,1,2626,Elm St @ Saint James Ave,87 96,8,drive,2.8,6.92
+ridership,62,4,2674,Highland Ave @ Cutter Ave,88 90,36,trailer,30,7.0
+ridership,63,3,2736,Broadway @ Boston Ave - Ball Sq,80 89,25,drive,0.2,7.21
+ridership,64,1,2627,Elm St @ Cutter Ave,87 96,11,drive,2.3,7.29
+ridership,65,2,2936,Mystic Ave @ I-93 Underpass,95,21,drive,5.1,7.31
+ridership,66,4,2675,Highland Ave @ Willow Ave,88 90,21,drive,2.5,7.37
+ridership,67,3,2737,Broadway @ Pearson Rd,80 89,4,drive,1.6,7.57
+ridership,68,2,2879,Mystic Ave @ Temple Rd,95,13,drive,5.0,7.73
+ridership,69,4,2676,Highland Ave @ Cherry St,88 90,34,drive,2.3,7.75
+ridership,70,3,2696,Broadway @ Bay State Ave,80 89 194,3,drive,0.6,7.91
+ridership,71,2,2880,Mystic Ave @ Shore Dr,95,13,drive,2.5,8.1
+ridership,72,4,2677,Highland Ave @ Cedar St,88 90,31,drive,1.8,8.11
+ridership,73,1,2631,Holland St @ Simpson Ave,87 88,19,trailer,30,8.12
+ridership,74,3,2695,Broadway opp Warner St - Powder House Sq,80 89 194,36,drive,1.1,8.26
+ridership,75,4,2670,263 Highland Ave,88 90,11,drive,1.4,8.47
+ridership,76,1,2632,Holland St opp Cameron Ave,87 88,10,drive,2.4,8.5
+ridership,77,2,2897,Mystic Ave @ Moreland St,95,16,drive,4.4,8.51
+ridership,78,3,5019,College Ave @ Francesca Ave,89 94 96,17,drive,3.6,8.65
+ridership,79,4,2678,Highland Ave @ Conwell St,88 90,10,drive,0.1,8.8
+ridership,80,1,2634,Broadway @ Curtis St,87 88 89,11,drive,2.5,8.87
+ridership,81,2,2898,Mystic Ave @ Mystic Apartments,95,15,drive,1.7,8.87
+ridership,82,3,5021,College Ave @ Broadway - Powder House Sq,94 96,9,drive,2.2,9.02
+ridership,83,4,2669,235 Highland Ave,88 90,26,drive,1.3,9.16
+ridership,84,1,2635,Broadway @ Dickson St,87 88 89,2,drive,1.1,9.22
+ridership,85,2,2899,Mystic Ave opp Shore Dr,95,67,drive,2.8,9.25
+ridership,86,3,2405,College Ave @ Warner St,80 94 96,12,drive,1.4,9.38
+ridership,87,4,2679,Highland Ave @ Tower St,88 90,35,drive,0.5,9.5
+ridership,88,1,2715,Broadway @ Belknap St,87 88 89,3,drive,2.0,9.59
+ridership,89,2,2900,Mystic Ave @ Temple Rd,95,37,drive,2.5,9.63
+ridership,90,3,2406,College Ave @ Dearborn Rd,80 94 96,15,drive,3.8,9.78
+ridership,91,4,2668,Highland Ave @ Lowell St,88 90,27,drive,0.9,9.85
+ridership,92,1,2636,Broadway @ North St,87,5,drive,1.2,9.94
+ridership,93,2,2901,Mystic Ave @ Wheatland St,95,18,drive,2.0,9.99
+ridership,94,3,2380,College Ave @ Professors Row,80 94 96,60,drive,0.4,10.12
+ridership,95,4,2680,Highland Ave @ Lowell St,88 90,17,drive,0.1,10.18
+ridership,96,1,12636,Broadway opp Clarendon Hill Busway,87,11,drive,1.0,10.29
+ridership,97,2,2902,Mystic Ave @ Garfield Ave,95,9,drive,3.4,10.38
+ridership,98,3,2381,College Ave @ Powder House Sq,80 94 96,21,drive,4.2,10.52
+ridership,99,4,2681,Highland Ave @ Benton Rd,88 90,14,drive,2.3,10.55
+ridership,100,2,2747,Cross St @ Broadway,90,5,drive,3.4,10.78
+ridership,101,4,2667,Highland Ave @ Benton Rd,88 90,20,drive,0.2,10.89
+ridership,102,1,2430,Somerville Ave @ Massachusetts Ave,83,66,trailer,30,11.13
+ridership,103,2,2746,Cross St @ Ellsworth St,90,3,drive,1.6,11.14
+ridership,104,4,2682,Highland Ave @ Central St,88 90,40,drive,1.4,11.25
+ridership,105,3,12699,Medford St @ Broadway - Magoun Sq,80,14,trailer,30,11.35
+ridership,106,1,2460,Somerville Ave @ White St (Porter Sq),83,13,drive,0.2,11.46
+ridership,107,2,2745,Cross St @ Pearl St,90,9,drive,1.6,11.5
+ridership,108,4,2666,Highland Ave @ Central St,88 90,50,drive,0.1,11.58
+ridership,109,3,2404,Medford St @ Broadway - Magoun Sq,80,11,drive,0.5,11.7
+ridership,110,1,2431,Somerville Ave opp Beacon Terr,83,3,drive,1.6,11.82
+ridership,111,2,2754,Cross St @ Chester Ave,90,2,drive,4.0,11.9
+ridership,112,4,2683,Highland Ave @ Trull Ln,88 90,9,drive,2.0,11.95
+ridership,113,3,23841,Medford St @ Glenwood Rd,80,10,drive,2.7,12.07
+ridership,114,1,2459,Somerville Ave @ Mossland St,83,0,drive,0.1,12.16
+ridership,115,2,2753,Cross St @ Auburn Ave,90,6,drive,1.4,12.25
+ridership,116,4,2665,125 Highland Ave,88 90,24,drive,0.2,12.28
+ridership,117,3,2402,Medford St @ Bartlett St,80,1,drive,0.4,12.42
+ridership,118,1,2432,Somerville Ave opp Elm St,83,5,drive,2.9,12.54
+ridership,119,2,2750,Cross St @ Pearl St,90,20,drive,2.5,12.63
+ridership,120,4,2684,Highland Ave @ School St,88 90,13,drive,1.9,12.65
+ridership,121,3,2401,Medford St @ Central St,80,5,drive,2.0,12.78
+ridership,122,1,24581,Somerville Ave @ Elm St,83,2,drive,0.2,12.88
+ridership,123,4,2664,Highland Ave @ School St,88 90,48,drive,0.2,12.99
+ridership,124,2,2749,Cross St @ Otis St,90,7,drive,1.6,12.99
+ridership,125,3,2385,Medford St @ Central St,80,7,drive,0.1,13.12
+ridership,126,1,2589,Somerville Ave @ Sacramento St,83 87,46,drive,2.3,13.25
+ridership,127,2,2748,Cross St @ Broadway,90,16,drive,1.6,13.35
+ridership,128,4,2686,Highland Ave @ Vinal Ave,88 90,23,drive,2.6,13.36
+ridership,129,3,2400,Medford St @ Sycamore St,80,5,drive,1.8,13.48
+ridership,130,1,2590,594 Somerville Ave,83 87,55,drive,2.4,13.62
+ridership,131,4,2687,Highland Ave @ Walnut St,88 90,37,drive,1.3,13.72
+ridership,132,3,2386,Medford St @ Sycamore St,80,5,drive,0.1,13.82
+ridership,133,1,2591,Somerville Ave opp Central St,83 87,15,drive,1.8,13.99
+ridership,134,4,2660,Highland Ave @ Medford St,88 90,31,drive,1.3,14.07
+ridership,135,2,2599,Somerville Ave opp Mansfield St,87,5,trailer,30,14.18
+ridership,136,3,2388,Medford St @ School St,80,6,drive,2.7,14.19
+ridership,137,1,2433,Park St @ Beacon St,83,20,drive,3.4,14.37
+ridership,138,4,2688,Medford St @ Highland Ave,88 90,17,drive,0.9,14.42
+ridership,139,3,2398,Medford St @ School St,80,12,drive,0.2,14.53
+ridership,140,2,12610,Somerville Ave @ Merriam St,87,40,drive,1.3,14.54
+ridership,141,1,2435,Beacon St @ Washington St,83,15,drive,2.6,14.75
+ridership,142,4,2689,422 McGrath Hwy,80 88 90,9,drive,1.6,14.78
+ridership,143,3,2397,Pearl St @ Bradley St,80,5,drive,2.1,14.9
+ridership,144,1,2436,Beacon St @ Smith Ave,83,13,drive,1.8,15.11
+ridership,145,4,2690,McGrath Hwy @ Washington St,80 88,16,drive,2.6,15.16
+ridership,146,3,2396,Pearl St @ Walnut St,80,11,drive,1.6,15.26
+ridership,147,2,2594,Somerville Ave opp School St,87,38,trailer,30,15.37
+ridership,148,1,2453,45 Beacon St,83,36,drive,2.0,15.48
+ridership,149,4,2600,McGrath Hwy @ Medford St,80 87 88,11,drive,3.7,15.55
+ridership,150,3,23951,Pearl St @ Wesley St,80,4,drive,1.5,15.62
+ridership,151,2,2593,Somerville Ave opp Loring St,87,35,drive,2.1,15.74
+ridership,152,1,2437,Beacon St @ Cooney St,83,15,drive,0.7,15.83
+ridership,153,4,2598,Somerville Ave @ Linden St,87,8,drive,3.4,15.94
+ridership,154,2,2595,Somerville Ave @ Carlton St,87,16,drive,3.9,16.14
+ridership,155,1,2454,Beacon St @ Calvin St,83,10,drive,1.4,16.18
+ridership,156,4,2531,Prospect St @ Union Sq - Green Line,91 747,29,drive,1.4,16.3
+ridership,157,3,5012,College Ave @ Broadway,89 94 96,19,trailer,30,16.45
+ridership,158,2,2510,Somerville Ave @ Hawkins St,85 87,26,drive,2.0,16.5
+ridership,159,1,2455,Beacon St @ Washington St,83,10,drive,1.2,16.54
+ridership,160,4,12530,Prospect St @ Webster Ave,91,8,drive,2.1,16.67
+ridership,161,3,5014,College Ave @ William St,89 94 96,5,drive,2.6,16.83
+ridership,162,2,2512,25 Webster Ave @ Newton St,85 91,19,drive,2.8,16.88
+ridership,163,1,2457,Beacon St @ Park St,83,6,drive,2.9,16.92
+ridership,164,4,2528,Webster Ave @ Prospect St,85,0,drive,0.4,17.01
+ridership,165,3,5015,College Ave @ Highland Ave,89 94 96,21,drive,2.9,17.21
+ridership,166,2,12512,Prospect St @ Oak St,91,5,drive,1.9,17.25
+ridership,167,4,2513,Webster Ave @ Norfolk St,85,4,drive,1.3,17.36
+ridership,168,3,2583,Elm St @ Russell St,87 96,21,drive,3.5,17.6
+ridership,169,1,2671,Highland Ave @ Cedar St,88 90,22,trailer,30,17.75
+ridership,170,3,2584,Elm St @ Beech St,87 96,16,drive,2.6,17.98
+ridership,171,2,28746,Grand Union Blvd opp Artisan Way,90,53,trailer,30,18.08
+ridership,172,1,2672,Highland Ave @ Cherry St,88 90,5,drive,1.5,18.11
+ridership,173,4,2372,Boston Ave @ Mystic Valley Pkwy,80 94 101,38,trailer,30,18.2
+ridership,174,3,2587,Elm St @ Mossland St,87,13,drive,4.8,18.39
+ridership,175,2,28745,Grand Union Blvd @ Canal St,90,0,drive,0.6,18.43
+ridership,176,1,2673,Highland Ave @ Willow Ave,88 90,4,drive,2.6,18.49
+ridership,177,4,2414,Boston Ave @ Mystic Valley Pkwy,80 94,8,drive,0.6,18.54
+ridership,178,3,2588,Elm St opp Porter St,87,10,drive,2.3,18.76
+ridership,179,2,28742,Grand Union Blvd @ Foley St,90,0,drive,1.7,18.79
+ridership,180,1,2628,Grove St @ Highland Ave,87 88 89 90 94 96,11,drive,3.2,18.87
+ridership,181,1,2580,Holland St @ Jay St,87 88,24,drive,5.2,19.29
+ridership,182,4,28743,Grand Union Blvd @ Foley St,90,12,trailer,30,19.37
+ridership,183,3,2691,Broadway opp Packard Ave,89 194,7,trailer,30,19.6
+ridership,184,2,2738,Broadway @ Warner St - Powder House Sq,80 89,9,trailer,30,19.62
+ridership,185,3,2743,Broadway @ Packard Ave,89,0,drive,0.3,19.93
+ridership,186,3,2742,Broadway @ Mason St,89,0,drive,1.8,20.3
+ridership,187,3,2692,Broadway @ Simpson Ave,89 194,2,drive,0.7,20.64
+ridership,188,3,2693,Broadway @ Billingham St,89 194,1,drive,2.4,21.01
+ridership,189,3,2740,Broadway @ Walker St,89,0,drive,1.0,21.36

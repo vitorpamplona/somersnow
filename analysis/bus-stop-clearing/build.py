@@ -5,20 +5,21 @@ Goal: the most riders at a clear stop, as fast as possible. We measure it as the
 average wait for a rider's stop: each stop's hour of clearing, weighted by its
 weekday boardings. Lower is better.
 
-The bobcats move only along the street, stop to stop: along each bus route, and
-across the street to the stop on the other side. A crew never drives past a
-waiting stop; it clears the next one it reaches. It may drive through stops that
-are already clear. Each crew starts at its first stop at hour 0.
+The bobcats move only along the street, stop to stop. Each side of a street is
+driven the way the bus goes; to reach the stop across the street, or where a route
+leaves the city, a crew turns around. A crew never drives past a waiting stop; it
+clears the next one it reaches. It may drive through stops that are already clear.
+Each crew starts at its first stop at hour 0.
 
 Two orders are compared:
   * route by route: each crew works through whole bus routes, stop by stop in the
     order the bus runs (a stand-in for today's practice; the City's own 4 clearing
     routes are not published);
-  * riders first: crews start at busy stops spread across the city; at each stop a
-    crew first clears the rest of that corner; each then heads
-    for the next waiting stop along the street whose run ahead clears the most riders
-    per minute of driving and clearing; once stops with 70% of riders are clear,
-    each takes the nearest waiting stop.
+  * riders first: crews start at busy stops spread across the city; a crew keeps
+    going along its side of the street while the next stop waits, then crosses the
+    road and clears the other side on the way back; after that it heads for the
+    waiting stop whose run ahead clears the most riders per minute of driving and
+    clearing; once stops with 70% of riders are clear, the nearest waiting stop.
 
 Inputs (copied into data/ by this script so the folder is self-contained):
   ../../docs/data/bus-stops.json  MBTA stops in Somerville, Fall weekday boardings, routes
@@ -44,8 +45,9 @@ A = {
     'service_min': 20,          # minutes to clear one stop: boarding area, shelter, bench
     'drive_m_per_min': 134,     # bobcat driving speed on the street: about 5 mph
     'cross_m': 60,              # stops this close are across the street from each other
+    'on_route_m': 25,           # a stop this close to a leg is on it (branches share streets)
+    'turn_min': 5,              # turning around to clear the other side of the street (or at the city line)
     'max_link_m': 900,          # longer gaps between stops on a route mean stops are missing in between: no link
-    'corner_m': 100,            # after reaching a stop, clear every waiting stop this close to it before moving on
     'lookahead': 8,             # a crew judges a direction by the run of up to this many waiting stops ahead
     'start_apart_m': 1200,      # the crews' first stops are at least this far apart
     'sweep_after': 0.7,         # once stops with this share of riders are clear, take the nearest waiting stop
@@ -60,8 +62,9 @@ def meters(a, b):
 
 
 def project(pt, path):
-    """Distance along a polyline to the point on it nearest pt, and how far pt is from it (m)."""
-    best, along = (1e18, 0), 0
+    """Distance along a polyline to the point on it nearest pt, how far pt is from it (m), and
+    whether pt is on the right of the line in the direction it runs (where a bus stops)."""
+    best, along = (1e18, 0, True), 0
     for p, q in zip(path, path[1:]):
         seg = meters(p, q)
         if seg == 0:
@@ -72,26 +75,37 @@ def project(pt, path):
         t = max(0, min(1, (wx * vx + wy * vy) / (seg * seg)))
         off = math.hypot(wx - t * vx, wy - t * vy)
         if off < best[0]:
-            best = (off, along + t * seg)
+            best = (off, along + t * seg, vx * wy - vy * wx <= 0)
         along += seg
-    return best[1], best[0]
+    return best[1], best[0], best[2]
 
 
 def route_orders(stops, routes):
     """Each route's stops in the order the bus passes them, with the distance along the
-    route (each direction is its own path)."""
+    route. Each direction is its own path (a leg), and a stop belongs to the leg it stands on
+    the right of: on a two-way street both legs follow the same line, one stop on each side.
+    A stop is on every leg that passes it (branches share streets). A stop on the left of
+    every leg is served by buses running the other way on a pattern the route data doesn't
+    carry, so it goes on that street driven the other way."""
     out = []
     for rid, r in sorted(routes.items(), key=lambda kv: (len(kv[0]), kv[0])):
         mine = [s for s in stops if rid in s['routes']]
         if not mine or not r['paths']:
             continue
-        on = {}
+        paths = r['paths'] + [p[::-1] for p in r['paths']]
+        n, on = len(r['paths']), {}
         for s in mine:
-            (along, off), i = min(((project((s['lon'], s['lat']), p), i) for i, p in enumerate(r['paths'])), key=lambda x: x[0][1])
-            if off < 120:
-                on.setdefault(i, []).append((along, s['id']))
+            fits = [(project((s['lon'], s['lat']), p), i) for i, p in enumerate(paths)]
+            ok = [f for f in fits if f[0][1] < 120]
+            pick = ([f for f in ok if f[1] < n and f[0][2]]
+                    or [f for f in ok if f[1] >= n and f[0][2]] or ok)
+            if pick:                              # every leg that passes it (branches share streets)
+                best = min(f[0][1] for f in pick)
+                for (along, off, _), i in pick:
+                    if off <= max(best, A['on_route_m']):
+                        on.setdefault(i, []).append((along, s['id']))
         for i in sorted(on):
-            out.append((rid, r['paths'][i], sorted(on[i])))
+            out.append((rid, paths[i], sorted(on[i])))
     return out
 
 
@@ -113,54 +127,97 @@ def slice_path(path, x, y):
 
 
 GEO = {}                                          # (a, b) -> the street shape of the link from a to b
+AWAY = set()                                      # links that leave the city or the bus routes (no street shape)
 
 
 def street_network(allstops, routes):
-    """Stops linked to the next stop along each bus route (by the route's own length, unless
-    the gap is so long that stops must be missing in between) and to the stop across the street. Pieces the bus routes don't join up are linked at their
-    closest stops, so every stop can be reached."""
+    """A one-way network: each bus route's stops on one side of the street, linked from each stop
+    to the next in the direction the bus runs (by the route's own length, unless the gap is so
+    long that stops must be missing in between). Crossing to the stop on the other side of the
+    street is a turnaround that costs A['turn_min'], and so is the end of a leg, where the bus
+    leaves the city: the crew turns to the nearest stop of the same route's other direction. Where the network can't get from one part
+    to another, the closest stops are joined both ways. G[a][b] = (meters, kind)."""
     G = {s['id']: {} for s in allstops}
+    RT = {s['id']: s['routes'] for s in allstops}
+    GEO.clear(); AWAY.clear()
 
-    GEO.clear()
-
-    def link(a, b, m, shape=None):
-        if a != b and (b not in G[a] or m < G[a][b]):
-            G[a][b] = G[b][a] = m
-            GEO.pop((a, b), None); GEO.pop((b, a), None)
+    def link(a, b, m, kind, shape=None):
+        if a != b and (b not in G[a] or edge_min(m, kind) < edge_min(*G[a][b])):
+            G[a][b] = (m, kind)
+            GEO.pop((a, b), None)
             if shape and len(shape) > 2:
                 GEO[(a, b)] = shape
-    for _, path, seq in route_orders(allstops, routes):
+    legs = route_orders(allstops, routes)
+    for _, path, seq in legs:
         for (x, a), (y, b) in zip(seq, seq[1:]):
             m = max(y - x, meters(P[a], P[b]))
             if m <= A['max_link_m']:
-                link(a, b, m, slice_path(path, x, y))
+                link(a, b, m, 'drive', slice_path(path, x, y))
+    for rid, _, seq in legs:                      # where a leg leaves the city, turn around like the bus
+        first, last = seq[0][1], seq[-1][1]
+        other = sorted({t for r, _, q in legs if r == rid and q is not seq for _, t in q} - {first, last})
+        if other:
+            for a, b in ((last, min(other, key=lambda t: meters(P[last], P[t]))),
+                         (min(other, key=lambda t: meters(P[first], P[t])), first)):
+                link(a, b, meters(P[a], P[b]), 'turn')
+                if meters(P[a], P[b]) > A['cross_m']:
+                    AWAY.add((a, b))
     ids = list(G)
     for i, a in enumerate(ids):
         for b in ids[i + 1:]:
             d = meters(P[a], P[b])
             if d <= A['cross_m']:
-                link(a, b, d)
-    extra = 0
-    while True:                                   # join any separate pieces
-        seen, comp = set(), []
-        for s in ids:
-            if s in seen:
-                continue
-            todo, part = [s], set()
-            while todo:
-                x = todo.pop()
-                if x not in part:
-                    part.add(x); todo.extend(G[x])
-            seen |= part; comp.append(part)
-        if len(comp) == 1:
-            return G, extra
-        small = min(comp, key=len)
-        a, b = min(((a, b) for a in small for b in ids if b not in small), key=lambda ab: meters(P[ab[0]], P[ab[1]]))
-        link(a, b, meters(P[a], P[b])); extra += 1
+                link(a, b, d, 'turn'); link(b, a, d, 'turn')
+    joins = 0
+    while True:                                   # every stop must be able to reach every other
+        comps = strong_parts(G)
+        if len(comps) == 1:
+            return G, joins
+        small = min(comps, key=len)
+        a, b = min(((a, b) for a in sorted(small) for b in ids if b not in small),   # a stop on the same route counts half as far
+                   key=lambda ab: meters(P[ab[0]], P[ab[1]]) / (2 if set(RT[ab[0]]) & set(RT[ab[1]]) else 1))
+        d = meters(P[a], P[b])
+        link(a, b, d, 'join'); link(b, a, d, 'join'); AWAY.update({(a, b), (b, a)}); joins += 1
+
+
+def strong_parts(G):
+    """Groups of stops that can all reach each other (strongly connected components)."""
+    order, seen = [], set()
+    for s in G:                                   # pass 1: finishing order
+        if s in seen:
+            continue
+        stack = [(s, iter(G[s]))]; seen.add(s)
+        while stack:
+            u, it = stack[-1]
+            v = next(it, None)
+            if v is None:
+                order.append(u); stack.pop()
+            elif v not in seen:
+                seen.add(v); stack.append((v, iter(G[v])))
+    back = {s: [] for s in G}
+    for u in G:
+        for v in G[u]:
+            back[v].append(u)
+    comps, done = [], set()
+    for s in reversed(order):                     # pass 2: on the reversed links
+        if s in done:
+            continue
+        part, todo = set(), [s]
+        while todo:
+            u = todo.pop()
+            if u not in done:
+                done.add(u); part.add(u); todo.extend(back[u])
+        comps.append(part)
+    return comps
+
+
+def edge_min(m, kind):
+    """Minutes for one link: driving at the bobcat's speed, plus the turnaround to cross."""
+    return m / A['drive_m_per_min'] + (A['turn_min'] if kind == 'turn' else 0)
 
 
 def dijkstra(G, src, stop_at=None):
-    """Shortest street distance from src. Nodes in stop_at are reached but not driven through."""
+    """Quickest drive (minutes) from src. Nodes in stop_at are reached but not driven through."""
     dist, prev, pq = {src: 0.0}, {}, [(0.0, src)]
     while pq:
         d, u = heapq.heappop(pq)
@@ -168,12 +225,20 @@ def dijkstra(G, src, stop_at=None):
             continue
         if stop_at and u != src and u in stop_at:
             continue
-        for v, w in G[u].items():
-            nd = d + w
+        for v, (m, kind) in G[u].items():
+            nd = d + edge_min(m, kind)
             if nd < dist.get(v, 1e18):
                 dist[v], prev[v] = nd, u
                 heapq.heappush(pq, (nd, v))
     return dist, prev
+
+
+def path_meters(G, src, path):
+    """Meters driven along a path of stops starting at src."""
+    m, at = 0.0, src
+    for n in path:
+        m += G[at][n][0]; at = n
+    return m
 
 
 def path_to(prev, src, dst):
@@ -203,12 +268,13 @@ def route_by_route(G, stops, orders):
         seq = [sid for rid in sorted(q, key=lambda r: (len(r), r)) for sid in routes[rid]]
         t, day = 0.0, []
         for i, sid in enumerate(seq):
-            path, m = [sid], 0.0
+            path, m, mins = [sid], 0.0, 0.0
             if i:
                 dist, prev = dijkstra(G, seq[i - 1])
-                path, m = path_to(prev, seq[i - 1], sid), dist[sid]
-            t += m / A['drive_m_per_min'] + A['service_min']
-            day.append({'stop': sid, 'path': path, 'm': m, 'h': t / 60})
+                path, mins = path_to(prev, seq[i - 1], sid), dist[sid]
+                m = path_meters(G, seq[i - 1], path)
+            t += mins + A['service_min']
+            day.append({'stop': sid, 'path': path, 'm': m, 'mins': mins, 'h': t / 60})
         days.append(day)
     return days
 
@@ -219,29 +285,29 @@ def run_value(G, start_min, v, left):
     t, val, cur, seen = start_min + A['service_min'], R[v], v, {v}
     best = (val + 1e-3) / t
     for _ in range(A['lookahead'] - 1):
-        nb = [(w, m) for w, m in sorted(G[cur].items()) if w in left and w not in seen]
+        nb = [(w, edge_min(*e)) for w, e in sorted(G[cur].items()) if w in left and w not in seen]
         if not nb:
             break
-        w, m = max(nb, key=lambda wm: (R[wm[0]] + 1e-3) / (wm[1] / A['drive_m_per_min'] + A['service_min']))
-        t += m / A['drive_m_per_min'] + A['service_min']; val += R[w]; seen.add(w); cur = w
+        w, mins = max(nb, key=lambda wm: (R[wm[0]] + 1e-3) / (wm[1] + A['service_min']))
+        t += mins + A['service_min']; val += R[w]; seen.add(w); cur = w
         best = max(best, (val + 1e-3) / t)
     return best
 
 
 def riders_first(G, stops):
-    """Crews start at busy stops spread across the city. At each stop a crew first clears any
-    waiting stop at the same corner; then it heads for the next waiting stop along the street
-    whose run ahead clears the most riders per minute; once stops with most riders are clear,
-    it takes the nearest waiting stop instead. A crew never drives past a waiting stop."""
+    """Crews start at busy stops spread across the city. A crew keeps going along its side of
+    the street while the next stop ahead waits; at the end of the run it crosses the road and
+    clears the other side on the way back. With neither, it heads for the waiting stop whose run
+    ahead clears the most riders per minute, and once stops with most riders are clear, the
+    nearest waiting stop. A crew never drives past a waiting stop."""
     left = {s['id'] for s in stops}
     total = sum(R[s] for s in left)
     days = [[] for _ in range(A['crews'])]
     clock, starts, taken = [0.0] * A['crews'], [], 0
-    corner = [None] * A['crews']                      # the stop each crew last drove to on purpose
     for k in range(A['crews']):                       # hour 0: busy stops, spread apart
         far = [s for s in sorted(left) if all(meters(P[s], P[x]) > A['start_apart_m'] for x in starts)] or sorted(left)
         sid = max(far, key=lambda s: run_value(G, 0.0, s, left))
-        starts.append(sid); left.discard(sid); taken += R[sid]; clock[k] = A['service_min']; corner[k] = sid
+        starts.append(sid); left.discard(sid); taken += R[sid]; clock[k] = A['service_min']
         days[k].append({'stop': sid, 'path': [sid], 'm': 0.0, 'h': clock[k] / 60})
     while left:
         k = min(range(A['crews']), key=lambda k: clock[k])
@@ -250,18 +316,20 @@ def riders_first(G, stops):
         reach = [s for s in sorted(left) if s in dist]
         if not reach:
             clock[k] = float('inf'); continue
-        close = [s for s in reach if meters(P[s], P[corner[k]]) <= A['corner_m']]
-        if close:                                     # finish the corner first: across the street, same intersection
-            nxt = min(close, key=lambda s: dist[s])
+        ahead = [w for w, (m, kind) in sorted(G[here].items()) if kind == 'drive' and w in left]
+        back = [w for w, (m, kind) in sorted(G[here].items()) if kind == 'turn' and w in left]
+        if ahead:                                     # keep going along this side while the next stop waits
+            nxt = max(ahead, key=lambda s: run_value(G, dist[s], s, left))
+        elif back:                                    # then cross the road and clear the other side on the way back
+            nxt = max(back, key=lambda s: run_value(G, dist[s], s, left))
+        elif taken >= A['sweep_after'] * total:
+            nxt = min(reach, key=lambda s: (dist[s], -R[s]))
         else:
-            if taken >= A['sweep_after'] * total:
-                nxt = min(reach, key=lambda s: (dist[s], -R[s]))
-            else:
-                nxt = max(reach, key=lambda s: run_value(G, dist[s] / A['drive_m_per_min'], s, left))
-            corner[k] = nxt
-        clock[k] += dist[nxt] / A['drive_m_per_min'] + A['service_min']
+            nxt = max(reach, key=lambda s: run_value(G, dist[s], s, left))
+        clock[k] += dist[nxt] + A['service_min']
         left.discard(nxt); taken += R[nxt]
-        days[k].append({'stop': nxt, 'path': path_to(prev, here, nxt), 'm': dist[nxt], 'h': clock[k] / 60})
+        path = path_to(prev, here, nxt)
+        days[k].append({'stop': nxt, 'path': path, 'm': path_meters(G, here, path), 'mins': dist[nxt], 'h': clock[k] / 60})
     return days
 
 
@@ -271,7 +339,7 @@ def stats(days, total):
     return {'avg_wait_h': round(sum(R[s] * t for s, t in done.items()) / total, 1),
             'finish_h': round(max(done.values()), 1),
             'share_by': {h: round(share(h) * 100) for h in (1, 2, 4, 6, 8, 12)},
-            'drive_h': round(sum(e['m'] for day in days for e in day) / A['drive_m_per_min'] / 60, 1),
+            'drive_h': round(sum(e.get('mins', e['m'] / A['drive_m_per_min']) for day in days for e in day) / 60, 1),
             'km': round(sum(e['m'] for day in days for e in day) / 1000, 1)}
 
 
@@ -375,6 +443,7 @@ if __name__ == '__main__':
         'routes': {k: v['paths'] for k, v in bs['routes'].items() if v['paths']},
         'nodes': {s['id']: [s['lon'], s['lat']] for s in allstops},
         'geo': {f'{a}|{b}': g for (a, b), g in GEO.items()},
+        'away': sorted(f'{a}|{b}' for a, b in AWAY if b in G[a] and G[a][b][1] != 'drive'),
         'stops': [{'id': s['id'], 'n': s['name'], 'x': s['lon'], 'y': s['lat'], 'r': s['riders'], 'rt': s['routes'],
                    **{k: next({'h': round(e['h'], 2), 'c': c + 1} for c, day in enumerate(plans[k]) for e in day if e['stop'] == s['id']) for k in plans}} for s in stops],
         'mbta': [{'n': s['name'], 'x': s['lon'], 'y': s['lat'], 'r': s['riders']} for s in mbta],
@@ -386,4 +455,4 @@ if __name__ == '__main__':
     # the same page on the public site (docs/ is served by GitHub Pages)
     shutil.copyfile(os.path.join(OUT, 'map.html'), os.path.join(ROOT, 'docs', 'bus-stops.html'))
     print('\n'.join(lines))
-    print(f'street network: {sum(len(v) for v in G.values()) // 2} links, {joins} added to join separate pieces')
+    print(f'street network: {sum(len(v) for v in G.values())} one-way links, {joins} pairs added to join separate pieces')

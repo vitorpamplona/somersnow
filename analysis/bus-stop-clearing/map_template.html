@@ -95,6 +95,7 @@ footer{margin-top:40px;color:var(--ice);font-size:14px;border-top:1px solid rgba
         <div class="lg"><svg width="30" height="22"><circle cx="11" cy="11" r="9" fill="#FF8A3D" stroke="#10243A" stroke-width="1.5"/></svg>Cleared.</div>
         <div class="lg"><svg width="30" height="22"><rect x="5" y="5" width="12" height="12" fill="#A9C4E4" stroke="#10243A" stroke-width="1.5"/></svg>Route 109: the MBTA clears it.</div>
         <div class="lg"><svg width="30" height="22"><path d="M2 11 H28" stroke="#B93D06" stroke-width="3"/></svg>Where the bobcats have driven.</div>
+        <div class="lg"><svg width="30" height="22"><path d="M3 11 H28" stroke="#B93D06" stroke-width="3" stroke-dasharray="2 7" stroke-linecap="round"/></svg>Out of the city and back, like the bus (no street data).</div>
         <p class="note" id="sidenote"></p>
       </div>
     </div>
@@ -171,7 +172,21 @@ s += '<g id="stops">' + [...D.stops].sort((a, b) => b.r - a.r).map((b) => { byId
 map.innerHTML = s;
 
 // the street shape between two linked stops (along the bus route), or a straight line
-const street = (a, b) => D.geo[a + '|' + b] || (D.geo[b + '|' + a] ? [...D.geo[b + '|' + a]].reverse() : [D.nodes[a], D.nodes[b]]);
+const street = (a, b) => D.geo[a + '|' + b] || [D.nodes[a], D.nodes[b]];
+// a drive from one stop through a path of stops, as [points, away] pieces: away pieces leave
+// the city or the bus routes (the bus turns around outside Somerville), drawn dashed
+const AWAY = new Set(D.away);
+function pieces(from, path) {
+  const out = []; let at = from, cur = [D.nodes[from]];
+  path.forEach((n) => {
+    if (AWAY.has(at + '|' + n)) { if (cur.length > 1) out.push([cur, false]); out.push([[D.nodes[at], D.nodes[n]], true]); cur = [D.nodes[n]]; }
+    else cur.push(...street(at, n).slice(1));
+    at = n;
+  });
+  if (cur.length > 1) out.push([cur, false]);
+  return out;
+}
+const piecesD = (ps, away) => ps.filter((p) => p[1] === away).map((p) => pathD(p[0])).join('');
 let plan = 'riders', T = 0, crew = 0;
 const maxH = Math.ceil(Math.max(R.finish_h, F.finish_h));
 $('#t').max = maxH;
@@ -184,14 +199,9 @@ function draw() {
   // each crew's drive so far, along the street (through the stops it passes)
   $('#trails').innerHTML = D.days[plan].map((day, k) => {
     if (crew && k + 1 !== crew) return '';
-    const pts = [];
-    let at = null;
-    day.forEach(([sid, path, h]) => {
-      if (h > T) return;
-      if (at === null) { pts.push(D.nodes[sid]); at = sid; return; }
-      path.forEach((n) => { pts.push(...street(at, n).slice(1)); at = n; });
-    });
-    return pts.length > 1 ? `<path d="${pathD(pts)}"/>` : '';
+    const ps = [];
+    day.forEach(([sid, path, h], i) => { if (i && h <= T) ps.push(...pieces(day[i - 1][0], path)); });
+    return `<path d="${piecesD(ps, false)}"/><path d="${piecesD(ps, true)}" stroke-dasharray="2 7"/>`;
   }).join('');
   const share = D.curve[plan].reduce((a, [h, v]) => (h <= T + 1e-9 ? v : a), 0);
   const nclear = D.stops.filter((b) => b[plan].h <= T).length;
@@ -199,7 +209,7 @@ function draw() {
   $('#read').innerHTML = `Hour ${T.toFixed(1)} · <b>${Math.round(share * 100)}%</b> of riders · `
     + (crew ? `crew ${crew}: ${mineDone} of ${mine.length} stops` : `${nclear} of ${D.nstops} stops`);
   $('#sidenote').textContent = plan === 'riders'
-    ? `Each crew follows the street and clears every waiting stop it reaches, finishing each corner before it moves on. It heads where the next few stops clear the most riders per minute; once stops with ${Math.round(A.sweep_after * 100)}% of riders are clear, it takes the nearest waiting stop.`
+    ? `Each crew drives its side of the street in the bus's direction and clears every waiting stop it reaches, then crosses the road and clears the other side on the way back. It heads where the next few stops clear the most riders per minute; once stops with ${Math.round(A.sweep_after * 100)}% of riders are clear, it takes the nearest waiting stop.`
     : 'Crews work whole routes, stop by stop, in route-number order. The City\'s own 4 routes are not published, so this is our stand-in.';
   drawChart();
 }
@@ -256,8 +266,9 @@ $('#season').textContent = D.season;
 $('#why').innerHTML = [
   ['Riders are bunched', `Half of the weekday boardings happen at ${D.half} of the ${D.nstops} stops the City clears. The 3 busiest (${D.top3.names.join(', ')}) see more riders than the ${D.top3.quiet} quietest stops together.`],
   ['One goal', 'The most riders at a clear stop, as fast as possible. We measure it as the average wait for a rider\'s stop: each stop\'s hour, counted once for every weekday boarding there.'],
-  ['Follow the street', `The bobcats drive along the bus routes at about ${mph} mph, stop to stop, and cross the street to the stop on the other side. A crew never drives past a waiting stop: it clears it. At each stop it first clears the rest of that corner (stops within ${A.corner_m} m), then moves on.`],
-  ['Busiest run first', `Crews start at busy stops spread across the city. At each stop, a crew heads where the next few waiting stops along the street clear the most riders per minute: the driving plus ${A.service_min} minutes a stop.`],
+  ['Follow the street', `The bobcats drive along the bus routes at about ${mph} mph, stop to stop. A crew never drives past a waiting stop: it clears it.`],
+  ['One side, then back', `Each side of the street is its own run, driven the way the bus goes. A crew keeps going while the next stop ahead waits; then it crosses the road (${A.turn_min} minutes to turn around) and clears the other side on the way back. It never backs up over a stretch it just cleared.`],
+  ['Busiest run first', `Crews start at busy stops spread across the city. When a run is done, a crew heads where the next few waiting stops along the street clear the most riders per minute: the driving plus ${A.service_min} minutes a stop.`],
   ['Then the nearest', `Once stops with ${Math.round(A.sweep_after * 100)}% of riders are clear, each crew takes the nearest waiting stop, so no one drives across town for the last few. That keeps driving below route by route.`],
 ].map(([h, p]) => `<div><b>${h}</b>${p}</div>`).join('');
 
@@ -270,7 +281,7 @@ function crewMap(day) {
   let lines = '', dots = '', labels = '';
   day.forEach(([sid, path, h], i) => {
     const b = byId[sid], [x, y] = px(b.x, b.y), col = mix(h / dayEnd);
-    if (i) { let at = day[i - 1][0]; const pts = [D.nodes[at]]; path.forEach((n) => { pts.push(...street(at, n).slice(1)); at = n; }); lines += `<path d="${pathD(pts)}" stroke="${col}" stroke-width="3.5" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>`; }
+    if (i) { const ps = pieces(day[i - 1][0], path); lines += `<path d="${piecesD(ps, false)}" stroke="${col}" stroke-width="3.5" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><path d="${piecesD(ps, true)}" stroke="${col}" stroke-width="3.5" stroke-dasharray="1 6" stroke-linecap="round" vector-effect="non-scaling-stroke"/>`; }
     dots += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(5 + Math.sqrt(b.r) / 2).toFixed(1)}" fill="${col}" stroke="#fff" stroke-width="1.2" vector-effect="non-scaling-stroke"/>`;
     if (i < 5) labels += `<g transform="translate(${x.toFixed(1)} ${(y - 26).toFixed(1)})"><circle r="17" fill="#10243A" stroke="#fff" stroke-width="1.5" vector-effect="non-scaling-stroke"/><text y="7" text-anchor="middle" font-size="20" font-weight="700" fill="#fff" font-family="Barlow, sans-serif">${i + 1}</text></g>`;
   });
@@ -294,9 +305,9 @@ $('#assume').innerHTML = '<tr><th>Assumption</th><th>Value</th><th>Why</th></tr>
   ['Crews on bus stops', A.crews, 'The City clears its stops in "4 Routes" (snow page). The real number of bobcats is not published.'],
   ['Time to clear one stop', A.service_min + ' min', 'Boarding area, shelter and bench. A guess: please correct it.'],
   ['Bobcat speed between stops', `about ${mph} mph`, 'A slow, safe speed for a small loader in traffic.'],
-  ['Streets', 'Along the bus routes', 'Bobcats drive the bus routes stop to stop and cross the street between stops ' + A.cross_m + ' m apart. Distances follow the route; one-way streets and turns aren\'t modeled. Stops more than ' + (A.max_link_m / 1000).toFixed(1) + ' km apart on a route aren\'t linked (stops must be missing in between).'],
+  ['Streets', 'Along the bus routes', 'Each side of the street is driven the way the bus goes, stop to stop, along the route. Stops more than ' + (A.max_link_m / 1000).toFixed(1) + ' km apart on a route aren\'t linked (stops must be missing in between). Side streets aren\'t modeled.'],
+  ['Turning around', A.turn_min + ' min', 'To clear the stop across the street (within ' + A.cross_m + ' m), or where a route leaves the city, a crew turns around, like the bus.'],
   ['Start', 'Hour 0, at each crew\'s first stop', 'Getting the bobcats there from the yard isn\'t counted, the same for both plans.'],
-  ['A corner', A.corner_m + ' m', 'After reaching a stop, a crew clears every waiting stop this close to it (across the street, the same intersection) before driving on.'],
   ['Stops the MBTA clears', 'Route ' + A.mbta_routes.join(', '), `All ${D.nmbta} stops on route 109. The MBTA also clears some stops on 77 and 104; it doesn't say which, so we leave them to the City.`],
   ['Which stops', D.nstops + ' MBTA stops', 'The City says it clears 281. We can only rank the stops the MBTA lists in Somerville.'],
   ['Boardings', D.season + ' weekdays', 'People getting on. Stops where people mostly get off rank lower than their real use.'],

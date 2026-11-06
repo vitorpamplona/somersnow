@@ -12,8 +12,9 @@ The most riders at a clear stop, as fast as possible. We measure it as the **ave
 
 1. **Riders are bunched.** Half of the weekday boardings at the stops the City clears happen at 15 of its 189 stops. The 3 busiest (Davis, Clarendon Hill Busway, Holland St @ Dover St) see more riders than the 151 quietest stops together.
 2. **Follow the street.** The bobcats drive along the bus routes, stop to stop, and cross the street to the stop on the other side. A crew never drives past a waiting stop: it clears it. It may drive through stops that are already clear.
-3. **Busiest run first.** Crews start at busy stops at least 1.2 km apart. At each stop, a crew heads where the next few waiting stops along the street (up to 8) clear the most riders per minute of driving and clearing.
-4. **Then the nearest.** Once stops with 70% of riders are clear, each crew takes the nearest waiting stop along the street, so no one drives across town for the last few.
+3. **Finish the corner.** After reaching a stop, a crew clears every waiting stop within 100 m of it (across the street, the same intersection) before driving on, so it never leaves a small stop behind at a hub.
+4. **Busiest run first.** Crews start at busy stops at least 1.2 km apart. At each stop, a crew heads where the next few waiting stops along the street (up to 8) clear the most riders per minute of driving and clearing.
+5. **Then the nearest.** Once stops with 70% of riders are clear, each crew takes the nearest waiting stop along the street, so no one drives across town for the last few.
 
 ## Result
 
@@ -21,22 +22,22 @@ Same 4 crews, same stops, same streets, different order (hours of work from when
 
 | | Route by route (today, as modeled) | Riders first |
 | --- | --- | --- |
-| Average wait for a rider's stop | 6.9 h | 4.3 h |
-| Riders' stops clear after 2 h | 7% | 47% |
-| Riders' stops clear after 4 h | 42% | 64% |
-| All stops clear | 20.2 h | 19.1 h |
-| Distance driven | 92 km | 90 km |
+| Average wait for a rider's stop | 7.0 h | 4.7 h |
+| Riders' stops clear after 2 h | 7% | 45% |
+| Riders' stops clear after 4 h | 42% | 58% |
+| All stops clear | 21.4 h | 18.6 h |
+| Distance driven | 102 km | 81 km |
 
-Riders first gets riders their stop sooner, finishes sooner and drives no more. It holds when any one assumption changes (2 or 6 crews, 10 or 30 minutes a stop, a bobcat at 3 or 8 mph): the average wait drops by at least a third every time. With 2 crews it finishes about an hour later; otherwise it finishes the same time or sooner. `output/summary.md` also has the same comparison for 1 to 10 crews.
+Riders first gets riders their stop sooner, finishes sooner and drives less. It holds when any one assumption changes (2 or 6 crews, 10 or 30 minutes a stop, a bobcat at 3 or 8 mph): the average wait drops by about a third or more, and every stop is clear sooner, every time. `output/summary.md` also has the same comparison for 1 to 10 crews.
 
 ## How the model works
 
 - **Stops:** the MBTA bus stops in Somerville with their average weekday boardings (Fall 2025). The 18 stops on route 109 are left out: the MBTA clears all of them itself. They stay on the street network, so crews can drive past them.
-- **Streets:** each stop is linked to the next stop along every bus route that serves it, at the route's own length, and to any stop within 60 m (across the street). Where the bus routes leave pieces unconnected, the closest stops are linked (4 links). Crews drive the shortest way along these links.
+- **Streets:** each stop is linked to the next stop along every bus route that serves it, at the route's own length, and to any stop within 60 m (across the street). Stops more than 900 m apart on a route aren't linked: a gap that long means stops in between were matched to the route's other direction, and the link would let a crew skip them. Where the bus routes leave pieces unconnected, the closest stops are linked (4 links). Crews drive the shortest way along these links.
 - **Driving:** about 5 mph. **Clearing:** 20 minutes a stop (boarding area, shelter, bench).
 - **Start:** each crew begins at its first stop at hour 0. Getting the bobcats there from the yard isn't counted; it is the same for both plans.
 - **Route by route:** a stand-in for today's practice, since the City's 4 routes aren't published: whole bus routes, stop by stop in the order the bus runs, in route-number order, split among 4 crews so each has about the same number of stops.
-- **Riders first:** the rules above. The 1.2 km spacing, the 8-stop lookahead and the 70% switch were picked by trying a few values; they give sensible starting points (Davis, Clarendon Hill Busway, Broadway @ Marshall St, McGrath Hwy) and beat route by route on every measure.
+- **Riders first:** the rules above. The 100 m corner, the 1.2 km spacing, the 8-stop lookahead and the 70% switch were picked by trying a few values; they give sensible starting points (Davis, Clarendon Hill Busway, Broadway @ Marshall St, McGrath Hwy) and beat route by route on every measure.
 
 Every assumption is at the top of `build.py` (`A = {...}`); change one and rebuild. A build takes about a second, and the same inputs always give the same plan.
 

@@ -183,7 +183,7 @@ function draw() {
   const nclear = D.stops.filter((b) => b[plan].h <= T).length;
   $('#read').innerHTML = `Hour ${T.toFixed(1)} · <b>${Math.round(share * 100)}%</b> of riders · ${nclear} of ${D.nstops} stops`;
   $('#sidenote').textContent = plan === 'riders'
-    ? `Each crew follows the street and clears every waiting stop it reaches. It heads where the next few stops clear the most riders per minute; once stops with ${Math.round(A.sweep_after * 100)}% of riders are clear, it takes the nearest waiting stop.`
+    ? `Each crew follows the street and clears every waiting stop it reaches, finishing each corner before it moves on. It heads where the next few stops clear the most riders per minute; once stops with ${Math.round(A.sweep_after * 100)}% of riders are clear, it takes the nearest waiting stop.`
     : 'Crews work whole routes, stop by stop, in route-number order. The City\'s own 4 routes are not published, so this is our stand-in.';
   drawChart();
 }
@@ -234,7 +234,7 @@ $('#season').textContent = D.season;
 $('#why').innerHTML = [
   ['Riders are bunched', `Half of the weekday boardings happen at ${D.half} of the ${D.nstops} stops the City clears. The 3 busiest (${D.top3.names.join(', ')}) see more riders than the ${D.top3.quiet} quietest stops together.`],
   ['One goal', 'The most riders at a clear stop, as fast as possible. We measure it as the average wait for a rider\'s stop: each stop\'s hour, counted once for every weekday boarding there.'],
-  ['Follow the street', `The bobcats drive along the bus routes at about ${mph} mph, stop to stop, and cross the street to the stop on the other side. A crew never drives past a waiting stop: it clears it. It may drive through stops already clear.`],
+  ['Follow the street', `The bobcats drive along the bus routes at about ${mph} mph, stop to stop, and cross the street to the stop on the other side. A crew never drives past a waiting stop: it clears it. At each stop it first clears the rest of that corner (stops within ${A.corner_m} m), then moves on.`],
   ['Busiest run first', `Crews start at busy stops spread across the city. At each stop, a crew heads where the next few waiting stops along the street clear the most riders per minute: the driving plus ${A.service_min} minutes a stop.`],
   ['Then the nearest', `Once stops with ${Math.round(A.sweep_after * 100)}% of riders are clear, each crew takes the nearest waiting stop, so no one drives across town for the last few. That keeps driving below route by route.`],
 ].map(([h, p]) => `<div><b>${h}</b>${p}</div>`).join('');
@@ -272,8 +272,9 @@ $('#assume').innerHTML = '<tr><th>Assumption</th><th>Value</th><th>Why</th></tr>
   ['Crews on bus stops', A.crews, 'The City clears its stops in "4 Routes" (snow page). The real number of bobcats is not published.'],
   ['Time to clear one stop', A.service_min + ' min', 'Boarding area, shelter and bench. A guess: please correct it.'],
   ['Bobcat speed between stops', `about ${mph} mph`, 'A slow, safe speed for a small loader in traffic.'],
-  ['Streets', 'Along the bus routes', 'Bobcats drive the bus routes stop to stop and cross the street between stops ' + A.cross_m + ' m apart. Distances follow the route; one-way streets and turns aren\'t modeled.'],
+  ['Streets', 'Along the bus routes', 'Bobcats drive the bus routes stop to stop and cross the street between stops ' + A.cross_m + ' m apart. Distances follow the route; one-way streets and turns aren\'t modeled. Stops more than ' + (A.max_link_m / 1000).toFixed(1) + ' km apart on a route aren\'t linked (stops must be missing in between).'],
   ['Start', 'Hour 0, at each crew\'s first stop', 'Getting the bobcats there from the yard isn\'t counted, the same for both plans.'],
+  ['A corner', A.corner_m + ' m', 'After reaching a stop, a crew clears every waiting stop this close to it (across the street, the same intersection) before driving on.'],
   ['Stops the MBTA clears', 'Route ' + A.mbta_routes.join(', '), `All ${D.nmbta} stops on route 109. The MBTA also clears some stops on 77 and 104; it doesn't say which, so we leave them to the City.`],
   ['Which stops', D.nstops + ' MBTA stops', 'The City says it clears 281. We can only rank the stops the MBTA lists in Somerville.'],
   ['Boardings', D.season + ' weekdays', 'People getting on. Stops where people mostly get off rank lower than their real use.'],

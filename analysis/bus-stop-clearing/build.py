@@ -14,7 +14,8 @@ Two orders are compared:
   * route by route: each crew works through whole bus routes, stop by stop in the
     order the bus runs (a stand-in for today's practice; the City's own 4 clearing
     routes are not published);
-  * riders first: crews start at busy stops spread across the city; each then heads
+  * riders first: crews start at busy stops spread across the city; at each stop a
+    crew first clears the rest of that corner; each then heads
     for the next waiting stop along the street whose run ahead clears the most riders
     per minute of driving and clearing; once stops with 70% of riders are clear,
     each takes the nearest waiting stop.
@@ -43,6 +44,8 @@ A = {
     'service_min': 20,          # minutes to clear one stop: boarding area, shelter, bench
     'drive_m_per_min': 134,     # bobcat driving speed on the street: about 5 mph
     'cross_m': 60,              # stops this close are across the street from each other
+    'max_link_m': 900,          # longer gaps between stops on a route mean stops are missing in between: no link
+    'corner_m': 100,            # after reaching a stop, clear every waiting stop this close to it before moving on
     'lookahead': 8,             # a crew judges a direction by the run of up to this many waiting stops ahead
     'start_apart_m': 1200,      # the crews' first stops are at least this far apart
     'sweep_after': 0.7,         # once stops with this share of riders are clear, take the nearest waiting stop
@@ -93,8 +96,8 @@ def route_orders(stops, routes):
 
 
 def street_network(allstops, routes):
-    """Stops linked to the next stop along each bus route (by the route's own length) and to
-    the stop across the street. Pieces the bus routes don't join up are linked at their
+    """Stops linked to the next stop along each bus route (by the route's own length, unless
+    the gap is so long that stops must be missing in between) and to the stop across the street. Pieces the bus routes don't join up are linked at their
     closest stops, so every stop can be reached."""
     G = {s['id']: {} for s in allstops}
 
@@ -103,7 +106,9 @@ def street_network(allstops, routes):
             G[a][b] = G[b][a] = m
     for _, seq in route_orders(allstops, routes):
         for (x, a), (y, b) in zip(seq, seq[1:]):
-            link(a, b, max(y - x, meters(P[a], P[b])))
+            m = max(y - x, meters(P[a], P[b]))
+            if m <= A['max_link_m']:
+                link(a, b, m)
     ids = list(G)
     for i, a in enumerate(ids):
         for b in ids[i + 1:]:
@@ -199,18 +204,19 @@ def run_value(G, start_min, v, left):
 
 
 def riders_first(G, stops):
-    """Crews start at busy stops spread across the city. Each free crew then heads for the next
-    waiting stop along the street whose run ahead clears the most riders per minute; once stops
-    with most riders are clear, it takes the nearest waiting stop instead. A crew never drives
-    past a waiting stop."""
+    """Crews start at busy stops spread across the city. At each stop a crew first clears any
+    waiting stop at the same corner; then it heads for the next waiting stop along the street
+    whose run ahead clears the most riders per minute; once stops with most riders are clear,
+    it takes the nearest waiting stop instead. A crew never drives past a waiting stop."""
     left = {s['id'] for s in stops}
     total = sum(R[s] for s in left)
     days = [[] for _ in range(A['crews'])]
     clock, starts, taken = [0.0] * A['crews'], [], 0
+    corner = [None] * A['crews']                      # the stop each crew last drove to on purpose
     for k in range(A['crews']):                       # hour 0: busy stops, spread apart
         far = [s for s in sorted(left) if all(meters(P[s], P[x]) > A['start_apart_m'] for x in starts)] or sorted(left)
         sid = max(far, key=lambda s: run_value(G, 0.0, s, left))
-        starts.append(sid); left.discard(sid); taken += R[sid]; clock[k] = A['service_min']
+        starts.append(sid); left.discard(sid); taken += R[sid]; clock[k] = A['service_min']; corner[k] = sid
         days[k].append({'stop': sid, 'path': [sid], 'm': 0.0, 'h': clock[k] / 60})
     while left:
         k = min(range(A['crews']), key=lambda k: clock[k])
@@ -219,10 +225,15 @@ def riders_first(G, stops):
         reach = [s for s in sorted(left) if s in dist]
         if not reach:
             clock[k] = float('inf'); continue
-        if taken >= A['sweep_after'] * total:
-            nxt = min(reach, key=lambda s: (dist[s], -R[s]))
+        close = [s for s in reach if meters(P[s], P[corner[k]]) <= A['corner_m']]
+        if close:                                     # finish the corner first: across the street, same intersection
+            nxt = min(close, key=lambda s: dist[s])
         else:
-            nxt = max(reach, key=lambda s: run_value(G, dist[s] / A['drive_m_per_min'], s, left))
+            if taken >= A['sweep_after'] * total:
+                nxt = min(reach, key=lambda s: (dist[s], -R[s]))
+            else:
+                nxt = max(reach, key=lambda s: run_value(G, dist[s] / A['drive_m_per_min'], s, left))
+            corner[k] = nxt
         clock[k] += dist[nxt] / A['drive_m_per_min'] + A['service_min']
         left.discard(nxt); taken += R[nxt]
         days[k].append({'stop': nxt, 'path': path_to(prev, here, nxt), 'm': dist[nxt], 'h': clock[k] / 60})

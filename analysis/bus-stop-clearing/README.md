@@ -2,7 +2,7 @@
 
 PTAC analysis of the order in which the City's bobcat crews could clear bus stops after a storm. Not a City plan.
 
-**Open [`output/map.html`](output/map.html) in a browser** for the illustrated version: a map you can play hour by hour, the two plans side by side, and the reasoning.
+**See it live at [vitorpamplona.com/somersnow/bus-stops.html](https://vitorpamplona.com/somersnow/bus-stops.html)**, or open [`output/map.html`](output/map.html) in a browser, for the illustrated version: a map you can play hour by hour, the two plans side by side, and the reasoning.
 
 ## The idea in four lines
 
@@ -46,6 +46,7 @@ Every assumption is at the top of `build.py` (`A = {...}`); change one and rebui
 | `output/plan.csv` | Every stop in the order each plan clears it: crew, how the bobcat got there (drive or trailer), minutes moving, hour clear. A list DPW could start from. |
 | `output/summary.md` | The headline numbers and the what-if table. |
 | `output/map.html` | The illustrated explainer (self-contained; open it in any browser). |
+| `../../docs/bus-stops.html` | The same page on the public site, copied by `build.py`. Don't edit it by hand. |
 
 `build.py` copies the two data files from `docs/data/` each time it runs, so `npm run data` followed by this script uses the latest ridership.
 

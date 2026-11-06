@@ -3,7 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Which Bus Stops First?</title>
+<title>Which bus stops first? · Somerville Snow Guide</title>
+<meta name="description" content="PTAC analysis: clearing Somerville's busiest bus stops first, stretch by stretch, gets most riders a clear stop hours sooner with the same crews.">
+<meta property="og:title" content="Which bus stops first? · Somerville Snow Guide">
+<meta property="og:description" content="Clearing the busiest stretches first gets most riders a clear stop hours sooner, with the same crews.">
+<meta name="theme-color" content="#10243A">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -54,11 +58,13 @@ td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
 .crew small{color:var(--ice)}
 .note{color:var(--ice);font-size:14px}
 a{color:var(--orange)}
+.bar{background:#0A1929;border-bottom:1px solid rgba(169,196,228,.2)}.bar div{max-width:1100px;margin:0 auto;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px}.bar a{color:#fff;text-decoration:none}.bar .brand{font-family:var(--display);font-weight:800;font-size:22px;text-transform:uppercase;letter-spacing:1px}.bar .brand span{color:var(--orange)}.bar nav a{color:var(--ice);font-size:15px}
 footer{margin-top:40px;color:var(--ice);font-size:14px;border-top:1px solid rgba(169,196,228,.3);padding-top:14px}
 @media (max-width:760px){.mapwrap{grid-template-columns:1fr}.read{margin-left:0;width:100%}}
 </style>
 </head>
 <body>
+<header class="bar"><div><a class="brand" href="https://vitorpamplona.com/somersnow/">Somerville <span>Snow</span></a><nav><a href="https://vitorpamplona.com/somersnow/">Back to the guide</a></nav></div></header>
 <main>
   <div class="k">PTAC analysis · not a City plan</div>
   <h1>Which bus stops first?</h1>
@@ -115,7 +121,7 @@ footer{margin-top:40px;color:var(--ice);font-size:14px;border-top:1px solid rgba
     stops and routes (<a href="https://api-v3.mbta.com/">MBTA V3 API</a>); route 109 cleared by the MBTA
     (<a href="https://www.mbta.com/winter-weather/bus-service-during-winter-storms">MBTA: bus service during winter storms</a>);
     281 stops in 4 routes (<a href="https://www.somervillema.gov/snow">City snow page</a>); ward outlines (City GIS).
-    Built by <code>analysis/bus-stop-clearing/build.py</code>; every number on this page comes from it.
+    Built by <a href="https://github.com/vitorpamplona/somersnow/tree/main/analysis/bus-stop-clearing"><code>analysis/bus-stop-clearing/build.py</code></a>, with its method, assumptions and the stop-by-stop plan; every number on this page comes from it.
   </footer>
 </main>
 <div id="tip"></div>

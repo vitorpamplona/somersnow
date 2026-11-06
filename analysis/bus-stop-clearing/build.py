@@ -18,7 +18,8 @@ Inputs (copied into data/ by this script so the folder is self-contained):
 Outputs (output/):
   plan.csv     every stop, in the order each plan clears it, with times
   summary.md   the headline numbers
-  map.html     the illustrated explainer (open it in a browser)
+  map.html     the illustrated explainer (open it in a browser); also copied to
+               docs/bus-stops.html, the public page
 
 Python standard library only:  python3 analysis/bus-stop-clearing/build.py
 """
@@ -305,4 +306,6 @@ if __name__ == '__main__':
     }
     tpl = open(os.path.join(HERE, 'map_template.html')).read()
     open(os.path.join(OUT, 'map.html'), 'w').write(tpl.replace('/*DATA*/null', json.dumps(payload, separators=(',', ':'))))
+    # the same page on the public site (docs/ is served by GitHub Pages)
+    shutil.copyfile(os.path.join(OUT, 'map.html'), os.path.join(ROOT, 'docs', 'bus-stops.html'))
     print('\n'.join(lines))

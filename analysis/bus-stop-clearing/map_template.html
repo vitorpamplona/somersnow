@@ -527,7 +527,7 @@ $('#delplan').addEventListener('click', () => {
 
 // ---------- the crew editor ----------
 function drawEditor() {
-  if (pickId && !routes[sel].includes(pickId)) { pickId = null; drawHL(); }   // picked stop not in this crew: let go
+  if (pickId && !routes[sel].includes(pickId)) { pickId = null; tip.style.display = 'none'; drawHL(); }   // picked stop not in this crew: let go
   $('#tabs').innerHTML = routes.map((r, c) => `<button class="tab" data-c="${c}" aria-pressed="${c === sel}"><i style="background:${color(c)}"></i>Crew ${c + 1} <small>${r.length}</small></button>`).join('');
   const cr = SIM.crews[sel];
   $('#edtitle').innerHTML = `<i style="background:${color(sel)}"></i>Crew ${sel + 1}`;
@@ -770,7 +770,7 @@ map.addEventListener('pointermove', (e) => {
   if (panFrom) {
     const { x, y, vb, k } = panFrom;
     if (Math.hypot(e.clientX - x, e.clientY - y) > 4) { panFrom.moved = true; tip.style.display = 'none'; }
-    if (panFrom.moved) setView([vb[0] - (e.clientX - x) / k, vb[1] - (e.clientY - y) / k, vb[2], vb[3]], false);
+    if (panFrom.moved) { setView([vb[0] - (e.clientX - x) / k, vb[1] - (e.clientY - y) / k, vb[2], vb[3]], false); if (pickId) pickTip(); }
     return;
   }
   if (downAt) {
@@ -794,6 +794,7 @@ function drawHL() {
     return `<circle class="${cls}" cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="${r.toFixed(2)}" fill="none" stroke="#FF8A3D" stroke-width="${(cls === 'pick' ? 4 : 3) / z}"/>`;
   };
   $('#hl').innerHTML = (pickId ? ring(pickId, 'pick') : '') + (hoverId && hoverId !== pickId ? ring(hoverId, 'hover') : '');
+  if (pickId) pickTip();
 }
 function glideTo(id) {
   const st = byId[id]; if (!st) return;
@@ -808,6 +809,7 @@ function glideTo(id) {
   requestAnimationFrame(step);
 }
 function pick(id, scroll) {
+  if (pickId && !id) tip.style.display = 'none';
   pickId = id;
   document.querySelectorAll('#list > li').forEach((li) => li.classList.toggle('pick', li.dataset.id === id));
   if (scroll) { const li = document.querySelector(`#list > li[data-id="${id}"]`); if (li) li.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
@@ -821,8 +823,15 @@ $('#list').addEventListener('click', (e) => {
   if (pickId === li.dataset.id) { pick(null); return; }        // a second click lets go
   pick(li.dataset.id); glideTo(li.dataset.id);
 });
+function pickTip() {                             // the picked stop's popup, next to the stop wherever the map is
+  const el = pickId && document.getElementById('s' + pickId);
+  if (!el) { tip.style.display = 'none'; return; }
+  const r = el.getBoundingClientRect(), m = map.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
+  if (x < m.left || x > m.right || y < m.top || y > m.bottom) { tip.style.display = 'none'; return; }
+  showTip(byId[pickId], x, y);
+}
 function showTip(s, cx, cy) {
-  if (!s) { tip.style.display = 'none'; return; }
+  if (!s) { if (pickId) pickTip(); else tip.style.display = 'none'; return; }
   const c = SIM.clear[s.id];
   let html = `<b>${esc(s.n)}</b>${s.on.toLocaleString()} on, ${s.off.toLocaleString()} off a weekday · routes ${s.rt.join(', ')}`;
   if (!counted(s)) html += '<br>Route 109: the MBTA clears it';
@@ -831,7 +840,7 @@ function showTip(s, cx, cy) {
   tip.innerHTML = html; tip.style.display = 'block';
   tip.style.left = Math.min(window.innerWidth - 290, cx + 14) + 'px'; tip.style.top = (cy + 14) + 'px';
 }
-map.addEventListener('pointerleave', () => { tip.style.display = 'none'; });
+map.addEventListener('pointerleave', () => { if (pickId) pickTip(); else tip.style.display = 'none'; });
 
 $('#t').addEventListener('input', (e) => { T = +e.target.value; stopPlay(); draw(); });
 let timer = null;

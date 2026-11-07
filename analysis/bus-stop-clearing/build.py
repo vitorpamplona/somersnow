@@ -57,6 +57,7 @@ A = {
     'jump_m': 800,              # a drive longer than this to the next stop is a jump to a different place
     'jump_min': 60,             # when planning, a jump counts as this many minutes of everyone's average wait (it isn't added to the hours)
     'jump_km_min': 120,         # and each km of a jump, or of driving along another crew's streets, as this many more minutes
+    'break_min': 180,           # when planning, leaving a street before both sides of your own stops on it are clear counts as this many minutes
     'finish_w': 2,              # when planning, each minute until the last stop is clear counts as this many minutes of average wait
     'sweep_after': 0.7,         # once stops with this share of riders are clear, take the nearest waiting stop
     'mbta_routes': ['109'],     # the MBTA clears every stop on these routes itself (mbta.com winter page)
@@ -364,6 +365,7 @@ def street_groups(stops):
 GROUP = {}                                        # stop -> its stretch of street (set by the main script)
 G_ = {}                                           # the street network, for checks() (set by the main script)
 NAME = {}                                         # stop -> name, for checks() (set by the main script)
+STREET = {}                                       # stop -> the street it stands on (set by the main script)
 
 
 def riders_first(G, stops):
@@ -393,7 +395,13 @@ def riders_first(G, stops):
             clock[k] = float('inf'); continue
         ahead = [w for w, (m, kind) in sorted(G[here].items()) if kind == 'drive' and w in ok]
         back = [w for w, (m, kind) in sorted(G[here].items()) if kind == 'turn' and w in ok]
-        if ahead:                                   # keep going along this side while the next stop waits
+        ahead_here = [w for w in ahead if STREET[w] == STREET[here]]
+        rest_here = [s for s in reach if STREET[s] == STREET[here]]
+        if ahead_here:                                # keep going along this side of the street while the next stop waits
+            nxt = max(ahead_here, key=lambda s: run_value(G, dist[s], s, ok))
+        elif rest_here:                               # at its end, cross and clear the other side on the way back
+            nxt = min(rest_here, key=lambda s: (dist[s], s))
+        elif ahead:                                   # this stretch done: keep going along the bus route
             nxt = max(ahead, key=lambda s: run_value(G, dist[s], s, ok))
         elif back:                                    # then cross the road and clear the other side on the way back
             nxt = max(back, key=lambda s: run_value(G, dist[s], s, ok))
@@ -450,12 +458,15 @@ def follow(G, lists):
         if ptr[k] == len(L):
             busy.discard(k); continue
         path, m, mins, at = [], 0.0, 0.0, pos[k]
+        here = pos[k]
+        unfinished = any(own[w] == k and STREET[w] == STREET[here] for w in waiting)   # own stops left on this street
         for nd in sp(pos[k], L[ptr[k]]):
             e = G[at][nd]; m += e[0]; mins += edge_min(*e); path.append(nd); at = nd
             if nd in waiting and own[nd] == k:
                 break
         waiting.discard(at); clock[k] += mins + A['service_min']; pos[k] = at
-        days[k].append({'stop': at, 'path': path, 'm': m, 'mins': mins, 'h': clock[k] / 60})
+        days[k].append({'stop': at, 'path': path, 'm': m, 'mins': mins, 'h': clock[k] / 60,
+                        'broke': unfinished and STREET[at] != STREET[here]})    # left a street unfinished
     return days
 
 
@@ -470,14 +481,15 @@ def fewer_jumps(G, days, total, short=False):
     def score(d):
         st = stats(d, total)
         return (st['avg_wait_h'] * 60 + A['jump_min'] * st['jumps'] + A['jump_km_min'] * (st['jump_km'] + others_km(d))
-                + A['finish_w'] * st['finish_h'] * 60)
+                + A['break_min'] * sum(e.get('broke', False) for day in d for e in day) + A['finish_w'] * st['finish_h'] * 60)
 
     def spots(L, piece):                              # right after the stops closest to it, by driving and as the crow flies
         quick = ALL[(A['drive_m_per_min'], A['turn_min'])]
         out = []
         for end, seg in ((piece[0], piece), (piece[-1], piece[::-1])):
-            near = sorted(range(len(L)), key=lambda i: (quick[L[i]][0].get(end, 1e18), i))[:3]
-            near += [i for i in sorted(range(len(L)), key=lambda i: (meters(P[L[i]], P[end]), i))[:3] if i not in near]
+            ok = [i for i in range(len(L)) if i == len(L) - 1 or STREET[L[i]] != STREET[L[i + 1]]]   # only between streets
+            near = sorted(ok, key=lambda i: (quick[L[i]][0].get(end, 1e18), i))[:3]
+            near += [i for i in sorted(ok, key=lambda i: (meters(P[L[i]], P[end]), i))[:3] if i not in near]
             out += [(i, seg) for i in near]
         return out
 
@@ -578,7 +590,14 @@ def checks(days):
         runs = [crew[a] for i, a in enumerate(seq) if i == 0 or crew[a] != crew[seq[i - 1]]]
         if len(runs) != len(set(runs)):                # a crew back on a street after another crew's piece
             mixed.append(st)
+    left_streets = []                                 # a crew leaving a street while its own stops there still wait
+    for k, day in enumerate(days):
+        for i, e in enumerate(day[1:], 1):
+            a, b = day[i - 1]['stop'], e['stop']
+            if STREET[a] != STREET[b] and any(STREET[x['stop']] == STREET[a] for x in day[i + 1:]):
+                left_streets.append((k + 1, NAME[a], NAME[b]))
     return {'split': len(split), 'split_pairs': split, 'again_km': round(again / 1000, 1), 'others_km': round(others_km(days), 1),
+            'left_streets': len(left_streets), 'left_list': left_streets,
             'switches': len(switches), 'switch_list': switches, 'mixed': mixed}
 
 
@@ -619,6 +638,7 @@ if __name__ == '__main__':
     G, joins = street_network(allstops, bs['routes'])
     G_ = G
     NAME.update({s['id']: s['name'] for s in allstops})
+    STREET.update({s['id']: street_of(s['name']) for s in allstops})
     GROUP.update(street_groups(stops))
     orders = route_orders(stops, bs['routes'])
 
@@ -649,7 +669,7 @@ if __name__ == '__main__':
     plans, S = simulate()
     C = {k: checks(v) for k, v in plans.items()}
     for k in plans:
-        S[k].update(split=C[k]['split'], again_km=C[k]['again_km'], others_km=C[k]['others_km'])
+        S[k].update(split=C[k]['split'], again_km=C[k]['again_km'], others_km=C[k]['others_km'], left_streets=C[k]['left_streets'])
     if C['riders']['split'] or C['riders']['mixed']:  # a stretch never split, a street never in alternating pieces
         raise SystemExit('riders first shares a street between crews: ' + str(C['riders']['split_pairs'][:5] + C['riders']['mixed']))
 
@@ -692,7 +712,8 @@ if __name__ == '__main__':
         f"| Jumps (drives over {A['jump_m']} m to the next stop) | {r['jumps']} ({r['jump_km']} km) | {f['jumps']} ({f['jump_km']} km) |",
         f"| Pairs of stops on one stretch of street cleared by different crews | {r['split']} | {f['split']} |",
         f"| Driving back over a link the same crew already drove | {r['again_km']} km | {f['again_km']} km |",
-        f"| Driving along another crew's streets | {r['others_km']} km | {f['others_km']} km |", '',
+        f"| Driving along another crew's streets | {r['others_km']} km | {f['others_km']} km |",
+        f"| Leaving a street with own stops on it still waiting (and coming back later) | {r['left_streets']} | {f['left_streets']} |", '',
         'Hours are working hours, from when the crews start at their first stops. The bobcats drive along the street, '
         'stop to stop, and never drive past a waiting stop.', '',
         'Assumptions: ' + '; '.join(f'{k} = {v}' for k, v in A.items()) + '.', '',

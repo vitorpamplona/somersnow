@@ -36,6 +36,10 @@ FEEDS = 'https://cdn.mbta.com/archive/archived_feeds.txt'
 TOWNS = ('https://services1.arcgis.com/hGdibHYSPO59RG1h/arcgis/rest/services/'
          'Massachusetts_Municipalities_Hosted/FeatureServer/0/query')
 DAYS = {'Wkdy': 'Weekday', 'Sat': 'Saturday', 'Sun': 'Sunday'}   # the file also has Friday on its own ('Fri'), left out
+# the ridership file's route id -> the schedule's, where they differ: '194' is the schedule's '8993' ("89/93",
+# Clarendon Hill - Haymarket via Sullivan, a supplemental early trip: same start times, 4:30 weekdays, 4:33 Sat, 5:16 Sun)
+SCHEDULE_ID = {'194': '8993'}
+FROM_SCHEDULE = {v: k for k, v in SCHEDULE_ID.items()}
 RAPID = {'Red': '#DA291C', 'Orange': '#ED8B00', 'Green-B': '#00843D', 'Green-C': '#00843D',
          'Green-D': '#00843D', 'Green-E': '#00843D', 'Blue': '#003DA5'}
 MIN_RIDERS = 0.05                                  # pairs under this many riders a day are left out (rounding)
@@ -121,7 +125,7 @@ def somerville_routes():
 
 
 def trips(routes):
-    """{day: [(route, [(stop_id, on, off), ...] in stop order), ...]} for the latest Fall season."""
+    """{day: [(route, [(stop_id, on, off), ...] in stop order, direction, start minute), ...]} for the latest Fall season."""
     z = zipfile.ZipFile(cached('mbta-bus-ridership.zip', RIDERSHIP))
     name = sorted(n for n in z.namelist() if '_Fall_' in n and n.endswith('.csv'))[-1]
     season = 'Fall ' + name.rsplit('_', 1)[1][:4]
@@ -132,17 +136,39 @@ def trips(routes):
                 key = (r['Day Type'], r['GTFS route_id'], r['GTFS direction_id'], r['trip start time'], r['Route/Variant'])
                 rows[key].append((int(r['stop sequence']), r['GTFS stop_id'], float(r['Boardings'] or 0), float(r['Alightings'] or 0)))
     out = defaultdict(list)
-    for (day, rid, *_), rs in rows.items():
+    for (day, rid, dirn, start, _), rs in rows.items():
         rs.sort()
-        out[day].append((rid, [(sid, on, off) for _, sid, on, off in rs]))
+        out[day].append((rid, [(sid, on, off) for _, sid, on, off in rs], dirn, minutes(start)))
     return season, out
+
+
+def minutes(t):
+    """'25:30:00' -> 1530 (schedule times run past midnight)."""
+    h, m, *_ = (int(x) for x in t.split(':'))
+    return h * 60 + m
+
+
+def by_hour(by_day, offset):
+    """{day: {stop: [riders getting on in each clock hour 0..23] + [getting off, same]}}. The hour the bus is at a
+    stop is the trip's start time plus the schedule's usual minutes from the first stop to that stop."""
+    out = {}
+    for day, tl in by_day.items():
+        h = defaultdict(lambda: [0.0] * 48)
+        for rid, stops, dirn, start in tl:
+            last = 0
+            for sid, on, off in stops:
+                last = offset.get((rid, dirn, sid), last)
+                hr = int((start + last) // 60) % 24
+                h[sid][hr] += on; h[sid][24 + hr] += off
+        out[day] = h
+    return out
 
 
 def merge_unknown(by_day, known):
     """A stop the schedule doesn't have is counted at the next stop on its trip (the last one: the stop before)."""
     moved = defaultdict(float)
     for day, tl in by_day.items():
-        for k, (rid, stops) in enumerate(tl):
+        for k, (rid, stops, *rest) in enumerate(tl):
             out = []
             carry_on = carry_off = 0.0
             for sid, on, off in stops:
@@ -152,7 +178,7 @@ def merge_unknown(by_day, known):
                 out.append([sid, on + carry_on, off + carry_off]); carry_on = carry_off = 0.0
             if out and (carry_on or carry_off):
                 out[-1][1] += carry_on; out[-1][2] += carry_off
-            tl[k] = (rid, [tuple(x) for x in out])
+            tl[k] = (rid, [tuple(x) for x in out], *rest)
     return moved
 
 
@@ -160,7 +186,7 @@ def estimate(trip_list):
     """{(from_stop, to_stop, route): riders a day}. On each trip, the people getting off at a stop
     are a mix of everyone on board, in proportion to where they got on."""
     od = defaultdict(float)
-    for rid, stops in trip_list:
+    for rid, stops, *_ in trip_list:
         aboard = {}                               # stop they got on -> riders still on board
         for sid, on, off in stops:
             total = sum(aboard.values())
@@ -192,7 +218,7 @@ def main():
     od = {day: estimate(by_day[day]) for day in DAYS}
 
     # route patterns, their representative trips and shapes
-    patterns = [p for p in table(z, 'route_patterns.txt')]
+    patterns = [{**p, 'route_id': FROM_SCHEDULE.get(p['route_id'], p['route_id'])} for p in table(z, 'route_patterns.txt')]
     want_trips = {p['representative_trip_id'] for p in patterns if p['route_id'] in routes or p['route_id'] in RAPID}
     trip_shape = {t['trip_id']: t['shape_id'] for t in table(z, 'trips.txt') if t['trip_id'] in want_trips}
     want_shapes = set(trip_shape.values())
@@ -201,10 +227,22 @@ def main():
         if r['shape_id'] in want_shapes:
             shape_pts[r['shape_id']].append((int(r['shape_pt_sequence']), float(r['shape_pt_lon']), float(r['shape_pt_lat'])))
     shape = {k: [(x, y) for _, x, y in sorted(v)] for k, v in shape_pts.items()}
-    trip_stops = defaultdict(list)
+    route_trip = {t['trip_id']: (FROM_SCHEDULE.get(t['route_id'], t['route_id']), t['direction_id']) for t in table(z, 'trips.txt')
+                  if FROM_SCHEDULE.get(t['route_id'], t['route_id']) in routes}
+    trip_stops, times = defaultdict(list), defaultdict(list)
     for r in table(z, 'stop_times.txt'):
         if r['trip_id'] in want_trips:
             trip_stops[r['trip_id']].append(r['stop_id'])
+        if r['trip_id'] in route_trip and r['arrival_time']:
+            times[r['trip_id']].append((int(r['stop_sequence']), r['stop_id'], minutes(r['arrival_time'])))
+    per = defaultdict(list)
+    for t, rows in times.items():
+        rows.sort()
+        rid, dirn = route_trip[t]
+        for _, sid, m in rows:
+            per[(rid, dirn, sid)].append(m - rows[0][2])
+    offset = {k: sorted(v)[len(v) // 2] for k, v in per.items()}
+    hours = by_hour(by_day, offset)
 
     # stops: every stop on the routes' patterns, and every stop in the ridership file
     stop_routes = defaultdict(set)
@@ -213,7 +251,7 @@ def main():
             for sid in trip_stops.get(p['representative_trip_id'], []):
                 stop_routes[sid].add(p['route_id'])
     for day_trips in by_day.values():
-        for rid, stops in day_trips:
+        for rid, stops, *_ in day_trips:
             for sid, *_ in stops:
                 stop_routes[sid].add(rid)
     meta = {s: stopinfo[s] for s in stop_routes}
@@ -225,18 +263,33 @@ def main():
     def xy(lon, lat):
         return [round((lon - LON0) * KX), round((LAT0 - lat) * KY)]
 
-    # route shapes, whole, both directions (typical patterns only)
+    # route shapes, whole, both directions: the usual patterns and branches (typicality 1 and 2), plus any rarer
+    # pattern that serves a stop none of those reach (a school trip, a garage trip)
     names = {r['route_id']: r for r in table(z, 'routes.txt')}
+    mine = [p for p in patterns if p['route_id'] in routes]
+    covered = {sid for p in mine if p['route_pattern_typicality'] in ('1', '2') for sid in trip_stops.get(p['representative_trip_id'], [])}
+    drawn = {p['route_pattern_id'] for p in mine if p['route_pattern_typicality'] in ('1', '2')
+             or set(trip_stops.get(p['representative_trip_id'], [])) - covered}
     rshapes = []
     for rid in routes:
         paths = []
         for p in patterns:
-            if p['route_id'] == rid and p['route_pattern_typicality'] == '1':
+            if p['route_id'] == rid and p['route_pattern_id'] in drawn:
                 pts = shape.get(trip_shape.get(p['representative_trip_id']))
                 if pts:
                     paths.append([xy(*q) for q in simplify(pts, 0.00005)])
-        a = names.get(rid, {})
-        rshapes.append({'id': rid, 'name': a.get('route_short_name') or rid, 'long': a.get('route_long_name', ''), 'paths': paths})
+        straight = False
+        if not paths:                             # no shape in the schedule (the 194): join its stops in trip order
+            longest = {}
+            for day_trips in by_day.values():
+                for r, stops, dirn, _ in day_trips:
+                    if r == rid and len(stops) > len(longest.get(dirn, [])):
+                        longest[dirn] = stops
+            paths = [[xy(float(stopinfo[sid]['stop_lon']), float(stopinfo[sid]['stop_lat'])) for sid, *_ in st] for st in longest.values()]
+            straight = True
+        a = names.get(SCHEDULE_ID.get(rid, rid), {})
+        rshapes.append({'id': rid, 'name': a.get('route_short_name') or rid, 'long': a.get('route_long_name', ''), 'paths': paths,
+                        **({'straight': True} if straight else {})})
 
     # the map's extent: every stop, plus a margin
     pad = 0.012
@@ -293,7 +346,9 @@ def main():
                 per[ix[a]].append([ix[b], ri[rid], round(n * 10)])
         flows[day] = {str(k): sorted(v, key=lambda e: -e[2]) for k, v in per.items()}
         totals[day] = round(sum(n for n in d.values()))
-    payload = {'season': season, 'feed': feed, 'days': DAYS, 'routes': rshapes, 'rapid': rapid, 'towns': towns,
+    hourly = {day: {str(ix[sid]): [round(x * 10) for x in v] for sid, v in h.items() if sid in ix and sum(v) >= 0.05}
+              for day, h in hours.items()}
+    payload = {'season': season, 'feed': feed, 'days': DAYS, 'hours': hourly, 'routes': rshapes, 'rapid': rapid, 'towns': towns,
                'stops': stops, 'flows': flows, 'totals': totals}
     blob = json.dumps(payload, separators=(',', ':'))
     with open(os.path.join(HERE, 'trips_template.html')) as f:

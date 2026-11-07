@@ -8,6 +8,7 @@ A PTAC map of every bus route with a stop in Somerville, drawn whole through the
 
 - The map: town outlines, the subway, the 15 routes (as they ran in Fall 2025) and their 548 stops, sized by riders.
 - With no stop picked: riders who get on in Somerville, and the share who get off in each city or town; the busiest stops in Somerville.
+- With a stop picked: a chart of riders getting on and off there by hour (the trip's start time plus the schedule's usual minutes to that stop).
 - With a stop picked: the stops where its riders get off light up in orange (bigger: more riders; stops with under 1 rider a day are left out) and its routes take their colors; the share by city or town, a list of the stops, and one button per route to show only that route. Hover a stop or a row for its numbers.
 - A stop where buses end their trip has no one getting on; the page offers where its riders got on instead.
 - The address keeps the stop, day and view (`#stop=5104&day=Sat&show=on`), so a link opens the same view.
@@ -27,7 +28,9 @@ Adding up every trip of the day gives about how many riders go from each stop to
 - **Where riders leave the bus, not where they end up.** Many who get off at Davis, Sullivan, Harvard or Lechmere change to the subway or another bus. A trip with a transfer shows as two.
 - **An assumption, not a survey.** Real riders aren't equally likely to get off anywhere: few ride one stop. The pairs are a best guess; the totals by stop are the MBTA's.
 - **Only Somerville's routes.** A stop in Cambridge shows only the riders on these 15 routes, not on other routes that stop there.
-- **Fall 2025.** Routes, stops and riders are from that season (the newest the MBTA has published). Some routes have changed since: today's MBTA API has no stops for the 194 or the CT2 (747). The 194 (about 15 riders a weekday) has no route shape in the schedule, so its stops show without a line.
+- **Fall 2025.** Routes, stops and riders are from that season (the newest the MBTA has published). Some routes have changed since: today's MBTA API has no stops for the CT2 (747).
+- **Route "194" is the 89/93.** The ridership file calls it 194; the schedule calls it 89/93 (route id `8993`, "Clarendon Hill – Haymarket Station", a supplemental bus): one early trip a day via Sullivan, at the same times in both (4:30 a.m. weekdays, 4:33 Saturday, 5:16 Sunday). The page shows it as 89/93, with the schedule's shape. About 15 riders a weekday.
+- **Branches.** Each route is drawn with its usual patterns and branches (the schedule's typicality 1 and 2, such as the 87 and 89 to Clarendon Hill), plus any rarer pattern that serves a stop none of those reach.
 - **Bennett Alley.** The ridership file starts Harvard trips of the 96 and 109 at "Bennett Alley", a stop id no schedule has (checked in the 2022, 2024 and 2025 feeds); it comes right before Harvard's upper busway, so its riders are counted there.
 - **Friday** is in the file on its own and left out; "Weekday" is the file's `Wkdy`, as in the bus stop routes tool.
 

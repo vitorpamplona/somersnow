@@ -82,6 +82,13 @@ details.how{margin-top:16px;font-size:14px;color:var(--snow)}
 details.how summary{cursor:pointer;font-family:var(--display);font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--ice)}
 details.how p{margin:6px 0}
 .about{border-top:1px solid rgba(169,196,228,.25);padding-top:10px;margin-top:16px;font-size:13px;color:var(--ice)}
+/* when a stop is busy: riders getting on and off, by hour */
+.hist{margin-top:12px}
+.hist .key{display:flex;gap:14px;font-size:13px;color:var(--snow);margin:4px 0}
+.hist .key i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.hist svg{width:100%;height:auto;display:block;overflow:visible}
+.hist text{fill:var(--ice);font:12px var(--body)}
+.hist .peak{color:var(--snow);font-size:14px;margin-top:4px}
 #tip{position:fixed;pointer-events:none;background:var(--snow);color:var(--navy);border-radius:10px;padding:8px 10px;font-size:14px;max-width:290px;box-shadow:0 6px 24px rgba(0,0,0,.35);display:none;z-index:5;line-height:1.35}
 #tip b{display:block}
 @media (max-width:1000px){
@@ -221,11 +228,12 @@ function drawLabels() {
   $('#glabels').innerHTML = TOWNLAB.map((t) => `<text class="tlab${t.n === 'Somerville' ? ' home' : ''}" x="${t.x.toFixed(0)}" y="${t.y.toFixed(0)}" font-size="${(t.n === 'Somerville' ? 15 : 13) * k}">${esc(t.n)}</text>`).join('');
 }
 $('#grapid').innerHTML = D.rapid.map((r) => r.paths.map((p) => `<path class="rapid" stroke="${r.color}" d="${pathD(p)}"/>`).join('')).join('');
-$('#groutes').innerHTML = R.map((r, i) => r.paths.map((p) => `<path class="route" data-r="${i}" d="${pathD(p)}"/>`).join('')).join('');
+$('#groutes').innerHTML = R.map((r, i) => r.paths.map((p) => `<path class="route" data-r="${i}" d="${pathD(p)}"${r.straight ? ' stroke-dasharray="4 4"' : ''}/>`).join('')).join('');
 
 // stops, dots and lines shrink when the map is small or zoomed out, so they don't run together
 const scale = () => Math.min(1, Math.max(0.4, 0.85 * Math.sqrt(zoom()) * Math.min(1, map.getBoundingClientRect().width / 1000)));
-const radius = (n) => (2.5 + Math.sqrt(n) / 3.2) * scale();   // in screen pixels
+const radius = (n) => Math.max(1.2, (1.4 + 1.3 * Math.log1p(n)) * scale());           // a stop with n riders getting on or off, on average, in screen px
+const dotR = (n) => Math.max(3, (2.5 + 2 * Math.log1p(n)) * Math.max(0.6, scale()));  // a stop that n riders of the picked stop get off at
 function drawStops() {
   const dd = dayData(day), k = px(), lit = litStops();
   let html = '';
@@ -257,9 +265,9 @@ function drawFlows() {
   const k = px(), fl = flowsNow();
   if (pick === null) { $('#gflows').innerHTML = ''; return; }
   // the stops where its riders get off (or got on), bigger for more riders; no lines between them
-  const sc = scale(), ends = endsNow(), emax = Math.max(1, ...ends.map((e) => e.n));
+  const sc = scale(), ends = endsNow();
   const dots = ends.slice().reverse().map((e) => {
-    const p = S[e.b].p, r = Math.max(4, (4 + 11 * Math.sqrt(e.n / emax)) * sc);
+    const p = S[e.b].p, r = dotR(e.n);
     return `<circle cx="${p[0]}" cy="${p[1]}" r="${(r * k).toFixed(1)}" fill="#FF8A3D" stroke="#10243A" stroke-width="${(1.5 * k).toFixed(2)}"/>`;
   }).join('');
   const s = S[pick].p;
@@ -276,6 +284,44 @@ function drawHL() {
   $('#ghl').innerHTML = hoverId === null ? '' : `<circle cx="${S[hoverId].p[0]}" cy="${S[hoverId].p[1]}" r="${(13 * k).toFixed(1)}" fill="none" stroke="#10243A" stroke-width="${(3 * k).toFixed(2)}"/>`;
 }
 function resetRoutes() { document.querySelectorAll('#groutes .route').forEach((p) => { p.style.stroke = p.style.strokeOpacity = p.style.strokeWidth = ''; }); }
+
+// ---------- when a stop is busy ----------
+const ON = '#E36F28', OFF = '#4F98DE';                 // checked for color vision and contrast on the panel
+const ORDER = Array.from({ length: 24 }, (_, i) => (i + 4) % 24);   // the bus day: 4 a.m. to 3 a.m.
+const hourName = (h) => h === 0 ? 'midnight' : h === 12 ? 'noon' : h < 12 ? `${h} a.m.` : `${h - 12} p.m.`;
+const hourSpan = (h) => `${hourName(h).replace(' a.m.', '').replace(' p.m.', '')}–${hourName((h + 1) % 24)}`;
+function histHTML(i) {
+  const v = (D.hours[day] || {})[i]; if (!v) return '';
+  const on = ORDER.map((h) => v[h] / 10), off = ORDER.map((h) => v[24 + h] / 10), max = Math.max(1, ...on, ...off);
+  const W = 360, H = 96, top = 14, bw = 5, gap = 2, gw = W / 24;
+  const bar = (x, val, col) => {
+    const h = (H - top) * val / max; if (h < 0.5) return '';
+    const y = H - h, r = Math.min(2, h);
+    return `<path d="M${x} ${H}V${(y + r).toFixed(1)}Q${x} ${y.toFixed(1)} ${x + r} ${y.toFixed(1)}H${x + bw - r}Q${x + bw} ${y.toFixed(1)} ${x + bw} ${(y + r).toFixed(1)}V${H}Z" fill="${col}"/>`;
+  };
+  let bars = '', hits = '', ticks = '';
+  ORDER.forEach((h, k) => {
+    const x = k * gw + (gw - 2 * bw - gap) / 2;
+    bars += bar(x, on[k], ON) + bar(x + bw + gap, off[k], OFF);
+    hits += `<rect class="hh" data-k="${k}" x="${(k * gw).toFixed(1)}" y="0" width="${gw.toFixed(1)}" height="${H}" fill="transparent"/>`;
+    if ([6, 9, 12, 15, 18, 21, 0].includes(h)) ticks += `<text x="${(k * gw + gw / 2).toFixed(1)}" y="${H + 15}" text-anchor="middle">${h === 0 ? '12a' : h === 12 ? 'noon' : h < 12 ? h + 'a' : (h - 12) + 'p'}</text>`;
+  });
+  const pk = on.indexOf(Math.max(...on)), po = off.indexOf(Math.max(...off));
+  const peak = dir === 'off' ? (on[pk] >= 1 ? `Busiest hour to get on: <b>${hourSpan(ORDER[pk])}</b> (${fmt(on[pk])})` : '')
+    : (off[po] >= 1 ? `Busiest hour to get off: <b>${hourSpan(ORDER[po])}</b> (${fmt(off[po])})` : '');
+  return `<div class="hist"><div class="sub" style="margin:0">When it's busy, a ${dayName(day)}, by hour (all its routes)</div>
+    <div class="key"><span><i style="background:${ON}"></i>Getting on</span><span><i style="background:${OFF}"></i>Getting off</span></div>
+    <svg viewBox="0 0 ${W} ${H + 20}" role="img" aria-label="Riders getting on and off at this stop by hour">
+      <text x="0" y="9">${fmt(max)}</text><line x1="0" x2="${W}" y1="${H + 0.5}" y2="${H + 0.5}" stroke="rgba(169,196,228,.45)"/>
+      ${bars}${ticks}<g id="hhits">${hits}</g></svg>
+    ${peak ? `<div class="peak">${peak}</div>` : ''}</div>`;
+}
+function histTip(e) {
+  const r = e.target.closest('.hh'); if (!r) { tip.style.display = 'none'; return; }
+  const v = D.hours[day][pick], h = ORDER[+r.dataset.k];
+  tip.innerHTML = `<b>${hourSpan(h)}</b>${fmt(v[h] / 10)} get on · ${fmt(v[24 + h] / 10)} get off`;
+  tip.style.display = 'block'; tip.style.left = Math.min(window.innerWidth - 300, e.clientX + 14) + 'px'; tip.style.top = (e.clientY + 14) + 'px';
+}
 
 // ---------- the sidebar ----------
 $('#days').innerHTML = Object.entries(D.days).map(([k, v]) => `<button data-day="${k}" aria-pressed="${k === day}">${v}</button>`).join('');
@@ -324,6 +370,7 @@ function panel() {
       <div class="sub">${esc(s.t)} · ${s.r.length > 1 ? 'routes' : 'route'} ${s.r.map((r) => esc(R[r].name)).join(', ')}</div>
       <div class="big">${fmt(total)}<small>${dir === 'off' ? 'riders get on here' : 'riders get off here'} on a ${dname}</small></div>
       ${perRoute.size > 1 ? `<div class="chips" id="chips"><button class="chip" data-r="" aria-pressed="${onlyRoute === null}">All routes</button>${[...perRoute.entries()].sort((a, b) => b[1] - a[1]).map(([r, n]) => `<button class="chip" data-r="${r}" aria-pressed="${onlyRoute === r}"><i style="background:${routeColor(r)}"></i>${esc(R[r].name)} <small>${fmt(n)}</small></button>`).join('')}</div>` : ''}
+      ${histHTML(pick)}
       ${fl.length ? `<div class="sub" style="margin-top:10px">${dir === 'off' ? 'They get off in' : 'They got on in'}:</div>${townsHTML(sp)}` : `<p class="note" style="margin-top:8px">No riders counted ${dir === 'off' ? 'getting on' : 'getting off'} here on a ${dname}${onlyRoute !== null ? ' on this route' : dir === 'off' ? ': buses end their trip here' : ''}.</p>${(dir === 'off' ? dd.off[pick] : dd.on[pick]) >= 1 ? `<button class="btn" id="flip">Show where the ${fmt(dir === 'off' ? dd.off[pick] : dd.on[pick])} riders ${dir === 'off' ? 'getting off here got on' : 'getting on here get off'}</button>` : ''}`}
     </div>
     ${ends.length ? `<div class="card"><h3>${dir === 'off' ? 'Stops where they get off' : 'Stops where they got on'}</h3><div class="sub">About how many riders a ${dname}. Hover to find one on the map; click to pick it.</div>
@@ -339,7 +386,8 @@ $('#panel').addEventListener('click', (e) => {
   const li = e.target.closest('#list li'); if (li) choose(+li.dataset.i, true);
 });
 $('#panel').addEventListener('pointerover', (e) => { const li = e.target.closest('#list li'); const v = li ? +li.dataset.i : null; if (v !== hoverId) { hoverId = v; drawHL(); } });
-$('#panel').addEventListener('pointerleave', () => { hoverId = null; drawHL(); });
+$('#panel').addEventListener('pointerleave', () => { hoverId = null; drawHL(); tip.style.display = 'none'; });
+$('#panel').addEventListener('pointermove', (e) => { if (e.target.closest('.hist svg')) histTip(e); else if (tip.style.display === 'block' && !e.target.closest('#map')) tip.style.display = 'none'; });
 
 function update() {
   document.querySelectorAll('#days button').forEach((b) => b.setAttribute('aria-pressed', b.dataset.day === day));

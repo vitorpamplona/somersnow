@@ -8,28 +8,20 @@ The page starts with the plan an earlier version of `build.py` computed (riders 
 
 ## What it does
 
-On a computer the page is a dashboard: the map fills the window, with the chart of riders whose stop is clear (one line per plan, and a marker at the hour shown) in its top corner, with the plans, crews and the crew's route in a sidebar; the scores, comparisons, settings and saving are below the map (the Scores link at the top jumps there). Scroll or use + / − to zoom (stops keep their size, so the two sides of a street come apart), and hold Space, drag with the right button, or turn on ✋ to move the map. On a phone the same parts stack.
+The page is one full-window dashboard: the map, with the chart of riders whose stop is clear (one line per plan, and a marker at the hour shown) in its top corner and the hour slider along its bottom, and a sidebar with the plans, the crews and the crew's route. Scroll or use + / − to zoom (stops keep their size, so the two sides of a street come apart), and hold Space, drag with the right button, or turn on ✋ to move the map. The **Settings ▾** menu at the top holds the settings, saving and sharing, and the sources. On a phone the parts stack.
 
 An operator builds plans. Each plan has its own crews, and each crew a list of stops in the order it clears them:
 
 - **Build a route.** Pick a crew, then press on the map and drag across stops: every stop the pointer passes is added, in order, until you let go (a stop of another crew moves to this one; a drag never takes stops off). Or tap stops one by one (tapping one of the crew's own stops takes it off), or add them by name. Drag stops in the crew's list to reorder them (or use the arrow keys on a stop's ⠿ handle). Reverse a route, clear a crew, add or remove crews. Undo (or Ctrl/Cmd+Z) takes back any change; a whole drag is one step.
-- **Score it.** The page plays the day hour by hour on the map, each crew in its own color, and scores the plan:
-  - the average wait for a rider's stop (stops in a route);
-  - the share of riders whose stop is in a route, and whose stop is clear after 2 and 4 hours;
-  - when the last stop is clear;
-  - kilometers driven between stops;
-  - jumps (drives of more than 800 m to the next stop; neighboring stops are at most about 600 m apart);
-  - times a crew drives past a stop that's still waiting.
-
-  Each crew gets the same numbers, and every stop in the editor shows when it's clear, how far the crew drove to it, and whether that was a jump or passed waiting stops.
-- **Compare plans.** Make as many plans as you like, with different numbers of crews: new, copy, rename, delete. "Compare plans" lists every plan's scores side by side, and the chart in the corner of the map draws one line per plan.
-- **Change the assumptions.** All plans share the settings, so they compare on the same terms:
+- **See how it does.** Play runs the day hour by hour on the map, each crew in its own color, with the share of riders' stops clear at that hour. Every stop in the crew's list shows when it's clear and how far the crew drove to it, and flags jumps (drives of more than 800 m to the next stop; neighboring stops are at most about 600 m apart) and drives past stops still waiting.
+- **Compare plans.** Make as many plans as you like, with different numbers of crews: new, copy, rename, delete. The chart draws one line per plan, the open plan's thicker.
+- **Change the assumptions** (Settings menu). All plans share them, so they compare on the same terms:
   - minutes to clear a stop (20);
   - bobcat speed (5 mph);
   - minutes to cross the road (1);
   - whether people getting off count as riders (yes);
   - whether route 109 stops, which the MBTA clears, are included (no).
-- **Save and share.** Plans and settings save in the browser as you go. Export them to a file and import a file to add its plans to yours. A copied link opens all the plans and settings in another browser.
+- **Save and share** (Settings menu). Plans and settings save in the browser as you go. Export them to a file and import a file to add its plans to yours. A copied link opens all the plans and settings in another browser.
 
 ## How a plan is scored
 

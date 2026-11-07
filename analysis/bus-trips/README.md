@@ -8,7 +8,7 @@ A PTAC map of every bus route with a stop in Somerville, drawn whole through the
 
 - The map: town outlines, the subway, the 15 routes (as they ran in Fall 2025) and their 548 stops, sized by riders.
 - With no stop picked: riders who get on in Somerville, and the share who get off in each city or town; the busiest stops in Somerville.
-- With a stop picked: a line to each stop where its riders get off (thicker: more riders, colored by route), the share by city or town, a list of the stops, and one button per route to show only that route. Hover a stop or a row for its numbers.
+- With a stop picked: the stops where its riders get off light up in orange (bigger: more riders) and its routes take their colors; the share by city or town, a list of the stops, and one button per route to show only that route. Hover a stop or a row for its numbers.
 - A stop where buses end their trip has no one getting on; the page offers where its riders got on instead.
 - The address keeps the stop, day and view (`#stop=5104&day=Sat&show=on`), so a link opens the same view.
 

@@ -69,6 +69,10 @@ h2{font-family:var(--display);font-weight:800;font-size:30px;text-transform:uppe
 #list li .grip{border:0;background:none;color:var(--ice);font-size:18px;line-height:1;width:26px;height:28px;cursor:grab;touch-action:none;padding:0;border-radius:6px}
 #list li .grip:focus-visible{outline:2px solid var(--orange)}
 #list li.dragging{opacity:.35}
+#list li:hover{background:rgba(169,196,228,.08)}
+#list li.pick{background:rgba(255,138,61,.18);box-shadow:inset 3px 0 0 var(--orange)}
+@keyframes pulse{from{stroke-opacity:1}to{stroke-opacity:.35}}
+#hl .pick{animation:pulse .8s ease-in-out infinite alternate}
 #list li.drop-before{box-shadow:inset 0 3px 0 var(--orange)}
 #list li.drop-after{box-shadow:inset 0 -3px 0 var(--orange)}
 body.reordering,body.reordering *{cursor:grabbing!important}
@@ -403,7 +407,7 @@ base += D.wards.map((rs) => rs.map((r) => `<path d="${pathD(r)}Z" fill="#DCE8F5"
 base += '<g clip-path="url(#city)" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round" opacity=".9">' + Object.values(D.routes).map((ps) => ps.map((p) => `<path d="${pathD(p)}"/>`).join('')).join('') + '</g>';
 base += '<g id="plans" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".35"></g>';
 base += '<g id="trails" fill="none" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></g>';
-base += '<g id="stops"></g><g id="labels" font-family="Barlow, sans-serif" font-size="11" font-weight="700" text-anchor="middle" pointer-events="none"></g>';
+base += '<g id="stops"></g><g id="hl" pointer-events="none"></g><g id="labels" font-family="Barlow, sans-serif" font-size="11" font-weight="700" text-anchor="middle" pointer-events="none"></g>';
 map.innerHTML = base;
 const NODE = {}; D.stops.forEach((s) => { NODE[s.id] = [s.x, s.y]; });
 const AWAY = new Set(D.away);
@@ -434,7 +438,7 @@ function drawStops() {
 }
 
 function draw() {
-  markHour();
+  markHour(); drawHL();
   const { clear, crews } = SIM;
   D.stops.forEach((s) => {
     const el = document.getElementById('s' + s.id);
@@ -523,6 +527,7 @@ $('#delplan').addEventListener('click', () => {
 
 // ---------- the crew editor ----------
 function drawEditor() {
+  if (pickId && !routes[sel].includes(pickId)) { pickId = null; drawHL(); }   // picked stop not in this crew: let go
   $('#tabs').innerHTML = routes.map((r, c) => `<button class="tab" data-c="${c}" aria-pressed="${c === sel}"><i style="background:${color(c)}"></i>Crew ${c + 1} <small>${r.length}</small></button>`).join('');
   const cr = SIM.crews[sel];
   $('#edtitle').innerHTML = `<i style="background:${color(sel)}"></i>Crew ${sel + 1}`;
@@ -533,7 +538,7 @@ function drawEditor() {
     const s = byId[L.id], notes = [];
     if (L.from) notes.push(`${(L.m / 1000).toFixed(1)} km from the last stop`);
     if (L.passes.length) notes.push(`<span class="warn">drives past ${L.passes.length} waiting: ${L.passes.slice(0, 3).map((n) => esc(byId[n].n)).join('; ')}${L.passes.length > 3 ? '…' : ''}</span>`);
-    return `<li data-i="${i}"><button class="grip" data-i="${i}" aria-label="Reorder ${esc(s.n)}: drag, or use the up and down arrow keys">⠿</button><span class="n">${i + 1}</span><span>${esc(s.n)}<small>${riders(s).toLocaleString()} riders · clear by hour ${L.h.toFixed(1)}${notes.length ? ' · ' + notes.join(' · ') : ''}</small></span>`
+    return `<li data-i="${i}" data-id="${L.id}" class="${L.id === pickId ? 'pick' : ''}" title="Show on the map"><button class="grip" data-i="${i}" aria-label="Reorder ${esc(s.n)}: drag, or use the up and down arrow keys">⠿</button><span class="n">${i + 1}</span><span>${esc(s.n)}<small>${riders(s).toLocaleString()} riders · clear by hour ${L.h.toFixed(1)}${notes.length ? ' · ' + notes.join(' · ') : ''}</small></span>`
       + `<span class="acts"><button data-a="del" data-i="${i}" aria-label="Take ${esc(s.n)} off">✕</button></span></li>`;
   }).join('');
   $('#delcrew').disabled = routes.length <= 1;
@@ -753,7 +758,11 @@ function endStroke(e, cancel) {
   }
 }
 map.addEventListener('pointerup', (e) => {
-  if (panFrom) { const tap = !panFrom.moved; panFrom = null; if (tap) showTip(nearest(e), e.clientX, e.clientY); return; }
+  if (panFrom) {
+    const tap = !panFrom.moved; panFrom = null;
+    if (tap) { const st = nearest(e); showTip(st, e.clientX, e.clientY); pick(st && routes[sel].includes(st.id) ? st.id : null, true); }
+    return;
+  }
   endStroke(e, false);
 });
 map.addEventListener('pointercancel', (e) => { panFrom = null; endStroke(e, true); });
@@ -775,6 +784,42 @@ map.addEventListener('pointermove', (e) => {
   }
   if (e.pointerType === 'touch') return;
   showTip(nearest(e), e.clientX, e.clientY);
+});
+// a stop in the list: hover rings it on the map; a click picks it (ring stays, the map glides to it)
+let hoverId = null, pickId = null;
+function drawHL() {
+  const z = zoom(), ring = (id, cls) => {
+    const st = byId[id]; if (!st) return '';
+    const [x, y] = px(st.x, st.y), r = radius(st) + 6 / z;
+    return `<circle class="${cls}" cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="${r.toFixed(2)}" fill="none" stroke="#FF8A3D" stroke-width="${(cls === 'pick' ? 4 : 3) / z}"/>`;
+  };
+  $('#hl').innerHTML = (pickId ? ring(pickId, 'pick') : '') + (hoverId && hoverId !== pickId ? ring(hoverId, 'hover') : '');
+}
+function glideTo(id) {
+  const st = byId[id]; if (!st) return;
+  const [x, y] = px(st.x, st.y), from = VB.slice();
+  const w = zoom() < 2.5 ? FITW / 3 : VB[2], h = VB[3] * w / VB[2];
+  const to = [x - w / 2, y - h / 2, w, h], t0 = performance.now();
+  const step = (now) => {
+    const k = Math.min(1, (now - t0) / 300), e = k * (2 - k);
+    setView(from.map((v, i) => v + (to[i] - v) * e), k === 1 || from[2] !== to[2]);
+    if (k < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+function pick(id, scroll) {
+  pickId = id;
+  document.querySelectorAll('#list > li').forEach((li) => li.classList.toggle('pick', li.dataset.id === id));
+  if (scroll) { const li = document.querySelector(`#list > li[data-id="${id}"]`); if (li) li.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
+  drawHL();
+}
+$('#list').addEventListener('pointerover', (e) => { const li = e.target.closest('li[data-id]'); hoverId = li ? li.dataset.id : null; drawHL(); });
+$('#list').addEventListener('pointerleave', () => { hoverId = null; drawHL(); });
+$('#list').addEventListener('click', (e) => {
+  const li = e.target.closest('li[data-id]');
+  if (!li || e.target.closest('button')) return;
+  if (pickId === li.dataset.id) { pick(null); return; }        // a second click lets go
+  pick(li.dataset.id); glideTo(li.dataset.id);
 });
 function showTip(s, cx, cy) {
   if (!s) { tip.style.display = 'none'; return; }

@@ -26,6 +26,7 @@ h2{font-family:var(--display);font-weight:800;font-size:30px;text-transform:uppe
 .btn{border:1px solid var(--ice);background:none;color:#fff;font:600 14px var(--body);padding:6px 12px;border-radius:999px;cursor:pointer}
 .btn:hover{background:rgba(169,196,228,.15)}
 .btn:disabled{opacity:.4;cursor:default}
+.btn[hidden]{display:none}
 .btn.main{background:var(--orange);border-color:var(--orange);color:var(--navy)}
 .play{width:44px;height:44px;border-radius:50%;border:0;background:var(--orange);cursor:pointer;display:flex;align-items:center;justify-content:center;flex:none}
 .read{font-family:var(--display);font-weight:700;font-size:17px;letter-spacing:.5px;font-variant-numeric:tabular-nums}
@@ -478,6 +479,7 @@ function markHour() { const m = document.getElementById('tmark'); if (m && chart
 function drawPlans() {
   $('#plantabs').innerHTML = plans.map((P, p) => `<button class="tab plan" data-p="${p}" aria-pressed="${p === cur}" title="${esc(P.name)}"><i style="background:${pcolor(p)}"></i><span class="pn">${esc(P.name)}</span> <small>${P.routes.length} crew${P.routes.length === 1 ? '' : 's'}</small></button>`).join('');
   $('#delplan').disabled = plans.length <= 1;
+  $('#baseplan').hidden = plans.some((P) => P.name === D.base.name);   // only when the computed plan isn't there
 }
 function openPlan(p) { cur = p; routes = plans[cur].routes; sel = 0; edmsg(''); changed(); }
 $('#plantabs').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) openPlan(+b.dataset.p); });

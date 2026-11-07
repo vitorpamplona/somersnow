@@ -2,7 +2,7 @@
 
 A PTAC tool for designing the routes the City's bobcat crews take to clear bus stops after a storm, and scoring them. Not a City plan.
 
-The page starts with the plan an earlier version of `build.py` computed (riders first, one street at a time; `data/computed-plan.json`), as a base to edit or compare against; "+ Computed" adds it again.
+The page starts with the plan an earlier version of `build.py` computed (riders first, one street at a time; `data/computed-plan.json`), as a base to edit or compare against; "+ Computed" adds it again when it isn't there.
 
 **Open it at [vitorpamplona.com/somersnow/bus-stops.html](https://vitorpamplona.com/somersnow/bus-stops.html)**, or open [`output/map.html`](output/map.html) in a browser.
 

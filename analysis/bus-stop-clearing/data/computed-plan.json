@@ -1,5 +1,5 @@
 {
- "name": "Computed plan",
+ "name": "Computed",
  "source": "analysis/bus-stop-clearing/build.py at commit 3cc3f4d (Nov 2026): crews start at busy stops spread apart, clear one street at a time (one side, then back on the other), each stretch of street is one crew's, and a whole-day pass cuts jumps.",
  "settings": {
   "service_min": 20,

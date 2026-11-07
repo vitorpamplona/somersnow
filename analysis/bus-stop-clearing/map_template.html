@@ -155,7 +155,7 @@ footer{margin-top:40px;color:var(--ice);font-size:14px;border-top:1px solid rgba
       <div class="tabs" id="plantabs" role="group" aria-label="Plan to edit"></div>
       <div class="row">
         <button class="btn" id="newplan">+ New plan</button>
-        <button class="btn" id="baseplan" title="The plan an earlier version of this page computed: riders first, one street at a time">+ Computed plan</button>
+        <button class="btn" id="baseplan" title="The plan an earlier version of this page computed: riders first, one street at a time">+ Computed</button>
         <button class="btn" id="copyplan">Copy</button>
         <button class="btn" id="renameplan">Rename</button>
         <button class="btn" id="delplan">Delete</button>
@@ -271,7 +271,7 @@ function apply(o, append) {
   }
   if (!plans.length) plans = [emptyPlan('Plan 1', D.settings.crews)];
   cur = Math.min(Math.max(0, cur), plans.length - 1);
-  plans.forEach((p) => { p.name = p.name.replace(/^Computed: riders first, one street at a time/, D.base.name); });   // its first, longer name
+  plans.forEach((p) => { p.name = p.name.replace(/^Computed(: riders first, one street at a time| plan)/, D.base.name); });   // its earlier, longer names
   routes = plans[cur].routes; sel = Math.min(sel, routes.length - 1);
   settings.jump_m = D.settings.jump_m;            // fixed, not a setting
 }
@@ -826,7 +826,7 @@ $('#how').innerHTML = [
   '<b>Streets.</b> Crews drive only along the bus routes. Each side of a street runs the way the bus goes, and a crew may also drive back along it. Stops within 60 m of each other are across the street: going between them costs the crossing minutes. Where a route leaves the city, the crew turns around like the bus. Two Boston Ave stops at the Medford line and the Assembly Row loop are reached through a short link with no street data (dotted).',
   '<b>The day.</b> Each crew starts at its first stop at hour 0 (getting there from the yard isn\'t counted) and works through its list in order: the quickest drive along the streets to the next stop, then the minutes to clear it. Hours are hours of work, not clock time.',
   '<b>The scores.</b> Average wait for a rider\'s stop: the hour each stop in a route is clear, counted once for every rider there. Riders\' stops clear after 2 and 4 hours: a share of all riders, so stops in no route count as never clear. A jump is a drive of more than ' + (D.settings.jump_m / 1000).toFixed(1) + ' km to the next stop (neighboring stops are at most about 600 m apart). "Drives past a stop still waiting" counts each time a crew\'s drive goes through a stop that isn\'t clear yet, its own or another crew\'s: a sign the order could be better.',
-  '<b>The computed plan.</b> The page starts with the plan an earlier version of it computed, as a base to edit or compare against ("+ Computed plan" adds it again any time). Its crews start at busy stops spread apart and clear one street at a time, out along one side and back along the other; each stretch of street is one crew\'s, and the day was rearranged to cut jumps. It is our starting point, not the City\'s routes.',
+  '<b>The computed plan.</b> The page starts with the plan an earlier version of it computed, as a base to edit or compare against ("+ Computed" adds it again any time). Its crews start at busy stops spread apart and clear one street at a time, out along one side and back along the other; each stretch of street is one crew\'s, and the day was rearranged to cut jumps. It is our starting point, not the City\'s routes.',
   '<b>Plans.</b> Each plan has its own crews and routes; the settings are shared, so every plan is scored on the same terms. "Compare plans" lists them side by side, and the chart draws one line per plan.',
   '<b>Saving.</b> Plans and settings are saved in this browser only; nobody else sees them unless you export a file or copy a link.',
   '<b>What we need from the City.</b> Its list of 281 stops and its 4 routes; how many bobcats and crews clear bus stops; how long a stop takes; where the crews start. From the MBTA: which stops on routes 77 and 104 it clears.',

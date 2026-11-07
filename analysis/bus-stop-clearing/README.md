@@ -2,6 +2,8 @@
 
 A PTAC tool for designing the routes the City's bobcat crews take to clear bus stops after a storm, and scoring them. Not a City plan.
 
+The page starts with the plan an earlier version of `build.py` computed (riders first, one street at a time; `data/computed-plan.json`), as a base to edit or compare against; "+ Computed plan" adds it again.
+
 **Open it at [vitorpamplona.com/somersnow/bus-stops.html](https://vitorpamplona.com/somersnow/bus-stops.html)**, or open [`output/map.html`](output/map.html) in a browser.
 
 ## What it does
@@ -16,7 +18,7 @@ An operator builds plans. Each plan has its own crews, and each crew a list of s
   - the share of riders whose stop is in a route, and whose stop is clear after 2 and 4 hours;
   - when the last stop is clear;
   - kilometers driven between stops;
-  - jumps (drives longer than the jump distance);
+  - jumps (drives of more than 800 m to the next stop; neighboring stops are at most about 600 m apart);
   - times a crew drives past a stop that's still waiting.
 
   Each crew gets the same numbers, and every stop in the editor shows when it's clear, how far the crew drove to it, and whether that was a jump or passed waiting stops.
@@ -25,7 +27,6 @@ An operator builds plans. Each plan has its own crews, and each crew a list of s
   - minutes to clear a stop (20);
   - bobcat speed (5 mph);
   - minutes to cross the road (1);
-  - the jump distance (800 m);
   - whether people getting off count as riders (yes);
   - whether route 109 stops, which the MBTA clears, are included (no).
 - **Save and share.** Plans and settings save in the browser as you go. Export them to a file and import a file to add its plans to yours. A copied link opens all the plans and settings in another browser.
@@ -49,6 +50,7 @@ An operator builds plans. Each plan has its own crews, and each crew a list of s
 | `build.py` | Builds the street network and writes the page. Python standard library only. Run `python3 analysis/bus-stop-clearing/build.py` from the repo root. The page's default settings are at its top (`SETTINGS`); the network's are in `A`. |
 | `map_template.html` | The page: map, route editor, plans, scoring, settings, saving. `build.py` fills in the data. |
 | `data/bus-stops.json` | Copy of `docs/data/bus-stops.json`: MBTA stops in Somerville, weekday boardings (`riders`) and alightings (`off`), routes and route shapes (from `scripts/fetch_data.py`). |
+| `data/computed-plan.json` | The starting plan: the 4 crews' routes an earlier version of `build.py` computed (commit 3cc3f4d). |
 | `data/wards.json` | Copy of `docs/data/wards.json`: ward outlines for the map. |
 | `output/map.html` | The page (self-contained; open it in any browser). |
 | `../../docs/bus-stops.html` | The same page on the public site, copied by `build.py`. Don't edit it by hand. |

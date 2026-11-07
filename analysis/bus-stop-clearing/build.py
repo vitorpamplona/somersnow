@@ -18,9 +18,11 @@ The street network:
     on the page; so does turning where a leg leaves the city, like the bus;
   * pieces that still can't reach each other are joined at their closest stops.
 
-Inputs (copied into data/ by this script so the folder is self-contained):
+Inputs (the first two copied into data/ by this script so the folder is self-contained):
   ../../docs/data/bus-stops.json  MBTA stops in Somerville, Fall weekday boardings and alightings, routes
   ../../docs/data/wards.json      ward outlines, for the map
+  data/computed-plan.json         the plan an earlier version of this script computed (riders first, one
+                                  street at a time, commit 3cc3f4d): the page's starting plan
 
 Run from the repo root:  python3 analysis/bus-stop-clearing/build.py
 """
@@ -233,8 +235,10 @@ if __name__ == '__main__':
     allstops = bs['stops']
     P = {s['id']: (s['lon'], s['lat']) for s in allstops}
     G, joins = street_network(allstops, bs['routes'])
+    # the plan the earlier version of this script computed (riders first, one street at a time): the starting plan
+    base = json.load(open(os.path.join(DATA, 'computed-plan.json')))
     payload = {
-        'season': bs['season'], 'A': A, 'settings': SETTINGS,
+        'season': bs['season'], 'A': A, 'settings': SETTINGS, 'base': {'name': base['name'], 'routes': base['routes']},
         'wards': [w['rings'] for w in wards],
         'routes': {k: v['paths'] for k, v in bs['routes'].items() if v['paths']},
         'stops': [{'id': s['id'], 'n': s['name'], 'x': s['lon'], 'y': s['lat'], 'on': s['riders'], 'off': s['off'],

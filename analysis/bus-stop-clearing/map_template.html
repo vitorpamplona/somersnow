@@ -152,6 +152,7 @@ footer{margin-top:40px;color:var(--ice);font-size:14px;border-top:1px solid rgba
       <div class="tabs" id="plantabs" role="group" aria-label="Plan to edit"></div>
       <div class="row">
         <button class="btn" id="newplan">+ New plan</button>
+        <button class="btn" id="baseplan" title="The plan an earlier version of this page computed: riders first, one street at a time">+ Computed plan</button>
         <button class="btn" id="copyplan">Copy</button>
         <button class="btn" id="renameplan">Rename</button>
         <button class="btn" id="delplan">Delete</button>
@@ -243,7 +244,8 @@ $('#season').textContent = D.season;
 // order) and the settings, which every plan shares so plans compare on the same terms ----------
 let settings = { ...D.settings };
 const emptyPlan = (name, n) => ({ name, routes: Array.from({ length: n }, () => []) });
-let plans = [emptyPlan('Plan 1', D.settings.crews)], cur = 0;
+const basePlan = () => ({ name: D.base.name, routes: D.base.routes.map((r) => r.slice()) });
+let plans = [basePlan()], cur = 0;                 // a fresh browser starts with the computed plan
 let routes = plans[0].routes;                     // the plan being edited
 let sel = 0, T = 0;
 function clean(rs) {                              // known stops, each in one crew only, at least one crew
@@ -267,6 +269,7 @@ function apply(o, append) {
   if (!plans.length) plans = [emptyPlan('Plan 1', D.settings.crews)];
   cur = Math.min(Math.max(0, cur), plans.length - 1);
   routes = plans[cur].routes; sel = Math.min(sel, routes.length - 1);
+  settings.jump_m = D.settings.jump_m;            // fixed, not a setting
 }
 function save() { try { localStorage.setItem(KEY, JSON.stringify({ settings, plans, cur })); } catch (e) { /* private mode: nothing saved */ } }
 (function load() {
@@ -515,6 +518,10 @@ $('#newplan').addEventListener('click', () => {
   if (!name) return;
   plans.push(emptyPlan(freshName(name), D.settings.crews)); openPlan(plans.length - 1);
 });
+$('#baseplan').addEventListener('click', () => {
+  const b = basePlan(); b.routes = clean(b.routes); b.name = freshName(b.name);
+  plans.push(b); openPlan(plans.length - 1);
+});
 $('#copyplan').addEventListener('click', () => {
   plans.push({ name: freshName(plans[cur].name + ' (copy)'), routes: plans[cur].routes.map((r) => r.slice()) }); openPlan(plans.length - 1);
 });
@@ -582,7 +589,6 @@ const FIELDS = [
   ['service_min', 'Minutes to clear a stop', 'Boarding area, shelter and bench. Our guess; please correct it.', 'number', 1, 120, 1],
   ['mph', 'Bobcat speed (mph)', 'Driving between stops along the street.', 'number', 1, 30, 0.5],
   ['cross_min', 'Minutes to cross the road', 'To the stop on the other side of the street, or to turn around where a route leaves the city.', 'number', 0, 30, 0.5],
-  ['jump_m', 'A jump, in meters', 'A drive longer than this to the next stop counts as a jump to a different place.', 'number', 100, 10000, 100],
   ['count_off', 'Count people getting off', 'Riders at a stop are the people getting on, plus (if checked) the people getting off.', 'checkbox'],
   ['include_mbta', 'Include route 109 stops', 'The MBTA clears every route 109 stop itself. Check to put them in the routes too.', 'checkbox'],
 ];
@@ -806,8 +812,8 @@ $('#copylink').addEventListener('click', () => {
   else prompt('Copy this link:', url);
 });
 $('#startover').addEventListener('click', () => {
-  if (!confirm('Delete every plan and start with one empty plan?')) return;
-  plans = [emptyPlan('Plan 1', D.settings.crews)]; cur = 0; routes = plans[0].routes; sel = 0; changed(); msg('Started over.');
+  if (!confirm('Delete every plan and start again from the computed plan?')) return;
+  plans = [basePlan()]; plans[0].routes = clean(plans[0].routes); cur = 0; routes = plans[0].routes; sel = 0; changed(); msg('Started over from the computed plan.');
 });
 
 // ---------- how it works ----------
@@ -815,7 +821,8 @@ $('#how').innerHTML = [
   `<b>Stops and riders.</b> The ${D.stops.filter((s) => !s.mbta).length} MBTA bus stops in Somerville the City clears (the MBTA clears the ${D.stops.filter((s) => s.mbta).length} on route 109 itself), with their average weekday riders (${D.season}): people getting on, plus people getting off unless you turn that off. The City says it clears 281 stops; we can only show the ones the MBTA lists.`,
   '<b>Streets.</b> Crews drive only along the bus routes. Each side of a street runs the way the bus goes, and a crew may also drive back along it. Stops within 60 m of each other are across the street: going between them costs the crossing minutes. Where a route leaves the city, the crew turns around like the bus. Two Boston Ave stops at the Medford line and the Assembly Row loop are reached through a short link with no street data (dotted).',
   '<b>The day.</b> Each crew starts at its first stop at hour 0 (getting there from the yard isn\'t counted) and works through its list in order: the quickest drive along the streets to the next stop, then the minutes to clear it. Hours are hours of work, not clock time.',
-  '<b>The scores.</b> Average wait for a rider\'s stop: the hour each stop in a route is clear, counted once for every rider there. Riders\' stops clear after 2 and 4 hours: a share of all riders, so stops in no route count as never clear. A jump is a drive longer than the jump distance. "Drives past a stop still waiting" counts each time a crew\'s drive goes through a stop that isn\'t clear yet, its own or another crew\'s: a sign the order could be better.',
+  '<b>The scores.</b> Average wait for a rider\'s stop: the hour each stop in a route is clear, counted once for every rider there. Riders\' stops clear after 2 and 4 hours: a share of all riders, so stops in no route count as never clear. A jump is a drive of more than ' + (D.settings.jump_m / 1000).toFixed(1) + ' km to the next stop (neighboring stops are at most about 600 m apart). "Drives past a stop still waiting" counts each time a crew\'s drive goes through a stop that isn\'t clear yet, its own or another crew\'s: a sign the order could be better.',
+  '<b>The computed plan.</b> The page starts with the plan an earlier version of it computed, as a base to edit or compare against ("+ Computed plan" adds it again any time). Its crews start at busy stops spread apart and clear one street at a time, out along one side and back along the other; each stretch of street is one crew\'s, and the day was rearranged to cut jumps. It is our starting point, not the City\'s routes.',
   '<b>Plans.</b> Each plan has its own crews and routes; the settings are shared, so every plan is scored on the same terms. "Compare plans" lists them side by side, and the chart draws one line per plan.',
   '<b>Saving.</b> Plans and settings are saved in this browser only; nobody else sees them unless you export a file or copy a link.',
   '<b>What we need from the City.</b> Its list of 281 stops and its 4 routes; how many bobcats and crews clear bus stops; how long a stop takes; where the crews start. From the MBTA: which stops on routes 77 and 104 it clears.',

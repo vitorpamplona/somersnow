@@ -7,7 +7,7 @@ Sources, caveats and what each file holds: research/data-sources.md.
   docs/data/winters.json        Boston snowfall per winter since 1891, and Somerville 311 snow requests per winter
   docs/data/storms.json         every 6-inch-plus storm since July 2015: daily snowfall and 311 requests around it
   docs/data/wards.json          Somerville ward outlines (lon/lat), simplified
-  docs/data/bus-stops.json      MBTA bus stops in Somerville with average weekday boardings
+  docs/data/bus-stops.json      MBTA bus stops in Somerville with average weekday boardings and alightings
   docs/data/storm-<id>.json     each storm (3 inches or more) hour by hour (id = last day of snow): weather at Logan, 311 requests, City notices
 """
 import storm_extras
@@ -463,21 +463,22 @@ def fetch_bus_stops():
         falls = sorted(n for n in z.namelist() if '_Fall_' in n and n.endswith('.csv'))
         latest = falls[-1]
         season = 'Fall ' + latest.rsplit('_', 1)[1][:4]
-        board, routes = defaultdict(float), defaultdict(set)
+        board, alight, routes = defaultdict(float), defaultdict(float), defaultdict(set)
         with z.open(latest) as fh:
             for row in csv.DictReader(io.TextIOWrapper(fh, encoding='utf-8-sig')):
                 sid = row.get('GTFS stop_id')
                 if sid in stops and row.get('Day Type') == 'Wkdy':
                     try:
                         board[sid] += float(row['Boardings'] or 0)
+                        alight[sid] += float(row['Alightings'] or 0)
                     except ValueError:
                         pass
                     routes[sid].add(row['GTFS route_id'])
     out = [{'id': s, 'name': a['name'], 'lat': round(a['latitude'], 5), 'lon': round(a['longitude'], 5),
-            'riders': round(board.get(s, 0)), 'routes': sorted(routes[s], key=lambda r: (len(r), r))}
+            'riders': round(board.get(s, 0)), 'off': round(alight.get(s, 0)), 'routes': sorted(routes[s], key=lambda r: (len(r), r))}
            for s, a in stops.items()]
     out.sort(key=lambda s: -s['riders'])
-    print(f'  bus stops: {len(out)}, {season}, {sum(s["riders"] for s in out)} weekday boardings')
+    print(f'  bus stops: {len(out)}, {season}, {sum(s["riders"] for s in out)} weekday boardings, {sum(s["off"] for s in out)} alightings')
     return {'season': season, 'stops': out}
 
 

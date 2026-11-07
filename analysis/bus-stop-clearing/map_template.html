@@ -91,7 +91,7 @@ footer{margin-top:40px;color:var(--ice);font-size:14px;border-top:1px solid rgba
       <svg id="map" role="img" aria-label="Somerville bus stops, cleared in plan order"></svg>
       <div class="side">
         <h3>How to read it</h3>
-        <div class="lg"><svg width="30" height="22"><circle cx="11" cy="11" r="9" fill="#fff" stroke="#10243A" stroke-width="1.5"/></svg>Waiting. Bigger = more weekday boardings.</div>
+        <div class="lg"><svg width="30" height="22"><circle cx="11" cy="11" r="9" fill="#fff" stroke="#10243A" stroke-width="1.5"/></svg>Waiting. Bigger = more weekday riders (on + off).</div>
         <div class="lg"><svg width="30" height="22"><circle cx="11" cy="11" r="9" fill="#FF8A3D" stroke="#10243A" stroke-width="1.5"/></svg>Cleared.</div>
         <div class="lg"><svg width="30" height="22"><rect x="5" y="5" width="12" height="12" fill="#A9C4E4" stroke="#10243A" stroke-width="1.5"/></svg>Route 109: the MBTA clears it.</div>
         <div class="lg"><svg width="30" height="22"><path d="M2 11 H28" stroke="#B93D06" stroke-width="3"/></svg>Where the bobcats have driven.</div>
@@ -127,7 +127,7 @@ footer{margin-top:40px;color:var(--ice);font-size:14px;border-top:1px solid rgba
 
   <footer>
     Made by the Somerville Pedestrian &amp; Transit Advisory Committee (PTAC). Not an official City page.
-    Sources: weekday boardings by stop, <span id="season"></span> (<a href="https://mbta-massdot.opendata.arcgis.com/">MBTA open data</a>);
+    Sources: weekday boardings and alightings by stop, <span id="season"></span> (<a href="https://mbta-massdot.opendata.arcgis.com/">MBTA open data</a>);
     stops and routes (<a href="https://api-v3.mbta.com/">MBTA V3 API</a>); route 109 cleared by the MBTA
     (<a href="https://www.mbta.com/winter-weather/bus-service-during-winter-storms">MBTA: bus service during winter storms</a>);
     281 stops in 4 routes (<a href="https://www.somervillema.gov/snow">City snow page</a>); ward outlines (City GIS).
@@ -146,7 +146,7 @@ const mph = (A.drive_m_per_min * 60 / 1609).toFixed(0);
 // ---------- headline ----------
 const gap = F.finish_h - R.finish_h;
 const finish = gap <= 0 ? 'and still finish sooner' : `and finish within ${gap < 1 ? Math.round(gap * 60) + ' minutes' : hrs(gap)} of route by route`;
-$('#lede').textContent = `After a storm, the City clears its bus stops route by route, stop by stop. But most riders use a few stops: half of the ${D.total.toLocaleString()} weekday boardings at the stops the City clears happen at just ${D.half} of its ${D.nstops} stops. Driving the same crews to the busiest stops first would cut the average rider's wait for a clear stop from ${hrs(R.avg_wait_h)} to ${hrs(F.avg_wait_h)}, ${finish}.`;
+$('#lede').textContent = `After a storm, the City clears its bus stops route by route, stop by stop. But most riders use a few stops: half of the ${D.total.toLocaleString()} weekday riders getting on or off at the stops the City clears use just ${D.half} of its ${D.nstops} stops. Driving the same crews to the busiest stops first would cut the average rider's wait for a clear stop from ${hrs(R.avg_wait_h)} to ${hrs(F.avg_wait_h)}, ${finish}.`;
 const tile = (old, now, l) => `<div class="tile"><div class="v"><s>${old}</s> → <b>${now}</b></div><div class="l">${l}</div></div>`;
 $('#tiles').innerHTML = tile(hrs(R.avg_wait_h), hrs(F.avg_wait_h), "Average wait for a rider's stop")
   + tile(pct(R.share_by[2]), pct(F.share_by[2]), "Riders' stops clear after 2 hours of work")
@@ -238,8 +238,8 @@ map.addEventListener('pointermove', (e) => {
   const el = e.target.closest('circle, rect[data-n]');
   if (!el) { tip.style.display = 'none'; return; }
   let html;
-  if (el.dataset.m) html = `<b>${el.dataset.n}</b>${el.dataset.r} weekday boardings · route 109, cleared by the MBTA`;
-  else { const b = byId[el.id.slice(1)]; html = `<b>${b.n}</b>${b.r} weekday boardings · routes ${b.rt.join(', ')}<br>Riders first: crew ${b.riders.c}, clear at hour ${b.riders.h.toFixed(1)}<br>Route by route: crew ${b.route.c}, hour ${b.route.h.toFixed(1)}`; }
+  if (el.dataset.m) html = `<b>${el.dataset.n}</b>${el.dataset.r} weekday riders (on + off) · route 109, cleared by the MBTA`;
+  else { const b = byId[el.id.slice(1)]; html = `<b>${b.n}</b>${b.r} weekday riders: ${b.on} on, ${b.off} off · routes ${b.rt.join(', ')}<br>Riders first: crew ${b.riders.c}, clear at hour ${b.riders.h.toFixed(1)}<br>Route by route: crew ${b.route.c}, hour ${b.route.h.toFixed(1)}`; }
   tip.innerHTML = html; tip.style.display = 'block';
   tip.style.left = Math.min(window.innerWidth - 270, e.clientX + 14) + 'px'; tip.style.top = (e.clientY + 14) + 'px';
 });
@@ -264,10 +264,10 @@ function drawChart() {
 // ---------- text ----------
 $('#season').textContent = D.season;
 $('#why').innerHTML = [
-  ['Riders are bunched', `Half of the weekday boardings happen at ${D.half} of the ${D.nstops} stops the City clears. The 3 busiest (${D.top3.names.join(', ')}) see more riders than the ${D.top3.quiet} quietest stops together.`],
-  ['One goal', 'The most riders at a clear stop, as fast as possible. We measure it as the average wait for a rider\'s stop: each stop\'s hour, counted once for every weekday boarding there.'],
+  ['Riders are bunched', `Half of the weekday riders, getting on or off, use ${D.half} of the ${D.nstops} stops the City clears. The 3 busiest (${D.top3.names.join(', ')}) see more riders than the ${D.top3.quiet} quietest stops together.`],
+  ['One goal', 'The most riders at a clear stop, as fast as possible. We measure it as the average wait for a rider\'s stop: each stop\'s hour, counted once for every person who gets on or off there on a weekday. Someone stepping off the bus needs a clear stop too, and they often get off across the street from where they got on.'],
   ['Follow the street', `The bobcats drive along the bus routes at about ${mph} mph, stop to stop. A crew never drives past a waiting stop: it clears it.`],
-  ['One side, then back', `Each side of the street is its own run, driven the way the bus goes. A crew keeps going while the next stop ahead waits; then it crosses the road (${A.turn_min} minutes to turn around) and clears the other side on the way back. It never backs up over a stretch it just cleared.`],
+  ['One side, then back', `Each side of the street is its own run, driven the way the bus goes. A crew keeps going while the next stop ahead waits; then it crosses the road (${A.turn_min} min) and clears the other side on the way back. It never backs up over a stretch it just cleared.`],
   ['Busiest run first', `Crews start at busy stops spread across the city. When a run is done, a crew heads where the next few waiting stops along the street clear the most riders per minute: the driving plus ${A.service_min} minutes a stop.`],
   ['Leave others their work', 'A crew skips the stops just ahead of another crew, and the far side of a street another crew just cleared: that crew clears it on its way back. So no crew drives down a cleared street to take stops another crew would reach anyway.'],
   ['Then the nearest', `Once stops with ${Math.round(A.sweep_after * 100)}% of riders are clear, each crew takes the nearest waiting stop, so no one drives across town for the last few. That keeps driving below route by route.`],
@@ -292,8 +292,8 @@ $('#crews').innerHTML = D.days.riders.map((day, k) => {
   const sts = day.map(([sid]) => byId[sid]), last = day[day.length - 1][2];
   const dist = day.reduce((a, e) => a + e[3], 0) / 1000;
   const riders = sts.reduce((a, b) => a + b.r, 0);
-  return `<div class="panel"><div class="k">Crew ${k + 1}</div>${crewMap(day)}<ol>${sts.slice(0, 5).map((b) => `<li>${b.n}<br><small>${b.r.toLocaleString()} weekday boardings, clear by hour ${b.riders.h.toFixed(1)}</small></li>`).join('')}</ol>
-    <p class="note">${sts.length} stops in all (${riders.toLocaleString()} boardings), ${dist.toFixed(0)} km of driving, the last clear by hour ${last.toFixed(1)}.</p></div>`;
+  return `<div class="panel"><div class="k">Crew ${k + 1}</div>${crewMap(day)}<ol>${sts.slice(0, 5).map((b) => `<li>${b.n}<br><small>${b.r.toLocaleString()} weekday riders (on + off), clear by hour ${b.riders.h.toFixed(1)}</small></li>`).join('')}</ol>
+    <p class="note">${sts.length} stops in all (${riders.toLocaleString()} riders), ${dist.toFixed(0)} km of driving, the last clear by hour ${last.toFixed(1)}.</p></div>`;
 }).join('');
 
 const cuts = [{ route: { wait: R.avg_wait_h }, riders: { wait: F.avg_wait_h } }, ...D.sens].map((r) => 1 - r.riders.wait / r.route.wait);
@@ -307,11 +307,11 @@ $('#assume').innerHTML = '<tr><th>Assumption</th><th>Value</th><th>Why</th></tr>
   ['Time to clear one stop', A.service_min + ' min', 'Boarding area, shelter and bench. A guess: please correct it.'],
   ['Bobcat speed between stops', `about ${mph} mph`, 'A slow, safe speed for a small loader in traffic.'],
   ['Streets', 'Along the bus routes', 'Each side of the street is driven the way the bus goes, stop to stop, along the route. Stops more than ' + (A.max_link_m / 1000).toFixed(1) + ' km apart on a route aren\'t linked (stops must be missing in between). Side streets aren\'t modeled.'],
-  ['Turning around', A.turn_min + ' min', 'To clear the stop across the street (within ' + A.cross_m + ' m), or where a route leaves the city, a crew turns around, like the bus.'],
+  ['Crossing the road', A.turn_min + ' min', 'To clear the stop across the street (within ' + A.cross_m + ' m), a crew crosses the road; where a route leaves the city, it turns around like the bus. These are small roads.'],
   ['Start', 'Hour 0, at each crew\'s first stop', 'Getting the bobcats there from the yard isn\'t counted, the same for both plans.'],
   ['Stops the MBTA clears', 'Route ' + A.mbta_routes.join(', '), `All ${D.nmbta} stops on route 109. The MBTA also clears some stops on 77 and 104; it doesn't say which, so we leave them to the City.`],
   ['Which stops', D.nstops + ' MBTA stops', 'The City says it clears 281. We can only rank the stops the MBTA lists in Somerville.'],
-  ['Boardings', D.season + ' weekdays', 'People getting on. Stops where people mostly get off rank lower than their real use.'],
+  ['Riders', D.season + ' weekdays', 'People getting on plus people getting off, on an average weekday. Someone getting off needs a clear stop as much as someone waiting.'],
 ].map((r) => `<tr><td>${r[0]}</td><td class="n">${r[1]}</td><td>${r[2]}</td></tr>`).join('');
 
 $('#ask').innerHTML = [

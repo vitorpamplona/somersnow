@@ -3,7 +3,8 @@
 
 Goal: the most riders at a clear stop, as fast as possible. We measure it as the
 average wait for a rider's stop: each stop's hour of clearing, weighted by its
-weekday boardings. Lower is better.
+weekday riders: the people who get on there plus the people who get off (someone
+stepping off the bus needs a clear stop too). Lower is better.
 
 The bobcats move only along the street, stop to stop. Each side of a street is
 driven the way the bus goes; to reach the stop across the street, or where a route
@@ -23,7 +24,7 @@ Two orders are compared:
     what they just cleared); once stops with 70% of riders are clear, the nearest.
 
 Inputs (copied into data/ by this script so the folder is self-contained):
-  ../../docs/data/bus-stops.json  MBTA stops in Somerville, Fall weekday boardings, routes
+  ../../docs/data/bus-stops.json  MBTA stops in Somerville, Fall weekday boardings and alightings, routes
   ../../docs/data/wards.json      ward outlines, for the map
 
 Outputs (output/):
@@ -47,7 +48,7 @@ A = {
     'drive_m_per_min': 134,     # bobcat driving speed on the street: about 5 mph
     'cross_m': 60,              # stops this close are across the street from each other
     'on_route_m': 25,           # a stop this close to a leg is on it (branches share streets)
-    'turn_min': 5,              # turning around to clear the other side of the street (or at the city line)
+    'turn_min': 1,              # crossing to clear the other side of the street (or turning at the city line): small roads
     'max_link_m': 900,          # longer gaps between stops on a route mean stops are missing in between: no link
     'lookahead': 8,             # a crew judges a direction by the run of up to this many waiting stops ahead
     'start_apart_m': 1200,      # the crews' first stops are at least this far apart
@@ -377,6 +378,8 @@ if __name__ == '__main__':
     bs = json.load(open(os.path.join(DATA, 'bus-stops.json')))
     wards = json.load(open(os.path.join(DATA, 'wards.json')))['wards']
     allstops = bs['stops']
+    for s in allstops:                                # riders at a stop: people getting on plus people getting off
+        s['on'], s['riders'] = s['riders'], s['riders'] + s['off']
     mbta = [s for s in allstops if set(s['routes']) & set(A['mbta_routes'])]
     stops = [s for s in allstops if s not in mbta]
     P = {s['id']: (s['lon'], s['lat']) for s in allstops}
@@ -412,14 +415,14 @@ if __name__ == '__main__':
     # ---- plan.csv ----
     with open(os.path.join(OUT, 'plan.csv'), 'w', newline='') as fh:
         w = csv.writer(fh)
-        w.writerow(['plan', 'crew', 'order', 'stop_id', 'stop', 'routes', 'weekday_boardings', 'drive_meters', 'drive_minutes', 'clear_by_hour', 'drives_through'])
+        w.writerow(['plan', 'crew', 'order', 'stop_id', 'stop', 'routes', 'weekday_on', 'weekday_off', 'weekday_riders', 'drive_meters', 'drive_minutes', 'clear_by_hour', 'drives_through'])
         for k, days in plans.items():
             for c, day in enumerate(days, 1):
                 for i, e in enumerate(day, 1):
                     s = by_id[e['stop']]
                     through = [P_name for P_name in (by_id[x]['name'] if x in by_id else next(m['name'] for m in mbta if m['id'] == x) for x in e['path'][:-1])]
                     w.writerow([{'route': 'route by route', 'riders': 'riders first'}[k], c, i, s['id'], s['name'], ' '.join(s['routes']),
-                                s['riders'], round(e['m']), round(e['m'] / A['drive_m_per_min'], 1), round(e['h'], 2), '; '.join(through)])
+                                s['on'], s['off'], s['riders'], round(e['m']), round(e.get('mins', 0), 1), round(e['h'], 2), '; '.join(through)])
 
     # ---- summary.md ----
     top = sorted(stops, key=lambda s: -s['riders'])
@@ -431,9 +434,10 @@ if __name__ == '__main__':
     r, f = S['route'], S['riders']
     lines = [
         '# Bus stop clearing order: results', '',
-        f"Built by build.py from MBTA {bs['season']} weekday boardings. {len(stops)} stops the City clears "
-        f"({len(mbta)} more are on route {', '.join(A['mbta_routes'])}, which the MBTA clears), {total:,} weekday boardings.", '',
-        f'Half of those boardings happen at {half} stops.', '',
+        f"Built by build.py from MBTA {bs['season']} weekday ridership. {len(stops)} stops the City clears "
+        f"({len(mbta)} more are on route {', '.join(A['mbta_routes'])}, which the MBTA clears), {total:,} weekday riders: "
+        f"{sum(s['on'] for s in stops):,} getting on and {sum(s['off'] for s in stops):,} getting off.", '',
+        f'Half of those riders use {half} stops.', '',
         '| | Route by route | Riders first |', '| --- | --- | --- |',
         f"| Average wait for a rider's stop | {r['avg_wait_h']} h | {f['avg_wait_h']} h |",
         *[f"| Riders' stops clear after {h} h | {r['share_by'][h]}% | {f['share_by'][h]}% |" for h in (1, 2, 4, 8, 12)],
@@ -464,7 +468,7 @@ if __name__ == '__main__':
         'nodes': {s['id']: [s['lon'], s['lat']] for s in allstops},
         'geo': {f'{a}|{b}': g for (a, b), g in GEO.items()},
         'away': sorted(f'{a}|{b}' for a, b in AWAY if b in G[a] and G[a][b][1] != 'drive'),
-        'stops': [{'id': s['id'], 'n': s['name'], 'x': s['lon'], 'y': s['lat'], 'r': s['riders'], 'rt': s['routes'],
+        'stops': [{'id': s['id'], 'n': s['name'], 'x': s['lon'], 'y': s['lat'], 'r': s['riders'], 'on': s['on'], 'off': s['off'], 'rt': s['routes'],
                    **{k: next({'h': round(e['h'], 2), 'c': c + 1} for c, day in enumerate(plans[k]) for e in day if e['stop'] == s['id']) for k in plans}} for s in stops],
         'mbta': [{'n': s['name'], 'x': s['lon'], 'y': s['lat'], 'r': s['riders']} for s in mbta],
         'days': {k: [[[e['stop'], e['path'], round(e['h'], 3), round(e['m'])] for e in day] for day in days] for k, days in plans.items()},

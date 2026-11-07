@@ -41,15 +41,20 @@ h2{font-family:var(--display);font-weight:800;font-size:30px;text-transform:uppe
 .timeline{display:flex;gap:12px;align-items:center;margin:4px 0 8px}
 #t{flex:1;min-width:0;accent-color:var(--orange)}
 .mapwrap{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;align-items:start}
-#map{width:100%;height:auto;display:block;background:#0E2034;border-radius:12px;touch-action:manipulation}
-#map{cursor:pointer}
+#map{width:100%;height:auto;display:block;background:#0E2034;border-radius:12px;touch-action:none;cursor:crosshair;user-select:none;-webkit-user-select:none}
 .editor h3{font-family:var(--display);font-size:22px;text-transform:uppercase;letter-spacing:1px;margin:0 0 4px;display:flex;align-items:center;gap:8px}
 .editor h3 i{width:14px;height:14px;border-radius:50%;display:inline-block}
 .editor .note{margin:0 0 8px}
 .add{display:flex;gap:6px;margin:8px 0}
 .add input{flex:1;min-width:0;font:15px var(--body);padding:7px 10px;border-radius:8px;border:1px solid var(--ice);background:var(--navy);color:#fff}
 #list{list-style:none;margin:8px 0;padding:0;max-height:520px;overflow:auto;font-size:14px}
-#list li{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:6px;align-items:start;padding:6px 4px;border-bottom:1px solid rgba(169,196,228,.2)}
+#list li{display:grid;grid-template-columns:26px 24px minmax(0,1fr) auto;gap:6px;align-items:start;padding:6px 4px;border-bottom:1px solid rgba(169,196,228,.2);cursor:grab;user-select:none;-webkit-user-select:none}
+#list li .grip{border:0;background:none;color:var(--ice);font-size:18px;line-height:1;width:26px;height:28px;cursor:grab;touch-action:none;padding:0;border-radius:6px}
+#list li .grip:focus-visible{outline:2px solid var(--orange)}
+#list li.dragging{opacity:.35}
+#list li.drop-before{box-shadow:inset 0 3px 0 var(--orange)}
+#list li.drop-after{box-shadow:inset 0 -3px 0 var(--orange)}
+body.reordering,body.reordering *{cursor:grabbing!important}
 #list li .n{font-family:var(--display);font-weight:700;color:var(--ice);font-size:16px;text-align:right}
 #list li small{color:var(--ice);display:block}
 #list li .warn{color:var(--orange)}
@@ -93,7 +98,7 @@ footer{margin-top:40px;color:var(--ice);font-size:14px;border-top:1px solid rgba
 <main>
   <div class="k">PTAC tool · not a City plan</div>
   <h1>Bus stop routes</h1>
-  <p class="lede">Design the routes the bobcat crews take to clear bus stops after a storm. Pick a crew, then tap stops on the map in the order that crew should clear them, or add them by name. The page plays the day and scores it: how soon riders get a clear stop, how far the crews drive, and where they jump across town. Make as many plans as you like, each with its own crews, and compare them. Your plans and settings stay in this browser.</p>
+  <p class="lede">Design the routes the bobcat crews take to clear bus stops after a storm. Pick a crew, then press on the map and drag across stops in the order that crew should clear them; or tap them one by one, or add them by name. The page plays the day and scores it: how soon riders get a clear stop, how far the crews drive, and where they jump across town. Make as many plans as you like, each with its own crews, and compare them. Your plans and settings stay in this browser.</p>
   <div class="planbar" id="planbar">
     <span class="seglab">Plan</span>
     <div class="tabs" id="plantabs" role="group" aria-label="Plan to edit"></div>
@@ -137,6 +142,7 @@ footer{margin-top:40px;color:var(--ice);font-size:14px;border-top:1px solid rgba
         <datalist id="stopnames"></datalist>
         <ol id="list"></ol>
         <div class="row">
+          <button class="btn" id="undo" disabled>Undo</button>
           <button class="btn" id="reverse">Reverse order</button>
           <button class="btn" id="clearcrew">Clear this crew</button>
         </div>
@@ -461,15 +467,15 @@ function drawEditor() {
   const cr = SIM.crews[sel];
   $('#edtitle').innerHTML = `<i style="background:${color(sel)}"></i>Crew ${sel + 1}`;
   $('#edsum').textContent = cr.legs.length
-    ? `${cr.legs.length} stops, last one clear by hour ${cr.end.toFixed(1)}. Tap stops on the map to add them to the end, or tap one of this crew's stops to take it off.`
-    : 'No stops yet. Tap stops on the map, in order, to build this crew\'s route. The crew starts at its first stop at hour 0.';
+    ? `${cr.legs.length} stops, last one clear by hour ${cr.end.toFixed(1)}. Press and drag across stops on the map to add them in order; tap one stop to add it, or one of this crew's stops to take it off. Drag a stop in the list to change the order.`
+    : 'No stops yet. Press on the map and drag across stops, in order, to build this crew\'s route; or tap them one by one. The crew starts at its first stop at hour 0.';
   $('#list').innerHTML = cr.legs.map((L, i) => {
     const s = byId[L.id], notes = [];
     if (L.from) notes.push(`${(L.m / 1000).toFixed(1)} km from the last stop`);
     if (L.jump) notes.push('<span class="warn">jump</span>');
     if (L.passes.length) notes.push(`<span class="warn">drives past ${L.passes.length} waiting: ${L.passes.slice(0, 3).map((n) => esc(byId[n].n)).join('; ')}${L.passes.length > 3 ? '…' : ''}</span>`);
-    return `<li><span class="n">${i + 1}</span><span>${esc(s.n)}<small>${riders(s).toLocaleString()} riders · clear by hour ${L.h.toFixed(1)}${notes.length ? ' · ' + notes.join(' · ') : ''}</small></span>`
-      + `<span class="acts"><button data-a="up" data-i="${i}" aria-label="Move ${esc(s.n)} up">↑</button><button data-a="down" data-i="${i}" aria-label="Move ${esc(s.n)} down">↓</button><button data-a="del" data-i="${i}" aria-label="Take ${esc(s.n)} off">✕</button></span></li>`;
+    return `<li data-i="${i}"><button class="grip" data-i="${i}" aria-label="Reorder ${esc(s.n)}: drag, or use the up and down arrow keys">⠿</button><span class="n">${i + 1}</span><span>${esc(s.n)}<small>${riders(s).toLocaleString()} riders · clear by hour ${L.h.toFixed(1)}${notes.length ? ' · ' + notes.join(' · ') : ''}</small></span>`
+      + `<span class="acts"><button data-a="del" data-i="${i}" aria-label="Take ${esc(s.n)} off">✕</button></span></li>`;
   }).join('');
   $('#delcrew').disabled = routes.length <= 1;
 }
@@ -487,8 +493,17 @@ function addStop(id) {
   changed(); edmsg(note);
 }
 const edmsg = (t) => { $('#edmsg').textContent = t; };
+// undo: the state before each change (a whole drag is one change)
+let UNDO = [], lastState = null, painting = false;
+const stateNow = () => JSON.stringify({ settings, plans, cur });
 function changed() {
   plans[cur].routes = routes;
+  if (!painting) {
+    const now = stateNow();
+    if (lastState !== null && now !== lastState) { UNDO.push(lastState); if (UNDO.length > 200) UNDO.shift(); }
+    lastState = now;
+  }
+  $('#undo').disabled = !UNDO.length;
   save();
   ALL = plans.map((p) => simulate(p.routes)); SIM = ALL[cur];
   const maxH = Math.max(1, Math.ceil(SIM.finish));
@@ -532,14 +547,65 @@ $('#delcrew').addEventListener('click', () => {
   routes.splice(sel, 1); sel = Math.max(0, sel - 1); changed();
 });
 $('#list').addEventListener('click', (e) => {
-  const b = e.target.closest('button'); if (!b) return;
-  const r = routes[sel], i = +b.dataset.i;
-  if (b.dataset.a === 'del') r.splice(i, 1);
-  if (b.dataset.a === 'up' && i > 0) [r[i - 1], r[i]] = [r[i], r[i - 1]];
-  if (b.dataset.a === 'down' && i < r.length - 1) [r[i + 1], r[i]] = [r[i], r[i + 1]];
-  changed();
+  const b = e.target.closest('button[data-a="del"]'); if (!b) return;
+  const i = +b.dataset.i, name = byId[routes[sel][i]].n;
+  routes[sel].splice(i, 1); changed(); edmsg(`Took ${name} off crew ${sel + 1}.`);
+});
+// reorder by drag and drop: grab a row (with a mouse) or its ⠿ handle (any pointer), drop it where it goes
+function moveStop(from, to) {                     // to: the position it ends up at
+  const r = routes[sel];
+  if (to === from || to < 0 || to >= r.length) return false;
+  const [id] = r.splice(from, 1); r.splice(to, 0, id);
+  changed(); edmsg(`Moved ${byId[id].n} to stop ${to + 1}.`);
+  return true;
+}
+let drag = null;
+$('#list').addEventListener('pointerdown', (e) => {
+  const li = e.target.closest('li'); if (!li || e.button !== 0 || e.target.closest('button[data-a]')) return;
+  if (e.pointerType !== 'mouse' && !e.target.closest('.grip')) return;   // on touch, rows scroll the page; the handle drags
+  drag = { from: +li.dataset.i, li, y: e.clientY, on: false, to: null };
+  try { e.target.setPointerCapture(e.pointerId); } catch (err) { /* older browsers */ }
+});
+document.addEventListener('pointermove', (e) => {
+  if (!drag) return;
+  if (!drag.on && Math.abs(e.clientY - drag.y) < 5) return;
+  if (!drag.on) { drag.on = true; drag.li.classList.add('dragging'); document.body.classList.add('reordering'); }
+  e.preventDefault();
+  const list = $('#list'), box = list.getBoundingClientRect();
+  if (e.clientY < box.top + 30) list.scrollTop -= 12; else if (e.clientY > box.bottom - 30) list.scrollTop += 12;
+  const lis = [...list.children];
+  lis.forEach((x) => x.classList.remove('drop-before', 'drop-after'));
+  let to = lis.findIndex((x) => { const r = x.getBoundingClientRect(); return e.clientY < r.top + r.height / 2; });
+  if (to < 0) { to = lis.length; lis[lis.length - 1].classList.add('drop-after'); } else lis[to].classList.add('drop-before');
+  drag.to = to;                                   // insert before this row
+});
+function endDrag() {
+  if (!drag) return;
+  const d = drag; drag = null;
+  document.body.classList.remove('reordering');
+  [...$('#list').children].forEach((x) => x.classList.remove('dragging', 'drop-before', 'drop-after'));
+  if (d.on && d.to !== null) moveStop(d.from, d.to > d.from ? d.to - 1 : d.to);
+}
+document.addEventListener('pointerup', endDrag);
+document.addEventListener('pointercancel', endDrag);
+$('#list').addEventListener('keydown', (e) => {
+  const g = e.target.closest('.grip'); if (!g || !['ArrowUp', 'ArrowDown'].includes(e.key)) return;
+  e.preventDefault();
+  const i = +g.dataset.i, to = i + (e.key === 'ArrowUp' ? -1 : 1);
+  if (moveStop(i, to)) { const ng = $(`#list .grip[data-i="${to}"]`); if (ng) ng.focus(); }
 });
 $('#reverse').addEventListener('click', () => { routes[sel].reverse(); changed(); });
+function undo() {
+  if (!UNDO.length) return;
+  const prev = UNDO.pop(), o = JSON.parse(prev);
+  settings = { ...D.settings, ...o.settings }; plans = o.plans; cur = o.cur; routes = plans[cur].routes;
+  sel = Math.min(sel, routes.length - 1); lastState = prev;
+  drawSettings(); drawStops(); changed(); edmsg('Undone.');
+}
+$('#undo').addEventListener('click', undo);
+document.addEventListener('keydown', (e) => {
+  if ((e.ctrlKey || e.metaKey) && !e.shiftKey && e.key.toLowerCase() === 'z' && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) { e.preventDefault(); undo(); }
+});
 $('#clearcrew').addEventListener('click', () => { if (routes[sel].length && confirm(`Take all ${routes[sel].length} stops off crew ${sel + 1}?`)) { routes[sel] = []; changed(); } });
 $('#addform').addEventListener('submit', (e) => {
   e.preventDefault();
@@ -549,24 +615,63 @@ $('#addform').addEventListener('submit', (e) => {
   if (!routes[sel].includes(s.id)) addStop(s.id);
   $('#addname').value = '';
 });
-// the stop nearest a tap or the pointer, within about a fingertip (stops at Davis and the squares sit close together)
-function nearest(e) {
+// the stop nearest a point on screen, within about a fingertip (stops at Davis and the squares sit close together)
+function nearest(e) { return nearestAt(e.clientX, e.clientY); }
+function nearestAt(cx, cy) {
   const box = map.getBoundingClientRect(), k = box.width / W;
-  const x = (e.clientX - box.left) / k, y = (e.clientY - box.top) / k;
+  const x = (cx - box.left) / k, y = (cy - box.top) / k;
   let best = null, bd = Infinity;
   D.stops.forEach((s) => { const [sx, sy] = px(s.x, s.y), d = Math.hypot(sx - x, sy - y); if (d < bd) { bd = d; best = s; } });
   return best && bd * k <= Math.max(radius(best) * k + 4, 16) ? best : null;
 }
-map.addEventListener('click', (e) => { const s = nearest(e); if (s) addStop(s.id); });
+// press and drag: every stop the pointer passes is added to the selected crew, in order, until
+// release (a stop of another crew moves over; nothing is taken off). A tap adds or takes off one stop.
 const tip = $('#tip');
+let downAt = null, lastPt = null, added = 0, moved = 0, pending = false;
+function paint(s) {
+  if (!s || !counted(s) || routes[sel].includes(s.id)) return;
+  routes.forEach((r, c) => { if (c !== sel) { const i = r.indexOf(s.id); if (i >= 0) { r.splice(i, 1); moved++; } } });
+  routes[sel].push(s.id); added++;
+  if (!pending) { pending = true; requestAnimationFrame(() => { pending = false; if (painting) changed(); }); }
+}
+map.addEventListener('pointerdown', (e) => {
+  if (e.button !== 0) return;
+  downAt = lastPt = [e.clientX, e.clientY]; painting = false; added = moved = 0;
+  try { map.setPointerCapture(e.pointerId); } catch (err) { /* older browsers */ }
+  stopPlay();
+});
+function endStroke(e, cancel) {
+  if (!downAt) return;
+  const was = painting, at = downAt;
+  downAt = null; painting = false;
+  if (was) {
+    changed();
+    edmsg(added ? `Added ${added} stop${added === 1 ? '' : 's'} to crew ${sel + 1}${moved ? ` (${moved} moved from other crews)` : ''}. Undo takes them back off.` : '');
+  } else if (!cancel) {
+    const s = nearestAt(e.clientX, e.clientY) || nearestAt(...at);
+    if (s) addStop(s.id);
+  }
+}
+map.addEventListener('pointerup', (e) => endStroke(e, false));
+map.addEventListener('pointercancel', (e) => endStroke(e, true));
 map.addEventListener('pointermove', (e) => {
+  if (downAt) {
+    if (!painting && Math.hypot(e.clientX - downAt[0], e.clientY - downAt[1]) > 6) { painting = true; edmsg(''); paint(nearestAt(...downAt)); }
+    if (painting) {
+      const [x0, y0] = lastPt, n = Math.max(1, Math.ceil(Math.hypot(e.clientX - x0, e.clientY - y0) / 4));
+      for (let i = 1; i <= n; i++) paint(nearestAt(x0 + (e.clientX - x0) * i / n, y0 + (e.clientY - y0) * i / n));
+      lastPt = [e.clientX, e.clientY]; tip.style.display = 'none';
+      return;
+    }
+  }
+  if (e.pointerType === 'touch') return;
   const s = nearest(e);
   if (!s) { tip.style.display = 'none'; return; }
   const c = SIM.clear[s.id];
   let html = `<b>${esc(s.n)}</b>${s.on.toLocaleString()} on, ${s.off.toLocaleString()} off a weekday · routes ${s.rt.join(', ')}`;
   if (!counted(s)) html += '<br>Route 109: the MBTA clears it';
   else if (c) html += `<br>Crew ${c.c + 1}, stop ${routes[c.c].indexOf(s.id) + 1}, clear by hour ${c.h.toFixed(1)}`;
-  else html += `<br>In no route. Tap to add it to crew ${sel + 1}.`;
+  else html += `<br>In no route. Tap or drag across it to add it to crew ${sel + 1}.`;
   tip.innerHTML = html; tip.style.display = 'block';
   tip.style.left = Math.min(window.innerWidth - 290, e.clientX + 14) + 'px'; tip.style.top = (e.clientY + 14) + 'px';
 });

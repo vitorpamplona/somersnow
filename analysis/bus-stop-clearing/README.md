@@ -8,7 +8,7 @@ A PTAC tool for designing the routes the City's bobcat crews take to clear bus s
 
 An operator builds plans. Each plan has its own crews, and each crew a list of stops in the order it clears them:
 
-- **Build a route.** Pick a crew, then tap stops on the map in order, or add them by name. Tapping one of the crew's stops takes it off; tapping another crew's stop moves it to this crew. Reorder with ↑ / ↓, reverse a route, clear a crew, add or remove crews.
+- **Build a route.** Pick a crew, then press on the map and drag across stops: every stop the pointer passes is added, in order, until you let go (a stop of another crew moves to this one; a drag never takes stops off). Or tap stops one by one (tapping one of the crew's own stops takes it off), or add them by name. Drag stops in the crew's list to reorder them (or use the arrow keys on a stop's ⠿ handle). Reverse a route, clear a crew, add or remove crews. Undo (or Ctrl/Cmd+Z) takes back any change; a whole drag is one step.
 - **Score it.** The page plays the day hour by hour on the map, each crew in its own color, and scores the plan:
   - the average wait for a rider's stop (stops in a route);
   - the share of riders whose stop is in a route, and whose stop is clear after 2 and 4 hours;

@@ -20,10 +20,10 @@ main{max-width:1180px;margin:0 auto;padding:28px 16px 60px}
 h1{font-family:var(--display);font-weight:800;font-size:clamp(40px,7vw,68px);line-height:.95;text-transform:uppercase;margin:8px 0 12px}
 h2{font-family:var(--display);font-weight:800;font-size:30px;text-transform:uppercase;margin:44px 0 10px;line-height:1}
 .lede{font-size:20px;max-width:780px;color:var(--snow);margin:0}
-.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:26px 0}
-.tile{background:var(--panel);border-radius:14px;padding:14px 16px}
-.tile .v{font-family:var(--display);font-weight:800;font-size:36px;line-height:1;font-variant-numeric:tabular-nums;color:var(--orange)}
-.tile .l{color:var(--ice);font-size:14px;margin-top:4px}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
+.tile{background:var(--panel);border-radius:12px;padding:8px 10px}
+.tile .v{font-family:var(--display);font-weight:800;font-size:26px;line-height:1;font-variant-numeric:tabular-nums;color:var(--orange)}
+.tile .l{color:var(--ice);font-size:12.5px;line-height:1.3;margin-top:3px}
 .panel{background:var(--panel);border-radius:18px;padding:16px}
 .controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:10px}
 .tabs{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
@@ -36,18 +36,35 @@ h2{font-family:var(--display);font-weight:800;font-size:30px;text-transform:uppe
 .btn:disabled{opacity:.4;cursor:default}
 .btn.main{background:var(--orange);border-color:var(--orange);color:var(--navy)}
 .play{width:44px;height:44px;border-radius:50%;border:0;background:var(--orange);cursor:pointer;display:flex;align-items:center;justify-content:center;flex:none}
-.read{font-family:var(--display);font-weight:700;font-size:20px;letter-spacing:.5px;font-variant-numeric:tabular-nums;margin-bottom:8px}
+.read{font-family:var(--display);font-weight:700;font-size:17px;letter-spacing:.5px;font-variant-numeric:tabular-nums}
 .read b{color:var(--orange)}
-.timeline{display:flex;gap:12px;align-items:center;margin:4px 0 8px}
-#t{flex:1;min-width:0;accent-color:var(--orange)}
-.mapwrap{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;align-items:start}
-#map{width:100%;height:auto;display:block;background:#0E2034;border-radius:12px;touch-action:none;cursor:crosshair;user-select:none;-webkit-user-select:none}
+#t{accent-color:var(--orange)}
+/* the dashboard: a full-window map, and a sidebar with the plan, its scores and the crew's route */
+.app{display:grid;grid-template-columns:minmax(0,1fr) 420px;height:calc(100vh - 56px);min-height:560px}
+.mapcol{position:relative;background:#0E2034;overflow:hidden}
+#map{width:100%;height:100%;display:block;touch-action:none;cursor:crosshair;user-select:none;-webkit-user-select:none}
+#map.panning{cursor:grab}
+#map path{vector-effect:non-scaling-stroke}
+.mapctl{position:absolute;top:12px;right:12px;display:flex;flex-direction:column;gap:6px}
+.mapctl button{width:40px;height:40px;border-radius:10px;border:0;background:rgba(16,36,58,.92);color:#fff;font:700 20px var(--body);cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.3)}
+.mapctl button[aria-pressed=true]{background:var(--orange);color:var(--navy)}
+.legend{position:absolute;top:12px;left:12px;max-width:300px;background:rgba(16,36,58,.92);border-radius:12px;padding:8px 12px;font-size:13px;color:var(--snow);box-shadow:0 2px 10px rgba(0,0,0,.3)}
+.legend summary{cursor:pointer;font-family:var(--display);font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--ice)}
+.legend span{display:flex;align-items:center;gap:6px;margin-top:4px}
+.legend .hint{color:var(--ice);display:block}
+.maptime{position:absolute;left:12px;right:12px;bottom:12px;display:flex;gap:12px;align-items:center;background:rgba(16,36,58,.92);border-radius:14px;padding:8px 12px;box-shadow:0 2px 10px rgba(0,0,0,.3)}
+.maptime .tl{flex:1;min-width:0}
+.maptime #t{width:100%}
+.side{overflow:auto;padding:14px 16px;border-left:1px solid rgba(169,196,228,.2);background:var(--navy)}
+.side .tabs{margin-bottom:6px}
+.apptitle{font-family:var(--display);font-weight:800;font-size:20px;text-transform:uppercase;letter-spacing:1px;margin-right:auto;margin-left:18px}
+.apptitle small{font-family:var(--body);font-weight:500;font-size:13px;letter-spacing:0;text-transform:none;color:var(--ice);margin-left:8px}
 .editor h3{font-family:var(--display);font-size:22px;text-transform:uppercase;letter-spacing:1px;margin:0 0 4px;display:flex;align-items:center;gap:8px}
 .editor h3 i{width:14px;height:14px;border-radius:50%;display:inline-block}
 .editor .note{margin:0 0 8px}
 .add{display:flex;gap:6px;margin:8px 0}
 .add input{flex:1;min-width:0;font:15px var(--body);padding:7px 10px;border-radius:8px;border:1px solid var(--ice);background:var(--navy);color:#fff}
-#list{list-style:none;margin:8px 0;padding:0;max-height:520px;overflow:auto;font-size:14px}
+#list{list-style:none;margin:8px 0;padding:0;font-size:14px}
 #list li{display:grid;grid-template-columns:26px 24px minmax(0,1fr) auto;gap:6px;align-items:start;padding:6px 4px;border-bottom:1px solid rgba(169,196,228,.2);cursor:grab;user-select:none;-webkit-user-select:none}
 #list li .grip{border:0;background:none;color:var(--ice);font-size:18px;line-height:1;width:26px;height:28px;cursor:grab;touch-action:none;padding:0;border-radius:6px}
 #list li .grip:focus-visible{outline:2px solid var(--orange)}
@@ -62,13 +79,13 @@ body.reordering,body.reordering *{cursor:grabbing!important}
 #list li .acts button{border:0;background:var(--navy);color:#fff;width:28px;height:28px;border-radius:6px;cursor:pointer;font-size:14px}
 #list li .acts button:hover{background:var(--mute)}
 .row{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.planbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:26px 0 0}
+.planbar{margin:0 0 4px}
 .seglab{color:var(--ice);font:600 13px var(--body);text-transform:uppercase;letter-spacing:1px}
 .tab.plan i{border-radius:3px}
 #compare button{border:0;background:none;color:var(--orange);font:600 15px var(--body);padding:0;cursor:pointer;text-align:left;text-decoration:underline}
 #compare tr.cur td{background:rgba(255,138,61,.12)}
-.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;color:var(--snow);margin-top:10px}
-.legend span{display:inline-flex;align-items:center;gap:6px}
+.chartkey{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;color:var(--snow);margin-top:10px}
+.chartkey span{display:inline-flex;align-items:center;gap:6px}
 #tip{position:fixed;pointer-events:none;background:var(--snow);color:var(--navy);border-radius:10px;padding:8px 10px;font-size:14px;max-width:280px;box-shadow:0 6px 24px rgba(0,0,0,.35);display:none;z-index:5}
 #tip b{display:block}
 #chart{width:100%;height:auto;display:block}
@@ -87,75 +104,92 @@ td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
 .how li{margin-bottom:8px}
 .note{color:var(--ice);font-size:14px}
 a{color:var(--orange)}
-.bar{background:#0A1929;border-bottom:1px solid rgba(169,196,228,.2)}.bar div{max-width:1180px;margin:0 auto;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px}.bar a{color:#fff;text-decoration:none}.bar .brand{font-family:var(--display);font-weight:800;font-size:22px;text-transform:uppercase;letter-spacing:1px}.bar .brand span{color:var(--orange)}.bar nav a{color:var(--ice);font-size:15px}
+.bar{background:#0A1929;border-bottom:1px solid rgba(169,196,228,.2)}.bar div{max-width:none;margin:0 auto;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px}.bar a{color:#fff;text-decoration:none}.bar .brand{font-family:var(--display);font-weight:800;font-size:22px;text-transform:uppercase;letter-spacing:1px}.bar .brand span{color:var(--orange)}.bar nav a{color:var(--ice);font-size:15px}
 footer{margin-top:40px;color:var(--ice);font-size:14px;border-top:1px solid rgba(169,196,228,.3);padding-top:14px}
-@media (max-width:860px){.mapwrap{grid-template-columns:1fr}#list{max-height:none}}
-@media (max-width:560px){.tiles{grid-template-columns:1fr 1fr;gap:8px}.tile{padding:10px 12px}.tile .v{font-size:28px}.tile .l{font-size:13px}}
+@media (max-width:1000px){
+  .app{display:block;height:auto;min-height:0}
+  .mapcol{overflow:visible}
+  #map{height:auto}
+  .legend{position:static;max-width:none;margin:8px 12px 0;box-shadow:none}
+  .legend[open] span{display:inline-flex;margin-right:14px}
+  .maptime{position:static;margin:8px 12px 0;box-shadow:none}
+  .mapctl{top:8px;right:8px}
+  .mapctl button{width:36px;height:36px}
+  .side{border-left:0;padding:12px 16px}
+  .apptitle small{display:none}
+}
+@media (max-width:560px){.apptitle{display:none}}
 </style>
 </head>
 <body>
-<header class="bar"><div><a class="brand" href="https://vitorpamplona.com/somersnow/">Somerville <span>Snow</span></a><nav><a href="https://vitorpamplona.com/somersnow/">Back to the guide</a></nav></div></header>
-<main>
-  <div class="k">PTAC tool · not a City plan</div>
-  <h1>Bus stop routes</h1>
-  <p class="lede">Design the routes the bobcat crews take to clear bus stops after a storm. Pick a crew, then press on the map and drag across stops in the order that crew should clear them; or tap them one by one, or add them by name. The page plays the day and scores it: how soon riders get a clear stop, how far the crews drive, and where they jump across town. Make as many plans as you like, each with its own crews, and compare them. Your plans and settings stay in this browser.</p>
-  <div class="planbar" id="planbar">
-    <span class="seglab">Plan</span>
-    <div class="tabs" id="plantabs" role="group" aria-label="Plan to edit"></div>
-    <button class="btn" id="newplan">+ New plan</button>
-    <button class="btn" id="copyplan">Copy this plan</button>
-    <button class="btn" id="renameplan">Rename</button>
-    <button class="btn" id="delplan">Delete this plan</button>
-  </div>
-  <div class="tiles" id="tiles"></div>
-
-  <section class="panel" aria-label="Crews and their routes">
+<header class="bar"><div><a class="brand" href="https://vitorpamplona.com/somersnow/">Somerville <span>Snow</span></a><span class="apptitle">Bus stop routes <small>PTAC tool · not a City plan</small></span><nav><a href="#about">How it works</a> · <a href="https://vitorpamplona.com/somersnow/">Back to the guide</a></nav></div></header>
+<div class="app">
+  <section class="mapcol" aria-label="Map of the bus stops and the crews' routes">
+    <svg id="map" role="img" aria-label="Somerville bus stops and the crews' routes"></svg>
+    <div class="mapctl" role="group" aria-label="Zoom and pan">
+      <button id="zoomin" aria-label="Zoom in">+</button>
+      <button id="zoomout" aria-label="Zoom out">−</button>
+      <button id="zoomfit" aria-label="Show the whole city">⤢</button>
+      <button id="pan" aria-pressed="false" aria-label="Pan mode: drag to move the map instead of adding stops">✋</button>
+    </div>
+    <details class="legend">
+      <summary>Map key</summary>
+      <span><svg width="22" height="22"><circle cx="11" cy="11" r="8" fill="#fff" stroke="#10243A" stroke-width="1.5"/></svg>In no route yet. Bigger = more riders.</span>
+      <span><svg width="22" height="22"><circle cx="11" cy="11" r="8" fill="#fff" stroke="#1F6FB2" stroke-width="3"/></svg>In a crew's route, waiting</span>
+      <span><svg width="22" height="22"><circle cx="11" cy="11" r="8" fill="#1F6FB2" stroke="#10243A" stroke-width="1.5"/></svg>Cleared</span>
+      <span><svg width="22" height="22"><rect x="5" y="5" width="12" height="12" fill="#A9C4E4" stroke="#10243A" stroke-width="1.5"/></svg>Route 109: the MBTA clears it</span>
+      <span><svg width="34" height="12"><path d="M2 6 H32" stroke="#1F6FB2" stroke-width="3" stroke-dasharray="2 6" stroke-linecap="round"/></svg>Out of the city and back (no street data)</span>
+      <span class="hint">Drag across stops to add them. Scroll to zoom; hold Space (or the right button, or ✋) and drag to move the map.</span>
+    </details>
+    <div class="maptime">
+      <button class="play" id="play" aria-label="Play the day"><svg width="18" height="18" viewBox="0 0 18 18"><path id="pi" d="M4 2 L16 9 L4 16 Z" fill="#10243A"/></svg></button>
+      <div class="tl"><input type="range" id="t" min="0" max="24" step="0.1" value="0" aria-label="Hours of work"><div class="read" id="read"></div></div>
+    </div>
+  </section>
+  <aside class="side" aria-label="Plans, scores and the crew's route">
+    <div class="planbar" id="planbar">
+      <div class="tabs" id="plantabs" role="group" aria-label="Plan to edit"></div>
+      <div class="row">
+        <button class="btn" id="newplan">+ New plan</button>
+        <button class="btn" id="copyplan">Copy</button>
+        <button class="btn" id="renameplan">Rename</button>
+        <button class="btn" id="delplan">Delete</button>
+      </div>
+    </div>
+    <div class="tiles" id="tiles"></div>
     <div class="controls">
       <div class="tabs" id="tabs" role="group" aria-label="Crew to edit"></div>
       <button class="btn" id="addcrew">+ Crew</button>
-      <button class="btn" id="delcrew">Remove this crew</button>
+      <button class="btn" id="delcrew">Remove crew</button>
     </div>
-    <div class="timeline">
-      <button class="play" id="play" aria-label="Play the day"><svg width="18" height="18" viewBox="0 0 18 18"><path id="pi" d="M4 2 L16 9 L4 16 Z" fill="#10243A"/></svg></button>
-      <input type="range" id="t" min="0" max="24" step="0.1" value="0" aria-label="Hours of work">
-    </div>
-    <div class="read" id="read"></div>
-    <div class="mapwrap">
-      <div>
-        <svg id="map" role="img" aria-label="Somerville bus stops and the crews' routes"></svg>
-        <div class="legend">
-          <span><svg width="22" height="22"><circle cx="11" cy="11" r="8" fill="#fff" stroke="#10243A" stroke-width="1.5"/></svg>In no route yet. Bigger = more riders.</span>
-          <span><svg width="22" height="22"><circle cx="11" cy="11" r="8" fill="#fff" stroke="#1F6FB2" stroke-width="3"/></svg>In a crew's route, waiting</span>
-          <span><svg width="22" height="22"><circle cx="11" cy="11" r="8" fill="#1F6FB2" stroke="#10243A" stroke-width="1.5"/></svg>Cleared</span>
-          <span><svg width="22" height="22"><rect x="5" y="5" width="12" height="12" fill="#A9C4E4" stroke="#10243A" stroke-width="1.5"/></svg>Route 109: the MBTA clears it</span>
-          <span><svg width="34" height="12"><path d="M2 6 H32" stroke="#1F6FB2" stroke-width="3" stroke-dasharray="2 6" stroke-linecap="round"/></svg>Out of the city and back (no street data)</span>
-        </div>
-      </div>
-      <div class="editor" id="editor">
-        <h3 id="edtitle"></h3>
-        <p class="note" id="edsum"></p>
-        <p class="note" id="edmsg" role="status" style="color:#fff"></p>
-        <form class="add" id="addform">
-          <input id="addname" list="stopnames" placeholder="Add a stop by name" aria-label="Add a stop by name" autocomplete="off">
-          <button class="btn main" type="submit">Add</button>
-        </form>
-        <datalist id="stopnames"></datalist>
-        <ol id="list"></ol>
-        <div class="row">
-          <button class="btn" id="undo" disabled>Undo</button>
-          <button class="btn" id="reverse">Reverse order</button>
-          <button class="btn" id="clearcrew">Clear this crew</button>
-        </div>
+    <div class="editor" id="editor">
+      <h3 id="edtitle"></h3>
+      <p class="note" id="edsum"></p>
+      <p class="note" id="edmsg" role="status" style="color:#fff"></p>
+      <form class="add" id="addform">
+        <input id="addname" list="stopnames" placeholder="Add a stop by name" aria-label="Add a stop by name" autocomplete="off">
+        <button class="btn main" type="submit">Add</button>
+      </form>
+      <datalist id="stopnames"></datalist>
+      <ol id="list"></ol>
+      <div class="row">
+        <button class="btn" id="undo" disabled>Undo</button>
+        <button class="btn" id="reverse">Reverse order</button>
+        <button class="btn" id="clearcrew">Clear this crew</button>
       </div>
     </div>
-  </section>
+  </aside>
+</div>
+<main>
+  <h1 id="about">Bus stop routes</h1>
+  <p class="lede">Design the routes the bobcat crews take to clear bus stops after a storm. Pick a crew, then press on the map and drag across stops in the order that crew should clear them; or tap them one by one, or add them by name. The page plays the day and scores it: how soon riders get a clear stop, how far the crews drive, and where they jump across town. Make as many plans as you like, each with its own crews, and compare them. Your plans and settings stay in this browser.</p>
 
   <h2>Compare plans</h2>
   <p class="note">Every plan, scored with the same settings. Tap a plan's name to open it.</p>
   <div class="tw"><table id="compare"></table></div>
 
   <h2>Riders whose stop is clear</h2>
-  <div class="panel"><svg id="chart" role="img" aria-label="Share of riders whose stop is clear, by hour of work, one line per plan"></svg><div class="legend" id="chartkey"></div></div>
+  <div class="panel"><svg id="chart" role="img" aria-label="Share of riders whose stop is clear, by hour of work, one line per plan"></svg><div class="chartkey" id="chartkey"></div></div>
 
   <h2>Each crew</h2>
   <div class="tw"><table id="crewtable"></table></div>
@@ -329,6 +363,30 @@ const kx = Math.cos(((miny + maxy) / 2) * Math.PI / 180), sc = (W - 2 * PAD) / (
 const H = Math.round((maxy - miny) * sc + 2 * PAD);
 const px = (x, y) => [PAD + (x - minx) * kx * sc, PAD + (maxy - y) * sc];
 const map = $('#map'); map.setAttribute('viewBox', `0 0 ${W} ${H}`);
+// zoom and pan: the view box, and the width it has when the whole city fits
+let VB = [0, 0, W, H], FITW = W;
+const zoom = () => FITW / VB[2];
+function setView(v, redraw = true) {
+  VB = v; map.setAttribute('viewBox', v.map((n) => n.toFixed(2)).join(' '));
+  if (redraw && SIM) { drawStops(); draw(); }
+}
+function fitView(keep) {                          // the whole city, clear of the controls over the map (keep: same zoom and centre)
+  const r = map.getBoundingClientRect();
+  if (!r.width || !r.height) return;
+  const over = getComputedStyle($('.maptime')).position === 'absolute';   // controls float over the map (desktop)
+  const [l, t, rt, b] = over ? [16, 56, 64, 92] : [6, 6, 50, 6];
+  const sc = Math.min((r.width - l - rt) / W, (r.height - t - b) / H);
+  const v = [-(l + (r.width - l - rt - W * sc) / 2) / sc, -(t + (r.height - t - b - H * sc) / 2) / sc, r.width / sc, r.height / sc];
+  if (!keep) { FITW = v[2]; return setView(v); }
+  const z = zoom(), cx = VB[0] + VB[2] / 2, cy = VB[1] + VB[3] / 2;
+  FITW = v[2]; const w = v[2] / z, h = v[3] / z;
+  setView([cx - w / 2, cy - h / 2, w, h]);
+}
+const toMap = (cx, cy) => { const m = map.getScreenCTM(); return m ? new DOMPoint(cx, cy).matrixTransform(m.inverse()) : { x: 0, y: 0 }; };
+function zoomAt(f, cx, cy) {
+  const p = toMap(cx, cy), w = Math.min(FITW, Math.max(FITW / 24, VB[2] / f)), k = w / VB[2];
+  setView([p.x - (p.x - VB[0]) * k, p.y - (p.y - VB[1]) * k, w, VB[3] * k]);
+}
 const pathD = (pts) => pts.map(([x, y], i) => (i ? 'L' : 'M') + px(x, y).map((v) => v.toFixed(1)).join(' ')).join('');
 let base = '<defs><clipPath id="city">' + D.wards.map((rs) => rs.map((r) => `<path d="${pathD(r)}Z"/>`).join('')).join('') + '</clipPath></defs>';
 base += D.wards.map((rs) => rs.map((r) => `<path d="${pathD(r)}Z" fill="#DCE8F5" stroke="#1A3A5F" stroke-width="2.5"/>`).join('')).join('');
@@ -351,15 +409,16 @@ function pieces(from, path) {
   return out;
 }
 const piecesD = (ps, away) => ps.filter((p) => p[1] === away).map((p) => pathD(p[0])).join('');
-const radius = (s) => 2.6 + Math.sqrt(riders(s)) / 3.2;
+const size = (s) => 2.6 + Math.sqrt(riders(s)) / 3.2;      // a stop's size at the whole-city view
+const radius = (s) => size(s) / zoom();                     // the same size on screen at any zoom
 
 function drawStops() {
   const order = [...D.stops].sort((a, b) => riders(b) - riders(a));
   $('#stops').innerHTML = order.map((s) => {
     const [x, y] = px(s.x, s.y), r = radius(s);
     const shape = counted(s)
-      ? `<circle class="dot" id="s${s.id}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(1)}"/>`
-      : `<rect x="${(x - 4).toFixed(1)}" y="${(y - 4).toFixed(1)}" width="8" height="8" fill="#A9C4E4" stroke="#10243A" stroke-width="1.2"/>`;
+      ? `<circle class="dot" id="s${s.id}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(2)}"/>`
+      : `<rect x="${(x - 4 / zoom()).toFixed(2)}" y="${(y - 4 / zoom()).toFixed(2)}" width="${(8 / zoom()).toFixed(2)}" height="${(8 / zoom()).toFixed(2)}" fill="#A9C4E4" stroke="#10243A" stroke-width="${(1.2 / zoom()).toFixed(2)}"/>`;
     return `<g data-id="${s.id}">${shape}</g>`;
   }).join('');
 }
@@ -370,9 +429,10 @@ function draw() {
     const el = document.getElementById('s' + s.id);
     if (!el) return;
     const c = clear[s.id];
-    if (!c) { el.setAttribute('fill', '#fff'); el.setAttribute('stroke', '#10243A'); el.setAttribute('stroke-width', '1.3'); }
-    else if (c.h <= T + 1e-9) { el.setAttribute('fill', color(c.c)); el.setAttribute('stroke', '#10243A'); el.setAttribute('stroke-width', '1.3'); }
-    else { el.setAttribute('fill', '#fff'); el.setAttribute('stroke', color(c.c)); el.setAttribute('stroke-width', '3'); }
+    const z = zoom();
+    if (!c) { el.setAttribute('fill', '#fff'); el.setAttribute('stroke', '#10243A'); el.setAttribute('stroke-width', 1.3 / z); }
+    else if (c.h <= T + 1e-9) { el.setAttribute('fill', color(c.c)); el.setAttribute('stroke', '#10243A'); el.setAttribute('stroke-width', 1.3 / z); }
+    else { el.setAttribute('fill', '#fff'); el.setAttribute('stroke', color(c.c)); el.setAttribute('stroke-width', 3 / z); }
   });
   $('#plans').innerHTML = crews.map((cr, c) => {
     const ps = cr.legs.flatMap((L) => (L.from ? pieces(L.from, L.path) : []));
@@ -384,7 +444,8 @@ function draw() {
   }).join('');
   $('#labels').innerHTML = (routes[sel] || []).map((id, i) => {
     const [x, y] = px(byId[id].x, byId[id].y);
-    return `<text x="${x.toFixed(1)}" y="${(y - radius(byId[id]) - 3).toFixed(1)}" fill="#10243A" stroke="#fff" stroke-width="3" paint-order="stroke">${i + 1}</text>`;
+    const z = zoom();
+    return `<text x="${x.toFixed(1)}" y="${(y - radius(byId[id]) - 3 / z).toFixed(2)}" font-size="${(11 / z).toFixed(2)}" fill="#10243A" stroke="#fff" stroke-width="${(3 / z).toFixed(2)}" paint-order="stroke">${i + 1}</text>`;
   }).join('');
   const cleared = SIM.city.filter((s) => clear[s.id] && clear[s.id].h <= T + 1e-9).length;
   const mine = routes[sel] || [], mineDone = mine.filter((id) => clear[id].h <= T + 1e-9).length;
@@ -468,7 +529,7 @@ function drawEditor() {
   $('#edtitle').innerHTML = `<i style="background:${color(sel)}"></i>Crew ${sel + 1}`;
   $('#edsum').textContent = cr.legs.length
     ? `${cr.legs.length} stops, last one clear by hour ${cr.end.toFixed(1)}. Press and drag across stops on the map to add them in order; tap one stop to add it, or one of this crew's stops to take it off. Drag a stop in the list to change the order.`
-    : 'No stops yet. Press on the map and drag across stops, in order, to build this crew\'s route; or tap them one by one. The crew starts at its first stop at hour 0.';
+    : 'No stops yet. Press on the map and drag across stops, in order, to build this crew\'s route; or tap them one by one. The crew starts at its first stop at hour 0. Scroll or use + / − to zoom in (the two sides of a street come apart); hold Space, drag with the right button, or turn on ✋ to move the map.';
   $('#list').innerHTML = cr.legs.map((L, i) => {
     const s = byId[L.id], notes = [];
     if (L.from) notes.push(`${(L.m / 1000).toFixed(1)} km from the last stop`);
@@ -618,12 +679,28 @@ $('#addform').addEventListener('submit', (e) => {
 // the stop nearest a point on screen, within about a fingertip (stops at Davis and the squares sit close together)
 function nearest(e) { return nearestAt(e.clientX, e.clientY); }
 function nearestAt(cx, cy) {
-  const box = map.getBoundingClientRect(), k = box.width / W;
-  const x = (cx - box.left) / k, y = (cy - box.top) / k;
+  const m = map.getScreenCTM(); if (!m) return null;
+  const p = toMap(cx, cy), k = m.a;               // screen pixels per map unit
   let best = null, bd = Infinity;
-  D.stops.forEach((s) => { const [sx, sy] = px(s.x, s.y), d = Math.hypot(sx - x, sy - y); if (d < bd) { bd = d; best = s; } });
+  D.stops.forEach((s) => { const [sx, sy] = px(s.x, s.y), d = Math.hypot(sx - p.x, sy - p.y); if (d < bd) { bd = d; best = s; } });
   return best && bd * k <= Math.max(radius(best) * k + 4, 16) ? best : null;
 }
+// pan: hold Space, drag with the right (or middle) button, or turn on ✋; scroll or +/− to zoom
+let panMode = false, spaceDown = false, panFrom = null;
+const panning = () => panMode || spaceDown;
+function setPanClass() { map.classList.toggle('panning', panning()); }
+document.addEventListener('keydown', (e) => {
+  if (e.code === 'Space' && !/INPUT|TEXTAREA|BUTTON|SELECT|SUMMARY/.test(document.activeElement.tagName)) { e.preventDefault(); spaceDown = true; setPanClass(); }
+});
+document.addEventListener('keyup', (e) => { if (e.code === 'Space') { spaceDown = false; setPanClass(); } });
+$('#pan').addEventListener('click', () => { panMode = !panMode; $('#pan').setAttribute('aria-pressed', panMode); setPanClass(); });
+map.addEventListener('contextmenu', (e) => e.preventDefault());
+map.addEventListener('wheel', (e) => { e.preventDefault(); zoomAt(Math.exp(-e.deltaY * 0.0015), e.clientX, e.clientY); }, { passive: false });
+const centre = () => { const r = map.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
+$('#zoomin').addEventListener('click', () => zoomAt(1.6, ...centre()));
+$('#zoomout').addEventListener('click', () => zoomAt(1 / 1.6, ...centre()));
+$('#zoomfit').addEventListener('click', () => fitView(false));
+window.addEventListener('resize', () => fitView(true));
 // press and drag: every stop the pointer passes is added to the selected crew, in order, until
 // release (a stop of another crew moves over; nothing is taken off). A tap adds or takes off one stop.
 const tip = $('#tip');
@@ -635,6 +712,12 @@ function paint(s) {
   if (!pending) { pending = true; requestAnimationFrame(() => { pending = false; if (painting) changed(); }); }
 }
 map.addEventListener('pointerdown', (e) => {
+  if (e.button === 1 || e.button === 2 || (e.button === 0 && panning())) {
+    e.preventDefault();
+    panFrom = { x: e.clientX, y: e.clientY, vb: VB.slice(), k: map.getScreenCTM().a };
+    try { map.setPointerCapture(e.pointerId); } catch (err) { /* older browsers */ }
+    return;
+  }
   if (e.button !== 0) return;
   downAt = lastPt = [e.clientX, e.clientY]; painting = false; added = moved = 0;
   try { map.setPointerCapture(e.pointerId); } catch (err) { /* older browsers */ }
@@ -652,9 +735,14 @@ function endStroke(e, cancel) {
     if (s) addStop(s.id);
   }
 }
-map.addEventListener('pointerup', (e) => endStroke(e, false));
-map.addEventListener('pointercancel', (e) => endStroke(e, true));
+map.addEventListener('pointerup', (e) => { if (panFrom) { panFrom = null; return; } endStroke(e, false); });
+map.addEventListener('pointercancel', (e) => { panFrom = null; endStroke(e, true); });
 map.addEventListener('pointermove', (e) => {
+  if (panFrom) {
+    const { x, y, vb, k } = panFrom;
+    setView([vb[0] - (e.clientX - x) / k, vb[1] - (e.clientY - y) / k, vb[2], vb[3]], false);
+    return;
+  }
   if (downAt) {
     if (!painting && Math.hypot(e.clientX - downAt[0], e.clientY - downAt[1]) > 6) { painting = true; edmsg(''); paint(nearestAt(...downAt)); }
     if (painting) {
@@ -728,7 +816,7 @@ $('#how').innerHTML = [
   '<b>What we need from the City.</b> Its list of 281 stops and its 4 routes; how many bobcats and crews clear bus stops; how long a stop takes; where the crews start. From the MBTA: which stops on routes 77 and 104 it clears.',
 ].map((t) => `<li>${t}</li>`).join('');
 
-drawSettings(); drawStops(); changed();
+drawSettings(); fitView(false); drawStops(); changed();
 </script>
 </body>
 </html>

@@ -36,9 +36,15 @@ h2{font-family:var(--display);font-weight:800;font-size:30px;text-transform:uppe
 .app{display:grid;grid-template-columns:minmax(0,1fr) 420px;height:calc(100vh - 56px);min-height:480px}
 @media (min-width:1001px){body{height:100vh;overflow:hidden;display:flex;flex-direction:column}.app{flex:1;height:auto;min-height:0}}
 .mapcol{position:relative;background:#0E2034;overflow:hidden}
-#map{width:100%;height:100%;display:block;touch-action:none;cursor:crosshair;user-select:none;-webkit-user-select:none}
+#map{width:100%;height:100%;display:block;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
 #map.panning{cursor:grab}
-#map pa.mapctl{position:absolute;top:12px;right:12px;display:flex;flex-direction:column;gap:6px}
+#map.editing{cursor:crosshair}
+.mapctl button:disabled{opacity:.4;cursor:default}
+.editbar{position:absolute;bottom:84px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;background:rgba(16,36,58,.95);border:2px solid var(--orange);border-radius:999px;padding:6px 8px 6px 14px;font-size:14px;box-shadow:0 2px 10px rgba(0,0,0,.35);z-index:3;max-width:calc(100% - 140px)}
+.editbar[hidden]{display:none}
+.editbar i{width:12px;height:12px;border-radius:50%;flex:none}
+#map path{vector-effect:non-scaling-stroke}
+.mapctl{position:absolute;top:12px;right:12px;display:flex;flex-direction:column;gap:6px}
 .mapctl button{width:40px;height:40px;border-radius:10px;border:0;background:rgba(16,36,58,.92);color:#fff;font:700 20px var(--body);cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.3)}
 .mapctl button[aria-pressed=true]{background:var(--orange);color:var(--navy)}
 .legend{position:absolute;top:12px;left:12px;max-width:300px;background:rgba(16,36,58,.92);border-radius:12px;padding:8px 12px;font-size:13px;color:var(--snow);box-shadow:0 2px 10px rgba(0,0,0,.3)}
@@ -109,6 +115,7 @@ a{color:var(--orange)}
 @media (max-width:560px){.menu .settings{grid-template-columns:1fr}}
 .bar{background:#0A1929;border-bottom:1px solid rgba(169,196,228,.2)}.bar div{max-width:none;margin:0 auto;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px}.bar a{color:#fff;text-decoration:none}.bar .brand{font-family:var(--display);font-weight:800;font-size:22px;text-transform:uppercase;letter-spacing:1px}.bar .brand span{color:var(--orange)}.bar nav a{color:var(--ice);font-size:15px}
 @media (max-width:1000px){
+  .editbar{bottom:auto;top:8px;left:8px;transform:none;max-width:calc(100% - 64px);font-size:13px}
   .app{display:block;height:auto;min-height:0}
   .mapcol{overflow:visible}
   #map{height:auto}
@@ -159,7 +166,13 @@ a{color:var(--orange)}
       <button id="zoomin" aria-label="Zoom in">+</button>
       <button id="zoomout" aria-label="Zoom out">−</button>
       <button id="zoomfit" aria-label="Show the whole city">⤢</button>
-      <button id="pan" aria-pressed="false" aria-label="Pan mode: drag to move the map instead of adding stops">✋</button>
+      <button id="edit" aria-pressed="false" aria-label="Edit the selected crew's route on the map (E)" title="Edit the selected crew's route (E)">✏️</button>
+      <button id="mundo" aria-label="Undo (Ctrl+Z)" title="Undo (Ctrl+Z)" disabled>↶</button>
+      <button id="mredo" aria-label="Redo (Ctrl+Shift+Z)" title="Redo (Ctrl+Shift+Z)" disabled>↷</button>
+    </div>
+    <div class="editbar" id="editbar" hidden>
+      <i id="editdot"></i><span id="edittext"></span>
+      <button class="btn main" id="editdone">Done</button>
     </div>
     <details class="mapchart" open>
       <summary>Riders whose stop is clear</summary>
@@ -174,7 +187,7 @@ a{color:var(--orange)}
       <span><svg width="22" height="22"><rect x="5" y="5" width="12" height="12" fill="#A9C4E4" stroke="#10243A" stroke-width="1.5"/></svg>Route 109: the MBTA clears it</span>
       <span><svg width="34" height="12"><path d="M2 6 H32" stroke="#1F6FB2" stroke-width="3" stroke-dasharray="2 6" stroke-linecap="round"/></svg>Out of the city and back (no street data)</span>
       <span><svg width="34" height="12"><path d="M2 10 L32 2" stroke="#1F6FB2" stroke-width="3"/></svg>Straight: a short drive between nearby stops on different bus routes (in a square, at a crossing)</span>
-      <span class="hint">Drag across stops to add them. Scroll to zoom; hold Space (or the right button, or ✋) and drag to move the map.</span>
+      <span class="hint">Drag to move the map, scroll to zoom. Press ✏️ (or E) to edit the selected crew: then drag across stops to add them, or tap one to add or take it off. Ctrl+Z undoes, Ctrl+Shift+Z redoes.</span>
     </details>
     <div class="maptime">
       <button class="play" id="play" aria-label="Play the day"><svg width="18" height="18" viewBox="0 0 18 18"><path id="pi" d="M4 2 L16 9 L4 16 Z" fill="#10243A"/></svg></button>
@@ -428,17 +441,20 @@ function draw() {
     if (!el) return;
     const c = clear[s.id];
     const z = zoom();
+    el.setAttribute('opacity', c && c.c !== sel ? 0.25 : 1);         // other crews dim; the selected crew and stops in no route stay
     if (!c) { el.setAttribute('fill', '#fff'); el.setAttribute('stroke', '#10243A'); el.setAttribute('stroke-width', 1.3 / z); }
     else if (c.h <= T + 1e-9) { el.setAttribute('fill', color(c.c)); el.setAttribute('stroke', '#10243A'); el.setAttribute('stroke-width', 1.3 / z); }
     else { el.setAttribute('fill', '#fff'); el.setAttribute('stroke', color(c.c)); el.setAttribute('stroke-width', 3 / z); }
   });
   $('#plans').innerHTML = crews.map((cr, c) => {
     const ps = cr.legs.flatMap((L) => (L.from ? pieces(L.from, L.path) : []));
-    return `<path stroke="${color(c)}" d="${piecesD(ps, false)}"/><path stroke="${color(c)}" stroke-dasharray="2 6" d="${piecesD(ps, true)}"/>`;
+    const o = c === sel ? 1 : 0.3;
+    return `<path stroke="${color(c)}" stroke-opacity="${o}" d="${piecesD(ps, false)}"/><path stroke="${color(c)}" stroke-opacity="${o}" stroke-dasharray="2 6" d="${piecesD(ps, true)}"/>`;
   }).join('');
   $('#trails').innerHTML = crews.map((cr, c) => {
     const ps = cr.legs.filter((L) => L.from && (L.start + L.mins) / 60 <= T + 1e-9).flatMap((L) => pieces(L.from, L.path));
-    return `<path stroke="${color(c)}" d="${piecesD(ps, false)}"/><path stroke="${color(c)}" stroke-dasharray="2 7" d="${piecesD(ps, true)}"/>`;
+    const o = c === sel ? 1 : 0.2;
+    return `<path stroke="${color(c)}" stroke-opacity="${o}" d="${piecesD(ps, false)}"/><path stroke="${color(c)}" stroke-opacity="${o}" stroke-dasharray="2 7" d="${piecesD(ps, true)}"/>`;
   }).join('');
   $('#labels').innerHTML = (routes[sel] || []).map((id, i) => {
     const [x, y] = px(byId[id].x, byId[id].y);
@@ -511,8 +527,8 @@ function drawEditor() {
   const cr = SIM.crews[sel];
   $('#edtitle').innerHTML = `<i style="background:${color(sel)}"></i>Crew ${sel + 1}`;
   $('#edsum').textContent = cr.legs.length
-    ? `${cr.legs.length} stops, last one clear by hour ${cr.end.toFixed(1)}. Press and drag across stops on the map to add them in order; tap one stop to add it, or one of this crew's stops to take it off. Drag a stop in the list to change the order.`
-    : 'No stops yet. Press on the map and drag across stops, in order, to build this crew\'s route; or tap them one by one. The crew starts at its first stop at hour 0. Scroll or use + / − to zoom in (the two sides of a street come apart); hold Space, drag with the right button, or turn on ✋ to move the map.';
+    ? `${cr.legs.length} stops, last one clear by hour ${cr.end.toFixed(1)}. Press ✏️ on the map (or E) to edit: drag across stops to add them in order, tap one to add it or take it off. Drag a stop in the list to change the order.`
+    : 'No stops yet. Press ✏️ on the map (or E), then drag across stops, in order, to build this crew\'s route; or tap them one by one. The crew starts at its first stop at hour 0. Zoom in to tell the two sides of a street apart.';
   $('#list').innerHTML = cr.legs.map((L, i) => {
     const s = byId[L.id], notes = [];
     if (L.from) notes.push(`${(L.m / 1000).toFixed(1)} km from the last stop`);
@@ -521,6 +537,7 @@ function drawEditor() {
       + `<span class="acts"><button data-a="del" data-i="${i}" aria-label="Take ${esc(s.n)} off">✕</button></span></li>`;
   }).join('');
   $('#delcrew').disabled = routes.length <= 1;
+  if (editMode) drawEditBar();
 }
 const nameOf = (s) => `${s.n} [${s.id}]`;
 $('#stopnames').innerHTML = D.stops.map((s) => `<option value="${esc(nameOf(s))}">`).join('');
@@ -537,16 +554,17 @@ function addStop(id) {
 }
 const edmsg = (t) => { $('#edmsg').textContent = t; };
 // undo: the state before each change (a whole drag is one change)
-let UNDO = [], lastState = null, painting = false;
+let UNDO = [], REDO = [], lastState = null, painting = false;
 const stateNow = () => JSON.stringify({ settings, plans, cur });
 function changed() {
   plans[cur].routes = routes;
   if (!painting) {
     const now = stateNow();
-    if (lastState !== null && now !== lastState) { UNDO.push(lastState); if (UNDO.length > 200) UNDO.shift(); }
+    if (lastState !== null && now !== lastState) { UNDO.push(lastState); if (UNDO.length > 200) UNDO.shift(); REDO = []; }
     lastState = now;
   }
-  $('#undo').disabled = !UNDO.length;
+  $('#undo').disabled = $('#mundo').disabled = !UNDO.length;
+  $('#mredo').disabled = !REDO.length;
   save();
   ALL = plans.map((p) => simulate(p.routes)); SIM = ALL[cur];
   const maxH = Math.max(1, Math.ceil(SIM.finish));
@@ -636,16 +654,24 @@ $('#list').addEventListener('keydown', (e) => {
   if (moveStop(i, to)) { const ng = $(`#list .grip[data-i="${to}"]`); if (ng) ng.focus(); }
 });
 $('#reverse').addEventListener('click', () => { routes[sel].reverse(); changed(); });
-function undo() {
-  if (!UNDO.length) return;
-  const prev = UNDO.pop(), o = JSON.parse(prev);
+function restore(st) {
+  const o = JSON.parse(st);
   settings = { ...D.settings, ...o.settings }; plans = o.plans; cur = o.cur; routes = plans[cur].routes;
-  sel = Math.min(sel, routes.length - 1); lastState = prev;
-  drawSettings(); drawStops(); changed(); edmsg('Undone.');
+  sel = Math.min(sel, routes.length - 1); lastState = st;
+  drawSettings(); drawStops(); changed();
 }
+function undo() { if (!UNDO.length) return; REDO.push(stateNow()); restore(UNDO.pop()); edmsg('Undone. Ctrl+Shift+Z (or ↷) redoes it.'); }
+function redo() { if (!REDO.length) return; UNDO.push(stateNow()); restore(REDO.pop()); edmsg('Redone.'); }
 $('#undo').addEventListener('click', undo);
+$('#mundo').addEventListener('click', undo);
+$('#mredo').addEventListener('click', redo);
 document.addEventListener('keydown', (e) => {
-  if ((e.ctrlKey || e.metaKey) && !e.shiftKey && e.key.toLowerCase() === 'z' && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) { e.preventDefault(); undo(); }
+  if (/INPUT|TEXTAREA/.test(document.activeElement.tagName)) return;
+  const k = e.key.toLowerCase();
+  if ((e.ctrlKey || e.metaKey) && ((k === 'z' && e.shiftKey) || k === 'y')) { e.preventDefault(); redo(); }
+  else if ((e.ctrlKey || e.metaKey) && k === 'z') { e.preventDefault(); undo(); }
+  else if (!e.ctrlKey && !e.metaKey && !e.altKey && k === 'e') { setEdit(!editMode); }
+  else if (k === 'escape' && editMode && $('#menu').hidden) setEdit(false);
 });
 $('#clearcrew').addEventListener('click', () => { if (routes[sel].length && confirm(`Take all ${routes[sel].length} stops off crew ${sel + 1}?`)) { routes[sel] = []; changed(); } });
 $('#addform').addEventListener('submit', (e) => {
@@ -666,14 +692,25 @@ function nearestAt(cx, cy) {
   return best && bd * k <= Math.max(radius(best) * k + 4, 16) ? best : null;
 }
 // pan: hold Space, drag with the right (or middle) button, or turn on ✋; scroll or +/− to zoom
-let panMode = false, spaceDown = false, panFrom = null;
-const panning = () => panMode || spaceDown;
-function setPanClass() { map.classList.toggle('panning', panning()); }
+// browse by default (drag moves the map); edit only when ✏️ is on (drag adds stops to the selected crew)
+let editMode = false, spaceDown = false, panFrom = null;
+const panning = () => !editMode || spaceDown;
+function setPanClass() { map.classList.toggle('editing', !panning()); }
+function setEdit(on) {
+  editMode = on; $('#edit').setAttribute('aria-pressed', on); $('#editbar').hidden = !on; setPanClass();
+  if (on) drawEditBar();
+  edmsg(on ? '' : 'Done editing. Drag moves the map.');
+}
+function drawEditBar() {
+  $('#editdot').style.background = color(sel);
+  $('#edittext').textContent = `Editing crew ${sel + 1}: drag across stops to add them, tap one to add or take it off.`;
+}
+$('#edit').addEventListener('click', () => setEdit(!editMode));
+$('#editdone').addEventListener('click', () => setEdit(false));
 document.addEventListener('keydown', (e) => {
   if (e.code === 'Space' && !/INPUT|TEXTAREA|BUTTON|SELECT|SUMMARY/.test(document.activeElement.tagName)) { e.preventDefault(); spaceDown = true; setPanClass(); }
 });
 document.addEventListener('keyup', (e) => { if (e.code === 'Space') { spaceDown = false; setPanClass(); } });
-$('#pan').addEventListener('click', () => { panMode = !panMode; $('#pan').setAttribute('aria-pressed', panMode); setPanClass(); });
 map.addEventListener('contextmenu', (e) => e.preventDefault());
 map.addEventListener('wheel', (e) => { e.preventDefault(); zoomAt(Math.exp(-e.deltaY * 0.0015), e.clientX, e.clientY); }, { passive: false });
 const centre = () => { const r = map.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
@@ -694,7 +731,7 @@ function paint(s) {
 map.addEventListener('pointerdown', (e) => {
   if (e.button === 1 || e.button === 2 || (e.button === 0 && panning())) {
     e.preventDefault();
-    panFrom = { x: e.clientX, y: e.clientY, vb: VB.slice(), k: map.getScreenCTM().a };
+    panFrom = { x: e.clientX, y: e.clientY, vb: VB.slice(), k: map.getScreenCTM().a, moved: false };
     try { map.setPointerCapture(e.pointerId); } catch (err) { /* older browsers */ }
     return;
   }
@@ -715,12 +752,16 @@ function endStroke(e, cancel) {
     if (s) addStop(s.id);
   }
 }
-map.addEventListener('pointerup', (e) => { if (panFrom) { panFrom = null; return; } endStroke(e, false); });
+map.addEventListener('pointerup', (e) => {
+  if (panFrom) { const tap = !panFrom.moved; panFrom = null; if (tap) showTip(nearest(e), e.clientX, e.clientY); return; }
+  endStroke(e, false);
+});
 map.addEventListener('pointercancel', (e) => { panFrom = null; endStroke(e, true); });
 map.addEventListener('pointermove', (e) => {
   if (panFrom) {
     const { x, y, vb, k } = panFrom;
-    setView([vb[0] - (e.clientX - x) / k, vb[1] - (e.clientY - y) / k, vb[2], vb[3]], false);
+    if (Math.hypot(e.clientX - x, e.clientY - y) > 4) { panFrom.moved = true; tip.style.display = 'none'; }
+    if (panFrom.moved) setView([vb[0] - (e.clientX - x) / k, vb[1] - (e.clientY - y) / k, vb[2], vb[3]], false);
     return;
   }
   if (downAt) {
@@ -733,16 +774,18 @@ map.addEventListener('pointermove', (e) => {
     }
   }
   if (e.pointerType === 'touch') return;
-  const s = nearest(e);
+  showTip(nearest(e), e.clientX, e.clientY);
+});
+function showTip(s, cx, cy) {
   if (!s) { tip.style.display = 'none'; return; }
   const c = SIM.clear[s.id];
   let html = `<b>${esc(s.n)}</b>${s.on.toLocaleString()} on, ${s.off.toLocaleString()} off a weekday · routes ${s.rt.join(', ')}`;
   if (!counted(s)) html += '<br>Route 109: the MBTA clears it';
   else if (c) html += `<br>Crew ${c.c + 1}, stop ${routes[c.c].indexOf(s.id) + 1}, clear by hour ${c.h.toFixed(1)}`;
-  else html += `<br>In no route. Tap or drag across it to add it to crew ${sel + 1}.`;
+  else html += editMode ? `<br>In no route. Tap or drag across it to add it to crew ${sel + 1}.` : '<br>In no route. Press ✏️ to edit a crew and add it.';
   tip.innerHTML = html; tip.style.display = 'block';
-  tip.style.left = Math.min(window.innerWidth - 290, e.clientX + 14) + 'px'; tip.style.top = (e.clientY + 14) + 'px';
-});
+  tip.style.left = Math.min(window.innerWidth - 290, cx + 14) + 'px'; tip.style.top = (cy + 14) + 'px';
+}
 map.addEventListener('pointerleave', () => { tip.style.display = 'none'; });
 
 $('#t').addEventListener('input', (e) => { T = +e.target.value; stopPlay(); draw(); });

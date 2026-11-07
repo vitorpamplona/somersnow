@@ -16,6 +16,8 @@ The street network:
   * a crew may also drive back along a leg (against the bus) to get somewhere;
   * stops within 60 m of each other are across the street: crossing costs extra minutes, set
     on the page; so does turning where a leg leaves the city, like the bus;
+  * stops within 300 m of each other that share no bus route (in a square, at a crossing) get a
+    short link both ways, 30% longer than the straight line for the corners;
   * pieces that still can't reach each other are joined at their closest stops.
 
 Inputs (the first two copied into data/ by this script so the folder is self-contained):
@@ -37,6 +39,8 @@ A = {
     'cross_m': 60,              # stops this close are across the street from each other
     'max_link_m': 900,          # longer gaps between stops on a route mean stops are missing in between: no link
     'on_route_m': 25,           # a stop this close to a leg is on it (branches share streets)
+    'near_m': 300,              # stops this close but not linked by a bus route (a square, a crossing) get a short link
+    'near_detour': 1.3,         # ... counted this much longer than the straight line, for the corners
     'mbta_routes': ['109'],     # the MBTA clears every stop on these routes itself (mbta.com winter page)
 }
 
@@ -134,7 +138,8 @@ def street_network(allstops, routes):
     street is a 'turn' (the page adds its crossing minutes), and so is the end of a leg, where the
     bus leaves the city: the crew turns to the nearest stop of the same route's other direction.
     A crew may drive back along a leg ('back'). Where the network can't get from one part to
-    another, the closest stops are joined both ways ('join'). G[a][b] = (meters, kind)."""
+    another, the closest stops are joined both ways ('join'). Stops within A['near_m'] that share
+    no route get a short link both ways ('near'). G[a][b] = (meters, kind)."""
     G = {s['id']: {} for s in allstops}
     RT = {s['id']: s['routes'] for s in allstops}
     GEO.clear(); AWAY.clear()
@@ -172,6 +177,11 @@ def street_network(allstops, routes):
                 G[b][a] = (m, 'back')
                 if (a, b) in GEO:
                     GEO[(b, a)] = GEO[(a, b)][::-1]
+    for i, a in enumerate(ids):                   # nearby stops on different routes (squares, crossings): a short drive
+        for b in ids[i + 1:]:
+            d = meters(P[a], P[b])
+            if d <= A['near_m'] and b not in G[a] and a not in G[b] and not set(RT[a]) & set(RT[b]):
+                link(a, b, d * A['near_detour'], 'near'); link(b, a, d * A['near_detour'], 'near')
     joins = 0
     while True:                                   # every stop must be able to reach every other
         comps = strong_parts(G)

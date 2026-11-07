@@ -39,7 +39,8 @@ An operator builds plans. Each plan has its own crews, and each crew a list of s
   - Each stop links to the next stop on its leg, at the route's own length. Stops more than 900 m apart aren't linked, because stops must be missing in between.
   - A crew may also drive back along a leg.
   - Stops within 60 m of each other are across the street; going between them costs the crossing minutes. So does turning where a leg leaves the city, like the bus.
-  - Two pieces that can't otherwise be reached are linked at their closest stops: the two Boston Ave stops at the Medford line, and the Assembly Row loop. These links are drawn dotted.
+  - Stops within 300 m of each other that share no bus route (in a square, at a crossing, like Prospect St and Somerville Ave at Union Sq) get a short link both ways, counted 30% longer than the straight line for the corners. These are drawn straight.
+  - The two Boston Ave stops at the Medford line, reached through Medford, are linked to College Ave @ Professors Row. That link is drawn dotted.
 - **The day:** each crew starts at its first stop at hour 0 (getting there from the yard isn't counted). It works through its list in order: the quickest drive along the streets to the next stop, then the minutes to clear it. Crews don't wait for each other. Hours are hours of work, not clock time.
 - **Driving past a waiting stop:** counted whenever a crew's drive goes through a stop that isn't clear yet at that moment, its own or another crew's, or one in no route. It's a sign the order could be better, not a rule the page enforces.
 
@@ -60,7 +61,7 @@ An operator builds plans. Each plan has its own crews, and each crew a list of s
 ## Limits
 
 - **Not the City's list.** The City says it clears 281 stops; the MBTA lists 207 in Somerville (189 without route 109). The page can only show stops the MBTA lists.
-- **Bus routes, not every street.** Crews drive only along bus routes. Side streets aren't modeled, so some drives are longer than a real bobcat would take. A crossing takes the same minutes everywhere, even on McGrath Hwy.
+- **Bus routes, not every street.** Crews drive along bus routes, plus short straight links between nearby stops on different routes. Side streets aren't modeled, so some drives are longer than a real bobcat would take. A crossing takes the same minutes everywhere, even on McGrath Hwy.
 - **Averages, not storm days.** Riders are a normal fall weekday's. Who rides after a storm, and when, isn't known.
 - **No storm timing.** Overnight pauses, shift changes, breaks and street plowing aren't modeled.
 

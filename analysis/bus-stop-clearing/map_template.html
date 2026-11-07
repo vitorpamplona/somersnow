@@ -82,7 +82,10 @@ body.reordering,body.reordering *{cursor:grabbing!important}
 .row{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 .planbar{margin:0 0 4px}
 .seglab{color:var(--ice);font:600 13px var(--body);text-transform:uppercase;letter-spacing:1px}
-.tab.plan i{border-radius:3px}
+.tab.plan i{border-radius:3px;flex:none}
+.tab.plan{max-width:100%}
+.tab.plan .pn{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.tab.plan small{white-space:nowrap;flex:none}
 #compare button{border:0;background:none;color:var(--orange);font:600 15px var(--body);padding:0;cursor:pointer;text-align:left;text-decoration:underline}
 #compare tr.cur td{background:rgba(255,138,61,.12)}
 .chartkey{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;color:var(--snow);margin-top:10px}
@@ -268,6 +271,7 @@ function apply(o, append) {
   }
   if (!plans.length) plans = [emptyPlan('Plan 1', D.settings.crews)];
   cur = Math.min(Math.max(0, cur), plans.length - 1);
+  plans.forEach((p) => { p.name = p.name.replace(/^Computed: riders first, one street at a time/, D.base.name); });   // its first, longer name
   routes = plans[cur].routes; sel = Math.min(sel, routes.length - 1);
   settings.jump_m = D.settings.jump_m;            // fixed, not a setting
 }
@@ -506,7 +510,7 @@ function drawChart() {
 
 // ---------- plans ----------
 function drawPlans() {
-  $('#plantabs').innerHTML = plans.map((P, p) => `<button class="tab plan" data-p="${p}" aria-pressed="${p === cur}"><i style="background:${pcolor(p)}"></i>${esc(P.name)} <small>${P.routes.length} crew${P.routes.length === 1 ? '' : 's'}</small></button>`).join('');
+  $('#plantabs').innerHTML = plans.map((P, p) => `<button class="tab plan" data-p="${p}" aria-pressed="${p === cur}" title="${esc(P.name)}"><i style="background:${pcolor(p)}"></i><span class="pn">${esc(P.name)}</span> <small>${P.routes.length} crew${P.routes.length === 1 ? '' : 's'}</small></button>`).join('');
   $('#delplan').disabled = plans.length <= 1;
 }
 function openPlan(p) { cur = p; routes = plans[cur].routes; sel = 0; edmsg(''); changed(); }

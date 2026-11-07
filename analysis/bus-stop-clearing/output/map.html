@@ -760,7 +760,11 @@ function endStroke(e, cancel) {
 map.addEventListener('pointerup', (e) => {
   if (panFrom) {
     const tap = !panFrom.moved; panFrom = null;
-    if (tap) { const st = nearest(e); showTip(st, e.clientX, e.clientY); pick(st && routes[sel].includes(st.id) ? st.id : null, true); }
+    if (tap) {                                   // a tap on a stop in a route opens its crew and picks it in the list
+      const st = nearest(e), c = st ? routes.findIndex((r) => r.includes(st.id)) : -1;
+      if (c >= 0 && c !== sel) { sel = c; edmsg(''); drawEditor(); draw(); if (editMode) drawEditBar(); }
+      showTip(st, e.clientX, e.clientY); pick(c >= 0 ? st.id : null, true);
+    }
     return;
   }
   endStroke(e, false);
@@ -808,11 +812,19 @@ function glideTo(id) {
   };
   requestAnimationFrame(step);
 }
+function showRow(li) {                           // scroll the list (never the page) so the row shows
+  let box = li && li.parentElement;
+  while (box && box !== document.body && !(/(auto|scroll)/.test(getComputedStyle(box).overflowY) && box.scrollHeight > box.clientHeight)) box = box.parentElement;
+  if (!li || !box || box === document.body) return;
+  const r = li.getBoundingClientRect(), b = box.getBoundingClientRect();
+  if (r.top < b.top) box.scrollBy({ top: r.top - b.top - 8, behavior: 'smooth' });
+  else if (r.bottom > b.bottom) box.scrollBy({ top: r.bottom - b.bottom + 8, behavior: 'smooth' });
+}
 function pick(id, scroll) {
   if (pickId && !id) tip.style.display = 'none';
   pickId = id;
   document.querySelectorAll('#list > li').forEach((li) => li.classList.toggle('pick', li.dataset.id === id));
-  if (scroll) { const li = document.querySelector(`#list > li[data-id="${id}"]`); if (li) li.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
+  if (scroll) showRow(document.querySelector(`#list > li[data-id="${id}"]`));
   drawHL();
 }
 $('#list').addEventListener('pointerover', (e) => { const li = e.target.closest('li[data-id]'); hoverId = li ? li.dataset.id : null; drawHL(); });

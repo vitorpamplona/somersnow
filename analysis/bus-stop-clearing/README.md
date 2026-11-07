@@ -19,13 +19,12 @@ An operator builds plans. Each plan has its own crews, and each crew a list of s
   - minutes to clear a stop (20);
   - bobcat speed (5 mph);
   - minutes to cross the road (1);
-  - whether people getting off count as riders (yes);
   - whether route 109 stops, which the MBTA clears, are included (no).
 - **Save and share** (Settings menu). Plans and settings save in the browser as you go. Export them to a file and import a file to add its plans to yours. A copied link opens all the plans and settings in another browser.
 
 ## How a plan is scored
 
-- **Stops and riders:** the MBTA bus stops in Somerville with their average weekday riders (Fall 2025): people getting on plus, by default, people getting off. Someone stepping off the bus needs a clear stop too. The 18 stops on route 109 are off by default: the MBTA clears them itself.
+- **Stops and riders:** the MBTA bus stops in Somerville with their average weekday riders (Fall 2025): people getting on plus people getting off. Someone stepping off the bus needs a clear stop too. The 18 stops on route 109 are off by default: the MBTA clears them itself.
 - **Streets:** crews drive only along the bus routes.
   - Each direction of a route is its own leg. A stop belongs to the leg it stands on the right of (buses stop on the right), and to every leg that passes it.
   - Each stop links to the next stop on its leg, at the route's own length. Stops more than 900 m apart aren't linked, because stops must be missing in between.

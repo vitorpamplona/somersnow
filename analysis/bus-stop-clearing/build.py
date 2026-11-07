@@ -51,7 +51,7 @@ SETTINGS = {
     'mph': 5,                   # bobcat driving speed
     'cross_min': 1,             # crossing the road to the stop on the other side (or turning at the city line)
     'jump_m': 800,              # a drive longer than this to the next stop is a jump to a different place
-    'count_off': True,          # count people getting off as well as people getting on
+    'count_off': True,          # riders: people getting on plus people getting off (always; not a setting)
     'include_mbta': False,      # also clear the stops the MBTA clears (route 109)
 }
 

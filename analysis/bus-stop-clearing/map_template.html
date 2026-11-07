@@ -258,6 +258,7 @@ function apply(o, append) {
   plans.forEach((p) => { p.name = p.name.replace(/^Computed(: riders first, one street at a time| plan)/, D.base.name); });   // its earlier, longer names
   routes = plans[cur].routes; sel = Math.min(sel, routes.length - 1);
   settings.jump_m = D.settings.jump_m;            // fixed, not a setting
+  settings.count_off = true;                      // riders are always people getting on plus people getting off
 }
 function save() { try { localStorage.setItem(KEY, JSON.stringify({ settings, plans, cur })); } catch (e) { /* private mode: nothing saved */ } }
 (function load() {
@@ -557,7 +558,6 @@ const FIELDS = [
   ['service_min', 'Minutes to clear a stop', 'Boarding area, shelter and bench. Our guess; please correct it.', 'number', 1, 120, 1],
   ['mph', 'Bobcat speed (mph)', 'Driving between stops along the street.', 'number', 1, 30, 0.5],
   ['cross_min', 'Minutes to cross the road', 'To the stop on the other side of the street, or to turn around where a route leaves the city.', 'number', 0, 30, 0.5],
-  ['count_off', 'Count people getting off', 'Riders at a stop are the people getting on, plus (if checked) the people getting off.', 'checkbox'],
   ['include_mbta', 'Include route 109 stops', 'The MBTA clears every route 109 stop itself. Check to put them in the routes too.', 'checkbox'],
 ];
 function drawSettings() {

@@ -15,6 +15,7 @@ The most riders at a clear stop, as fast as possible. We measure it as the **ave
 3. **One side, then back.** Each side of the street is its own run, driven the way the bus goes. A crew keeps going while the next stop ahead waits; then it crosses the road and clears the other side on the way back. It never backs up over a stretch it just cleared.
 4. **Busiest run first, and your own.** Crews start at busy stops at least 1.2 km apart. When a run is done, a crew heads where the next few waiting stops along the street (up to 8) clear the most riders per minute of driving and clearing. Each street, both sides, is one crew's: a crew leaves other crews the stops just ahead of them and the far side of every street they cleared, and comes back first to the far side of its own. So a crew doesn't drive down a street another crew cleared to take stops that crew will reach anyway, and two crews don't each clear one side of the same street.
 5. **Then the nearest.** Once stops with 70% of riders are clear, each crew takes the nearest waiting stop along the street, so no one drives across town for the last few.
+6. **Few jumps.** A jump is a drive of more than 800 m to the next stop, past stops already clear: a crew moving to a different place, which is slow, costly and annoying. Rules 1–5 plan the day one stop at a time and can't see that leaving a pocket behind forces a jump hours later. So the model then looks at the whole day: it cuts each crew's day at its jumps and tries handing each piece to the crew that passes closest to it (at its first or last stop, either way round). It keeps a change when the average wait plus 30 minutes for every jump goes down. A crew that reaches a waiting stop on the way clears it then and there, so rule 2 still holds.
 
 ## Result
 
@@ -22,11 +23,12 @@ Same 4 crews, same stops, same streets, different order (hours of work from when
 
 | | Route by route (today, as modeled) | Riders first |
 | --- | --- | --- |
-| Average wait for a rider's stop | 7.7 h | 4.9 h |
+| Average wait for a rider's stop | 7.7 h | 5.1 h |
 | Riders' stops clear after 2 h | 7% | 40% |
-| Riders' stops clear after 4 h | 17% | 56% |
-| All stops clear | 21.2 h | 18.5 h |
-| Distance driven | 91 km | 77 km |
+| Riders' stops clear after 4 h | 17% | 58% |
+| All stops clear | 21.2 h | 18.0 h |
+| Distance driven | 91 km | 59 km |
+| Jumps (drives over 800 m to the next stop) | 20 | 10 |
 
 Riders first gets riders their stop sooner, finishes sooner and drives less. It holds when any one assumption changes (2 or 6 crews, 10 or 30 minutes a stop, a bobcat at 3 or 8 mph): the average wait drops by about a third or more, and every stop is clear sooner, every time. `output/summary.md` also has the same comparison for 1 to 10 crews.
 
@@ -39,9 +41,9 @@ Riders first gets riders their stop sooner, finishes sooner and drives less. It 
 - **Driving:** about 5 mph. **Clearing:** 20 minutes a stop (boarding area, shelter, bench).
 - **Start:** each crew begins at its first stop at hour 0. Getting the bobcats there from the yard isn't counted; it is the same for both plans.
 - **Route by route:** a stand-in for today's practice, since the City's 4 routes aren't published: whole bus routes, stop by stop in the order the bus runs, in route-number order, split among 4 crews so each has about the same number of stops.
-- **Riders first:** the rules above. The 1.2 km spacing, the 8-stop lookahead (also how far ahead another crew's run is left to it) and the 70% switch were picked by trying a few values; they give sensible starting points and beat route by route on every measure.
+- **Riders first:** the rules above. The 800 m jump, its 30-minute weight, the 1.2 km spacing, the 8-stop lookahead (also how far ahead another crew's run is left to it) and the 70% switch were picked by trying a few values; they give sensible starting points and beat route by route on every measure.
 
-Every assumption is at the top of `build.py` (`A = {...}`); change one and rebuild. A build takes about a second, and the same inputs always give the same plan.
+Every assumption is at the top of `build.py` (`A = {...}`); change one and rebuild. A build takes about 10 seconds (the what-ifs run side by side), and the same inputs always give the same plan.
 
 ## Files
 

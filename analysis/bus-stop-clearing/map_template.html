@@ -20,7 +20,7 @@ main{max-width:1100px;margin:0 auto;padding:28px 16px 60px}
 h1{font-family:var(--display);font-weight:800;font-size:clamp(40px,7vw,68px);line-height:.95;text-transform:uppercase;margin:8px 0 12px}
 h2{font-family:var(--display);font-weight:800;font-size:30px;text-transform:uppercase;margin:44px 0 10px;line-height:1}
 .lede{font-size:20px;max-width:760px;color:var(--snow);margin:0}
-.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:26px 0}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:26px 0}
 .tile{background:var(--panel);border-radius:14px;padding:14px 16px}
 .tile .v{font-family:var(--display);font-weight:800;font-size:40px;line-height:1;font-variant-numeric:tabular-nums}
 .tile .v s{color:var(--ice);opacity:.7;font-size:28px;text-decoration:none}
@@ -151,7 +151,8 @@ const tile = (old, now, l) => `<div class="tile"><div class="v"><s>${old}</s> â†
 $('#tiles').innerHTML = tile(hrs(R.avg_wait_h), hrs(F.avg_wait_h), "Average wait for a rider's stop")
   + tile(pct(R.share_by[2]), pct(F.share_by[2]), "Riders' stops clear after 2 hours of work")
   + tile(pct(R.share_by[4]), pct(F.share_by[4]), "Riders' stops clear after 4 hours")
-  + tile(hrs(R.finish_h), hrs(F.finish_h), 'Until every stop is clear');
+  + tile(hrs(R.finish_h), hrs(F.finish_h), 'Until every stop is clear')
+  + tile(R.jumps, F.jumps, `Jumps: drives over ${(A.jump_m / 1000).toFixed(1)} km to the next stop`);
 
 // ---------- map ----------
 const W = 760, PAD = 14;
@@ -270,6 +271,7 @@ $('#why').innerHTML = [
   ['One side, then back', `Each side of the street is its own run, driven the way the bus goes. A crew keeps going while the next stop ahead waits; then it crosses the road (${A.turn_min} min) and clears the other side on the way back. It never backs up over a stretch it just cleared.`],
   ['Busiest run first', `Crews start at busy stops spread across the city. When a run is done, a crew heads where the next few waiting stops along the street clear the most riders per minute: the driving plus ${A.service_min} minutes a stop.`],
   ['One crew per street', 'Both sides of a street are one crew\'s. A crew skips the stops just ahead of another crew and the far side of streets another crew cleared, and comes back first to the far side of its own. So two crews never split a street, and no crew drives down a cleared street to take stops another will reach anyway.'],
+  ['Few jumps', `Driving across town to a far stop is slow and costly. After planning the day, the model looks at the whole day: it cuts each crew's day at its jumps (drives over ${(A.jump_m / 1000).toFixed(1)} km to the next stop) and hands each piece to the crew that passes closest to it, keeping a change when it cuts jumps without raising the average wait much. A jump counts as ${A.jump_min} minutes of every rider's wait.`],
   ['Then the nearest', `Once stops with ${Math.round(A.sweep_after * 100)}% of riders are clear, each crew takes the nearest waiting stop, so no one drives across town for the last few. That keeps driving below route by route.`],
 ].map(([h, p]) => `<div><b>${h}</b>${p}</div>`).join('');
 
@@ -290,10 +292,10 @@ function crewMap(day) {
 }
 $('#crews').innerHTML = D.days.riders.map((day, k) => {
   const sts = day.map(([sid]) => byId[sid]), last = day[day.length - 1][2];
-  const dist = day.reduce((a, e) => a + e[3], 0) / 1000;
+  const dist = day.reduce((a, e) => a + e[3], 0) / 1000, jumps = day.filter((e) => e[3] > A.jump_m).length;
   const riders = sts.reduce((a, b) => a + b.r, 0);
   return `<div class="panel"><div class="k">Crew ${k + 1}</div>${crewMap(day)}<ol>${sts.slice(0, 5).map((b) => `<li>${b.n}<br><small>${b.r.toLocaleString()} weekday riders (on + off), clear by hour ${b.riders.h.toFixed(1)}</small></li>`).join('')}</ol>
-    <p class="note">${sts.length} stops in all (${riders.toLocaleString()} riders), ${dist.toFixed(0)} km of driving, the last clear by hour ${last.toFixed(1)}.</p></div>`;
+    <p class="note">${sts.length} stops in all (${riders.toLocaleString()} riders), ${dist.toFixed(0)} km of driving, ${jumps} ${jumps === 1 ? 'jump' : 'jumps'}, the last clear by hour ${last.toFixed(1)}.</p></div>`;
 }).join('');
 
 const cuts = [{ route: { wait: R.avg_wait_h }, riders: { wait: F.avg_wait_h } }, ...D.sens].map((r) => 1 - r.riders.wait / r.route.wait);
@@ -308,6 +310,7 @@ $('#assume').innerHTML = '<tr><th>Assumption</th><th>Value</th><th>Why</th></tr>
   ['Bobcat speed between stops', `about ${mph} mph`, 'A slow, safe speed for a small loader in traffic.'],
   ['Streets', 'Along the bus routes', 'Each side of the street is driven the way the bus goes, stop to stop, along the route. Stops more than ' + (A.max_link_m / 1000).toFixed(1) + ' km apart on a route aren\'t linked (stops must be missing in between). Side streets aren\'t modeled.'],
   ['Crossing the road', A.turn_min + ' min', 'To clear the stop across the street (within ' + A.cross_m + ' m), a crew crosses the road; where a route leaves the city, it turns around like the bus. These are small roads.'],
+  ['A jump', (A.jump_m / 1000).toFixed(1) + ' km', `A drive longer than this to the next stop, past stops already clear: a crew moving to a different place. When planning, each jump counts as ${A.jump_min} minutes of every rider's wait (the hours shown are real driving time).`],
   ['Start', 'Hour 0, at each crew\'s first stop', 'Getting the bobcats there from the yard isn\'t counted, the same for both plans.'],
   ['Stops the MBTA clears', 'Route ' + A.mbta_routes.join(', '), `All ${D.nmbta} stops on route 109. The MBTA also clears some stops on 77 and 104; it doesn't say which, so we leave them to the City.`],
   ['Which stops', D.nstops + ' MBTA stops', 'The City says it clears 281. We can only rank the stops the MBTA lists in Somerville.'],

@@ -516,7 +516,6 @@ function drawEditor() {
   $('#list').innerHTML = cr.legs.map((L, i) => {
     const s = byId[L.id], notes = [];
     if (L.from) notes.push(`${(L.m / 1000).toFixed(1)} km from the last stop`);
-    if (L.jump) notes.push('<span class="warn">jump</span>');
     if (L.passes.length) notes.push(`<span class="warn">drives past ${L.passes.length} waiting: ${L.passes.slice(0, 3).map((n) => esc(byId[n].n)).join('; ')}${L.passes.length > 3 ? '…' : ''}</span>`);
     return `<li data-i="${i}"><button class="grip" data-i="${i}" aria-label="Reorder ${esc(s.n)}: drag, or use the up and down arrow keys">⠿</button><span class="n">${i + 1}</span><span>${esc(s.n)}<small>${riders(s).toLocaleString()} riders · clear by hour ${L.h.toFixed(1)}${notes.length ? ' · ' + notes.join(' · ') : ''}</small></span>`
       + `<span class="acts"><button data-a="del" data-i="${i}" aria-label="Take ${esc(s.n)} off">✕</button></span></li>`;

@@ -13,7 +13,7 @@ The page is one full-window dashboard: the map, with the chart of riders whose s
 An operator builds plans. Each plan has its own crews, and each crew a list of stops in the order it clears them:
 
 - **Build a route.** Pick a crew, then press on the map and drag across stops: every stop the pointer passes is added, in order, until you let go (a stop of another crew moves to this one; a drag never takes stops off). Or tap stops one by one (tapping one of the crew's own stops takes it off), or add them by name. Drag stops in the crew's list to reorder them (or use the arrow keys on a stop's ⠿ handle). Reverse a route, clear a crew, add or remove crews. Undo (or Ctrl/Cmd+Z) takes back any change; a whole drag is one step.
-- **See how it does.** Play runs the day hour by hour on the map, each crew in its own color, with the share of riders' stops clear at that hour. Every stop in the crew's list shows when it's clear and how far the crew drove to it, and flags jumps (drives of more than 800 m to the next stop; neighboring stops are at most about 600 m apart) and drives past stops still waiting.
+- **See how it does.** Play runs the day hour by hour on the map, each crew in its own color, with the share of riders' stops clear at that hour. Every stop in the crew's list shows when it's clear and how far the crew drove to it, and flags drives past stops still waiting.
 - **Compare plans.** Make as many plans as you like, with different numbers of crews: new, copy, rename, delete. The chart draws one line per plan, the open plan's thicker.
 - **Change the assumptions** (Settings menu). All plans share them, so they compare on the same terms:
   - minutes to clear a stop (20);

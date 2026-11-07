@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Which bus stops first? · Somerville Snow Guide</title>
-<meta name="description" content="PTAC analysis: driving Somerville's bobcats to the busiest bus stops first gets most riders a clear stop hours sooner, with the same crews.">
-<meta property="og:title" content="Which bus stops first? · Somerville Snow Guide">
-<meta property="og:description" content="The busiest stops first: most riders get a clear stop hours sooner, with the same crews.">
+<title>Bus stop routes · Somerville Snow Guide</title>
+<meta name="description" content="Design the routes Somerville's bobcat crews take to clear bus stops after a storm, and see how soon riders get a clear stop.">
+<meta property="og:title" content="Bus stop routes · Somerville Snow Guide">
+<meta property="og:description" content="Design the bobcat crews' bus stop routes and see how soon riders get a clear stop.">
 <meta name="theme-color" content="#10243A">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
@@ -15,144 +15,305 @@
   --display:'Barlow Condensed',Arial Narrow,sans-serif;--body:'Barlow',Arial,sans-serif}
 *{box-sizing:border-box}
 body{margin:0;background:var(--navy);color:#fff;font:16px/1.5 var(--body)}
-main{max-width:1100px;margin:0 auto;padding:28px 16px 60px}
+main{max-width:1180px;margin:0 auto;padding:28px 16px 60px}
 .k{font-family:var(--display);font-weight:700;font-size:15px;letter-spacing:2px;text-transform:uppercase;color:var(--ice)}
 h1{font-family:var(--display);font-weight:800;font-size:clamp(40px,7vw,68px);line-height:.95;text-transform:uppercase;margin:8px 0 12px}
 h2{font-family:var(--display);font-weight:800;font-size:30px;text-transform:uppercase;margin:44px 0 10px;line-height:1}
-.lede{font-size:20px;max-width:760px;color:var(--snow);margin:0}
-.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:26px 0}
+.lede{font-size:20px;max-width:780px;color:var(--snow);margin:0}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:26px 0}
 .tile{background:var(--panel);border-radius:14px;padding:14px 16px}
-.tile .v{font-family:var(--display);font-weight:800;font-size:40px;line-height:1;font-variant-numeric:tabular-nums}
-.tile .v s{color:var(--ice);opacity:.7;font-size:28px;text-decoration:none}
-.tile .v b{color:var(--orange)}
+.tile .v{font-family:var(--display);font-weight:800;font-size:36px;line-height:1;font-variant-numeric:tabular-nums;color:var(--orange)}
 .tile .l{color:var(--ice);font-size:14px;margin-top:4px}
 .panel{background:var(--panel);border-radius:18px;padding:16px}
 .controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:10px}
-.seg{display:inline-flex;background:var(--navy);border-radius:999px;padding:4px}
-.seg button{border:0;background:none;color:var(--ice);font:600 15px var(--body);padding:8px 14px;border-radius:999px;cursor:pointer}
-.seg button[aria-pressed=true]{background:var(--orange);color:var(--navy)}
-.seglab{align-self:center;padding:0 6px 0 10px;color:var(--ice);font:600 13px var(--body);text-transform:uppercase;letter-spacing:1px}
-#crewseg button{padding:8px 12px}
-.play{width:44px;height:44px;border-radius:50%;border:0;background:var(--orange);cursor:pointer;display:flex;align-items:center;justify-content:center}
-.read{font-family:var(--display);font-weight:700;font-size:22px;letter-spacing:.5px;margin-left:auto;font-variant-numeric:tabular-nums}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.tab{border:2px solid transparent;background:var(--navy);color:#fff;font:600 15px var(--body);padding:6px 12px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.tab[aria-pressed=true]{border-color:#fff}
+.tab i{width:12px;height:12px;border-radius:50%;display:inline-block}
+.tab small{color:var(--ice);font-weight:500}
+.btn{border:1px solid var(--ice);background:none;color:#fff;font:600 14px var(--body);padding:6px 12px;border-radius:999px;cursor:pointer}
+.btn:hover{background:rgba(169,196,228,.15)}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.main{background:var(--orange);border-color:var(--orange);color:var(--navy)}
+.play{width:44px;height:44px;border-radius:50%;border:0;background:var(--orange);cursor:pointer;display:flex;align-items:center;justify-content:center;flex:none}
+.read{font-family:var(--display);font-weight:700;font-size:20px;letter-spacing:.5px;font-variant-numeric:tabular-nums;margin-bottom:8px}
 .read b{color:var(--orange)}
-#t{width:100%;accent-color:var(--orange);margin:2px 0 8px}
-.mapwrap{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:16px;align-items:start}
-#map{width:100%;height:auto;display:block;background:#0E2034;border-radius:12px}
-.side{font-size:14px;color:var(--snow)}
-.side h3{font-family:var(--display);font-size:18px;text-transform:uppercase;letter-spacing:1px;margin:0 0 6px;color:var(--ice)}
-.lg{display:flex;align-items:center;gap:8px;margin:6px 0}
-.lg svg{flex:none}
-#tip{position:fixed;pointer-events:none;background:var(--snow);color:var(--navy);border-radius:10px;padding:8px 10px;font-size:14px;max-width:260px;box-shadow:0 6px 24px rgba(0,0,0,.35);display:none;z-index:5}
+.timeline{display:flex;gap:12px;align-items:center;margin:4px 0 8px}
+#t{flex:1;min-width:0;accent-color:var(--orange)}
+.mapwrap{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;align-items:start}
+#map{width:100%;height:auto;display:block;background:#0E2034;border-radius:12px;touch-action:manipulation}
+#map{cursor:pointer}
+.editor h3{font-family:var(--display);font-size:22px;text-transform:uppercase;letter-spacing:1px;margin:0 0 4px;display:flex;align-items:center;gap:8px}
+.editor h3 i{width:14px;height:14px;border-radius:50%;display:inline-block}
+.editor .note{margin:0 0 8px}
+.add{display:flex;gap:6px;margin:8px 0}
+.add input{flex:1;min-width:0;font:15px var(--body);padding:7px 10px;border-radius:8px;border:1px solid var(--ice);background:var(--navy);color:#fff}
+#list{list-style:none;margin:8px 0;padding:0;max-height:520px;overflow:auto;font-size:14px}
+#list li{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:6px;align-items:start;padding:6px 4px;border-bottom:1px solid rgba(169,196,228,.2)}
+#list li .n{font-family:var(--display);font-weight:700;color:var(--ice);font-size:16px;text-align:right}
+#list li small{color:var(--ice);display:block}
+#list li .warn{color:var(--orange)}
+#list li .acts{display:flex;gap:2px}
+#list li .acts button{border:0;background:var(--navy);color:#fff;width:28px;height:28px;border-radius:6px;cursor:pointer;font-size:14px}
+#list li .acts button:hover{background:var(--mute)}
+.row{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.planbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:26px 0 0}
+.seglab{color:var(--ice);font:600 13px var(--body);text-transform:uppercase;letter-spacing:1px}
+.tab.plan i{border-radius:3px}
+#compare button{border:0;background:none;color:var(--orange);font:600 15px var(--body);padding:0;cursor:pointer;text-align:left;text-decoration:underline}
+#compare tr.cur td{background:rgba(255,138,61,.12)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;color:var(--snow);margin-top:10px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+#tip{position:fixed;pointer-events:none;background:var(--snow);color:var(--navy);border-radius:10px;padding:8px 10px;font-size:14px;max-width:280px;box-shadow:0 6px 24px rgba(0,0,0,.35);display:none;z-index:5}
 #tip b{display:block}
 #chart{width:100%;height:auto;display:block}
-.why{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
-.why div{background:var(--panel);border-radius:14px;padding:14px 16px}
-.why b{display:block;font-family:var(--display);font-size:22px;text-transform:uppercase;line-height:1.05;margin-bottom:4px;color:var(--orange)}
 table{width:100%;border-collapse:collapse;font-size:15px}
 th,td{text-align:left;padding:8px 10px;border-bottom:1px solid rgba(169,196,228,.25);vertical-align:top}
 th{font-family:var(--display);text-transform:uppercase;letter-spacing:1px;color:var(--ice);font-size:15px}
 td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
 .tw{overflow-x:auto}
-.crew{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.cmap{width:100%;height:auto;display:block;background:#0E2034;border-radius:10px;margin:8px 0 4px}
-.crewkey{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;font-size:14px;color:var(--snow);margin:6px 0 12px}
-.crewkey span{display:inline-flex;align-items:center;gap:6px}
-.crew ol{margin:6px 0 0;padding-left:20px;font-size:14px}
-.crew li{margin-bottom:6px}
-.crew small{color:var(--ice)}
+.settings{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.settings label{background:var(--panel);border-radius:14px;padding:12px 14px;display:block}
+.settings b{display:block;font-family:var(--display);font-size:20px;text-transform:uppercase;line-height:1.1}
+.settings small{display:block;color:var(--ice);margin:2px 0 8px}
+.settings input[type=number]{width:110px;font:600 18px var(--body);padding:6px 8px;border-radius:8px;border:1px solid var(--ice);background:var(--navy);color:#fff}
+.settings input[type=checkbox]{width:20px;height:20px;accent-color:var(--orange);vertical-align:middle}
+.how{padding-left:20px;max-width:820px}
+.how li{margin-bottom:8px}
 .note{color:var(--ice);font-size:14px}
 a{color:var(--orange)}
-.bar{background:#0A1929;border-bottom:1px solid rgba(169,196,228,.2)}.bar div{max-width:1100px;margin:0 auto;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px}.bar a{color:#fff;text-decoration:none}.bar .brand{font-family:var(--display);font-weight:800;font-size:22px;text-transform:uppercase;letter-spacing:1px}.bar .brand span{color:var(--orange)}.bar nav a{color:var(--ice);font-size:15px}
+.bar{background:#0A1929;border-bottom:1px solid rgba(169,196,228,.2)}.bar div{max-width:1180px;margin:0 auto;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px}.bar a{color:#fff;text-decoration:none}.bar .brand{font-family:var(--display);font-weight:800;font-size:22px;text-transform:uppercase;letter-spacing:1px}.bar .brand span{color:var(--orange)}.bar nav a{color:var(--ice);font-size:15px}
 footer{margin-top:40px;color:var(--ice);font-size:14px;border-top:1px solid rgba(169,196,228,.3);padding-top:14px}
-@media (max-width:760px){.crew{grid-template-columns:1fr}.mapwrap{grid-template-columns:1fr}.read{margin-left:0;width:100%}}
+@media (max-width:860px){.mapwrap{grid-template-columns:1fr}#list{max-height:none}}
+@media (max-width:560px){.tiles{grid-template-columns:1fr 1fr;gap:8px}.tile{padding:10px 12px}.tile .v{font-size:28px}.tile .l{font-size:13px}}
 </style>
 </head>
 <body>
 <header class="bar"><div><a class="brand" href="https://vitorpamplona.com/somersnow/">Somerville <span>Snow</span></a><nav><a href="https://vitorpamplona.com/somersnow/">Back to the guide</a></nav></div></header>
 <main>
-  <div class="k">PTAC analysis · not a City plan</div>
-  <h1>Which bus stops first?</h1>
-  <p class="lede" id="lede"></p>
+  <div class="k">PTAC tool · not a City plan</div>
+  <h1>Bus stop routes</h1>
+  <p class="lede">Design the routes the bobcat crews take to clear bus stops after a storm. Pick a crew, then tap stops on the map in the order that crew should clear them, or add them by name. The page plays the day and scores it: how soon riders get a clear stop, how far the crews drive, and where they jump across town. Make as many plans as you like, each with its own crews, and compare them. Your plans and settings stay in this browser.</p>
+  <div class="planbar" id="planbar">
+    <span class="seglab">Plan</span>
+    <div class="tabs" id="plantabs" role="group" aria-label="Plan to edit"></div>
+    <button class="btn" id="newplan">+ New plan</button>
+    <button class="btn" id="copyplan">Copy this plan</button>
+    <button class="btn" id="renameplan">Rename</button>
+    <button class="btn" id="delplan">Delete this plan</button>
+  </div>
   <div class="tiles" id="tiles"></div>
 
-  <section class="panel" aria-label="Map of the clearing order">
+  <section class="panel" aria-label="Crews and their routes">
     <div class="controls">
-      <div class="seg" role="group" aria-label="Plan" id="planseg">
-        <button data-p="riders" aria-pressed="true">Riders first</button>
-        <button data-p="route" aria-pressed="false">Route by route</button>
-      </div>
-      <button class="play" id="play" aria-label="Play"><svg width="18" height="18" viewBox="0 0 18 18"><path id="pi" d="M4 2 L16 9 L4 16 Z" fill="#10243A"/></svg></button>
-      <div class="seg" role="group" aria-label="Which crew to show" id="crewseg"></div>
-      <div class="read" id="read"></div>
+      <div class="tabs" id="tabs" role="group" aria-label="Crew to edit"></div>
+      <button class="btn" id="addcrew">+ Crew</button>
+      <button class="btn" id="delcrew">Remove this crew</button>
     </div>
-    <input type="range" id="t" min="0" max="24" step="0.1" value="0" aria-label="Hours of work">
+    <div class="timeline">
+      <button class="play" id="play" aria-label="Play the day"><svg width="18" height="18" viewBox="0 0 18 18"><path id="pi" d="M4 2 L16 9 L4 16 Z" fill="#10243A"/></svg></button>
+      <input type="range" id="t" min="0" max="24" step="0.1" value="0" aria-label="Hours of work">
+    </div>
+    <div class="read" id="read"></div>
     <div class="mapwrap">
-      <svg id="map" role="img" aria-label="Somerville bus stops, cleared in plan order"></svg>
-      <div class="side">
-        <h3>How to read it</h3>
-        <div class="lg"><svg width="30" height="22"><circle cx="11" cy="11" r="9" fill="#fff" stroke="#10243A" stroke-width="1.5"/></svg>Waiting. Bigger = more weekday riders (on + off).</div>
-        <div class="lg"><svg width="30" height="22"><circle cx="11" cy="11" r="9" fill="#FF8A3D" stroke="#10243A" stroke-width="1.5"/></svg>Cleared.</div>
-        <div class="lg"><svg width="30" height="22"><rect x="5" y="5" width="12" height="12" fill="#A9C4E4" stroke="#10243A" stroke-width="1.5"/></svg>Route 109: the MBTA clears it.</div>
-        <div class="lg"><svg width="30" height="22"><path d="M2 11 H28" stroke="#B93D06" stroke-width="3"/></svg>Where the bobcats have driven.</div>
-        <div class="lg"><svg width="30" height="22"><path d="M3 11 H28" stroke="#B93D06" stroke-width="3" stroke-dasharray="2 7" stroke-linecap="round"/></svg>Out of the city and back, like the bus (no street data).</div>
-        <p class="note" id="sidenote"></p>
+      <div>
+        <svg id="map" role="img" aria-label="Somerville bus stops and the crews' routes"></svg>
+        <div class="legend">
+          <span><svg width="22" height="22"><circle cx="11" cy="11" r="8" fill="#fff" stroke="#10243A" stroke-width="1.5"/></svg>In no route yet. Bigger = more riders.</span>
+          <span><svg width="22" height="22"><circle cx="11" cy="11" r="8" fill="#fff" stroke="#1F6FB2" stroke-width="3"/></svg>In a crew's route, waiting</span>
+          <span><svg width="22" height="22"><circle cx="11" cy="11" r="8" fill="#1F6FB2" stroke="#10243A" stroke-width="1.5"/></svg>Cleared</span>
+          <span><svg width="22" height="22"><rect x="5" y="5" width="12" height="12" fill="#A9C4E4" stroke="#10243A" stroke-width="1.5"/></svg>Route 109: the MBTA clears it</span>
+          <span><svg width="34" height="12"><path d="M2 6 H32" stroke="#1F6FB2" stroke-width="3" stroke-dasharray="2 6" stroke-linecap="round"/></svg>Out of the city and back (no street data)</span>
+        </div>
+      </div>
+      <div class="editor" id="editor">
+        <h3 id="edtitle"></h3>
+        <p class="note" id="edsum"></p>
+        <p class="note" id="edmsg" role="status" style="color:#fff"></p>
+        <form class="add" id="addform">
+          <input id="addname" list="stopnames" placeholder="Add a stop by name" aria-label="Add a stop by name" autocomplete="off">
+          <button class="btn main" type="submit">Add</button>
+        </form>
+        <datalist id="stopnames"></datalist>
+        <ol id="list"></ol>
+        <div class="row">
+          <button class="btn" id="reverse">Reverse order</button>
+          <button class="btn" id="clearcrew">Clear this crew</button>
+        </div>
       </div>
     </div>
   </section>
 
+  <h2>Compare plans</h2>
+  <p class="note">Every plan, scored with the same settings. Tap a plan's name to open it.</p>
+  <div class="tw"><table id="compare"></table></div>
+
   <h2>Riders whose stop is clear</h2>
-  <div class="panel"><svg id="chart" role="img" aria-label="Share of riders whose stop is clear, by hour, for both plans"></svg></div>
+  <div class="panel"><svg id="chart" role="img" aria-label="Share of riders whose stop is clear, by hour of work, one line per plan"></svg><div class="legend" id="chartkey"></div></div>
 
-  <h2>Why this order</h2>
-  <div class="why" id="why"></div>
+  <h2>Each crew</h2>
+  <div class="tw"><table id="crewtable"></table></div>
 
-  <h2>Each crew's day</h2>
-  <p class="note">Riders first. Each map traces one crew's drive along the street, from its first stop to its last; the numbers mark its first five stops, listed below it.</p>
-  <div class="crewkey">
-    <span><svg width="64" height="12"><defs><linearGradient id="dayg"><stop offset="0" stop-color="#B93D06"/><stop offset="1" stop-color="#47607C"/></linearGradient></defs><rect width="64" height="12" rx="6" fill="url(#dayg)"/></svg>Early in the day → late</span>
-    <span><svg width="22" height="22"><circle cx="11" cy="11" r="10" fill="#10243A" stroke="#fff" stroke-width="1.5"/><text x="11" y="15.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text></svg>First stops, in order</span>
+  <h2>Settings</h2>
+  <p class="note">Change any assumption and the scores update. Settings are saved in this browser.</p>
+  <div class="settings" id="settings"></div>
+  <div class="row"><button class="btn" id="resetsettings">Back to the defaults</button></div>
+
+  <h2>Save and share</h2>
+  <p class="note">Your plans save in this browser as you go. To move them to another computer, or send them to someone, export a file or copy a link. Importing a file adds its plans to yours; opening a link replaces your plans and settings with the ones in the link.</p>
+  <div class="row">
+    <button class="btn" id="export">Export plans (file)</button>
+    <label class="btn" for="import" style="display:inline-block">Import plans (file)</label>
+    <input type="file" id="import" accept="application/json,.json" style="display:none">
+    <button class="btn" id="copylink">Copy a link to these plans</button>
+    <button class="btn" id="startover">Start over</button>
   </div>
-  <div class="crew" id="crews"></div>
+  <p class="note" id="savemsg" role="status"></p>
 
-  <h2>If our assumptions are off</h2>
-  <p class="note" id="sensnote"></p>
-  <div class="tw"><table id="sens"></table></div>
-
-  <h2>Assumptions</h2>
-  <div class="tw"><table id="assume"></table></div>
-
-  <h2>What we need from the City</h2>
-  <ul id="ask"></ul>
+  <h2>How the page works</h2>
+  <ul class="how" id="how"></ul>
 
   <footer>
-    Made by the Somerville Pedestrian &amp; Transit Advisory Committee (PTAC). Not an official City page.
+    Made by the Somerville Pedestrian &amp; Transit Advisory Committee (PTAC). Not an official City page; the City publishes neither its list of 281 stops nor its 4 routes.
     Sources: weekday boardings and alightings by stop, <span id="season"></span> (<a href="https://mbta-massdot.opendata.arcgis.com/">MBTA open data</a>);
     stops and routes (<a href="https://api-v3.mbta.com/">MBTA V3 API</a>); route 109 cleared by the MBTA
     (<a href="https://www.mbta.com/winter-weather/bus-service-during-winter-storms">MBTA: bus service during winter storms</a>);
     281 stops in 4 routes (<a href="https://www.somervillema.gov/snow">City snow page</a>); ward outlines (City GIS).
-    Built by <a href="https://github.com/vitorpamplona/somersnow/tree/main/analysis/bus-stop-clearing"><code>analysis/bus-stop-clearing/build.py</code></a>, with its method, assumptions and the stop-by-stop plan; every number on this page comes from it.
+    Built by <a href="https://github.com/vitorpamplona/somersnow/tree/main/analysis/bus-stop-clearing"><code>analysis/bus-stop-clearing/build.py</code></a>.
   </footer>
 </main>
 <div id="tip"></div>
 <script>
 const D = /*DATA*/null;
 const $ = (s) => document.querySelector(s);
-const S = D.stats, A = D.A, R = S.route, F = S.riders;
-const pct = (x) => Math.round(x) + '%';
-const hrs = (h) => h.toFixed(1) + ' h';
-const mph = (A.drive_m_per_min * 60 / 1609).toFixed(0);
+const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const COLORS = ['#1F6FB2', '#B93D06', '#2E7D32', '#7B3FA0', '#C2185B', '#8D6E00', '#00838F', '#5D4037', '#E65100', '#283593'];
+const color = (c) => COLORS[c % COLORS.length];
+const PCOLORS = ['#FF8A3D', '#A9C4E4', '#7FD4C1', '#F2C14E', '#E57373', '#BA68C8', '#90A4AE', '#AED581'];
+const pcolor = (p) => PCOLORS[p % PCOLORS.length];
+const KEY = 'somersnow.busstops.v2', OLDKEY = 'somersnow.busstops.v1';
+const byId = {}; D.stops.forEach((s) => { byId[s.id] = s; });
+$('#season').textContent = D.season;
 
-// ---------- headline ----------
-const gap = F.finish_h - R.finish_h;
-const finish = gap <= 0 ? 'and still finish sooner' : `and finish within ${gap < 1 ? Math.round(gap * 60) + ' minutes' : hrs(gap)} of route by route`;
-$('#lede').textContent = `After a storm, the City clears its bus stops route by route, stop by stop. But most riders use a few stops: half of the ${D.total.toLocaleString()} weekday riders getting on or off at the stops the City clears use just ${D.half} of its ${D.nstops} stops. Driving the same crews to the busiest stops first would cut the average rider's wait for a clear stop from ${hrs(R.avg_wait_h)} to ${hrs(F.avg_wait_h)}, ${finish}.`;
-const tile = (old, now, l) => `<div class="tile"><div class="v"><s>${old}</s> → <b>${now}</b></div><div class="l">${l}</div></div>`;
-$('#tiles').innerHTML = tile(hrs(R.avg_wait_h), hrs(F.avg_wait_h), "Average wait for a rider's stop")
-  + tile(pct(R.share_by[2]), pct(F.share_by[2]), "Riders' stops clear after 2 hours of work")
-  + tile(pct(R.share_by[4]), pct(F.share_by[4]), "Riders' stops clear after 4 hours")
-  + tile(hrs(R.finish_h), hrs(F.finish_h), 'Until every stop is clear')
-  + tile(R.jumps, F.jumps, `Jumps: drives over ${(A.jump_m / 1000).toFixed(1)} km to the next stop`);
+// ---------- state, kept in this browser: plans (each a name and its crews' routes: stop ids in
+// order) and the settings, which every plan shares so plans compare on the same terms ----------
+let settings = { ...D.settings };
+const emptyPlan = (name, n) => ({ name, routes: Array.from({ length: n }, () => []) });
+let plans = [emptyPlan('Plan 1', D.settings.crews)], cur = 0;
+let routes = plans[0].routes;                     // the plan being edited
+let sel = 0, T = 0;
+function clean(rs) {                              // known stops, each in one crew only, at least one crew
+  const seen = new Set();
+  const out = (Array.isArray(rs) ? rs : []).map((r) => (Array.isArray(r) ? r : [])
+    .filter((id) => byId[id] && (settings.include_mbta || !byId[id].mbta) && !seen.has(id) && seen.add(id)));
+  return out.length ? out : [[]];
+}
+const planName = (n) => String(n || '').trim().slice(0, 60);
+function apply(o, append) {
+  if (!o) return;
+  if (o.settings && !append) settings = { ...D.settings, ...o.settings };
+  let got = Array.isArray(o.plans) ? o.plans.map((p, i) => ({ name: planName(p.name) || `Plan ${i + 1}`, routes: clean(p.routes) }))
+    : Array.isArray(o.routes) ? [{ name: planName(o.name) || 'Plan 1', routes: clean(o.routes) }] : [];
+  if (append) {
+    got = got.map((p) => ({ ...p, name: plans.some((q) => q.name === p.name) ? p.name + ' (imported)' : p.name }));
+    plans = plans.concat(got); cur = plans.length - (got.length || 1);
+  } else if (got.length) {
+    plans = got; cur = Number.isInteger(o.cur) ? o.cur : 0;
+  }
+  if (!plans.length) plans = [emptyPlan('Plan 1', D.settings.crews)];
+  cur = Math.min(Math.max(0, cur), plans.length - 1);
+  routes = plans[cur].routes; sel = Math.min(sel, routes.length - 1);
+}
+function save() { try { localStorage.setItem(KEY, JSON.stringify({ settings, plans, cur })); } catch (e) { /* private mode: nothing saved */ } }
+(function load() {
+  try {
+    const m = location.hash.match(/plan=([^&]+)/);
+    if (m) {
+      apply(JSON.parse(decodeURIComponent(escape(atob(decodeURIComponent(m[1]))))));
+      history.replaceState(null, '', location.pathname + location.search);
+      save(); return;
+    }
+    const raw = localStorage.getItem(KEY) || localStorage.getItem(OLDKEY);   // older saves had one plan
+    if (raw) apply(JSON.parse(raw));
+  } catch (e) { /* unreadable: start fresh */ }
+})();
+function forEachPlan(fn) { plans.forEach((p) => { p.routes = fn(p.routes); }); routes = plans[cur].routes; }
+
+// ---------- which stops count, and their riders ----------
+const counted = (s) => !s.mbta || settings.include_mbta;
+const riders = (s) => s.on + (settings.count_off ? s.off : 0);
+
+// ---------- the street network: quickest drive between stops (minutes) ----------
+const LINK = {}, ADJ = {};
+D.links.forEach(([a, b, m, k]) => { LINK[a + '|' + b] = [m, k]; (ADJ[a] = ADJ[a] || []).push([b, m, k]); });
+const edgeMin = (m, k) => m / (settings.mph * 1609.34 / 60) + (k === 'turn' ? settings.cross_min : 0);
+let SP = {}, spKey = '';
+function quickest(src) {
+  const key = settings.mph + '|' + settings.cross_min;
+  if (key !== spKey) { SP = {}; spKey = key; }
+  if (SP[src]) return SP[src];
+  const dist = { [src]: 0 }, prev = {}, heap = [[0, src]];
+  const push = (x) => { heap.push(x); let i = heap.length - 1; while (i) { const p = (i - 1) >> 1; if (heap[p][0] <= heap[i][0]) break; [heap[p], heap[i]] = [heap[i], heap[p]]; i = p; } };
+  const pop = () => { const top = heap[0], last = heap.pop(); if (heap.length) { heap[0] = last; let i = 0; for (;;) { const l = 2 * i + 1, r = l + 1; let m = i; if (l < heap.length && heap[l][0] < heap[m][0]) m = l; if (r < heap.length && heap[r][0] < heap[m][0]) m = r; if (m === i) break; [heap[m], heap[i]] = [heap[i], heap[m]]; i = m; } } return top; };
+  while (heap.length) {
+    const [d, u] = pop();
+    if (d > dist[u]) continue;
+    (ADJ[u] || []).forEach(([v, m, k]) => { const nd = d + edgeMin(m, k); if (nd < (dist[v] ?? Infinity)) { dist[v] = nd; prev[v] = u; push([nd, v]); } });
+  }
+  return (SP[src] = { dist, prev });
+}
+function pathTo(a, b) {
+  const { prev } = quickest(a), out = [];
+  for (let n = b; n !== a; n = prev[n]) { if (n === undefined) return null; out.push(n); }
+  return out.reverse();
+}
+
+// ---------- the day: each crew starts at its first stop at hour 0 and works through its list ----------
+let SIM = null, ALL = [];
+function simulate(rs) {
+  const clear = {};
+  const crews = rs.map((r, c) => {
+    let t = 0, at = null;
+    const legs = r.map((id) => {
+      const start = t;
+      let path = [], m = 0, mins = 0;
+      if (at !== null) {
+        path = pathTo(at, id) || [id];
+        let a = at;
+        path.forEach((n) => { const l = LINK[a + '|' + n] || [0, 'drive']; m += l[0]; mins += edgeMin(l[0], l[1]); a = n; });
+      }
+      t += mins + settings.service_min;
+      const leg = { id, from: at, path, m, mins, start, h: t / 60, jump: m > settings.jump_m, passes: [] };
+      clear[id] = { h: t / 60, c };
+      at = id;
+      return leg;
+    });
+    return { legs, end: t / 60 };
+  });
+  // driving past a stop that is still waiting (any crew's, or in no route)
+  crews.forEach((cr) => cr.legs.forEach((L) => {
+    let tt = L.start, a = L.from;
+    L.path.slice(0, -1).forEach((n) => {
+      const l = LINK[a + '|' + n] || [0, 'drive']; tt += edgeMin(l[0], l[1]); a = n;
+      const s = byId[n];
+      if (s && counted(s) && (!clear[n] || clear[n].h * 60 > tt + 1e-6)) L.passes.push(n);
+    });
+  }));
+  const city = D.stops.filter(counted), total = city.reduce((a, s) => a + riders(s), 0);
+  const inRoute = city.filter((s) => clear[s.id]);
+  const rIn = inRoute.reduce((a, s) => a + riders(s), 0);
+  const wait = rIn ? inRoute.reduce((a, s) => a + riders(s) * clear[s.id].h, 0) / rIn : null;
+  const shareBy = (h) => (total ? city.reduce((a, s) => a + (clear[s.id] && clear[s.id].h <= h + 1e-9 ? riders(s) : 0), 0) / total : 0);
+  const finish = Math.max(0, ...crews.map((c) => (c.legs.length ? c.end : 0)));
+  const all = crews.flatMap((c) => c.legs);
+  return {
+    clear, crews, city, total, rIn, wait, shareBy, finish, stops: all.length,
+    missing: city.filter((s) => !clear[s.id]),
+    km: all.reduce((a, L) => a + L.m, 0) / 1000,
+    jumps: all.filter((L) => L.jump).length,
+    passes: all.reduce((a, L) => a + L.passes.length, 0),
+  };
+}
 
 // ---------- map ----------
 const W = 760, PAD = 14;
@@ -163,24 +324,20 @@ const H = Math.round((maxy - miny) * sc + 2 * PAD);
 const px = (x, y) => [PAD + (x - minx) * kx * sc, PAD + (maxy - y) * sc];
 const map = $('#map'); map.setAttribute('viewBox', `0 0 ${W} ${H}`);
 const pathD = (pts) => pts.map(([x, y], i) => (i ? 'L' : 'M') + px(x, y).map((v) => v.toFixed(1)).join(' ')).join('');
-let s = '<defs><clipPath id="city">' + D.wards.map((rs) => rs.map((r) => `<path d="${pathD(r)}Z"/>`).join('')).join('') + '</clipPath></defs>';
-s += D.wards.map((rs) => rs.map((r) => `<path d="${pathD(r)}Z" fill="#DCE8F5" stroke="#1A3A5F" stroke-width="2.5"/>`).join('')).join('');
-s += '<g clip-path="url(#city)" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round" opacity=".9">' + Object.values(D.routes).map((ps) => ps.map((p) => `<path d="${pathD(p)}"/>`).join('')).join('') + '</g>';
-s += '<g id="trails" fill="none" stroke="#B93D06" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></g>';
-s += D.mbta.map((b) => { const [x, y] = px(b.x, b.y); return `<rect x="${(x - 4).toFixed(1)}" y="${(y - 4).toFixed(1)}" width="8" height="8" fill="#A9C4E4" stroke="#10243A" stroke-width="1.2" data-n="${b.n}" data-r="${b.r}" data-m="1"/>`; }).join('');
-const byId = {};
-s += '<g id="stops">' + [...D.stops].sort((a, b) => b.r - a.r).map((b) => { byId[b.id] = b; const [x, y] = px(b.x, b.y); return `<circle id="s${b.id}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(2.6 + Math.sqrt(b.r) / 3.2).toFixed(1)}" fill="#fff" stroke="#10243A" stroke-width="1.3"/>`; }).join('') + '</g>';
-map.innerHTML = s;
-
-// the street shape between two linked stops (along the bus route), or a straight line
-const street = (a, b) => D.geo[a + '|' + b] || [D.nodes[a], D.nodes[b]];
-// a drive from one stop through a path of stops, as [points, away] pieces: away pieces leave
-// the city or the bus routes (the bus turns around outside Somerville), drawn dashed
+let base = '<defs><clipPath id="city">' + D.wards.map((rs) => rs.map((r) => `<path d="${pathD(r)}Z"/>`).join('')).join('') + '</clipPath></defs>';
+base += D.wards.map((rs) => rs.map((r) => `<path d="${pathD(r)}Z" fill="#DCE8F5" stroke="#1A3A5F" stroke-width="2.5"/>`).join('')).join('');
+base += '<g clip-path="url(#city)" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round" opacity=".9">' + Object.values(D.routes).map((ps) => ps.map((p) => `<path d="${pathD(p)}"/>`).join('')).join('') + '</g>';
+base += '<g id="plans" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".35"></g>';
+base += '<g id="trails" fill="none" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></g>';
+base += '<g id="stops"></g><g id="labels" font-family="Barlow, sans-serif" font-size="11" font-weight="700" text-anchor="middle" pointer-events="none"></g>';
+map.innerHTML = base;
+const NODE = {}; D.stops.forEach((s) => { NODE[s.id] = [s.x, s.y]; });
 const AWAY = new Set(D.away);
+const street = (a, b) => D.geo[a + '|' + b] || [NODE[a], NODE[b]];
 function pieces(from, path) {
-  const out = []; let at = from, cur = [D.nodes[from]];
+  const out = []; let at = from, cur = [NODE[from]];
   path.forEach((n) => {
-    if (AWAY.has(at + '|' + n)) { if (cur.length > 1) out.push([cur, false]); out.push([[D.nodes[at], D.nodes[n]], true]); cur = [D.nodes[n]]; }
+    if (AWAY.has(at + '|' + n)) { if (cur.length > 1) out.push([cur, false]); out.push([[NODE[at], NODE[n]], true]); cur = [NODE[n]]; }
     else cur.push(...street(at, n).slice(1));
     at = n;
   });
@@ -188,144 +345,285 @@ function pieces(from, path) {
   return out;
 }
 const piecesD = (ps, away) => ps.filter((p) => p[1] === away).map((p) => pathD(p[0])).join('');
-let plan = 'riders', T = 0, crew = 0;
-const maxH = Math.ceil(Math.max(R.finish_h, F.finish_h));
-$('#t').max = maxH;
-function draw() {
-  D.stops.forEach((b) => {
-    const el = document.getElementById('s' + b.id);
-    el.setAttribute('fill', b[plan].h <= T ? '#FF8A3D' : '#fff');
-    el.setAttribute('opacity', crew && b[plan].c !== crew ? '.2' : '1');
-  });
-  // each crew's drive so far, along the street (through the stops it passes)
-  $('#trails').innerHTML = D.days[plan].map((day, k) => {
-    if (crew && k + 1 !== crew) return '';
-    const ps = [];
-    day.forEach(([sid, path, h], i) => { if (i && h <= T) ps.push(...pieces(day[i - 1][0], path)); });
-    return `<path d="${piecesD(ps, false)}"/><path d="${piecesD(ps, true)}" stroke-dasharray="2 7"/>`;
+const radius = (s) => 2.6 + Math.sqrt(riders(s)) / 3.2;
+
+function drawStops() {
+  const order = [...D.stops].sort((a, b) => riders(b) - riders(a));
+  $('#stops').innerHTML = order.map((s) => {
+    const [x, y] = px(s.x, s.y), r = radius(s);
+    const shape = counted(s)
+      ? `<circle class="dot" id="s${s.id}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(1)}"/>`
+      : `<rect x="${(x - 4).toFixed(1)}" y="${(y - 4).toFixed(1)}" width="8" height="8" fill="#A9C4E4" stroke="#10243A" stroke-width="1.2"/>`;
+    return `<g data-id="${s.id}">${shape}</g>`;
   }).join('');
-  const share = D.curve[plan].reduce((a, [h, v]) => (h <= T + 1e-9 ? v : a), 0);
-  const nclear = D.stops.filter((b) => b[plan].h <= T).length;
-  const mine = D.stops.filter((b) => b[plan].c === crew), mineDone = mine.filter((b) => b[plan].h <= T).length;
-  $('#read').innerHTML = `Hour ${T.toFixed(1)} · <b>${Math.round(share * 100)}%</b> of riders · `
-    + (crew ? `crew ${crew}: ${mineDone} of ${mine.length} stops` : `${nclear} of ${D.nstops} stops`);
-  $('#sidenote').textContent = plan === 'riders'
-    ? `Each crew drives its side of the street in the bus's direction and clears every waiting stop it reaches, then crosses the road and clears the other side on the way back. It heads where the next few stops clear the most riders per minute; once stops with ${Math.round(A.sweep_after * 100)}% of riders are clear, it takes the nearest waiting stop.`
-    : 'Crews work whole routes, stop by stop, in route-number order. The City\'s own 4 routes are not published, so this is our stand-in.';
+}
+
+function draw() {
+  const { clear, crews } = SIM;
+  D.stops.forEach((s) => {
+    const el = document.getElementById('s' + s.id);
+    if (!el) return;
+    const c = clear[s.id];
+    if (!c) { el.setAttribute('fill', '#fff'); el.setAttribute('stroke', '#10243A'); el.setAttribute('stroke-width', '1.3'); }
+    else if (c.h <= T + 1e-9) { el.setAttribute('fill', color(c.c)); el.setAttribute('stroke', '#10243A'); el.setAttribute('stroke-width', '1.3'); }
+    else { el.setAttribute('fill', '#fff'); el.setAttribute('stroke', color(c.c)); el.setAttribute('stroke-width', '3'); }
+  });
+  $('#plans').innerHTML = crews.map((cr, c) => {
+    const ps = cr.legs.flatMap((L) => (L.from ? pieces(L.from, L.path) : []));
+    return `<path stroke="${color(c)}" d="${piecesD(ps, false)}"/><path stroke="${color(c)}" stroke-dasharray="2 6" d="${piecesD(ps, true)}"/>`;
+  }).join('');
+  $('#trails').innerHTML = crews.map((cr, c) => {
+    const ps = cr.legs.filter((L) => L.from && (L.start + L.mins) / 60 <= T + 1e-9).flatMap((L) => pieces(L.from, L.path));
+    return `<path stroke="${color(c)}" d="${piecesD(ps, false)}"/><path stroke="${color(c)}" stroke-dasharray="2 7" d="${piecesD(ps, true)}"/>`;
+  }).join('');
+  $('#labels').innerHTML = (routes[sel] || []).map((id, i) => {
+    const [x, y] = px(byId[id].x, byId[id].y);
+    return `<text x="${x.toFixed(1)}" y="${(y - radius(byId[id]) - 3).toFixed(1)}" fill="#10243A" stroke="#fff" stroke-width="3" paint-order="stroke">${i + 1}</text>`;
+  }).join('');
+  const cleared = SIM.city.filter((s) => clear[s.id] && clear[s.id].h <= T + 1e-9).length;
+  const mine = routes[sel] || [], mineDone = mine.filter((id) => clear[id].h <= T + 1e-9).length;
+  $('#read').innerHTML = `Hour ${T.toFixed(1)} · <b>${Math.round(SIM.shareBy(T) * 100)}%</b> of riders' stops clear · ${cleared} of ${SIM.city.length} stops · crew ${sel + 1}: ${mineDone} of ${mine.length}`;
+}
+
+// ---------- scores ----------
+const hrs = (h) => (h == null ? '–' : h.toFixed(1) + ' h');
+const pct = (x) => Math.round(x * 100) + '%';
+function drawScores() {
+  const S = SIM, tile = (v, l) => `<div class="tile"><div class="v">${v}</div><div class="l">${l}</div></div>`;
+  $('#tiles').innerHTML = tile(hrs(S.wait), `Average wait for a rider's stop in ${esc(plans[cur].name)} (stops in a route)`)
+    + tile(pct(S.total ? S.rIn / S.total : 0), `Riders whose stop is in a route (${S.missing.length} of ${S.city.length} stops in none)`)
+    + tile(pct(S.shareBy(2)), "Riders' stops clear after 2 hours")
+    + tile(pct(S.shareBy(4)), "Riders' stops clear after 4 hours")
+    + tile(hrs(S.finish || null), 'Until the last stop in a route is clear')
+    + tile(S.km.toFixed(0) + ' km', 'Driving between stops')
+    + tile(S.jumps, `Jumps: drives over ${(settings.jump_m / 1000).toFixed(1)} km to the next stop`)
+    + tile(S.passes, 'Times a crew drives past a stop still waiting');
+  const rows = S.crews.map((cr, c) => {
+    const L = cr.legs, r = L.reduce((a, x) => a + riders(byId[x.id]), 0);
+    return `<tr><td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${color(c)};margin-right:6px"></span>Crew ${c + 1}</td>`
+      + `<td class="n">${L.length}</td><td class="n">${r.toLocaleString()}</td><td class="n">${L.length ? hrs(cr.end) : '–'}</td>`
+      + `<td class="n">${(L.reduce((a, x) => a + x.m, 0) / 1000).toFixed(1)} km</td><td class="n">${L.filter((x) => x.jump).length}</td>`
+      + `<td class="n">${L.reduce((a, x) => a + x.passes.length, 0)}</td></tr>`;
+  }).join('');
+  $('#compare').innerHTML = '<tr><th>Plan</th><th>Crews</th><th>Stops in routes</th><th>Average wait</th><th>Riders in a route</th><th>Clear after 2 h</th><th>After 4 h</th><th>Last stop clear</th><th>Driving</th><th>Jumps</th><th>Drives past a waiting stop</th></tr>'
+    + ALL.map((X, p) => `<tr class="${p === cur ? 'cur' : ''}"><td><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:${pcolor(p)};margin-right:6px"></span><button data-p="${p}">${esc(plans[p].name)}</button></td>`
+      + `<td class="n">${plans[p].routes.length}</td><td class="n">${X.stops} of ${X.city.length}</td><td class="n">${hrs(X.wait)}</td><td class="n">${pct(X.total ? X.rIn / X.total : 0)}</td>`
+      + `<td class="n">${pct(X.shareBy(2))}</td><td class="n">${pct(X.shareBy(4))}</td><td class="n">${hrs(X.finish || null)}</td>`
+      + `<td class="n">${X.km.toFixed(0)} km</td><td class="n">${X.jumps}</td><td class="n">${X.passes}</td></tr>`).join('');
+  $('#crewtable').innerHTML = `<tr><th>Crew</th><th>Stops</th><th>Riders</th><th>Last stop clear</th><th>Driving</th><th>Jumps</th><th>Drives past a waiting stop</th></tr>${rows}`;
   drawChart();
 }
-document.querySelectorAll('#planseg button').forEach((b) => b.addEventListener('click', () => {
-  plan = b.dataset.p; document.querySelectorAll('#planseg button').forEach((x) => x.setAttribute('aria-pressed', x === b)); draw();
-}));
-// show all crews, or one: its trail and its stops
-$('#crewseg').innerHTML = '<span class="seglab">Crew</span>' + ['All', ...D.days.riders.map((_, k) => String(k + 1))]
-  .map((t, k) => `<button data-c="${k}" aria-pressed="${k === 0}" aria-label="${k ? 'Show crew ' + k : 'Show all crews'}">${t}</button>`).join('');
-document.querySelectorAll('#crewseg button').forEach((b) => b.addEventListener('click', () => {
-  crew = +b.dataset.c; document.querySelectorAll('#crewseg button').forEach((x) => x.setAttribute('aria-pressed', x === b)); draw();
-}));
-$('#t').addEventListener('input', (e) => { T = +e.target.value; stop(); draw(); });
-let timer = null;
-function stop() { if (timer) { cancelAnimationFrame(timer); timer = null; $('#pi').setAttribute('d', 'M4 2 L16 9 L4 16 Z'); } }
-$('#play').addEventListener('click', () => {
-  if (timer) return stop();
-  if (T >= maxH) T = 0;
-  $('#pi').setAttribute('d', 'M4 2 H7 V16 H4 Z M11 2 H14 V16 H11 Z');
-  let prev = performance.now();
-  const step = (now) => { T = Math.min(maxH, T + (now - prev) / 1000 * 1.6); prev = now; $('#t').value = T; draw(); if (T < maxH) timer = requestAnimationFrame(step); else stop(); };
-  timer = requestAnimationFrame(step);
+function drawChart() {
+  const Wc = 760, Hc = 240, L = 44, B = 30, maxH = Math.max(4, Math.ceil(Math.max(...ALL.map((x) => x.finish))));
+  const x = (h) => L + (h / maxH) * (Wc - L - 12), y = (v) => 10 + (1 - v) * (Hc - B - 10);
+  let s = '';
+  for (let v = 0; v <= 1.001; v += 0.25) s += `<line x1="${L}" x2="${Wc - 12}" y1="${y(v)}" y2="${y(v)}" stroke="rgba(169,196,228,.25)"/><text x="${L - 6}" y="${y(v) + 4}" fill="#A9C4E4" font-size="12" text-anchor="end">${Math.round(v * 100)}%</text>`;
+  const step = maxH > 24 ? 4 : 2;
+  for (let h = 0; h <= maxH; h += step) s += `<text x="${x(h)}" y="${Hc - 8}" fill="#A9C4E4" font-size="12" text-anchor="middle">${h} h</text>`;
+  ALL.map((S, p) => [S, p]).sort((a, b) => (a[1] === cur) - (b[1] === cur)).forEach(([S, p]) => {
+    const pts = []; for (let h = 0; h <= maxH + 1e-9; h += 0.1) pts.push([h, S.shareBy(h)]);
+    s += `<path d="${pts.map(([h, v], i) => (i ? 'L' : 'M') + x(h).toFixed(1) + ' ' + y(v).toFixed(1)).join('')}" fill="none" stroke="${pcolor(p)}" stroke-width="${p === cur ? 4 : 2}"/>`;
+  });
+  $('#chartkey').innerHTML = plans.map((P, p) => `<span><svg width="26" height="10"><path d="M1 5 H25" stroke="${pcolor(p)}" stroke-width="${p === cur ? 4 : 2}"/></svg>${esc(P.name)}</span>`).join('');
+  $('#chart').setAttribute('viewBox', `0 0 ${Wc} ${Hc}`);
+  $('#chart').innerHTML = s;
+}
+
+// ---------- plans ----------
+function drawPlans() {
+  $('#plantabs').innerHTML = plans.map((P, p) => `<button class="tab plan" data-p="${p}" aria-pressed="${p === cur}"><i style="background:${pcolor(p)}"></i>${esc(P.name)} <small>${P.routes.length} crew${P.routes.length === 1 ? '' : 's'}</small></button>`).join('');
+  $('#delplan').disabled = plans.length <= 1;
+}
+function openPlan(p) { cur = p; routes = plans[cur].routes; sel = 0; edmsg(''); changed(); }
+$('#plantabs').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) openPlan(+b.dataset.p); });
+$('#compare').addEventListener('click', (e) => { const b = e.target.closest('button[data-p]'); if (b) { openPlan(+b.dataset.p); $('#planbar').scrollIntoView({ behavior: 'smooth' }); } });
+const freshName = (base) => { let n = base, i = 2; while (plans.some((P) => P.name === n)) n = `${base} ${i++}`; return n; };
+$('#newplan').addEventListener('click', () => {
+  const name = planName(prompt('Name the new plan:', freshName(`Plan ${plans.length + 1}`)));
+  if (!name) return;
+  plans.push(emptyPlan(freshName(name), D.settings.crews)); openPlan(plans.length - 1);
 });
+$('#copyplan').addEventListener('click', () => {
+  plans.push({ name: freshName(plans[cur].name + ' (copy)'), routes: plans[cur].routes.map((r) => r.slice()) }); openPlan(plans.length - 1);
+});
+$('#renameplan').addEventListener('click', () => {
+  const name = planName(prompt('Rename this plan:', plans[cur].name));
+  if (name) { plans[cur].name = name; changed(); }
+});
+$('#delplan').addEventListener('click', () => {
+  if (plans.length <= 1 || !confirm(`Delete the plan "${plans[cur].name}"?`)) return;
+  plans.splice(cur, 1); openPlan(Math.max(0, cur - 1));
+});
+
+// ---------- the crew editor ----------
+function drawEditor() {
+  $('#tabs').innerHTML = routes.map((r, c) => `<button class="tab" data-c="${c}" aria-pressed="${c === sel}"><i style="background:${color(c)}"></i>Crew ${c + 1} <small>${r.length}</small></button>`).join('');
+  const cr = SIM.crews[sel];
+  $('#edtitle').innerHTML = `<i style="background:${color(sel)}"></i>Crew ${sel + 1}`;
+  $('#edsum').textContent = cr.legs.length
+    ? `${cr.legs.length} stops, last one clear by hour ${cr.end.toFixed(1)}. Tap stops on the map to add them to the end, or tap one of this crew's stops to take it off.`
+    : 'No stops yet. Tap stops on the map, in order, to build this crew\'s route. The crew starts at its first stop at hour 0.';
+  $('#list').innerHTML = cr.legs.map((L, i) => {
+    const s = byId[L.id], notes = [];
+    if (L.from) notes.push(`${(L.m / 1000).toFixed(1)} km from the last stop`);
+    if (L.jump) notes.push('<span class="warn">jump</span>');
+    if (L.passes.length) notes.push(`<span class="warn">drives past ${L.passes.length} waiting: ${L.passes.slice(0, 3).map((n) => esc(byId[n].n)).join('; ')}${L.passes.length > 3 ? '…' : ''}</span>`);
+    return `<li><span class="n">${i + 1}</span><span>${esc(s.n)}<small>${riders(s).toLocaleString()} riders · clear by hour ${L.h.toFixed(1)}${notes.length ? ' · ' + notes.join(' · ') : ''}</small></span>`
+      + `<span class="acts"><button data-a="up" data-i="${i}" aria-label="Move ${esc(s.n)} up">↑</button><button data-a="down" data-i="${i}" aria-label="Move ${esc(s.n)} down">↓</button><button data-a="del" data-i="${i}" aria-label="Take ${esc(s.n)} off">✕</button></span></li>`;
+  }).join('');
+  $('#delcrew').disabled = routes.length <= 1;
+}
+const nameOf = (s) => `${s.n} [${s.id}]`;
+$('#stopnames').innerHTML = D.stops.map((s) => `<option value="${esc(nameOf(s))}">`).join('');
+
+function addStop(id) {
+  const s = byId[id];
+  if (!s) return;
+  if (!counted(s)) { edmsg(`${s.n} is on route 109: the MBTA clears it. Turn on "Include route 109 stops" in the settings to add it.`); return; }
+  let note = '';
+  routes.forEach((r, c) => { if (c !== sel) { const i = r.indexOf(id); if (i >= 0) { r.splice(i, 1); note = `Moved ${s.n} from crew ${c + 1} to crew ${sel + 1}.`; } } });
+  const mine = routes[sel], i = mine.indexOf(id);
+  if (i >= 0) { mine.splice(i, 1); note = `Took ${s.n} off crew ${sel + 1}.`; } else { mine.push(id); if (!note) note = `Added ${s.n} as stop ${mine.length} of crew ${sel + 1}.`; }
+  changed(); edmsg(note);
+}
+const edmsg = (t) => { $('#edmsg').textContent = t; };
+function changed() {
+  plans[cur].routes = routes;
+  save();
+  ALL = plans.map((p) => simulate(p.routes)); SIM = ALL[cur];
+  const maxH = Math.max(1, Math.ceil(SIM.finish));
+  $('#t').max = maxH; if (T > maxH) T = maxH; $('#t').value = T;
+  drawPlans(); drawEditor(); drawScores(); draw();
+}
+
+// ---------- settings ----------
+const FIELDS = [
+  ['service_min', 'Minutes to clear a stop', 'Boarding area, shelter and bench. Our guess; please correct it.', 'number', 1, 120, 1],
+  ['mph', 'Bobcat speed (mph)', 'Driving between stops along the street.', 'number', 1, 30, 0.5],
+  ['cross_min', 'Minutes to cross the road', 'To the stop on the other side of the street, or to turn around where a route leaves the city.', 'number', 0, 30, 0.5],
+  ['jump_m', 'A jump, in meters', 'A drive longer than this to the next stop counts as a jump to a different place.', 'number', 100, 10000, 100],
+  ['count_off', 'Count people getting off', 'Riders at a stop are the people getting on, plus (if checked) the people getting off.', 'checkbox'],
+  ['include_mbta', 'Include route 109 stops', 'The MBTA clears every route 109 stop itself. Check to put them in the routes too.', 'checkbox'],
+];
+function drawSettings() {
+  $('#settings').innerHTML = FIELDS.map(([k, label, help, type, min, max, step]) => type === 'checkbox'
+    ? `<label><b>${label}</b><small>${help}</small><input type="checkbox" data-k="${k}" ${settings[k] ? 'checked' : ''}></label>`
+    : `<label><b>${label}</b><small>${help}</small><input type="number" data-k="${k}" min="${min}" max="${max}" step="${step}" value="${settings[k]}"></label>`).join('');
+}
+$('#settings').addEventListener('change', (e) => {
+  const k = e.target.dataset.k; if (!k) return;
+  if (e.target.type === 'checkbox') settings[k] = e.target.checked;
+  else { const v = parseFloat(e.target.value); if (!(v >= +e.target.min && v <= +e.target.max)) { e.target.value = settings[k]; return; } settings[k] = v; }
+  if (k === 'include_mbta' && !settings.include_mbta) forEachPlan((rs) => rs.map((r) => r.filter((id) => !byId[id].mbta)));
+  drawStops(); changed();
+});
+$('#resetsettings').addEventListener('click', () => {
+  settings = { ...D.settings };
+  if (!settings.include_mbta) forEachPlan((rs) => rs.map((r) => r.filter((id) => !byId[id].mbta)));
+  drawSettings(); drawStops(); changed();
+});
+
+// ---------- events ----------
+$('#tabs').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; sel = +b.dataset.c; edmsg(''); drawEditor(); draw(); });
+$('#addcrew').addEventListener('click', () => { routes.push([]); sel = routes.length - 1; changed(); });
+$('#delcrew').addEventListener('click', () => {
+  if (routes.length <= 1) return;
+  if (routes[sel].length && !confirm(`Remove crew ${sel + 1} and its ${routes[sel].length} stops?`)) return;
+  routes.splice(sel, 1); sel = Math.max(0, sel - 1); changed();
+});
+$('#list').addEventListener('click', (e) => {
+  const b = e.target.closest('button'); if (!b) return;
+  const r = routes[sel], i = +b.dataset.i;
+  if (b.dataset.a === 'del') r.splice(i, 1);
+  if (b.dataset.a === 'up' && i > 0) [r[i - 1], r[i]] = [r[i], r[i - 1]];
+  if (b.dataset.a === 'down' && i < r.length - 1) [r[i + 1], r[i]] = [r[i], r[i + 1]];
+  changed();
+});
+$('#reverse').addEventListener('click', () => { routes[sel].reverse(); changed(); });
+$('#clearcrew').addEventListener('click', () => { if (routes[sel].length && confirm(`Take all ${routes[sel].length} stops off crew ${sel + 1}?`)) { routes[sel] = []; changed(); } });
+$('#addform').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const v = $('#addname').value.trim(), m = v.match(/\[([^\]]+)\]$/);
+  const s = m ? byId[m[1]] : D.stops.find((x) => x.n.toLowerCase() === v.toLowerCase());
+  if (!s) return;
+  if (!routes[sel].includes(s.id)) addStop(s.id);
+  $('#addname').value = '';
+});
+// the stop nearest a tap or the pointer, within about a fingertip (stops at Davis and the squares sit close together)
+function nearest(e) {
+  const box = map.getBoundingClientRect(), k = box.width / W;
+  const x = (e.clientX - box.left) / k, y = (e.clientY - box.top) / k;
+  let best = null, bd = Infinity;
+  D.stops.forEach((s) => { const [sx, sy] = px(s.x, s.y), d = Math.hypot(sx - x, sy - y); if (d < bd) { bd = d; best = s; } });
+  return best && bd * k <= Math.max(radius(best) * k + 4, 16) ? best : null;
+}
+map.addEventListener('click', (e) => { const s = nearest(e); if (s) addStop(s.id); });
 const tip = $('#tip');
 map.addEventListener('pointermove', (e) => {
-  const el = e.target.closest('circle, rect[data-n]');
-  if (!el) { tip.style.display = 'none'; return; }
-  let html;
-  if (el.dataset.m) html = `<b>${el.dataset.n}</b>${el.dataset.r} weekday riders (on + off) · route 109, cleared by the MBTA`;
-  else { const b = byId[el.id.slice(1)]; html = `<b>${b.n}</b>${b.r} weekday riders: ${b.on} on, ${b.off} off · routes ${b.rt.join(', ')}<br>Riders first: crew ${b.riders.c}, clear at hour ${b.riders.h.toFixed(1)}<br>Route by route: crew ${b.route.c}, hour ${b.route.h.toFixed(1)}`; }
+  const s = nearest(e);
+  if (!s) { tip.style.display = 'none'; return; }
+  const c = SIM.clear[s.id];
+  let html = `<b>${esc(s.n)}</b>${s.on.toLocaleString()} on, ${s.off.toLocaleString()} off a weekday · routes ${s.rt.join(', ')}`;
+  if (!counted(s)) html += '<br>Route 109: the MBTA clears it';
+  else if (c) html += `<br>Crew ${c.c + 1}, stop ${routes[c.c].indexOf(s.id) + 1}, clear by hour ${c.h.toFixed(1)}`;
+  else html += `<br>In no route. Tap to add it to crew ${sel + 1}.`;
   tip.innerHTML = html; tip.style.display = 'block';
-  tip.style.left = Math.min(window.innerWidth - 270, e.clientX + 14) + 'px'; tip.style.top = (e.clientY + 14) + 'px';
+  tip.style.left = Math.min(window.innerWidth - 290, e.clientX + 14) + 'px'; tip.style.top = (e.clientY + 14) + 'px';
 });
 map.addEventListener('pointerleave', () => { tip.style.display = 'none'; });
 
-// ---------- chart ----------
-function drawChart() {
-  const CW = 760, CH = 300, L = 46, Rm = 16, Tm = 16, B = 40;
-  const x = (h) => L + h / maxH * (CW - L - Rm), y = (v) => Tm + (1 - v) * (CH - Tm - B);
-  let c = '';
-  [0, .25, .5, .75, 1].forEach((v) => { c += `<path d="M${L} ${y(v)}H${CW - Rm}" stroke="rgba(169,196,228,.25)"/><text x="${L - 8}" y="${y(v) + 5}" text-anchor="end" fill="#A9C4E4" font-size="13">${v * 100}%</text>`; });
-  for (let h = 0; h <= maxH; h += 4) c += `<text x="${x(h)}" y="${CH - B + 20}" text-anchor="middle" fill="#A9C4E4" font-size="13">${h} h</text>`;
-  c += `<text x="${(L + CW - Rm) / 2}" y="${CH - 4}" text-anchor="middle" fill="#A9C4E4" font-size="13">Hours of work</text>`;
-  const line = (k, col, w) => `<path d="${D.curve[k].map(([h, v], i) => (i ? 'L' : 'M') + x(h).toFixed(1) + ' ' + y(v).toFixed(1)).join('')}" fill="none" stroke="${col}" stroke-width="${w}" stroke-linejoin="round"/>`;
-  c += line('route', '#A9C4E4', plan === 'route' ? 4 : 2.5) + line('riders', '#FF8A3D', plan === 'riders' ? 4 : 2.5);
-  const lab = (k, col, txt) => { const p = D.curve[k].find(([h]) => h >= 3) || D.curve[k][D.curve[k].length - 1]; return `<text x="${x(p[0]) + 8}" y="${y(p[1]) + (k === 'route' ? 20 : -12)}" fill="${col}" font-size="15" font-weight="600">${txt}</text>`; };
-  c += lab('riders', '#FF8A3D', 'Riders first') + lab('route', '#A9C4E4', 'Route by route');
-  c += `<path d="M${x(T)} ${Tm}V${CH - B}" stroke="#fff" stroke-width="2"/>`;
-  const ch = $('#chart'); ch.setAttribute('viewBox', `0 0 ${CW} ${CH}`); ch.innerHTML = c;
-}
+$('#t').addEventListener('input', (e) => { T = +e.target.value; stopPlay(); draw(); });
+let timer = null;
+function stopPlay() { if (timer) { cancelAnimationFrame(timer); timer = null; $('#pi').setAttribute('d', 'M4 2 L16 9 L4 16 Z'); } }
+$('#play').addEventListener('click', () => {
+  if (timer) return stopPlay();
+  const maxH = +$('#t').max;
+  if (T >= maxH) T = 0;
+  $('#pi').setAttribute('d', 'M4 2 H7 V16 H4 Z M11 2 H14 V16 H11 Z');
+  let prev = performance.now();
+  const step = (now) => { T = Math.min(maxH, T + (now - prev) / 1000 * Math.max(1.5, maxH / 12)); prev = now; $('#t').value = T; draw(); if (T < maxH) timer = requestAnimationFrame(step); else stopPlay(); };
+  timer = requestAnimationFrame(step);
+});
 
-// ---------- text ----------
-$('#season').textContent = D.season;
-$('#why').innerHTML = [
-  ['Riders are bunched', `Half of the weekday riders, getting on or off, use ${D.half} of the ${D.nstops} stops the City clears. The 3 busiest (${D.top3.names.join(', ')}) see more riders than the ${D.top3.quiet} quietest stops together.`],
-  ['One goal', 'The most riders at a clear stop, as fast as possible. We measure it as the average wait for a rider\'s stop: each stop\'s hour, counted once for every person who gets on or off there on a weekday. Someone stepping off the bus needs a clear stop too, and they often get off across the street from where they got on.'],
-  ['Follow the street', `The bobcats drive along the bus routes at about ${mph} mph, stop to stop. A crew never drives past a waiting stop of its own: it clears it.`],
-  ['One street at a time', `A crew clears one side of a street the way the bus goes, then crosses the road (${A.turn_min} min) at the end of its part of the street and clears the other side on the way back. Only then does it move on to another street. To get somewhere, it may drive back along a street it cleared.`],
-  ['Busiest run first', `Crews start at busy stops spread across the city. When a run is done, a crew heads where the next few waiting stops of its own along the street clear the most riders per minute: the driving plus ${A.service_min} minutes a stop.`],
-  ['One crew per street', `Each street is cut into stretches of up to ${A.stretch_stops} stops, both sides. The first crew to clear a stop on a stretch owns it; no other crew clears its stops. So two crews never work the same street at the same place. A long street like Broadway can go to two crews, in two whole pieces. Every build checks this.`],
-  ['No jumping around', `A jump is a drive over ${(A.jump_m / 1000).toFixed(1)} km to the next stop: a crew moving to a different place, slow and costly. After planning the day stop by stop, the model looks at the whole day and moves stretches and pieces of a crew's day between and within crews, keeping a change when it lowers the score: the average wait, plus ${A.jump_min} minutes for every jump, ${A.jump_km_min} for every km of jumps or of driving along another crew's streets, ${A.break_min} every time a crew leaves a street before its own stops there are clear, and ${A.finish_w} for every minute until the last stop is clear.`],
-  ['Then the nearest', `Once stops with ${Math.round(A.sweep_after * 100)}% of riders are clear, each crew takes the nearest waiting stop, so no one drives across town for the last few. That keeps driving below route by route.`],
-].map(([h, p]) => `<div><b>${h}</b>${p}</div>`).join('');
+// ---------- save and share ----------
+const msg = (t) => { $('#savemsg').textContent = t; };
+$('#export').addEventListener('click', () => {
+  const out = { settings, cur, plans: plans.map((p) => ({ ...p, names: p.routes.map((r) => r.map((id) => byId[id].n)) })) };
+  const blob = new Blob([JSON.stringify(out, null, 1)], { type: 'application/json' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'bus-stop-routes.json'; a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  msg('Saved bus-stop-routes.json.');
+});
+$('#import').addEventListener('change', (e) => {
+  const f = e.target.files[0]; if (!f) return;
+  f.text().then((t) => { const n = plans.length; apply(JSON.parse(t), true); sel = 0; drawStops(); changed(); msg(`Added ${plans.length - n} plan(s) from ${f.name}. Your settings are unchanged.`); })
+    .catch(() => msg('That file could not be read.'));
+  e.target.value = '';
+});
+$('#copylink').addEventListener('click', () => {
+  const b64 = btoa(unescape(encodeURIComponent(JSON.stringify({ settings, plans, cur }))));
+  const url = location.origin + location.pathname + '#plan=' + encodeURIComponent(b64);
+  const done = () => msg('Link copied. Whoever opens it gets all these plans and settings (replacing theirs).');
+  if (navigator.clipboard) navigator.clipboard.writeText(url).then(done, () => { prompt('Copy this link:', url); });
+  else prompt('Copy this link:', url);
+});
+$('#startover').addEventListener('click', () => {
+  if (!confirm('Delete every plan and start with one empty plan?')) return;
+  plans = [emptyPlan('Plan 1', D.settings.crews)]; cur = 0; routes = plans[0].routes; sel = 0; changed(); msg('Started over.');
+});
 
-// each crew's day on a small map: early stops rust, late ones slate
-const base = D.wards.map((rs) => rs.map((r) => `<path d="${pathD(r)}Z" fill="#DCE8F5" stroke="#1A3A5F" stroke-width="1.5" vector-effect="non-scaling-stroke"/>`).join('')).join('')
-  + '<g clip-path="url(#city)" fill="none" stroke="#fff" stroke-width="1.6" vector-effect="non-scaling-stroke">' + Object.values(D.routes).map((ps) => ps.map((p) => `<path d="${pathD(p)}" vector-effect="non-scaling-stroke"/>`).join('')).join('') + '</g>';
-const mix = (f) => { const a = [0xB9, 0x3D, 0x06], b = [0x47, 0x60, 0x7C]; return '#' + a.map((v, i) => Math.round(v + (b[i] - v) * f).toString(16).padStart(2, '0')).join(''); };
-const dayEnd = Math.max(...D.stops.map((b) => b.riders.h));
-function crewMap(day) {
-  let lines = '', dots = '', labels = '';
-  day.forEach(([sid, path, h], i) => {
-    const b = byId[sid], [x, y] = px(b.x, b.y), col = mix(h / dayEnd);
-    if (i) { const ps = pieces(day[i - 1][0], path); lines += `<path d="${piecesD(ps, false)}" stroke="${col}" stroke-width="3.5" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><path d="${piecesD(ps, true)}" stroke="${col}" stroke-width="3.5" stroke-dasharray="1 6" stroke-linecap="round" vector-effect="non-scaling-stroke"/>`; }
-    dots += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(5 + Math.sqrt(b.r) / 2).toFixed(1)}" fill="${col}" stroke="#fff" stroke-width="1.2" vector-effect="non-scaling-stroke"/>`;
-    if (i < 5) labels += `<g transform="translate(${x.toFixed(1)} ${(y - 26).toFixed(1)})"><circle r="17" fill="#10243A" stroke="#fff" stroke-width="1.5" vector-effect="non-scaling-stroke"/><text y="7" text-anchor="middle" font-size="20" font-weight="700" fill="#fff" font-family="Barlow, sans-serif">${i + 1}</text></g>`;
-  });
-  return `<svg class="cmap" viewBox="-20 -40 ${W + 40} ${H + 60}" role="img" aria-label="This crew's day on the map">${base}<g fill="none" stroke-linecap="round">${lines}</g>${dots}${labels}</svg>`;
-}
-$('#crews').innerHTML = D.days.riders.map((day, k) => {
-  const sts = day.map(([sid]) => byId[sid]), last = day[day.length - 1][2];
-  const dist = day.reduce((a, e) => a + e[3], 0) / 1000, jumps = day.filter((e) => e[3] > A.jump_m).length;
-  const riders = sts.reduce((a, b) => a + b.r, 0);
-  return `<div class="panel"><div class="k">Crew ${k + 1}</div>${crewMap(day)}<ol>${sts.slice(0, 5).map((b) => `<li>${b.n}<br><small>${b.r.toLocaleString()} weekday riders (on + off), clear by hour ${b.riders.h.toFixed(1)}</small></li>`).join('')}</ol>
-    <p class="note">${sts.length} stops in all (${riders.toLocaleString()} riders), ${dist.toFixed(0)} km of driving, ${jumps} ${jumps === 1 ? 'jump' : 'jumps'}, the last clear by hour ${last.toFixed(1)}.</p></div>`;
-}).join('');
+// ---------- how it works ----------
+$('#how').innerHTML = [
+  `<b>Stops and riders.</b> The ${D.stops.filter((s) => !s.mbta).length} MBTA bus stops in Somerville the City clears (the MBTA clears the ${D.stops.filter((s) => s.mbta).length} on route 109 itself), with their average weekday riders (${D.season}): people getting on, plus people getting off unless you turn that off. The City says it clears 281 stops; we can only show the ones the MBTA lists.`,
+  '<b>Streets.</b> Crews drive only along the bus routes. Each side of a street runs the way the bus goes, and a crew may also drive back along it. Stops within 60 m of each other are across the street: going between them costs the crossing minutes. Where a route leaves the city, the crew turns around like the bus. Two Boston Ave stops at the Medford line and the Assembly Row loop are reached through a short link with no street data (dotted).',
+  '<b>The day.</b> Each crew starts at its first stop at hour 0 (getting there from the yard isn\'t counted) and works through its list in order: the quickest drive along the streets to the next stop, then the minutes to clear it. Hours are hours of work, not clock time.',
+  '<b>The scores.</b> Average wait for a rider\'s stop: the hour each stop in a route is clear, counted once for every rider there. Riders\' stops clear after 2 and 4 hours: a share of all riders, so stops in no route count as never clear. A jump is a drive longer than the jump distance. "Drives past a stop still waiting" counts each time a crew\'s drive goes through a stop that isn\'t clear yet, its own or another crew\'s: a sign the order could be better.',
+  '<b>Plans.</b> Each plan has its own crews and routes; the settings are shared, so every plan is scored on the same terms. "Compare plans" lists them side by side, and the chart draws one line per plan.',
+  '<b>Saving.</b> Plans and settings are saved in this browser only; nobody else sees them unless you export a file or copy a link.',
+  '<b>What we need from the City.</b> Its list of 281 stops and its 4 routes; how many bobcats and crews clear bus stops; how long a stop takes; where the crews start. From the MBTA: which stops on routes 77 and 104 it clears.',
+].map((t) => `<li>${t}</li>`).join('');
 
-const cuts = [{ route: { wait: R.avg_wait_h }, riders: { wait: F.avg_wait_h } }, ...D.sens].map((r) => 1 - r.riders.wait / r.route.wait);
-$('#sensnote').textContent = `Each row changes one assumption. Riders first still cuts the average wait by at least ${Math.floor(Math.min(...cuts) * 100)}%.`;
-$('#sens').innerHTML = '<tr><th>Change</th><th>Average wait</th><th>Riders\' stops clear after 4 h</th><th>All stops clear</th></tr>'
-  + [{ label: 'As modeled', route: { wait: R.avg_wait_h, h4: R.share_by[4], finish: R.finish_h }, riders: { wait: F.avg_wait_h, h4: F.share_by[4], finish: F.finish_h } }, ...D.sens]
-    .map((r) => `<tr><td>${r.label}</td><td class="n">${hrs(r.route.wait)} → <b>${hrs(r.riders.wait)}</b></td><td class="n">${pct(r.route.h4)} → <b>${pct(r.riders.h4)}</b></td><td class="n">${hrs(r.route.finish)} → <b>${hrs(r.riders.finish)}</b></td></tr>`).join('');
-
-$('#assume').innerHTML = '<tr><th>Assumption</th><th>Value</th><th>Why</th></tr>' + [
-  ['Crews on bus stops', A.crews, 'The City clears its stops in "4 Routes" (snow page). The real number of bobcats is not published.'],
-  ['Time to clear one stop', A.service_min + ' min', 'Boarding area, shelter and bench. A guess: please correct it.'],
-  ['Bobcat speed between stops', `about ${mph} mph`, 'A slow, safe speed for a small loader in traffic.'],
-  ['Streets', 'Along the bus routes', 'Each side of the street is cleared the way the bus goes, stop to stop, along the route; a crew may drive back along a street to get somewhere. Stops more than ' + (A.max_link_m / 1000).toFixed(1) + ' km apart on a route aren\'t linked (stops must be missing in between). Side streets aren\'t modeled.'],
-  ['Crossing the road', A.turn_min + ' min', 'To clear the stop across the street (within ' + A.cross_m + ' m), a crew crosses the road; where a route leaves the city, it turns around like the bus. These are small roads.'],
-  ['A jump', (A.jump_m / 1000).toFixed(1) + ' km', `A drive longer than this to the next stop, past stops already clear: a crew moving to a different place. When planning, each jump counts as ${A.jump_min} minutes of every rider's wait, plus ${A.jump_km_min} a km (the hours shown are real driving time).`],
-  ['A stretch', 'Up to ' + A.stretch_stops + ' stops', 'A street\'s stops in order along it, both sides, cut into even pieces of at most this many. One crew clears each.'],
-  ['Start', 'Hour 0, at each crew\'s first stop', 'Getting the bobcats there from the yard isn\'t counted, the same for both plans.'],
-  ['Stops the MBTA clears', 'Route ' + A.mbta_routes.join(', '), `All ${D.nmbta} stops on route 109. The MBTA also clears some stops on 77 and 104; it doesn't say which, so we leave them to the City.`],
-  ['Which stops', D.nstops + ' MBTA stops', 'The City says it clears 281. We can only rank the stops the MBTA lists in Somerville.'],
-  ['Riders', D.season + ' weekdays', 'People getting on plus people getting off, on an average weekday. Someone getting off needs a clear stop as much as someone waiting.'],
-].map((r) => `<tr><td>${r[0]}</td><td class="n">${r[1]}</td><td>${r[2]}</td></tr>`).join('');
-
-$('#ask').innerHTML = [
-  'The list of the 281 stops the City clears, and its 4 routes.',
-  'How many bobcats and crews work on bus stops, and how long a stop takes.',
-  'How far a bobcat can drive between stops, and where the crews start.',
-  'Whether the MBTA\'s stops on routes 77 and 104 are on the City\'s list.',
-].map((x) => `<li>${x}</li>`).join('');
-
-draw();
+drawSettings(); drawStops(); changed();
 </script>
 </body>
 </html>

@@ -1,81 +1,67 @@
-# Which bus stops first?
+# Bus stop routes
 
-PTAC analysis of the order in which the City's bobcat crews could clear bus stops after a storm. Not a City plan.
+A PTAC tool for designing the routes the City's bobcat crews take to clear bus stops after a storm, and scoring them. Not a City plan.
 
-**See it live at [vitorpamplona.com/somersnow/bus-stops.html](https://vitorpamplona.com/somersnow/bus-stops.html)**, or open [`output/map.html`](output/map.html) in a browser, for the illustrated version: a map you can play hour by hour, the two plans side by side, each crew's day on a map, and the reasoning.
+**Open it at [vitorpamplona.com/somersnow/bus-stops.html](https://vitorpamplona.com/somersnow/bus-stops.html)**, or open [`output/map.html`](output/map.html) in a browser.
 
-## The goal
+## What it does
 
-The most riders at a clear stop, as fast as possible. We measure it as the **average wait for a rider's stop**: the hour each stop is clear, counted once for every person who gets on or off there on a weekday. Lower is better. People getting off count as much as people getting on: someone stepping off the bus needs a clear stop too, and riders often get off across the street from where they got on.
+An operator builds plans. Each plan has its own crews, and each crew a list of stops in the order it clears them:
 
-## The idea
+- **Build a route.** Pick a crew, then tap stops on the map in order, or add them by name. Tapping one of the crew's stops takes it off; tapping another crew's stop moves it to this crew. Reorder with ↑ / ↓, reverse a route, clear a crew, add or remove crews.
+- **Score it.** The page plays the day hour by hour on the map, each crew in its own color, and scores the plan:
+  - the average wait for a rider's stop (stops in a route);
+  - the share of riders whose stop is in a route, and whose stop is clear after 2 and 4 hours;
+  - when the last stop is clear;
+  - kilometers driven between stops;
+  - jumps (drives longer than the jump distance);
+  - times a crew drives past a stop that's still waiting.
 
-1. **Riders are bunched.** Half of the weekday riders (getting on or off) at the stops the City clears use 20 of its 189 stops. The 3 busiest (Davis, Clarendon Hill Busway, Holland St @ Dover St) see more riders than the 129 quietest stops together.
-2. **Follow the street.** The bobcats drive along the bus routes, stop to stop. A crew never drives past a waiting stop of its own: it clears it. It may drive past stops that are already clear, or that are another crew's.
-3. **One street at a time, both sides.** A crew keeps going along one side of a street, the way the bus goes, while the next stop ahead waits. At the end of its part of the street it crosses and clears the other side on the way back. Only then does it move on to another street. To get somewhere, a crew may also drive back along a street.
-4. **One crew per stretch of street.** Each street is cut into stretches of up to 10 stops, in order along it, both sides. The first crew to clear a stop on a stretch owns it: no other crew clears its stops, so two crews never work the same street at the same place. A long street like Broadway can go to two crews, in two whole pieces.
-5. **Busiest run first, then the nearest.** Crews start at busy stops at least 1.2 km apart. When a run is done, a crew heads where the next few waiting stops of its own along the street (up to 8) clear the most riders per minute of driving and clearing, leaving other crews the stops just ahead of them. Once stops with 70% of riders are clear, each crew takes the nearest.
-6. **No jumping around.** A jump is a drive of more than 800 m to the next stop, past stops already clear: a crew moving to a different place, which is slow, costly and annoying. Rules 1–5 plan the day one stop at a time and can't see that leaving a pocket behind forces a jump hours later. So the model then looks at the whole day: it tries moving each stretch, and each piece of a crew's day between two jumps, into every crew's day next to the stops closest to it (by driving and as the crow flies), either way round. It keeps a change when the score goes down: the average wait in minutes, plus 60 for every jump, plus 120 for every km of jumps or of driving along another crew's streets, plus 180 every time a crew leaves a street before its own stops there are clear, plus 2 for every minute until the last stop is clear (so no crew is left with a much longer day). Work is only ever inserted where a crew moves from one street to another, never in the middle of a street. It repeats until no move helps.
+  Each crew gets the same numbers, and every stop in the editor shows when it's clear, how far the crew drove to it, and whether that was a jump or passed waiting stops.
+- **Compare plans.** Make as many plans as you like, with different numbers of crews: new, copy, rename, delete. "Compare plans" lists every plan's scores side by side, and the chart draws one line per plan.
+- **Change the assumptions.** All plans share the settings, so they compare on the same terms:
+  - minutes to clear a stop (20);
+  - bobcat speed (5 mph);
+  - minutes to cross the road (1);
+  - the jump distance (800 m);
+  - whether people getting off count as riders (yes);
+  - whether route 109 stops, which the MBTA clears, are included (no).
+- **Save and share.** Plans and settings save in the browser as you go. Export them to a file and import a file to add its plans to yours. A copied link opens all the plans and settings in another browser.
 
-Every build checks the plan and stops with an error if two crews share a stretch of street or a crew comes back to a street after another crew's piece of it. `output/summary.md` lists the checks: jumps, driving back over the same link, driving along another crew's streets, and leaving a street unfinished.
+## How a plan is scored
 
-## Result
-
-Same 4 crews, same stops, same streets, different order (hours of work from when the crews start at their first stops; every number is in `output/summary.md`):
-
-| | Route by route (today, as modeled) | Riders first |
-| --- | --- | --- |
-| Average wait for a rider's stop | 7.7 h | 6.0 h |
-| Riders' stops clear after 2 h | 7% | 33% |
-| Riders' stops clear after 4 h | 17% | 44% |
-| All stops clear | 20.5 h | 19.2 h |
-| Distance driven | 84 km | 50 km |
-| Jumps (drives over 800 m to the next stop) | 18 | 5 |
-| Pairs of stops on one stretch cleared by different crews | 83 | 0 |
-| Driving along another crew's streets | 15 km | 0.2 km |
-| Leaving a street with own stops on it still waiting | 14 | 3 |
-
-Riders first gets riders their stop sooner, drives less, keeps each crew to its own streets and finishes one street, both sides, before the next. Its 5 jumps are 0.8 to 2.2 km; one ends a crew's day at the two Boston Ave stops on the Medford line (reached through Medford, drawn dotted), another takes a crew to the Assembly Row loop. The 3 streets left and come back to are where two streets cross (Prospect St and Webster Ave at Union Sq; Medford St and Pearl St). With any one assumption changed (2 or 6 crews, 10 or 30 minutes a stop, a bobcat at 3 or 8 mph), the average wait is always lower, by 20% (30 minutes a stop) to 38%; the last stop is clear sooner except with 30 minutes a stop (42 minutes later). `output/summary.md` also has the same comparison for 1 to 10 crews.
-
-## How the model works
-
-- **Stops:** the MBTA bus stops in Somerville with their average weekday riders (Fall 2025): people getting on plus people getting off. The 18 stops on route 109 are left out: the MBTA clears all of them itself. They stay on the street network, so crews can drive past them.
-- **Streets, one side at a time:** for clearing, each direction of a bus route is its own one-way leg. A stop belongs to the leg it stands on the right of (buses stop on the right), and to every leg that passes it, since branches share streets; a stop on the left of every leg of a route is served by buses running the other way on a pattern the route data doesn't carry, so it goes on that street driven the other way. Each stop links to the next one on its leg, in the bus's direction, at the route's own length. Stops more than 900 m apart on a leg aren't linked: a gap that long means stops are missing in between, and the link would let a crew skip them.
-- **Turning around:** a crew reaches the stop across the street (within 60 m) by crossing the road, which costs 1 minute (these are small roads). Where a leg leaves the city, the crew turns like the bus does, to the nearest stop of the same route's other direction. Where pieces still can't reach each other, the closest stops are linked both ways, preferring a stop on the same route (3 pairs: Assembly Row, Mystic Ave and Boston Ave at the Medford line). Crews take the quickest way along these links, and may drive back along a leg (against the bus) to get somewhere.
-- **On the map:** each link is drawn along the bus route's own shape between the two stops, so trails follow the street and share it where routes do. Both sides of a street follow the same line. Turnarounds and joining links are straight.
-- **Driving:** about 5 mph. **Clearing:** 20 minutes a stop (boarding area, shelter, bench).
-- **Start:** each crew begins at its first stop at hour 0. Getting the bobcats there from the yard isn't counted; it is the same for both plans.
-- **Route by route:** a stand-in for today's practice, since the City's 4 routes aren't published: whole bus routes, stop by stop in the order the bus runs, in route-number order, split among 4 crews so each has about the same number of stops.
-- **Riders first:** the rules above. The 10-stop stretches, the 800 m jump, the weights in the score, the 1.2 km spacing, the 8-stop lookahead (also how far ahead another crew's run is left to it) and the 70% switch were picked by trying a few values; they give sensible starting points and beat route by route on every measure.
-
-Every assumption is at the top of `build.py` (`A = {...}`); change one and rebuild. A build takes about two minutes (16 what-if plans, side by side), and the same inputs always give the same plan.
+- **Stops and riders:** the MBTA bus stops in Somerville with their average weekday riders (Fall 2025): people getting on plus, by default, people getting off. Someone stepping off the bus needs a clear stop too. The 18 stops on route 109 are off by default: the MBTA clears them itself.
+- **Streets:** crews drive only along the bus routes.
+  - Each direction of a route is its own leg. A stop belongs to the leg it stands on the right of (buses stop on the right), and to every leg that passes it.
+  - Each stop links to the next stop on its leg, at the route's own length. Stops more than 900 m apart aren't linked, because stops must be missing in between.
+  - A crew may also drive back along a leg.
+  - Stops within 60 m of each other are across the street; going between them costs the crossing minutes. So does turning where a leg leaves the city, like the bus.
+  - Two pieces that can't otherwise be reached are linked at their closest stops: the two Boston Ave stops at the Medford line, and the Assembly Row loop. These links are drawn dotted.
+- **The day:** each crew starts at its first stop at hour 0 (getting there from the yard isn't counted). It works through its list in order: the quickest drive along the streets to the next stop, then the minutes to clear it. Crews don't wait for each other. Hours are hours of work, not clock time.
+- **Driving past a waiting stop:** counted whenever a crew's drive goes through a stop that isn't clear yet at that moment, its own or another crew's, or one in no route. It's a sign the order could be better, not a rule the page enforces.
 
 ## Files
 
 | Path | What it is |
 | --- | --- |
-| `build.py` | The model. Python standard library only. Run `python3 analysis/bus-stop-clearing/build.py` from the repo root. |
-| `map_template.html` | The page; `build.py` fills in the data. |
-| `data/bus-stops.json` | Copy of `docs/data/bus-stops.json`: MBTA stops in Somerville, weekday boardings and alightings, routes and route shapes (from `scripts/fetch_data.py`). |
+| `build.py` | Builds the street network and writes the page. Python standard library only. Run `python3 analysis/bus-stop-clearing/build.py` from the repo root. The page's default settings are at its top (`SETTINGS`); the network's are in `A`. |
+| `map_template.html` | The page: map, route editor, plans, scoring, settings, saving. `build.py` fills in the data. |
+| `data/bus-stops.json` | Copy of `docs/data/bus-stops.json`: MBTA stops in Somerville, weekday boardings (`riders`) and alightings (`off`), routes and route shapes (from `scripts/fetch_data.py`). |
 | `data/wards.json` | Copy of `docs/data/wards.json`: ward outlines for the map. |
-| `output/plan.csv` | Every stop in each crew's order for both plans: meters and minutes driven to reach it, the stops it drives through on the way, and the hour it is clear. A list DPW could start from. |
-| `output/summary.md` | The headline numbers and the what-if table. |
-| `output/map.html` | The illustrated explainer (self-contained; open it in any browser). |
+| `output/map.html` | The page (self-contained; open it in any browser). |
 | `../../docs/bus-stops.html` | The same page on the public site, copied by `build.py`. Don't edit it by hand. |
 
 `build.py` copies the two data files from `docs/data/` each time it runs, so `npm run data` followed by this script uses the latest ridership.
 
 ## Limits
 
-- **Not the City's list.** The City says it clears 281 stops; the MBTA lists 207 in Somerville (189 without route 109). We can only rank stops we can see.
-- **Assumed times.** Crews, minutes a stop and bobcat speed are estimates. The what-if table shows riders get their stop sooner whichever one changes, but the hours, and how much sooner, do depend on them.
-- **Bus routes, not every street.** Crews drive only along bus routes (plus 3 joining links where routes don't meet). Side streets aren't modeled, so a crew sometimes drives back along a street it already cleared to get somewhere else; with side streets it could often take a shorter way. A crossing takes the same minute everywhere, even on McGrath Hwy.
+- **Not the City's list.** The City says it clears 281 stops; the MBTA lists 207 in Somerville (189 without route 109). The page can only show stops the MBTA lists.
+- **Bus routes, not every street.** Crews drive only along bus routes. Side streets aren't modeled, so some drives are longer than a real bobcat would take. A crossing takes the same minutes everywhere, even on McGrath Hwy.
 - **Averages, not storm days.** Riders are a normal fall weekday's. Who rides after a storm, and when, isn't known.
-- **No storm timing.** Hours are hours of work, not clock time; overnight pauses, shift changes and street plowing aren't modeled.
-- **Not the best possible order.** The plan comes from simple rules and a search that keeps the first change that helps, not a proven optimum; small changes to the settings move the hours, and sometimes which crew gets a stretch.
+- **No storm timing.** Overnight pauses, shift changes, breaks and street plowing aren't modeled.
 
 ## What would make it better
 
-From the City: its list of 281 stops and 4 routes; how many bobcats and crews clear bus stops; how long a stop takes; how far a bobcat can drive between stops and where the crews start. From the MBTA: which stops on routes 77 and 104 it clears.
+From the City: its list of 281 stops and its 4 routes, which could be loaded as a plan to score; how many bobcats and crews clear bus stops; how long a stop takes; where the crews start. From the MBTA: which stops on routes 77 and 104 it clears.
 
 Sources: weekday boardings and alightings by stop ([MBTA open data](https://mbta-massdot.opendata.arcgis.com/)); stops and routes ([MBTA V3 API](https://api-v3.mbta.com/)); route 109 cleared by the MBTA ([MBTA: bus service during winter storms](https://www.mbta.com/winter-weather/bus-service-during-winter-storms)); 281 stops in "4 Routes" ([City snow page](https://www.somervillema.gov/snow)); ward outlines (City GIS, `ym5n-phxd`).

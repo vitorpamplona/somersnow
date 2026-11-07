@@ -29,7 +29,7 @@ An operator builds plans. Each plan has its own crews, and each crew a list of s
   - Each direction of a route is its own leg. A stop belongs to the leg it stands on the right of (buses stop on the right), and to every leg that passes it.
   - Each stop links to the next stop on its leg, at the route's own length. Stops more than 900 m apart aren't linked, because stops must be missing in between.
   - A crew may also drive back along a leg.
-  - Stops within 60 m of each other are across the street; going between them costs the crossing minutes. So does turning where a leg leaves the city, like the bus.
+  - A crew can cross the street anywhere: from a stop to the stops just before and after it on the other side, measured along the street (like Somerville Ave @ Linden St to Somerville Ave @ Merriam St, 89 m). Stops within 60 m of each other are across the street too. Each crossing costs the crossing minutes. So does turning where a leg leaves the city, like the bus.
   - Stops within 300 m of each other that share no bus route (in a square, at a crossing, like Prospect St and Somerville Ave at Union Sq) get a short link both ways, counted 30% longer than the straight line for the corners. These are drawn straight.
   - The two Boston Ave stops at the Medford line, reached through Medford, are linked to College Ave @ Professors Row. That link is drawn dotted.
 - **The day:** each crew starts at its first stop at hour 0 (getting there from the yard isn't counted). It works through its list in order: the quickest drive along the streets to the next stop, then the minutes to clear it. Crews don't wait for each other. Hours are hours of work, not clock time.

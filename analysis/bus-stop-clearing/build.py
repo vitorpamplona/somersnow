@@ -14,8 +14,10 @@ The street network:
   * each stop links to the next stop on its leg, in the bus's direction, at the route's length
     (not when they're more than 900 m apart: stops must be missing in between);
   * a crew may also drive back along a leg (against the bus) to get somewhere;
-  * stops within 60 m of each other are across the street: crossing costs extra minutes, set
-    on the page; so does turning where a leg leaves the city, like the bus;
+  * a crew may cross the street anywhere: from a stop to the stops just before and after it on the
+    other side (a leg within 40 m running the other way), measured along the street; stops within
+    60 m are across the street too. Crossing costs extra minutes, set on the page; so does
+    turning where a leg leaves the city, like the bus;
   * stops within 300 m of each other that share no bus route (in a square, at a crossing) get a
     short link both ways, 30% longer than the straight line for the corners;
   * pieces that still can't reach each other are joined at their closest stops.
@@ -39,6 +41,7 @@ A = {
     'cross_m': 60,              # stops this close are across the street from each other
     'max_link_m': 900,          # longer gaps between stops on a route mean stops are missing in between: no link
     'on_route_m': 25,           # a stop this close to a leg is on it (branches share streets)
+    'street_m': 40,             # a leg this close to a stop, running the other way, is the other side of its street
     'near_m': 300,              # stops this close but not linked by a bus route (a square, a crossing) get a short link
     'near_detour': 1.3,         # ... counted this much longer than the straight line, for the corners
     'mbta_routes': ['109'],     # the MBTA clears every stop on these routes itself (mbta.com winter page)
@@ -127,6 +130,18 @@ def slice_path(path, x, y):
     return [[round(a, 5), round(b, 5)] for a, b in pts]
 
 
+def heading(path, x):
+    """The direction (a unit vector, in meters) a polyline runs at distance x along it."""
+    along = 0.0
+    for p, q in zip(path, path[1:]):
+        seg = meters(p, q)
+        if seg and along + seg >= x:
+            kx = 111320 * math.cos(math.radians(p[1]))
+            return ((q[0] - p[0]) * kx / seg, (q[1] - p[1]) * 110540 / seg)
+        along += seg
+    return (0.0, 0.0)
+
+
 GEO = {}                                          # (a, b) -> the street shape of the link from a to b
 AWAY = set()                                      # links that leave the city or the bus routes (no street shape)
 
@@ -134,8 +149,9 @@ AWAY = set()                                      # links that leave the city or
 def street_network(allstops, routes):
     """A one-way network: each bus route's stops on one side of the street, linked from each stop
     to the next in the direction the bus runs (by the route's own length, unless the gap is so
-    long that stops must be missing in between). Crossing to the stop on the other side of the
-    street is a 'turn' (the page adds its crossing minutes), and so is the end of a leg, where the
+    long that stops must be missing in between). Crossing the street is a 'turn' (the page adds its
+    crossing minutes): from each stop to the stops just before and after it on the other side,
+    along the street, and between stops within A['cross_m']. So is the end of a leg, where the
     bus leaves the city: the crew turns to the nearest stop of the same route's other direction.
     A crew may drive back along a leg ('back'). Where the network can't get from one part to
     another, the closest stops are joined both ways ('join'). Stops within A['near_m'] that share
@@ -165,6 +181,29 @@ def street_network(allstops, routes):
                 link(a, b, meters(P[a], P[b]), 'turn')
                 if meters(P[a], P[b]) > A['cross_m']:
                     AWAY.add((a, b))
+    mine = {}                                     # stop -> the legs it's on, and where along them
+    for _, path, seq in legs:
+        for x, t in seq:
+            mine.setdefault(t, []).append(heading(path, x))
+    for _, path, seq in legs:                     # cross the street anywhere: from a stop to the stops just
+        for a, own in mine.items():               # before and after it on the other side, along the street
+            if any(t == a for _, t in seq):
+                continue
+            x, off, _ = project(P[a], path)
+            h = heading(path, x)
+            if off > A['street_m'] or not any(h[0] * o[0] + h[1] * o[1] < -0.7 for o in own):
+                continue
+            before = [(y, b) for y, b in seq if y <= x]
+            after = [(y, b) for y, b in seq if y > x]
+            for y, b in before[-1:] + after[:1]:
+                m = abs(y - x)
+                if m > A['max_link_m']:
+                    continue
+                along = slice_path(path, min(x, y), max(x, y))
+                if y < x:
+                    along = along[::-1]
+                link(a, b, m, 'turn', [list(P[a])] + along)
+                link(b, a, m, 'turn', along[::-1] + [list(P[a])])
     ids = list(G)
     for i, a in enumerate(ids):
         for b in ids[i + 1:]:

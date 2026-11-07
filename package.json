@@ -12,7 +12,8 @@
     "pages": "python3 scripts/build_pages.py",
     "verify": "node scripts/verify.mjs",
     "flyer": "node scripts/render-flyer.mjs",
-    "letter": "python3 scripts/build_letter.py && node scripts/print-letter.mjs"
+    "letter": "python3 scripts/build_letter.py && node scripts/print-letter.mjs",
+    "trips": "python3 analysis/bus-trips/build.py"
   },
   "license": "MIT",
   "devDependencies": {

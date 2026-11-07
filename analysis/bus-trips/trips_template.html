@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Where bus riders go · Somerville</title>
+<meta name="description" content="Pick a bus stop on Somerville's bus routes and see about where its riders get off, on a weekday, Saturday or Sunday. An estimate from the MBTA's counts.">
+<meta property="og:title" content="Where bus riders go · Somerville">
+<meta property="og:description" content="Pick a bus stop and see about where its riders get off. An estimate from the MBTA's counts.">
+<meta name="theme-color" content="#10243A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#10243A;--panel:#1A3A5F;--snow:#EEF3F7;--orange:#FF8A3D;--rust:#B93D06;--ice:#A9C4E4;--mute:#47607C;
+  --display:'Barlow Condensed',Arial Narrow,sans-serif;--body:'Barlow',Arial,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--navy);color:#fff;font:16px/1.5 var(--body)}
+a{color:var(--orange)}
+.bar{background:#0A1929;border-bottom:1px solid rgba(169,196,228,.2)}
+.bar div{padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.bar a{color:#fff;text-decoration:none}
+.bar .brand{font-family:var(--display);font-weight:800;font-size:22px;text-transform:uppercase;letter-spacing:1px;white-space:nowrap}
+.bar .brand span{color:var(--orange)}
+.bar nav{display:flex;align-items:center;gap:14px}
+.bar nav a{color:var(--ice);font-size:15px;white-space:nowrap}
+.bar .short{display:none}
+.apptitle{font-family:var(--display);font-weight:800;font-size:20px;text-transform:uppercase;letter-spacing:1px;margin-right:auto;margin-left:18px}
+.apptitle small{font-family:var(--body);font-weight:500;font-size:13px;letter-spacing:0;text-transform:none;color:var(--ice);margin-left:8px}
+.btn{border:1px solid var(--ice);background:none;color:#fff;font:600 14px var(--body);padding:6px 12px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.btn:hover{background:rgba(169,196,228,.15)}
+.app{display:grid;grid-template-columns:minmax(0,1fr) 400px;height:calc(100vh - 56px);min-height:480px}
+@media (min-width:1001px){body{height:100vh;overflow:hidden;display:flex;flex-direction:column}.app{flex:1;height:auto;min-height:0}}
+.mapcol{position:relative;background:#0B1C2E;overflow:hidden}
+#map{width:100%;height:100%;display:block;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+#map.grabbing{cursor:grabbing}
+#map path,#map line{vector-effect:non-scaling-stroke}
+.town{fill:#C8D6E5;stroke:#0B1C2E;stroke-width:1.2px}
+.town.home{fill:var(--snow)}
+.tlab{font-family:var(--display);font-weight:800;text-transform:uppercase;letter-spacing:.12em;fill:#7B93AE;pointer-events:none;text-anchor:middle}
+.tlab.home{fill:var(--mute)}
+.route{fill:none;stroke:#5E7894;stroke-width:1.6px;stroke-opacity:.55;stroke-linejoin:round}
+.rapid{fill:none;stroke-width:3px;stroke-linejoin:round;stroke-linecap:round;opacity:.75}
+.flow{fill:none;stroke-linecap:round;pointer-events:visibleStroke;cursor:pointer}
+.mapctl{position:absolute;top:12px;right:12px;display:flex;flex-direction:column;gap:6px}
+.mapctl button{width:40px;height:40px;border-radius:10px;border:0;background:rgba(16,36,58,.92);color:#fff;font:700 20px var(--body);cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.3)}
+.legend{position:absolute;top:12px;left:12px;max-width:280px;background:rgba(16,36,58,.92);border-radius:12px;padding:8px 12px;font-size:13px;color:var(--snow);box-shadow:0 2px 10px rgba(0,0,0,.3)}
+.legend summary{cursor:pointer;font-family:var(--display);font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--ice)}
+.legend span{display:flex;align-items:center;gap:8px;margin-top:5px}
+.legend svg{flex:none}
+.side{overflow:auto;padding:14px 16px 24px;border-left:1px solid rgba(169,196,228,.2);background:var(--navy)}
+.lede{font-family:var(--display);font-weight:800;font-size:26px;text-transform:uppercase;line-height:1.05;margin:2px 0 6px}
+.note{color:var(--ice);font-size:14px;margin:0 0 10px}
+.seg{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.seg button{border:1px solid rgba(169,196,228,.5);background:none;color:#fff;font:600 14px var(--body);padding:6px 12px;border-radius:999px;cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--snow);color:var(--navy);border-color:var(--snow)}
+.seglab{color:var(--ice);font:600 12px var(--body);text-transform:uppercase;letter-spacing:1px;margin-top:10px}
+.find{display:flex;gap:6px;margin:10px 0 4px}
+.find input{flex:1;min-width:0;font:15px var(--body);padding:8px 10px;border-radius:8px;border:1px solid var(--ice);background:var(--navy);color:#fff}
+.card{background:var(--panel);border-radius:14px;padding:12px 14px;margin-top:12px}
+.card h3{font-family:var(--display);font-size:22px;text-transform:uppercase;letter-spacing:.5px;margin:0;line-height:1.1;display:flex;gap:8px;align-items:flex-start;justify-content:space-between}
+.card h3 button{flex:none;border:0;background:var(--navy);color:#fff;width:30px;height:30px;border-radius:8px;cursor:pointer;font-size:16px}
+.card .sub{color:var(--ice);font-size:14px;margin:2px 0 8px}
+.big{font-family:var(--display);font-weight:800;font-size:34px;line-height:1;color:var(--orange)}
+.big small{display:block;font-family:var(--body);font-weight:500;font-size:14px;color:var(--snow);margin-top:4px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 2px}
+.chip{display:inline-flex;align-items:center;gap:6px;border:2px solid transparent;background:var(--navy);color:#fff;font:600 13px var(--body);padding:4px 10px;border-radius:999px;cursor:pointer}
+.chip i{width:10px;height:10px;border-radius:50%}
+.chip small{color:var(--ice);font-weight:500}
+.chip[aria-pressed=true]{border-color:#fff}
+.towns{margin:10px 0 0;padding:0;list-style:none;font-size:14px}
+.towns li{display:grid;grid-template-columns:96px minmax(0,1fr) 52px;gap:8px;align-items:center;margin:3px 0}
+.towns .b{height:10px;border-radius:5px;background:var(--orange);min-width:2px}
+.towns .p{text-align:right;color:var(--ice);font-variant-numeric:tabular-nums}
+#list{list-style:none;margin:6px 0 0;padding:0;font-size:14px}
+#list li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:7px 6px;border-bottom:1px solid rgba(169,196,228,.18);cursor:pointer;border-radius:6px}
+#list li:hover,#list li.hover{background:rgba(169,196,228,.1)}
+#list li small{display:block;color:var(--ice)}
+#list li .n{font-family:var(--display);font-weight:700;font-size:18px;color:var(--orange);font-variant-numeric:tabular-nums;text-align:right}
+#list li .mini{height:4px;border-radius:2px;background:var(--orange);opacity:.7;margin-top:3px}
+.more{margin-top:8px}
+details.how{margin-top:16px;font-size:14px;color:var(--snow)}
+details.how summary{cursor:pointer;font-family:var(--display);font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--ice)}
+details.how p{margin:6px 0}
+.about{border-top:1px solid rgba(169,196,228,.25);padding-top:10px;margin-top:16px;font-size:13px;color:var(--ice)}
+#tip{position:fixed;pointer-events:none;background:var(--snow);color:var(--navy);border-radius:10px;padding:8px 10px;font-size:14px;max-width:290px;box-shadow:0 6px 24px rgba(0,0,0,.35);display:none;z-index:5;line-height:1.35}
+#tip b{display:block}
+@media (max-width:1000px){
+  .app{display:block;height:auto;min-height:0}
+  .mapcol{height:62vh;min-height:340px}
+  .side{border-left:0;overflow:visible}
+  .legend{max-width:200px}
+}
+@media (max-width:560px){.bar .brand{font-size:18px}.apptitle{display:none}.bar .long{display:none}.bar .short{display:inline}}
+</style>
+</head>
+<body>
+<header class="bar"><div><a class="brand" href="https://vitorpamplona.com/somersnow/">Somerville <span>Snow</span></a><span class="apptitle">Where bus riders go <small>PTAC · an estimate, not an MBTA page</small></span><nav><a href="https://vitorpamplona.com/somersnow/"><span class="long">Back to the guide</span><span class="short">Guide</span></a></nav></div></header>
+<div class="app">
+  <div class="mapcol">
+    <svg id="map" role="img" aria-label="Map of Somerville's bus routes and the cities and towns they reach. Pick a stop to see where its riders get off.">
+      <g id="gtowns"></g><g id="glabels"></g><g id="grapid"></g><g id="groutes"></g><g id="gflows"></g><g id="gstops"></g><g id="ghl"></g>
+    </svg>
+    <details class="legend" open>
+      <summary>Map key</summary>
+      <span><svg width="22" height="14"><circle cx="11" cy="7" r="4.5" fill="#fff" stroke="#47607C" stroke-width="1.5"/></svg>A bus stop (bigger: more riders)</span>
+      <span><svg width="22" height="14"><path d="M2 12 Q11 0 20 12" fill="none" stroke="#FF8A3D" stroke-width="4" stroke-linecap="round"/></svg>Riders of the stop you picked (thicker: more), colored by route. Lines show where they go, not the street.</span>
+      <span><svg width="22" height="14"><line x1="2" y1="7" x2="20" y2="7" stroke="#DA291C" stroke-width="3"/></svg>Subway</span>
+    </details>
+    <div class="mapctl">
+      <button id="zin" title="Zoom in" aria-label="Zoom in">+</button>
+      <button id="zout" title="Zoom out" aria-label="Zoom out">−</button>
+      <button id="zfit" title="Show it all" aria-label="Show it all">⤢</button>
+    </div>
+  </div>
+  <aside class="side">
+    <p class="lede" id="lede">Where do bus riders go?</p>
+    <p class="note">Pick a stop on the map, or find one. <b style="color:var(--snow)">An estimate</b> from the MBTA's counts of people getting on and off.</p>
+    <div class="seglab">Day</div>
+    <div class="seg" id="days"></div>
+    <div class="seglab">Show</div>
+    <div class="seg" id="dirs">
+      <button data-dir="off" aria-pressed="true">Where riders get off</button>
+      <button data-dir="on" aria-pressed="false">Where they got on</button>
+    </div>
+    <form class="find" id="find"><input id="q" list="stoplist" placeholder="Find a stop: Davis, Union Sq…" aria-label="Find a stop"><datalist id="stoplist"></datalist><button class="btn">Go</button></form>
+    <div id="panel"></div>
+    <details class="how">
+      <summary>How it's estimated</summary>
+      <p>The MBTA counts, for every scheduled trip, how many people get on and off at each stop (an average of the season's counts). It doesn't say which rider got off where.</p>
+      <p>So, trip by trip, we assume everyone on the bus is equally likely to get off at the next stop: the people getting off are a mix of everyone on board, in proportion to where they got on. Whoever is still on at the end gets off there. Adding up every trip of the day gives about how many riders go from each stop to each other stop.</p>
+      <p>It shows where riders leave the bus, not where they end up: many who get off at Davis, Sullivan, Harvard or Lechmere change to the subway. Only these routes are counted, so a trip with a transfer shows as two.</p>
+      <p>Routes, stops and lines are drawn as they ran in <span class="season"></span>. The ridership file's "Bennett Alley" (a layover before Harvard's upper busway, not a stop in the schedule) is counted at Harvard.</p>
+    </details>
+    <div class="about">
+      Sources: <a href="https://mbta-massdot.opendata.arcgis.com/datasets/8daf4a33925a4df59183f860826d29ee">MBTA bus ridership by trip, season, route and stop</a> (<span class="season"></span>, average per trip); <a href="https://www.mbta.com/developers/gtfs">MBTA schedule (GTFS)</a> from the <a href="https://cdn.mbta.com/archive/archived_feeds.txt">MBTA's feed archive</a>, <span id="feed"></span>; town outlines: <a href="https://www.mass.gov/info-details/massgis-data-municipalities">MassGIS</a>. Made by the Somerville Pedestrian &amp; Transit Advisory Committee (PTAC). Not an MBTA or City page. <a href="https://github.com/vitorpamplona/somersnow/tree/main/analysis/bus-trips">Method and code</a>.
+    </div>
+  </aside>
+</div>
+<div id="tip"></div>
+<script>
+const D = /*DATA*/null;
+const $ = (s) => document.querySelector(s);
+const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const COLORS = ['#1F6FB2', '#B93D06', '#2E7D32', '#7B3FA0', '#C2185B', '#8D6E00', '#00838F', '#5D4037', '#E65100', '#283593', '#AD1457', '#33691E', '#4527A0', '#00695C', '#BF360C'];
+const routeColor = (r) => COLORS[r % COLORS.length];
+const S = D.stops, R = D.routes, N = S.length;
+const dayName = (d) => d === 'Wkdy' ? 'weekday' : D.days[d];
+const fmt = (x) => x < 0.95 ? '<1' : Math.round(x).toLocaleString();
+document.querySelectorAll('.season').forEach((e) => { e.textContent = D.season; });
+$('#feed').textContent = `${D.feed.slice(0, 4)}-${D.feed.slice(4, 6)}-${D.feed.slice(6)}`;
+
+// ---------- state ----------
+let day = 'Wkdy', dir = 'off', pick = null, onlyRoute = null, showAll = false, hoverId = null;
+const byId = Object.fromEntries(S.map((s, i) => [s.id, i]));
+function readHash() {
+  const H = new URLSearchParams(location.hash.slice(1));
+  day = D.days[H.get('day')] ? H.get('day') : 'Wkdy';
+  dir = H.get('show') === 'on' ? 'on' : 'off';
+  pick = H.get('stop') in byId ? byId[H.get('stop')] : null;
+  onlyRoute = null; showAll = false;
+}
+readHash();
+function saveHash() {
+  const p = new URLSearchParams();
+  if (pick !== null) p.set('stop', S[pick].id);
+  if (day !== 'Wkdy') p.set('day', day);
+  if (dir === 'on') p.set('show', 'on');
+  history.replaceState(null, '', p.toString() ? '#' + p : location.pathname + location.search);
+}
+
+// per day: outgoing flows (from the data), incoming flows (built once), riders on and off at each stop
+const CACHE = {};
+function dayData(d) {
+  if (CACHE[d]) return CACHE[d];
+  const out = Array.from({ length: N }, () => []), inn = Array.from({ length: N }, () => []);
+  const on = new Float64Array(N), off = new Float64Array(N);
+  for (const [a, list] of Object.entries(D.flows[d])) {
+    for (const [b, r, n10] of list) { const n = n10 / 10; out[+a].push([b, r, n]); inn[b].push([+a, r, n]); on[+a] += n; off[b] += n; }
+  }
+  inn.forEach((l) => l.sort((x, y) => y[2] - x[2]));
+  return (CACHE[d] = { out, inn, on, off });
+}
+
+// ---------- map ----------
+const map = $('#map');
+const ext = (() => { let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity; S.forEach((s) => { x0 = Math.min(x0, s.p[0]); y0 = Math.min(y0, s.p[1]); x1 = Math.max(x1, s.p[0]); y1 = Math.max(y1, s.p[1]); }); return [x0, y0, x1, y1]; })();
+let VB = [0, 0, 1, 1], FITW = 1;
+const zoom = () => FITW / VB[2];
+const pathD = (pts) => 'M' + pts.map((p) => p[0] + ' ' + p[1]).join('L');
+function setView(vb, full) {
+  VB = vb; map.setAttribute('viewBox', vb.map((v) => v.toFixed(1)).join(' '));
+  if (full) { drawLabels(); drawStops(); drawFlows(); }
+  drawHL();
+}
+function fitView() {
+  const r = map.getBoundingClientRect(), pad = 0.06;
+  const w = (ext[2] - ext[0]) * (1 + 2 * pad), h = (ext[3] - ext[1]) * (1 + 2 * pad);
+  const k = Math.max(w / r.width, h / r.height), cx = (ext[0] + ext[2]) / 2, cy = (ext[1] + ext[3]) / 2;
+  FITW = r.width * k;
+  setView([cx - r.width * k / 2, cy - r.height * k / 2, r.width * k, r.height * k], true);
+}
+function toMap(cx, cy) { const m = map.getScreenCTM(); return [(cx - m.e) / m.a, (cy - m.f) / m.d]; }
+function zoomAt(f, cx, cy) {
+  const z = Math.min(40, Math.max(0.8, zoom() * f)), w = FITW / z, h = VB[3] * w / VB[2];
+  const [mx, my] = toMap(cx, cy), r = map.getBoundingClientRect();
+  setView([mx - (cx - r.left) / r.width * w, my - (cy - r.top) / r.height * h, w, h], true);
+}
+const px = () => VB[2] / map.getBoundingClientRect().width;   // map units per screen pixel
+
+// towns (drawn once), with Somerville lighter
+$('#gtowns').innerHTML = D.towns.map((t) => `<path class="town${t.n === 'Somerville' ? ' home' : ''}" d="${t.rings.map((r) => pathD(r) + 'Z').join('')}"/>`).join('');
+const TOWNLAB = D.towns.map((t) => {
+  const r = t.rings.reduce((a, b) => (b.length > a.length ? b : a));
+  let x = 0, y = 0; r.forEach((p) => { x += p[0]; y += p[1]; });
+  return { n: t.n, x: x / r.length, y: y / r.length };
+});
+function drawLabels() {
+  const k = px();
+  $('#glabels').innerHTML = TOWNLAB.map((t) => `<text class="tlab${t.n === 'Somerville' ? ' home' : ''}" x="${t.x.toFixed(0)}" y="${t.y.toFixed(0)}" font-size="${(t.n === 'Somerville' ? 15 : 13) * k}">${esc(t.n)}</text>`).join('');
+}
+$('#grapid').innerHTML = D.rapid.map((r) => r.paths.map((p) => `<path class="rapid" stroke="${r.color}" d="${pathD(p)}"/>`).join('')).join('');
+$('#groutes').innerHTML = R.map((r, i) => r.paths.map((p) => `<path class="route" data-r="${i}" d="${pathD(p)}"/>`).join('')).join('');
+
+// stops, dots and lines shrink when the map is small or zoomed out, so they don't run together
+const scale = () => Math.min(1, Math.max(0.4, 0.85 * Math.sqrt(zoom()) * Math.min(1, map.getBoundingClientRect().width / 1000)));
+const radius = (n) => (2.5 + Math.sqrt(n) / 3.2) * scale();   // in screen pixels
+function drawStops() {
+  const dd = dayData(day), k = px(), lit = litStops();
+  let html = '';
+  for (let i = 0; i < N; i++) {
+    if (lit && lit.has(i)) continue;
+    const s = S[i], n = dd.on[i] + dd.off[i];
+    if (onlyRoute !== null && !s.r.includes(onlyRoute)) continue;
+    html += `<circle cx="${s.p[0]}" cy="${s.p[1]}" r="${(radius(n / 2) * k).toFixed(1)}" fill="${pick === null ? '#fff' : '#E6EDF4'}" stroke="#47607C" stroke-width="${(1.2 * k).toFixed(2)}" opacity="${pick === null ? 1 : 0.7}"/>`;
+  }
+  $('#gstops').innerHTML = html;
+}
+// the flows from (or to) the picked stop, by route
+function flowsNow() {
+  if (pick === null) return [];
+  const dd = dayData(day), l = dir === 'off' ? dd.out[pick] : dd.inn[pick];
+  return onlyRoute === null ? l : l.filter((f) => f[1] === onlyRoute);
+}
+function litStops() {
+  if (pick === null) return null;
+  const set = new Set(flowsNow().map((f) => f[0])); set.add(pick); return set;
+}
+function byStop(flows) {                              // riders per other stop, all routes together
+  const m = new Map();
+  flows.forEach(([b, r, n]) => { const e = m.get(b) || { b, n: 0, r: new Map() }; e.n += n; e.r.set(r, (e.r.get(r) || 0) + n); m.set(b, e); });
+  return [...m.values()].sort((a, b) => b.n - a.n);
+}
+function drawFlows() {
+  const k = px(), fl = flowsNow();
+  if (pick === null) { $('#gflows').innerHTML = ''; return; }
+  const max = Math.max(1, ...fl.map((f) => f[2])), o = S[pick].p, sc = scale();
+  const arcs = fl.slice().sort((a, b) => a[2] - b[2]).map(([b, r, n]) => {
+    const t = S[b].p, [a0, a1] = dir === 'off' ? [o, t] : [t, o];
+    const mx = (a0[0] + a1[0]) / 2, my = (a0[1] + a1[1]) / 2, dx = a1[0] - a0[0], dy = a1[1] - a0[1];
+    const cx = mx - dy * 0.18, cy = my + dx * 0.18, w = 1 + 9 * Math.sqrt(n / max) * sc;
+    return `<path class="flow" data-b="${b}" data-r="${r}" data-n="${n}" d="M${a0[0]} ${a0[1]}Q${cx.toFixed(0)} ${cy.toFixed(0)} ${a1[0]} ${a1[1]}" stroke="${routeColor(r)}" stroke-width="${w.toFixed(1)}" stroke-opacity="0.78"/>`;
+  }).join('');
+  const ends = byStop(fl), emax = Math.max(1, ...ends.map((e) => e.n));
+  const dots = ends.slice().reverse().map((e) => {
+    const p = S[e.b].p;
+    return `<circle cx="${p[0]}" cy="${p[1]}" r="${((3 + 9 * Math.sqrt(e.n / emax)) * sc * k).toFixed(1)}" fill="#FF8A3D" stroke="#10243A" stroke-width="${(1.2 * k).toFixed(2)}"/>`;
+  }).join('');
+  const s = S[pick].p;
+  $('#gflows').innerHTML = arcs + dots + `<circle cx="${s[0]}" cy="${s[1]}" r="${(Math.max(6, 9 * sc) * k).toFixed(1)}" fill="#10243A" stroke="#FF8A3D" stroke-width="${(3.5 * k).toFixed(2)}"/>`;
+  // the routes these riders take stand out
+  const used = new Set(fl.map((f) => f[1]));
+  document.querySelectorAll('#groutes .route').forEach((p) => {
+    const r = +p.dataset.r, on = used.has(r);
+    p.style.stroke = on ? routeColor(r) : ''; p.style.strokeOpacity = on ? 0.9 : (pick === null ? '' : 0.25); p.style.strokeWidth = on ? '3px' : '';
+  });
+}
+function drawHL() {
+  const k = px();
+  $('#ghl').innerHTML = hoverId === null ? '' : `<circle cx="${S[hoverId].p[0]}" cy="${S[hoverId].p[1]}" r="${(13 * k).toFixed(1)}" fill="none" stroke="#10243A" stroke-width="${(3 * k).toFixed(2)}"/>`;
+}
+function resetRoutes() { document.querySelectorAll('#groutes .route').forEach((p) => { p.style.stroke = p.style.strokeOpacity = p.style.strokeWidth = ''; }); }
+
+// ---------- the sidebar ----------
+$('#days').innerHTML = Object.entries(D.days).map(([k, v]) => `<button data-day="${k}" aria-pressed="${k === day}">${v}</button>`).join('');
+$('#days').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; day = b.dataset.day; showAll = false; update(); });
+$('#dirs').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; dir = b.dataset.dir; showAll = false; update(); });
+$('#stoplist').innerHTML = S.map((s) => `<option value="${esc(s.n)} — ${esc(s.t)}">`).join('');
+$('#find').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const v = $('#q').value.trim().toLowerCase(); if (!v) return;
+  const dd = dayData(day);
+  const hits = S.map((s, i) => i).filter((i) => (S[i].n + ' — ' + S[i].t).toLowerCase() === v || S[i].n.toLowerCase().includes(v.split(' — ')[0]));
+  if (!hits.length) { $('#q').setCustomValidity('No stop by that name'); $('#q').reportValidity(); setTimeout(() => $('#q').setCustomValidity(''), 1500); return; }
+  hits.sort((a, b) => (dd.on[b] + dd.off[b]) - (dd.on[a] + dd.off[a]));
+  choose(hits[0], true); $('#q').value = ''; $('#q').blur();
+});
+
+function townSplit(list) {
+  const m = new Map(); let tot = 0;
+  list.forEach(([b, , n]) => { const t = S[b].t || 'Other'; m.set(t, (m.get(t) || 0) + n); tot += n; });
+  return { tot, rows: [...m.entries()].sort((a, b) => b[1] - a[1]) };
+}
+function townsHTML(split) {
+  const max = split.rows.length ? split.rows[0][1] : 1;
+  return '<ul class="towns">' + split.rows.map(([t, n]) => `<li><span>${esc(t)}</span><span class="b" style="width:${(100 * n / max).toFixed(1)}%"></span><span class="p">${Math.round(100 * n / split.tot)}%</span></li>`).join('') + '</ul>';
+}
+function panel() {
+  const dd = dayData(day), dname = dayName(day);
+  if (pick === null) {
+    // the whole picture: riders who get on in Somerville, where they get off
+    const all = [];
+    for (let a = 0; a < N; a++) if (S[a].t === 'Somerville') dd.out[a].forEach((f) => all.push(f));
+    const sp = townSplit(all), top = S.map((s, i) => i).filter((i) => S[i].t === 'Somerville').sort((a, b) => dd.on[b] - dd.on[a]).slice(0, 12);
+    $('#lede').textContent = 'Where do bus riders go?';
+    $('#panel').innerHTML = `<div class="card"><div class="big">${fmt(sp.tot)}<small>riders get on a bus in Somerville on a ${dname}</small></div>
+      <div class="sub" style="margin-top:8px">Where they get off:</div>${townsHTML(sp)}</div>
+      <div class="card"><h3>Busiest stops in Somerville</h3><div class="sub">Riders getting on, a ${dname}. Pick one.</div><ul id="list">${top.map((i) => `<li data-i="${i}"><span>${esc(S[i].n)}<small>${S[i].r.map((r) => R[r].name).join(', ')}</small></span><span class="n">${fmt(dd.on[i])}</span></li>`).join('')}</ul></div>`;
+    return;
+  }
+  const s = S[pick], all = dir === 'off' ? dd.out[pick] : dd.inn[pick], fl = flowsNow(), ends = byStop(fl), sp = townSplit(fl);
+  const perRoute = new Map(); all.forEach(([, r, n]) => perRoute.set(r, (perRoute.get(r) || 0) + n));
+  const total = dir === 'off' ? dd.on[pick] : dd.off[pick];
+  const shown = showAll ? ends : ends.slice(0, 20), emax = ends.length ? ends[0].n : 1;
+  $('#lede').textContent = dir === 'off' ? 'Where riders get off' : 'Where they got on';
+  $('#panel').innerHTML = `<div class="card">
+      <h3><span>${esc(s.n)}</span><button id="unpick" title="Let go of this stop" aria-label="Let go of this stop">✕</button></h3>
+      <div class="sub">${esc(s.t)} · ${s.r.length > 1 ? 'routes' : 'route'} ${s.r.map((r) => esc(R[r].name)).join(', ')}</div>
+      <div class="big">${fmt(total)}<small>${dir === 'off' ? 'riders get on here' : 'riders get off here'} on a ${dname}</small></div>
+      ${perRoute.size > 1 ? `<div class="chips" id="chips"><button class="chip" data-r="" aria-pressed="${onlyRoute === null}">All routes</button>${[...perRoute.entries()].sort((a, b) => b[1] - a[1]).map(([r, n]) => `<button class="chip" data-r="${r}" aria-pressed="${onlyRoute === r}"><i style="background:${routeColor(r)}"></i>${esc(R[r].name)} <small>${fmt(n)}</small></button>`).join('')}</div>` : ''}
+      ${fl.length ? `<div class="sub" style="margin-top:10px">${dir === 'off' ? 'They get off in' : 'They got on in'}:</div>${townsHTML(sp)}` : `<p class="note" style="margin-top:8px">No riders counted ${dir === 'off' ? 'getting on' : 'getting off'} here on a ${dname}${onlyRoute !== null ? ' on this route' : dir === 'off' ? ': buses end their trip here' : ''}.</p>${(dir === 'off' ? dd.off[pick] : dd.on[pick]) >= 1 ? `<button class="btn" id="flip">Show where the ${fmt(dir === 'off' ? dd.off[pick] : dd.on[pick])} riders ${dir === 'off' ? 'getting off here got on' : 'getting on here get off'}</button>` : ''}`}
+    </div>
+    ${ends.length ? `<div class="card"><h3>${dir === 'off' ? 'Stops where they get off' : 'Stops where they got on'}</h3><div class="sub">About how many riders a ${dname}. Hover to find one on the map; click to pick it.</div>
+      <ul id="list">${shown.map((e) => `<li data-i="${e.b}"><span>${esc(S[e.b].n)}<small>${esc(S[e.b].t)} · ${[...e.r.keys()].map((r) => R[r].name).join(', ')}</small><div class="mini" style="width:${(100 * e.n / emax).toFixed(1)}%"></div></span><span class="n">${fmt(e.n)}</span></li>`).join('')}</ul>
+      ${ends.length > 20 ? `<button class="btn more" id="more">${showAll ? 'Show the top 20' : `Show all ${ends.length}`}</button>` : ''}</div>` : ''}`;
+}
+$('#panel').addEventListener('click', (e) => {
+  if (e.target.closest('#unpick')) { choose(null); return; }
+  if (e.target.closest('#more')) { showAll = !showAll; panel(); return; }
+  if (e.target.closest('#flip')) { dir = dir === 'off' ? 'on' : 'off'; showAll = false; update(); glideTo(pick); return; }
+  const c = e.target.closest('.chip'); if (c) { onlyRoute = c.dataset.r === '' ? null : +c.dataset.r; showAll = false; update(); return; }
+  const li = e.target.closest('#list li'); if (li) choose(+li.dataset.i, true);
+});
+$('#panel').addEventListener('pointerover', (e) => { const li = e.target.closest('#list li'); const v = li ? +li.dataset.i : null; if (v !== hoverId) { hoverId = v; drawHL(); } });
+$('#panel').addEventListener('pointerleave', () => { hoverId = null; drawHL(); });
+
+function update() {
+  document.querySelectorAll('#days button').forEach((b) => b.setAttribute('aria-pressed', b.dataset.day === day));
+  document.querySelectorAll('#dirs button').forEach((b) => b.setAttribute('aria-pressed', b.dataset.dir === dir));
+  if (pick === null) resetRoutes();
+  drawStops(); drawFlows(); panel(); saveHash();
+}
+function choose(i, glide) {
+  if (i !== pick) { onlyRoute = null; showAll = false; }
+  pick = i; hoverId = null; tip.style.display = 'none';
+  update();
+  if (glide && i !== null) glideTo(i);
+}
+function glideTo(i) {
+  // keep the zoom; bring the picked stop and where its riders go into view
+  const pts = [S[i].p, ...flowsNow().slice(0, 30).map((f) => S[f[0]].p)];
+  let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+  pts.forEach((p) => { x0 = Math.min(x0, p[0]); y0 = Math.min(y0, p[1]); x1 = Math.max(x1, p[0]); y1 = Math.max(y1, p[1]); });
+  const r = map.getBoundingClientRect(), pad = 1.25;
+  const k = Math.max((x1 - x0) * pad / r.width, (y1 - y0) * pad / r.height, FITW / 6 / r.width);
+  const w = Math.min(FITW, r.width * k), h = w * r.height / r.width, from = VB.slice();
+  const to = [(x0 + x1) / 2 - w / 2, (y0 + y1) / 2 - h / 2, w, h], t0 = performance.now();
+  const step = (now) => {
+    const q = Math.min(1, (now - t0) / 350), e = q * (2 - q);
+    setView(from.map((v, j) => v + (to[j] - v) * e), q === 1 || Math.abs(to[2] - from[2]) > 1);
+    if (q < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+// ---------- pointer: pan, pinch, tap, hover ----------
+const tip = $('#tip'), pts = new Map();
+let panFrom = null, pinch = null;
+function nearest(cx, cy) {
+  const [x, y] = toMap(cx, cy), k = px(), dd = dayData(day), lit = litStops();
+  let best = null, bd = Infinity;
+  for (let i = 0; i < N; i++) {
+    if (onlyRoute !== null && !S[i].r.includes(onlyRoute) && !(lit && lit.has(i))) continue;
+    const d = Math.hypot(S[i].p[0] - x, S[i].p[1] - y) / k;
+    if (d < bd) { bd = d; best = i; }
+  }
+  return best !== null && bd <= Math.max(14, radius((dd.on[best] + dd.off[best]) / 2) + 4) ? best : null;
+}
+function showTip(i, cx, cy) {
+  if (i === null) { tip.style.display = 'none'; return; }
+  const s = S[i], dd = dayData(day), dname = dayName(day);
+  let html = `<b>${esc(s.n)}</b>${esc(s.t)} · routes ${s.r.map((r) => R[r].name).join(', ')}<br>${fmt(dd.on[i])} on, ${fmt(dd.off[i])} off a ${dname}`;
+  if (pick !== null && i !== pick) {
+    const e = byStop(flowsNow()).find((x) => x.b === i);
+    html += e ? `<br><span style="color:#B93D06;font-weight:600">${fmt(e.n)} ${dir === 'off' ? `from ${esc(S[pick].n)} get off here` : `get on here and off at ${esc(S[pick].n)}`}</span>` : '<br>None of the picked stop\'s riders';
+  } else if (pick === null) html += '<br>Tap to see where its riders go';
+  tip.innerHTML = html; tip.style.display = 'block';
+  tip.style.left = Math.min(window.innerWidth - 300, cx + 14) + 'px'; tip.style.top = Math.min(window.innerHeight - 110, cy + 14) + 'px';
+}
+map.addEventListener('pointerdown', (e) => {
+  pts.set(e.pointerId, [e.clientX, e.clientY]);
+  try { map.setPointerCapture(e.pointerId); } catch (err) { /* older browsers */ }
+  if (pts.size === 2) {
+    const [a, b] = [...pts.values()];
+    pinch = { d: Math.hypot(a[0] - b[0], a[1] - b[1]), vb: VB.slice(), c: [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2] }; panFrom = null;
+  } else if (pts.size === 1) panFrom = { x: e.clientX, y: e.clientY, vb: VB.slice(), k: px(), moved: false };
+});
+map.addEventListener('pointermove', (e) => {
+  if (pts.has(e.pointerId)) pts.set(e.pointerId, [e.clientX, e.clientY]);
+  if (pinch && pts.size === 2) {
+    const [a, b] = [...pts.values()], d = Math.hypot(a[0] - b[0], a[1] - b[1]);
+    VB = pinch.vb.slice(); zoomAt(d / pinch.d, pinch.c[0], pinch.c[1]); return;
+  }
+  if (panFrom) {
+    const dx = e.clientX - panFrom.x, dy = e.clientY - panFrom.y;
+    if (!panFrom.moved && Math.hypot(dx, dy) > 4) { panFrom.moved = true; map.classList.add('grabbing'); tip.style.display = 'none'; }
+    if (panFrom.moved) setView([panFrom.vb[0] - dx * panFrom.k, panFrom.vb[1] - dy * panFrom.k, panFrom.vb[2], panFrom.vb[3]], false);
+    return;
+  }
+  if (e.pointerType !== 'touch') showTip(nearest(e.clientX, e.clientY), e.clientX, e.clientY);
+});
+function endPointer(e) {
+  pts.delete(e.pointerId);
+  if (pinch) { if (pts.size < 2) { pinch = null; setView(VB, true); } panFrom = null; return; }
+  if (!panFrom) return;
+  const tap = !panFrom.moved; panFrom = null; map.classList.remove('grabbing');
+  if (!tap) { setView(VB, true); return; }
+  const i = nearest(e.clientX, e.clientY);
+  if (i !== null) { choose(i, false); showTip(i, e.clientX, e.clientY); }
+}
+map.addEventListener('pointerup', endPointer);
+map.addEventListener('pointercancel', (e) => { pts.delete(e.pointerId); panFrom = pinch = null; map.classList.remove('grabbing'); });
+map.addEventListener('pointerleave', () => { if (!panFrom) tip.style.display = 'none'; });
+map.addEventListener('wheel', (e) => { e.preventDefault(); zoomAt(Math.exp(-e.deltaY * 0.0015), e.clientX, e.clientY); }, { passive: false });
+const centre = () => { const r = map.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
+$('#zin').addEventListener('click', () => zoomAt(1.6, ...centre()));
+$('#zout').addEventListener('click', () => zoomAt(1 / 1.6, ...centre()));
+$('#zfit').addEventListener('click', fitView);
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && pick !== null && !/INPUT/.test(document.activeElement.tagName)) choose(null); });
+window.addEventListener('hashchange', () => { readHash(); update(); if (pick !== null) glideTo(pick); });
+let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(fitView, 120); });
+
+if (window.innerWidth < 700) $('.legend').open = false;
+fitView(); update();
+if (pick !== null) glideTo(pick);
+</script>
+</body>
+</html>

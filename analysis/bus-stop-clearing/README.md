@@ -6,7 +6,7 @@ A PTAC tool for designing the routes the City's bobcat crews take to clear bus s
 
 ## What it does
 
-On a computer the page is a dashboard: the map fills the window, with the plan, its scores and the crew's route in a sidebar; comparisons, settings and saving are below. Scroll or use + / − to zoom (stops keep their size, so the two sides of a street come apart), and hold Space, drag with the right button, or turn on ✋ to move the map. On a phone the same parts stack.
+On a computer the page is a dashboard: the map fills the window, with the plans, crews and the crew's route in a sidebar; the scores, comparisons, settings and saving are below the map (the Scores link at the top jumps there). Scroll or use + / − to zoom (stops keep their size, so the two sides of a street come apart), and hold Space, drag with the right button, or turn on ✋ to move the map. On a phone the same parts stack.
 
 An operator builds plans. Each plan has its own crews, and each crew a list of stops in the order it clears them:
 

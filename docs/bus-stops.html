@@ -88,8 +88,11 @@ body.reordering,body.reordering *{cursor:grabbing!important}
 .tab.plan small{white-space:nowrap;flex:none}
 #compare button{border:0;background:none;color:var(--orange);font:600 15px var(--body);padding:0;cursor:pointer;text-align:left;text-decoration:underline}
 #compare tr.cur td{background:rgba(255,138,61,.12)}
-.chartkey{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;color:var(--snow);margin-top:10px}
-.chartkey span{display:inline-flex;align-items:center;gap:6px}
+.chartkey{display:flex;flex-wrap:wrap;gap:2px 14px;font-size:12px;color:var(--snow);margin-top:4px}
+.chartkey span{display:inline-flex;align-items:center;gap:5px;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mapchart{position:absolute;top:12px;right:64px;width:min(380px,calc(100% - 420px));background:rgba(16,36,58,.92);border-radius:12px;padding:8px 12px;box-shadow:0 2px 10px rgba(0,0,0,.3)}
+.mapchart summary{cursor:pointer;font-family:var(--display);font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--ice);font-size:13px}
+.mapchart #chart{margin-top:4px}
 #tip{position:fixed;pointer-events:none;background:var(--snow);color:var(--navy);border-radius:10px;padding:8px 10px;font-size:14px;max-width:280px;box-shadow:0 6px 24px rgba(0,0,0,.35);display:none;z-index:5}
 #tip b{display:block}
 #chart{width:100%;height:auto;display:block}
@@ -115,6 +118,7 @@ footer{margin-top:40px;color:var(--ice);font-size:14px;border-top:1px solid rgba
   .mapcol{overflow:visible}
   #map{height:auto}
   .legend{position:static;max-width:none;margin:8px 12px 0;box-shadow:none}
+  .mapchart{position:static;width:auto;margin:8px 12px 0;box-shadow:none}
   .legend[open] span{display:inline-flex;margin-right:14px}
   .maptime{position:static;margin:8px 12px 0;box-shadow:none}
   .mapctl{top:8px;right:8px}
@@ -136,6 +140,11 @@ footer{margin-top:40px;color:var(--ice);font-size:14px;border-top:1px solid rgba
       <button id="zoomfit" aria-label="Show the whole city">⤢</button>
       <button id="pan" aria-pressed="false" aria-label="Pan mode: drag to move the map instead of adding stops">✋</button>
     </div>
+    <details class="mapchart" open>
+      <summary>Riders whose stop is clear</summary>
+      <svg id="chart" role="img" aria-label="Share of riders whose stop is clear, by hour of work, one line per plan"></svg>
+      <div class="chartkey" id="chartkey"></div>
+    </details>
     <details class="legend">
       <summary>Map key</summary>
       <span><svg width="22" height="22"><circle cx="11" cy="11" r="8" fill="#fff" stroke="#10243A" stroke-width="1.5"/></svg>In no route yet. Bigger = more riders.</span>
@@ -195,9 +204,6 @@ footer{margin-top:40px;color:var(--ice);font-size:14px;border-top:1px solid rgba
   <h2>Compare plans</h2>
   <p class="note">Every plan, scored with the same settings. Tap a plan's name to open it.</p>
   <div class="tw"><table id="compare"></table></div>
-
-  <h2>Riders whose stop is clear</h2>
-  <div class="panel"><svg id="chart" role="img" aria-label="Share of riders whose stop is clear, by hour of work, one line per plan"></svg><div class="chartkey" id="chartkey"></div></div>
 
   <h2>Each crew</h2>
   <div class="tw"><table id="crewtable"></table></div>
@@ -435,6 +441,7 @@ function drawStops() {
 }
 
 function draw() {
+  markHour();
   const { clear, crews } = SIM;
   D.stops.forEach((s) => {
     const el = document.getElementById('s' + s.id);
@@ -492,21 +499,26 @@ function drawScores() {
   $('#crewtable').innerHTML = `<tr><th>Crew</th><th>Stops</th><th>Riders</th><th>Last stop clear</th><th>Driving</th><th>Jumps</th><th>Drives past a waiting stop</th></tr>${rows}`;
   drawChart();
 }
+let chartX = null;                               // hour -> x on the chart, for the hour marker
 function drawChart() {
-  const Wc = 760, Hc = 240, L = 44, B = 30, maxH = Math.max(4, Math.ceil(Math.max(...ALL.map((x) => x.finish))));
-  const x = (h) => L + (h / maxH) * (Wc - L - 12), y = (v) => 10 + (1 - v) * (Hc - B - 10);
+  const Wc = 380, Hc = 150, L = 34, B = 20, maxH = Math.max(4, Math.ceil(Math.max(...ALL.map((x) => x.finish))));
+  const x = (h) => L + (h / maxH) * (Wc - L - 18), y = (v) => 6 + (1 - v) * (Hc - B - 6);
+  chartX = x;
   let s = '';
-  for (let v = 0; v <= 1.001; v += 0.25) s += `<line x1="${L}" x2="${Wc - 12}" y1="${y(v)}" y2="${y(v)}" stroke="rgba(169,196,228,.25)"/><text x="${L - 6}" y="${y(v) + 4}" fill="#A9C4E4" font-size="12" text-anchor="end">${Math.round(v * 100)}%</text>`;
-  const step = maxH > 24 ? 4 : 2;
-  for (let h = 0; h <= maxH; h += step) s += `<text x="${x(h)}" y="${Hc - 8}" fill="#A9C4E4" font-size="12" text-anchor="middle">${h} h</text>`;
+  for (let v = 0; v <= 1.001; v += 0.25) s += `<line x1="${L}" x2="${x(maxH)}" y1="${y(v)}" y2="${y(v)}" stroke="rgba(169,196,228,.25)"/>` + (v % 0.5 < 1e-9 ? `<text x="${L - 5}" y="${y(v) + 4}" fill="#A9C4E4" font-size="11" text-anchor="end">${Math.round(v * 100)}%</text>` : '');
+  const step = maxH > 16 ? 4 : 2;
+  for (let h = 0; h <= maxH; h += step) s += `<text x="${x(h)}" y="${Hc - 5}" fill="#A9C4E4" font-size="11" text-anchor="middle">${h} h</text>`;
+  s += `<line id="tmark" y1="4" y2="${Hc - B}" stroke="#fff" stroke-width="1.5" stroke-dasharray="3 3"/>`;
   ALL.map((S, p) => [S, p]).sort((a, b) => (a[1] === cur) - (b[1] === cur)).forEach(([S, p]) => {
     const pts = []; for (let h = 0; h <= maxH + 1e-9; h += 0.1) pts.push([h, S.shareBy(h)]);
-    s += `<path d="${pts.map(([h, v], i) => (i ? 'L' : 'M') + x(h).toFixed(1) + ' ' + y(v).toFixed(1)).join('')}" fill="none" stroke="${pcolor(p)}" stroke-width="${p === cur ? 4 : 2}"/>`;
+    s += `<path d="${pts.map(([h, v], i) => (i ? 'L' : 'M') + x(h).toFixed(1) + ' ' + y(v).toFixed(1)).join('')}" fill="none" stroke="${pcolor(p)}" stroke-width="${p === cur ? 3 : 1.5}"/>`;
   });
   $('#chartkey').innerHTML = plans.map((P, p) => `<span><svg width="26" height="10"><path d="M1 5 H25" stroke="${pcolor(p)}" stroke-width="${p === cur ? 4 : 2}"/></svg>${esc(P.name)}</span>`).join('');
   $('#chart').setAttribute('viewBox', `0 0 ${Wc} ${Hc}`);
   $('#chart').innerHTML = s;
+  markHour();
 }
+function markHour() { const m = document.getElementById('tmark'); if (m && chartX) { const v = chartX(Math.min(T, +$('#t').max)); m.setAttribute('x1', v); m.setAttribute('x2', v); } }
 
 // ---------- plans ----------
 function drawPlans() {
@@ -827,7 +839,7 @@ $('#how').innerHTML = [
   '<b>The day.</b> Each crew starts at its first stop at hour 0 (getting there from the yard isn\'t counted) and works through its list in order: the quickest drive along the streets to the next stop, then the minutes to clear it. Hours are hours of work, not clock time.',
   '<b>The scores.</b> Average wait for a rider\'s stop: the hour each stop in a route is clear, counted once for every rider there. Riders\' stops clear after 2 and 4 hours: a share of all riders, so stops in no route count as never clear. A jump is a drive of more than ' + (D.settings.jump_m / 1000).toFixed(1) + ' km to the next stop (neighboring stops are at most about 600 m apart). "Drives past a stop still waiting" counts each time a crew\'s drive goes through a stop that isn\'t clear yet, its own or another crew\'s: a sign the order could be better.',
   '<b>The computed plan.</b> The page starts with the plan an earlier version of it computed, as a base to edit or compare against ("+ Computed" adds it again any time). Its crews start at busy stops spread apart and clear one street at a time, out along one side and back along the other; each stretch of street is one crew\'s, and the day was rearranged to cut jumps. It is our starting point, not the City\'s routes.',
-  '<b>Plans.</b> Each plan has its own crews and routes; the settings are shared, so every plan is scored on the same terms. "Compare plans" lists them side by side, and the chart draws one line per plan.',
+  '<b>Plans.</b> Each plan has its own crews and routes; the settings are shared, so every plan is scored on the same terms. "Compare plans" lists them side by side, and the chart in the corner of the map draws one line per plan, with a marker at the hour shown.',
   '<b>Saving.</b> Plans and settings are saved in this browser only; nobody else sees them unless you export a file or copy a link.',
   '<b>What we need from the City.</b> Its list of 281 stops and its 4 routes; how many bobcats and crews clear bus stops; how long a stop takes; where the crews start. From the MBTA: which stops on routes 77 and 104 it clears.',
 ].map((t) => `<li>${t}</li>`).join('');

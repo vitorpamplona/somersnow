@@ -8,7 +8,7 @@ The page starts with the plan an earlier version of `build.py` computed (riders 
 
 ## What it does
 
-On a computer the page is a dashboard: the map fills the window, with the plans, crews and the crew's route in a sidebar; the scores, comparisons, settings and saving are below the map (the Scores link at the top jumps there). Scroll or use + / − to zoom (stops keep their size, so the two sides of a street come apart), and hold Space, drag with the right button, or turn on ✋ to move the map. On a phone the same parts stack.
+On a computer the page is a dashboard: the map fills the window, with the chart of riders whose stop is clear (one line per plan, and a marker at the hour shown) in its top corner, with the plans, crews and the crew's route in a sidebar; the scores, comparisons, settings and saving are below the map (the Scores link at the top jumps there). Scroll or use + / − to zoom (stops keep their size, so the two sides of a street come apart), and hold Space, drag with the right button, or turn on ✋ to move the map. On a phone the same parts stack.
 
 An operator builds plans. Each plan has its own crews, and each crew a list of stops in the order it clears them:
 
@@ -22,7 +22,7 @@ An operator builds plans. Each plan has its own crews, and each crew a list of s
   - times a crew drives past a stop that's still waiting.
 
   Each crew gets the same numbers, and every stop in the editor shows when it's clear, how far the crew drove to it, and whether that was a jump or passed waiting stops.
-- **Compare plans.** Make as many plans as you like, with different numbers of crews: new, copy, rename, delete. "Compare plans" lists every plan's scores side by side, and the chart draws one line per plan.
+- **Compare plans.** Make as many plans as you like, with different numbers of crews: new, copy, rename, delete. "Compare plans" lists every plan's scores side by side, and the chart in the corner of the map draws one line per plan.
 - **Change the assumptions.** All plans share the settings, so they compare on the same terms:
   - minutes to clear a stop (20);
   - bobcat speed (5 mph);

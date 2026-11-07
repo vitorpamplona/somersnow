@@ -13,7 +13,7 @@ The most riders at a clear stop, as fast as possible. We measure it as the **ave
 1. **Riders are bunched.** Half of the weekday riders (getting on or off) at the stops the City clears use 20 of its 189 stops. The 3 busiest (Davis, Clarendon Hill Busway, Holland St @ Dover St) see more riders than the 129 quietest stops together.
 2. **Follow the street.** The bobcats drive along the bus routes, stop to stop. A crew never drives past a waiting stop: it clears it. It may drive through stops that are already clear.
 3. **One side, then back.** Each side of the street is its own run, driven the way the bus goes. A crew keeps going while the next stop ahead waits; then it crosses the road and clears the other side on the way back. It never backs up over a stretch it just cleared.
-4. **Busiest run first, and your own.** Crews start at busy stops at least 1.2 km apart. When a run is done, a crew heads where the next few waiting stops along the street (up to 8) clear the most riders per minute of driving and clearing. It leaves other crews their work: the stops just ahead of another crew, and the far side of the street another crew just cleared (its way back). So a crew doesn't drive down a street another crew just cleared to take stops that crew would reach anyway.
+4. **Busiest run first, and your own.** Crews start at busy stops at least 1.2 km apart. When a run is done, a crew heads where the next few waiting stops along the street (up to 8) clear the most riders per minute of driving and clearing. Each street, both sides, is one crew's: a crew leaves other crews the stops just ahead of them and the far side of every street they cleared, and comes back first to the far side of its own. So a crew doesn't drive down a street another crew cleared to take stops that crew will reach anyway, and two crews don't each clear one side of the same street.
 5. **Then the nearest.** Once stops with 70% of riders are clear, each crew takes the nearest waiting stop along the street, so no one drives across town for the last few.
 
 ## Result
@@ -25,10 +25,10 @@ Same 4 crews, same stops, same streets, different order (hours of work from when
 | Average wait for a rider's stop | 7.7 h | 4.9 h |
 | Riders' stops clear after 2 h | 7% | 40% |
 | Riders' stops clear after 4 h | 17% | 56% |
-| All stops clear | 21.2 h | 19.2 h |
-| Distance driven | 91 km | 91 km |
+| All stops clear | 21.2 h | 18.5 h |
+| Distance driven | 91 km | 77 km |
 
-Riders first gets riders their stop sooner and finishes sooner, with the same driving. It holds when any one assumption changes (2 or 6 crews, 10 or 30 minutes a stop, a bobcat at 3 or 8 mph): the average wait drops by about a third or more, and every stop is clear sooner, every time. `output/summary.md` also has the same comparison for 1 to 10 crews.
+Riders first gets riders their stop sooner, finishes sooner and drives less. It holds when any one assumption changes (2 or 6 crews, 10 or 30 minutes a stop, a bobcat at 3 or 8 mph): the average wait drops by about a third or more, and every stop is clear sooner, every time. `output/summary.md` also has the same comparison for 1 to 10 crews.
 
 ## How the model works
 

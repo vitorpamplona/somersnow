@@ -20,8 +20,9 @@ Two orders are compared:
     going along its side of the street while the next stop waits, then crosses the
     road and clears the other side on the way back; after that it heads for the
     waiting stop whose run ahead clears the most riders per minute of driving and
-    clearing (leaving other crews the stops just ahead of them and the far side of
-    what they just cleared); once stops with 70% of riders are clear, the nearest.
+    clearing (leaving other crews the stops just ahead of them, and coming back to
+    the far side of its own streets first: both sides of a street are one crew's);
+    once stops with 70% of riders are clear, the nearest.
 
 Inputs (copied into data/ by this script so the folder is self-contained):
   ../../docs/data/bus-stops.json  MBTA stops in Somerville, Fall weekday boardings and alightings, routes
@@ -314,8 +315,9 @@ def riders_first(G, stops):
     the street while the next stop ahead waits; at the end of the run it crosses the road and
     clears the other side on the way back. With neither, it heads for the waiting stop whose run
     ahead clears the most riders per minute, and once stops with most riders are clear, the
-    nearest waiting stop; either way it leaves other crews their runs ahead and the far side of
-    what they just cleared. A crew never drives past a waiting stop."""
+    nearest waiting stop. Either way it leaves other crews their runs ahead and the far side of
+    every street they cleared, and comes back first to the far side of its own: each street,
+    both sides, is one crew's. A crew never drives past a waiting stop."""
     left = {s['id'] for s in stops}
     total = sum(R[s] for s in left)
     days = [[] for _ in range(A['crews'])]
@@ -339,10 +341,10 @@ def riders_first(G, stops):
         elif back:                                    # then cross the road and clear the other side on the way back
             nxt = max(back, key=lambda s: run_value(G, dist[s], s, left))
         else:
-            theirs = {w for j in range(A['crews']) if j != k for w in run_ahead(G, days[j][-1]['stop'], left)}
-            theirs |= {w for j in range(A['crews']) if j != k for e in days[j][-A['lookahead']:]   # and the far side
-                       for w, (m, kind) in G[e['stop']].items() if kind == 'turn' and w in left}  # of what they just cleared
-            reach = [s for s in reach if s not in theirs] or reach    # leave other crews' runs ahead to them
+            far = [{w for e in day for w, (m, kind) in G[e['stop']].items() if kind == 'turn' and m <= A['cross_m']} for day in days]
+            theirs = {w for j in range(A['crews']) if j != k for w in run_ahead(G, days[j][-1]['stop'], left) + sorted(far[j])}
+            reach = [s for s in reach if s not in theirs] or reach    # leave other crews their runs ahead and their streets' far sides
+            reach = [s for s in reach if s in far[k]] or reach        # and come back to finish the far side of your own
             if taken >= A['sweep_after'] * total:
                 nxt = min(reach, key=lambda s: (dist[s], -R[s]))
             else:

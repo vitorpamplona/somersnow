@@ -146,7 +146,8 @@ const COLORS = ['#1F6FB2', '#B93D06', '#2E7D32', '#7B3FA0', '#C2185B', '#8D6E00'
 const routeColor = (r) => COLORS[r % COLORS.length];
 const S = D.stops, R = D.routes, N = S.length;
 const dayName = (d) => d === 'Wkdy' ? 'weekday' : D.days[d];
-const fmt = (x) => x < 0.95 ? '<1' : Math.round(x).toLocaleString();
+const fmt = (x) => x < 1 ? '<1' : Math.round(x).toLocaleString();
+const MIN = 1;                                         // stops with fewer riders than this a day aren't highlighted or listed
 document.querySelectorAll('.season').forEach((e) => { e.textContent = D.season; });
 $('#feed').textContent = `${D.feed.slice(0, 4)}-${D.feed.slice(4, 6)}-${D.feed.slice(6)}`;
 
@@ -244,8 +245,9 @@ function flowsNow() {
 }
 function litStops() {
   if (pick === null) return null;
-  const set = new Set(flowsNow().map((f) => f[0])); set.add(pick); return set;
+  const set = new Set(endsNow().map((e) => e.b)); set.add(pick); return set;
 }
+const endsNow = () => byStop(flowsNow()).filter((e) => e.n >= MIN);   // the stops that light up
 function byStop(flows) {                              // riders per other stop, all routes together
   const m = new Map();
   flows.forEach(([b, r, n]) => { const e = m.get(b) || { b, n: 0, r: new Map() }; e.n += n; e.r.set(r, (e.r.get(r) || 0) + n); m.set(b, e); });
@@ -255,7 +257,7 @@ function drawFlows() {
   const k = px(), fl = flowsNow();
   if (pick === null) { $('#gflows').innerHTML = ''; return; }
   // the stops where its riders get off (or got on), bigger for more riders; no lines between them
-  const sc = scale(), ends = byStop(fl), emax = Math.max(1, ...ends.map((e) => e.n));
+  const sc = scale(), ends = endsNow(), emax = Math.max(1, ...ends.map((e) => e.n));
   const dots = ends.slice().reverse().map((e) => {
     const p = S[e.b].p, r = Math.max(4, (4 + 11 * Math.sqrt(e.n / emax)) * sc);
     return `<circle cx="${p[0]}" cy="${p[1]}" r="${(r * k).toFixed(1)}" fill="#FF8A3D" stroke="#10243A" stroke-width="${(1.5 * k).toFixed(2)}"/>`;
@@ -312,7 +314,7 @@ function panel() {
       <div class="card"><h3>Busiest stops in Somerville</h3><div class="sub">Riders getting on, a ${dname}. Pick one.</div><ul id="list">${top.map((i) => `<li data-i="${i}"><span>${esc(S[i].n)}<small>${S[i].r.map((r) => R[r].name).join(', ')}</small></span><span class="n">${fmt(dd.on[i])}</span></li>`).join('')}</ul></div>`;
     return;
   }
-  const s = S[pick], all = dir === 'off' ? dd.out[pick] : dd.inn[pick], fl = flowsNow(), ends = byStop(fl), sp = townSplit(fl);
+  const s = S[pick], all = dir === 'off' ? dd.out[pick] : dd.inn[pick], fl = flowsNow(), ends = endsNow(), few = byStop(fl).length - ends.length, sp = townSplit(fl);
   const perRoute = new Map(); all.forEach(([, r, n]) => perRoute.set(r, (perRoute.get(r) || 0) + n));
   const total = dir === 'off' ? dd.on[pick] : dd.off[pick];
   const shown = showAll ? ends : ends.slice(0, 20), emax = ends.length ? ends[0].n : 1;
@@ -326,7 +328,8 @@ function panel() {
     </div>
     ${ends.length ? `<div class="card"><h3>${dir === 'off' ? 'Stops where they get off' : 'Stops where they got on'}</h3><div class="sub">About how many riders a ${dname}. Hover to find one on the map; click to pick it.</div>
       <ul id="list">${shown.map((e) => `<li data-i="${e.b}"><span>${esc(S[e.b].n)}<small>${esc(S[e.b].t)} · ${[...e.r.keys()].map((r) => R[r].name).join(', ')}</small><div class="mini" style="width:${(100 * e.n / emax).toFixed(1)}%"></div></span><span class="n">${fmt(e.n)}</span></li>`).join('')}</ul>
-      ${ends.length > 20 ? `<button class="btn more" id="more">${showAll ? 'Show the top 20' : `Show all ${ends.length}`}</button>` : ''}</div>` : ''}`;
+      ${ends.length > 20 ? `<button class="btn more" id="more">${showAll ? 'Show the top 20' : `Show all ${ends.length}`}</button>` : ''}
+      ${few && (showAll || ends.length <= 20) ? `<p class="note" style="margin:8px 0 0">And ${few} stop${few === 1 ? '' : 's'} with under 1 rider a ${dname}, not shown.</p>` : ''}</div>` : ''}`;
 }
 $('#panel').addEventListener('click', (e) => {
   if (e.target.closest('#unpick')) { choose(null); return; }

@@ -36,7 +36,7 @@ Outputs (output/):
 
 Python standard library only:  python3 analysis/bus-stop-clearing/build.py
 """
-import csv, heapq, json, math, os, shutil
+import csv, heapq, json, math, os, re, shutil
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.normpath(os.path.join(HERE, '..', '..'))
@@ -53,8 +53,11 @@ A = {
     'max_link_m': 900,          # longer gaps between stops on a route mean stops are missing in between: no link
     'lookahead': 8,             # a crew judges a direction by the run of up to this many waiting stops ahead
     'start_apart_m': 1200,      # the crews' first stops are at least this far apart
+    'stretch_stops': 10,        # a street is cut into stretches of up to this many stops (both sides); one crew clears each
     'jump_m': 800,              # a drive longer than this to the next stop is a jump to a different place
-    'jump_min': 30,             # a jump counts as this many minutes of everyone's average wait when planning (it isn't added to the hours)
+    'jump_min': 60,             # when planning, a jump counts as this many minutes of everyone's average wait (it isn't added to the hours)
+    'jump_km_min': 120,         # and each km of a jump, or of driving along another crew's streets, as this many more minutes
+    'finish_w': 2,              # when planning, each minute until the last stop is clear counts as this many minutes of average wait
     'sweep_after': 0.7,         # once stops with this share of riders are clear, take the nearest waiting stop
     'mbta_routes': ['109'],     # the MBTA clears every stop on these routes itself (mbta.com winter page)
 }
@@ -173,6 +176,12 @@ def street_network(allstops, routes):
             d = meters(P[a], P[b])
             if d <= A['cross_m']:
                 link(a, b, d, 'turn'); link(b, a, d, 'turn')
+    for a in list(G):                             # a crew may drive back along a street to get somewhere
+        for b, (m, kind) in list(G[a].items()):   # (it clears only in the bus's direction, rules below)
+            if kind == 'drive' and a not in G[b]:
+                G[b][a] = (m, 'back')
+                if (a, b) in GEO:
+                    GEO[(b, a)] = GEO[(a, b)][::-1]
     joins = 0
     while True:                                   # every stop must be able to reach every other
         comps = strong_parts(G)
@@ -312,49 +321,93 @@ def run_ahead(G, here, left):
     return run
 
 
+def street_of(name):
+    """The street a stop stands on, from its MBTA name: "Elm St @ Chester St" and "Elm St opp
+    Porter St" are on Elm St, "594 Somerville Ave" on Somerville Ave."""
+    name = re.sub(r'^\d+\s+', '', name)
+    return re.split(r' @ | opp ', name)[0].strip()
+
+
+def along(ids):
+    """Stops sorted along their street: by position on the line that fits them best."""
+    xs = [P[s][0] * 82000 for s in ids]; ys = [P[s][1] * 111000 for s in ids]
+    mx, my = sum(xs) / len(xs), sum(ys) / len(ys)
+    sxx = sum((x - mx) ** 2 for x in xs); syy = sum((y - my) ** 2 for y in ys)
+    sxy = sum((x - mx) * (y - my) for x, y in zip(xs, ys))
+    ang = 0.5 * math.atan2(2 * sxy, sxx - syy)
+    pos = {s: (x - mx) * math.cos(ang) + (y - my) * math.sin(ang) for s, x, y in zip(ids, xs, ys)}
+    return sorted(ids, key=lambda s: (pos[s], s))
+
+
+def street_groups(stops):
+    """Stretches of street, each cleared by one crew, both sides: each street's stops in order
+    along it, in pieces of up to A['stretch_stops']."""
+    par = {s['id']: s['id'] for s in stops}
+
+    def root(x):
+        while par[x] != x:
+            par[x] = par[par[x]]; x = par[x]
+        return x
+    streets = {}
+    for s in stops:
+        streets.setdefault(street_of(s['name']), []).append(s['id'])
+    for ids in streets.values():
+        seq = along(ids)
+        n = -(-len(seq) // A['stretch_stops'])                 # as few pieces as fit, of even size
+        for i in range(n):
+            piece = seq[i * len(seq) // n:(i + 1) * len(seq) // n]
+            for a in piece[1:]:
+                par[root(a)] = root(piece[0])
+    return {s['id']: root(s['id']) for s in stops}
+
+
+GROUP = {}                                        # stop -> its stretch of street (set by the main script)
+G_ = {}                                           # the street network, for checks() (set by the main script)
+NAME = {}                                         # stop -> name, for checks() (set by the main script)
+
+
 def riders_first(G, stops):
-    """Crews start at busy stops spread across the city. A crew keeps going along its side of
-    the street while the next stop ahead waits; at the end of the run it crosses the road and
-    clears the other side on the way back. With neither, it heads for the waiting stop whose run
-    ahead clears the most riders per minute, and once stops with most riders are clear, the
-    nearest waiting stop. Either way it leaves other crews their runs ahead and the far side of
-    every street they cleared, and comes back first to the far side of its own: each street,
-    both sides, is one crew's. A crew never drives past a waiting stop."""
+    """Crews start at busy stops spread across the city. The first crew to clear a stop on a
+    stretch of street owns the stretch, both sides: other crews may drive past its stops but
+    never clear them. A crew keeps going along its side of the street while the next stop ahead waits, and at the end of
+    the run crosses the road and clears the other side on the way back. With neither, it heads
+    for the waiting stop whose run ahead clears the most riders per minute (leaving other crews
+    their runs ahead), and once stops with most riders are clear, the nearest. A crew never
+    drives past a waiting stop of its own."""
     left = {s['id'] for s in stops}
     total = sum(R[s] for s in left)
     days = [[] for _ in range(A['crews'])]
-    clock, starts, taken = [0.0] * A['crews'], [], 0
+    clock, starts, taken, owner = [0.0] * A['crews'], [], 0, {}
     for k in range(A['crews']):                       # hour 0: busy stops, spread apart
-        far = [s for s in sorted(left) if all(meters(P[s], P[x]) > A['start_apart_m'] for x in starts)] or sorted(left)
+        far = [s for s in sorted(left) if GROUP[s] not in owner and all(meters(P[s], P[x]) > A['start_apart_m'] for x in starts)] or sorted(left)
         sid = max(far, key=lambda s: run_value(G, 0.0, s, left))
-        starts.append(sid); left.discard(sid); taken += R[sid]; clock[k] = A['service_min']
+        starts.append(sid); left.discard(sid); taken += R[sid]; clock[k] = A['service_min']; owner[GROUP[sid]] = k
         days[k].append({'stop': sid, 'path': [sid], 'm': 0.0, 'h': clock[k] / 60})
     while left:
         k = min(range(A['crews']), key=lambda k: clock[k])
         here = days[k][-1]['stop']
-        dist, prev = dijkstra(G, here, stop_at=left)
-        reach = [s for s in sorted(left) if s in dist]
+        ok = {s for s in left if owner.get(GROUP[s], k) == k}        # waiting stops this crew may clear
+        dist, prev = dijkstra(G, here, stop_at=ok)
+        reach = [s for s in sorted(ok) if s in dist]
         if not reach:
             clock[k] = float('inf'); continue
-        ahead = [w for w, (m, kind) in sorted(G[here].items()) if kind == 'drive' and w in left]
-        back = [w for w, (m, kind) in sorted(G[here].items()) if kind == 'turn' and w in left]
-        if ahead:                                     # keep going along this side while the next stop waits
-            nxt = max(ahead, key=lambda s: run_value(G, dist[s], s, left))
+        ahead = [w for w, (m, kind) in sorted(G[here].items()) if kind == 'drive' and w in ok]
+        back = [w for w, (m, kind) in sorted(G[here].items()) if kind == 'turn' and w in ok]
+        if ahead:                                   # keep going along this side while the next stop waits
+            nxt = max(ahead, key=lambda s: run_value(G, dist[s], s, ok))
         elif back:                                    # then cross the road and clear the other side on the way back
-            nxt = max(back, key=lambda s: run_value(G, dist[s], s, left))
+            nxt = max(back, key=lambda s: run_value(G, dist[s], s, ok))
         else:
-            far = [{w for e in day for w, (m, kind) in G[e['stop']].items() if kind == 'turn' and m <= A['cross_m']} for day in days]
-            theirs = {w for j in range(A['crews']) if j != k for w in run_ahead(G, days[j][-1]['stop'], left) + sorted(far[j])}
-            reach = [s for s in reach if s not in theirs] or reach    # leave other crews their runs ahead and their streets' far sides
+            theirs = {w for j in range(A['crews']) if j != k for w in run_ahead(G, days[j][-1]['stop'], left)}
+            reach = [s for s in reach if s not in theirs] or reach    # leave other crews their runs ahead
             jump = {s: path_meters(G, here, path_to(prev, here, s)) > A['jump_m'] for s in reach}
             cost = {s: dist[s] + (A['jump_min'] if jump[s] else 0) for s in reach}   # jumps across town are costly
-            reach = [s for s in reach if s in far[k] and not jump[s]] or reach   # finish the far side of your own street
             if taken >= A['sweep_after'] * total:
                 nxt = min(reach, key=lambda s: (cost[s], -R[s]))
             else:
-                nxt = max(reach, key=lambda s: run_value(G, cost[s], s, left))
+                nxt = max(reach, key=lambda s: run_value(G, cost[s], s, ok))
         clock[k] += dist[nxt] + A['service_min']
-        left.discard(nxt); taken += R[nxt]
+        left.discard(nxt); taken += R[nxt]; owner.setdefault(GROUP[nxt], k)
         path = path_to(prev, here, nxt)
         days[k].append({'stop': nxt, 'path': path, 'm': path_meters(G, here, path), 'mins': dist[nxt], 'h': clock[k] / 60})
     return days
@@ -369,9 +422,9 @@ def run_job(i):
 
 
 def follow(G, lists):
-    """Crews work through their lists of stops, each by the quickest way; a crew that reaches a
-    waiting stop on the way clears it then and there (so no crew ever drives past a waiting
-    stop). A crew that finishes its list helps with the nearest waiting stop."""
+    """Crews work through their lists of stops, each by the quickest way. A crew that reaches a
+    waiting stop of its own on the way clears it then and there (no crew drives past a waiting
+    stop of its own); other crews' stops it drives past."""
     key = (A['drive_m_per_min'], A['turn_min'])
     if key not in ALL:
         ALL[key] = {a: dijkstra(G, a) for a in G}
@@ -381,70 +434,152 @@ def follow(G, lists):
         if (a, b) not in paths:
             paths[(a, b)] = path_to(quick[a][1], a, b) if a != b else []
         return paths[(a, b)]
-    waiting = {s for L in lists for s in L}
+    own = {s: k for k, L in enumerate(lists) for s in L}
+    waiting = set(own)
     n = len(lists)
     days, clock, pos, ptr = [[] for _ in range(n)], [0.0] * n, [None] * n, [0] * n
     for k, L in enumerate(lists):
         pos[k] = L[0]; waiting.discard(L[0]); clock[k] = A['service_min']
         days[k].append({'stop': L[0], 'path': [L[0]], 'm': 0.0, 'mins': 0.0, 'h': clock[k] / 60})
-    while waiting:
-        k = min(range(n), key=lambda k: (clock[k], k))
+    busy = set(range(n))
+    while busy:
+        k = min(busy, key=lambda k: (clock[k], k))
         L = lists[k]
         while ptr[k] < len(L) and L[ptr[k]] not in waiting:
             ptr[k] += 1
-        if ptr[k] < len(L):
-            tgt = L[ptr[k]]
-        else:
-            dist = quick[pos[k]][0]
-            tgt = min(sorted(waiting), key=lambda t: dist.get(t, 1e18))
+        if ptr[k] == len(L):
+            busy.discard(k); continue
         path, m, mins, at = [], 0.0, 0.0, pos[k]
-        for nd in sp(pos[k], tgt):
+        for nd in sp(pos[k], L[ptr[k]]):
             e = G[at][nd]; m += e[0]; mins += edge_min(*e); path.append(nd); at = nd
-            if nd in waiting:
+            if nd in waiting and own[nd] == k:
                 break
         waiting.discard(at); clock[k] += mins + A['service_min']; pos[k] = at
         days[k].append({'stop': at, 'path': path, 'm': m, 'mins': mins, 'h': clock[k] / 60})
     return days
 
 
-def fewer_jumps(G, days, total):
-    """Look at the whole day: cut each crew's day at its jumps, and try handing each piece to
-    the crew that passes closest to it (at its first or last stop, either way round). Keep a
-    change when it lowers the average wait plus A['jump_min'] for every jump."""
+def fewer_jumps(G, days, total, short=False):
+    """Look at the whole day. The day-by-day rules can't see that leaving a pocket behind forces a
+    jump hours later, so try moving work between and within crews: each stretch of street (both
+    sides, so it stays with one crew) and each piece of a crew's day between two jumps, tried in
+    every crew's day next to the stops closest to it, either way round. Keep a change when the
+    score goes down: the average wait, plus A['jump_min'] for every jump and A['jump_km_min'] for
+    every km of jumps, plus A['finish_w'] times the time until the last stop is clear. With
+    `short` (the what-ifs), only stretches are moved, for at most 15 rounds."""
     def score(d):
         st = stats(d, total)
-        return st['avg_wait_h'] * 60 + A['jump_min'] * st['jumps']
-    lists = [[e['stop'] for e in day] for day in days]
-    days = follow(G, lists)
-    best = score(days)
-    for _ in range(40):
-        lists = [[e['stop'] for e in day] for day in days]
-        pieces = []
+        return (st['avg_wait_h'] * 60 + A['jump_min'] * st['jumps'] + A['jump_km_min'] * (st['jump_km'] + others_km(d))
+                + A['finish_w'] * st['finish_h'] * 60)
+
+    def spots(L, piece):                              # right after the stops closest to it, by driving and as the crow flies
+        quick = ALL[(A['drive_m_per_min'], A['turn_min'])]
+        out = []
+        for end, seg in ((piece[0], piece), (piece[-1], piece[::-1])):
+            near = sorted(range(len(L)), key=lambda i: (quick[L[i]][0].get(end, 1e18), i))[:3]
+            near += [i for i in sorted(range(len(L)), key=lambda i: (meters(P[L[i]], P[end]), i))[:3] if i not in near]
+            out += [(i, seg) for i in near]
+        return out
+
+    def stretches(lists):
+        return [[s for s in L if GROUP[s] == gid] for gid in sorted({GROUP[s] for L in lists for s in L})
+                for L in lists if any(GROUP[s] == gid for s in L)]
+
+    def pieces(days, lists):
+        out = []
         for k, day in enumerate(days):
             cur = []
             for i, e in enumerate(day):
                 if i and e['m'] > A['jump_m'] and cur:
-                    pieces.append((k, cur)); cur = []
+                    out.append(cur); cur = []
                 cur.append(e['stop'])
-            pieces.append((k, cur))
-        better = False
-        for k, piece in pieces:
-            if piece[0] == lists[k][0]:
-                continue                                  # a crew keeps its first stop
-            rest = [[s for s in L if s not in piece] for L in lists]
-            tries = []
-            for j, L in enumerate(rest):
-                for end, seg in ((piece[0], piece), (piece[-1], piece[::-1])):
-                    tries += [(j, i, seg) for i in sorted(range(len(L)), key=lambda i: (meters(P[L[i]], P[end]), i))[:3]]
-            for j, i, seg in tries:
-                trial = [L[:] for L in rest]; trial[j] = trial[j][:i + 1] + seg + trial[j][i + 1:]
-                d = follow(G, trial); sc = score(d)
-                if sc < best - 1e-9:
-                    best, days, better = sc, d, True
+            out.append(cur)
+        k_of = {s: k for k, L in enumerate(lists) for s in L}
+        full = []
+        for piece in out:
+            groups = {GROUP[s] for s in piece}
+            full.append(piece + [s for s in lists[k_of[piece[0]]] if GROUP[s] in groups and s not in piece])
+        return full
+
+    def descend(days, make):
+        best = score(days)
+        for _ in range(15 if short else 60):
+            lists = [[e['stop'] for e in day] for day in days]
+            firsts, better = {L[0] for L in lists}, False
+            for piece in make(days, lists):
+                if firsts & set(piece):
+                    continue                              # a crew keeps its first stop
+                rest = [[s for s in L if s not in piece] for L in lists]
+                for j, L in enumerate(rest):
+                    for i, seg in spots(L, piece):
+                        trial = [x[:] for x in rest]; trial[j] = trial[j][:i + 1] + seg + trial[j][i + 1:]
+                        d = follow(G, trial); sc = score(d)
+                        if sc < best - 1e-9:
+                            best, days, better = sc, d, True
+                            break
+                    if better:
+                        break
+                if better:
                     break
-        if not better:
+            if not better:
+                return days
+        return days
+    days = follow(G, [[e['stop'] for e in day] for day in days])
+    days = descend(days, lambda d, lists: stretches(lists))
+    if short:
+        return days
+    while True:                                       # alternate until neither kind of move helps
+        before = score(days)
+        days = descend(descend(days, pieces), lambda d, lists: stretches(lists))
+        if score(days) >= before - 1e-9:
             return days
-    return days
+
+
+def others_km(days):
+    """Km a crew drives along another crew's streets (between two stops another crew clears)."""
+    crew = {e['stop']: k for k, day in enumerate(days) for e in day}
+    m = 0.0
+    for k, day in enumerate(days):
+        for i, e in enumerate(day):
+            if i:
+                a = day[i - 1]['stop']
+                for n in e['path']:
+                    if crew.get(a, k) != k and crew.get(n, k) != k:
+                        m += G_[a][n][0] if a in G_ and n in G_[a] else 0
+                    a = n
+    return m / 1000
+
+
+def checks(days):
+    """What a crew shouldn't do, counted: stretches of street split between crews (pairs of stops
+    on the same stretch cleared by different crews), jumps, and driving again over a link the
+    same crew already drove (doubling back), in meters."""
+    crew = {e['stop']: k for k, day in enumerate(days) for e in day}
+    ids = sorted(crew)
+    split = [(a, b) for i, a in enumerate(ids) for b in ids[i + 1:]
+             if crew[a] != crew[b] and GROUP.get(a) is not None and GROUP.get(a) == GROUP.get(b)]
+    again = 0.0
+    for k, day in enumerate(days):
+        seen, at = set(), None
+        for e in day:
+            if at is not None:
+                a = at
+                for n in e['path']:
+                    if (a, n) in seen or (n, a) in seen:
+                        again += G_[a][n][0]
+                    seen.add((a, n)); a = n
+            at = e['stop']
+    streets, switches, mixed = {}, [], []
+    for s in ids:
+        streets.setdefault(street_of(NAME[s]), []).append(s)
+    for st, sids in sorted(streets.items()):
+        seq = along(sids)
+        switches += [(st, NAME[a], NAME[b]) for a, b in zip(seq, seq[1:]) if crew[a] != crew[b]]
+        runs = [crew[a] for i, a in enumerate(seq) if i == 0 or crew[a] != crew[seq[i - 1]]]
+        if len(runs) != len(set(runs)):                # a crew back on a street after another crew's piece
+            mixed.append(st)
+    return {'split': len(split), 'split_pairs': split, 'again_km': round(again / 1000, 1), 'others_km': round(others_km(days), 1),
+            'switches': len(switches), 'switch_list': switches, 'mixed': mixed}
 
 
 def stats(days, total):
@@ -482,10 +617,13 @@ if __name__ == '__main__':
     by_id = {s['id']: s for s in stops}
     total = sum(R.values())
     G, joins = street_network(allstops, bs['routes'])
+    G_ = G
+    NAME.update({s['id']: s['name'] for s in allstops})
+    GROUP.update(street_groups(stops))
     orders = route_orders(stops, bs['routes'])
 
-    def simulate():
-        plans = {'route': route_by_route(G, stops, orders), 'riders': fewer_jumps(G, riders_first(G, stops), total)}
+    def simulate(short=False):
+        plans = {'route': route_by_route(G, stops, orders), 'riders': fewer_jumps(G, riders_first(G, stops), total, short)}
         return plans, {k: stats(v, total) for k, v in plans.items()}
 
     # does the answer hold if the assumptions are off? change one at a time (and try 1 to 10 crews);
@@ -509,6 +647,11 @@ if __name__ == '__main__':
     sens = [{'label': label, **{k: {'wait': v['avg_wait_h'], 'h4': v['share_by'][4], 'finish': v['finish_h']} for k, v in s2.items()}}
             for (_, _, label), s2 in zip(whatifs[:6], results[:6])]
     plans, S = simulate()
+    C = {k: checks(v) for k, v in plans.items()}
+    for k in plans:
+        S[k].update(split=C[k]['split'], again_km=C[k]['again_km'], others_km=C[k]['others_km'])
+    if C['riders']['split'] or C['riders']['mixed']:  # a stretch never split, a street never in alternating pieces
+        raise SystemExit('riders first shares a street between crews: ' + str(C['riders']['split_pairs'][:5] + C['riders']['mixed']))
 
     # how many crews? same rules, 1 to 10 crews
     crews_curve = [{'crews': c, **{k: {'wait': v['avg_wait_h'], 'finish': v['finish_h']} for k, v in s2.items()}}
@@ -546,7 +689,10 @@ if __name__ == '__main__':
         f"| All stops clear | {r['finish_h']} h | {f['finish_h']} h |",
         f"| Hours driving | {r['drive_h']} h | {f['drive_h']} h |",
         f"| Distance driven | {r['km']} km | {f['km']} km |",
-        f"| Jumps (drives over {A['jump_m']} m to the next stop) | {r['jumps']} ({r['jump_km']} km) | {f['jumps']} ({f['jump_km']} km) |", '',
+        f"| Jumps (drives over {A['jump_m']} m to the next stop) | {r['jumps']} ({r['jump_km']} km) | {f['jumps']} ({f['jump_km']} km) |",
+        f"| Pairs of stops on one stretch of street cleared by different crews | {r['split']} | {f['split']} |",
+        f"| Driving back over a link the same crew already drove | {r['again_km']} km | {f['again_km']} km |",
+        f"| Driving along another crew's streets | {r['others_km']} km | {f['others_km']} km |", '',
         'Hours are working hours, from when the crews start at their first stops. The bobcats drive along the street, '
         'stop to stop, and never drive past a waiting stop.', '',
         'Assumptions: ' + '; '.join(f'{k} = {v}' for k, v in A.items()) + '.', '',

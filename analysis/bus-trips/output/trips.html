@@ -68,7 +68,7 @@ a{color:var(--orange)}
 .chip i{width:10px;height:10px;border-radius:50%}
 .chip small{color:var(--ice);font-weight:500}
 .chip[aria-pressed=true]{border-color:#fff}
-.atstop{margin:6px 0 12px}
+.atstop{margin:14px 0 2px}
 .atstop .seglab{margin:0 0 4px}
 .tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
 .tile{position:relative;background:var(--navy);border:1px solid transparent;border-radius:10px;padding:8px 4px 7px;text-align:center;font-size:12px;line-height:1.2;color:var(--snow)}
@@ -466,12 +466,12 @@ function panel() {
   $('#panel').innerHTML = `<div class="card">
       <h3><span>${esc(s.n)}</span><button id="unpick" title="Let go of this stop" aria-label="Let go of this stop">✕</button></h3>
       <div class="sub">${esc(s.t)}</div>
-      ${atStop(s)}
       ${perRoute.size > 1 ? '' : `<div class="dirs"><span class="seglab" style="margin:0">Buses here go toward</span>${s.d.map(([k]) => `<span><i style="background:${rdColor(k)}"></i>${esc(rdLabel(pick, k))}</span>`).join('')}</div>`}
       <div class="big">${fmt(total)}<small>${dir === 'off' ? 'riders get on here' : 'riders get off here'} on a ${dname}</small></div>
       ${perRoute.size > 1 ? `<div class="seglab">Buses here go toward · riders ${dir === 'off' ? 'getting on' : 'getting off'}</div><div class="chips" id="chips"><button class="chip" data-r="" aria-pressed="${onlyRoute === null}">All</button>${[...perRoute.entries()].sort((a, b) => b[1] - a[1]).map(([k, n]) => `<button class="chip" data-r="${k}" aria-pressed="${onlyRoute === k}"><i style="background:${rdColor(k)}"></i>${esc(rdLabel(pick, k))} <small>${fmt(n)}</small></button>`).join('')}</div>` : ''}
       ${histHTML(pick)}
       ${fl.length ? `<div class="sub" style="margin-top:10px">${dir === 'off' ? 'They get off in' : 'They got on in'}:</div>${townsHTML(sp)}` : `<p class="note" style="margin-top:8px">No riders counted ${dir === 'off' ? 'getting on' : 'getting off'} here on a ${dname}${onlyRoute !== null ? ' on this bus' : dir === 'off' ? ': buses end their trip here' : ''}.</p>${(dir === 'off' ? dd.off[pick] : dd.on[pick]) >= 1 ? `<button class="btn" id="flip">Show where the ${fmt(dir === 'off' ? dd.off[pick] : dd.on[pick])} riders ${dir === 'off' ? 'getting off here got on' : 'getting on here get off'}</button>` : ''}`}
+      ${atStop(s)}
     </div>
     ${ends.length ? `<div class="card"><h3>${dir === 'off' ? 'Stops where they get off' : 'Stops where they got on'}</h3><div class="sub">About how many riders a ${dname}. Hover to find one on the map; click to pick it.</div>
       <ul id="list">${shown.map((e) => `<li data-i="${e.b}"><span>${esc(S[e.b].n)}<small>${esc(S[e.b].t)} · ${[...e.r.keys()].map(rdName).map(esc).join(', ')}</small><div class="mini" style="width:${(100 * e.n / emax).toFixed(1)}%"></div></span><span class="n">${fmt(e.n)}</span></li>`).join('')}</ul>

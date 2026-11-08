@@ -68,9 +68,18 @@ a{color:var(--orange)}
 .chip i{width:10px;height:10px;border-radius:50%}
 .chip small{color:var(--ice);font-weight:500}
 .chip[aria-pressed=true]{border-color:#fff}
-.atstop{margin:4px 0 10px;font-size:14px;line-height:1.45}
-.atstop small{color:var(--ice)}
-.atstop .seglab{margin:0 0 2px}
+.atstop{margin:6px 0 12px}
+.atstop .seglab{margin:0 0 4px}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.tile{position:relative;background:var(--navy);border:1px solid transparent;border-radius:10px;padding:8px 4px 7px;text-align:center;font-size:12px;line-height:1.2;color:var(--snow)}
+.tile svg{width:28px;height:28px;display:block;margin:0 auto 5px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.tile small{display:block;color:var(--ice);font-size:11px;margin-top:1px}
+.tile.no{color:#8197B0}
+.tile.no svg{opacity:.6}
+.tile.no::after{content:'';position:absolute;left:50%;top:9px;width:2px;height:30px;background:#8197B0;transform:translateX(-50%) rotate(45deg);border-radius:1px}
+.tile.unk{background:none;border:1px dashed rgba(169,196,228,.45);color:var(--ice)}
+.tile.warn{color:var(--orange);border-color:rgba(255,138,61,.6)}
+.srcs{font-size:11px;color:var(--ice);margin-top:5px;line-height:1.35}
 .dirs{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:center;margin:2px 0 10px;font-size:14px}
 .dirs .seglab{flex-basis:100%}
 .dirs span{display:inline-flex;align-items:center;gap:6px}
@@ -372,19 +381,44 @@ function histTip(e) {
 // ---------- what's at the stop ----------
 // wheelchair boarding from the MBTA schedule; access status (Jan 2024) and amenities (2017 survey) from MBTA PATI.
 // No public data on shelters or real-time signs, so the card says so rather than showing nothing.
+const ICON = {
+  wheel: '<circle cx="12" cy="4" r="2"/><path d="M12 7v6h5l2.5 5.5"/><path d="M9 10.5a6 6 0 1 0 7.5 7"/>',
+  ada: '<path d="M3 19h18"/><path d="M3 19 17 9v10"/><path d="m7.5 6 2 2 4-4"/>',
+  bench: '<path d="M4 10h16M4 14h16M6 14v5M18 14v5M6 10V7M18 10V7"/>',
+  trash: '<path d="M5 7h14M10 7V4.5h4V7M7 7l1 13h8l1-13M10.5 11v5M13.5 11v5"/>',
+  bike: '<circle cx="6" cy="16" r="3.5"/><circle cx="18" cy="16" r="3.5"/><path d="M6 16l4-7h6l2 7M10 9l2.5 7H6M14.5 6H17"/>',
+  blocked: '<circle cx="12" cy="12" r="8.5"/><path d="M6 12h12"/>',
+  shelter: '<path d="M3 8.5 12 4l9 4.5M5 8v12M19 8v12M8 14h8"/>',
+  sign: '<rect x="3" y="4.5" width="18" height="10" rx="1.5"/><path d="M6.5 8.5h6M6.5 11.5h9M12 14.5V20M9 20h6"/>',
+};
+// what's at the stop, as icon tiles: has it (bright), doesn't (dim, slashed), no data (dashed)
 function atStop(s) {
-  const a = s.a, rows = [];
-  rows.push(`Wheelchair boarding: <b>${s.w === 1 ? 'yes' : s.w === 2 ? 'no' : 'not known'}</b> <small>· MBTA schedule, fall 2025</small>`);
+  const a = s.a, tile = (icon, cls, label, note, title) =>
+    `<div class="tile ${cls}" title="${esc(title)}" role="img" aria-label="${esc(title)}"><svg viewBox="0 0 24 24" aria-hidden="true">${ICON[icon]}</svg>${esc(label)}${note ? `<small>${esc(note)}</small>` : ''}</div>`;
+  const t = [];
+  t.push(s.w === 1 ? tile('wheel', 'yes', 'Wheelchair', 'boarding', 'Wheelchair boarding: yes (MBTA schedule, fall 2025)')
+    : s.w === 2 ? tile('wheel', 'no', 'Wheelchair', 'no boarding', 'Wheelchair boarding: no (MBTA schedule, fall 2025)')
+    : tile('wheel', 'unk', 'Wheelchair', 'not known', 'Wheelchair boarding: not known (MBTA schedule, fall 2025)'));
   if (a) {
-    const p = a.p, acc = p === 'Compliant' ? 'meets ADA' : a.done ? 'rebuilt for access (PATI)' : p === 'Stop Eliminated' ? 'stop eliminated'
-      : p ? `not fully ADA compliant; ${p.toLowerCase()} priority` : '';
-    if (acc) rows.push(`Access: <b>${acc}</b> <small>· MBTA, Jan 2024</small>`);
-    const same = a.b.length && a.b.every((x) => x === a.b[0]);
-    const bench = !a.n ? 'no bench' : a.n === 1 ? (a.b[0] || 'a bench') : same ? `${a.n} ${a.b[0].replace('bench', 'benches')}` : a.b.length ? a.b.join(', ') : `${a.n} benches`;
-    rows.push(`${[bench, a.t && 'trash can', a.k && 'bike rack'].filter(Boolean).join(' · ')}${a.x ? ' · <b>path to the bus blocked</b>' : ''} <small>· MBTA survey, 2017</small>`);
+    const p = a.p;
+    t.push(p === 'Compliant' || a.done ? tile('ada', 'yes', 'Meets ADA', a.done && p !== 'Compliant' ? 'rebuilt' : '', 'Fully ADA compliant (MBTA PATI, Jan 2024)')
+      : p === 'Stop Eliminated' ? tile('ada', 'unk', 'ADA', 'stop eliminated', 'Stop eliminated (MBTA PATI, Jan 2024)')
+      : p ? tile('ada', 'no', 'Not ADA', `${p.toLowerCase()} priority`, `Not fully ADA compliant; ${p.toLowerCase()} priority for the MBTA's accessibility program (PATI, Jan 2024)`)
+      : tile('ada', 'unk', 'ADA', 'no data', 'No accessibility status (MBTA PATI)'));
+    const kind = a.b.length ? [...new Set(a.b)].join(', ').replace(/ bench/g, '') : '';
+    t.push(a.n ? tile('bench', 'yes', a.n === 1 ? 'Bench' : `${a.n} benches`, kind, `Bench: ${a.b.join(', ') || a.n} (MBTA survey, 2017)`)
+      : tile('bench', 'no', 'No bench', '', 'No bench (MBTA survey, 2017)'));
+    t.push(tile('trash', a.t ? 'yes' : 'no', a.t ? 'Trash can' : 'No trash', '', `${a.t ? 'Trash can' : 'No trash can'} (MBTA survey, 2017)`));
+    t.push(tile('bike', a.k ? 'yes' : 'no', a.k ? 'Bike rack' : 'No bike rack', '', `${a.k ? 'Bike rack' : 'No bike rack'} (MBTA survey, 2017)`));
+    if (a.x) t.push(tile('blocked', 'warn', 'Path blocked', '', 'Something blocked the path to the bus (MBTA survey, 2017)'));
+  } else {
+    t.push(tile('ada', 'unk', 'ADA', 'no data', 'Not in the MBTA accessibility survey (PATI)'));
+    t.push(tile('bench', 'unk', 'Bench', 'no data', 'Not in the MBTA bus stop survey'));
   }
-  rows.push('<small>Shelter, real-time sign: no public data</small>');
-  return `<div class="atstop"><div class="seglab">At this stop</div>${rows.map((r) => `<div>${r}</div>`).join('')}</div>`;
+  t.push(tile('shelter', 'unk', 'Shelter', 'no data', 'Shelter: no public data (questions 58 and 59)'));
+  t.push(tile('sign', 'unk', 'Live sign', 'no data', 'Real-time arrival sign: no public data (question 60)'));
+  return `<div class="atstop"><div class="seglab">At this stop</div><div class="tiles">${t.join('')}</div>
+    <div class="srcs">Wheelchair: MBTA schedule, fall 2025${a ? ' · ADA: MBTA, Jan 2024 · Bench, trash, bike rack: MBTA survey, 2017' : ''} · Shelter, live sign: no public data</div></div>`;
 }
 
 // ---------- the sidebar ----------

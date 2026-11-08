@@ -202,11 +202,19 @@ function setView(vb, full) {
   if (full) { drawLabels(); drawStops(); drawFlows(); }
   drawHL();
 }
-function fitView() {
-  const r = map.getBoundingClientRect(), pad = 0.06;
-  const w = (ext[2] - ext[0]) * (1 + 2 * pad), h = (ext[3] - ext[1]) * (1 + 2 * pad);
-  const k = Math.max(w / r.width, h / r.height), cx = (ext[0] + ext[2]) / 2, cy = (ext[1] + ext[3]) / 2;
-  FITW = r.width * k;
+// the map is always centered on Somerville: it opens on the city with its neighbors around it, and
+// "Show it all" zooms out until every route fits, still centered there
+const HOME = (() => {
+  const t = D.towns.find((x) => x.n === 'Somerville'); let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+  t.rings.forEach((r) => r.forEach((p) => { x0 = Math.min(x0, p[0]); y0 = Math.min(y0, p[1]); x1 = Math.max(x1, p[0]); y1 = Math.max(y1, p[1]); }));
+  return [x0, y0, x1, y1];
+})();
+function fitView(all) {
+  const r = map.getBoundingClientRect(), cx = (HOME[0] + HOME[2]) / 2, cy = (HOME[1] + HOME[3]) / 2;
+  const fit = (hw, hh) => Math.max(2 * hw / r.width, 2 * hh / r.height);   // map units per pixel to fit a half-width and half-height
+  const kAll = fit(Math.max(cx - ext[0], ext[2] - cx) * 1.06, Math.max(cy - ext[1], ext[3] - cy) * 1.06);
+  FITW = r.width * kAll;
+  const k = all ? kAll : Math.min(kAll, fit((HOME[2] - HOME[0]) * 0.8, (HOME[3] - HOME[1]) * 0.8));
   setView([cx - r.width * k / 2, cy - r.height * k / 2, r.width * k, r.height * k], true);
 }
 function toMap(cx, cy) { const m = map.getScreenCTM(); return [(cx - m.e) / m.a, (cy - m.f) / m.d]; }
@@ -483,13 +491,13 @@ map.addEventListener('wheel', (e) => { e.preventDefault(); zoomAt(Math.exp(-e.de
 const centre = () => { const r = map.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
 $('#zin').addEventListener('click', () => zoomAt(1.6, ...centre()));
 $('#zout').addEventListener('click', () => zoomAt(1 / 1.6, ...centre()));
-$('#zfit').addEventListener('click', fitView);
+$('#zfit').addEventListener('click', () => fitView(true));
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && pick !== null && !/INPUT/.test(document.activeElement.tagName)) choose(null); });
 window.addEventListener('hashchange', () => { readHash(); update(); if (pick !== null) glideTo(pick); });
-let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(fitView, 120); });
+let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => fitView(false), 120); });
 
 if (window.innerWidth < 700) $('.legend').open = false;
-fitView(); update();
+fitView(false); update();
 if (pick !== null) glideTo(pick);
 </script>
 </body>

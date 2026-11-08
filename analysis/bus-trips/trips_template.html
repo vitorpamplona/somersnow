@@ -68,6 +68,9 @@ a{color:var(--orange)}
 .chip i{width:10px;height:10px;border-radius:50%}
 .chip small{color:var(--ice);font-weight:500}
 .chip[aria-pressed=true]{border-color:#fff}
+.atstop{margin:4px 0 10px;font-size:14px;line-height:1.45}
+.atstop small{color:var(--ice)}
+.atstop .seglab{margin:0 0 2px}
 .dirs{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:center;margin:2px 0 10px;font-size:14px}
 .dirs .seglab{flex-basis:100%}
 .dirs span{display:inline-flex;align-items:center;gap:6px}
@@ -366,6 +369,24 @@ function histTip(e) {
   tip.style.display = 'block'; tip.style.left = Math.min(window.innerWidth - 300, e.clientX + 14) + 'px'; tip.style.top = (e.clientY + 14) + 'px';
 }
 
+// ---------- what's at the stop ----------
+// wheelchair boarding from the MBTA schedule; access status (Jan 2024) and amenities (2017 survey) from MBTA PATI.
+// No public data on shelters or real-time signs, so the card says so rather than showing nothing.
+function atStop(s) {
+  const a = s.a, rows = [];
+  rows.push(`Wheelchair boarding: <b>${s.w === 1 ? 'yes' : s.w === 2 ? 'no' : 'not known'}</b> <small>· MBTA schedule, fall 2025</small>`);
+  if (a) {
+    const p = a.p, acc = p === 'Compliant' ? 'meets ADA' : a.done ? 'rebuilt for access (PATI)' : p === 'Stop Eliminated' ? 'stop eliminated'
+      : p ? `not fully ADA compliant; ${p.toLowerCase()} priority` : '';
+    if (acc) rows.push(`Access: <b>${acc}</b> <small>· MBTA, Jan 2024</small>`);
+    const same = a.b.length && a.b.every((x) => x === a.b[0]);
+    const bench = !a.n ? 'no bench' : a.n === 1 ? (a.b[0] || 'a bench') : same ? `${a.n} ${a.b[0].replace('bench', 'benches')}` : a.b.length ? a.b.join(', ') : `${a.n} benches`;
+    rows.push(`${[bench, a.t && 'trash can', a.k && 'bike rack'].filter(Boolean).join(' · ')}${a.x ? ' · <b>path to the bus blocked</b>' : ''} <small>· MBTA survey, 2017</small>`);
+  }
+  rows.push('<small>Shelter, real-time sign: no public data</small>');
+  return `<div class="atstop"><div class="seglab">At this stop</div>${rows.map((r) => `<div>${r}</div>`).join('')}</div>`;
+}
+
 // ---------- the sidebar ----------
 $('#days').innerHTML = Object.entries(D.days).map(([k, v]) => `<button data-day="${k}" aria-pressed="${k === day}">${v}</button>`).join('');
 $('#days').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; day = b.dataset.day; showAll = false; update(); });
@@ -411,6 +432,7 @@ function panel() {
   $('#panel').innerHTML = `<div class="card">
       <h3><span>${esc(s.n)}</span><button id="unpick" title="Let go of this stop" aria-label="Let go of this stop">✕</button></h3>
       <div class="sub">${esc(s.t)}</div>
+      ${atStop(s)}
       ${perRoute.size > 1 ? '' : `<div class="dirs"><span class="seglab" style="margin:0">Buses here go toward</span>${s.d.map(([k]) => `<span><i style="background:${rdColor(k)}"></i>${esc(rdLabel(pick, k))}</span>`).join('')}</div>`}
       <div class="big">${fmt(total)}<small>${dir === 'off' ? 'riders get on here' : 'riders get off here'} on a ${dname}</small></div>
       ${perRoute.size > 1 ? `<div class="seglab">Buses here go toward · riders ${dir === 'off' ? 'getting on' : 'getting off'}</div><div class="chips" id="chips"><button class="chip" data-r="" aria-pressed="${onlyRoute === null}">All</button>${[...perRoute.entries()].sort((a, b) => b[1] - a[1]).map(([k, n]) => `<button class="chip" data-r="${k}" aria-pressed="${onlyRoute === k}"><i style="background:${rdColor(k)}"></i>${esc(rdLabel(pick, k))} <small>${fmt(n)}</small></button>`).join('')}</div>` : ''}

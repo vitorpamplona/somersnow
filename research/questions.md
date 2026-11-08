@@ -76,6 +76,12 @@ Ordinance wording and enforcement.
     - MBTA clears its listed stops "within 24 hours" and takes reports through Customer Support ([MBTA: bus service during winter storms](https://www.mbta.com/winter-weather/bus-service-during-winter-storms))
 26. **The RIDE.** How does paratransit operate during snow emergencies?
     - No source found
+59. **Bus stop amenities today.** Can the MBTA publish what's at each stop now: shelters, benches, signs? The public PATI layer's amenities are from the 2017 survey and have no shelter field, though its description mentions shelters. The newer "MBTA Bus Survey" form asks about shelters, signs and accessibility, but its answers can't be read publicly.
+    - [MBTA PATI Bus Stops](https://www.arcgis.com/home/item.html?id=24a97982b39f4febb504c9e6cb55879b) (amenities "from 2017 and may not reflect current bus stop amenities"; 7 Somerville stops had a bench); [MBTA Bus Survey](https://www.arcgis.com/home/item.html?id=2feecb1e8d7441918e145f5d5954959c) (form layer, queries refused)
+60. **Real-time signs.** Which bus stops in Somerville have a real-time arrival sign, and is there a public list?
+    - None found in MBTA open data; the schedule's facility tables (GTFS `facilities.txt`) cover stations only (elevators, fare machines, bike and car parking)
+61. **Accessible stops.** PATI (status as of January 2024) rates 7 of its 225 Somerville stops ADA compliant, 12 high priority, 157 medium and 48 low (1 eliminated); the schedule marks 205 of 217 Somerville bus stops wheelchair accessible and 12 unknown. How do the two fit, and when will the high-priority stops be done?
+    - [MBTA PATI Bus Stops](https://www.arcgis.com/home/item.html?id=24a97982b39f4febb504c9e6cb55879b); MBTA schedule, Fall 2025 (`stops.txt`, `wheelchair_boarding`), from the [MBTA's feed archive](https://cdn.mbta.com/archive/archived_feeds.txt)
 
 ## State: MassDOT and DCR
 
@@ -145,6 +151,8 @@ What PTAC found in public data, and what's missing, is in [data-sources.md](data
 55. **Traffic on Somerville streets.** Does the City have hourly traffic counts or a data-sharing deal (Waze for Cities or similar) that shows when cars are back on the streets during and after a storm? The replays use bus speed between timing stops as a stand-in.
 56. **Parking revenue by day.** Daily parking meter and ParkMobile revenue, ideally by area, for the storms since 2016. It would show what a storm and a snow emergency cost the City and local businesses.
 57. **Parking tickets in a snow emergency.** Parking tickets issued per day (snow emergency, hydrant, 20 feet of an intersection), the money collected, and the tow fees. The open-data citations cover moving violations only.
+58. **Bus shelters.** Which Somerville bus stops have a shelter, who owns and maintains each (City, MBTA or an advertising contractor), and who clears the snow in and around it? Neither the City nor the MBTA publishes a list; Cambridge publishes its own.
+    - Nothing on data.somervillema.gov; [Cambridge: Bus Shelters](https://www.arcgis.com/home/item.html?id=d3901fd1218c45f1924adcce50e5b9ed) for comparison; MBTA side: question 59
 
 ## Sources
 

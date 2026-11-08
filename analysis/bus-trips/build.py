@@ -39,6 +39,9 @@ FEEDS = 'https://cdn.mbta.com/archive/archived_feeds.txt'
 # like marsh and wetland and are left out; so is the ocean itself (the town outlines already leave it out).
 WATER = ('https://services1.arcgis.com/hGdibHYSPO59RG1h/arcgis/rest/services/'
          '1_25_000_USGS_MassDEP_Hydrography/FeatureServer/1/query')
+# what's at each stop: MBTA Plan for Accessible Transit Infrastructure (PATI): accessibility status as of Jan 2024,
+# and amenities (benches, trash cans, bike racks, blocked paths) from the 2017 survey. No shelters or real-time signs.
+PATI = 'https://services1.arcgis.com/ceiitspzDAHrdGO1/arcgis/rest/services/PATI_Bus_Stops/FeatureServer/0/query'
 TOWNS = ('https://services1.arcgis.com/hGdibHYSPO59RG1h/arcgis/rest/services/'
          'Massachusetts_Municipalities_Hosted/FeatureServer/0/query')
 DAYS = {'Wkdy': 'Weekday', 'Sat': 'Saturday', 'Sun': 'Sunday'}   # the file also has Friday on its own ('Fri'), left out
@@ -167,6 +170,35 @@ def clip(ring, box):
         if not ring:
             break
     return ring
+
+
+def pati(box):
+    """{stop id: [PATI records]} for every stop in the box (paged; cached in .cache). A stop with benches has one
+    record with the count and one more per bench with its type and condition."""
+    out, offset = defaultdict(list), 0
+    while True:
+        with open(cached(f'bus-trips-pati-{offset}.json', PATI, {
+                'where': '1=1', 'geometry': ','.join(f'{v:.4f}' for v in box), 'geometryType': 'esriGeometryEnvelope',
+                'inSR': 4326, 'spatialRel': 'esriSpatialRelIntersects', 'outFields': '*', 'returnGeometry': 'false',
+                'resultOffset': offset, 'f': 'json'})) as f:
+            d = json.load(f)
+        for ft in d.get('features', []):
+            a = ft['attributes']
+            out[str(a['Stop_ID'])].append(a)
+        if not d.get('exceededTransferLimit') or not d.get('features'):
+            return out
+        offset += len(d['features'])
+
+
+def amenities(recs):
+    """A stop's PATI records, short: access status (2024) and what was there in 2017."""
+    val = lambda k: next(((r.get(k) or '').strip() for r in recs if (r.get(k) or '').strip()), '')
+    most = lambda k: max((r.get(k) or 0) for r in recs)
+    benches = [f"{r['SeatType17'].strip().lower()} ({r['SeatCond17'].strip().lower()})" if (r.get('SeatCond17') or '').strip()
+               else r['SeatType17'].strip().lower() for r in recs if (r.get('SeatType17') or '').strip()]
+    n = max(most('SeatNum17'), len(benches))
+    return {'p': val('PATI_Prior'), 'done': val('PATI_Prgrm') == 'PATI Complete', 'n': n, 'b': benches,
+            't': most('Trash17') > 0, 'k': most('BikeRks17') > 0, 'x': any((r.get('BlkdPath17') or '').strip() == 'Yes' for r in recs)}
 
 
 def somerville_routes():
@@ -397,12 +429,16 @@ def main():
             if len(r) > 3:
                 water.append([xy(*q) for q in r])
 
+    pati_at = pati(box)
+
     # stops in the page: only those with a location; ids become indexes
     ids = sorted(meta, key=lambda s: (meta[s]['stop_name'], s))
     ix = {s: i for i, s in enumerate(ids)}
     ri = {r: i for i, r in enumerate(routes)}
     stops = [{'id': s, 'n': meta[s]['stop_name'], 't': meta[s].get('municipality') or '', 'p': xy(float(meta[s]['stop_lon']), float(meta[s]['stop_lat'])),
-              'r': sorted(ri[r] for r in stop_routes[s])} for s in ids]
+              'r': sorted(ri[r] for r in stop_routes[s]), 'w': int(meta[s].get('wheelchair_boarding') or 0),
+              **({'a': amenities(pati_at[s])} if s in pati_at else {})} for s in ids]
+    print(f'  PATI: {sum(1 for s in ids if s in pati_at)} of {len(ids)} stops', file=sys.stderr)
     # each route's two directions, named by where the bus is headed (the schedule's direction destination)
     dest = {(FROM_SCHEDULE.get(r['route_id'], r['route_id']), r['direction_id']): r['direction_destination']
             for r in table(z, 'directions.txt')}

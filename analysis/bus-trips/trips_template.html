@@ -36,6 +36,7 @@ a{color:var(--orange)}
 #map path,#map line{vector-effect:non-scaling-stroke}
 .town{fill:#C8D6E5;stroke:#0B1C2E;stroke-width:1.2px}
 .town.home{fill:var(--snow)}
+.water{fill:#0B1C2E;stroke:none}
 .tlab{font-family:var(--display);font-weight:800;text-transform:uppercase;letter-spacing:.12em;fill:#7B93AE;pointer-events:none;text-anchor:middle}
 .tlab.home{fill:var(--mute)}
 .route{fill:none;stroke:#5E7894;stroke-width:1.6px;stroke-opacity:.55;stroke-linejoin:round}
@@ -105,7 +106,7 @@ details.how p{margin:6px 0}
 <div class="app">
   <div class="mapcol">
     <svg id="map" role="img" aria-label="Map of Somerville's bus routes and the cities and towns they reach. Pick a stop to see where its riders get off.">
-      <g id="gtowns"></g><g id="glabels"></g><g id="grapid"></g><g id="groutes"></g><g id="gflows"></g><g id="gstops"></g><g id="ghl"></g>
+      <g id="gtowns"></g><g id="gwater"></g><g id="glabels"></g><g id="grapid"></g><g id="groutes"></g><g id="gflows"></g><g id="gstops"></g><g id="ghl"></g>
     </svg>
     <details class="legend" open>
       <summary>Map key</summary>
@@ -218,6 +219,7 @@ const px = () => VB[2] / map.getBoundingClientRect().width;   // map units per s
 
 // towns (drawn once), with Somerville lighter
 $('#gtowns').innerHTML = D.towns.map((t) => `<path class="town${t.n === 'Somerville' ? ' home' : ''}" d="${t.rings.map((r) => pathD(r) + 'Z').join('')}"/>`).join('');
+$('#gwater').innerHTML = `<path class="water" d="${D.water.map((r) => pathD(r) + 'Z').join('')}"/>`;
 const TOWNLAB = D.towns.map((t) => {
   const r = t.rings.reduce((a, b) => (b.length > a.length ? b : a));
   let x = 0, y = 0; r.forEach((p) => { x += p[0]; y += p[1]; });

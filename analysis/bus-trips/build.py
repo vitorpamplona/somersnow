@@ -33,6 +33,12 @@ UA = 'somersnow-bus-trips (PTAC; github.com/vitorpamplona/somersnow)'
 
 RIDERSHIP = 'https://www.arcgis.com/sharing/rest/content/items/8daf4a33925a4df59183f860826d29ee/data'
 FEEDS = 'https://cdn.mbta.com/archive/archived_feeds.txt'
+# rivers, ponds and tidal water (MassDEP 1:25,000 water bodies): town lines run down the middle of the Charles and
+# the Mystic, so the town outlines alone leave them out. POLY_CODE 1: reservoirs (Fresh Pond, Spot Pond); 6: rivers and
+# ponds (Charles River, Alewife Brook); 8: tidal water (Mystic River, Chelsea River). The unnamed codes (2, 5, 7) look
+# like marsh and wetland and are left out; so is the ocean itself (the town outlines already leave it out).
+WATER = ('https://services1.arcgis.com/hGdibHYSPO59RG1h/arcgis/rest/services/'
+         '1_25_000_USGS_MassDEP_Hydrography/FeatureServer/1/query')
 TOWNS = ('https://services1.arcgis.com/hGdibHYSPO59RG1h/arcgis/rest/services/'
          'Massachusetts_Municipalities_Hosted/FeatureServer/0/query')
 DAYS = {'Wkdy': 'Weekday', 'Sat': 'Saturday', 'Sun': 'Sunday'}   # the file also has Friday on its own ('Fri'), left out
@@ -116,6 +122,28 @@ def simplify(pts, tol):
     if dmax <= tol:
         return [pts[0], pts[-1]]
     return simplify(pts[:i + 1], tol)[:-1] + simplify(pts[i:], tol)
+
+
+def clip(ring, box):
+    """A polygon ring cut to a box (Sutherland-Hodgman), so water far off the map isn't carried."""
+    x0, y0, x1, y1 = box
+    for inside, cut in ((lambda p: p[0] >= x0, lambda a, b: (x0, a[1] + (b[1] - a[1]) * (x0 - a[0]) / (b[0] - a[0]))),
+                        (lambda p: p[0] <= x1, lambda a, b: (x1, a[1] + (b[1] - a[1]) * (x1 - a[0]) / (b[0] - a[0]))),
+                        (lambda p: p[1] >= y0, lambda a, b: (a[0] + (b[0] - a[0]) * (y0 - a[1]) / (b[1] - a[1]), y0)),
+                        (lambda p: p[1] <= y1, lambda a, b: (a[0] + (b[0] - a[0]) * (y1 - a[1]) / (b[1] - a[1]), y1))):
+        out = []
+        for k, p in enumerate(ring):
+            q = ring[k - 1]
+            if inside(p):
+                if not inside(q):
+                    out.append(cut(q, p))
+                out.append(p)
+            elif inside(q):
+                out.append(cut(q, p))
+        ring = out
+        if not ring:
+            break
+    return ring
 
 
 def somerville_routes():
@@ -332,6 +360,20 @@ def main():
         rings = [[xy(*q) for q in r] for r in ft['geometry']['rings'] if len(r) > 3]
         towns.append({'n': ft['attributes']['TOWN'].title(), 'rings': rings})
 
+    # water, cut to the map
+    with open(cached('bus-trips-water.json', WATER, {
+            'where': 'POLY_CODE IN (1,6,8) AND Shape__Area > 5000 AND Shape__Area < 1e9',
+            'geometry': ','.join(f'{v:.4f}' for v in box), 'geometryType': 'esriGeometryEnvelope', 'inSR': 4326,
+            'spatialRel': 'esriSpatialRelIntersects', 'outFields': 'NAME', 'outSR': 4326,
+            'maxAllowableOffset': 0.00008, 'f': 'json'})) as f:
+        wj = json.load(f)
+    water = []
+    for ft in wj['features']:
+        for r in ft['geometry']['rings']:
+            r = clip(r, box)
+            if len(r) > 3:
+                water.append([xy(*q) for q in r])
+
     # stops in the page: only those with a location; ids become indexes
     ids = sorted(meta, key=lambda s: (meta[s]['stop_name'], s))
     ix = {s: i for i, s in enumerate(ids)}
@@ -348,7 +390,7 @@ def main():
         totals[day] = round(sum(n for n in d.values()))
     hourly = {day: {str(ix[sid]): [round(x * 10) for x in v] for sid, v in h.items() if sid in ix and sum(v) >= 0.05}
               for day, h in hours.items()}
-    payload = {'season': season, 'feed': feed, 'days': DAYS, 'hours': hourly, 'routes': rshapes, 'rapid': rapid, 'towns': towns,
+    payload = {'season': season, 'feed': feed, 'days': DAYS, 'hours': hourly, 'routes': rshapes, 'rapid': rapid, 'towns': towns, 'water': water,
                'stops': stops, 'flows': flows, 'totals': totals}
     blob = json.dumps(payload, separators=(',', ':'))
     with open(os.path.join(HERE, 'trips_template.html')) as f:

@@ -211,10 +211,10 @@ def merge_unknown(by_day, known):
 
 
 def estimate(trip_list):
-    """{(from_stop, to_stop, route): riders a day}. On each trip, the people getting off at a stop
+    """{(from_stop, to_stop, route, direction): riders a day}. On each trip, the people getting off at a stop
     are a mix of everyone on board, in proportion to where they got on."""
     od = defaultdict(float)
-    for rid, stops, *_ in trip_list:
+    for rid, stops, dirn, _ in trip_list:
         aboard = {}                               # stop they got on -> riders still on board
         for sid, on, off in stops:
             total = sum(aboard.values())
@@ -223,14 +223,14 @@ def estimate(trip_list):
                 for o in list(aboard):
                     n = aboard[o] * k
                     if o != sid:
-                        od[(o, sid, rid)] += n
+                        od[(o, sid, rid, dirn)] += n
                     aboard[o] -= n
             if on > 0:
                 aboard[sid] = aboard.get(sid, 0) + on
         last = stops[-1][0]
         for o, n in aboard.items():               # still on board at the end of the trip
             if n > 1e-9 and o != last:
-                od[(o, last, rid)] += n
+                od[(o, last, rid, dirn)] += n
     return od
 
 
@@ -380,17 +380,31 @@ def main():
     ri = {r: i for i, r in enumerate(routes)}
     stops = [{'id': s, 'n': meta[s]['stop_name'], 't': meta[s].get('municipality') or '', 'p': xy(float(meta[s]['stop_lon']), float(meta[s]['stop_lat'])),
               'r': sorted(ri[r] for r in stop_routes[s])} for s in ids]
+    # each route's two directions, named by where the bus is headed (the schedule's direction destination)
+    dest = {(FROM_SCHEDULE.get(r['route_id'], r['route_id']), r['direction_id']): r['direction_destination']
+            for r in table(z, 'directions.txt')}
+    combos = sorted({(rid, dirn) for tl in by_day.values() for rid, _, dirn, _ in tl}, key=lambda k: (ri[k[0]], k[1]))
+    rdi = {k: i for i, k in enumerate(combos)}
+    rd = [[ri[rid], int(dirn), dest.get((rid, dirn), '')] for rid, dirn in combos]
+    # which directions stop at each stop, and the stop the bus goes to next (the most common one)
+    nxt = defaultdict(lambda: defaultdict(lambda: defaultdict(int)))
+    for tl in by_day.values():
+        for rid, seq, dirn, _ in tl:
+            for k, (sid, *_) in enumerate(seq):
+                nxt[sid][rdi[(rid, dirn)]][seq[k + 1][0] if k + 1 < len(seq) else None] += 1
+    for st in stops:
+        st['d'] = [[k, ix.get(max(c, key=c.get), -1) if max(c, key=c.get) else -1] for k, c in sorted(nxt[st['id']].items())]
     flows, totals = {}, {}
     for day, d in od.items():
         per = defaultdict(list)
-        for (a, b, rid), n in d.items():
+        for (a, b, rid, dirn), n in d.items():
             if n >= MIN_RIDERS and a in ix and b in ix:
-                per[ix[a]].append([ix[b], ri[rid], round(n * 10)])
+                per[ix[a]].append([ix[b], rdi[(rid, dirn)], round(n * 10)])
         flows[day] = {str(k): sorted(v, key=lambda e: -e[2]) for k, v in per.items()}
         totals[day] = round(sum(n for n in d.values()))
     hourly = {day: {str(ix[sid]): [round(x * 10) for x in v] for sid, v in h.items() if sid in ix and sum(v) >= 0.05}
               for day, h in hours.items()}
-    payload = {'season': season, 'feed': feed, 'days': DAYS, 'hours': hourly, 'routes': rshapes, 'rapid': rapid, 'towns': towns, 'water': water,
+    payload = {'season': season, 'feed': feed, 'days': DAYS, 'hours': hourly, 'routes': rshapes, 'rd': rd, 'rapid': rapid, 'towns': towns, 'water': water,
                'stops': stops, 'flows': flows, 'totals': totals}
     blob = json.dumps(payload, separators=(',', ':'))
     with open(os.path.join(HERE, 'trips_template.html')) as f:

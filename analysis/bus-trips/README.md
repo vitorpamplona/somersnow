@@ -8,6 +8,7 @@ A PTAC map of every bus route with a stop in Somerville, drawn whole through the
 
 - The map opens centered on Somerville, with its neighbors around it; ⤢ zooms out to every route, still centered there. On it: town outlines, the subway, the 15 routes (as they ran in Fall 2025) and their 548 stops, sized by riders.
 - With no stop picked: riders who get on in Somerville, and the share who get off in each city or town; the busiest stops in Somerville.
+- With a stop picked: which way its buses go, by route and direction ("87 → Lechmere", from the schedule's direction names; "90 ends here" where a trip ends), with an arrow on the map toward each bus's next stop. Riders are counted per route and direction, so a stop served both ways (Davis, Clarendon Hill) keeps them apart, and the buttons show one direction at a time.
 - With a stop picked: a chart of riders getting on and off there by hour (the trip's start time plus the schedule's usual minutes to that stop).
 - With a stop picked: the stops where its riders get off light up in orange (bigger: more riders; stops with under 1 rider a day are left out) and its routes take their colors; the share by city or town, a list of the stops, and one button per route to show only that route. Hover a stop or a row for its numbers.
 - A stop where buses end their trip has no one getting on; the page offers where its riders got on instead.

@@ -68,6 +68,11 @@ a{color:var(--orange)}
 .chip i{width:10px;height:10px;border-radius:50%}
 .chip small{color:var(--ice);font-weight:500}
 .chip[aria-pressed=true]{border-color:#fff}
+.dirs{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:center;margin:2px 0 10px;font-size:14px}
+.dirs .seglab{flex-basis:100%}
+.dirs span{display:inline-flex;align-items:center;gap:6px}
+.dirs i{width:10px;height:10px;border-radius:50%}
+.dirs small{color:var(--ice)}
 .towns{margin:10px 0 0;padding:0;list-style:none;font-size:14px}
 .towns li{display:grid;grid-template-columns:96px minmax(0,1fr) 52px;gap:8px;align-items:center;margin:3px 0}
 .towns .b{height:10px;border-radius:5px;background:var(--orange);min-width:2px}
@@ -111,7 +116,7 @@ details.how p{margin:6px 0}
     <details class="legend" open>
       <summary>Map key</summary>
       <span><svg width="22" height="14"><circle cx="11" cy="7" r="4.5" fill="#fff" stroke="#47607C" stroke-width="1.5"/></svg>A bus stop (bigger: more riders)</span>
-      <span><svg width="22" height="18"><circle cx="11" cy="9" r="7" fill="#10243A" stroke="#FF8A3D" stroke-width="3"/></svg>The stop you picked</span>
+      <span><svg width="22" height="18"><circle cx="11" cy="9" r="7" fill="#10243A" stroke="#FF8A3D" stroke-width="3"/></svg>The stop you picked; arrows show the way its buses go</span>
       <span><svg width="22" height="18"><circle cx="11" cy="9" r="6" fill="#FF8A3D" stroke="#10243A" stroke-width="1.5"/></svg><span><b id="keyends" style="font-weight:inherit">Where its riders get off</b> (bigger: more riders). Its routes are in color.</span></span>
       <span><svg width="22" height="14"><line x1="2" y1="7" x2="20" y2="7" stroke="#DA291C" stroke-width="3"/></svg>Subway</span>
     </details>
@@ -152,6 +157,12 @@ const $ = (s) => document.querySelector(s);
 const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const COLORS = ['#1F6FB2', '#B93D06', '#2E7D32', '#7B3FA0', '#C2185B', '#8D6E00', '#00838F', '#5D4037', '#E65100', '#283593', '#AD1457', '#33691E', '#4527A0', '#00695C', '#BF360C'];
 const routeColor = (r) => COLORS[r % COLORS.length];
+// a route in one direction: [route, direction id, where the bus is headed]
+const RD = D.rd, rdRoute = (k) => RD[k][0], rdColor = (k) => routeColor(RD[k][0]);
+const shortDest = (t) => t.replace(/ Station\b/g, '').replace(/ Square\b/g, ' Sq');
+const rdName = (k) => `${D.routes[RD[k][0]].name} → ${shortDest(RD[k][2])}`;
+const endsAt = (i, k) => S[i].d.some(([q, nx]) => q === k && nx < 0);      // this direction ends its trip at stop i
+const rdLabel = (i, k) => endsAt(i, k) ? `${D.routes[RD[k][0]].name} ends here` : rdName(k);
 const S = D.stops, R = D.routes, N = S.length;
 const dayName = (d) => d === 'Wkdy' ? 'weekday' : D.days[d];
 const fmt = (x) => x < 1 ? '<1' : Math.round(x).toLocaleString();
@@ -250,7 +261,7 @@ function drawStops() {
   for (let i = 0; i < N; i++) {
     if (lit && lit.has(i)) continue;
     const s = S[i], n = dd.on[i] + dd.off[i];
-    if (onlyRoute !== null && !s.r.includes(onlyRoute)) continue;
+    if (onlyRoute !== null && !s.r.includes(rdRoute(onlyRoute))) continue;
     html += `<circle cx="${s.p[0]}" cy="${s.p[1]}" r="${(radius(n / 2) * k).toFixed(1)}" fill="${pick === null ? '#fff' : '#E6EDF4'}" stroke="#47607C" stroke-width="${(1.2 * k).toFixed(2)}" opacity="${pick === null ? 1 : 0.45}"/>`;
   }
   $('#gstops').innerHTML = html;
@@ -281,9 +292,16 @@ function drawFlows() {
     return `<circle cx="${p[0]}" cy="${p[1]}" r="${(r * k).toFixed(1)}" fill="#FF8A3D" stroke="#10243A" stroke-width="${(1.5 * k).toFixed(2)}"/>`;
   }).join('');
   const s = S[pick].p;
-  $('#gflows').innerHTML = dots + `<circle cx="${s[0]}" cy="${s[1]}" r="${(Math.max(6, 9 * sc) * k).toFixed(1)}" fill="#10243A" stroke="#FF8A3D" stroke-width="${(3.5 * k).toFixed(2)}"/>`;
+  const arrows = S[pick].d.filter(([q, nx]) => nx >= 0 && (onlyRoute === null || q === onlyRoute)).map(([q, nx]) => {
+    const a = S[pick].p, b = S[nx].p, L = Math.hypot(b[0] - a[0], b[1] - a[1]) || 1, ux = (b[0] - a[0]) / L, uy = (b[1] - a[1]) / L;
+    const r0 = (Math.max(6, 9 * sc) + 4) * k, len = 22 * k, hw = 6 * k, tip = [a[0] + ux * (r0 + len), a[1] + uy * (r0 + len)];
+    const base = [tip[0] - ux * 10 * k, tip[1] - uy * 10 * k];
+    return `<g class="arrow"><line x1="${(a[0] + ux * r0).toFixed(1)}" y1="${(a[1] + uy * r0).toFixed(1)}" x2="${base[0].toFixed(1)}" y2="${base[1].toFixed(1)}" stroke="${rdColor(q)}" stroke-width="4" stroke-linecap="round"/>`
+      + `<path d="M${tip[0].toFixed(1)} ${tip[1].toFixed(1)}L${(base[0] - uy * hw).toFixed(1)} ${(base[1] + ux * hw).toFixed(1)}L${(base[0] + uy * hw).toFixed(1)} ${(base[1] - ux * hw).toFixed(1)}Z" fill="${rdColor(q)}" stroke="#10243A" stroke-width="1"/></g>`;
+  }).join('');
+  $('#gflows').innerHTML = dots + arrows + `<circle cx="${s[0]}" cy="${s[1]}" r="${(Math.max(6, 9 * sc) * k).toFixed(1)}" fill="#10243A" stroke="#FF8A3D" stroke-width="${(3.5 * k).toFixed(2)}"/>`;
   // the routes these riders take stand out
-  const used = new Set(fl.map((f) => f[1]));
+  const used = new Set(fl.map((f) => rdRoute(f[1])));
   document.querySelectorAll('#groutes .route').forEach((p) => {
     const r = +p.dataset.r, on = used.has(r);
     p.style.stroke = on ? routeColor(r) : ''; p.style.strokeOpacity = on ? 0.9 : (pick === null ? '' : 0.25); p.style.strokeWidth = on ? '3px' : '';
@@ -377,14 +395,15 @@ function panel() {
   $('#lede').textContent = dir === 'off' ? 'Where riders get off' : 'Where they got on';
   $('#panel').innerHTML = `<div class="card">
       <h3><span>${esc(s.n)}</span><button id="unpick" title="Let go of this stop" aria-label="Let go of this stop">✕</button></h3>
-      <div class="sub">${esc(s.t)} · ${s.r.length > 1 ? 'routes' : 'route'} ${s.r.map((r) => esc(R[r].name)).join(', ')}</div>
+      <div class="sub">${esc(s.t)}</div>
+      ${perRoute.size > 1 ? '' : `<div class="dirs"><span class="seglab" style="margin:0">Buses here go toward</span>${s.d.map(([k]) => `<span><i style="background:${rdColor(k)}"></i>${esc(rdLabel(pick, k))}</span>`).join('')}</div>`}
       <div class="big">${fmt(total)}<small>${dir === 'off' ? 'riders get on here' : 'riders get off here'} on a ${dname}</small></div>
-      ${perRoute.size > 1 ? `<div class="chips" id="chips"><button class="chip" data-r="" aria-pressed="${onlyRoute === null}">All routes</button>${[...perRoute.entries()].sort((a, b) => b[1] - a[1]).map(([r, n]) => `<button class="chip" data-r="${r}" aria-pressed="${onlyRoute === r}"><i style="background:${routeColor(r)}"></i>${esc(R[r].name)} <small>${fmt(n)}</small></button>`).join('')}</div>` : ''}
+      ${perRoute.size > 1 ? `<div class="seglab">Buses here go toward · riders ${dir === 'off' ? 'getting on' : 'getting off'}</div><div class="chips" id="chips"><button class="chip" data-r="" aria-pressed="${onlyRoute === null}">All</button>${[...perRoute.entries()].sort((a, b) => b[1] - a[1]).map(([k, n]) => `<button class="chip" data-r="${k}" aria-pressed="${onlyRoute === k}"><i style="background:${rdColor(k)}"></i>${esc(rdLabel(pick, k))} <small>${fmt(n)}</small></button>`).join('')}</div>` : ''}
       ${histHTML(pick)}
-      ${fl.length ? `<div class="sub" style="margin-top:10px">${dir === 'off' ? 'They get off in' : 'They got on in'}:</div>${townsHTML(sp)}` : `<p class="note" style="margin-top:8px">No riders counted ${dir === 'off' ? 'getting on' : 'getting off'} here on a ${dname}${onlyRoute !== null ? ' on this route' : dir === 'off' ? ': buses end their trip here' : ''}.</p>${(dir === 'off' ? dd.off[pick] : dd.on[pick]) >= 1 ? `<button class="btn" id="flip">Show where the ${fmt(dir === 'off' ? dd.off[pick] : dd.on[pick])} riders ${dir === 'off' ? 'getting off here got on' : 'getting on here get off'}</button>` : ''}`}
+      ${fl.length ? `<div class="sub" style="margin-top:10px">${dir === 'off' ? 'They get off in' : 'They got on in'}:</div>${townsHTML(sp)}` : `<p class="note" style="margin-top:8px">No riders counted ${dir === 'off' ? 'getting on' : 'getting off'} here on a ${dname}${onlyRoute !== null ? ' on this bus' : dir === 'off' ? ': buses end their trip here' : ''}.</p>${(dir === 'off' ? dd.off[pick] : dd.on[pick]) >= 1 ? `<button class="btn" id="flip">Show where the ${fmt(dir === 'off' ? dd.off[pick] : dd.on[pick])} riders ${dir === 'off' ? 'getting off here got on' : 'getting on here get off'}</button>` : ''}`}
     </div>
     ${ends.length ? `<div class="card"><h3>${dir === 'off' ? 'Stops where they get off' : 'Stops where they got on'}</h3><div class="sub">About how many riders a ${dname}. Hover to find one on the map; click to pick it.</div>
-      <ul id="list">${shown.map((e) => `<li data-i="${e.b}"><span>${esc(S[e.b].n)}<small>${esc(S[e.b].t)} · ${[...e.r.keys()].map((r) => R[r].name).join(', ')}</small><div class="mini" style="width:${(100 * e.n / emax).toFixed(1)}%"></div></span><span class="n">${fmt(e.n)}</span></li>`).join('')}</ul>
+      <ul id="list">${shown.map((e) => `<li data-i="${e.b}"><span>${esc(S[e.b].n)}<small>${esc(S[e.b].t)} · ${[...e.r.keys()].map(rdName).map(esc).join(', ')}</small><div class="mini" style="width:${(100 * e.n / emax).toFixed(1)}%"></div></span><span class="n">${fmt(e.n)}</span></li>`).join('')}</ul>
       ${ends.length > 20 ? `<button class="btn more" id="more">${showAll ? 'Show the top 20' : `Show all ${ends.length}`}</button>` : ''}
       ${few && (showAll || ends.length <= 20) ? `<p class="note" style="margin:8px 0 0">And ${few} stop${few === 1 ? '' : 's'} with under 1 rider a ${dname}, not shown.</p>` : ''}</div>` : ''}`;
 }
@@ -436,7 +455,7 @@ function nearest(cx, cy) {
   const [x, y] = toMap(cx, cy), k = px(), dd = dayData(day), lit = litStops();
   let best = null, bd = Infinity;
   for (let i = 0; i < N; i++) {
-    if (onlyRoute !== null && !S[i].r.includes(onlyRoute) && !(lit && lit.has(i))) continue;
+    if (onlyRoute !== null && !S[i].r.includes(rdRoute(onlyRoute)) && !(lit && lit.has(i))) continue;
     const d = Math.hypot(S[i].p[0] - x, S[i].p[1] - y) / k;
     if (d < bd) { bd = d; best = i; }
   }

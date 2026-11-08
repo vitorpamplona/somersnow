@@ -292,12 +292,27 @@ function drawFlows() {
     return `<circle cx="${p[0]}" cy="${p[1]}" r="${(r * k).toFixed(1)}" fill="#FF8A3D" stroke="#10243A" stroke-width="${(1.5 * k).toFixed(2)}"/>`;
   }).join('');
   const s = S[pick].p;
-  const arrows = S[pick].d.filter(([q, nx]) => nx >= 0 && (onlyRoute === null || q === onlyRoute)).map(([q, nx]) => {
-    const a = S[pick].p, b = S[nx].p, L = Math.hypot(b[0] - a[0], b[1] - a[1]) || 1, ux = (b[0] - a[0]) / L, uy = (b[1] - a[1]) / L;
-    const r0 = (Math.max(6, 9 * sc) + 4) * k, len = 22 * k, hw = 6 * k, tip = [a[0] + ux * (r0 + len), a[1] + uy * (r0 + len)];
-    const base = [tip[0] - ux * 10 * k, tip[1] - uy * 10 * k];
-    return `<g class="arrow"><line x1="${(a[0] + ux * r0).toFixed(1)}" y1="${(a[1] + uy * r0).toFixed(1)}" x2="${base[0].toFixed(1)}" y2="${base[1].toFixed(1)}" stroke="${rdColor(q)}" stroke-width="4" stroke-linecap="round"/>`
-      + `<path d="M${tip[0].toFixed(1)} ${tip[1].toFixed(1)}L${(base[0] - uy * hw).toFixed(1)} ${(base[1] + ux * hw).toFixed(1)}L${(base[0] + uy * hw).toFixed(1)} ${(base[1] - ux * hw).toFixed(1)}Z" fill="${rdColor(q)}" stroke="#10243A" stroke-width="1"/></g>`;
+  // an arrow for each way a bus leaves the stop, drawn along the route's own line toward its next stop
+  const arrows = S[pick].d.filter(([q, nx]) => nx >= 0 && (onlyRoute === null || q === onlyRoute)).map(([q, nx, path]) => {
+    const line = path && path.length > 1 ? path : [S[pick].p, S[nx].p];
+    const cum = [0]; for (let i = 1; i < line.length; i++) cum.push(cum[i - 1] + Math.hypot(line[i][0] - line[i - 1][0], line[i][1] - line[i - 1][1]));
+    const total = cum[cum.length - 1] || 1;
+    const at = (d) => {                                  // the point d along the line, and the way it runs there
+      let i = 1; while (i < line.length - 1 && cum[i] < d) i++;
+      const a = line[i - 1], b = line[i], seg = (cum[i] - cum[i - 1]) || 1, t = Math.max(0, Math.min(1, (d - cum[i - 1]) / seg));
+      return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, (b[0] - a[0]) / seg, (b[1] - a[1]) / seg];
+    };
+    const d0 = Math.min((Math.max(6, 9 * sc) + 4) * k, total * 0.4), d1 = Math.min(d0 + 50 * k, total), head = Math.min(13 * k, (d1 - d0) * 0.6);
+    const pts = [at(d0)];
+    for (let i = 1; i < line.length - 1; i++) if (cum[i] > d0 && cum[i] < d1 - head) pts.push([line[i][0], line[i][1]]);
+    const base = at(d1 - head), tip = at(d1), hw = 7 * k, [ux, uy] = [tip[2], tip[3]];
+    pts.push(base);
+    const d = `M${pts.map((p) => p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join('L')}`;
+    const tri = `M${tip[0].toFixed(1)} ${tip[1].toFixed(1)}L${(base[0] - uy * hw).toFixed(1)} ${(base[1] + ux * hw).toFixed(1)}L${(base[0] + uy * hw).toFixed(1)} ${(base[1] - ux * hw).toFixed(1)}Z`;
+    return `<g class="arrow"><path d="${d}" fill="none" stroke="#10243A" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>`
+      + `<path d="${tri}" fill="#10243A" stroke="#10243A" stroke-width="4" stroke-linejoin="round"/>`
+      + `<path d="${d}" fill="none" stroke="${rdColor(q)}" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>`
+      + `<path d="${tri}" fill="${rdColor(q)}"/></g>`;
   }).join('');
   $('#gflows').innerHTML = dots + arrows + `<circle cx="${s[0]}" cy="${s[1]}" r="${(Math.max(6, 9 * sc) * k).toFixed(1)}" fill="#10243A" stroke="#FF8A3D" stroke-width="${(3.5 * k).toFixed(2)}"/>`;
   // the routes these riders take stand out

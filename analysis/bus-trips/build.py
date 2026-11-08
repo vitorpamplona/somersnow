@@ -124,6 +124,29 @@ def simplify(pts, tol):
     return simplify(pts[:i + 1], tol)[:-1] + simplify(pts[i:], tol)
 
 
+def piece(pts, a, b):
+    """The stretch of a route shape (lon, lat points) from the point nearest a to the point nearest b after it."""
+    kx = 111320 * math.cos(math.radians(pts[0][1]))
+
+    def near(p, start):
+        best = (1e18, start, 0.0)
+        for i in range(start, len(pts) - 1):
+            (x1, y1), (x2, y2) = pts[i], pts[i + 1]
+            vx, vy, wx, wy = (x2 - x1) * kx, (y2 - y1) * 110540, (p[0] - x1) * kx, (p[1] - y1) * 110540
+            L = vx * vx + vy * vy
+            t = max(0.0, min(1.0, (wx * vx + wy * vy) / L)) if L else 0.0
+            d = math.hypot(wx - t * vx, wy - t * vy)
+            if d < best[0]:
+                best = (d, i, t)
+        return best
+    at = lambda i, t: (pts[i][0] + (pts[i + 1][0] - pts[i][0]) * t, pts[i][1] + (pts[i + 1][1] - pts[i][1]) * t)
+    d0, i0, t0 = near(a, 0)
+    d1, i1, t1 = near(b, i0)
+    if d0 > 60 or d1 > 60 or (i1, t1) <= (i0, t0):
+        return None
+    return [at(i0, t0)] + pts[i0 + 1:i1 + 1] + [at(i1, t1)]
+
+
 def clip(ring, box):
     """A polygon ring cut to a box (Sutherland-Hodgman), so water far off the map isn't carried."""
     x0, y0, x1, y1 = box
@@ -392,8 +415,29 @@ def main():
         for rid, seq, dirn, _ in tl:
             for k, (sid, *_) in enumerate(seq):
                 nxt[sid][rdi[(rid, dirn)]][seq[k + 1][0] if k + 1 < len(seq) else None] += 1
+    # and the stretch of the route's own shape from the stop to that next stop, so the map's arrow follows the street
+    pat_shapes = defaultdict(list)                # (route, direction) -> shapes of its patterns, usual ones first
+    for p in sorted(patterns, key=lambda p: p['route_pattern_typicality']):
+        pts = shape.get(trip_shape.get(p['representative_trip_id']))
+        if p['route_id'] in routes and pts:
+            pat_shapes[(p['route_id'], p['direction_id'])].append((set(trip_stops.get(p['representative_trip_id'], [])), pts))
+    ll = lambda sid: (float(stopinfo[sid]['stop_lon']), float(stopinfo[sid]['stop_lat']))
+    traced = 0
     for st in stops:
-        st['d'] = [[k, ix.get(max(c, key=c.get), -1) if max(c, key=c.get) else -1] for k, c in sorted(nxt[st['id']].items())]
+        st['d'] = []
+        for k, c in sorted(nxt[st['id']].items()):
+            nsid = max(c, key=c.get)
+            path = None
+            if nsid:
+                rid, dirn = combos[k]
+                for served, pts in pat_shapes.get((rid, dirn), []):
+                    if st['id'] in served and nsid in served:
+                        path = piece(pts, ll(st['id']), ll(nsid))
+                        if path:
+                            break
+            traced += bool(path)
+            st['d'].append([k, ix.get(nsid, -1) if nsid else -1] + ([[xy(*q) for q in simplify(path, 0.00002)]] if path else []))
+    print(f'  arrows along the route: {traced} of {sum(len(st["d"]) for st in stops)} stop directions', file=sys.stderr)
     flows, totals = {}, {}
     for day, d in od.items():
         per = defaultdict(list)

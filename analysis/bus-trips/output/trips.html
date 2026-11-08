@@ -406,11 +406,14 @@ function atStop(s) {
       : p ? tile('ada', 'no', 'Not ADA', `${p.toLowerCase()} priority`, `Not fully ADA compliant; ${p.toLowerCase()} priority for the MBTA's accessibility program (PATI, Jan 2024)`)
       : tile('ada', 'unk', 'ADA', 'no data', 'No accessibility status (MBTA PATI)'));
     const kind = a.b.length ? [...new Set(a.b)].join(', ').replace(/ bench/g, '') : '';
-    t.push(a.n ? tile('bench', 'yes', a.n === 1 ? 'Bench' : `${a.n} benches`, kind, `Bench: ${a.b.join(', ') || a.n} (MBTA survey, 2017)`)
-      : tile('bench', 'no', 'No bench', '', 'No bench (MBTA survey, 2017)'));
-    t.push(tile('trash', a.t ? 'yes' : 'no', a.t ? 'Trash can' : 'No trash', '', `${a.t ? 'Trash can' : 'No trash can'} (MBTA survey, 2017)`));
-    t.push(tile('bike', a.k ? 'yes' : 'no', a.k ? 'Bike rack' : 'No bike rack', '', `${a.k ? 'Bike rack' : 'No bike rack'} (MBTA survey, 2017)`));
-    if (a.x) t.push(tile('blocked', 'warn', 'Path blocked', '', 'Something blocked the path to the bus (MBTA survey, 2017)'));
+    // SeatNum17 is "number of available seats", not benches; SeatType17 and SeatCond17 describe the seating
+    const benchy = a.b.length && a.b.every((x) => / bench/.test(x));
+    t.push(a.n ? tile('bench', 'yes', benchy ? 'Bench' : 'Seating', [a.n > 1 ? `${a.n} seats` : '', kind].filter(Boolean).join(' · '),
+      `Seating: ${a.n} seat${a.n > 1 ? 's' : ''}${a.b.length ? '; ' + a.b.join(', ') : ''} (MBTA accessibility survey, 2017)`)
+      : tile('bench', 'no', 'No bench', '', 'No bench (MBTA accessibility survey, 2017)'));
+    t.push(tile('trash', a.t ? 'yes' : 'no', a.t ? 'Trash can' : 'No trash', '', `${a.t ? 'Trash can' : 'No trash can'} (MBTA accessibility survey, 2017)`));
+    t.push(tile('bike', a.k ? 'yes' : 'no', a.k ? 'Bike rack' : 'No bike rack', '', `${a.k ? 'Bike rack' : 'No bike rack'} (MBTA accessibility survey, 2017)`));
+    if (a.x) t.push(tile('blocked', 'warn', 'Path narrowed', 'under 36 in.', 'The path of travel was obstructed to under 36 inches (MBTA accessibility survey, 2017)'));
   } else {
     t.push(tile('ada', 'unk', 'ADA', 'no data', 'Not in the MBTA accessibility survey (PATI)'));
     t.push(tile('bench', 'unk', 'Bench', 'no data', 'Not in the MBTA bus stop survey'));
@@ -418,7 +421,7 @@ function atStop(s) {
   t.push(tile('shelter', 'unk', 'Shelter', 'no data', 'Shelter: no public data (questions 58 and 59)'));
   t.push(tile('sign', 'unk', 'Live sign', 'no data', 'Real-time arrival sign: no public data (question 60)'));
   return `<div class="atstop"><div class="seglab">At this stop</div><div class="tiles">${t.join('')}</div>
-    <div class="srcs">Wheelchair: MBTA schedule, fall 2025${a ? ' · ADA: MBTA, Jan 2024 · Bench, trash, bike rack: MBTA survey, 2017' : ''} · Shelter, live sign: no public data</div></div>`;
+    <div class="srcs">Wheelchair: MBTA schedule, fall 2025${a ? ' · ADA: MBTA, Jan 2024 · Seating, trash, bike rack, path: MBTA accessibility survey (PATI), 2017' : ''} · Shelter, live sign: no public data</div></div>`;
 }
 
 // ---------- the sidebar ----------

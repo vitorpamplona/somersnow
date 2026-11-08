@@ -41,6 +41,18 @@ a{color:var(--orange)}
 .tlab.home{fill:var(--mute)}
 .route{fill:none;stroke:#5E7894;stroke-width:1.6px;stroke-opacity:.55;stroke-linejoin:round}
 .rapid{fill:none;stroke-width:3px;stroke-linejoin:round;stroke-linecap:round;opacity:.75}
+.markbar{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);display:flex;align-items:center;gap:6px;background:rgba(16,36,58,.95);border:2px solid var(--snow);border-radius:999px;padding:5px 6px 5px 14px;font-size:14px;box-shadow:0 2px 12px rgba(0,0,0,.35);z-index:4;max-width:calc(100% - 24px);white-space:nowrap}
+.markbar[hidden]{display:none}
+.markbar b{font-family:var(--display);text-transform:uppercase;letter-spacing:1px;margin-right:4px}
+.markbar button{border:1px solid rgba(169,196,228,.5);background:none;color:#fff;font:600 13px var(--body);padding:4px 10px;border-radius:999px;cursor:pointer}
+.markbar button small{color:var(--ice);font-weight:500}
+.markbar button[aria-pressed=true]{background:var(--snow);color:var(--navy);border-color:var(--snow)}
+.markbar button[aria-pressed=true] small{color:var(--mute)}
+.markbar .x{border:0;font-size:15px;padding:4px 8px}
+.tile{cursor:pointer}
+.tile:hover{box-shadow:inset 0 0 0 1px rgba(238,243,247,.5)}
+.tile:focus-visible{outline:2px solid var(--orange);outline-offset:1px}
+.tile.on{box-shadow:inset 0 0 0 2px var(--snow)}
 .mapctl{position:absolute;top:12px;right:12px;display:flex;flex-direction:column;gap:6px}
 .mapctl button{width:40px;height:40px;border-radius:10px;border:0;background:rgba(16,36,58,.92);color:#fff;font:700 20px var(--body);cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.3)}
 .legend{position:absolute;top:12px;left:12px;max-width:280px;background:rgba(16,36,58,.92);border-radius:12px;padding:8px 12px;font-size:13px;color:var(--snow);box-shadow:0 2px 10px rgba(0,0,0,.3)}
@@ -48,6 +60,7 @@ a{color:var(--orange)}
 .legend span{display:flex;align-items:center;gap:8px;margin-top:5px}
 .legend svg{flex:none}
 .legend span span{display:block;margin:0}
+.legend span[hidden]{display:none}
 .side{overflow:auto;padding:14px 16px 24px;border-left:1px solid rgba(169,196,228,.2);background:var(--navy)}
 .lede{font-family:var(--display);font-weight:800;font-size:26px;text-transform:uppercase;line-height:1.05;margin:2px 0 6px}
 .note{color:var(--ice);font-size:14px;margin:0 0 10px}
@@ -131,8 +144,10 @@ details.how p{margin:6px 0}
       <span><svg width="22" height="14"><circle cx="11" cy="7" r="4.5" fill="#fff" stroke="#47607C" stroke-width="1.5"/></svg>A bus stop (bigger: more riders)</span>
       <span><svg width="22" height="18"><circle cx="11" cy="9" r="7" fill="#10243A" stroke="#FF8A3D" stroke-width="3"/></svg>The stop you picked; arrows show the way its buses go</span>
       <span><svg width="22" height="18"><circle cx="11" cy="9" r="6" fill="#FF8A3D" stroke="#10243A" stroke-width="1.5"/></svg><span><b id="keyends" style="font-weight:inherit">Where its riders get off</b> (bigger: more riders). Its routes are in color.</span></span>
+      <span id="keymark" hidden><svg width="22" height="18"><circle cx="11" cy="9" r="6" fill="#10243A" stroke="#fff" stroke-width="1.6"/></svg><b id="keymarktext" style="font-weight:inherit"></b></span>
       <span><svg width="22" height="14"><line x1="2" y1="7" x2="20" y2="7" stroke="#DA291C" stroke-width="3"/></svg>Subway</span>
     </details>
+    <div class="markbar" id="markbar" hidden role="group" aria-label="Stops found on the map"></div>
     <div class="mapctl">
       <button id="zin" title="Zoom in" aria-label="Zoom in">+</button>
       <button id="zout" title="Zoom out" aria-label="Zoom out">−</button>
@@ -270,14 +285,18 @@ const radius = (n) => Math.max(1.2, (1.4 + 1.3 * Math.log1p(n)) * scale());     
 const dotR = (n) => Math.max(3, (2.5 + 2 * Math.log1p(n)) * Math.max(0.6, scale()));  // a stop that n riders of the picked stop get off at
 function drawStops() {
   const dd = dayData(day), k = px(), lit = litStops();
-  let html = '';
+  let html = '', marked = '';
   for (let i = 0; i < N; i++) {
     if (lit && lit.has(i)) continue;
-    const s = S[i], n = dd.on[i] + dd.off[i];
+    const s = S[i], n = dd.on[i] + dd.off[i], r = radius(n / 2);
     if (onlyRoute !== null && !s.r.includes(rdRoute(onlyRoute))) continue;
-    html += `<circle cx="${s.p[0]}" cy="${s.p[1]}" r="${(radius(n / 2) * k).toFixed(1)}" fill="${pick === null ? '#fff' : '#E6EDF4'}" stroke="#47607C" stroke-width="${(1.2 * k).toFixed(2)}" opacity="${pick === null ? 1 : 0.45}"/>`;
+    if (mark && featAt(i)[mark.key].state === mark.show) {      // found: a dark dot with a white ring, on top
+      marked += `<circle cx="${s.p[0]}" cy="${s.p[1]}" r="${(Math.max(4.5, r + 1.5) * k).toFixed(1)}" fill="#10243A" stroke="#fff" stroke-width="${(1.6 * k).toFixed(2)}"/>`;
+      continue;
+    }
+    html += `<circle cx="${s.p[0]}" cy="${s.p[1]}" r="${(r * k).toFixed(1)}" fill="${pick === null ? '#fff' : '#E6EDF4'}" stroke="#47607C" stroke-width="${(1.2 * k).toFixed(2)}" opacity="${mark ? 0.3 : pick === null ? 1 : 0.45}"/>`;
   }
-  $('#gstops').innerHTML = html;
+  $('#gstops').innerHTML = html + marked;
 }
 // the flows from (or to) the picked stop, by route
 function flowsNow() {
@@ -302,7 +321,8 @@ function drawFlows() {
   const sc = scale(), ends = endsNow();
   const dots = ends.slice().reverse().map((e) => {
     const p = S[e.b].p, r = dotR(e.n);
-    return `<circle cx="${p[0]}" cy="${p[1]}" r="${(r * k).toFixed(1)}" fill="#FF8A3D" stroke="#10243A" stroke-width="${(1.5 * k).toFixed(2)}"/>`;
+    const found = mark && featAt(e.b)[mark.key].state === mark.show;    // also a found stop: a thick dark ring
+    return `<circle cx="${p[0]}" cy="${p[1]}" r="${(r * k).toFixed(1)}" fill="#FF8A3D" stroke="#10243A" stroke-width="${((found ? 4 : 1.5) * k).toFixed(2)}"/>`;
   }).join('');
   const s = S[pick].p;
   // an arrow for each way a bus leaves the stop, drawn along the route's own line toward its next stop
@@ -395,45 +415,68 @@ const ICON = {
   sign: '<rect x="3" y="4.5" width="18" height="10" rx="1.5"/><path d="M6.5 8.5h6M6.5 11.5h9M12 14.5V20M9 20h6"/>',
 };
 // what's at the stop, as icon tiles: has it (bright), doesn't (dim, slashed), no data (dashed)
-function atStop(s) {
-  // each item from its newest source: OpenStreetMap volunteers (OSM, with the year the value was set), else the
-  // MBTA's 2017 accessibility survey; ADA status from the MBTA (2024); wheelchair boarding from the schedule (2025)
-  const a = s.a, o = s.o || {}, t = [];
-  const tile = (icon, cls, label, note, title) =>
-    `<div class="tile ${cls}" title="${esc(title)}" role="img" aria-label="${esc(title)}"><svg viewBox="0 0 24 24" aria-hidden="true">${ICON[icon]}</svg>${esc(label)}${note ? `<small>${esc(note)}</small>` : ''}</div>`;
+// each item at a stop, from its newest source: OpenStreetMap volunteers (OSM, with the year the value was set), else
+// the MBTA's 2017 accessibility survey; ADA status from the MBTA (2024); wheelchair boarding from the schedule (2025).
+// state: yes / no / unk (no data); show: whether the stop's card shows a tile for it. The map highlight uses the same.
+const FEAT = { wheel: 'Wheelchair', ada: 'ADA', shelter: 'Shelter', bench: 'Bench', trash: 'Trash', lit: 'Lit', tactile: 'Tactile', bike: 'Bike rack', narrow: 'Narrow path', sign: 'Live sign' };
+function features(s) {
+  const a = s.a, o = s.o || {}, f = {};
+  const put = (key, icon, state, label, note, title, show = true) => { f[key] = { key, icon, state, label, note, title, show }; };
   const osm = (k) => o[k] ? { v: o[k][0], y: o[k][1] } : null;
-  // one yes/no item: OSM if tagged, else the 2017 survey (if given), else no data
-  const item = (icon, k, yes, no, pati) => {
+  const item = (key, icon, k, yes, no, pati, showUnk) => {
     const v = osm(k);
-    if (v && (v.v === 'yes' || v.v === 'no')) return tile(icon, v.v === 'yes' ? 'yes' : 'no', v.v === 'yes' ? yes : no, `OSM ${v.y}`, `${v.v === 'yes' ? yes : no} (OpenStreetMap, set ${v.y})`);
-    if (pati !== undefined && a) return tile(icon, pati ? 'yes' : 'no', pati ? yes : no, 'MBTA 2017', `${pati ? yes : no} (MBTA accessibility survey, 2017)`);
-    return '';
+    if (v && (v.v === 'yes' || v.v === 'no')) return put(key, icon, v.v, v.v === 'yes' ? yes : no, `OSM ${v.y}`, `${v.v === 'yes' ? yes : no} (OpenStreetMap, set ${v.y})`);
+    if (pati !== undefined && a) return put(key, icon, pati ? 'yes' : 'no', pati ? yes : no, 'MBTA 2017', `${pati ? yes : no} (MBTA accessibility survey, 2017)`);
+    put(key, icon, 'unk', yes, 'no data', `${yes}: no data`, showUnk);
   };
-  t.push(s.w === 1 ? tile('wheel', 'yes', 'Wheelchair', 'MBTA 2025', 'Wheelchair boarding (MBTA schedule, fall 2025)')
-    : s.w === 2 ? tile('wheel', 'no', 'No wheelchair', 'MBTA 2025', 'No wheelchair boarding (MBTA schedule, fall 2025)')
-    : tile('wheel', 'unk', 'Wheelchair', 'no data', 'Wheelchair boarding not known (MBTA schedule, fall 2025)'));
-  if (a && a.p) {
-    const p = a.p;
-    t.push(p === 'Compliant' || a.done ? tile('ada', 'yes', 'ADA', 'MBTA 2024', 'Fully ADA compliant (MBTA, Jan 2024)')
-      : p === 'Stop Eliminated' ? tile('ada', 'unk', 'ADA', 'no data', 'Stop eliminated (MBTA, Jan 2024)')
-      : tile('ada', 'no', 'Not ADA', 'MBTA 2024', `Not fully ADA compliant; ${p.toLowerCase()} priority for the MBTA's accessibility program (Jan 2024)`));
-  } else t.push(tile('ada', 'unk', 'ADA', 'no data', 'No ADA status from the MBTA'));
-  t.push(item('shelter', 'shelter', 'Shelter', 'No shelter') || tile('shelter', 'unk', 'Shelter', 'no data', 'Shelter: not tagged in OpenStreetMap'));
-  t.push(item('bench', 'bench', 'Bench', 'No bench', a ? a.n > 0 : undefined) || tile('bench', 'unk', 'Bench', 'no data', 'Bench: no data'));
-  t.push(item('trash', 'bin', 'Trash', 'No trash', a ? a.t : undefined));
-  t.push(item('lit', 'lit', 'Lit', 'Not lit'));
-  t.push(item('tactile', 'tactile_paving', 'Tactile', 'No tactile'));
-  if (a) t.push(tile('bike', a.k ? 'yes' : 'no', a.k ? 'Bike rack' : 'No rack', 'MBTA 2017', `${a.k ? 'Bike rack' : 'No bike rack'} (MBTA accessibility survey, 2017)`));
-  if (a && a.x) t.push(tile('blocked', 'warn', 'Narrow', 'MBTA 2017', 'Path of travel obstructed to under 36 inches (MBTA accessibility survey, 2017)'));
+  if (s.w === 1) put('wheel', 'wheel', 'yes', 'Wheelchair', 'MBTA 2025', 'Wheelchair boarding (MBTA schedule, fall 2025)');
+  else if (s.w === 2) put('wheel', 'wheel', 'no', 'No wheelchair', 'MBTA 2025', 'No wheelchair boarding (MBTA schedule, fall 2025)');
+  else put('wheel', 'wheel', 'unk', 'Wheelchair', 'no data', 'Wheelchair boarding not known (MBTA schedule, fall 2025)');
+  const p = a && a.p;
+  if (p === 'Compliant' || (a && a.done)) put('ada', 'ada', 'yes', 'ADA', 'MBTA 2024', 'Fully ADA compliant (MBTA, Jan 2024)');
+  else if (p && p !== 'Stop Eliminated') put('ada', 'ada', 'no', 'Not ADA', 'MBTA 2024', `Not fully ADA compliant; ${p.toLowerCase()} priority for the MBTA's accessibility program (Jan 2024)`);
+  else put('ada', 'ada', 'unk', 'ADA', 'no data', p ? 'Stop eliminated (MBTA, Jan 2024)' : 'No ADA status from the MBTA');
+  item('shelter', 'shelter', 'shelter', 'Shelter', 'No shelter', undefined, true);
+  item('bench', 'bench', 'bench', 'Bench', 'No bench', a ? a.n > 0 : undefined, true);
+  item('trash', 'trash', 'bin', 'Trash', 'No trash', a ? a.t : undefined, false);
+  item('lit', 'lit', 'lit', 'Lit', 'Not lit', undefined, false);
+  item('tactile', 'tactile', 'tactile_paving', 'Tactile', 'No tactile', undefined, false);
+  if (a) put('bike', 'bike', a.k ? 'yes' : 'no', a.k ? 'Bike rack' : 'No rack', 'MBTA 2017', `${a.k ? 'Bike rack' : 'No bike rack'} (MBTA accessibility survey, 2017)`);
+  else put('bike', 'bike', 'unk', 'Bike rack', 'no data', 'Bike rack: no data', false);
+  if (a) put('narrow', 'blocked', a.x ? 'yes' : 'no', 'Narrow', 'MBTA 2017', a.x ? 'Path of travel obstructed to under 36 inches (MBTA accessibility survey, 2017)' : 'Path not narrowed (MBTA accessibility survey, 2017)', a.x);
+  else put('narrow', 'blocked', 'unk', 'Narrow', 'no data', 'Narrow path: no data', false);
   const sign = osm('departures_board');
-  t.push(!sign ? tile('sign', 'unk', 'Live sign', 'no data', 'Real-time sign: not tagged in OpenStreetMap')
-    : sign.v === 'realtime' ? tile('sign', 'yes', 'Live sign', `OSM ${sign.y}`, `Real-time arrival sign (OpenStreetMap, set ${sign.y})`)
-    : sign.v === 'no' ? tile('sign', 'no', 'No sign', `OSM ${sign.y}`, `No departure board (OpenStreetMap, set ${sign.y})`)
-    : tile('sign', 'yes', 'Timetable', `OSM ${sign.y}`, `Printed timetable, not real-time (OpenStreetMap, set ${sign.y})`));
+  if (!sign) put('sign', 'sign', 'unk', 'Live sign', 'no data', 'Real-time sign: not tagged in OpenStreetMap');
+  else if (sign.v === 'realtime') put('sign', 'sign', 'yes', 'Live sign', `OSM ${sign.y}`, `Real-time arrival sign (OpenStreetMap, set ${sign.y})`);
+  else put('sign', 'sign', 'no', sign.v === 'no' ? 'No sign' : 'Timetable', `OSM ${sign.y}`, sign.v === 'no' ? `No departure board (OpenStreetMap, set ${sign.y})` : `Printed timetable, not real-time (OpenStreetMap, set ${sign.y})`);
+  return f;
+}
+function atStop(s) {
+  const o = s.o || {};
+  const tiles = Object.values(features(s)).filter((x) => x.show).map((x) => {
+    const cls = x.key === 'narrow' && x.state === 'yes' ? 'warn' : x.state;
+    return `<div class="tile ${cls}${mark && mark.key === x.key ? ' on' : ''}" data-key="${x.key}" role="button" tabindex="0" aria-pressed="${!!(mark && mark.key === x.key)}" title="${esc(x.title)}. Click to find every stop with it." aria-label="${esc(x.title)}. Show every stop with it on the map."><svg viewBox="0 0 24 24" aria-hidden="true">${ICON[x.icon]}</svg>${esc(x.label)}${x.note ? `<small>${esc(x.note)}</small>` : ''}</div>`;
+  }).join('');
   const edit = o.id ? ` · <a href="https://www.openstreetmap.org/node/${o.id}" target="_blank" rel="noopener">Edit on OSM</a>` : '';
-  return `<div class="atstop"><div class="seglab">At this stop</div><div class="tiles">${t.filter(Boolean).join('')}</div>
+  return `<div class="atstop"><div class="seglab">At this stop <span style="text-transform:none;letter-spacing:0;font-weight:500">· tap one to find it on the map</span></div><div class="tiles">${tiles}</div>
     <div class="srcs">MBTA: schedule, ADA list, 2017 survey. OSM: © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors${edit}</div></div>`;
 }
+
+// ---------- find an item on the map: every stop that has it (or doesn't, or has no data) ----------
+let mark = null;                                      // { key, show: 'yes' | 'no' | 'unk' }
+let FS = null;                                        // each stop's items, worked out once
+const featAt = (i) => (FS || (FS = S.map(features)))[i];
+function markCounts(key) { const c = { yes: 0, no: 0, unk: 0 }; for (let i = 0; i < N; i++) c[featAt(i)[key].state]++; return c; }
+function drawMarkBar() {
+  const bar = $('#markbar');
+  $('#keymark').hidden = !mark;
+  if (mark) $('#keymarktext').textContent = `Stops found: ${FEAT[mark.key].toLowerCase()}, ${{ yes: 'yes', no: 'no', unk: 'no data' }[mark.show]}`;
+  if (!mark) { bar.hidden = true; return; }
+  const c = markCounts(mark.key), lab = { yes: 'Yes', no: 'No', unk: 'No data' };
+  bar.innerHTML = `<b>${esc(FEAT[mark.key])}</b>${['yes', 'no', 'unk'].map((k) => `<button data-show="${k}" aria-pressed="${mark.show === k}">${lab[k]} <small>${c[k]}</small></button>`).join('')}<button class="x" aria-label="Stop finding ${esc(FEAT[mark.key])}" title="Close">✕</button>`;
+  bar.hidden = false;
+}
+function setMark(m) { mark = m; drawMarkBar(); drawStops(); drawFlows(); if (pick !== null) panel(); }
 
 // ---------- the sidebar ----------
 $('#days').innerHTML = Object.entries(D.days).map(([k, v]) => `<button data-day="${k}" aria-pressed="${k === day}">${v}</button>`).join('');
@@ -495,6 +538,8 @@ function panel() {
 $('#panel').addEventListener('click', (e) => {
   if (e.target.closest('#unpick')) { choose(null); return; }
   if (e.target.closest('#more')) { showAll = !showAll; panel(); return; }
+  const tl = e.target.closest('.tile[data-key]');
+  if (tl) { const key = tl.dataset.key; setMark(mark && mark.key === key ? null : { key, show: 'yes' }); return; }
   if (e.target.closest('#flip')) { dir = dir === 'off' ? 'on' : 'off'; showAll = false; update(); glideTo(pick); return; }
   const c = e.target.closest('.chip'); if (c) { onlyRoute = c.dataset.r === '' ? null : +c.dataset.r; showAll = false; update(); return; }
   const li = e.target.closest('#list li'); if (li) choose(+li.dataset.i, true);
@@ -596,7 +641,15 @@ const centre = () => { const r = map.getBoundingClientRect(); return [r.left + r
 $('#zin').addEventListener('click', () => zoomAt(1.6, ...centre()));
 $('#zout').addEventListener('click', () => zoomAt(1 / 1.6, ...centre()));
 $('#zfit').addEventListener('click', () => fitView(true));
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && pick !== null && !/INPUT/.test(document.activeElement.tagName)) choose(null); });
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'Escape' || /INPUT/.test(document.activeElement.tagName)) return;
+  if (mark) setMark(null); else if (pick !== null) choose(null);
+});
+$('#panel').addEventListener('keydown', (e) => { const tl = e.target.closest('.tile[data-key]'); if (tl && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); tl.click(); const again = document.querySelector(`.tile[data-key="${tl.dataset.key}"]`); if (again) again.focus(); } });
+$('#markbar').addEventListener('click', (e) => {
+  const b = e.target.closest('button'); if (!b) return;
+  if (b.classList.contains('x')) setMark(null); else setMark({ key: mark.key, show: b.dataset.show });
+});
 window.addEventListener('hashchange', () => { readHash(); update(); if (pick !== null) glideTo(pick); });
 let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => fitView(false), 120); });
 

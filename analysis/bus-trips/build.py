@@ -41,6 +41,13 @@ WATER = ('https://services1.arcgis.com/hGdibHYSPO59RG1h/arcgis/rest/services/'
          '1_25_000_USGS_MassDEP_Hydrography/FeatureServer/1/query')
 # what's at each stop: MBTA Plan for Accessible Transit Infrastructure (PATI): accessibility status as of Jan 2024,
 # and amenities (benches, trash cans, bike racks, blocked paths) from the 2017 survey. No shelters or real-time signs.
+# what volunteers mapped at each stop: OpenStreetMap bus stops (shelter, bench, bin, lit, tactile paving, departures
+# board), matched by MBTA stop number (ref), and each tag's year from the stop's edit history. ODbL, (c) OpenStreetMap
+# contributors. Overpass servers come and go, so a few are tried in turn.
+OVERPASS = ['https://overpass-api.de/api/interpreter', 'https://maps.mail.ru/osm/tools/overpass/api/interpreter',
+            'https://overpass.kumi.systems/api/interpreter']
+OSM_API = 'https://api.openstreetmap.org/api/0.6/node/{}/history.json'
+OSM_TAGS = ['shelter', 'bench', 'bin', 'lit', 'tactile_paving', 'departures_board']
 PATI = 'https://services1.arcgis.com/ceiitspzDAHrdGO1/arcgis/rest/services/PATI_Bus_Stops/FeatureServer/0/query'
 TOWNS = ('https://services1.arcgis.com/hGdibHYSPO59RG1h/arcgis/rest/services/'
          'Massachusetts_Municipalities_Hosted/FeatureServer/0/query')
@@ -68,11 +75,12 @@ def get(url, params=None, tries=4):
             time.sleep(2 ** (i + 1))
 
 
-def cached(name, url, params=None):
-    os.makedirs(CACHE, exist_ok=True)
+def cached(name, url, params=None, quiet=False):
     path = os.path.join(CACHE, name)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
     if not os.path.exists(path):
-        print(f'  downloading {name}…', file=sys.stderr)
+        if not quiet:
+            print(f'  downloading {name}…', file=sys.stderr)
         blob = get(url, params)
         with open(path + '.part', 'wb') as f:
             f.write(blob)
@@ -199,6 +207,58 @@ def amenities(recs):
     n = max(most('SeatNum17'), len(benches))
     return {'p': val('PATI_Prior'), 'done': val('PATI_Prgrm') == 'PATI Complete', 'n': n, 'b': benches,
             't': most('Trash17') > 0, 'k': most('BikeRks17') > 0, 'x': any((r.get('BlkdPath17') or '').strip() == 'Yes' for r in recs)}
+
+
+def osm_stops(box, want):
+    """{MBTA stop id: {'id': node id, tag: [value, year the value was set]}} for the stops in `want` (id -> lon, lat)."""
+    path = os.path.join(CACHE, 'bus-trips-osm.json')
+    if not os.path.exists(path):
+        q = (f'[out:json][timeout:120];node["highway"="bus_stop"]'
+             f'({box[1]:.4f},{box[0]:.4f},{box[3]:.4f},{box[2]:.4f});out meta;')
+        for url in OVERPASS:
+            try:
+                blob = get(url + '?' + urllib.parse.urlencode({'data': q}), tries=2)
+                json.loads(blob)
+                with open(path, 'wb') as f:
+                    f.write(blob)
+                break
+            except Exception as e:
+                print(f'  overpass {url[:40]}… failed ({e})', file=sys.stderr)
+    if not os.path.exists(path):
+        print('  OpenStreetMap: no server answered; the page shows the MBTA survey only', file=sys.stderr)
+        return {}
+    with open(path) as f:
+        nodes = json.load(f)['elements']
+    byref = {n['tags']['ref']: n for n in nodes if n.get('tags', {}).get('ref')}
+    out = {}
+    for sid, (lon, lat) in want.items():
+        n = byref.get(sid)
+        if not n:                                 # no MBTA number on the node: the nearest stop within 30 m
+            near = min(nodes, key=lambda n: math.hypot((n['lon'] - lon) * 82000, (n['lat'] - lat) * 111000), default=None)
+            if near and math.hypot((near['lon'] - lon) * 82000, (near['lat'] - lat) * 111000) < 30 and not near['tags'].get('ref'):
+                n = near
+        if not n or not any(k in n['tags'] for k in OSM_TAGS):
+            if n:
+                out[sid] = {'id': n['id']}
+            continue
+        name = f"osm-hist/{n['id']}-v{n['version']}.json"                     # refetched when the stop changes
+        fresh = not os.path.exists(os.path.join(CACHE, name))
+        hist = cached(name, OSM_API.format(n['id']), quiet=True)
+        if fresh:
+            time.sleep(0.3)                       # go easy on the OpenStreetMap API
+        with open(hist) as f:
+            vers = sorted(json.load(f)['elements'], key=lambda e: e['version'])
+        rec = {'id': n['id']}
+        for k in OSM_TAGS:
+            v = n['tags'].get(k)
+            if v is None:
+                continue
+            i = len(vers) - 1
+            while i > 0 and vers[i - 1].get('tags', {}).get(k) == v:
+                i -= 1
+            rec[k] = [v, int(vers[i]['timestamp'][:4])]
+        out[sid] = rec
+    return out
 
 
 def somerville_routes():
@@ -430,6 +490,7 @@ def main():
                 water.append([xy(*q) for q in r])
 
     pati_at = pati(box)
+    osm_at = osm_stops(box, {s: (float(meta[s]['stop_lon']), float(meta[s]['stop_lat'])) for s in meta})
 
     # stops in the page: only those with a location; ids become indexes
     ids = sorted(meta, key=lambda s: (meta[s]['stop_name'], s))
@@ -437,8 +498,9 @@ def main():
     ri = {r: i for i, r in enumerate(routes)}
     stops = [{'id': s, 'n': meta[s]['stop_name'], 't': meta[s].get('municipality') or '', 'p': xy(float(meta[s]['stop_lon']), float(meta[s]['stop_lat'])),
               'r': sorted(ri[r] for r in stop_routes[s]), 'w': int(meta[s].get('wheelchair_boarding') or 0),
-              **({'a': amenities(pati_at[s])} if s in pati_at else {})} for s in ids]
-    print(f'  PATI: {sum(1 for s in ids if s in pati_at)} of {len(ids)} stops', file=sys.stderr)
+              **({'a': amenities(pati_at[s])} if s in pati_at else {}), **({'o': osm_at[s]} if s in osm_at else {})} for s in ids]
+    print(f'  PATI: {sum(1 for s in ids if s in pati_at)} of {len(ids)} stops; OpenStreetMap: {len(osm_at)} matched, '
+          f'{sum(1 for v in osm_at.values() if "shelter" in v)} with a shelter tag', file=sys.stderr)
     # each route's two directions, named by where the bus is headed (the schedule's direction destination)
     dest = {(FROM_SCHEDULE.get(r['route_id'], r['route_id']), r['direction_id']): r['direction_destination']
             for r in table(z, 'directions.txt')}

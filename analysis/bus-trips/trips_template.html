@@ -80,6 +80,7 @@ a{color:var(--orange)}
 .tile.unk{background:none;border:1px dashed rgba(169,196,228,.45);color:var(--ice)}
 .tile.warn{color:var(--orange);border-color:rgba(255,138,61,.6)}
 .srcs{font-size:11px;color:var(--ice);margin-top:5px;line-height:1.35}
+.srcs a{color:var(--ice)}
 .dirs{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:center;margin:2px 0 10px;font-size:14px}
 .dirs .seglab{flex-basis:100%}
 .dirs span{display:inline-flex;align-items:center;gap:6px}
@@ -158,7 +159,7 @@ details.how p{margin:6px 0}
       <p>Routes, stops and lines are drawn as they ran in <span class="season"></span>. The ridership file's "Bennett Alley" (a layover before Harvard's upper busway, not a stop in the schedule) is counted at Harvard.</p>
     </details>
     <div class="about">
-      Sources: <a href="https://mbta-massdot.opendata.arcgis.com/datasets/8daf4a33925a4df59183f860826d29ee">MBTA bus ridership by trip, season, route and stop</a> (<span class="season"></span>, average per trip); <a href="https://www.mbta.com/developers/gtfs">MBTA schedule (GTFS)</a> from the <a href="https://cdn.mbta.com/archive/archived_feeds.txt">MBTA's feed archive</a>, <span id="feed"></span>; town outlines: <a href="https://www.mass.gov/info-details/massgis-data-municipalities">MassGIS</a>. Made by the Somerville Pedestrian &amp; Transit Advisory Committee (PTAC). Not an MBTA or City page. <a href="https://github.com/vitorpamplona/somersnow/tree/main/analysis/bus-trips">Method and code</a>.
+      Sources: <a href="https://mbta-massdot.opendata.arcgis.com/datasets/8daf4a33925a4df59183f860826d29ee">MBTA bus ridership by trip, season, route and stop</a> (<span class="season"></span>, average per trip); <a href="https://www.mbta.com/developers/gtfs">MBTA schedule (GTFS)</a> from the <a href="https://cdn.mbta.com/archive/archived_feeds.txt">MBTA's feed archive</a>, <span id="feed"></span>; town outlines: <a href="https://www.mass.gov/info-details/massgis-data-municipalities">MassGIS</a>; rivers and ponds: <a href="https://www.arcgis.com/home/item.html?id=22e491ae01cc4907934d8a81f2e0b40b">MassDEP hydrography</a>; what's at each stop: <a href="https://www.arcgis.com/home/item.html?id=24a97982b39f4febb504c9e6cb55879b">MBTA PATI</a> (ADA status 2024, survey 2017) and © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors (ODbL). Made by the Somerville Pedestrian &amp; Transit Advisory Committee (PTAC). Not an MBTA or City page. <a href="https://github.com/vitorpamplona/somersnow/tree/main/analysis/bus-trips">Method and code</a>.
     </div>
   </aside>
 </div>
@@ -389,39 +390,49 @@ const ICON = {
   bike: '<circle cx="6" cy="16" r="3.5"/><circle cx="18" cy="16" r="3.5"/><path d="M6 16l4-7h6l2 7M10 9l2.5 7H6M14.5 6H17"/>',
   blocked: '<circle cx="12" cy="12" r="8.5"/><path d="M6 12h12"/>',
   shelter: '<path d="M3 8.5 12 4l9 4.5M5 8v12M19 8v12M8 14h8"/>',
+  lit: '<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>',
+  tactile: '<rect x="3.5" y="3.5" width="17" height="17" rx="2"/><circle cx="8" cy="8" r="1.3"/><circle cx="12" cy="8" r="1.3"/><circle cx="16" cy="8" r="1.3"/><circle cx="8" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="16" cy="12" r="1.3"/><circle cx="8" cy="16" r="1.3"/><circle cx="12" cy="16" r="1.3"/><circle cx="16" cy="16" r="1.3"/>',
   sign: '<rect x="3" y="4.5" width="18" height="10" rx="1.5"/><path d="M6.5 8.5h6M6.5 11.5h9M12 14.5V20M9 20h6"/>',
 };
 // what's at the stop, as icon tiles: has it (bright), doesn't (dim, slashed), no data (dashed)
 function atStop(s) {
-  const a = s.a, tile = (icon, cls, label, note, title) =>
+  // each item from its newest source: OpenStreetMap volunteers (OSM, with the year the value was set), else the
+  // MBTA's 2017 accessibility survey; ADA status from the MBTA (2024); wheelchair boarding from the schedule (2025)
+  const a = s.a, o = s.o || {}, t = [];
+  const tile = (icon, cls, label, note, title) =>
     `<div class="tile ${cls}" title="${esc(title)}" role="img" aria-label="${esc(title)}"><svg viewBox="0 0 24 24" aria-hidden="true">${ICON[icon]}</svg>${esc(label)}${note ? `<small>${esc(note)}</small>` : ''}</div>`;
-  const t = [];
-  t.push(s.w === 1 ? tile('wheel', 'yes', 'Wheelchair', 'boarding', 'Wheelchair boarding: yes (MBTA schedule, fall 2025)')
-    : s.w === 2 ? tile('wheel', 'no', 'Wheelchair', 'no boarding', 'Wheelchair boarding: no (MBTA schedule, fall 2025)')
-    : tile('wheel', 'unk', 'Wheelchair', 'not known', 'Wheelchair boarding: not known (MBTA schedule, fall 2025)'));
-  if (a) {
+  const osm = (k) => o[k] ? { v: o[k][0], y: o[k][1] } : null;
+  // one yes/no item: OSM if tagged, else the 2017 survey (if given), else no data
+  const item = (icon, k, yes, no, pati) => {
+    const v = osm(k);
+    if (v && (v.v === 'yes' || v.v === 'no')) return tile(icon, v.v === 'yes' ? 'yes' : 'no', v.v === 'yes' ? yes : no, `OSM ${v.y}`, `${v.v === 'yes' ? yes : no} (OpenStreetMap, set ${v.y})`);
+    if (pati !== undefined && a) return tile(icon, pati ? 'yes' : 'no', pati ? yes : no, 'MBTA 2017', `${pati ? yes : no} (MBTA accessibility survey, 2017)`);
+    return '';
+  };
+  t.push(s.w === 1 ? tile('wheel', 'yes', 'Wheelchair', 'MBTA 2025', 'Wheelchair boarding (MBTA schedule, fall 2025)')
+    : s.w === 2 ? tile('wheel', 'no', 'No wheelchair', 'MBTA 2025', 'No wheelchair boarding (MBTA schedule, fall 2025)')
+    : tile('wheel', 'unk', 'Wheelchair', 'no data', 'Wheelchair boarding not known (MBTA schedule, fall 2025)'));
+  if (a && a.p) {
     const p = a.p;
-    t.push(p === 'Compliant' || a.done ? tile('ada', 'yes', 'Meets ADA', a.done && p !== 'Compliant' ? 'rebuilt' : '', 'Fully ADA compliant (MBTA PATI, Jan 2024)')
-      : p === 'Stop Eliminated' ? tile('ada', 'unk', 'ADA', 'stop eliminated', 'Stop eliminated (MBTA PATI, Jan 2024)')
-      : p ? tile('ada', 'no', 'Not ADA', `${p.toLowerCase()} priority`, `Not fully ADA compliant; ${p.toLowerCase()} priority for the MBTA's accessibility program (PATI, Jan 2024)`)
-      : tile('ada', 'unk', 'ADA', 'no data', 'No accessibility status (MBTA PATI)'));
-    const kind = a.b.length ? [...new Set(a.b)].join(', ').replace(/ bench/g, '') : '';
-    // SeatNum17 is "number of available seats", not benches; SeatType17 and SeatCond17 describe the seating
-    const benchy = a.b.length && a.b.every((x) => / bench/.test(x));
-    t.push(a.n ? tile('bench', 'yes', benchy ? 'Bench' : 'Seating', [a.n > 1 ? `${a.n} seats` : '', kind].filter(Boolean).join(' · '),
-      `Seating: ${a.n} seat${a.n > 1 ? 's' : ''}${a.b.length ? '; ' + a.b.join(', ') : ''} (MBTA accessibility survey, 2017)`)
-      : tile('bench', 'no', 'No bench', '', 'No bench (MBTA accessibility survey, 2017)'));
-    t.push(tile('trash', a.t ? 'yes' : 'no', a.t ? 'Trash can' : 'No trash', '', `${a.t ? 'Trash can' : 'No trash can'} (MBTA accessibility survey, 2017)`));
-    t.push(tile('bike', a.k ? 'yes' : 'no', a.k ? 'Bike rack' : 'No bike rack', '', `${a.k ? 'Bike rack' : 'No bike rack'} (MBTA accessibility survey, 2017)`));
-    if (a.x) t.push(tile('blocked', 'warn', 'Path narrowed', 'under 36 in.', 'The path of travel was obstructed to under 36 inches (MBTA accessibility survey, 2017)'));
-  } else {
-    t.push(tile('ada', 'unk', 'ADA', 'no data', 'Not in the MBTA accessibility survey (PATI)'));
-    t.push(tile('bench', 'unk', 'Bench', 'no data', 'Not in the MBTA bus stop survey'));
-  }
-  t.push(tile('shelter', 'unk', 'Shelter', 'no data', 'Shelter: no public data (questions 58 and 59)'));
-  t.push(tile('sign', 'unk', 'Live sign', 'no data', 'Real-time arrival sign: no public data (question 60)'));
-  return `<div class="atstop"><div class="seglab">At this stop</div><div class="tiles">${t.join('')}</div>
-    <div class="srcs">Wheelchair: MBTA schedule, fall 2025${a ? ' · ADA: MBTA, Jan 2024 · Seating, trash, bike rack, path: MBTA accessibility survey (PATI), 2017' : ''} · Shelter, live sign: no public data</div></div>`;
+    t.push(p === 'Compliant' || a.done ? tile('ada', 'yes', 'ADA', 'MBTA 2024', 'Fully ADA compliant (MBTA, Jan 2024)')
+      : p === 'Stop Eliminated' ? tile('ada', 'unk', 'ADA', 'no data', 'Stop eliminated (MBTA, Jan 2024)')
+      : tile('ada', 'no', 'Not ADA', 'MBTA 2024', `Not fully ADA compliant; ${p.toLowerCase()} priority for the MBTA's accessibility program (Jan 2024)`));
+  } else t.push(tile('ada', 'unk', 'ADA', 'no data', 'No ADA status from the MBTA'));
+  t.push(item('shelter', 'shelter', 'Shelter', 'No shelter') || tile('shelter', 'unk', 'Shelter', 'no data', 'Shelter: not tagged in OpenStreetMap'));
+  t.push(item('bench', 'bench', 'Bench', 'No bench', a ? a.n > 0 : undefined) || tile('bench', 'unk', 'Bench', 'no data', 'Bench: no data'));
+  t.push(item('trash', 'bin', 'Trash', 'No trash', a ? a.t : undefined));
+  t.push(item('lit', 'lit', 'Lit', 'Not lit'));
+  t.push(item('tactile', 'tactile_paving', 'Tactile', 'No tactile'));
+  if (a) t.push(tile('bike', a.k ? 'yes' : 'no', a.k ? 'Bike rack' : 'No rack', 'MBTA 2017', `${a.k ? 'Bike rack' : 'No bike rack'} (MBTA accessibility survey, 2017)`));
+  if (a && a.x) t.push(tile('blocked', 'warn', 'Narrow', 'MBTA 2017', 'Path of travel obstructed to under 36 inches (MBTA accessibility survey, 2017)'));
+  const sign = osm('departures_board');
+  t.push(!sign ? tile('sign', 'unk', 'Live sign', 'no data', 'Real-time sign: not tagged in OpenStreetMap')
+    : sign.v === 'realtime' ? tile('sign', 'yes', 'Live sign', `OSM ${sign.y}`, `Real-time arrival sign (OpenStreetMap, set ${sign.y})`)
+    : sign.v === 'no' ? tile('sign', 'no', 'No sign', `OSM ${sign.y}`, `No departure board (OpenStreetMap, set ${sign.y})`)
+    : tile('sign', 'yes', 'Timetable', `OSM ${sign.y}`, `Printed timetable, not real-time (OpenStreetMap, set ${sign.y})`));
+  const edit = o.id ? ` · <a href="https://www.openstreetmap.org/node/${o.id}" target="_blank" rel="noopener">Edit on OSM</a>` : '';
+  return `<div class="atstop"><div class="seglab">At this stop</div><div class="tiles">${t.filter(Boolean).join('')}</div>
+    <div class="srcs">MBTA: schedule, ADA list, 2017 survey. OSM: © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors${edit}</div></div>`;
 }
 
 // ---------- the sidebar ----------

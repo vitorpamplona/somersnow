@@ -41,7 +41,14 @@ a{color:var(--orange)}
 .tlab.home{fill:var(--mute)}
 .route{fill:none;stroke:#5E7894;stroke-width:1.6px;stroke-opacity:.55;stroke-linejoin:round}
 .rapid{fill:none;stroke-width:3px;stroke-linejoin:round;stroke-linecap:round;opacity:.75}
-.markbar{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);display:flex;align-items:center;gap:6px;background:rgba(16,36,58,.95);border:2px solid var(--snow);border-radius:999px;padding:5px 6px 5px 14px;font-size:14px;box-shadow:0 2px 12px rgba(0,0,0,.35);z-index:4;max-width:calc(100% - 24px);white-space:nowrap}
+.featbar{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);display:flex;gap:4px;background:rgba(16,36,58,.95);border-radius:14px;padding:5px;box-shadow:0 2px 12px rgba(0,0,0,.35);z-index:4;max-width:calc(100% - 24px)}
+.featbar button{width:36px;height:36px;flex:none;border:0;border-radius:9px;background:none;color:var(--snow);cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}
+.featbar button:hover{background:rgba(169,196,228,.18)}
+.featbar button[aria-pressed=true]{background:var(--snow);color:var(--navy)}
+.featbar button:focus-visible{outline:2px solid var(--orange)}
+.featbar svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:420px){.featbar{gap:1px;padding:4px}.featbar button{width:31px;height:34px}.featbar svg{width:20px;height:20px}}
+.markbar{position:absolute;left:50%;bottom:66px;transform:translateX(-50%);display:flex;align-items:center;gap:6px;background:rgba(16,36,58,.95);border:2px solid var(--snow);border-radius:999px;padding:5px 6px 5px 14px;font-size:14px;box-shadow:0 2px 12px rgba(0,0,0,.35);z-index:4;max-width:calc(100% - 24px);white-space:nowrap}
 .markbar[hidden]{display:none}
 .markbar b{font-family:var(--display);text-transform:uppercase;letter-spacing:1px;margin-right:4px}
 .markbar button{border:1px solid rgba(169,196,228,.5);background:none;color:#fff;font:600 13px var(--body);padding:4px 10px;border-radius:999px;cursor:pointer}
@@ -148,6 +155,7 @@ details.how p{margin:6px 0}
       <span><svg width="22" height="14"><line x1="2" y1="7" x2="20" y2="7" stroke="#DA291C" stroke-width="3"/></svg>Subway</span>
     </details>
     <div class="markbar" id="markbar" hidden role="group" aria-label="Stops found on the map"></div>
+    <div class="featbar" id="featbar" role="toolbar" aria-label="Find stops with…"></div>
     <div class="mapctl">
       <button id="zin" title="Zoom in" aria-label="Zoom in">+</button>
       <button id="zout" title="Zoom out" aria-label="Zoom out">−</button>
@@ -476,7 +484,17 @@ function drawMarkBar() {
   bar.innerHTML = `<b>${esc(FEAT[mark.key])}</b>${['yes', 'no', 'unk'].map((k) => `<button data-show="${k}" aria-pressed="${mark.show === k}">${lab[k]} <small>${c[k]}</small></button>`).join('')}<button class="x" aria-label="Stop finding ${esc(FEAT[mark.key])}" title="Close">✕</button>`;
   bar.hidden = false;
 }
-function setMark(m) { mark = m; drawMarkBar(); drawStops(); drawFlows(); if (pick !== null) panel(); }
+function setMark(m) { mark = m; drawMarkBar(); drawFeatBar(); drawStops(); drawFlows(); if (pick !== null) panel(); }
+// the same items as buttons on the map, so they work without picking a stop first
+const FEAT_ICON = { narrow: 'blocked' };
+function drawFeatBar() {
+  $('#featbar').innerHTML = Object.entries(FEAT).map(([k, name]) => `<button data-key="${k}" aria-pressed="${!!(mark && mark.key === k)}" title="Find stops: ${esc(name.toLowerCase())}" aria-label="Find stops: ${esc(name.toLowerCase())}"><svg viewBox="0 0 24 24" aria-hidden="true">${ICON[FEAT_ICON[k] || k]}</svg></button>`).join('');
+}
+$('#featbar').addEventListener('click', (e) => {
+  const b = e.target.closest('button[data-key]'); if (!b) return;
+  setMark(mark && mark.key === b.dataset.key ? null : { key: b.dataset.key, show: 'yes' });
+  const again = document.querySelector(`#featbar button[data-key="${b.dataset.key}"]`); if (again) again.focus();
+});
 
 // ---------- the sidebar ----------
 $('#days').innerHTML = Object.entries(D.days).map(([k, v]) => `<button data-day="${k}" aria-pressed="${k === day}">${v}</button>`).join('');
@@ -654,6 +672,7 @@ window.addEventListener('hashchange', () => { readHash(); update(); if (pick !==
 let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => fitView(false), 120); });
 
 if (window.innerWidth < 700) $('.legend').open = false;
+drawFeatBar();
 fitView(false); update();
 if (pick !== null) glideTo(pick);
 </script>

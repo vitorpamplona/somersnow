@@ -35,9 +35,9 @@ Deploy: anything pushed to `main` under `docs/` goes live within a minute or two
 
 ## Making changes
 
-- **A rule or number changes** (new fine, new even/odd side, new lots): update it everywhere it appears, in this order: the "Verified facts" list below, `docs/snow/i18n/en.js` (and any translations), `docs/index.html`, `docs/snow/flyer.html` and `docs/snow/flyer-phone.html` (then `npm run flyer`), `docs/llms.txt`, the affected cards in `cards/src/` (then `npm run cards -- <card>`), and `research/ordinance.md` if it's law. Search the repo for the old value before you finish.
+- **A rule or number changes** (new fine, new even/odd side, new lots): update it everywhere it appears, in this order: the "Verified facts" list below, `docs/snow/i18n/en.js` (and any translations), `docs/snow/index.html`, `docs/snow/flyer.html` and `docs/snow/flyer-phone.html` (then `npm run flyer`), `docs/llms.txt`, the affected cards in `cards/src/` (then `npm run cards -- <card>`), and `research/ordinance.md` if it's law. Search the repo for the old value before you finish.
 - **Every fact needs a source.** Law comes from `research/source-files/` or Municode; City practice from somervillema.gov; MBTA facts from mbta.com. If a source is a search snippet, mark it * in `research/sources.md`. Don't add facts from memory. If something is unconfirmed, add it to "Not yet confirmed" and to `research/questions.md`, not to the site.
-- **Text:** edit `docs/index.html` and `docs/snow/i18n/en.js` together. Keys in `en.js` must match the `data-i18n` attributes. New visible text gets a new key.
+- **Text:** edit `docs/snow/index.html` and `docs/snow/i18n/en.js` together. Keys in `en.js` must match the `data-i18n` attributes. New visible text gets a new key.
 - **Before pushing:** `npm test`, then open `npm run dev` and check the page at phone width (390px) with no sideways scroll.
 - **Don't** describe the site as official, put City or MBTA logos on it, or soften the "not an official City page" line.
 

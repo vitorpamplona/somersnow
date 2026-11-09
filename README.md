@@ -2,7 +2,7 @@
 
 Somerville's sidewalk snow and ice rules, for everyone who walks, rolls or rides the bus. Made by the Somerville Pedestrian & Transit Advisory Committee (PTAC). Not an official City of Somerville page: the [City's rules](https://www.somervillema.gov/snow) apply.
 
-**Live site:** https://somerwalks.org/snow/ (part of [somerwalks.org](https://somerwalks.org/), PTAC's projects; until the domain is live: https://vitorpamplona.com/somersnow/snow/)
+**Live site:** https://somerwalks.org/snow/ (part of [somerwalks.org](https://somerwalks.org/), PTAC's projects)
 
 - **6 daylight hours** after the snow stops. Night doesn't count.
 - **36 inches** wide, down to bare pavement. Ice too.

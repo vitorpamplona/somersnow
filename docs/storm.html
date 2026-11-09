@@ -1,16 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<title>Storm replays · Somerville Snow Guide</title>
-<meta name="robots" content="noindex">
-<!-- Old address. Each storm now has its own page in storms/; storm.html?storm=<id> forwards there. -->
-<meta http-equiv="refresh" content="0; url=storms/">
-<link rel="canonical" href="storms/">
-<script>
-  const id = new URLSearchParams(location.search).get('storm');
-  location.replace(/^\d{4}-\d{2}-\d{2}$/.test(id || '') ? `storms/${id}.html` : 'storms/');
-</script>
-</head>
-<body><p><a href="storms/">Storm replays</a></p></body>
-</html>
+<!-- forwarding page: scripts/build_redirects.py -->
+<html lang="en"><head><meta charset="utf-8"><title>Moved: Somerville Snow Guide</title>
+<meta name="robots" content="noindex"><link rel="canonical" href="https://somerwalks.org/snow/storm.html">
+<script>location.replace('snow/storm.html' + location.search + location.hash);</script>
+<meta http-equiv="refresh" content="0; url=snow/storm.html">
+</head><body><p>This page moved to <a href="snow/storm.html">somerwalks.org/snow/storm.html</a>.</p></body></html>

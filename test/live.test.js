@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { metarSnow, interval, liveState, demoInput } from '../docs/js/live.js';
+import { metarSnow, interval, liveState, demoInput } from '../docs/snow/js/live.js';
 
 test('METAR: falling snow counts, blowing snow and remarks do not', () => {
   assert.equal(metarSnow('KBOS 230654Z 03028G40KT 1/4SM +SN FZFG VV005 M03/M04 A2950'), true);

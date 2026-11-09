@@ -23,8 +23,8 @@ The street network:
   * pieces that still can't reach each other are joined at their closest stops.
 
 Inputs (the first two copied into data/ by this script so the folder is self-contained):
-  ../../docs/data/bus-stops.json  MBTA stops in Somerville, Fall weekday boardings and alightings, routes
-  ../../docs/data/wards.json      ward outlines, for the map
+  ../../docs/snow/data/bus-stops.json  MBTA stops in Somerville, Fall weekday boardings and alightings, routes
+  ../../docs/snow/data/wards.json      ward outlines, for the map
   data/computed-plan.json         the plan an earlier version of this script computed (riders first, one
                                   street at a time, commit 3cc3f4d): the page's starting plan
 
@@ -278,7 +278,7 @@ def turn_cost_links(G):
 if __name__ == '__main__':
     os.makedirs(DATA, exist_ok=True); os.makedirs(OUT, exist_ok=True)
     for f in ('bus-stops.json', 'wards.json'):
-        shutil.copyfile(os.path.join(ROOT, 'docs', 'data', f), os.path.join(DATA, f))
+        shutil.copyfile(os.path.join(ROOT, 'docs', 'snow', 'data', f), os.path.join(DATA, f))
     bs = json.load(open(os.path.join(DATA, 'bus-stops.json')))
     wards = json.load(open(os.path.join(DATA, 'wards.json')))['wards']
     allstops = bs['stops']

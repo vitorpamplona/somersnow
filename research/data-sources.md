@@ -114,7 +114,7 @@ A curb-ramp inventory (City or MassDOT); a list of declared snow emergencies; th
 
 ## Collected
 
-`npm run data` (`scripts/fetch_data.py`, Python standard library, no keys) collects sources 1–3 and 5, the ward outlines and the hourly Logan weather into small files in `docs/data/`, including an hour-by-hour file for each storm of 3 inches or more since 2016 (the 15 with a 6-inch day at first). The storm replays (`docs/storms/<id>.html`, written by `scripts/build_pages.py`) embed them.
+`npm run data` (`scripts/fetch_data.py`, Python standard library, no keys) collects sources 1–3 and 5, the ward outlines and the hourly Logan weather into small files in `docs/snow/data/`, including an hour-by-hour file for each storm of 3 inches or more since 2016 (the 15 with a 6-inch day at first). The storm replays (`docs/snow/storms/<id>.html`, written by `scripts/build_pages.py`) embed them.
 
 City snow emergency times come from the City's news posts. Its online archive reaches back only to about May 2022; it has both notices for Feb 22–24, 2026, only the declaration for Jan 25–27, 2026, and only the end notice for Feb 25, 2022 (which gives the City's own deadline, 12:30 p.m. Feb 26; the guide's calculator says 12:24 p.m.). Earlier storms replay without parking messages (question 48). Re-run it each fall before the first storm.
 

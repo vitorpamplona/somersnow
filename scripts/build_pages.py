@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Write one fixed page per storm (docs/storms/<id>.html) and an index (docs/storms/index.html).
+"""Write one fixed page per storm (docs/snow/storms/<id>.html) and an index (docs/snow/storms/index.html).
 
 Everything a page shows is prepared here and written into the page: title, summary, "at a glance" facts,
 links to the previous and next storm, the storm cards, and the data (as JSON in the page). The page's script
-(docs/js/storm.js) only draws and animates. Run by `npm run data` after collecting, or alone with `npm run pages`.
+(docs/snow/js/storm.js) only draws and animates. Run by `npm run data` after collecting, or alone with `npm run pages`.
 Template: scripts/storm_page.html.
 """
 import csv, hashlib, html, io, json, os
@@ -11,9 +11,9 @@ from collections import defaultdict
 from datetime import date, datetime, timedelta
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA = os.path.join(ROOT, 'docs', 'data')
-OUT = os.path.join(ROOT, 'docs', 'storms')
-SITE = 'https://vitorpamplona.com/somersnow/'
+DATA = os.path.join(ROOT, 'docs', 'snow', 'data')
+OUT = os.path.join(ROOT, 'docs', 'snow', 'storms')
+SITE = 'https://somerwalks.org/snow/'
 
 
 def load(name):
@@ -223,7 +223,7 @@ def cards(storms, current=None, prefix=''):
 
 
 def hourly_csv(S):
-    """docs/data/csv/<id>.csv: one row per hour of the storm's window, every hourly number the page draws, so the
+    """docs/snow/data/csv/<id>.csv: one row per hour of the storm's window, every hourly number the page draws, so the
     charts can be checked in a spreadsheet. Empty cells: the source doesn't cover this storm (never a zero)."""
     t0 = datetime.fromisoformat(S['from']); n = len(S['hours']); x = S.get('extra') or {}
     pick = lambda *path: (lambda o: o if isinstance(o, list) else None)(_dig(x, path))
@@ -291,7 +291,7 @@ def main():
     # Cache-busting: browsers may keep old copies of these files for a while; a content hash in the URL
     # makes a changed file load fresh, so a new page never runs with an old script.
     for rel in ('js/storm.js', 'js/deadline.js', 'css/storm.css', 'css/style.css'):
-        with open(os.path.join(ROOT, 'docs', rel), 'rb') as f:
+        with open(os.path.join(ROOT, 'docs', 'snow', rel), 'rb') as f:
             v = hashlib.sha1(f.read()).hexdigest()[:8]
         tpl = tpl.replace(f'../{rel}"', f'../{rel}?v={v}"')
     os.makedirs(OUT, exist_ok=True)
@@ -312,8 +312,8 @@ def main():
                 .replace('%%CARDS%%', cards_html).replace('%%ALL_LEDE%%', esc(all_lede)).replace('%%DATA%%', data))
         with open(os.path.join(OUT, f'{sid}.html'), 'w') as f:
             f.write(page)
-        os.makedirs(os.path.join(ROOT, 'docs', 'data', 'csv'), exist_ok=True)
-        with open(os.path.join(ROOT, 'docs', 'data', 'csv', f'{sid}.csv'), 'w', newline='') as f:
+        os.makedirs(os.path.join(ROOT, 'docs', 'snow', 'data', 'csv'), exist_ok=True)
+        with open(os.path.join(ROOT, 'docs', 'snow', 'data', 'csv', f'{sid}.csv'), 'w', newline='') as f:
             f.write(hourly_csv(S))
     # a snowfall that is now part of a longer period keeps its address: a small page that forwards to the period
     alias = {a: st['id'] for st in storms for a in st.get('aliases', [])}
@@ -331,12 +331,12 @@ def main():
     latest = ids[-1]
     idx = INDEX
     for rel in ('css/storm.css', 'css/style.css'):
-        with open(os.path.join(ROOT, 'docs', rel), 'rb') as f:
+        with open(os.path.join(ROOT, 'docs', 'snow', rel), 'rb') as f:
             idx = idx.replace(f'../{rel}"', f'../{rel}?v={hashlib.sha1(f.read()).hexdigest()[:8]}"')
     idx = idx.replace('%%CARDS%%', cards_html).replace('%%ALL_LEDE%%', esc(all_lede)).replace('%%LATEST%%', latest).replace('%%LATEST_NAME%%', esc(load(f'storm-{latest}.json')['title']))
     with open(os.path.join(OUT, 'index.html'), 'w') as f:
         f.write(idx)
-    print(f'  wrote docs/storms/ ({len(ids)} storm pages and index.html)')
+    print(f'  wrote docs/snow/storms/ ({len(ids)} storm pages and index.html)')
 
 
 INDEX = '''<!DOCTYPE html>

@@ -1,14 +1,14 @@
-// npm run verify: recompute the storm replays' published numbers from docs/data and check them against the pages.
-// No downloads: it reads only docs/data and docs/storms. Pass --cache to also re-fingerprint the archives in .cache/
-// against docs/data/sources.json (after `npm run data`). Exits 1 if anything doesn't match.
+// npm run verify: recompute the storm replays' published numbers from docs/snow/data and check them against the pages.
+// No downloads: it reads only docs/snow/data and docs/snow/storms. Pass --cache to also re-fingerprint the archives in .cache/
+// against docs/snow/data/sources.json (after `npm run data`). Exits 1 if anything doesn't match.
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
-import { deadline, zoned, wall } from '../docs/js/deadline.js';
+import { deadline, zoned, wall } from '../docs/snow/js/deadline.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const DATA = path.join(ROOT, 'docs', 'data');
+const DATA = path.join(ROOT, 'docs', 'snow', 'data');
 const read = (f) => fs.readFileSync(path.join(ROOT, f), 'utf8');
 const json = (f) => JSON.parse(read(f));
 const DAY = 864e5;
@@ -31,11 +31,11 @@ const local = (s) => { const [d, t = '00:00'] = s.split('T'); const [y, m, dd] =
 const addDays = (d, n) => new Date(Date.parse(`${d}T12:00:00Z`) + n * DAY).toISOString().slice(0, 10);
 const html = (s) => s.replace(/&amp;/g, '&').replace(/&#x27;|&#39;/g, "'").replace(/&quot;/g, '"');
 
-const { storms } = json('docs/data/storms.json');
+const { storms } = json('docs/snow/data/storms.json');
 console.log(`Checking ${storms.length} storm periods…`);
 
 for (const st of storms) {
-  const S = json(`docs/data/storm-${st.id}.json`);
+  const S = json(`docs/snow/data/storm-${st.id}.json`);
   const n = S.hours.length;
   const t0 = local(S.from);
   const hrs = (Date.parse(`${S.to}:00Z`) - Date.parse(`${S.from}:00Z`)) / 36e5;
@@ -44,7 +44,7 @@ for (const st of storms) {
   const sw = (i) => (S.requests[i] || [])[k] || 0;
 
   // 1. the hourly table is the same data
-  const csvFile = `docs/data/csv/${st.id}.csv`;
+  const csvFile = `docs/snow/data/csv/${st.id}.csv`;
   check(fs.existsSync(path.join(ROOT, csvFile)), `${st.id}: ${csvFile} is missing (npm run pages writes it)`);
   const rows = fs.existsSync(path.join(ROOT, csvFile)) ? csvRows(read(csvFile)).filter((r) => r.length > 1) : [[]];
   const head = rows.shift();
@@ -83,7 +83,7 @@ for (const st of storms) {
   check(st.lasted === Math.round((Date.parse(st.clear) - Date.parse(st.snowfalls[0].end)) / DAY), `${st.id}: lasted ${st.lasted} doesn't match clear`);
 
   // 4. the page shows these numbers
-  const page = read(`docs/storms/${st.id}.html`);
+  const page = read(`docs/snow/storms/${st.id}.html`);
   const lede = html((page.match(/id="r-lede"[^>]*>([^<]*)/) || [])[1] || '');
   if (st.lasted > 1) check(lede.includes(`kept coming for ${st.lasted} days`), `${st.id}: intro doesn't say ${st.lasted} days`);
   const base = Math.floor((local(S.snowStart) - t0) / 36e5);
@@ -106,13 +106,13 @@ const peaks = single.filter((s) => {
   const off = Math.round((Date.parse(s.end) - Date.parse(s.days[0][0])) / DAY);
   const p = Math.max(...v) ? v.indexOf(mx) - off : -99; return p >= 1 && p <= 3;
 }).length;
-const index = html(read('docs/storms/index.html'));
+const index = html(read('docs/snow/storms/index.html'));
 for (const [what, txt] of [['typical storm', `keep coming for ${med} days in a typical storm`], ['over a week', `more than a week in ${week} of ${snowy.length} snow periods`],
   ['over two weeks', `more than two weeks in ${two}`], ['peaks', `in ${peaks} of ${single.length} storms`]]) check(index.includes(txt), `index: "${txt}" (${what}) not on the page`);
 
 // 6. the deadline calculator against the City's own notices
 for (const [id, city, ours] of [['2022-02-25', '12:30 p.m. Feb 26, 2022', '2022-02-26T12:24'], ['2026-03-03', '1 p.m. Feb 24, 2026', '2026-02-24T12:28']]) {
-  const S = json(`docs/data/storm-${id}.json`);
+  const S = json(`docs/snow/data/storm-${id}.json`);
   const main = S.snowfalls.reduce((a, f) => (f.snow > a.snow ? f : a));
   const w = wall(deadline(local(main.stop)).end);
   const got = `${w.y}-${String(w.m).padStart(2, '0')}-${String(w.d).padStart(2, '0')}T${String(w.h).padStart(2, '0')}:${String(w.mi).padStart(2, '0')}`;
@@ -122,7 +122,7 @@ for (const [id, city, ours] of [['2022-02-25', '12:30 p.m. Feb 26, 2022', '2022-
 
 // 7. optional: the downloaded archives are the ones recorded
 if (process.argv.includes('--cache')) {
-  const { downloads } = json('docs/data/sources.json');
+  const { downloads } = json('docs/snow/data/sources.json');
   for (const d of downloads.filter((x) => x.cache_file)) {
     const f = path.join(ROOT, '.cache', d.cache_file);
     if (!fs.existsSync(f)) { console.log(`  · ${d.cache_file}: not downloaded here`); continue; }

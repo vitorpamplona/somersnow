@@ -4,7 +4,7 @@ A PTAC tool for designing the routes the City's bobcat crews take to clear bus s
 
 The page starts with the plan an earlier version of `build.py` computed (riders first, one street at a time; `data/computed-plan.json`), as a base to edit or compare against; "+ Computed" adds it again when it isn't there.
 
-**Open it at [vitorpamplona.com/somersnow/bus-stops.html](https://vitorpamplona.com/somersnow/bus-stops.html)**, or open [`output/map.html`](output/map.html) in a browser.
+**Open it at [somerwalks.org/bus-stops.html](https://somerwalks.org/bus-stops.html)**, or open [`output/map.html`](output/map.html) in a browser.
 
 ## What it does
 
@@ -41,13 +41,13 @@ An operator builds plans. Each plan has its own crews, and each crew a list of s
 | --- | --- |
 | `build.py` | Builds the street network and writes the page. Python standard library only. Run `python3 analysis/bus-stop-clearing/build.py` from the repo root. The page's default settings are at its top (`SETTINGS`); the network's are in `A`. |
 | `map_template.html` | The page: map, route editor, plans, scoring, settings, saving. `build.py` fills in the data. |
-| `data/bus-stops.json` | Copy of `docs/data/bus-stops.json`: MBTA stops in Somerville, weekday boardings (`riders`) and alightings (`off`), routes and route shapes (from `scripts/fetch_data.py`). |
+| `data/bus-stops.json` | Copy of `docs/snow/data/bus-stops.json`: MBTA stops in Somerville, weekday boardings (`riders`) and alightings (`off`), routes and route shapes (from `scripts/fetch_data.py`). |
 | `data/computed-plan.json` | The starting plan: the 4 crews' routes an earlier version of `build.py` computed (commit 3cc3f4d). |
-| `data/wards.json` | Copy of `docs/data/wards.json`: ward outlines for the map. |
+| `data/wards.json` | Copy of `docs/snow/data/wards.json`: ward outlines for the map. |
 | `output/map.html` | The page (self-contained; open it in any browser). |
 | `../../docs/bus-stops.html` | The same page on the public site, copied by `build.py`. Don't edit it by hand. |
 
-`build.py` copies the two data files from `docs/data/` each time it runs, so `npm run data` followed by this script uses the latest ridership.
+`build.py` copies the two data files from `docs/snow/data/` each time it runs, so `npm run data` followed by this script uses the latest ridership.
 
 ## Limits
 

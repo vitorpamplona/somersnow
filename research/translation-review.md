@@ -1,13 +1,13 @@
 # Translation review checklist
 
-Four draft translations exist: `docs/i18n/es.js` (Spanish), `pt.js` (Brazilian Portuguese), `ht.js` (Haitian Creole), `ne.js` (Nepali). An AI wrote them, so they are **not** in the language switcher yet. Preview one at `index.html?lang=es` (or `pt`, `ht`, `ne`); a yellow banner marks it as a draft.
+Four draft translations exist: `docs/snow/i18n/es.js` (Spanish), `pt.js` (Brazilian Portuguese), `ht.js` (Haitian Creole), `ne.js` (Nepali). An AI wrote them, so they are **not** in the language switcher yet. Preview one at `index.html?lang=es` (or `pt`, `ht`, `ne`); a yellow banner marks it as a draft.
 
 The City's snow page has no translated snow rules to borrow terms from (its language links were placeholders or only covered City Alerts sign-up), so every term below is the AI's choice.
 
 ## To publish a language
 
 1. A native speaker reads the whole page at `?lang=<code>`, on a phone, and fixes the file.
-2. Move the language from `docs/i18n/drafts.js` to `docs/i18n/languages.js`. The switcher appears automatically.
+2. Move the language from `docs/snow/i18n/drafts.js` to `docs/snow/i18n/languages.js`. The switcher appears automatically.
 
 ## Added later (by the same AI, after the first drafts)
 

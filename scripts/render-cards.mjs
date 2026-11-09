@@ -1,4 +1,4 @@
-// Renders every card in cards/src/ to a 1080×1920 PNG in docs/cards/.
+// Renders every card in cards/src/ to a 1080×1920 PNG in docs/snow/cards/.
 // Usage: npm run cards   (needs Playwright: npm i -D playwright && npx playwright install chromium)
 import { readdir } from 'node:fs/promises';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -7,7 +7,7 @@ import { chromium } from 'playwright';
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const srcDir = path.join(root, 'cards', 'src');
-const outDir = path.join(root, 'docs', 'cards');
+const outDir = path.join(root, 'docs', 'snow', 'cards');
 const only = process.argv.slice(2);
 
 const browser = await chromium.launch();

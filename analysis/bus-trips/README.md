@@ -2,7 +2,7 @@
 
 A PTAC map of every bus route with a stop in Somerville, drawn whole through the cities and towns it serves. Pick a stop to see about where its riders get off, or switch to where riders getting off there got on, on a weekday, Saturday or Sunday. **An estimate**, not MBTA data.
 
-**Open it at [vitorpamplona.com/somersnow/bus-trips.html](https://vitorpamplona.com/somersnow/bus-trips.html)**, or open [`output/trips.html`](output/trips.html) in a browser. Not linked from the guide.
+**Open it at [somerwalks.org/bus-trips.html](https://somerwalks.org/bus-trips.html)**, or open [`output/trips.html`](output/trips.html) in a browser. Not linked from the guide.
 
 ## What it shows
 
@@ -49,7 +49,7 @@ Adding up every trip of the day gives about how many riders go from each stop to
 
 - Riders: [MBTA Bus Ridership by Trip, Season, Route/Line and Stop](https://mbta-massdot.opendata.arcgis.com/datasets/8daf4a33925a4df59183f860826d29ee), the newest Fall season (Fall 2025), average boardings and alightings per trip and stop.
 - Stops, towns, route shapes, subway lines and stations: the MBTA schedule (GTFS), the last feed of the same season from the [MBTA's feed archive](https://cdn.mbta.com/archive/archived_feeds.txt) (Fall 2025, from Nov 24, 2025).
-- Routes: every route with a stop in Somerville in `docs/data/bus-stops.json` (from the same ridership file).
+- Routes: every route with a stop in Somerville in `docs/snow/data/bus-stops.json` (from the same ridership file).
 - What's at each stop: [MBTA PATI Bus Stops](https://www.arcgis.com/home/item.html?id=24a97982b39f4febb504c9e6cb55879b) (status as of Jan 2024; amenities from 2017). A stop with benches has one record with the count and one per bench with its type and condition; `build.py` merges them. 511 of the 548 stops are in it.
 - What volunteers mapped at each stop: [OpenStreetMap](https://www.openstreetmap.org/copyright) bus stops (© OpenStreetMap contributors, ODbL), from an Overpass server, matched to MBTA stops by `ref` (the MBTA stop number; else the nearest stop without one within 30 m), with the year each value was set from the stop's edit history (OpenStreetMap API, cached in `.cache/osm-hist/` by node and version, so only changed stops are fetched again). Delete `.cache/bus-trips-osm.json` to refresh. 531 of 548 stops match. The OSM-derived fields in the page are under the ODbL.
 - Town outlines: [MassGIS municipalities with generalized coast](https://www.mass.gov/info-details/massgis-data-municipalities).

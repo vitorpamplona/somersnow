@@ -1,8 +1,8 @@
 # Storm replay data: a guide
 
-Everything the storm replays (`docs/storms/`) show comes from public sources, through the scripts in `scripts/`. This folder holds what they produced, so anyone can check a number on a page, rebuild it from scratch, or reuse it. Made by the Somerville Pedestrian & Transit Advisory Committee (PTAC); not an official City dataset. MIT license.
+Everything the storm replays (`docs/snow/storms/`) show comes from public sources, through the scripts in `scripts/`. This folder holds what they produced, so anyone can check a number on a page, rebuild it from scratch, or reuse it. Made by the Somerville Pedestrian & Transit Advisory Committee (PTAC); not an official City dataset. MIT license.
 
-Live copies: `https://vitorpamplona.com/somersnow/data/<file>`. Method notes and caveats per source: [`research/data-sources.md`](../../research/data-sources.md).
+Live copies: `https://somerwalks.org/snow/data/<file>`. Method notes and caveats per source: [`research/data-sources.md`](../../../research/data-sources.md).
 
 ## Check it, or rebuild it
 
@@ -58,7 +58,7 @@ A **snow period** groups snowfalls whose sidewalk reports overlap: a seed snowfa
 |---|---|
 | `title` | Dates of the snow (from the hourly reports), or a title typed from a City notice. |
 | `from`, `to` | Window, hour precision. |
-| `snowfalls` | `[{start, stop, snow}]` per snowfall, hour precision: falling snow at Logan, from the first to the last run of 3+ snowy hours (lulls under 6 hours count as one run). Each `stop` gives that snowfall's shoveling deadline: 6 daylight hours later (`docs/js/deadline.js`). |
+| `snowfalls` | `[{start, stop, snow}]` per snowfall, hour precision: falling snow at Logan, from the first to the last run of 3+ snowy hours (lulls under 6 hours count as one run). Each `stop` gives that snowfall's shoveling deadline: 6 daylight hours later (`docs/snow/js/deadline.js`). |
 | `snowStart`, `snowStop` | First snowfall's start, last snowfall's stop. The page-wide deadline is the biggest snowfall's. |
 | `snowTotal`, `clear`, `lasted` | As in `storms.json`. |
 | `emergency`, `notices`, `cityDeadline` | Only where the City's notices are online (typed in `CITY` in `fetch_data.py`, each with its source link). |
@@ -116,7 +116,7 @@ The T, bus, subway, Bluebikes, spending and page-view numbers are counted from a
 | "Reports for N days" (cards), "kept coming for N days" (intro) | `lasted` |
 | "After the snow stops… N days in a typical storm", "more than a week in N of M", "more than two weeks in N" (index) | median and counts of `lasted` over `kind: snow` periods |
 | "Peaked 1 to 3 days after the snow in N of M storms" (index) | single-snowfall `kind: snow` periods: the day with the most sidewalk reports in `days`, counted from `end` |
-| Deadline, "Shovel by", "came after the deadline" | `docs/js/deadline.js` on each snowfall's `stop` (checked against two City notices: Feb 26, 2022 and Feb 24, 2026) |
+| Deadline, "Shovel by", "came after the deadline" | `docs/snow/js/deadline.js` on each snowfall's `stop` (checked against two City notices: Feb 26, 2022 and Feb 24, 2026) |
 | "N sidewalk reports to 311" (summary), the ward map | `requests` / `sidewalkByWard` from the first snowy hour on |
 | "T entries −N% on <day>" (summary) | `extra.tEntries`, the day with the biggest drop vs. a normal week from the first snow to 3 days after it stops, holidays skipped |
 

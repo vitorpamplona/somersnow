@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-"""Collect the public data behind the storm replay and the charts, and write small JSON files to docs/data/.
+"""Collect the public data behind the storm replay and the charts, and write small JSON files to docs/snow/data/.
 
 Run with `npm run data` (Python 3 standard library only, no API keys). Re-run each fall before the first storm.
 Sources, caveats and what each file holds: research/data-sources.md.
 
-  docs/data/winters.json        Boston snowfall per winter since 1891, and Somerville 311 snow requests per winter
-  docs/data/storms.json         every 6-inch-plus storm since July 2015: daily snowfall and 311 requests around it
-  docs/data/wards.json          Somerville ward outlines (lon/lat), simplified
-  docs/data/bus-stops.json      MBTA bus stops in Somerville with average weekday boardings and alightings
-  docs/data/storm-<id>.json     each storm (3 inches or more) hour by hour (id = last day of snow): weather at Logan, 311 requests, City notices
+  docs/snow/data/winters.json        Boston snowfall per winter since 1891, and Somerville 311 snow requests per winter
+  docs/snow/data/storms.json         every 6-inch-plus storm since July 2015: daily snowfall and 311 requests around it
+  docs/snow/data/wards.json          Somerville ward outlines (lon/lat), simplified
+  docs/snow/data/bus-stops.json      MBTA bus stops in Somerville with average weekday boardings and alightings
+  docs/snow/data/storm-<id>.json     each storm (3 inches or more) hour by hour (id = last day of snow): weather at Logan, 311 requests, City notices
 """
 import storm_extras
 import csv, io, json, math, os, statistics, struct, sys, tempfile, time, urllib.parse, urllib.request, zipfile
@@ -16,7 +16,7 @@ from collections import Counter, defaultdict
 from datetime import date, datetime, timedelta
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-OUT = os.path.join(ROOT, 'docs', 'data')
+OUT = os.path.join(ROOT, 'docs', 'snow', 'data')
 CACHE = os.path.join(ROOT, '.cache')  # big downloads (station entries, bike trips, alert archives); git-ignored
 UA = 'somersnow data script (Somerville PTAC snow guide)'
 
@@ -78,7 +78,7 @@ CITY = {
 
 STORM_MIN = 3.0  # inches at Logan over the storm's consecutive snowy days (each with 0.5 in or more)
 
-# Every download is recorded (address, date, size, SHA-256) and written to docs/data/sources.json, so a later run can
+# Every download is recorded (address, date, size, SHA-256) and written to docs/snow/data/sources.json, so a later run can
 # tell whether it worked from the same inputs. Sources change: 311 records get edited, archives get republished.
 PROV = {}
 
@@ -135,7 +135,7 @@ def write(name, obj):
     path = os.path.join(OUT, name)
     with open(path, 'w') as f:
         json.dump(obj, f, separators=(',', ':'), ensure_ascii=False)
-    print(f'  wrote docs/data/{name} ({os.path.getsize(path) // 1024} KB)')
+    print(f'  wrote docs/snow/data/{name} ({os.path.getsize(path) // 1024} KB)')
 
 
 def season_of(d):  # winter "2025" = July 2025 – June 2026
@@ -607,7 +607,7 @@ def snow_periods(daily, by_day, seeds):
 
 
 def write_raw(storms, windows, extra):
-    """docs/data/raw/<id>/<source>.csv: the records behind each storm's counts. Collected rows (311, police, fire,
+    """docs/snow/data/raw/<id>/<source>.csv: the records behind each storm's counts. Collected rows (311, police, fire,
     Logan weather reports) plus the per-record lists already kept in the storm data (crashes, alerts, warnings,
     Somerville observers). Privacy as on the pages: streets without house numbers, medical calls without a street."""
     import shutil
@@ -637,7 +637,7 @@ def write_raw(storms, windows, extra):
                 w = csv.writer(f)
                 w.writerow(head)
                 w.writerows(sorted(rows, key=lambda r: str(r[0])))
-    print(f'  wrote docs/data/raw/ ({len(storms)} storms)')
+    print(f'  wrote docs/snow/data/raw/ ({len(storms)} storms)')
 
 
 def main():
@@ -821,7 +821,7 @@ def main():
             },
         })
     write_raw(storms, windows, extra)
-    write('sources.json', {'note': 'Every download behind docs/data, with its address, when it was fetched, its size and SHA-256. '
+    write('sources.json', {'note': 'Every download behind docs/snow/data, with its address, when it was fetched, its size and SHA-256. '
                                    'Big archives are kept in .cache/ (not published); a new run can compare fingerprints.',
                            'generated': datetime.now().isoformat(timespec='seconds'),
                            'downloads': sorted(PROV.values(), key=lambda p: p['url'])})

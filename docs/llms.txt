@@ -54,6 +54,6 @@ Rules below were checked against the Somerville Code of Ordinances (Chapter 12 a
 
 ## Pages
 
-- [Guide](https://vitorpamplona.com/somersnow/): the interactive guide (deadline calculator, who clears what, salt or sand, fines)
-- [Cards](https://vitorpamplona.com/somersnow/cards.html): 34 shareable phone-size cards
+- [Guide](https://somerwalks.org/snow/): the interactive guide (deadline calculator, who clears what, salt or sand, fines)
+- [Cards](https://somerwalks.org/snow/cards.html): 34 shareable phone-size cards
 - [Source code and research](https://github.com/vitorpamplona/somersnow): ordinance text, sources, open questions for officials

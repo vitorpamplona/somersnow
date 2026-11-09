@@ -7,7 +7,7 @@ getting off are taken from the people on board in proportion to where they got o
 getting on join. Whoever is still on board at the last stop gets off there. Added up over every
 trip of a day, that gives about how many riders go from each stop to each other stop on each route.
 
-Routes: every bus route with a stop in Somerville in the ridership data (docs/data/bus-stops.json),
+Routes: every bus route with a stop in Somerville in the ridership data (docs/snow/data/bus-stops.json),
 drawn whole, through every city and town they serve.
 
 Inputs (downloaded once into ../../.cache/, git-ignored; delete a file there to refresh it):
@@ -262,7 +262,7 @@ def osm_stops(box, want):
 
 
 def somerville_routes():
-    with open(os.path.join(ROOT, 'docs', 'data', 'bus-stops.json')) as f:
+    with open(os.path.join(ROOT, 'docs', 'snow', 'data', 'bus-stops.json')) as f:
         d = json.load(f)
     return sorted({r for s in d['stops'] for r in s['routes']}, key=lambda r: (len(r), r))
 

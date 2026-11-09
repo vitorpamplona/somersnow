@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Not found · SomerWalks</title>
+<meta name="robots" content="noindex">
+<script>
+  // The snow guide moved from the top of the site to /snow (Nov 2026). An old address that isn't a page any more
+  // (a card image, a data file) is sent to the same place under /snow/. Works at somerwalks.org and at the old
+  // project address (vitorpamplona.com/somersnow/).
+  (function () {
+    var base = location.pathname.indexOf('/somersnow/') === 0 ? '/somersnow/' : '/';
+    var rest = location.pathname.slice(base.length);
+    if (rest && rest.indexOf('snow/') !== 0) location.replace(base + 'snow/' + rest + location.search + location.hash);
+  })();
+</script>
+<style>
+body{margin:0;background:#10243A;color:#fff;font:17px/1.5 'Barlow',Arial,sans-serif;display:flex;min-height:100vh;align-items:center;justify-content:center;text-align:center;padding:20px}
+h1{font:800 44px/1 'Barlow Condensed',Arial Narrow,sans-serif;text-transform:uppercase;margin:0 0 12px}
+a{color:#FF8A3D}
+</style>
+</head>
+<body>
+<div>
+  <h1>Not found</h1>
+  <p>That page isn't here. Try the <a id="home" href="/">home page</a> or the <a id="guide" href="/snow/">snow guide</a>.</p>
+</div>
+<script>var b = location.pathname.indexOf('/somersnow/') === 0 ? '/somersnow/' : '/'; document.getElementById('home').href = b; document.getElementById('guide').href = b + 'snow/';</script>
+</body>
+</html>

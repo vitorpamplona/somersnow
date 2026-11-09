@@ -1,4 +1,4 @@
-# Bus stop routes
+# Bus stop clearing planner
 
 A PTAC tool for designing the routes the City's bobcat crews take to clear bus stops after a storm, and scoring them. Not a City plan.
 

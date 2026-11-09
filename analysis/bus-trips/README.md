@@ -34,7 +34,7 @@ Adding up every trip of the day gives about how many riders go from each stop to
 - **Route "194" is the 89/93.** The ridership file calls it 194; the schedule calls it 89/93 (route id `8993`, "Clarendon Hill – Haymarket Station", a supplemental bus): one early trip a day via Sullivan, at the same times in both (4:30 a.m. weekdays, 4:33 Saturday, 5:16 Sunday). The page shows it as 89/93, with the schedule's shape. About 15 riders a weekday.
 - **Branches.** Each route is drawn with its usual patterns and branches (the schedule's typicality 1 and 2, such as the 87 and 89 to Clarendon Hill), plus any rarer pattern that serves a stop none of those reach.
 - **Bennett Alley.** The ridership file starts Harvard trips of the 96 and 109 at "Bennett Alley", a stop id no schedule has (checked in the 2022, 2024 and 2025 feeds); it comes right before Harvard's upper busway, so its riders are counted there.
-- **Friday** is in the file on its own and left out; "Weekday" is the file's `Wkdy`, as in the bus stop routes tool.
+- **Friday** is in the file on its own and left out; "Weekday" is the file's `Wkdy`, as in the bus stop clearing planner.
 
 ## Files
 

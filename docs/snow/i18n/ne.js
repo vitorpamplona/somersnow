@@ -4,7 +4,7 @@ export default {
     "footer.cards": "<a href=\"cards.html\">34 वटा कार्ड डाउनलोड गर्नुहोस्</a> र सेयर गर्नुहोस्।",
     "footer.flyer": "आफ्नो ढोका, भवन वा पसलका लागि <a href=\"flyer.html\">फ्लायर प्रिन्ट गर्नुहोस्</a>।",
     "share.card": "यो कार्ड सेयर गर्नुहोस्",
-    "header.01": "Somerville <span>हिउँ</span>",
+    "header.01": "Somer<span>Walks</span>",
     "header.02": "समयसीमा",
     "header.03": "हिउँ फाल्ने",
     "header.04": "कसले सफा गर्ने",

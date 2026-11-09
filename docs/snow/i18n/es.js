@@ -4,7 +4,7 @@ export default {
     "footer.cards": "<a href=\"cards.html\">Descarga las 34 tarjetas</a> para compartir.",
     "footer.flyer": "<a href=\"flyer.html\">Imprime un volante</a> para tu puerta, edificio o tienda.",
     "share.card": "Comparte esta tarjeta",
-    "header.01": "Somerville <span>Snow</span>",
+    "header.01": "Somer<span>Walks</span>",
     "header.02": "Plazo",
     "header.03": "Palear",
     "header.04": "Quién limpia",

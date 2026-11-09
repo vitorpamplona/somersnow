@@ -12,7 +12,7 @@ export default {
     "footer.phone": "<a href=\"flyer-phone.html\">Get the phone flyer</a> to share by text or social media.",
     "footer.code": "<a href=\"https://github.com/vitorpamplona/somerwalks\">Source code and data</a>: open to all, MIT license.",
     "share.card": "Share this card",
-    "header.01": "Somerville <span>Snow</span>",
+    "header.01": "Somer<span>Walks</span>",
     "header.02": "Deadline",
     "header.03": "Shovel",
     "header.04": "Who clears",
@@ -293,7 +293,7 @@ export default {
       "todoReport": "<b>311</b> or 617-666-3311, or the 311Somerville app.",
       "todoSpace": "<b>Space savers</b> are banned. $100.",
       "icsTitle": "Shovel the sidewalk (deadline)",
-      "icsDetails": "3 feet wide, down to the pavement, curb ramp to the crosswalk. Estimate from the Somerville Snow Guide (PTAC): the City may announce a different time."
+      "icsDetails": "3 feet wide, down to the pavement, curb ramp to the crosswalk. Estimate from the SomerWalks snow guide (PTAC): the City may announce a different time."
     },
     "replay": {
       "title": "Sidewalk reports to 311, per day",

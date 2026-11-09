@@ -4,7 +4,7 @@ export default {
     "footer.cards": "<a href=\"cards.html\">Telechaje 34 kat yo</a> pou pataje.",
     "footer.flyer": "<a href=\"flyer.html\">Enprime yon afich</a> pou pòt ou, bilding ou oswa magazen ou.",
     "share.card": "Pataje kat sa a",
-    "header.01": "Somerville <span>Nèj</span>",
+    "header.01": "Somer<span>Walks</span>",
     "header.02": "Delè",
     "header.03": "Netwaye",
     "header.04": "Kiyès ki netwaye",

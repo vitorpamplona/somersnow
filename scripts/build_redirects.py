@@ -16,7 +16,7 @@ DOCS, SNOW = os.path.join(ROOT, 'docs'), os.path.join(ROOT, 'docs', 'snow')
 MARK = '<!-- forwarding page: scripts/build_redirects.py -->'
 PAGE = '''<!DOCTYPE html>
 {mark}
-<html lang="en"><head><meta charset="utf-8"><title>Moved: Somerville Snow Guide</title>
+<html lang="en"><head><meta charset="utf-8"><title>Moved · SomerWalks</title>
 <meta name="robots" content="noindex"><link rel="canonical" href="https://somerwalks.org/snow/{canon}">
 <script>location.replace('{target}' + location.search + location.hash);</script>
 <meta http-equiv="refresh" content="0; url={target}">

@@ -344,9 +344,9 @@ INDEX = '''<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Every storm since 2016 · Somerville Snow Guide</title>
+<title>Every storm since 2016 · SomerWalks</title>
 <meta name="description" content="Replay every Somerville snowstorm of 3 inches or more since 2016, hour by hour: the snow, the City's snow emergency, the shoveling deadline, 311 reports, the T and Bluebikes. By the Somerville PTAC.">
-<meta property="og:title" content="Every storm since 2016 · Somerville Snow Guide">
+<meta property="og:title" content="Every storm since 2016 · SomerWalks">
 <meta property="og:description" content="Replay every Somerville snowstorm of 3 inches or more since 2016, hour by hour.">
 <meta name="theme-color" content="#10243A">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -356,7 +356,7 @@ INDEX = '''<!DOCTYPE html>
 <link rel="stylesheet" href="../css/storm.css">
 </head>
 <body>
-<header class="bar"><div class="wrap"><a class="brand" href="../">Somerville <span>Snow</span></a><nav class="nav"><a href="../">Back to the guide</a></nav></div></header>
+<header class="bar"><div class="wrap"><a class="brand" href="../../">Somer<span>Walks</span></a><nav class="nav"><a href="../">Snow guide</a></nav></div></header>
 <section class="replay-all" style="background:var(--paper)">
 <div class="wrap">
 <div class="eyebrow">Storm replays</div>

@@ -4,7 +4,7 @@ export default {
     "footer.cards": "<a href=\"cards.html\">Baixe os 34 cards</a> para compartilhar.",
     "footer.flyer": "<a href=\"flyer.html\">Imprima um folheto</a> para sua porta, prédio ou loja.",
     "share.card": "Compartilhe este card",
-    "header.01": "<span>Neve</span> em Somerville",
+    "header.01": "Somer<span>Walks</span>",
     "header.02": "Prazo",
     "header.03": "Limpar",
     "header.04": "Quem limpa",

@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Snow guide cards · SomerWalks</title>
-<meta name="description" content="34 phone-size cards on Somerville's snow and ice rules, ready to share. By the Somerville PTAC.">
+<title>Snow guide cards and flyers · SomerWalks</title>
+<meta name="description" content="Two flyers and 34 phone-size cards on Somerville's snow and ice rules, ready to print or share. By the Somerville PTAC.">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;600&display=swap">
 <link rel="stylesheet" href="css/style.css">
 <style>
@@ -12,6 +12,13 @@
 .gallery figure{margin:0;display:flex;flex-direction:column;gap:8px}
 .gallery img{width:100%;height:auto;border-radius:14px;display:block;box-shadow:0 2px 0 rgba(16,36,58,.08)}
 .gallery figcaption{display:flex;justify-content:space-between;gap:8px;align-items:baseline;font-size:15px}
+.flyers{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:24px}
+.flyers a.fl{display:flex;gap:16px;align-items:center;background:var(--navy,#10243A);color:#fff;border-radius:16px;padding:18px 20px;text-decoration:none}
+.flyers a.fl:hover,.flyers a.fl:focus-visible{outline:3px solid var(--orange,#FF8A3D)}
+.flyers svg{flex:none;width:40px;height:40px;fill:none;stroke:#fff;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.flyers b{display:block;font-family:var(--display);text-transform:uppercase;font-size:22px;line-height:1.05}
+.flyers small{display:block;color:#A9C4E4;font-size:15px;margin-top:2px}
+.flyers .save{display:block;margin-top:8px;font-size:15px}
 .gallery figcaption b{font-family:var(--display);text-transform:uppercase;font-size:18px;line-height:1}
 </style>
 </head>
@@ -19,8 +26,13 @@
 <header class="bar"><div class="wrap"><a class="brand" href="../">Somer<span>Walks</span></a><nav class="nav"><a href="./">Back to the guide</a></nav></div></header>
 <section>
   <div class="wrap">
-    <div class="eyebrow">Share them</div>
-    <h2 style="margin-top:14px">The cards</h2>
+    <div class="eyebrow">Print them, share them</div>
+    <h2 style="margin-top:14px">The flyers</h2>
+    <div class="flyers">
+      <div><a class="fl" href="flyer.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8V3h10v5M7 17H4v-7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v7h-3"/><path d="M7 14h10v7H7z"/></svg><span><b>Print flyer</b><small>One page, US Letter, with a QR code. For your door, building or shop.</small></span></a></div>
+      <div><a class="fl" href="flyer-phone.html"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M11 18.5h2"/></svg><span><b>Phone flyer</b><small>The same facts in one tall column, to share by text or social media.</small></span></a><a class="save" href="flyer-phone.png" download>Save the image</a></div>
+    </div>
+    <h2 style="margin-top:44px">The cards</h2>
     <p class="lede" style="margin-top:18px">Phone-size. Tap one to open it full size, then save or share.</p>
     <div class="gallery" id="gallery"></div>
   </div>

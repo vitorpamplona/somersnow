@@ -366,10 +366,10 @@ INDEX = '''<!DOCTYPE html>
 <div class="multiples">
 %%CARDS%%
 </div>
-<p class="cite" style="margin-top:20px">Sidewalk reports per day (orange) and snow days (navy), until reports died down. Snow that falls before then joins the same storm. Every snow of 3 inches or more at Logan, plus smaller ones that drew many reports. <a href="https://github.com/vitorpamplona/somersnow/blob/main/research/data-sources.md">Method notes</a>.</p>
+<p class="cite" style="margin-top:20px">Sidewalk reports per day (orange) and snow days (navy), until reports died down. Snow that falls before then joins the same storm. Every snow of 3 inches or more at Logan, plus smaller ones that drew many reports. <a href="https://github.com/vitorpamplona/somerwalks/blob/main/research/data-sources.md">Method notes</a>.</p>
 </div>
 </section>
-<footer><div class="wrap"><p>By the Somerville PTAC. Not an official City page. The City's rules apply: <a href="https://www.somervillema.gov/snow">somervillema.gov/snow</a>. <a href="https://github.com/vitorpamplona/somersnow">Source code and data</a>.</p></div></footer>
+<footer><div class="wrap"><p>By the Somerville PTAC. Not an official City page. The City's rules apply: <a href="https://www.somervillema.gov/snow">somervillema.gov/snow</a>. <a href="https://github.com/vitorpamplona/somerwalks">Source code and data</a>.</p></div></footer>
 </body>
 </html>
 '''

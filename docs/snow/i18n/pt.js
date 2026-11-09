@@ -16,7 +16,7 @@ export default {
     "header.10": "Rever",
     "footer.storm": "<a href=\"storms/\">Reveja uma tempestade passada</a>, hora a hora.",
     "footer.phone": "<a href=\"flyer-phone.html\">Baixe o folheto para celular</a> para compartilhar por mensagem ou redes sociais.",
-    "footer.code": "<a href=\"https://github.com/vitorpamplona/somersnow\">Código-fonte e dados</a>: abertos a todos, licença MIT.",
+    "footer.code": "<a href=\"https://github.com/vitorpamplona/somerwalks\">Código-fonte e dados</a>: abertos a todos, licença MIT.",
     "replay.01": "<span class=\"n\">08</span> Olhar para trás",
     "replay.02": "Reveja uma<br/>tempestade",
     "replay.03": "Hora a hora: a neve, a emergência, o prazo e cada reclamação ao 311.",

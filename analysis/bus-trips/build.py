@@ -29,7 +29,7 @@ from collections import defaultdict
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.normpath(os.path.join(HERE, '..', '..'))
 CACHE, OUT = os.path.join(ROOT, '.cache'), os.path.join(HERE, 'output')
-UA = 'somersnow-bus-trips (PTAC; github.com/vitorpamplona/somersnow)'
+UA = 'somersnow-bus-trips (PTAC; github.com/vitorpamplona/somerwalks)'
 
 RIDERSHIP = 'https://www.arcgis.com/sharing/rest/content/items/8daf4a33925a4df59183f860826d29ee/data'
 FEEDS = 'https://cdn.mbta.com/archive/archived_feeds.txt'

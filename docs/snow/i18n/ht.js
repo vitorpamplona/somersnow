@@ -16,7 +16,7 @@ export default {
     "header.10": "Revize",
     "footer.storm": "<a href=\"storms/\">Revize yon tanpèt ki pase</a>, èdtan pa èdtan.",
     "footer.phone": "<a href=\"flyer-phone.html\">Pran fèy pou telefòn nan</a> pou pataje pa mesaj oswa rezo sosyal.",
-    "footer.code": "<a href=\"https://github.com/vitorpamplona/somersnow\">Kòd sous ak done</a>: ouvè pou tout moun, lisans MIT.",
+    "footer.code": "<a href=\"https://github.com/vitorpamplona/somerwalks\">Kòd sous ak done</a>: ouvè pou tout moun, lisans MIT.",
     "replay.01": "<span class=\"n\">08</span> Gade dèyè",
     "replay.02": "Revize yon<br/>tanpèt ki pase",
     "replay.03": "Èdtan pa èdtan: nèj la, ijans lan, dènye dat la, ak chak rapò bay 311.",

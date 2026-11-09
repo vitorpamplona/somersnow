@@ -1,4 +1,4 @@
-# Somerville Snow Guide (somersnow)
+# Somerville Snow Guide (somerwalks)
 
 Instructions for AI coding agents (Claude Code, Codex, Copilot, Cursor and others) and for people new to the project. `CLAUDE.md` points here.
 
@@ -8,7 +8,7 @@ A public guide to Somerville, MA's sidewalk snow and ice rules, for people who w
 
 | Path | What it is |
 |---|---|
-| `docs/` | The website, at **somerwalks.org** (bought Nov 2026, on Squarespace DNS; the domain is set by `docs/CNAME` once DNS points to GitHub). GitHub Pages serves this folder straight from `main` (Settings → Pages → Deploy from a branch → `main`, `/docs`). No build step. The top is a PTAC home page (`docs/index.html`: a tile per project, the snow guide first); the snow guide and everything that belongs to it live in `docs/snow/` (somerwalks.org/snow/); PTAC-wide pages sit at the top (`bus-stops.html`, `bus-trips.html`). Links between pages are relative, so the site also works at its old address (vitorpamplona.com/somersnow/). |
+| `docs/` | The website, at **somerwalks.org** (repository `vitorpamplona/somerwalks`, renamed from `somersnow` in Nov 2026) (bought Nov 2026, on Squarespace DNS; the domain is set by `docs/CNAME` once DNS points to GitHub). GitHub Pages serves this folder straight from `main` (Settings → Pages → Deploy from a branch → `main`, `/docs`). No build step. The top is a PTAC home page (`docs/index.html`: a tile per project, the snow guide first); the snow guide and everything that belongs to it live in `docs/snow/` (somerwalks.org/snow/); PTAC-wide pages sit at the top (`bus-stops.html`, `bus-trips.html`). Links between pages are relative, so the site also works at its old address (vitorpamplona.com/somersnow/). |
 | `docs/index.html`, `docs/404.html`, the forwarding pages | The guide used to sit at the top of `docs/`. Every old page address (flyers, cards gallery, storm pages, `storm.html`) has a small forwarding page to its new place under `snow/` (written by `scripts/build_redirects.py`, run once; it skips real pages). `404.html` sends any other old address (card images, data files) to the same path under `snow/`. Old guide links with a `#section`, `?lang=` or `?live=` reach the home page, which sends them on to `snow/`. New pages never need forwarding pages. |
 | `docs/snow/index.html` | All page markup. English text lives here, each piece tagged `data-i18n="section.NN"`. |
 | `docs/snow/i18n/en.js` | Every English string: `page` (mirrors the `data-i18n` tags) and `ui` (text scripts write). |

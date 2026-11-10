@@ -8,7 +8,7 @@ A PTAC tool for designing the routes the City's bobcat crews take to clear bus s
 
 | File | What it is |
 |---|---|
-| `build.py` | Builds the street network from the bus routes and writes the page. Python standard library only, no network. `python3 analysis/bus-stop-clearing/build.py` from the repo root. Defaults at the top: `SETTINGS` (the page's) and `A` (the network's). |
+| `build.py` | Builds the street network from the bus routes and writes the page. Python standard library only, no network. `npm run planner` (or `python3 analysis/bus-stop-clearing/build.py`) from the repo root. Defaults at the top: `SETTINGS` (the page's) and `A` (the network's). |
 | `map_template.html` | The page: map, plans, crews, route editor, scoring, settings, saving. `build.py` fills in the data. |
 | `data/bus-stops.json`, `data/wards.json` | Copied from `docs/snow/data/` on every build (made by `npm run data`): stops with weekday riders (`riders` getting on, `off` getting off), routes and shapes; ward outlines. |
 | `data/computed-plan.json` | The starting plan an earlier version computed (riders first, one street at a time). |

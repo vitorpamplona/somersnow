@@ -11,7 +11,7 @@ Both are **estimates**, not MBTA data, and say so on the page.
 
 | File | What it is |
 |---|---|
-| `build.py` | Downloads everything (cached in `../../.cache/`), estimates stop-to-stop riders, writes both pages. Python standard library only. `npm run trips` from the repo root. |
+| `build.py` | Downloads everything (cached in `../../.cache/`; every build still fetches the MBTA's small feed list, so it needs the network), estimates stop-to-stop riders, writes both pages. Python standard library only. `npm run trips` from the repo root. |
 | `trips_template.html` | The "Where bus riders go" page: map, sidebar, interaction. `build.py` replaces `/*DATA*/null` with the data. |
 | `pulse_template.html` | The pulse page: canvas animation, clock, counts, waveform, controls. Same `/*DATA*/null` placeholder. |
 | `output/trips.html`, `output/pulse.html` | The built pages (self-contained, open in any browser). |

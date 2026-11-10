@@ -39,7 +39,7 @@ An operator builds plans. Each plan has its own crews, and each crew a list of s
 
 | Path | What it is |
 | --- | --- |
-| `build.py` | Builds the street network and writes the page. Python standard library only. Run `python3 analysis/bus-stop-clearing/build.py` from the repo root. The page's default settings are at its top (`SETTINGS`); the network's are in `A`. |
+| `build.py` | Builds the street network and writes the page. Python standard library only. Run `npm run planner` (or `python3 analysis/bus-stop-clearing/build.py`) from the repo root. The page's default settings are at its top (`SETTINGS`); the network's are in `A`. |
 | `map_template.html` | The page: map, route editor, plans, scoring, settings, saving. `build.py` fills in the data. |
 | `data/bus-stops.json` | Copy of `docs/snow/data/bus-stops.json`: MBTA stops in Somerville, weekday boardings (`riders`) and alightings (`off`), routes and route shapes (from `scripts/fetch_data.py`). |
 | `data/computed-plan.json` | The starting plan: the 4 crews' routes an earlier version of `build.py` computed (commit 3cc3f4d). |

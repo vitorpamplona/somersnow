@@ -17,7 +17,7 @@ Live at **somerwalks.org/snow/**. Plain HTML, CSS and JavaScript modules; no bui
 | `js/shovel.js` | The animated street corner for "Down to the pavement" (steps 1–5). Each step plays one short animation; CSS under "shovel scene" in `css/style.css`. |
 | `js/corner.js` | The street-corner SVG for "Who clears this?". |
 | `js/main.js` | Wires the page: steps, who-clears map, calculator (starts at "just now" from Oct 1 to May 1), salt slider, fines, share-this-card links, nav. |
-| `css/style.css` | The guide's styles (also used by `cards.html` and the flyers). |
+| `css/style.css` | The guide's styles (also used by `cards.html`; the flyers carry their own). |
 | `cards.html` | Gallery: the two flyers first, then the 34 cards from `cards/cards.json`, then the bonus "Somerville's lights" animation. ("Flyers and cards" on the home page.) |
 | `cards/` | Card PNGs (1080×1920) rendered from `../../cards/src/*.html`; `cards.json` lists them in story order. Plus `somerville-lights.gif` (480×854, about 10 MB), `.mp4` (540×960) and `.jpg` (poster). |
 | `flyer.html` | One-page US Letter flyer to print and post, with a QR code (`qr.svg`, to https://somerwalks.org/snow/). |
@@ -38,12 +38,14 @@ Edit `index.html` and `i18n/en.js` together: keys in `en.js` must match the `dat
 A new fine, a new even/odd side, new parking lots: update it everywhere it appears, in this order, then search the repo for the old value before you finish.
 
 1. [`research/facts.md`](../../research/facts.md) (with its source).
-2. `i18n/en.js`, and every translation that has the string.
-3. `index.html`.
+2. `i18n/en.js`, and every translation that has the text (`es.js`, `pt.js`, `ht.js`, `ne.js`; their values are in their own language, so search for the number).
+3. `index.html`, and numbers the scripts hold: `js/main.js` (`FINES`, the fine calculator, written without `$`) and `js/storm.js` (the replays' phone messages, e.g. "Space savers … $100"); then `npm run pages` if `storm.js` changed.
 4. `flyer.html` and `flyer-phone.html` (each has its own copy of the key facts), then `npm run flyer`.
 5. `../llms.txt`.
 6. The affected cards in `../../cards/src/`, then `npm run cards -- <card>` (e.g. `23-fines`).
 7. [`research/ordinance.md`](../../research/ordinance.md) if it's law.
+
+When you search (e.g. `grep -rn '\$100' --include=*.html --include=*.js --include=*.md --include=*.txt .`), many hits are other fines with the same amount (space savers, tow-zone and hydrant tickets): change only the one that changed. Leave alone `research/ordinance-proposals.md` (the letter as sent), `research/source-files/` (original documents) and the storm data.
 
 ## Cards
 

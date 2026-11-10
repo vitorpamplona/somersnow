@@ -6,7 +6,7 @@ Instructions for AI coding agents (Claude Code, Codex, Copilot, Cursor and other
 
 **somerwalks.org**: projects by the **Somerville Pedestrian & Transit Advisory Committee (PTAC)** for people who walk, roll or ride the bus in Somerville, MA. Volunteer-made, public, MIT license. **Not an official City or MBTA site**, and nothing here may say or look otherwise.
 
-The first and biggest project is the **snow guide**: Somerville's sidewalk snow and ice rules, for new residents first and everyone second. Its goal: more people shovel on time, down to the pavement, ramps included, so walking to transit works in winter. Around it: storm replays (what actually happens in a storm, hour by hour, from public data), and tools about the buses.
+The first and biggest project is the **snow guide**: Somerville's sidewalk snow and ice rules, for new residents first and everyone second. Its goal: more people shovel on time, down to the pavement, ramps included, so walking to transit works in winter. Around it: storm replays (what actually happens in a storm, hour by hour, from public data, every snow period since the winter of 2015–16), and tools about the buses.
 
 ## Map of the repo
 
@@ -14,7 +14,7 @@ The first and biggest project is the **snow guide**: Somerville's sidewalk snow 
 |---|---|---|---|
 | `docs/` | somerwalks.org | The whole website, served as-is by GitHub Pages. Home page `docs/index.html` (a tile per project). | this file |
 | `docs/snow/` | /snow/ | The snow guide: one page, its scripts, translations, cards gallery, two flyers. | [`docs/snow/AGENTS.md`](docs/snow/AGENTS.md) |
-| `docs/snow/storms/`, `docs/snow/data/`, `scripts/` | /snow/storms/ | Storm replays: a page per snow period since 2016, built from public data by Python scripts; `scripts/` also renders cards, flyer, GIF and the Council letter. | [`scripts/AGENTS.md`](scripts/AGENTS.md), then [`docs/snow/data/README.md`](docs/snow/data/README.md) |
+| `docs/snow/storms/`, `docs/snow/data/`, `scripts/` | /snow/storms/ | Storm replays: a page per snow period since the winter of 2015–16, built from public data by Python scripts; `scripts/` also renders cards, flyer, GIF and the Council letter. | [`scripts/AGENTS.md`](scripts/AGENTS.md), then [`docs/snow/data/README.md`](docs/snow/data/README.md) |
 | `cards/src/` | /snow/cards.html | 34 phone-size social cards, editable HTML; rendered to `docs/snow/cards/`. | [`docs/snow/AGENTS.md`](docs/snow/AGENTS.md) |
 | `analysis/bus-trips/` | /bus-trips.html, /bus-pulse.html | "Where bus riders go" (pick a stop, see where its riders get off) and "Somerville's pulse" (a weekday on the buses, animated). One build writes both. | [`analysis/bus-trips/AGENTS.md`](analysis/bus-trips/AGENTS.md) |
 | `analysis/bus-stop-clearing/` | /bus-planner.html | Bus stop clearing planner: design and score the routes crews take to clear bus stops after a storm. | [`analysis/bus-stop-clearing/AGENTS.md`](analysis/bus-stop-clearing/AGENTS.md) |
@@ -25,12 +25,12 @@ Per-project READMEs (`analysis/*/README.md`, `docs/snow/data/README.md`) are for
 
 ## Run it
 
-Needs Node 22+ and Python 3 (standard library only). `npm install` once, for Playwright (renders cards, flyer and GIF; Chromium must be available).
+Needs Node 22+ and Python 3 (standard library only). `npm install` once, for Playwright (renders cards, flyer and GIF); if it can't find a browser, `npx playwright install chromium`.
 
 ```sh
 npm run dev      # serve docs/ at http://localhost:8080 (home at /, guide at /snow/); ES modules don't load from file://
 npm test         # unit tests (deadline math, live storm mode)
-npm run verify   # recompute the storm replays' published numbers from docs/snow/data and check them against the pages
+npm run verify   # recompute the storm replays' published numbers from docs/snow/data and check them against the pages (no downloads)
 ```
 
 Builders (each writes into `docs/`; run the one for what you changed):
@@ -41,8 +41,8 @@ Builders (each writes into `docs/`; run the one for what you changed):
 | `npm run pages` | storm pages only, from `docs/snow/data/` | nothing |
 | `npm run cards` (`-- 23-fines` for one) | card PNGs from `cards/src/` | Playwright |
 | `npm run flyer` | `docs/snow/flyer-phone.png` | `npm run dev` running |
-| `npm run trips` | `docs/bus-trips.html` and `docs/bus-pulse.html` | network the first time (cached in `.cache/`) |
-| `python3 analysis/bus-stop-clearing/build.py` | `docs/bus-planner.html` | `docs/snow/data/bus-stops.json` |
+| `npm run trips` | `docs/bus-trips.html` and `docs/bus-pulse.html` | network: big downloads are cached in `.cache/` after the first run, but every build fetches the MBTA's small feed list; delete `.cache/bus-trips-osm.json` to pick up new OpenStreetMap edits |
+| `npm run planner` | `docs/bus-planner.html` | `docs/snow/data/bus-stops.json` and `wards.json` (no network) |
 | `npm run lights` | the "Somerville's lights" GIF and video in the cards gallery | `npm run dev` running, ffmpeg |
 | `npm run letter` | `research/ordinance-proposals.pdf` (git-ignored) | network for fonts |
 
@@ -51,7 +51,7 @@ Builders (each writes into `docs/`; run the one for what you changed):
 - **`main` is live.** GitHub Pages serves `docs/` from `main`; anything merged there is on somerwalks.org within a minute or two. There is no build step on the server: what's committed in `docs/` is what's served.
 - **Work on a branch and open a pull request** against `main`. Don't push to `main` unless a maintainer asked you to. CI (`.github/workflows/test.yml`) runs `npm test` and `npm run verify` on every push and pull request.
 - **Generated files are committed, and never edited by hand.** Edit the source, rebuild, commit both. Sources → outputs: `cards/src/*.html` → `docs/snow/cards/*.png`; `scripts/storm_page.html` + `docs/snow/data/` → `docs/snow/storms/*.html`; `analysis/*/…_template.html` + `build.py` → `analysis/*/output/` → copied to `docs/*.html`; `docs/snow/flyer-phone.html` → `flyer-phone.png`.
-- **Before you push:** `npm test` (and `npm run verify` if you touched storm data or pages); open the page with `npm run dev` and check it at phone width (390 px): nothing scrolls sideways, nothing overlaps, no errors in the console. Check desktop too.
+- **Before you push:** `npm test` and `npm run verify` (CI runs both); open the page with `npm run dev` and check it at phone width (390 px): nothing scrolls sideways, nothing overlaps, no errors in the console. Check desktop too.
 - **Commits:** a short subject that says what changed for the reader of the site ("Bus trips: the hourly chart follows the bus picked"), then why, in plain sentences.
 - **Update the docs in the same change**: the area's `AGENTS.md` when how things work changes, its README when what the page shows changes, `research/facts.md` when a fact changes.
 
@@ -75,7 +75,7 @@ Builders (each writes into `docs/`; run the one for what you changed):
 
 ## Recipes
 
-**Add a new PTAC project page** (the bus pages are the pattern): make `analysis/<name>/` with a `build.py` (standard library) that writes `output/<name>.html` from a template and copies it to `docs/<name>.html`; a `README.md` (what it shows, method, limits, sources) and an `AGENTS.md` (files, build, gotchas) plus a one-line `CLAUDE.md` (`@AGENTS.md`); an npm script; a tile on `docs/index.html`; a row in the map above. Data goes inside the page as JSON, so the page works offline from one file.
+**Add a new PTAC project page.** A page with no data (text, a form, a calculator) is written straight into `docs/<name>.html`. A page built from data follows the bus pages: `analysis/<name>/` with a `build.py` (standard library) that writes `output/<name>.html` from a template (data replaces a `/*DATA*/null` placeholder, so the page works from one file) and copies it to `docs/<name>.html`; an npm script for it. Either way: start from an existing page's `<head>` and header bar (`analysis/bus-trips/trips_template.html` has the fonts, colors, the SomerWalks brand linking home and the PTAC / not-official line); a `README.md` (what it shows, method, limits, sources) and an `AGENTS.md` (files, build, gotchas) plus a one-line `CLAUDE.md` (`@AGENTS.md`) in its folder; a tile on `docs/index.html`; a row in the root `README.md` projects table and in the map above.
 
 **Change a rule or a number in the snow guide** (a fine, the even/odd side, the lots): follow the checklist in [`docs/snow/AGENTS.md`](docs/snow/AGENTS.md#change-a-rule-or-a-number). It touches the facts list, every language file, the page, both flyers, `docs/llms.txt`, the cards and the law notes.
 

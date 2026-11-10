@@ -292,19 +292,22 @@ def minutes(t):
 
 
 def by_hour(by_day, offset):
-    """{day: {stop: [riders getting on in each clock hour 0..23] + [getting off, same]}}. The hour the bus is at a
-    stop is the trip's start time plus the schedule's usual minutes from the first stop to that stop."""
-    out = {}
+    """{day: {stop: [riders getting on in each clock hour 0..23] + [getting off, same]}}, and the same per stop, route
+    and direction (so the page's chart can follow the bus picked). The hour the bus is at a stop is the trip's start
+    time plus the schedule's usual minutes from the first stop to that stop."""
+    out, out_rd = {}, {}
     for day, tl in by_day.items():
         h = defaultdict(lambda: [0.0] * 48)
+        hr_rd = defaultdict(lambda: [0.0] * 48)
         for rid, stops, dirn, start in tl:
             last = 0
             for sid, on, off in stops:
                 last = offset.get((rid, dirn, sid), last)
                 hr = int((start + last) // 60) % 24
                 h[sid][hr] += on; h[sid][24 + hr] += off
-        out[day] = h
-    return out
+                hr_rd[(sid, rid, dirn)][hr] += on; hr_rd[(sid, rid, dirn)][24 + hr] += off
+        out[day] = h; out_rd[day] = hr_rd
+    return out, out_rd
 
 
 def merge_unknown(by_day, known):
@@ -385,7 +388,7 @@ def main():
         for _, sid, m in rows:
             per[(rid, dirn, sid)].append(m - rows[0][2])
     offset = {k: sorted(v)[len(v) // 2] for k, v in per.items()}
-    hours = by_hour(by_day, offset)
+    hours, hours_rd = by_hour(by_day, offset)
 
     # stops: every stop on the routes' patterns, and every stop in the ridership file
     stop_routes = defaultdict(set)
@@ -546,7 +549,15 @@ def main():
         totals[day] = round(sum(n for n in d.values()))
     hourly = {day: {str(ix[sid]): [round(x * 10) for x in v] for sid, v in h.items() if sid in ix and sum(v) >= 0.05}
               for day, h in hours.items()}
-    payload = {'season': season, 'feed': feed, 'days': DAYS, 'hours': hourly, 'routes': rshapes, 'rd': rd, 'rapid': rapid, 'towns': towns, 'water': water,
+    # per route and direction, only at stops served by more than one (where the page can filter by bus)
+    hourly_rd = {}
+    for day, h in hours_rd.items():
+        by_stop = defaultdict(dict)
+        for (sid, rid, dirn), v in h.items():
+            if sid in ix and (rid, dirn) in rdi and sum(v) >= 0.05:
+                by_stop[str(ix[sid])][str(rdi[(rid, dirn)])] = [round(x * 10) for x in v]
+        hourly_rd[day] = {k: v for k, v in by_stop.items() if len(v) > 1}
+    payload = {'season': season, 'feed': feed, 'days': DAYS, 'hours': hourly, 'hoursRd': hourly_rd, 'routes': rshapes, 'rd': rd, 'rapid': rapid, 'towns': towns, 'water': water,
                'stops': stops, 'flows': flows, 'totals': totals}
     blob = json.dumps(payload, separators=(',', ':'))
     with open(os.path.join(HERE, 'trips_template.html')) as f:

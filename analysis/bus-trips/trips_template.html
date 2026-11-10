@@ -148,6 +148,8 @@ details.how p{margin:6px 0}
 @media (max-width:1000px){
   .app{display:block;height:auto;min-height:0}
   .mapcol{height:62vh;min-height:340px}
+  body.picked .mapcol{height:45vh;min-height:300px}
+  .stophead h1{font-size:32px}
   .side{border-left:0;overflow:visible}
   .legend{max-width:200px}
 }
@@ -387,8 +389,10 @@ const ON = '#E36F28', OFF = '#4F98DE';                 // checked for color visi
 const ORDER = Array.from({ length: 24 }, (_, i) => (i + 4) % 24);   // the bus day: 4 a.m. to 3 a.m.
 const hourName = (h) => h === 0 ? 'midnight' : h === 12 ? 'noon' : h < 12 ? `${h} a.m.` : `${h - 12} p.m.`;
 const hourSpan = (h) => `${hourName(h).replace(' a.m.', '').replace(' p.m.', '')}–${hourName((h + 1) % 24)}`;
+// riders on and off by hour at stop i: every bus, or only the bus picked
+const hoursAt = (i) => (onlyRoute !== null && (((D.hoursRd || {})[day] || {})[i] || {})[onlyRoute]) || (D.hours[day] || {})[i];
 function histHTML(i) {
-  const v = (D.hours[day] || {})[i]; if (!v) return '';
+  const v = hoursAt(i); if (!v) return '';
   const on = ORDER.map((h) => v[h] / 10), off = ORDER.map((h) => v[24 + h] / 10), max = Math.max(1, ...on, ...off);
   const W = 360, H = 96, top = 14, bw = 5, gap = 2, gw = W / 24;
   const bar = (x, val, col) => {
@@ -414,7 +418,7 @@ function histHTML(i) {
 }
 function histTip(e) {
   const r = e.target.closest('.hh'); if (!r) { tip.style.display = 'none'; return; }
-  const v = D.hours[day][pick], h = ORDER[+r.dataset.k];
+  const v = hoursAt(pick), h = ORDER[+r.dataset.k];
   tip.innerHTML = `<b>${hourSpan(h)}</b>${fmt(v[h] / 10)} get on · ${fmt(v[24 + h] / 10)} get off`;
   tip.style.display = 'block'; tip.style.left = Math.min(window.innerWidth - 300, e.clientX + 14) + 'px'; tip.style.top = (e.clientY + 14) + 'px';
 }
@@ -513,7 +517,7 @@ $('#days').innerHTML = Object.entries(D.days).map(([k, v]) => `<button data-day=
 $('#days').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; day = b.dataset.day; showAll = false; onlyRoute = null; update(); });
 $('#dirs').addEventListener('click', (e) => {
   const b = e.target.closest('button'); if (!b) return;
-  dir = b.dataset.dir; showAll = false; update();
+  dir = b.dataset.dir; showAll = false; onlyRoute = null; update();
   const again = $(`#dirs button[data-dir="${dir}"]`); if (again) again.focus();
 });
 $('#head').addEventListener('click', (e) => { if (e.target.closest('#unpick')) choose(null); });
@@ -535,7 +539,10 @@ const routeBadge = (r) => `<span class="bdg" style="background:${routeColor(r)}"
 const badges = (rs) => `<span class="bdgs">${rs.map(routeBadge).join('')}</span>`;
 const sec = (title, note, body) => `<div class="sec"><div class="h"><h2>${title}</h2>${note ? `<span>${note}</span>` : ''}</div>${body}</div>`;
 const toLabel = (i, k) => endsAt(i, k) ? 'ends here' : 'to ' + shortDest(RD[k][2]).replace(/ Center\b/g, ' Ctr');
-const stopRow = (i, n, max, rs, col, town) => `<li data-i="${i}"><span>${esc(S[i].n)}<small>${town ? esc(S[i].t) + ' ·' : ''}${badges(rs)}</small><div class="mini" style="width:${(100 * n / max).toFixed(1)}%;background:${col}"></div></span><span class="n">${fmt(n)}</span></li>`;
+const stopRow = (i, n, max, rs, col, town) => {
+  const where = town && S[i].t !== 'Somerville' ? esc(S[i].t) : '', meta = [where, rs.length ? badges(rs) : ''].filter(Boolean).join(' · ');
+  return `<li data-i="${i}"><span>${esc(S[i].n)}${meta ? `<small>${meta}</small>` : ''}<div class="mini" style="width:${(100 * n / max).toFixed(1)}%;background:${col}"></div></span><span class="n">${fmt(n)}</span></li>`;
+};
 const TOP = 5;                                        // stops listed before "All N stops"
 function panel() {
   const dd = dayData(day), dname = dayName(day), dirs = $('#dirs');
@@ -563,7 +570,8 @@ function panel() {
   } else {
     // one row per bus and direction, with its riders; more than one: tap a row to see only its riders
     const per = new Map(); all.forEach(([, r, n]) => per.set(r, (per.get(r) || 0) + n));
-    const rows = [...per.entries()].sort((a, b) => b[1] - a[1]), rmax = rows[0][1], multi = rows.length > 1;
+    const rows = [...per.entries()].sort((a, b) => b[1] - a[1]), multi = rows.length > 1;
+    const rmax = rows.reduce((t, r) => t + r[1], 0) || 1;        // every bar is a share of all riders here
     const row = (k, n) => { const t = multi ? 'button' : 'div';
       return `<${t} class="rrow"${multi ? ` data-r="${k}" aria-pressed="${onlyRoute === k}"` : ''}><span class="bdg" style="background:${rdColor(k)}">${esc(R[rdRoute(k)].name)}</span><span class="to">${esc(toLabel(pick, k))}</span><span class="rbar"><i style="width:${(100 * n / rmax).toFixed(1)}%;background:${col}"></i></span><b>${fmt(n)}</b></${t}>`; };
     const every = multi ? `<button class="rrow" data-r="" aria-pressed="${onlyRoute === null}"><span class="bdg all">All</span><span class="to">Every bus</span><span class="rbar"><i style="width:100%;background:${col}"></i></span><b>${fmt(dir === 'off' ? dd.on[pick] : dd.off[pick])}</b></button>` : '';
@@ -571,12 +579,12 @@ function panel() {
     const shown = showAll ? ends : ends.slice(0, TOP), emax = ends.length ? ends[0].n : 1;
     const routesOf = (e) => [...new Set([...e.r.keys()].map(rdRoute))];
     html += sec(dir === 'off' ? 'Where they get off' : 'Where they got on', `Riders a ${dname}${onlyRoute !== null ? ', this bus' : ''}`,
-      (ends.length ? `<ul id="list">${shown.map((e) => stopRow(e.b, e.n, emax, routesOf(e), endCol, true)).join('')}</ul>` : `<p class="note" style="margin:0">Under 1 rider a ${dname} to any one stop.</p>`)
+      (ends.length ? `<ul id="list">${shown.map((e) => stopRow(e.b, e.n, emax, onlyRoute !== null ? [] : routesOf(e), endCol, true)).join('')}</ul>` : `<p class="note" style="margin:0">Under 1 rider a ${dname} to any one stop.</p>`)
       + (ends.length > TOP ? `<button class="btn more" id="more">${showAll ? `Show the top ${TOP}` : `All ${ends.length} stops`}</button>` : '')
       + (few && ends.length && (showAll || ends.length <= TOP) ? `<p class="note">And ${few} stop${few === 1 ? '' : 's'} with under 1 rider a ${dname}, not shown.</p>` : ''));
   }
   const h = histHTML(pick);
-  if (h) html += sec("When it's busy", `A ${dname}, by hour, every bus`, h);
+  if (h) html += sec("When it's busy", `A ${dname}, by hour, ${onlyRoute !== null ? 'this bus' : 'every bus'}`, h);
   html += sec('At this stop', 'Tap one to find it on the map', atStop(s));
   $('#panel').innerHTML = html;
 }
@@ -601,8 +609,22 @@ function update() {
 function choose(i, glide) {
   if (i !== pick) { onlyRoute = null; showAll = false; }
   pick = i; hoverId = null; tip.style.display = 'none';
+  setPicked();
   update();
   if (glide && i !== null) glideTo(i);
+}
+// on a phone the map gets shorter once a stop is picked; keep its zoom and centre, and the picked stop in view
+function setPicked() {
+  const was = document.body.classList.contains('picked'); document.body.classList.toggle('picked', pick !== null);
+  if (was === (pick !== null)) return;
+  const r = map.getBoundingClientRect(), h = VB[2] * r.height / r.width;
+  let y = VB[1] + VB[3] / 2 - h / 2, x = VB[0];
+  if (pick !== null) {
+    const [sx, sy] = S[pick].p;
+    if (sy < y || sy > y + h) y = sy - h / 2;
+    if (sx < x || sx > x + VB[2]) x = sx - VB[2] / 2;
+  }
+  setView([x, y, VB[2], h], true);
 }
 function glideTo(i) {
   // keep the zoom; bring the picked stop and where its riders go into view
@@ -693,11 +715,12 @@ $('#markbar').addEventListener('click', (e) => {
   const b = e.target.closest('button'); if (!b) return;
   if (b.classList.contains('x')) setMark(null); else setMark({ key: mark.key, show: b.dataset.show });
 });
-window.addEventListener('hashchange', () => { readHash(); update(); if (pick !== null) glideTo(pick); });
+window.addEventListener('hashchange', () => { readHash(); setPicked(); update(); if (pick !== null) glideTo(pick); });
 let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => fitView(false), 120); });
 
 if (window.innerWidth < 700) $('.legend').open = false;
 drawFeatBar();
+document.body.classList.toggle('picked', pick !== null);
 fitView(false); update();
 if (pick !== null) glideTo(pick);
 </script>

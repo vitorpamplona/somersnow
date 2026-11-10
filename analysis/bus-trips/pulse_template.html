@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--navy:#10243A;--panel:#1A3A5F;--snow:#EEF3F7;--orange:#FF8A3D;--blue:#4F98DE;--ice:#A9C4E4;--mute:#47607C;--deep:#0A1929;
+:root{--on:#FF8A3D;--off:#4F98DE;--navy:#10243A;--panel:#1A3A5F;--snow:#EEF3F7;--orange:#FF8A3D;--blue:#4F98DE;--ice:#A9C4E4;--mute:#47607C;--deep:#0A1929;
   --display:'Barlow Condensed',Arial Narrow,sans-serif;--body:'Barlow',Arial,sans-serif}
 *{box-sizing:border-box}
 html,body{margin:0;height:100%}
@@ -39,8 +39,12 @@ a{color:var(--orange)}
 .stats{display:flex;gap:18px;margin-top:8px}
 .stats div{font-size:13px;color:var(--ice);line-height:1.15}
 .stats b{display:block;font:800 30px/1 var(--display);font-variant-numeric:tabular-nums;color:var(--snow)}
-.stats .on b{color:var(--orange)}
-.stats .off b{color:var(--blue)}
+.stats .on b{color:var(--on)}
+.stats .off b{color:var(--off)}
+/* holiday lights: red for getting on, green for getting off, on a darker night */
+body.xmas{--on:#FF4848;--off:#34D678}
+body.xmas .stage{background:#050C15}
+body.xmas .hud h1{color:#FFE9B8;text-shadow:0 0 18px rgba(255,196,92,.55)}
 .key{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:10px;font-size:13px;color:var(--snow)}
 .key span{display:inline-flex;align-items:center;gap:6px}
 .key i{display:inline-block;border-radius:50%}
@@ -56,11 +60,13 @@ a{color:var(--orange)}
 #wave{position:absolute;inset:0;width:100%;height:100%;cursor:pointer;touch-action:none;border-radius:6px}
 .ctrls{display:flex;gap:8px;align-items:center}
 .speed{display:flex;background:var(--panel);border-radius:10px;padding:3px}
-#buses{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 12px;border-radius:10px;border:1px solid rgba(169,196,228,.5);background:none}
+.tog{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:40px;min-width:40px;padding:0 12px;border-radius:10px;border:1px solid rgba(169,196,228,.5);background:none}
+.tog:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
 #buses i{display:inline-block;width:9px;height:9px;border-radius:50%;background:#fff;box-shadow:0 0 6px 2px rgba(169,196,228,.8)}
 #buses[aria-pressed=false]{color:var(--ice);border-style:dashed}
 #buses[aria-pressed=false] i{background:none;box-shadow:none;border:1.5px solid var(--ice)}
-#buses:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+#holiday svg{width:16px;height:16px;fill:currentColor}
+#holiday[aria-pressed=true]{background:#FFE9B8;color:#5A2A00;border-color:#FFE9B8;box-shadow:0 0 14px rgba(255,196,92,.6)}
 .speed button{border:0;background:none;border-radius:8px;height:34px;min-width:40px;padding:0 8px}
 .speed button[aria-pressed=true]{background:var(--snow);color:var(--deep)}
 .dock .foot{grid-column:1/-1;display:flex;justify-content:space-between;gap:10px;font-size:12px;color:var(--ice)}
@@ -83,7 +89,9 @@ a{color:var(--orange)}
   .key{display:none}
   .dock{left:8px;right:8px;bottom:8px;grid-template-columns:auto minmax(0,1fr);padding:8px 10px 6px}
   .wavewrap{grid-column:1/-1;grid-row:2;height:54px}
-  .ctrls{justify-self:end}
+  .ctrls{justify-self:end;gap:6px}
+  .tog{padding:0 10px}
+  .tog .lbl{display:none}
   #about{left:8px;right:8px;bottom:150px;max-width:none}
   .dock .foot .long{font-size:11px}
   .dock .foot .wide{display:none}
@@ -98,8 +106,8 @@ a{color:var(--orange)}
   <canvas id="top" role="img" aria-label="Animated map of Somerville and its neighbors: buses move along their routes through a weekday, and stops flash orange when riders get on and blue when they get off."></canvas>
   <div id="tip"></div>
   <div class="hud">
-    <h1>Somerville's pulse</h1>
-    <p class="sub">A weekday on its buses.</p>
+    <h1 id="h1">Somerville's pulse</h1>
+    <p class="sub" id="sub">A weekday on its buses.</p>
     <div class="clock" aria-live="off"><span id="clock">5:00</span><small id="ampm">a.m.</small></div>
     <div class="stats">
       <div><b id="aboard">0</b>on a bus now</div>
@@ -108,15 +116,15 @@ a{color:var(--orange)}
     </div>
     <div class="key">
       <span><i style="width:9px;height:9px;background:#fff;box-shadow:0 0 6px 2px rgba(169,196,228,.8)"></i>A bus (bigger: fuller)</span>
-      <span><i style="width:10px;height:10px;border:2px solid var(--orange)"></i>Getting on</span>
-      <span><i style="width:10px;height:10px;border:2px solid var(--blue)"></i>Getting off</span>
+      <span><i style="width:10px;height:10px;border:2px solid var(--on)"></i>Getting on</span>
+      <span><i style="width:10px;height:10px;border:2px solid var(--off)"></i>Getting off</span>
     </div>
   </div>
   <div class="dock">
     <button id="play" aria-label="Pause"><svg viewBox="0 0 20 20" aria-hidden="true"><path id="playicon" d="M5 3h4v14H5zM11 3h4v14h-4z"/></svg></button>
     <div class="wavewrap"><canvas id="wave" tabindex="0" role="slider" aria-label="Time of day" aria-valuemin="0" aria-valuemax="1440" aria-valuenow="300" aria-valuetext="5:00 a.m."></canvas></div>
-    <div class="ctrls"><button id="buses" aria-pressed="true" title="Show or hide the buses"><i aria-hidden="true"></i>Buses</button><div class="speed" role="group" aria-label="Speed"><button data-s="0" aria-pressed="false">1×</button><button data-s="1" aria-pressed="true">2×</button><button data-s="2" aria-pressed="false">5×</button></div></div>
-    <div class="foot"><span class="long"><span style="color:var(--orange)">▲ getting on</span> · <span style="color:var(--blue)">▼ getting off</span>, every 5 minutes<span class="wide"> · drag to pick a time</span></span><button id="aboutbtn">How it's made</button></div>
+    <div class="ctrls"><button id="holiday" class="tog" aria-pressed="false" title="Holiday lights" aria-label="Holiday lights"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.3 5.4 5.7.4-4.4 3.7 1.4 5.6L10 13.6l-5 3 1.4-5.6L2 7.3l5.7-.4z"/></svg><span class="lbl">Holiday lights</span></button><button id="buses" class="tog" aria-pressed="true" title="Show or hide the buses" aria-label="Buses"><i aria-hidden="true"></i><span class="lbl">Buses</span></button><div class="speed" role="group" aria-label="Speed"><button data-s="0" aria-pressed="false">1×</button><button data-s="1" aria-pressed="true">2×</button><button data-s="2" aria-pressed="false">5×</button></div></div>
+    <div class="foot"><span class="long"><span style="color:var(--on)">▲ getting on</span> · <span style="color:var(--off)">▼ getting off</span>, every 5 minutes<span class="wide"> · drag to pick a time</span></span><button id="aboutbtn">How it's made</button></div>
   </div>
   <div id="about" hidden>
     <button class="x" id="aboutx" aria-label="Close">✕</button>
@@ -131,7 +139,17 @@ a{color:var(--orange)}
 const D = /*DATA*/null;
 const $ = (s) => document.querySelector(s);
 const S = D.stops, N = S.length;
-const ONC = [255, 138, 61], OFFC = [79, 152, 222];          // orange: getting on; blue: getting off
+// two looks: the night map (orange: getting on; blue: getting off) and holiday lights (red and green, gold buses,
+// a warm-white bulb at every stop, snow)
+const THEMES = {
+  night: { on: [255, 138, 61], off: [79, 152, 222], bus: '200,222,246', core: '#fff', trail: 'rgba(169,196,228,.55)', bg: '#0B1C2E', town: '#11283F', home: '#163452',
+    water: '#07121D', edge: 'rgba(169,196,228,.16)', wire: 'rgba(169,196,228,.13)', lab: ['rgba(169,196,228,.32)', 'rgba(169,196,228,.2)'], outline: '169,196,228', rapid: 0.28,
+    tip: ['#B93D06', '#1F5FA0'], title: "Somerville's pulse", sub: 'A weekday on its buses.' },
+  lights: { on: [255, 72, 72], off: [52, 214, 120], bus: '255,214,120', core: '#FFF4D6', trail: 'rgba(255,205,110,.5)', bg: '#050C15', town: '#0A1624', home: '#0D1D30',
+    water: '#03080F', edge: 'rgba(169,196,228,.09)', wire: 'rgba(70,160,100,.32)', lab: ['rgba(255,226,170,.3)', 'rgba(169,196,228,.16)'], outline: '255,196,92', rapid: 0.1,
+    tip: ['#C62828', '#1B7F3B'], title: "Somerville's lights", sub: 'A weekday on its buses, lit up.', bulbs: true, snow: true },
+};
+let TH = THEMES.night, ONC = TH.on, OFFC = TH.off;
 document.querySelectorAll('.season').forEach((e) => { e.textContent = D.season; });
 $('#feed').textContent = `schedule of ${D.feed.slice(0, 4)}-${D.feed.slice(4, 6)}-${D.feed.slice(6)}`;
 $('#nroutes').textContent = D.routes.length;
@@ -206,18 +224,18 @@ const P_ROUTES = (() => { const p = new Path2D(); D.routes.forEach((r) => r.path
 const P_HOME = (() => { const p = new Path2D(); HOME.rings.forEach((r) => p.addPath(path(r, true))); return p; })();
 const TOWNLAB = D.towns.map((t) => { const r = t.rings.reduce((a, b) => (b.length > a.length ? b : a)); let x = 0, y = 0; r.forEach((p) => { x += p[0]; y += p[1]; }); return { n: t.n, x: x / r.length, y: y / r.length }; });
 function drawBase() {
-  gb.setTransform(DPR, 0, 0, DPR, 0, 0); gb.fillStyle = '#0B1C2E'; gb.fillRect(0, 0, W, H);
+  gb.setTransform(DPR, 0, 0, DPR, 0, 0); gb.fillStyle = TH.bg; gb.fillRect(0, 0, W, H);
   worldT(gb); const px = 1 / view.k;
-  P_TOWNS.forEach((t) => { gb.fillStyle = t.home ? '#163452' : '#11283F'; gb.fill(t.p); });
-  gb.fillStyle = '#07121D'; gb.fill(P_WATER);
-  gb.lineWidth = 1 * px; gb.strokeStyle = 'rgba(169,196,228,.16)'; P_TOWNS.forEach((t) => gb.stroke(t.p));
-  gb.lineWidth = 1.2 * px; gb.strokeStyle = 'rgba(169,196,228,.13)'; gb.lineJoin = 'round'; gb.stroke(P_ROUTES);
-  D.rapid.forEach((r) => { gb.strokeStyle = r.color; gb.globalAlpha = 0.28; gb.lineWidth = 2.5 * px; r.paths.forEach((q) => gb.stroke(path(q))); });
+  P_TOWNS.forEach((t) => { gb.fillStyle = t.home ? TH.home : TH.town; gb.fill(t.p); });
+  gb.fillStyle = TH.water; gb.fill(P_WATER);
+  gb.lineWidth = 1 * px; gb.strokeStyle = TH.edge; P_TOWNS.forEach((t) => gb.stroke(t.p));
+  gb.lineWidth = 1.2 * px; gb.strokeStyle = TH.wire; gb.lineJoin = 'round'; gb.stroke(P_ROUTES);
+  D.rapid.forEach((r) => { gb.strokeStyle = r.color; gb.globalAlpha = TH.rapid; gb.lineWidth = 2.5 * px; r.paths.forEach((q) => gb.stroke(path(q))); });
   gb.globalAlpha = 1; gb.fillStyle = 'rgba(238,243,247,.22)';
   const sr = 1.1 * px; S.forEach((s) => { gb.beginPath(); gb.arc(s.p[0], s.p[1], sr, 0, 7); gb.fill(); });
   gb.setTransform(DPR, 0, 0, DPR, 0, 0);
   gb.textAlign = 'center'; gb.font = `800 ${Math.round(13 * Math.min(1.4, zs()))}px 'Barlow Condensed', Arial Narrow, sans-serif`;
-  TOWNLAB.forEach((t) => { gb.fillStyle = t.n === 'Somerville' ? 'rgba(169,196,228,.32)' : 'rgba(169,196,228,.2)'; gb.fillText(t.n.toUpperCase().split('').join(' '), sx(t.x), sy(t.y)); });
+  TOWNLAB.forEach((t) => { gb.fillStyle = TH.lab[t.n === 'Somerville' ? 0 : 1]; gb.fillText(t.n.toUpperCase().split('').join(' '), sx(t.x), sy(t.y)); });
 }
 
 // ---------- glow sprites ----------
@@ -227,7 +245,15 @@ function sprite(rgb, soft) {
   gr.addColorStop(0, `rgba(${rgb},1)`); gr.addColorStop(soft, `rgba(${rgb},.35)`); gr.addColorStop(1, `rgba(${rgb},0)`);
   g.fillStyle = gr; g.fillRect(0, 0, 64, 64); return c;
 }
-const SPR_ON = sprite(ONC.join(','), 0.25), SPR_OFF = sprite(OFFC.join(','), 0.25), SPR_BUS = sprite('200,222,246', 0.2);
+let SPR_ON, SPR_OFF, SPR_BUS;
+const SPR_BULB = sprite('255,236,190', 0.3);
+function sprites() { SPR_ON = sprite(ONC.join(','), 0.25); SPR_OFF = sprite(OFFC.join(','), 0.25); SPR_BUS = sprite(TH.bus, 0.2); }
+sprites();
+// holiday lights: each stop's bulb twinkles at its own pace; snow drifts down over the map
+const TW = S.map((_, i) => [(i * 2.39996) % 6.2832, 0.5 + ((i * 7919) % 100) / 100]);
+const STILL = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let flakes = [];
+function makeSnow() { flakes = Array.from({ length: W < 700 ? 90 : 170 }, () => ({ x: Math.random() * W, y: Math.random() * H, r: 0.6 + Math.random() * 1.6, v: 8 + Math.random() * 22, p: Math.random() * 6.28 })); }
 
 // ---------- the clock ----------
 const SPEEDS = [6, 12, 30];                            // minutes of the day per second: 1× is an hour in 10 seconds
@@ -265,13 +291,22 @@ function draw(dt) {
   if (playing) {
     gt.globalCompositeOperation = 'destination-out'; gt.fillStyle = `rgba(0,0,0,${(1 - Math.exp(-dt / 0.45)).toFixed(3)})`; gt.fillRect(0, 0, W, H);
   }
-  gt.globalCompositeOperation = 'lighter'; gt.strokeStyle = 'rgba(169,196,228,.55)'; gt.lineCap = 'round';
+  gt.globalCompositeOperation = 'lighter'; gt.strokeStyle = TH.trail; gt.lineCap = 'round';
   gx.setTransform(DPR, 0, 0, DPR, 0, 0); gx.clearRect(0, 0, W, H);
   // Somerville's outline breathes with how many get on and off right now
   const b = Math.max(0, Math.min(NB - 1, Math.floor((T - T0) / BIN))), beat = Math.pow((binOn[b] + binOff[b]) / (2 * binMax), 0.6);
-  worldT(gx); gx.lineWidth = (1.2 + 2.2 * beat) / view.k; gx.strokeStyle = `rgba(169,196,228,${(0.22 + 0.5 * beat).toFixed(3)})`; gx.lineJoin = 'round'; gx.stroke(P_HOME);
+  worldT(gx); gx.lineWidth = (1.2 + 2.2 * beat) / view.k; gx.strokeStyle = `rgba(${TH.outline},${(0.22 + 0.5 * beat).toFixed(3)})`; gx.lineJoin = 'round'; gx.stroke(P_HOME);
+  if (TH.bulbs) { gx.lineWidth = (7 + 6 * beat) / view.k; gx.strokeStyle = `rgba(${TH.outline},${(0.06 + 0.1 * beat).toFixed(3)})`; gx.stroke(P_HOME); }
   gx.setTransform(DPR, 0, 0, DPR, 0, 0);
   gx.globalCompositeOperation = 'lighter';
+  if (TH.bulbs) {                                      // a string of warm-white bulbs, one at every stop
+    const br = 3.2 * z;
+    for (let i = 0; i < N; i++) {
+      const x = sx(S[i].p[0]), y = sy(S[i].p[1]); if (x < -10 || y < -10 || x > W + 10 || y > H + 10) continue;
+      gx.globalAlpha = STILL ? 0.35 : 0.22 + 0.2 * Math.sin(now / 650 * TW[i][1] + TW[i][0]);
+      gx.drawImage(SPR_BULB, x - br, y - br, 2 * br, 2 * br);
+    }
+  }
   // the stops' glow
   for (let i = 0; i < N; i++) {
     const a = eOn[i], o = eOff[i]; if (a < 0.03 && o < 0.03) continue;
@@ -305,9 +340,18 @@ function draw(dt) {
     if (x < -20 || y < -20 || x > W + 20 || y > H + 20) return;
     const rad = (1.7 + 0.5 * Math.sqrt(l)) * z;
     gx.globalAlpha = 0.55; gx.drawImage(SPR_BUS, x - rad * 3.2, y - rad * 3.2, rad * 6.4, rad * 6.4);
-    gx.globalAlpha = 1; gx.fillStyle = '#fff'; gx.beginPath(); gx.arc(x, y, rad, 0, 7); gx.fill();
+    gx.globalAlpha = 1; gx.fillStyle = TH.core; gx.beginPath(); gx.arc(x, y, rad, 0, 7); gx.fill();
   });
   gx.globalAlpha = 1; gx.globalCompositeOperation = 'source-over';
+  if (TH.snow && !STILL) {
+    gx.fillStyle = 'rgba(255,255,255,.8)';
+    flakes.forEach((f) => {
+      f.y += f.v * dt; f.x += Math.sin(now / 1400 + f.p) * 6 * dt;
+      if (f.y > H + 4) { f.y = -4; f.x = Math.random() * W; }
+      gx.globalAlpha = 0.35 + f.r / 4; gx.beginPath(); gx.arc(f.x, f.y, f.r, 0, 7); gx.fill();
+    });
+    gx.globalAlpha = 1;
+  }
   drawWave();
 }
 
@@ -372,12 +416,24 @@ function setPlaying(p) {
 $('#play').addEventListener('click', () => { if (!playing && T >= T1 - 0.5) seek(T0); setPlaying(!playing); });
 // the buses (dots and trails) on or off; the stops' rings and glow stay
 let showBuses = true;
-$('#buses').addEventListener('click', () => {
-  showBuses = !showBuses; $('#buses').setAttribute('aria-pressed', showBuses);
+function setBuses(v) {
+  showBuses = v; $('#buses').setAttribute('aria-pressed', showBuses);
   document.querySelector('.key span').style.opacity = showBuses ? '' : '.4';
   gt.setTransform(1, 0, 0, 1, 0, 0); gt.clearRect(0, 0, ct.width, ct.height);
   if (!playing) draw(0);
-});
+}
+$('#buses').addEventListener('click', () => setBuses(!showBuses));
+// holiday lights: a look of its own (and the buses off, so the stops twinkle); #lights in the address opens it
+function setTheme(name) {
+  TH = THEMES[name]; ONC = TH.on; OFFC = TH.off; sprites(); ripples = [];
+  document.body.classList.toggle('xmas', name === 'lights');
+  $('#holiday').setAttribute('aria-pressed', name === 'lights');
+  $('#h1').textContent = TH.title; $('#sub').textContent = TH.sub;
+  if (TH.snow) makeSnow();
+  drawBase(); setBuses(name !== 'lights');
+  history.replaceState(null, '', name === 'lights' ? '#lights' : location.pathname + location.search);
+}
+$('#holiday').addEventListener('click', () => setTheme(TH === THEMES.lights ? 'night' : 'lights'));
 document.querySelectorAll('.speed button').forEach((b) => b.addEventListener('click', () => {
   speed = +b.dataset.s; document.querySelectorAll('.speed button').forEach((x) => x.setAttribute('aria-pressed', x === b));
 }));
@@ -443,13 +499,14 @@ function showTip(cx, cy) {
   for (let i = 0; i < N; i++) { const d = Math.hypot(sx(S[i].p[0]) - mx, sy(S[i].p[1]) - my); if (d < bd) { bd = d; best = i; } }
   if (best < 0) { tip.style.display = 'none'; return; }
   const [on, off] = lastHour(best);
-  tip.innerHTML = `<b>${esc(S[best].n)}</b>${esc(S[best].t)} · last hour: <span style="color:#B93D06;font-weight:600">${fmt(on)} on</span>, <span style="color:#1F5FA0;font-weight:600">${fmt(off)} off</span>`;
+  tip.innerHTML = `<b>${esc(S[best].n)}</b>${esc(S[best].t)} · last hour: <span style="color:${TH.tip[0]};font-weight:600">${fmt(on)} on</span>, <span style="color:${TH.tip[1]};font-weight:600">${fmt(off)} off</span>`;
   tip.style.display = 'block';
   tip.style.left = Math.min(W - 270, mx + 14) + 'px'; tip.style.top = Math.max(4, my - 50) + 'px';
 }
 
-let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { size(); sizeWave(); fit(); viewChanged(); }, 120); });
+let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { size(); sizeWave(); fit(); if (TH.snow) makeSnow(); viewChanged(); }, 120); });
 size(); sizeWave(); fit(); drawBase(); seek(T); setPlaying(playing); hud(true);
+if (location.hash === '#lights') setTheme('lights');
 if (document.fonts) document.fonts.ready.then(() => { drawBase(); });
 requestAnimationFrame(frame);
 </script>

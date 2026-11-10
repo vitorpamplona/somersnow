@@ -564,6 +564,9 @@ function panel() {
   dirs.innerHTML = `<button data-dir="off" aria-pressed="${dir === 'off'}" aria-label="${fmt(dd.on[pick])} get on here: show where they get off"><b>${fmt(dd.on[pick])}</b><small><i class="dot" style="background:${ON}"></i>get on</small></button>`
     + `<button data-dir="on" aria-pressed="${dir === 'on'}" aria-label="${fmt(dd.off[pick])} get off here: show where they got on"><b>${fmt(dd.off[pick])}</b><small><i class="dot" style="background:${OFF}"></i>get off</small></button>`;
   let html = '';
+  // when it's busy comes first, right under the get on / get off counts it breaks down
+  const h = histHTML(pick);
+  if (h) html += sec("When it's busy", `A ${dname}, by hour, ${onlyRoute !== null ? 'this bus' : 'every bus'}`, h);
   if (!all.length) {
     const other = dir === 'off' ? dd.off[pick] : dd.on[pick];
     html += sec('Which bus', '', `<p class="note" style="margin:0">No riders counted ${dir === 'off' ? 'getting on' : 'getting off'} here on a ${dname}${dir === 'off' ? ': buses end their trip here' : ''}.</p>${other >= 1 ? `<button class="btn more" id="flip">Show where the ${fmt(other)} riders ${dir === 'off' ? 'getting off here got on' : 'getting on here get off'}</button>` : ''}`);
@@ -583,8 +586,6 @@ function panel() {
       + (ends.length > TOP ? `<button class="btn more" id="more">${showAll ? `Show the top ${TOP}` : `All ${ends.length} stops`}</button>` : '')
       + (few && ends.length && (showAll || ends.length <= TOP) ? `<p class="note">And ${few} stop${few === 1 ? '' : 's'} with under 1 rider a ${dname}, not shown.</p>` : ''));
   }
-  const h = histHTML(pick);
-  if (h) html += sec("When it's busy", `A ${dname}, by hour, ${onlyRoute !== null ? 'this bus' : 'every bus'}`, h);
   html += sec('At this stop', 'Tap one to find it on the map', atStop(s));
   $('#panel').innerHTML = html;
 }

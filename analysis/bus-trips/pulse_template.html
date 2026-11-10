@@ -54,7 +54,13 @@ a{color:var(--orange)}
 #play:focus-visible,.speed button:focus-visible,#wave:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
 .wavewrap{position:relative;height:66px}
 #wave{position:absolute;inset:0;width:100%;height:100%;cursor:pointer;touch-action:none;border-radius:6px}
+.ctrls{display:flex;gap:8px;align-items:center}
 .speed{display:flex;background:var(--panel);border-radius:10px;padding:3px}
+#buses{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 12px;border-radius:10px;border:1px solid rgba(169,196,228,.5);background:none}
+#buses i{display:inline-block;width:9px;height:9px;border-radius:50%;background:#fff;box-shadow:0 0 6px 2px rgba(169,196,228,.8)}
+#buses[aria-pressed=false]{color:var(--ice);border-style:dashed}
+#buses[aria-pressed=false] i{background:none;box-shadow:none;border:1.5px solid var(--ice)}
+#buses:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
 .speed button{border:0;background:none;border-radius:8px;height:34px;min-width:40px;padding:0 8px}
 .speed button[aria-pressed=true]{background:var(--snow);color:var(--deep)}
 .dock .foot{grid-column:1/-1;display:flex;justify-content:space-between;gap:10px;font-size:12px;color:var(--ice)}
@@ -77,7 +83,7 @@ a{color:var(--orange)}
   .key{display:none}
   .dock{left:8px;right:8px;bottom:8px;grid-template-columns:auto minmax(0,1fr);padding:8px 10px 6px}
   .wavewrap{grid-column:1/-1;grid-row:2;height:54px}
-  .speed{justify-self:end}
+  .ctrls{justify-self:end}
   #about{left:8px;right:8px;bottom:150px;max-width:none}
   .dock .foot .long{font-size:11px}
   .dock .foot .wide{display:none}
@@ -109,7 +115,7 @@ a{color:var(--orange)}
   <div class="dock">
     <button id="play" aria-label="Pause"><svg viewBox="0 0 20 20" aria-hidden="true"><path id="playicon" d="M5 3h4v14H5zM11 3h4v14h-4z"/></svg></button>
     <div class="wavewrap"><canvas id="wave" tabindex="0" role="slider" aria-label="Time of day" aria-valuemin="0" aria-valuemax="1440" aria-valuenow="300" aria-valuetext="5:00 a.m."></canvas></div>
-    <div class="speed" role="group" aria-label="Speed"><button data-s="0" aria-pressed="false">1×</button><button data-s="1" aria-pressed="true">2×</button><button data-s="2" aria-pressed="false">5×</button></div>
+    <div class="ctrls"><button id="buses" aria-pressed="true" title="Show or hide the buses"><i aria-hidden="true"></i>Buses</button><div class="speed" role="group" aria-label="Speed"><button data-s="0" aria-pressed="false">1×</button><button data-s="1" aria-pressed="true">2×</button><button data-s="2" aria-pressed="false">5×</button></div></div>
     <div class="foot"><span class="long"><span style="color:var(--orange)">▲ getting on</span> · <span style="color:var(--blue)">▼ getting off</span>, every 5 minutes<span class="wide"> · drag to pick a time</span></span><button id="aboutbtn">How it's made</button></div>
   </div>
   <div id="about" hidden>
@@ -288,6 +294,7 @@ function draw(dt) {
     if (T < r.start || T > r.end) { r.prev = null; return; }
     const t = r.t; while (r.j < t.length - 2 && t[r.j + 1] <= T) r.j++; while (r.j > 0 && t[r.j] > T) r.j--;
     const j = r.j, l = r.load[j]; aboard += l;
+    if (!showBuses) { r.prev = null; return; }
     const f = t[j + 1] > t[j] ? Math.min(1, (T - t[j]) / (t[j + 1] - t[j])) : 1;
     const w = along(seg(r.st[j], r.k, r.st[j + 1]), f), x = sx(w[0]), y = sy(w[1]);
     if (r.prev && playing) {
@@ -363,6 +370,14 @@ function setPlaying(p) {
   last = performance.now();
 }
 $('#play').addEventListener('click', () => { if (!playing && T >= T1 - 0.5) seek(T0); setPlaying(!playing); });
+// the buses (dots and trails) on or off; the stops' rings and glow stay
+let showBuses = true;
+$('#buses').addEventListener('click', () => {
+  showBuses = !showBuses; $('#buses').setAttribute('aria-pressed', showBuses);
+  document.querySelector('.key span').style.opacity = showBuses ? '' : '.4';
+  gt.setTransform(1, 0, 0, 1, 0, 0); gt.clearRect(0, 0, ct.width, ct.height);
+  if (!playing) draw(0);
+});
 document.querySelectorAll('.speed button').forEach((b) => b.addEventListener('click', () => {
   speed = +b.dataset.s; document.querySelectorAll('.speed button').forEach((x) => x.setAttribute('aria-pressed', x === b));
 }));

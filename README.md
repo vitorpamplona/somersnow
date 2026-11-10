@@ -1,34 +1,35 @@
-# Somerville Snow Guide
+# SomerWalks
 
-Somerville's sidewalk snow and ice rules, for everyone who walks, rolls or rides the bus. Made by the Somerville Pedestrian & Transit Advisory Committee (PTAC). Not an official City of Somerville page: the [City's rules](https://www.somervillema.gov/snow) apply.
+Projects for people who walk, roll or ride the bus in Somerville, MA, by the Somerville Pedestrian & Transit Advisory Committee (PTAC). Volunteer-made, public data, MIT license. **Not an official City of Somerville or MBTA site.**
 
-**Live site:** https://somerwalks.org/snow/ (part of [somerwalks.org](https://somerwalks.org/), PTAC's projects)
+**Live:** https://somerwalks.org
 
-- **6 daylight hours** after the snow stops. Night doesn't count.
-- **36 inches** wide, down to bare pavement. Ice too.
-- **Curb ramp to the crosswalk.** Required for businesses, asked of everyone.
+## The projects
 
-## What's in the repo
+| Project | Live | What it is |
+|---|---|---|
+| **Snow guide** | [/snow/](https://somerwalks.org/snow/) | Somerville's sidewalk snow and ice rules in short lines and pictures: **6 daylight hours** after the snow stops (night doesn't count), **36 inches** wide down to bare pavement (ice too), **the curb ramp to the crosswalk** (required for businesses, asked of everyone). A deadline calculator with Somerville's sunrise and sunset, a "who clears this?" street corner, salt or sand, fines, and a live storm banner from the National Weather Service (preview with `?live=stopped`). The [City's rules](https://www.somervillema.gov/snow) apply. |
+| **Storm replays** | [/snow/storms/](https://somerwalks.org/snow/storms/) | Every snow period since 2016, hour by hour, from public data: snow at Logan and inside Somerville, warnings, the snow emergency, the deadline, 311 reports by ward, the T, buses, Bluebikes, tows, alerts, crashes and Fire Department calls. Every number is checkable: [the data guide](docs/snow/data/README.md), one CSV per storm, the records behind the counts, and `npm run verify`. |
+| **Flyers and cards** | [/snow/cards.html](https://somerwalks.org/snow/cards.html) | A printable flyer with a QR code, a phone flyer, 34 phone-size cards to share, and "Somerville's lights", an animation of the evening rush. |
+| **Where bus riders go** | [/bus-trips.html](https://somerwalks.org/bus-trips.html) | Pick a bus stop: about where its riders get off, when it's busy, and what's at the stop (shelter, bench, accessibility). An estimate from the MBTA's counts. [Method](analysis/bus-trips/README.md). |
+| **Somerville's pulse** | [/bus-pulse.html](https://somerwalks.org/bus-pulse.html) | A weekday on the buses, played back: every trip, every stop. Try [Holiday lights](https://somerwalks.org/bus-pulse.html#lights). |
+| **Bus stop clearing planner** | [/bus-planner.html](https://somerwalks.org/bus-planner.html) | Design and score the routes crews take to clear bus stops after a storm. Not a City plan. [How it works](analysis/bus-stop-clearing/README.md). |
 
-- `docs/`: the website (plain HTML, CSS and JavaScript modules, no build step), including a deadline calculator that uses Somerville sunrise and sunset times, a "who clears this?" street corner, a salt-or-sand thermometer and a fine calculator.
-- Storm mode: while snow is on the way, falling or just ended, the top of the guide shows a live banner from the National Weather Service (forecast, warnings, when the snow stopped at Logan) with an estimated shoveling deadline and a calendar reminder. Preview it with `?live=stopped` (or `forecast`, `snowing`, `passed`).
-- `docs/snow/storms/`: a replay page for every storm of 3 inches or more since 2016, hour by hour, built from public data: snow at Logan and inside Somerville, weather warnings, the City's snow emergency, the shoveling deadline, 311 reports by ward, the T, buses, Bluebikes, tows, MBTA alerts and crashes. `npm run data` refreshes the data and the pages, and `npm run verify` checks the published numbers against the pages; the data guide (`docs/snow/data/README.md`) explains every file, with one CSV per storm and the records behind the counts; what each source covers and its caveats are in `AGENTS.md` ("Storm replays and data") and `research/data-sources.md`.
-- `docs/snow/flyer.html`: a one-page printable flyer with a QR code, for doors, building lobbies and shop windows.
-- `docs/snow/cards/` and `cards/src/`: 34 phone-size cards to share, as PNGs and as editable HTML. Gallery at `/cards.html`.
-- `research/`: the ordinance text and fines, questions and proposals for City, MBTA and State officials, and sources.
+Behind them, `research/` holds the ordinance text and fines, the verified facts, questions and proposals for City, MBTA and State officials, and every source.
 
 ## Work on it
 
 ```sh
-npm run dev      # serve the site at http://localhost:8080 (the guide at /snow/)
-npm test         # check the deadline math
-npm run data     # refresh docs/snow/data/ and the storm pages from public sources (Python 3, no keys)
-npm run pages    # rebuild only the storm pages in docs/snow/storms/
-npm i && npm run cards   # re-render card PNGs after editing cards/src (uses Playwright)
+npm install      # once: Playwright, for rendering cards, the flyer and the animation
+npm run dev      # serve the site at http://localhost:8080
+npm test         # unit tests
+npm run verify   # check the storm replays' numbers against their data
 ```
 
-All English text is in `docs/snow/i18n/en.js`. To add a language, copy it to `docs/snow/i18n/<code>.js`, translate the values, have a native speaker review it, and list it in `docs/snow/i18n/languages.js`. Spanish, Portuguese, Haitian Creole and Nepali drafts are waiting for review: preview them with `?lang=es`, `?lang=pt`, `?lang=ht` or `?lang=ne`, and see `research/translation-review.md`.
+The site is plain HTML, CSS and JavaScript with no build step; GitHub Pages serves the `docs/` folder from `main`. Pages built from data (storm replays, bus pages, cards) have a script that writes them: see the table in [`AGENTS.md`](AGENTS.md#run-it).
 
-GitHub Pages serves the `docs/` folder from `main` (**Settings → Pages → Deploy from a branch → `main` / `/docs`**). GitHub Actions runs the tests on every push.
+**Contributing:** open an issue or a pull request against `main`. [`AGENTS.md`](AGENTS.md) is the guide for anyone changing the code, person or AI agent: the map of the repo, how changes go live, the ground rules (every fact needs a source; nothing official-looking; estimates say so) and recipes. Each area has its own `AGENTS.md` next to its code.
 
-AI agents: `AGENTS.md` holds the project context, verified facts, open questions, style rules and how to change things (`CLAUDE.md` points to it). `docs/llms.txt` is a plain-text summary of the rules for AI assistants that read the live site.
+**Translations:** all English text of the guide is in `docs/snow/i18n/en.js`. Spanish, Portuguese, Haitian Creole and Nepali drafts are waiting for native-speaker review: preview them with `?lang=es`, `?lang=pt`, `?lang=ht` or `?lang=ne`, and see [`research/translation-review.md`](research/translation-review.md).
+
+**AI assistants reading the site:** [`docs/llms.txt`](docs/llms.txt) is a plain-text summary of the rules.

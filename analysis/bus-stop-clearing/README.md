@@ -46,6 +46,7 @@ An operator builds plans. Each plan has its own crews, and each crew a list of s
 | `data/wards.json` | Copy of `docs/snow/data/wards.json`: ward outlines for the map. |
 | `output/map.html` | The page (self-contained; open it in any browser). |
 | `../../docs/bus-planner.html` | The same page on the public site, copied by `build.py`. Don't edit it by hand. (Until Nov 2026 it was `bus-stops.html`, which now forwards here.) |
+| `AGENTS.md` | Notes for changing the code. |
 
 `build.py` copies the two data files from `docs/snow/data/` each time it runs, so `npm run data` followed by this script uses the latest ridership.
 

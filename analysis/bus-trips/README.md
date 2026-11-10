@@ -7,11 +7,11 @@ A PTAC map of every bus route with a stop in Somerville, drawn whole through the
 ## What it shows
 
 - The map opens centered on Somerville, with its neighbors around it; ⤢ zooms out to every route, still centered there. On it: town outlines, the subway, the 15 routes (as they ran in Fall 2025) and their 548 stops, sized by riders.
-- With no stop picked: riders who get on in Somerville, and the share who get off in each city or town; the busiest stops in Somerville.
-- With a stop picked: which way its buses go, by route and direction ("87 → Lechmere", from the schedule's direction names; "90 ends here" where a trip ends), with an arrow on the map that follows the route's own line toward each bus's next stop (the stretch of the schedule's shape between the two stops; straight where no pattern matches, 2 of 870). Riders are counted per route and direction, so a stop served both ways (Davis, Clarendon Hill) keeps them apart, and the buttons show one direction at a time.
+- With no stop picked: how many riders get on a bus in Somerville, and the 10 busiest stops, to pick one.
+- With a stop picked: which way its buses go, by route and direction ("87 → Lechmere", from the schedule's direction names; "90 ends here" where a trip ends), with an arrow on the map that follows the route's own line toward each bus's next stop (the stretch of the schedule's shape between the two stops; straight where no pattern matches, 2 of 870). Riders are counted per route and direction, so a stop served both ways (Davis, Clarendon Hill) keeps them apart, and each direction has its own row.
 - With a stop picked, "At this stop", as icon tiles (bright: there; dim and slashed: not there; dashed: no data), each with its source and year ("OSM 2023", "MBTA 2017"). Each item comes from its newest source: OpenStreetMap where volunteers tagged it (shelter, bench, trash, lit, tactile paving, live sign), else the MBTA's 2017 accessibility survey (bench, trash; bike rack and paths narrowed under 36 inches come only from it); ADA status from the MBTA (Jan 2024); wheelchair boarding from the schedule. Tap a tile, or the same icon in the row of buttons along the bottom of the map (no stop needs to be picked), to find that item on the map: every stop with it turns into a dark dot (an orange dot gets a thick dark ring), and a bar on the map switches between Yes, No and No data with counts for all the stops on the map; tap the tile again, ✕ or Esc to stop. An "Edit on OSM" link opens the stop in OpenStreetMap, for volunteers who check it on foot. For Somerville's stops, OpenStreetMap's bench and trash values are newer than 2017 almost everywhere; they agree with the survey at about two thirds of stops, and at 57 OSM has a bench where the 2017 survey had none.
-- With a stop picked: a chart of riders getting on and off there by hour (the trip's start time plus the schedule's usual minutes to that stop).
-- With a stop picked: the stops where its riders get off light up in orange (bigger: more riders; stops with under 1 rider a day are left out) and its routes take their colors; the share by city or town, a list of the stops, and one button per route to show only that route. Hover a stop or a row for its numbers.
+- With a stop picked: two big counts that are also the switch (riders getting on here, and where they get off; or getting off here, and where they got on), then a chart of riders getting on and off there by hour (the trip's start time plus the schedule's usual minutes to that stop), for every bus or only the bus picked.
+- With a stop picked: the stops where its riders get off light up in orange (bigger: more riders; stops with under 1 rider a day are left out) and its routes take their colors; a row per route and direction, with its riders and a bar for its share (tap one to show only its riders; "Every bus" goes back); the top 5 stops where they get off, then all of them. Hover a stop or a row for its numbers.
 - A stop where buses end their trip has no one getting on; the page offers where its riders got on instead.
 - The address keeps the stop, day and view (`#stop=5104&day=Sat&show=on`), so a link opens the same view.
 
@@ -42,8 +42,16 @@ Adding up every trip of the day gives about how many riders go from each stop to
 | --- | --- |
 | `build.py` | Downloads the data (cached in `../../.cache/`), makes the estimate, writes the page. Python standard library only. Run `npm run trips` (or `python3 analysis/bus-trips/build.py`) from the repo root. |
 | `trips_template.html` | The page: map, panel, interaction. `build.py` fills in the data. |
-| `output/trips.html` | The page (self-contained). |
-| `../../docs/bus-trips.html` | The same page on the public site, copied by `build.py`. Don't edit it by hand. |
+| `pulse_template.html` | Somerville's pulse (below). Same data placeholder. |
+| `output/trips.html`, `output/pulse.html` | The pages (self-contained). |
+| `../../docs/bus-trips.html`, `../../docs/bus-pulse.html` | The same pages on the public site, copied by `build.py`. Don't edit them by hand. |
+| `AGENTS.md` | Notes for changing the code. |
+
+## Somerville's pulse
+
+**[somerwalks.org/bus-pulse.html](https://somerwalks.org/bus-pulse.html)**: a weekday on these routes, played back. Every weekday trip (1,090) moves along its route at its own scheduled times (matched to the schedule by route, direction and start time: 954 of them; the rest use the route's usual minutes between stops, so they don't slow down at rush hour). At each stop, riders getting on and off are the trip's average counts: an orange ring for getting on, a blue ring for getting off, and a glow that keeps the last few minutes. A bus grows with its riders and leaves a fading trail; the Buses button hides them. Somerville's outline brightens with the activity. The waveform along the bottom is the whole day, getting on above the line and getting off below, every 5 minutes; drag it to pick a time. Holiday lights (the star, or `#lights` in the address) turns it into red and green lights with twinkling bulbs and snow.
+
+Same limits as above, plus: buses run exactly on schedule, every day the same; trips logged before 3 a.m. are counted at the end of the service day.
 
 ## Sources
 

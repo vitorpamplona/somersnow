@@ -1,5 +1,5 @@
-# Somerville Snow Guide
+# SomerWalks
 
-All project context, facts, open questions and style rules live in AGENTS.md so every coding agent reads the same file.
+The agent guide is AGENTS.md, shared by every coding agent. Each area has its own AGENTS.md (and a CLAUDE.md that loads it): docs/snow/, scripts/, analysis/bus-trips/, analysis/bus-stop-clearing/.
 
 @AGENTS.md

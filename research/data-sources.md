@@ -1,6 +1,6 @@
 # Data for snow visualizations
 
-> Short version for agents: the coverage table and data rules are in `AGENTS.md` ("Storm replays and data"). This file has the details, numbers and queries, in the order they were found.
+> Short version for agents: the coverage table and data rules are in [`scripts/AGENTS.md`](../scripts/AGENTS.md). This file has the details, numbers and queries, in the order they were found.
 
 What public data exists for charts and maps about snow work in Somerville, what it shows, and how to get it. Every source below was opened and queried on **Oct 31, 2026**; the numbers are from those queries. None of this is on the site yet.
 

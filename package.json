@@ -1,8 +1,8 @@
 {
-  "name": "somersnow",
+  "name": "somerwalks",
   "version": "1.0.0",
   "private": true,
-  "description": "Somerville Snow Guide: snow and ice rules for walkers, rollers and bus riders, by the Somerville PTAC.",
+  "description": "SomerWalks: the Somerville snow guide, storm replays and bus tools for people who walk, roll or ride, by the Somerville PTAC.",
   "type": "module",
   "scripts": {
     "dev": "python3 -m http.server 8080 --directory docs",

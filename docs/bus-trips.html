@@ -68,30 +68,52 @@ a{color:var(--orange)}
 .legend svg{flex:none}
 .legend span span{display:block;margin:0}
 .legend span[hidden]{display:none}
-.side{overflow:auto;padding:14px 16px 24px;border-left:1px solid rgba(169,196,228,.2);background:var(--navy)}
-.lede{font-family:var(--display);font-weight:800;font-size:26px;text-transform:uppercase;line-height:1.05;margin:2px 0 6px}
-.note{color:var(--ice);font-size:14px;margin:0 0 10px}
-.seg{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
-.seg button{border:1px solid rgba(169,196,228,.5);background:none;color:#fff;font:600 14px var(--body);padding:6px 12px;border-radius:999px;cursor:pointer}
-.seg button[aria-pressed=true]{background:var(--snow);color:var(--navy);border-color:var(--snow)}
-.seglab{color:var(--ice);font:600 12px var(--body);text-transform:uppercase;letter-spacing:1px;margin-top:10px}
-.find{display:flex;gap:6px;margin:10px 0 4px}
-.find input{flex:1;min-width:0;font:15px var(--body);padding:8px 10px;border-radius:8px;border:1px solid var(--ice);background:var(--navy);color:#fff}
-.card{background:var(--panel);border-radius:14px;padding:12px 14px;margin-top:12px}
-.card h3{font-family:var(--display);font-size:22px;text-transform:uppercase;letter-spacing:.5px;margin:0;line-height:1.1;display:flex;gap:8px;align-items:flex-start;justify-content:space-between}
-.card h3 button{flex:none;border:0;background:var(--navy);color:#fff;width:30px;height:30px;border-radius:8px;cursor:pointer;font-size:16px}
-.card .sub{color:var(--ice);font-size:14px;margin:2px 0 8px}
-.big{font-family:var(--display);font-weight:800;font-size:34px;line-height:1;color:var(--orange)}
-.big small{display:block;font-family:var(--body);font-weight:500;font-size:14px;color:var(--snow);margin-top:4px}
-.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 2px}
-.chip{display:inline-flex;align-items:center;gap:6px;border:2px solid transparent;background:var(--navy);color:#fff;font:600 13px var(--body);padding:4px 10px;border-radius:999px;cursor:pointer}
-.chip i{width:10px;height:10px;border-radius:50%}
-.chip small{color:var(--ice);font-weight:500}
-.chip[aria-pressed=true]{border-color:#fff}
-.atstop{margin:14px 0 2px}
-.atstop .seglab{margin:0 0 4px}
+.side{overflow:auto;padding:0;border-left:1px solid rgba(169,196,228,.2);background:var(--navy)}
+/* the sidebar, top to bottom: search, the stop (or the intro), day, get on / get off, then one section per question */
+.find{display:flex;gap:8px;padding:14px 16px;border-bottom:1px solid rgba(169,196,228,.2)}
+.find input{flex:1;min-width:0;height:42px;font:15px var(--body);padding:0 12px;border-radius:10px;border:1px solid var(--ice);background:var(--navy);color:#fff}
+.find .btn{height:42px;border-radius:10px;padding:0 14px}
+.intro{padding:16px 16px 10px}
+.intro h1{margin:0;font:800 34px/.95 var(--display);text-transform:uppercase}
+.intro p{margin:8px 0 0;color:var(--ice);font-size:15px;line-height:1.4}
+.stophead{padding:16px 16px 10px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.stophead h1{margin:0;font:800 40px/.95 var(--display);text-transform:uppercase;overflow-wrap:anywhere}
+.stophead p{margin:5px 0 0;color:var(--ice);font-size:14px}
+.stophead button{flex:none;width:42px;height:42px;border-radius:10px;border:0;background:var(--panel);color:#fff;font-size:16px;cursor:pointer}
+.ctl{padding:0 16px;display:flex;flex-direction:column;gap:8px}
+.seg{display:flex;background:var(--panel);border-radius:10px;padding:3px}
+.seg button{flex:1;min-width:0;border:0;border-radius:8px;background:none;color:var(--snow);font:600 14px var(--body);height:36px;padding:0 6px;cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--snow);color:var(--navy)}
+.seg[hidden]{display:none}
+.seg button:focus-visible{outline:2px solid var(--orange);outline-offset:1px}
+.seg.big button{height:54px;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1}
+.seg.big b{font:800 23px/1 var(--display)}
+.seg.big small{display:flex;align-items:center;gap:5px;font-size:13px;font-weight:600;opacity:.85}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%}
+.stat{padding:0 16px 14px;display:flex;align-items:baseline;gap:8px}
+.stat b{font:800 32px/1 var(--display);color:var(--orange)}
+.stat span{font-size:14px;color:var(--snow)}
+.sec{padding:14px 16px;border-top:1px solid rgba(169,196,228,.2)}
+#panel{margin-top:14px}
+.h{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:6px}
+.h h2{margin:0;font:800 19px/1 var(--display);letter-spacing:.5px;text-transform:uppercase;white-space:nowrap}
+.h span{font-size:13px;color:var(--ice);text-align:right}
+.rrow{display:grid;grid-template-columns:40px minmax(0,1fr) 60px 46px;gap:8px;align-items:center;width:100%;min-height:42px;border:0;border-bottom:1px solid rgba(169,196,228,.13);background:none;color:#fff;font:15px var(--body);text-align:left;padding:3px 6px;border-radius:0}
+button.rrow{cursor:pointer}
+button.rrow:hover{background:rgba(169,196,228,.08)}
+.rrow:last-child{border-bottom:0}
+.rrow[aria-pressed=true]{background:rgba(238,243,247,.1);box-shadow:inset 3px 0 0 var(--snow);border-radius:6px}
+.rrow b{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
+.rrow .to{line-height:1.2}
+.rbar{height:6px;border-radius:3px;background:rgba(169,196,228,.15);overflow:hidden}
+.rbar i{display:block;height:100%;border-radius:3px}
+.bdg{display:inline-flex;align-items:center;justify-content:center;min-width:36px;height:24px;padding:0 5px;border-radius:5px;color:#fff;font-weight:700;font-size:13px;white-space:nowrap}
+.bdg.all{background:none;border:1.5px solid var(--ice);color:var(--snow);font-size:12px}
+.bdgs{display:inline-flex;flex-wrap:wrap;gap:3px;vertical-align:middle}
+.bdgs .bdg{min-width:26px;height:18px;font-size:11px;padding:0 4px;border-radius:4px}
+.atstop{margin:0}
 .tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
-.tile{position:relative;background:var(--navy);border:1px solid transparent;border-radius:10px;padding:8px 4px 7px;text-align:center;font-size:12px;line-height:1.2;color:var(--snow)}
+.tile{position:relative;background:var(--panel);border:1px solid transparent;border-radius:10px;padding:8px 4px 7px;text-align:center;font-size:12px;line-height:1.2;color:var(--snow)}
 .tile svg{width:28px;height:28px;display:block;margin:0 auto 5px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .tile small{display:block;color:var(--ice);font-size:11px;margin-top:1px}
 .tile.no{color:#8197B0}
@@ -99,35 +121,28 @@ a{color:var(--orange)}
 .tile.no::after{content:'';position:absolute;left:50%;top:9px;width:2px;height:30px;background:#8197B0;transform:translateX(-50%) rotate(45deg);border-radius:1px}
 .tile.unk{background:none;border:1px dashed rgba(169,196,228,.45);color:var(--ice)}
 .tile.warn{color:var(--orange);border-color:rgba(255,138,61,.6)}
-.srcs{font-size:11px;color:var(--ice);margin-top:5px;line-height:1.35}
+.srcs{font-size:12px;color:var(--ice);margin-top:8px;line-height:1.35}
 .srcs a{color:var(--ice)}
-.dirs{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:center;margin:2px 0 10px;font-size:14px}
-.dirs .seglab{flex-basis:100%}
-.dirs span{display:inline-flex;align-items:center;gap:6px}
-.dirs i{width:10px;height:10px;border-radius:50%}
-.dirs small{color:var(--ice)}
-.towns{margin:10px 0 0;padding:0;list-style:none;font-size:14px}
-.towns li{display:grid;grid-template-columns:96px minmax(0,1fr) 52px;gap:8px;align-items:center;margin:3px 0}
-.towns .b{height:10px;border-radius:5px;background:var(--orange);min-width:2px}
-.towns .p{text-align:right;color:var(--ice);font-variant-numeric:tabular-nums}
-#list{list-style:none;margin:6px 0 0;padding:0;font-size:14px}
-#list li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:7px 6px;border-bottom:1px solid rgba(169,196,228,.18);cursor:pointer;border-radius:6px}
+#list{list-style:none;margin:0;padding:0;font-size:15px}
+#list li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:start;padding:8px 6px;border-bottom:1px solid rgba(169,196,228,.13);cursor:pointer;border-radius:6px;line-height:1.25}
+#list li:last-child{border-bottom:0}
 #list li:hover,#list li.hover{background:rgba(169,196,228,.1)}
-#list li small{display:block;color:var(--ice)}
-#list li .n{font-family:var(--display);font-weight:700;font-size:18px;color:var(--orange);font-variant-numeric:tabular-nums;text-align:right}
-#list li .mini{height:4px;border-radius:2px;background:var(--orange);opacity:.7;margin-top:3px}
-.more{margin-top:8px}
-details.how{margin-top:16px;font-size:14px;color:var(--snow)}
+#list li small{display:flex;flex-wrap:wrap;align-items:center;gap:4px;color:var(--ice);font-size:12px;margin-top:3px}
+#list li .n{font-weight:600;color:var(--snow);font-variant-numeric:tabular-nums;text-align:right}
+#list li .mini{height:3px;border-radius:2px;margin-top:6px}
+.more{margin-top:10px}
+.sec .note{color:var(--ice);font-size:14px;margin:8px 0 0}
+.foot{padding:4px 16px 20px;border-top:1px solid rgba(169,196,228,.2)}
+details.how{margin-top:14px;font-size:14px;color:var(--snow)}
 details.how summary{cursor:pointer;font-family:var(--display);font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--ice)}
 details.how p{margin:6px 0}
 .about{border-top:1px solid rgba(169,196,228,.25);padding-top:10px;margin-top:16px;font-size:13px;color:var(--ice)}
 /* when a stop is busy: riders getting on and off, by hour */
-.hist{margin-top:12px}
-.hist .key{display:flex;gap:14px;font-size:13px;color:var(--snow);margin:4px 0}
+.hist .key{display:flex;gap:14px;font-size:13px;color:var(--snow);margin:0 0 6px}
 .hist .key i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
 .hist svg{width:100%;height:auto;display:block;overflow:visible}
 .hist text{fill:var(--ice);font:12px var(--body)}
-.hist .peak{color:var(--snow);font-size:14px;margin-top:4px}
+.hist .peak{color:var(--snow);font-size:14px;margin-top:6px}
 #tip{position:fixed;pointer-events:none;background:var(--snow);color:var(--navy);border-radius:10px;padding:8px 10px;font-size:14px;max-width:290px;box-shadow:0 6px 24px rgba(0,0,0,.35);display:none;z-index:5;line-height:1.35}
 #tip b{display:block}
 @media (max-width:1000px){
@@ -163,17 +178,14 @@ details.how p{margin:6px 0}
     </div>
   </div>
   <aside class="side">
-    <p class="lede" id="lede">Where do bus riders go?</p>
-    <p class="note">Pick a stop on the map, or find one. <b style="color:var(--snow)">An estimate</b> from the MBTA's counts of people getting on and off.</p>
-    <div class="seglab">Day</div>
-    <div class="seg" id="days"></div>
-    <div class="seglab">Show</div>
-    <div class="seg" id="dirs">
-      <button data-dir="off" aria-pressed="true">Where riders get off</button>
-      <button data-dir="on" aria-pressed="false">Where they got on</button>
-    </div>
     <form class="find" id="find"><input id="q" list="stoplist" placeholder="Find a stop: Davis, Union Sq…" aria-label="Find a stop"><datalist id="stoplist"></datalist><button class="btn">Go</button></form>
+    <div id="head"></div>
+    <div class="ctl">
+      <div class="seg" id="days" role="group" aria-label="Day"></div>
+      <div class="seg big" id="dirs" role="group" aria-label="Which riders" hidden></div>
+    </div>
     <div id="panel"></div>
+    <div class="foot">
     <details class="how">
       <summary>How it's estimated</summary>
       <p>The MBTA counts, for every scheduled trip, how many people get on and off at each stop (an average of the season's counts). It doesn't say which rider got off where.</p>
@@ -183,6 +195,7 @@ details.how p{margin:6px 0}
     </details>
     <div class="about">
       Sources: <a href="https://mbta-massdot.opendata.arcgis.com/datasets/8daf4a33925a4df59183f860826d29ee">MBTA bus ridership by trip, season, route and stop</a> (<span class="season"></span>, average per trip); <a href="https://www.mbta.com/developers/gtfs">MBTA schedule (GTFS)</a> from the <a href="https://cdn.mbta.com/archive/archived_feeds.txt">MBTA's feed archive</a>, <span id="feed"></span>; town outlines: <a href="https://www.mass.gov/info-details/massgis-data-municipalities">MassGIS</a>; rivers and ponds: <a href="https://www.arcgis.com/home/item.html?id=22e491ae01cc4907934d8a81f2e0b40b">MassDEP hydrography</a>; what's at each stop: <a href="https://www.arcgis.com/home/item.html?id=24a97982b39f4febb504c9e6cb55879b">MBTA PATI</a> (ADA status 2024, survey 2017) and © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors (ODbL). Made by the Somerville Pedestrian &amp; Transit Advisory Committee (PTAC). Not an MBTA or City page. <a href="https://github.com/vitorpamplona/somerwalks/tree/main/analysis/bus-trips">Method and code</a>.
+    </div>
     </div>
   </aside>
 </div>
@@ -393,8 +406,7 @@ function histHTML(i) {
   const pk = on.indexOf(Math.max(...on)), po = off.indexOf(Math.max(...off));
   const peak = dir === 'off' ? (on[pk] >= 1 ? `Busiest hour to get on: <b>${hourSpan(ORDER[pk])}</b> (${fmt(on[pk])})` : '')
     : (off[po] >= 1 ? `Busiest hour to get off: <b>${hourSpan(ORDER[po])}</b> (${fmt(off[po])})` : '');
-  return `<div class="hist"><div class="sub" style="margin:0">When it's busy, a ${dayName(day)}, by hour (all its routes)</div>
-    <div class="key"><span><i style="background:${ON}"></i>Getting on</span><span><i style="background:${OFF}"></i>Getting off</span></div>
+  return `<div class="hist"><div class="key"><span><i style="background:${ON}"></i>Getting on</span><span><i style="background:${OFF}"></i>Getting off</span></div>
     <svg viewBox="0 0 ${W} ${H + 20}" role="img" aria-label="Riders getting on and off at this stop by hour">
       <text x="0" y="9">${fmt(max)}</text><line x1="0" x2="${W}" y1="${H + 0.5}" y2="${H + 0.5}" stroke="rgba(169,196,228,.45)"/>
       ${bars}${ticks}<g id="hhits">${hits}</g></svg>
@@ -466,7 +478,7 @@ function atStop(s) {
     return `<div class="tile ${cls}${mark && mark.key === x.key ? ' on' : ''}" data-key="${x.key}" role="button" tabindex="0" aria-pressed="${!!(mark && mark.key === x.key)}" title="${esc(x.title)}. Click to find every stop with it." aria-label="${esc(x.title)}. Show every stop with it on the map."><svg viewBox="0 0 24 24" aria-hidden="true">${ICON[x.icon]}</svg>${esc(x.label)}${x.note ? `<small>${esc(x.note)}</small>` : ''}</div>`;
   }).join('');
   const edit = o.id ? ` · <a href="https://www.openstreetmap.org/node/${o.id}" target="_blank" rel="noopener">Edit on OSM</a>` : '';
-  return `<div class="atstop"><div class="seglab">At this stop <span style="text-transform:none;letter-spacing:0;font-weight:500">· tap one to find it on the map</span></div><div class="tiles">${tiles}</div>
+  return `<div class="atstop"><div class="tiles">${tiles}</div>
     <div class="srcs">MBTA: schedule, ADA list, 2017 survey. OSM: © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors${edit}</div></div>`;
 }
 
@@ -498,8 +510,13 @@ $('#featbar').addEventListener('click', (e) => {
 
 // ---------- the sidebar ----------
 $('#days').innerHTML = Object.entries(D.days).map(([k, v]) => `<button data-day="${k}" aria-pressed="${k === day}">${v}</button>`).join('');
-$('#days').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; day = b.dataset.day; showAll = false; update(); });
-$('#dirs').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; dir = b.dataset.dir; showAll = false; update(); });
+$('#days').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; day = b.dataset.day; showAll = false; onlyRoute = null; update(); });
+$('#dirs').addEventListener('click', (e) => {
+  const b = e.target.closest('button'); if (!b) return;
+  dir = b.dataset.dir; showAll = false; update();
+  const again = $(`#dirs button[data-dir="${dir}"]`); if (again) again.focus();
+});
+$('#head').addEventListener('click', (e) => { if (e.target.closest('#unpick')) choose(null); });
 $('#stoplist').innerHTML = S.map((s) => `<option value="${esc(s.n)} — ${esc(s.t)}">`).join('');
 $('#find').addEventListener('submit', (e) => {
   e.preventDefault();
@@ -510,56 +527,65 @@ $('#find').addEventListener('submit', (e) => {
   hits.sort((a, b) => (dd.on[b] + dd.off[b]) - (dd.on[a] + dd.off[a]));
   choose(hits[0], true); $('#q').value = ''; $('#q').blur();
 });
+// picking a name from the list goes straight to it
+$('#q').addEventListener('input', () => { if ($('#q').value.includes(' — ')) $('#find').requestSubmit(); });
 
-function townSplit(list) {
-  const m = new Map(); let tot = 0;
-  list.forEach(([b, , n]) => { const t = S[b].t || 'Other'; m.set(t, (m.get(t) || 0) + n); tot += n; });
-  return { tot, rows: [...m.entries()].sort((a, b) => b[1] - a[1]) };
-}
-function townsHTML(split) {
-  const max = split.rows.length ? split.rows[0][1] : 1;
-  return '<ul class="towns">' + split.rows.map(([t, n]) => `<li><span>${esc(t)}</span><span class="b" style="width:${(100 * n / max).toFixed(1)}%"></span><span class="p">${Math.round(100 * n / split.tot)}%</span></li>`).join('') + '</ul>';
-}
+// ---------- the panel: one section per question ----------
+const routeBadge = (r) => `<span class="bdg" style="background:${routeColor(r)}">${esc(R[r].name)}</span>`;
+const badges = (rs) => `<span class="bdgs">${rs.map(routeBadge).join('')}</span>`;
+const sec = (title, note, body) => `<div class="sec"><div class="h"><h2>${title}</h2>${note ? `<span>${note}</span>` : ''}</div>${body}</div>`;
+const toLabel = (i, k) => endsAt(i, k) ? 'ends here' : 'to ' + shortDest(RD[k][2]).replace(/ Center\b/g, ' Ctr');
+const stopRow = (i, n, max, rs, col, town) => `<li data-i="${i}"><span>${esc(S[i].n)}<small>${town ? esc(S[i].t) + ' ·' : ''}${badges(rs)}</small><div class="mini" style="width:${(100 * n / max).toFixed(1)}%;background:${col}"></div></span><span class="n">${fmt(n)}</span></li>`;
+const TOP = 5;                                        // stops listed before "All N stops"
 function panel() {
-  const dd = dayData(day), dname = dayName(day);
+  const dd = dayData(day), dname = dayName(day), dirs = $('#dirs');
   if (pick === null) {
-    // the whole picture: riders who get on in Somerville, where they get off
-    const all = [];
-    for (let a = 0; a < N; a++) if (S[a].t === 'Somerville') dd.out[a].forEach((f) => all.push(f));
-    const sp = townSplit(all), top = S.map((s, i) => i).filter((i) => S[i].t === 'Somerville').sort((a, b) => dd.on[b] - dd.on[a]).slice(0, 12);
-    $('#lede').textContent = 'Where do bus riders go?';
-    $('#panel').innerHTML = `<div class="card"><div class="big">${fmt(sp.tot)}<small>riders get on a bus in Somerville on a ${dname}</small></div>
-      <div class="sub" style="margin-top:8px">Where they get off:</div>${townsHTML(sp)}</div>
-      <div class="card"><h3>Busiest stops in Somerville</h3><div class="sub">Riders getting on, a ${dname}. Pick one.</div><ul id="list">${top.map((i) => `<li data-i="${i}"><span>${esc(S[i].n)}<small>${S[i].r.map((r) => R[r].name).join(', ')}</small></span><span class="n">${fmt(dd.on[i])}</span></li>`).join('')}</ul></div>`;
+    // before a stop is picked: how many ride, and the busiest stops to start from
+    let tot = 0; for (let a = 0; a < N; a++) if (S[a].t === 'Somerville') tot += dd.on[a];
+    const top = S.map((s, i) => i).filter((i) => S[i].t === 'Somerville').sort((a, b) => dd.on[b] - dd.on[a]).slice(0, 10);
+    $('#head').innerHTML = `<div class="intro"><h1>Where do bus riders go?</h1><p>Pick a stop on the map, or find one, to see where its riders get off. <b style="color:var(--snow)">An estimate</b> from the MBTA's counts.</p></div>`;
+    dirs.hidden = true; dirs.innerHTML = '';
+    $('#panel').innerHTML = `<div class="stat"><b>${fmt(tot)}</b><span>riders get on a bus in Somerville on a ${dname}</span></div>`
+      + sec('Busiest stops', 'Riders getting on · pick one', `<ul id="list">${top.map((i) => stopRow(i, dd.on[i], dd.on[top[0]] || 1, S[i].r, ON, false)).join('')}</ul>`);
     return;
   }
-  const s = S[pick], all = dir === 'off' ? dd.out[pick] : dd.inn[pick], fl = flowsNow(), ends = endsNow(), few = byStop(fl).length - ends.length, sp = townSplit(fl);
-  const perRoute = new Map(); all.forEach(([, r, n]) => perRoute.set(r, (perRoute.get(r) || 0) + n));
-  const total = dir === 'off' ? dd.on[pick] : dd.off[pick];
-  const shown = showAll ? ends : ends.slice(0, 20), emax = ends.length ? ends[0].n : 1;
-  $('#lede').textContent = dir === 'off' ? 'Where riders get off' : 'Where they got on';
-  $('#panel').innerHTML = `<div class="card">
-      <h3><span>${esc(s.n)}</span><button id="unpick" title="Let go of this stop" aria-label="Let go of this stop">✕</button></h3>
-      <div class="sub">${esc(s.t)}</div>
-      ${perRoute.size > 1 ? '' : `<div class="dirs"><span class="seglab" style="margin:0">Buses here go toward</span>${s.d.map(([k]) => `<span><i style="background:${rdColor(k)}"></i>${esc(rdLabel(pick, k))}</span>`).join('')}</div>`}
-      <div class="big">${fmt(total)}<small>${dir === 'off' ? 'riders get on here' : 'riders get off here'} on a ${dname}</small></div>
-      ${perRoute.size > 1 ? `<div class="seglab">Buses here go toward · riders ${dir === 'off' ? 'getting on' : 'getting off'}</div><div class="chips" id="chips"><button class="chip" data-r="" aria-pressed="${onlyRoute === null}">All</button>${[...perRoute.entries()].sort((a, b) => b[1] - a[1]).map(([k, n]) => `<button class="chip" data-r="${k}" aria-pressed="${onlyRoute === k}"><i style="background:${rdColor(k)}"></i>${esc(rdLabel(pick, k))} <small>${fmt(n)}</small></button>`).join('')}</div>` : ''}
-      ${histHTML(pick)}
-      ${fl.length ? `<div class="sub" style="margin-top:10px">${dir === 'off' ? 'They get off in' : 'They got on in'}:</div>${townsHTML(sp)}` : `<p class="note" style="margin-top:8px">No riders counted ${dir === 'off' ? 'getting on' : 'getting off'} here on a ${dname}${onlyRoute !== null ? ' on this bus' : dir === 'off' ? ': buses end their trip here' : ''}.</p>${(dir === 'off' ? dd.off[pick] : dd.on[pick]) >= 1 ? `<button class="btn" id="flip">Show where the ${fmt(dir === 'off' ? dd.off[pick] : dd.on[pick])} riders ${dir === 'off' ? 'getting off here got on' : 'getting on here get off'}</button>` : ''}`}
-      ${atStop(s)}
-    </div>
-    ${ends.length ? `<div class="card"><h3>${dir === 'off' ? 'Stops where they get off' : 'Stops where they got on'}</h3><div class="sub">About how many riders a ${dname}. Hover to find one on the map; click to pick it.</div>
-      <ul id="list">${shown.map((e) => `<li data-i="${e.b}"><span>${esc(S[e.b].n)}<small>${esc(S[e.b].t)} · ${[...e.r.keys()].map(rdName).map(esc).join(', ')}</small><div class="mini" style="width:${(100 * e.n / emax).toFixed(1)}%"></div></span><span class="n">${fmt(e.n)}</span></li>`).join('')}</ul>
-      ${ends.length > 20 ? `<button class="btn more" id="more">${showAll ? 'Show the top 20' : `Show all ${ends.length}`}</button>` : ''}
-      ${few && (showAll || ends.length <= 20) ? `<p class="note" style="margin:8px 0 0">And ${few} stop${few === 1 ? '' : 's'} with under 1 rider a ${dname}, not shown.</p>` : ''}</div>` : ''}`;
+  const s = S[pick], all = dir === 'off' ? dd.out[pick] : dd.inn[pick], ends = endsNow(), few = byStop(flowsNow()).length - ends.length;
+  const col = dir === 'off' ? ON : OFF, endCol = dir === 'off' ? OFF : ON;   // orange: getting on; blue: getting off
+  $('#head').innerHTML = `<div class="stophead"><div><h1>${esc(s.n)}</h1><p>${esc(s.t)} · ${s.r.length} bus route${s.r.length === 1 ? '' : 's'}</p></div><button id="unpick" title="Let go of this stop" aria-label="Let go of this stop">✕</button></div>`;
+  // the two counts are the switch: riders getting on here (and where they get off), or getting off here (and where they got on)
+  dirs.hidden = false;
+  dirs.innerHTML = `<button data-dir="off" aria-pressed="${dir === 'off'}" aria-label="${fmt(dd.on[pick])} get on here: show where they get off"><b>${fmt(dd.on[pick])}</b><small><i class="dot" style="background:${ON}"></i>get on</small></button>`
+    + `<button data-dir="on" aria-pressed="${dir === 'on'}" aria-label="${fmt(dd.off[pick])} get off here: show where they got on"><b>${fmt(dd.off[pick])}</b><small><i class="dot" style="background:${OFF}"></i>get off</small></button>`;
+  let html = '';
+  if (!all.length) {
+    const other = dir === 'off' ? dd.off[pick] : dd.on[pick];
+    html += sec('Which bus', '', `<p class="note" style="margin:0">No riders counted ${dir === 'off' ? 'getting on' : 'getting off'} here on a ${dname}${dir === 'off' ? ': buses end their trip here' : ''}.</p>${other >= 1 ? `<button class="btn more" id="flip">Show where the ${fmt(other)} riders ${dir === 'off' ? 'getting off here got on' : 'getting on here get off'}</button>` : ''}`);
+  } else {
+    // one row per bus and direction, with its riders; more than one: tap a row to see only its riders
+    const per = new Map(); all.forEach(([, r, n]) => per.set(r, (per.get(r) || 0) + n));
+    const rows = [...per.entries()].sort((a, b) => b[1] - a[1]), rmax = rows[0][1], multi = rows.length > 1;
+    const row = (k, n) => { const t = multi ? 'button' : 'div';
+      return `<${t} class="rrow"${multi ? ` data-r="${k}" aria-pressed="${onlyRoute === k}"` : ''}><span class="bdg" style="background:${rdColor(k)}">${esc(R[rdRoute(k)].name)}</span><span class="to">${esc(toLabel(pick, k))}</span><span class="rbar"><i style="width:${(100 * n / rmax).toFixed(1)}%;background:${col}"></i></span><b>${fmt(n)}</b></${t}>`; };
+    const every = multi ? `<button class="rrow" data-r="" aria-pressed="${onlyRoute === null}"><span class="bdg all">All</span><span class="to">Every bus</span><span class="rbar"><i style="width:100%;background:${col}"></i></span><b>${fmt(dir === 'off' ? dd.on[pick] : dd.off[pick])}</b></button>` : '';
+    html += sec('Which bus', multi ? 'Tap one to see only its riders' : (dir === 'off' ? 'Riders getting on' : 'Riders getting off'), every + rows.map(([k, n]) => row(k, n)).join(''));
+    const shown = showAll ? ends : ends.slice(0, TOP), emax = ends.length ? ends[0].n : 1;
+    const routesOf = (e) => [...new Set([...e.r.keys()].map(rdRoute))];
+    html += sec(dir === 'off' ? 'Where they get off' : 'Where they got on', `Riders a ${dname}${onlyRoute !== null ? ', this bus' : ''}`,
+      (ends.length ? `<ul id="list">${shown.map((e) => stopRow(e.b, e.n, emax, routesOf(e), endCol, true)).join('')}</ul>` : `<p class="note" style="margin:0">Under 1 rider a ${dname} to any one stop.</p>`)
+      + (ends.length > TOP ? `<button class="btn more" id="more">${showAll ? `Show the top ${TOP}` : `All ${ends.length} stops`}</button>` : '')
+      + (few && ends.length && (showAll || ends.length <= TOP) ? `<p class="note">And ${few} stop${few === 1 ? '' : 's'} with under 1 rider a ${dname}, not shown.</p>` : ''));
+  }
+  const h = histHTML(pick);
+  if (h) html += sec("When it's busy", `A ${dname}, by hour, every bus`, h);
+  html += sec('At this stop', 'Tap one to find it on the map', atStop(s));
+  $('#panel').innerHTML = html;
 }
 $('#panel').addEventListener('click', (e) => {
-  if (e.target.closest('#unpick')) { choose(null); return; }
   if (e.target.closest('#more')) { showAll = !showAll; panel(); return; }
   const tl = e.target.closest('.tile[data-key]');
   if (tl) { const key = tl.dataset.key; setMark(mark && mark.key === key ? null : { key, show: 'yes' }); return; }
   if (e.target.closest('#flip')) { dir = dir === 'off' ? 'on' : 'off'; showAll = false; update(); glideTo(pick); return; }
-  const c = e.target.closest('.chip'); if (c) { onlyRoute = c.dataset.r === '' ? null : +c.dataset.r; showAll = false; update(); return; }
+  const c = e.target.closest('button.rrow'); if (c) { onlyRoute = c.dataset.r === '' ? null : +c.dataset.r; showAll = false; update(); const again = $(`.rrow[data-r="${c.dataset.r}"]`); if (again) again.focus(); return; }
   const li = e.target.closest('#list li'); if (li) choose(+li.dataset.i, true);
 });
 $('#panel').addEventListener('pointerover', (e) => { const li = e.target.closest('#list li'); const v = li ? +li.dataset.i : null; if (v !== hoverId) { hoverId = v; drawHL(); } });
@@ -568,7 +594,6 @@ $('#panel').addEventListener('pointermove', (e) => { if (e.target.closest('.hist
 
 function update() {
   document.querySelectorAll('#days button').forEach((b) => b.setAttribute('aria-pressed', b.dataset.day === day));
-  document.querySelectorAll('#dirs button').forEach((b) => b.setAttribute('aria-pressed', b.dataset.dir === dir));
   $('#keyends').textContent = dir === 'off' ? 'Where its riders get off' : 'Where riders getting off there got on';
   if (pick === null) resetRoutes();
   drawStops(); drawFlows(); panel(); saveHash();

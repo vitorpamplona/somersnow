@@ -539,8 +539,8 @@ const routeBadge = (r) => `<span class="bdg" style="background:${routeColor(r)}"
 const badges = (rs) => `<span class="bdgs">${rs.map(routeBadge).join('')}</span>`;
 const sec = (title, note, body) => `<div class="sec"><div class="h"><h2>${title}</h2>${note ? `<span>${note}</span>` : ''}</div>${body}</div>`;
 const toLabel = (i, k) => endsAt(i, k) ? 'ends here' : 'to ' + shortDest(RD[k][2]).replace(/ Center\b/g, ' Ctr');
-const stopRow = (i, n, max, rs, col, town) => {
-  const where = town && S[i].t !== 'Somerville' ? esc(S[i].t) : '', meta = [where, rs.length ? badges(rs) : ''].filter(Boolean).join(' · ');
+const stopRow = (i, n, max, rs, col) => {
+  const meta = rs.length ? badges(rs) : '';
   return `<li data-i="${i}"><span>${esc(S[i].n)}${meta ? `<small>${meta}</small>` : ''}<div class="mini" style="width:${(100 * n / max).toFixed(1)}%;background:${col}"></div></span><span class="n">${fmt(n)}</span></li>`;
 };
 const TOP = 5;                                        // stops listed before "All N stops"
@@ -553,7 +553,7 @@ function panel() {
     $('#head').innerHTML = `<div class="intro"><h1>Where do bus riders go?</h1><p>Pick a stop on the map, or find one, to see where its riders get off. <b style="color:var(--snow)">An estimate</b> from the MBTA's counts.</p></div>`;
     dirs.hidden = true; dirs.innerHTML = '';
     $('#panel').innerHTML = `<div class="stat"><b>${fmt(tot)}</b><span>riders get on a bus in Somerville on a ${dname}</span></div>`
-      + sec('Busiest stops', 'Riders getting on · pick one', `<ul id="list">${top.map((i) => stopRow(i, dd.on[i], dd.on[top[0]] || 1, S[i].r, ON, false)).join('')}</ul>`);
+      + sec('Busiest stops', 'Riders getting on · pick one', `<ul id="list">${top.map((i) => stopRow(i, dd.on[i], dd.on[top[0]] || 1, S[i].r, ON)).join('')}</ul>`);
     return;
   }
   const s = S[pick], all = dir === 'off' ? dd.out[pick] : dd.inn[pick], ends = endsNow(), few = byStop(flowsNow()).length - ends.length;
@@ -579,7 +579,7 @@ function panel() {
     const shown = showAll ? ends : ends.slice(0, TOP), emax = ends.length ? ends[0].n : 1;
     const routesOf = (e) => [...new Set([...e.r.keys()].map(rdRoute))];
     html += sec(dir === 'off' ? 'Where they get off' : 'Where they got on', `Riders a ${dname}${onlyRoute !== null ? ', this bus' : ''}`,
-      (ends.length ? `<ul id="list">${shown.map((e) => stopRow(e.b, e.n, emax, onlyRoute !== null ? [] : routesOf(e), endCol, true)).join('')}</ul>` : `<p class="note" style="margin:0">Under 1 rider a ${dname} to any one stop.</p>`)
+      (ends.length ? `<ul id="list">${shown.map((e) => stopRow(e.b, e.n, emax, onlyRoute !== null ? [] : routesOf(e), endCol)).join('')}</ul>` : `<p class="note" style="margin:0">Under 1 rider a ${dname} to any one stop.</p>`)
       + (ends.length > TOP ? `<button class="btn more" id="more">${showAll ? `Show the top ${TOP}` : `All ${ends.length} stops`}</button>` : '')
       + (few && ends.length && (showAll || ends.length <= TOP) ? `<p class="note">And ${few} stop${few === 1 ? '' : 's'} with under 1 rider a ${dname}, not shown.</p>` : ''));
   }

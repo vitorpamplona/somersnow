@@ -4,7 +4,7 @@ it is.
 
 This script builds the street network the crews drive on, from the MBTA bus routes, and writes
 it with the stops and their riders into one self-contained page (output/map.html, copied to
-docs/bus-stops.html). The page does the rest in the browser: the operator picks each crew's
+docs/bus-planner.html). The page does the rest in the browser: the operator picks each crew's
 stops in order, sets the assumptions (minutes a stop, bobcat speed, time to cross the road,
 ...), and the page plays the day and scores it. Routes and settings are saved in the browser.
 
@@ -299,6 +299,6 @@ if __name__ == '__main__':
     tpl = open(os.path.join(HERE, 'map_template.html')).read()
     open(os.path.join(OUT, 'map.html'), 'w').write(tpl.replace('/*DATA*/null', json.dumps(payload, separators=(',', ':'))))
     # the same page on the public site (docs/ is served by GitHub Pages)
-    shutil.copyfile(os.path.join(OUT, 'map.html'), os.path.join(ROOT, 'docs', 'bus-stops.html'))
+    shutil.copyfile(os.path.join(OUT, 'map.html'), os.path.join(ROOT, 'docs', 'bus-planner.html'))
     print(f'{len(allstops)} stops; street network: {sum(len(v) for v in G.values())} one-way links, '
-          f'{joins} pairs added to join separate pieces; wrote output/map.html and docs/bus-stops.html')
+          f'{joins} pairs added to join separate pieces; wrote output/map.html and docs/bus-planner.html')

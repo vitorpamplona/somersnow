@@ -4,7 +4,7 @@ A PTAC tool for designing the routes the City's bobcat crews take to clear bus s
 
 The page starts with the plan an earlier version of `build.py` computed (riders first, one street at a time; `data/computed-plan.json`), as a base to edit or compare against; "+ Computed" adds it again when it isn't there.
 
-**Open it at [somerwalks.org/bus-stops.html](https://somerwalks.org/bus-stops.html)**, or open [`output/map.html`](output/map.html) in a browser.
+**Open it at [somerwalks.org/bus-planner.html](https://somerwalks.org/bus-planner.html)**, or open [`output/map.html`](output/map.html) in a browser.
 
 ## What it does
 
@@ -45,7 +45,7 @@ An operator builds plans. Each plan has its own crews, and each crew a list of s
 | `data/computed-plan.json` | The starting plan: the 4 crews' routes an earlier version of `build.py` computed (commit 3cc3f4d). |
 | `data/wards.json` | Copy of `docs/snow/data/wards.json`: ward outlines for the map. |
 | `output/map.html` | The page (self-contained; open it in any browser). |
-| `../../docs/bus-stops.html` | The same page on the public site, copied by `build.py`. Don't edit it by hand. |
+| `../../docs/bus-planner.html` | The same page on the public site, copied by `build.py`. Don't edit it by hand. (Until Nov 2026 it was `bus-stops.html`, which now forwards here.) |
 
 `build.py` copies the two data files from `docs/snow/data/` each time it runs, so `npm run data` followed by this script uses the latest ridership.
 

@@ -388,6 +388,12 @@ def main():
         for _, sid, m in rows:
             per[(rid, dirn, sid)].append(m - rows[0][2])
     offset = {k: sorted(v)[len(v) // 2] for k, v in per.items()}
+    # each scheduled trip's own minutes from its first stop, found by route, direction and start time (buses run
+    # slower at rush hour); the pulse page uses them, and falls back to the usual minutes when no trip matches
+    sched = {}
+    for t, rows in times.items():
+        rid, dirn = route_trip[t]
+        sched.setdefault((rid, dirn, rows[0][2]), {sid: m - rows[0][2] for _, sid, m in rows})
     hours, hours_rd = by_hour(by_day, offset)
 
     # stops: every stop on the routes' patterns, and every stop in the ridership file
@@ -566,9 +572,43 @@ def main():
     with open(os.path.join(OUT, 'trips.html'), 'w') as f:
         f.write(page)
     shutil.copy(os.path.join(OUT, 'trips.html'), os.path.join(ROOT, 'docs', 'bus-trips.html'))
+    pulse(by_day['Wkdy'], offset, sched, ix, rdi, stops, rshapes, rapid, towns, water, season, feed)
     pairs = sum(len(v) for d in flows.values() for v in d.values())
     print(f'{season}: {len(stops)} stops, {len(rshapes)} routes, {len(towns)} towns, {pairs} stop pairs; '
           f'riders a day: ' + ', '.join(f'{DAYS[d]} {totals[d]:,}' for d in DAYS) + f'; page {len(page) // 1024} KB')
+
+
+def pulse(day_trips, offset, sched, ix, rdi, stops, rshapes, rapid, towns, water, season, feed):
+    """The pulse page: every weekday trip on these routes, stop by stop, with the minutes from the trip's start (the
+    schedule's usual ones) and its riders getting on and off. Trips that share a route, direction, stops and times
+    share a pattern. Writes output/pulse.html, copied to ../../docs/bus-pulse.html."""
+    pats, pat_ix, trips_out, own = [], {}, [], 0
+    for rid, seq, dirn, start in day_trips:
+        if (rid, dirn) not in rdi:
+            continue
+        mine = sched.get((rid, dirn, start), {})
+        if start < 180:                           # a trip logged at 0:15 is the end of the service day, not its start
+            start += 1440
+        own += bool(mine)
+        sids, mins, last = [], [], 0
+        for sid, *_ in seq:
+            last = max(last, mine.get(sid, offset.get((rid, dirn, sid), last)))
+            sids.append(ix[sid]); mins.append(last)
+        key = (rdi[(rid, dirn)], tuple(sids), tuple(mins))
+        if key not in pat_ix:
+            pat_ix[key] = len(pats); pats.append([key[0], list(key[1]), list(key[2])])
+        trips_out.append([pat_ix[key], start, [round(on * 10) for _, on, _ in seq], [round(off * 10) for _, _, off in seq]])
+    trips_out.sort(key=lambda t: t[1])
+    data = {'season': season, 'feed': feed, 'routes': rshapes, 'rapid': rapid, 'towns': towns, 'water': water,
+            'stops': [{'n': s['n'], 't': s['t'], 'p': s['p'], 'd': s['d']} for s in stops],
+            'rd': [k for k in sorted(rdi, key=rdi.get)], 'pats': pats, 'trips': trips_out}
+    data['rd'] = [[next(i for i, r in enumerate(rshapes) if r['id'] == rid), int(dirn)] for rid, dirn in data['rd']]
+    with open(os.path.join(HERE, 'pulse_template.html')) as f:
+        page = f.read().replace('/*DATA*/null', json.dumps(data, separators=(',', ':')))
+    with open(os.path.join(OUT, 'pulse.html'), 'w') as f:
+        f.write(page)
+    shutil.copy(os.path.join(OUT, 'pulse.html'), os.path.join(ROOT, 'docs', 'bus-pulse.html'))
+    print(f'  pulse: {len(trips_out)} weekday trips ({own} with their own scheduled times), {len(pats)} patterns; page {len(page) // 1024} KB', file=sys.stderr)
 
 
 if __name__ == '__main__':

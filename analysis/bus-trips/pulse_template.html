@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Somerville's pulse · SomerWalks</title>
+<meta name="description" content="A weekday on Somerville's buses, played back: every trip moving along its route, riders getting on and off at every stop. An estimate from the MBTA's counts.">
+<meta property="og:title" content="Somerville's pulse · SomerWalks">
+<meta property="og:description" content="A weekday on Somerville's buses, played back: every trip, every stop.">
+<meta name="theme-color" content="#0A1929">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#10243A;--panel:#1A3A5F;--snow:#EEF3F7;--orange:#FF8A3D;--blue:#4F98DE;--ice:#A9C4E4;--mute:#47607C;--deep:#0A1929;
+  --display:'Barlow Condensed',Arial Narrow,sans-serif;--body:'Barlow',Arial,sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--deep);color:var(--snow);font:16px/1.4 var(--body);display:flex;flex-direction:column;overflow:hidden}
+a{color:var(--orange)}
+.bar{background:var(--deep);border-bottom:1px solid rgba(169,196,228,.15);flex:none}
+.bar div{padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.bar a{color:#fff;text-decoration:none}
+.bar .brand{font-family:var(--display);font-weight:800;font-size:22px;text-transform:uppercase;letter-spacing:1px;white-space:nowrap}
+.bar .brand span{color:var(--orange)}
+.bar nav{display:flex;align-items:center;gap:14px}
+.bar nav a{color:var(--ice);font-size:15px;white-space:nowrap}
+.apptitle{font-family:var(--display);font-weight:800;font-size:20px;text-transform:uppercase;letter-spacing:1px;margin-right:auto;margin-left:18px;white-space:nowrap}
+.apptitle small{font-family:var(--body);font-weight:500;font-size:13px;letter-spacing:0;text-transform:none;color:var(--ice);margin-left:8px}
+.stage{position:relative;flex:1;min-height:0;overflow:hidden;background:#0B1C2E}
+.stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#top{touch-action:none;cursor:grab}
+#top.grabbing{cursor:grabbing}
+/* the clock and the counts, over the map */
+.hud{position:absolute;left:16px;top:14px;pointer-events:none;max-width:calc(100% - 32px)}
+.hud h1{margin:0;font:800 30px/1 var(--display);text-transform:uppercase;letter-spacing:.5px}
+.hud .sub{margin:4px 0 0;color:var(--ice);font-size:14px}
+.clock{margin-top:10px;font:800 76px/.9 var(--display);font-variant-numeric:tabular-nums;letter-spacing:1px;text-shadow:0 2px 24px rgba(0,0,0,.6)}
+.clock small{font-size:30px;margin-left:6px;color:var(--ice)}
+.stats{display:flex;gap:18px;margin-top:8px}
+.stats div{font-size:13px;color:var(--ice);line-height:1.15}
+.stats b{display:block;font:800 30px/1 var(--display);font-variant-numeric:tabular-nums;color:var(--snow)}
+.stats .on b{color:var(--orange)}
+.stats .off b{color:var(--blue)}
+.key{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:10px;font-size:13px;color:var(--snow)}
+.key span{display:inline-flex;align-items:center;gap:6px}
+.key i{display:inline-block;border-radius:50%}
+/* the busiest stops of the last hour */
+.lab{position:absolute;left:0;top:0;pointer-events:none;transform:translate(-50%,calc(-100% - 16px));background:rgba(10,25,41,.86);border:1px solid rgba(169,196,228,.35);border-radius:8px;padding:4px 8px;font-size:13px;line-height:1.2;white-space:nowrap;transition:opacity .4s}
+.lab b{display:block;font:700 15px/1.1 var(--display);text-transform:uppercase;letter-spacing:.5px}
+.lab .on{color:var(--orange)}
+.lab .off{color:var(--blue)}
+.lab::after{content:'';position:absolute;left:50%;bottom:-13px;width:1px;height:12px;background:rgba(169,196,228,.55)}
+#tip{position:absolute;pointer-events:none;background:var(--snow);color:var(--navy);border-radius:8px;padding:6px 9px;font-size:13px;line-height:1.3;display:none;max-width:260px;box-shadow:0 6px 20px rgba(0,0,0,.4);z-index:3}
+#tip b{display:block}
+/* play, speed and the day's pulse to scrub */
+.dock{position:absolute;left:12px;right:12px;bottom:12px;background:rgba(10,25,41,.9);border:1px solid rgba(169,196,228,.18);border-radius:14px;padding:10px 12px 8px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:6px 12px;align-items:center;box-shadow:0 6px 30px rgba(0,0,0,.4)}
+.dock button{font:600 14px var(--body);color:var(--snow);cursor:pointer}
+#play{width:46px;height:46px;border-radius:50%;border:0;background:var(--snow);color:var(--deep);display:flex;align-items:center;justify-content:center}
+#play svg{width:20px;height:20px;fill:currentColor}
+#play:focus-visible,.speed button:focus-visible,#wave:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+.wavewrap{position:relative;height:66px}
+#wave{position:absolute;inset:0;width:100%;height:100%;cursor:pointer;touch-action:none;border-radius:6px}
+.speed{display:flex;background:var(--panel);border-radius:10px;padding:3px}
+.speed button{border:0;background:none;border-radius:8px;height:34px;min-width:40px;padding:0 8px}
+.speed button[aria-pressed=true]{background:var(--snow);color:var(--deep)}
+.dock .foot{grid-column:1/-1;display:flex;justify-content:space-between;gap:10px;font-size:12px;color:var(--ice)}
+.dock .foot button{border:0;background:none;color:var(--ice);font-size:12px;text-decoration:underline;padding:0}
+#about{position:absolute;right:12px;bottom:128px;max-width:420px;background:rgba(10,25,41,.96);border:1px solid rgba(169,196,228,.25);border-radius:14px;padding:14px 16px;font-size:14px;color:var(--snow);box-shadow:0 6px 30px rgba(0,0,0,.5)}
+#about[hidden]{display:none}
+#about h2{margin:0 0 6px;font:800 20px/1 var(--display);text-transform:uppercase}
+#about p{margin:6px 0}
+#about .x{position:absolute;top:8px;right:8px;width:34px;height:34px;border-radius:8px;border:0;background:var(--panel);color:#fff;cursor:pointer}
+@media (max-width:700px){
+  .apptitle{display:none}
+  .hud{left:12px;top:10px}
+  .hud h1{font-size:22px}
+  .hud .sub{font-size:13px}
+  .clock{font-size:52px;margin-top:6px}
+  .clock small{font-size:22px}
+  .stats{gap:12px}
+  .stats b{font-size:22px}
+  .stats div{font-size:12px}
+  .key{display:none}
+  .dock{left:8px;right:8px;bottom:8px;grid-template-columns:auto minmax(0,1fr);padding:8px 10px 6px}
+  .wavewrap{grid-column:1/-1;grid-row:2;height:54px}
+  .speed{justify-self:end}
+  #about{left:8px;right:8px;bottom:150px;max-width:none}
+  .dock .foot .long{font-size:11px}
+  .dock .foot .wide{display:none}
+}
+@media (prefers-reduced-motion:reduce){.lab{transition:none}}
+</style>
+</head>
+<body>
+<header class="bar"><div><a class="brand" href="./">Somer<span>Walks</span></a><span class="apptitle">Somerville's pulse <small>PTAC · an estimate, not an MBTA page</small></span><nav><a href="bus-trips.html">Where riders go</a><a href="snow/">Snow guide</a></nav></div></header>
+<main class="stage" id="stage">
+  <canvas id="base" aria-hidden="true"></canvas>
+  <canvas id="trail" aria-hidden="true"></canvas>
+  <canvas id="top" role="img" aria-label="Animated map of Somerville and its neighbors: buses move along their routes through a weekday, and stops flash orange when riders get on and blue when they get off."></canvas>
+  <div id="labels"></div>
+  <div id="tip"></div>
+  <div class="hud">
+    <h1>Somerville's pulse</h1>
+    <p class="sub">A weekday on its buses.</p>
+    <div class="clock" aria-live="off"><span id="clock">5:00</span><small id="ampm">a.m.</small></div>
+    <div class="stats">
+      <div><b id="aboard">0</b>on a bus now</div>
+      <div class="on"><b id="hon">0</b>got on, last hour</div>
+      <div class="off"><b id="hoff">0</b>got off, last hour</div>
+    </div>
+    <div class="key">
+      <span><i style="width:9px;height:9px;background:#fff;box-shadow:0 0 6px 2px rgba(169,196,228,.8)"></i>A bus (bigger: fuller)</span>
+      <span><i style="width:10px;height:10px;border:2px solid var(--orange)"></i>Getting on</span>
+      <span><i style="width:10px;height:10px;border:2px solid var(--blue)"></i>Getting off</span>
+    </div>
+  </div>
+  <div class="dock">
+    <button id="play" aria-label="Pause"><svg viewBox="0 0 20 20" aria-hidden="true"><path id="playicon" d="M5 3h4v14H5zM11 3h4v14h-4z"/></svg></button>
+    <div class="wavewrap"><canvas id="wave" tabindex="0" role="slider" aria-label="Time of day" aria-valuemin="0" aria-valuemax="1440" aria-valuenow="300" aria-valuetext="5:00 a.m."></canvas></div>
+    <div class="speed" role="group" aria-label="Speed"><button data-s="0" aria-pressed="false">1×</button><button data-s="1" aria-pressed="true">2×</button><button data-s="2" aria-pressed="false">5×</button></div>
+    <div class="foot"><span class="long"><span style="color:var(--orange)">▲ getting on</span> · <span style="color:var(--blue)">▼ getting off</span>, every 5 minutes<span class="wide"> · drag to pick a time</span></span><button id="aboutbtn">How it's made</button></div>
+  </div>
+  <div id="about" hidden>
+    <button class="x" id="aboutx" aria-label="Close">✕</button>
+    <h2>How it's made</h2>
+    <p>Every weekday trip on the <span id="nroutes">15</span> bus routes that stop in Somerville (<span class="season"></span>), moving at its scheduled times along its route.</p>
+    <p>At each stop, riders getting on and off are the MBTA's average counts for that trip. Riders on board are what's left after each stop.</p>
+    <p><b>An estimate:</b> the buses run on schedule here, not as they really ran on any one day. Routes as they ran in <span class="season"></span>.</p>
+    <p style="font-size:13px;color:var(--ice)">Sources: <a href="https://mbta-massdot.opendata.arcgis.com/datasets/8daf4a33925a4df59183f860826d29ee">MBTA bus ridership by trip</a>; <a href="https://www.mbta.com/developers/gtfs">MBTA schedule</a> (<span id="feed"></span>); town outlines: MassGIS; water: MassDEP. Made by the Somerville Pedestrian &amp; Transit Advisory Committee (PTAC). Not an MBTA or City page. <a href="https://github.com/vitorpamplona/somerwalks/tree/main/analysis/bus-trips">Method and code</a>.</p>
+  </div>
+</main>
+<script>
+const D = /*DATA*/null;
+const $ = (s) => document.querySelector(s);
+const S = D.stops, N = S.length;
+const ONC = [255, 138, 61], OFFC = [79, 152, 222];          // orange: getting on; blue: getting off
+document.querySelectorAll('.season').forEach((e) => { e.textContent = D.season; });
+$('#feed').textContent = `schedule of ${D.feed.slice(0, 4)}-${D.feed.slice(4, 6)}-${D.feed.slice(6)}`;
+$('#nroutes').textContent = D.routes.length;
+
+// ---------- trips: where each bus is, and who's on it ----------
+const segCache = new Map();
+function seg(a, k, b) {                                // the street from stop a to stop b on route-direction k
+  const key = a + ':' + k + ':' + b;
+  let s = segCache.get(key); if (s) return s;
+  const d = S[a].d.find((e) => e[0] === k && e[1] === b);
+  const pts = d && d[2] && d[2].length > 1 ? d[2] : [S[a].p, S[b].p];
+  const cum = [0]; for (let i = 1; i < pts.length; i++) cum.push(cum[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]));
+  s = { pts, cum, len: cum[cum.length - 1] || 1 }; segCache.set(key, s); return s;
+}
+function along(s, f) {
+  const d = f * s.len; let i = 1;
+  while (i < s.pts.length - 1 && s.cum[i] < d) i++;
+  const a = s.pts[i - 1], b = s.pts[i], L = (s.cum[i] - s.cum[i - 1]) || 1, t = Math.max(0, Math.min(1, (d - s.cum[i - 1]) / L));
+  return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];
+}
+const EV = [];                                         // [minute, stop, on, off], every stop a bus makes
+const TR = D.trips.map(([pi, start, on, off], n) => {
+  const [k, st, mins] = D.pats[pi];
+  const u = ((n * 7919) % 60) / 60;                    // a trip's start is to the minute: spread its stops within it
+  const t = mins.map((m) => start + m + u);
+  let l = 0; const load = on.map((x, j) => (l = Math.max(0, l + x / 10 - off[j] / 10)));
+  st.forEach((s, j) => { if (on[j] || off[j]) EV.push([t[j], s, on[j] / 10, off[j] / 10]); });
+  return { k, st, t, load, start: t[0], end: t[t.length - 1], j: 0, prev: null };
+});
+EV.sort((a, b) => a[0] - b[0]);
+TR.splice(0, TR.length, ...TR.filter((r) => r.st.length > 1));
+const T0 = Math.floor(TR.reduce((m, r) => Math.min(m, r.start), 1e9) / 60) * 60;
+const T1 = Math.ceil(TR.reduce((m, r) => Math.max(m, r.end), 0) / 60) * 60;
+const BIN = 5, NB = Math.ceil((T1 - T0) / BIN);
+const binOn = new Float32Array(NB), binOff = new Float32Array(NB), stopBin = new Float32Array(N * NB * 2);
+const cumOn = new Float64Array(T1 - T0 + 2), cumOff = new Float64Array(T1 - T0 + 2);
+EV.forEach(([t, s, on, off]) => {
+  const b = Math.min(NB - 1, Math.floor((t - T0) / BIN)), m = Math.floor(t - T0) + 1;
+  binOn[b] += on; binOff[b] += off; stopBin[(s * NB + b) * 2] += on; stopBin[(s * NB + b) * 2 + 1] += off;
+  cumOn[m] += on; cumOff[m] += off;
+});
+for (let i = 1; i < cumOn.length; i++) { cumOn[i] += cumOn[i - 1]; cumOff[i] += cumOff[i - 1]; }
+const cumAt = (c, t) => c[Math.max(0, Math.min(c.length - 1, Math.floor(t - T0) + 1))];
+const binMax = Math.max(...binOn, ...binOff);
+
+// ---------- view: Somerville in the middle, pan and zoom ----------
+const stage = $('#stage'), cb = $('#base'), ct = $('#trail'), cx_ = $('#top');
+const gb = cb.getContext('2d'), gt = ct.getContext('2d'), gx = cx_.getContext('2d');
+let W = 0, H = 0, DPR = 1, view = { x: 0, y: 0, k: 0.05 }, K0 = 0.05;
+const HOME = (() => {
+  const t = D.towns.find((x) => x.n === 'Somerville'); let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+  t.rings.forEach((r) => r.forEach((p) => { x0 = Math.min(x0, p[0]); y0 = Math.min(y0, p[1]); x1 = Math.max(x1, p[0]); y1 = Math.max(y1, p[1]); }));
+  return { x0, y0, x1, y1, rings: t.rings };
+})();
+const sx = (x) => (x - view.x) * view.k + W / 2, sy = (y) => (y - view.y) * view.k + H / 2;
+const zs = () => Math.max(0.65, Math.min(2.2, Math.sqrt(view.k / K0)));   // marks grow a little as you zoom in
+function fit() {
+  const phone = W < 700, top = phone ? 190 : 0, bottom = phone ? 120 : 110, left = phone ? 0 : 300;
+  const k = Math.min((W - left - 40) / (HOME.x1 - HOME.x0), (H - top - bottom - 30) / (HOME.y1 - HOME.y0));
+  K0 = k;
+  view = { k, x: (HOME.x0 + HOME.x1) / 2 - (left / 2) / k, y: (HOME.y0 + HOME.y1) / 2 - ((top - bottom) / 2) / k };
+}
+function size() {
+  const r = stage.getBoundingClientRect(); W = r.width; H = r.height; DPR = Math.min(2, window.devicePixelRatio || 1);
+  [cb, ct, cx_].forEach((c) => { c.width = Math.round(W * DPR); c.height = Math.round(H * DPR); });
+}
+const worldT = (g) => g.setTransform(DPR * view.k, 0, 0, DPR * view.k, DPR * (W / 2 - view.x * view.k), DPR * (H / 2 - view.y * view.k));
+const path = (pts, close) => { const p = new Path2D(); pts.forEach((q, i) => (i ? p.lineTo(q[0], q[1]) : p.moveTo(q[0], q[1]))); if (close) p.closePath(); return p; };
+const P_TOWNS = D.towns.map((t) => { const p = new Path2D(); t.rings.forEach((r) => p.addPath(path(r, true))); return { n: t.n, p, home: t.n === 'Somerville' }; });
+const P_WATER = (() => { const p = new Path2D(); D.water.forEach((r) => p.addPath(path(r, true))); return p; })();
+const P_ROUTES = (() => { const p = new Path2D(); D.routes.forEach((r) => r.paths.forEach((q) => p.addPath(path(q)))); return p; })();
+const P_HOME = (() => { const p = new Path2D(); HOME.rings.forEach((r) => p.addPath(path(r, true))); return p; })();
+const TOWNLAB = D.towns.map((t) => { const r = t.rings.reduce((a, b) => (b.length > a.length ? b : a)); let x = 0, y = 0; r.forEach((p) => { x += p[0]; y += p[1]; }); return { n: t.n, x: x / r.length, y: y / r.length }; });
+function drawBase() {
+  gb.setTransform(DPR, 0, 0, DPR, 0, 0); gb.fillStyle = '#0B1C2E'; gb.fillRect(0, 0, W, H);
+  worldT(gb); const px = 1 / view.k;
+  P_TOWNS.forEach((t) => { gb.fillStyle = t.home ? '#163452' : '#11283F'; gb.fill(t.p); });
+  gb.fillStyle = '#07121D'; gb.fill(P_WATER);
+  gb.lineWidth = 1 * px; gb.strokeStyle = 'rgba(169,196,228,.16)'; P_TOWNS.forEach((t) => gb.stroke(t.p));
+  gb.lineWidth = 1.2 * px; gb.strokeStyle = 'rgba(169,196,228,.13)'; gb.lineJoin = 'round'; gb.stroke(P_ROUTES);
+  D.rapid.forEach((r) => { gb.strokeStyle = r.color; gb.globalAlpha = 0.28; gb.lineWidth = 2.5 * px; r.paths.forEach((q) => gb.stroke(path(q))); });
+  gb.globalAlpha = 1; gb.fillStyle = 'rgba(238,243,247,.22)';
+  const sr = 1.1 * px; S.forEach((s) => { gb.beginPath(); gb.arc(s.p[0], s.p[1], sr, 0, 7); gb.fill(); });
+  gb.setTransform(DPR, 0, 0, DPR, 0, 0);
+  gb.textAlign = 'center'; gb.font = `800 ${Math.round(13 * Math.min(1.4, zs()))}px 'Barlow Condensed', Arial Narrow, sans-serif`;
+  TOWNLAB.forEach((t) => { gb.fillStyle = t.n === 'Somerville' ? 'rgba(169,196,228,.32)' : 'rgba(169,196,228,.2)'; gb.fillText(t.n.toUpperCase().split('').join(' '), sx(t.x), sy(t.y)); });
+}
+
+// ---------- glow sprites ----------
+function sprite(rgb, soft) {
+  const c = document.createElement('canvas'); c.width = c.height = 64; const g = c.getContext('2d');
+  const gr = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+  gr.addColorStop(0, `rgba(${rgb},1)`); gr.addColorStop(soft, `rgba(${rgb},.35)`); gr.addColorStop(1, `rgba(${rgb},0)`);
+  g.fillStyle = gr; g.fillRect(0, 0, 64, 64); return c;
+}
+const SPR_ON = sprite(ONC.join(','), 0.25), SPR_OFF = sprite(OFFC.join(','), 0.25), SPR_BUS = sprite('200,222,246', 0.2);
+
+// ---------- the clock ----------
+const SPEEDS = [6, 12, 30];                            // minutes of the day per second: 1× is an hour in 10 seconds
+let T = 300, speed = 1, playing = !matchMedia('(prefers-reduced-motion: reduce)').matches, evPtr = 0, last = performance.now();
+const eOn = new Float32Array(N), eOff = new Float32Array(N), TAU = 10;   // each stop's glow: riders of the last ~10 minutes
+let ripples = [];
+function lowerBound(t) { let lo = 0, hi = EV.length; while (lo < hi) { const m = (lo + hi) >> 1; if (EV[m][0] <= t) lo = m + 1; else hi = m; } return lo; }
+function seek(t) {
+  T = Math.max(T0, Math.min(T1, t)); evPtr = lowerBound(T); eOn.fill(0); eOff.fill(0); ripples = [];
+  for (let i = lowerBound(T - 4 * TAU); i < evPtr; i++) { const [te, s, on, off] = EV[i], w = Math.exp(-(T - te) / TAU); eOn[s] += on * w; eOff[s] += off * w; }
+  TR.forEach((r) => { r.j = 0; r.prev = null; });
+  gt.setTransform(1, 0, 0, 1, 0, 0); gt.clearRect(0, 0, ct.width, ct.height);
+  pickLabels(true);
+}
+function advance(nt) {
+  if (nt >= T1) { seek(T0); return; }
+  const now = performance.now();
+  while (evPtr < EV.length && EV[evPtr][0] <= nt) {
+    const [, s, on, off] = EV[evPtr++];
+    eOn[s] += on; eOff[s] += off;
+    if (on >= 0.15) ripples.push({ s, n: on, c: ONC, b: now });
+    if (off >= 0.15) ripples.push({ s, n: off, c: OFFC, b: now });
+  }
+  if (ripples.length > 900) ripples = ripples.slice(-900);
+  const f = Math.exp(-(nt - T) / TAU); for (let i = 0; i < N; i++) { eOn[i] *= f; eOff[i] *= f; }
+  T = nt;
+}
+
+// ---------- drawing, every frame ----------
+const RIP = 1300;                                      // a ripple lasts this many milliseconds
+let aboard = 0;
+function draw(dt) {
+  const now = performance.now(), z = zs();
+  // trails: what's there fades, the buses draw on top of it
+  gt.setTransform(DPR, 0, 0, DPR, 0, 0);
+  if (playing) {
+    gt.globalCompositeOperation = 'destination-out'; gt.fillStyle = `rgba(0,0,0,${(1 - Math.exp(-dt / 0.45)).toFixed(3)})`; gt.fillRect(0, 0, W, H);
+  }
+  gt.globalCompositeOperation = 'lighter'; gt.strokeStyle = 'rgba(169,196,228,.55)'; gt.lineCap = 'round';
+  gx.setTransform(DPR, 0, 0, DPR, 0, 0); gx.clearRect(0, 0, W, H);
+  // Somerville's outline breathes with how many get on and off right now
+  const b = Math.max(0, Math.min(NB - 1, Math.floor((T - T0) / BIN))), beat = Math.pow((binOn[b] + binOff[b]) / (2 * binMax), 0.6);
+  worldT(gx); gx.lineWidth = (1.2 + 2.2 * beat) / view.k; gx.strokeStyle = `rgba(169,196,228,${(0.22 + 0.5 * beat).toFixed(3)})`; gx.lineJoin = 'round'; gx.stroke(P_HOME);
+  gx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  gx.globalCompositeOperation = 'lighter';
+  // the stops' glow
+  for (let i = 0; i < N; i++) {
+    const a = eOn[i], o = eOff[i]; if (a < 0.03 && o < 0.03) continue;
+    const x = sx(S[i].p[0]), y = sy(S[i].p[1]); if (x < -60 || y < -60 || x > W + 60 || y > H + 60) continue;
+    if (a >= 0.03) { const r = (4 + 4.2 * Math.sqrt(a)) * z; gx.globalAlpha = Math.min(0.9, 0.25 + a / 6); gx.drawImage(SPR_ON, x - r, y - r, 2 * r, 2 * r); }
+    if (o >= 0.03) { const r = (4 + 4.2 * Math.sqrt(o)) * z; gx.globalAlpha = Math.min(0.9, 0.25 + o / 6); gx.drawImage(SPR_OFF, x - r, y - r, 2 * r, 2 * r); }
+  }
+  // ripples: a ring for each bus's riders getting on (orange) or off (blue)
+  ripples = ripples.filter((p) => now - p.b < RIP);
+  ripples.forEach((p) => {
+    const q = (now - p.b) / RIP, x = sx(S[p.s].p[0]), y = sy(S[p.s].p[1]);
+    if (x < -40 || y < -40 || x > W + 40 || y > H + 40) return;
+    gx.globalAlpha = Math.min(1, 0.35 + p.n / 3) * (1 - q) * (1 - q);
+    gx.strokeStyle = `rgb(${p.c})`; gx.lineWidth = 1.6;
+    gx.beginPath(); gx.arc(x, y, (2 + (5 + 6 * Math.sqrt(p.n)) * q) * z, 0, 7); gx.stroke();
+  });
+  // the buses
+  aboard = 0;
+  TR.forEach((r) => {
+    if (T < r.start || T > r.end) { r.prev = null; return; }
+    const t = r.t; while (r.j < t.length - 2 && t[r.j + 1] <= T) r.j++; while (r.j > 0 && t[r.j] > T) r.j--;
+    const j = r.j, l = r.load[j]; aboard += l;
+    const f = t[j + 1] > t[j] ? Math.min(1, (T - t[j]) / (t[j + 1] - t[j])) : 1;
+    const w = along(seg(r.st[j], r.k, r.st[j + 1]), f), x = sx(w[0]), y = sy(w[1]);
+    if (r.prev && playing) {
+      const d = Math.hypot(x - r.prev[0], y - r.prev[1]);
+      if (d < 90 && d > 0.05) { gt.lineWidth = (1 + 0.25 * Math.sqrt(l)) * z; gt.beginPath(); gt.moveTo(r.prev[0], r.prev[1]); gt.lineTo(x, y); gt.stroke(); }
+    }
+    r.prev = [x, y];
+    if (x < -20 || y < -20 || x > W + 20 || y > H + 20) return;
+    const rad = (1.7 + 0.5 * Math.sqrt(l)) * z;
+    gx.globalAlpha = 0.55; gx.drawImage(SPR_BUS, x - rad * 3.2, y - rad * 3.2, rad * 6.4, rad * 6.4);
+    gx.globalAlpha = 1; gx.fillStyle = '#fff'; gx.beginPath(); gx.arc(x, y, rad, 0, 7); gx.fill();
+  });
+  gx.globalAlpha = 1; gx.globalCompositeOperation = 'source-over';
+  drawWave();
+}
+
+// ---------- the day's pulse: getting on above the line, getting off below ----------
+const wave = $('#wave'), gw = wave.getContext('2d');
+let WW = 0, WH = 0;
+function sizeWave() { const r = wave.getBoundingClientRect(); WW = r.width; WH = r.height; wave.width = Math.round(WW * DPR); wave.height = Math.round(WH * DPR); }
+const tx = (t) => (t - T0) / (T1 - T0) * WW;
+const hourName = (h) => { h = ((h % 24) + 24) % 24; return h === 0 ? '12a' : h === 12 ? 'noon' : h < 12 ? h + 'a' : (h - 12) + 'p'; };
+function drawWave() {
+  gw.setTransform(DPR, 0, 0, DPR, 0, 0); gw.clearRect(0, 0, WW, WH);
+  const lab = 14, mid = (WH - lab) / 2, amp = mid - 2, bw = WW / NB, now = tx(T);
+  for (let i = 0; i < NB; i++) {
+    const x = i * bw, past = x + bw <= now + 0.5, a = past ? 1 : 0.35;
+    const hOn = amp * binOn[i] / binMax, hOff = amp * binOff[i] / binMax;
+    gw.fillStyle = `rgba(${ONC},${a})`; gw.fillRect(x + 0.3, mid - hOn, Math.max(0.6, bw - 0.6), hOn);
+    gw.fillStyle = `rgba(${OFFC},${a})`; gw.fillRect(x + 0.3, mid, Math.max(0.6, bw - 0.6), hOff);
+  }
+  gw.fillStyle = 'rgba(169,196,228,.5)'; gw.fillRect(0, mid - 0.5, WW, 1);
+  gw.fillStyle = '#A9C4E4'; gw.font = '11px Barlow, Arial, sans-serif'; gw.textAlign = 'center';
+  const step = WW < 420 ? 6 : 3;
+  for (let h = Math.ceil(T0 / 60); h * 60 <= T1; h++) if (h % step === 0) gw.fillText(hourName(h), tx(h * 60), WH - 2);
+  gw.fillStyle = '#EEF3F7'; gw.fillRect(now - 1, 0, 2, WH - lab);
+  gw.beginPath(); gw.arc(now, mid, 5, 0, 7); gw.fill();
+}
+
+// ---------- the clock and counts ----------
+const fmt = (x) => Math.round(x).toLocaleString();
+function timeText(t) { const m = Math.floor(t) % 1440, h = Math.floor(m / 60), mm = m % 60; return [`${h % 12 || 12}:${String(mm).padStart(2, '0')}`, h < 12 ? 'a.m.' : 'p.m.']; }
+let lastHud = 0;
+function hud(force) {
+  const now = performance.now(); if (!force && now - lastHud < 120) return; lastHud = now;
+  const [c, ap] = timeText(T); $('#clock').textContent = c; $('#ampm').textContent = ap;
+  $('#aboard').textContent = fmt(aboard);
+  $('#hon').textContent = fmt(cumAt(cumOn, T) - cumAt(cumOn, T - 60));
+  $('#hoff').textContent = fmt(cumAt(cumOff, T) - cumAt(cumOff, T - 60));
+  wave.setAttribute('aria-valuenow', Math.round(T)); wave.setAttribute('aria-valuetext', c + ' ' + ap);
+}
+
+// ---------- the busiest stops of the last hour, labeled ----------
+const labels = $('#labels');
+let labTimer = 0, shown = [];
+function lastHour(s) {
+  const b1 = Math.min(NB - 1, Math.floor((T - T0) / BIN)), b0 = Math.max(0, b1 - 11); let on = 0, off = 0;
+  for (let b = b0; b <= b1; b++) { on += stopBin[(s * NB + b) * 2]; off += stopBin[(s * NB + b) * 2 + 1]; }
+  return [on, off];
+}
+function pickLabels(force) {
+  const now = performance.now(); if (!force && now - labTimer < 600) return; labTimer = now;
+  const want = W < 700 ? 2 : 3, cand = [];
+  for (let i = 0; i < N; i++) {
+    const x = sx(S[i].p[0]), y = sy(S[i].p[1]); if (x < 60 || x > W - 60 || y < 60 || y > H - 140) continue;
+    const [on, off] = lastHour(i); if (on + off >= 20) cand.push({ i, on, off, x, y });
+  }
+  cand.sort((a, b) => (b.on + b.off) - (a.on + a.off));
+  const pick = [];
+  for (const c of cand) { if (pick.length >= want) break; if (pick.every((p) => Math.hypot(p.x - c.x, p.y - c.y) > 120)) pick.push(c); }
+  labels.innerHTML = pick.map((p) => `<div class="lab" style="left:${p.x.toFixed(0)}px;top:${p.y.toFixed(0)}px"><b>${esc(S[p.i].n)}</b><span class="on">${fmt(p.on)} on</span> · <span class="off">${fmt(p.off)} off</span> <span style="color:var(--ice)">last hour</span></div>`).join('');
+  shown = pick;
+}
+const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+// ---------- loop ----------
+function frame(now) {
+  const dt = Math.min(0.1, (now - last) / 1000); last = now;
+  if (playing) advance(T + dt * SPEEDS[speed]);
+  draw(dt); hud(); if (playing) pickLabels();
+  requestAnimationFrame(frame);
+}
+
+// ---------- controls ----------
+function setPlaying(p) {
+  playing = p; $('#play').setAttribute('aria-label', p ? 'Pause' : 'Play');
+  $('#playicon').setAttribute('d', p ? 'M5 3h4v14H5zM11 3h4v14h-4z' : 'M5 3l12 7-12 7z');
+  last = performance.now();
+}
+$('#play').addEventListener('click', () => { if (!playing && T >= T1 - 0.5) seek(T0); setPlaying(!playing); });
+document.querySelectorAll('.speed button').forEach((b) => b.addEventListener('click', () => {
+  speed = +b.dataset.s; document.querySelectorAll('.speed button').forEach((x) => x.setAttribute('aria-pressed', x === b));
+}));
+let scrub = false;
+const scrubTo = (e) => { const r = wave.getBoundingClientRect(); seek(T0 + (e.clientX - r.left) / r.width * (T1 - T0)); hud(true); draw(0); };
+wave.addEventListener('pointerdown', (e) => { scrub = true; try { wave.setPointerCapture(e.pointerId); } catch (err) { /* old browsers */ } scrubTo(e); });
+wave.addEventListener('pointermove', (e) => { if (scrub) scrubTo(e); });
+wave.addEventListener('pointerup', () => { scrub = false; });
+wave.addEventListener('keydown', (e) => {
+  const d = { ArrowRight: 15, ArrowLeft: -15, PageUp: 60, PageDown: -60 }[e.key];
+  if (d) { e.preventDefault(); seek(T + d); hud(true); draw(0); }
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === ' ' && e.target === document.body) { e.preventDefault(); $('#play').click(); }
+  if (e.key === 'Escape') $('#about').hidden = true;
+});
+$('#aboutbtn').addEventListener('click', () => { $('#about').hidden = !$('#about').hidden; });
+$('#aboutx').addEventListener('click', () => { $('#about').hidden = true; });
+
+// pan, pinch and wheel zoom on the map; hover a stop for its last hour
+const top_ = cx_, ptrs = new Map(), tip = $('#tip');
+let drag = null, pinch = null;
+function viewChanged() { drawBase(); gt.setTransform(1, 0, 0, 1, 0, 0); gt.clearRect(0, 0, ct.width, ct.height); TR.forEach((r) => { r.prev = null; }); pickLabels(true); if (!playing) draw(0); }
+function zoomAt(f, px, py) {
+  const r = stage.getBoundingClientRect(), mx = px - r.left, my = py - r.top;
+  const wx = (mx - W / 2) / view.k + view.x, wy = (my - H / 2) / view.k + view.y;
+  view.k = Math.max(K0 * 0.35, Math.min(K0 * 8, view.k * f));
+  view.x = wx - (mx - W / 2) / view.k; view.y = wy - (my - H / 2) / view.k; viewChanged();
+}
+top_.addEventListener('pointerdown', (e) => {
+  ptrs.set(e.pointerId, [e.clientX, e.clientY]); try { top_.setPointerCapture(e.pointerId); } catch (err) { /* old browsers */ }
+  if (ptrs.size === 2) { const [a, b] = [...ptrs.values()]; pinch = { d: Math.hypot(a[0] - b[0], a[1] - b[1]), k: view.k }; drag = null; }
+  else drag = { x: e.clientX, y: e.clientY, vx: view.x, vy: view.y, moved: false };
+});
+top_.addEventListener('pointermove', (e) => {
+  if (ptrs.has(e.pointerId)) ptrs.set(e.pointerId, [e.clientX, e.clientY]);
+  if (pinch && ptrs.size === 2) {
+    const [a, b] = [...ptrs.values()], d = Math.hypot(a[0] - b[0], a[1] - b[1]);
+    zoomAt(pinch.k * d / pinch.d / view.k, (a[0] + b[0]) / 2, (a[1] + b[1]) / 2); return;
+  }
+  if (drag) {
+    const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+    if (!drag.moved && Math.hypot(dx, dy) > 4) { drag.moved = true; top_.classList.add('grabbing'); tip.style.display = 'none'; }
+    if (drag.moved) { view.x = drag.vx - dx / view.k; view.y = drag.vy - dy / view.k; viewChanged(); }
+    return;
+  }
+  if (e.pointerType !== 'touch') showTip(e.clientX, e.clientY);
+});
+function endPtr(e) {
+  ptrs.delete(e.pointerId); top_.classList.remove('grabbing');
+  if (pinch) { if (ptrs.size < 2) pinch = null; drag = null; return; }
+  if (drag && !drag.moved) showTip(e.clientX, e.clientY);
+  drag = null;
+}
+top_.addEventListener('pointerup', endPtr);
+top_.addEventListener('pointercancel', endPtr);
+top_.addEventListener('pointerleave', () => { tip.style.display = 'none'; });
+top_.addEventListener('wheel', (e) => { e.preventDefault(); zoomAt(Math.exp(-e.deltaY * 0.0015), e.clientX, e.clientY); }, { passive: false });
+top_.addEventListener('dblclick', () => { fit(); viewChanged(); });
+function showTip(cx, cy) {
+  const r = stage.getBoundingClientRect(), mx = cx - r.left, my = cy - r.top;
+  let best = -1, bd = 14;
+  for (let i = 0; i < N; i++) { const d = Math.hypot(sx(S[i].p[0]) - mx, sy(S[i].p[1]) - my); if (d < bd) { bd = d; best = i; } }
+  if (best < 0) { tip.style.display = 'none'; return; }
+  const [on, off] = lastHour(best);
+  tip.innerHTML = `<b>${esc(S[best].n)}</b>${esc(S[best].t)} · last hour: <span style="color:#B93D06;font-weight:600">${fmt(on)} on</span>, <span style="color:#1F5FA0;font-weight:600">${fmt(off)} off</span>`;
+  tip.style.display = 'block';
+  tip.style.left = Math.min(W - 270, mx + 14) + 'px'; tip.style.top = Math.max(4, my - 50) + 'px';
+}
+
+let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { size(); sizeWave(); fit(); viewChanged(); }, 120); });
+size(); sizeWave(); fit(); drawBase(); seek(T); setPlaying(playing); hud(true);
+if (document.fonts) document.fonts.ready.then(() => { drawBase(); });
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>

@@ -20,6 +20,9 @@
 .flyers small{display:block;color:#A9C4E4;font-size:15px;margin-top:2px}
 .flyers .save{display:block;margin-top:8px;font-size:15px}
 .gallery figcaption b{font-family:var(--display);text-transform:uppercase;font-size:18px;line-height:1}
+.gallery video{width:100%;height:auto;aspect-ratio:9/16;border-radius:14px;display:block;background:#050C15;box-shadow:0 2px 0 rgba(16,36,58,.08)}
+.gallery figcaption span{display:flex;gap:10px}
+.gallery .bonus{font-size:14px;color:var(--mute,#47607C);margin:-2px 0 0}
 </style>
 </head>
 <body>
@@ -44,7 +47,17 @@ document.getElementById('gallery').innerHTML = cards.map((c) => `
   <figure>
     <a href="cards/${c.file}.png"><img src="cards/${c.file}.png" alt="${c.heading}" loading="lazy" width="1080" height="1920"></a>
     <figcaption><b>${c.n}. ${c.title}</b><a href="cards/${c.file}.png" download>Save</a></figcaption>
-  </figure>`).join('');
+  </figure>`).join('') + `
+  <figure>
+    <a href="cards/somerville-lights.gif"><video src="cards/somerville-lights.mp4" poster="cards/somerville-lights.jpg" muted loop playsinline preload="none" width="540" height="960" aria-label="Animation: Somerville's buses as holiday lights, the evening rush from 4:30 to 6:30 p.m. Stops flash red when riders get on and green when they get off."></video></a>
+    <figcaption><b>Somerville's lights</b><span><a href="cards/somerville-lights.gif" download>GIF</a><a href="cards/somerville-lights.mp4" download>Video</a></span></figcaption>
+    <p class="bonus">Bonus: the evening rush on the buses. <a href="../bus-pulse.html#lights">See it live</a></p>
+  </figure>`;
+// the animation plays when it's on screen, unless the reader asked for less motion
+const vid = document.querySelector('#gallery video');
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  new IntersectionObserver((es) => es.forEach((e) => (e.isIntersecting ? vid.play().catch(() => {}) : vid.pause()))).observe(vid);
+}
 </script>
 </body>
 </html>

@@ -697,16 +697,16 @@ function homes() {
 
 // ---------- the housing pipeline: a map you can zoom ----------
 const PP = D.pipe, PCOL = '#EEF3F7', LOTC = '#E8B84A';
-const PT = { c: 'Under construction', p: 'In permitting', m: 'Planned', f: 'Long range' };
+const PT = { c: 'Under construction', p: 'In permitting', m: 'Planned', f: 'Long range', s: 'Site, homes not set' };
 const PV = { z: 1, cx: null, cy: null };                      // the view: zoom and centre, in map metres
 const PZMAX = 8, LOTZ = 2.2;                                 // zoomed in this far, projects show as their lots
 const nearSta = (x, y) => HM.sta.reduce((b, s) => { const d = Math.hypot(s[0] - x, s[1] - y); return d < b[0] ? [d, s[2]] : b; }, [Infinity, '']);
 const half = (x, y) => nearSta(x, y)[0] <= 805;
 const lotXY = (l) => l.r[0][0];
 function pipeTiles() {
-  const by = (t) => PP.p.filter((x) => x.t === t), hom = (a) => a.reduce((s, x) => s + x.u, 0);
+  const by = (t) => PP.p.filter((x) => x.t === t), hom = (a) => a.reduce((s, x) => s + (x.u || 0), 0);
   const pc = (a) => a.length ? Math.round(100 * hom(a.filter((x) => half(...x.xy))) / hom(a)) : 0;
-  const k = { c: 'Under construction <span>(building permit issued)</span>', p: 'In permitting <span>(applied for)</span>', m: 'Planned <span>(MassBuilds, no permit yet)</span>', f: 'Long range <span>(MassBuilds “projected”)</span>' };
+  const k = { c: 'Under construction <span>(building permit issued)</span>', p: 'In permitting <span>(applied for)</span>', m: 'Planned <span>(no building permit yet)</span>', f: 'Long range <span>(MassBuilds “projected”)</span>' };
   const ac = PP.lots.reduce((s, l) => s + (l.ac || 0), 0);
   $('#tiles-pipe').innerHTML = 'cpmf'.split('').map((t) => `<div class="tile"><div class="k">${k[t]}</div><div class="v">${fmt(hom(by(t)))}</div><div class="s">homes, ${by(t).length} ${t === 'f' ? 'sites' : 'projects'} · ${pc(by(t))}% within ½ mile of a station</div></div>`).join('')
     + `<div class="tile"><div class="k">Buildable vacant lots <span>(assessor)</span></div><div class="v">${PP.lots.length}</div><div class="s">lots, ${ac.toFixed(0)} acres · ${PP.lots.filter((l) => half(...lotXY(l))).length} within ½ mile</div></div>`;
@@ -715,9 +715,10 @@ function pipe() {
   pipeTiles();
   const el = $('#c-pipe'), w = W(el), [MW, MH] = D.size, phone = w < 600, h = Math.round(w * MH / MW), k0 = w / MW;
   if (PV.cx == null) { PV.cx = MW / 2; PV.cy = MH / 2; }
-  const rad = (u) => (2.5 + 19 * Math.sqrt(u / 450)) * Math.max(0.75, Math.min(1.2, w / 900));
+  const rad = (u) => (2.5 + 19 * Math.sqrt((u || 40) / 450)) * Math.max(0.75, Math.min(1.2, w / 900));   // homes not set: a mid-size ring
   const STY = { c: `fill="${PCOL}" fill-opacity=".9" stroke="${SURF}" stroke-width="1.5"`, p: `fill="${PCOL}" fill-opacity=".22" stroke="${PCOL}" stroke-width="1.8"`,
-    m: `fill="rgba(0,0,0,0)" stroke="${PCOL}" stroke-width="1.8" stroke-dasharray="4 3"`, f: `fill="rgba(0,0,0,0)" stroke="${PCOL}" stroke-opacity=".7" stroke-width="1.6" stroke-dasharray="1.5 3.5" stroke-linecap="round"` };
+    m: `fill="rgba(0,0,0,0)" stroke="${PCOL}" stroke-width="1.8" stroke-dasharray="4 3"`, f: `fill="rgba(0,0,0,0)" stroke="${PCOL}" stroke-opacity=".7" stroke-width="1.6" stroke-dasharray="1.5 3.5" stroke-linecap="round"`,
+    s: `fill="${C.bus}" fill-opacity=".15" stroke="${C.bus}" stroke-width="2" stroke-dasharray="4 3"` };
   const NS = 'vector-effect="non-scaling-stroke"';
   let base = '';                                              // drawn once in map metres, moved with a transform
   D.towns.forEach((t) => { base += `<path d="${t.rings.map(pathOf).join('')}" fill="${t.n === 'Somerville' ? '#163452' : '#11283F'}" stroke="rgba(169,196,228,.28)" stroke-width="1.2" ${NS}/>`; });
@@ -726,7 +727,8 @@ function pipe() {
   Object.entries(HM.rail).forEach(([n, ln]) => { base += `<path d="M${ln.map((p) => p.join(',')).join('L')}" fill="none" stroke="${LINEC[n]}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" ${NS}/>`; });
   PP.lots.forEach((l, i) => { base += `<path class="pl" data-l="${i}" d="${l.r.map(pathOf).join('')}" fill="${LOTC}" fill-opacity=".6" stroke="${LOTC}" stroke-width="1.5" stroke-linejoin="round" ${NS}/>`; });
   const LST = { c: `fill="${PCOL}" fill-opacity=".85" stroke="${PCOL}" stroke-width="1"`, p: `fill="${PCOL}" fill-opacity=".25" stroke="${PCOL}" stroke-width="1.8"`,
-    m: `fill="${PCOL}" fill-opacity=".06" stroke="${PCOL}" stroke-width="1.8" stroke-dasharray="5 3"`, f: `fill="${PCOL}" fill-opacity=".04" stroke="${PCOL}" stroke-opacity=".75" stroke-width="1.6" stroke-dasharray="1.5 4" stroke-linecap="round"` };
+    m: `fill="${PCOL}" fill-opacity=".06" stroke="${PCOL}" stroke-width="1.8" stroke-dasharray="5 3"`, f: `fill="${PCOL}" fill-opacity=".04" stroke="${PCOL}" stroke-opacity=".75" stroke-width="1.6" stroke-dasharray="1.5 4" stroke-linecap="round"`,
+    s: `fill="${C.bus}" fill-opacity=".15" stroke="${C.bus}" stroke-width="2" stroke-dasharray="5 3"` };
   PP.p.forEach((x, i) => {                                    // each project's lot, under its circle; the circle gives way as you zoom in
     if (!x.lot) return;
     base += `<path class="pp" data-i="${i}" d="${x.lot.map(pathOf).join('')}" ${LST[x.t]} stroke-linejoin="round" ${NS}/>`;
@@ -734,7 +736,7 @@ function pipe() {
     x.lc = [(Math.min(...xs) + Math.max(...xs)) / 2, (Math.min(...ys) + Math.max(...ys)) / 2, Math.max(Math.max(...xs) - Math.min(...xs), Math.max(...ys) - Math.min(...ys)) / 2];
   });
   const tot = (t) => PP.p.filter((x) => x.t === t).reduce((s, x) => s + x.u, 0);
-  el.innerHTML = `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" role="img" aria-label="Zoomable map of Somerville's housing pipeline: ${fmt(tot('c'))} homes under construction, ${fmt(tot('p'))} in permitting, ${fmt(tot('m'))} planned and ${fmt(tot('f'))} long range, and ${PP.lots.length} buildable vacant lots, with the T lines, stations and bus routes. The biggest: ${PP.p.slice(0, 4).map((x) => `${x.full || x.a}, ${x.u} homes, ${PT[x.t].toLowerCase()}`).join('; ')}. Every project is in the table under All the numbers."><g id="pb">${base}</g><g id="pf"></g></svg>`;
+  el.innerHTML = `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" role="img" aria-label="Zoomable map of Somerville's housing pipeline: ${fmt(tot('c'))} homes under construction, ${fmt(tot('p'))} in permitting, ${fmt(tot('m'))} planned and ${fmt(tot('f'))} long range, and ${PP.lots.length} buildable vacant lots, with the T lines, stations and bus routes. The biggest: ${PP.p.slice(0, 4).map((x) => `${x.full || x.a}, ${x.u} homes, ${PT[x.t].toLowerCase()}`).join('; ')}.${PP.p.some((x) => x.t === 's') ? ` Sites with no number of homes yet: ${PP.p.filter((x) => x.t === 's').map((x) => x.full).join('; ')}.` : ''} Every project is in the table under All the numbers."><g id="pb">${base}</g><g id="pf"></g></svg>`;
   const svg = el.firstChild, gb = svg.querySelector('#pb'), gf = svg.querySelector('#pf');
   const clamp = () => {                                       // keep the view on the map
     PV.z = Math.max(1, Math.min(PZMAX, PV.z));
@@ -762,9 +764,9 @@ function pipe() {
     });
     const minU = (phone ? 200 : 75) / PV.z / PV.z;               // more labels as you zoom in
     PP.p.forEach((x, i) => {                                      // biggest first, beside the bubble, skipped where none fits
-      if (x.u < minU) return;
+      if ((x.u || 100) < minU) return;
       const [X, Y, r] = circ[i]; if (!vis(X, Y, 0)) return;
-      const txt = `${x.a} · ${x.u} homes`, tw = txt.length * 6.4 + 4; let best = null;
+      const txt = x.u ? `${x.a} · ${x.u} homes` : `${x.a} · homes not set`, tw = txt.length * 6.4 + 4; let best = null;
       for (const d of (phone && PV.z < 1.5 ? [0] : [0, 10, 22])) {
         for (const a of [0, 180, -35, 35, 215, 145, -90, 90]) {
           const c = Math.cos(a * Math.PI / 180), ex = X + (r + 4 + d) * c, ey = Y - (r + 4 + d) * Math.sin(a * Math.PI / 180) + 4;
@@ -810,8 +812,9 @@ function pipe() {
       return showTip(`<b>${esc(l.a || 'Vacant lot')}</b>` + tipRow('', 'Vacant lot', esc(l.c)) + (l.ac ? tipRow('', 'Size', `${l.ac.toFixed(2)} acres`) : '') + tipRow('', 'Nearest station', `${esc(n)}, ${fmt(d)} m`), e);
     }
     const x = PP.p[+c.dataset.i], [d, n] = nearSta(...x.xy);
-    showTip(`<b>${esc(x.full || x.a)}</b>` + tipRow('', 'Homes', fmt(x.u)) + tipRow('', 'Stage', PT[x.t])
-      + (x.full ? tipRow('', 'MassBuilds status', esc(x.ms)) + (x.y ? tipRow('', 'Expected', x.y) : '') + tipRow('', 'MassBuilds updated', x.up)
+    showTip(`<b>${esc(x.full || x.a)}</b>` + tipRow('', 'Homes', x.u ? fmt(x.u) : 'not set yet') + tipRow('', 'Stage', PT[x.t])
+      + (x.note ? `<div>${esc(x.note)}</div>` + tipRow('', 'Source', `City of Somerville, ${x.asof}`)
+        : x.full ? tipRow('', 'MassBuilds status', esc(x.ms)) + (x.y ? tipRow('', 'Expected', x.y) : '') + tipRow('', 'MassBuilds updated', x.up)
         : tipRow('', 'Applied', x.d) + (x.f ? tipRow('', 'First permit', x.f) : ''))
       + tipRow('', 'Nearest station', `${esc(n)}, ${fmt(d)} m`), e);
   };
@@ -849,10 +852,11 @@ function pipe() {
     else if (e.key === '-' || e.key === '_') { zoomAt(1 / 1.6, w / 2, h / 2); e.preventDefault(); }
   };
   draw();
-  $('#leg-pipe').innerHTML = `<span><i style="background:${PCOL};border-radius:50%"></i>Under construction</span><span><i class="ring" style="border-color:${PCOL};background:rgba(238,243,247,.22)"></i>In permitting</span><span><i class="ring" style="border-color:${PCOL};border-style:dashed"></i>Planned</span><span><i class="ring" style="border-color:rgba(238,243,247,.7);border-style:dotted"></i>Long range</span><span><i style="background:${LOTC};opacity:.8"></i>Buildable vacant lot</span><span><i class="line" style="background:${C.bus};opacity:.7"></i>Bus routes</span><span><i class="ring" style="border-color:rgba(169,196,228,.5);border-style:dashed"></i>½ mile from a station</span><span>Zoom in to see each project's lot.</span>`;
+  $('#leg-pipe').innerHTML = `<span><i style="background:${PCOL};border-radius:50%"></i>Under construction</span><span><i class="ring" style="border-color:${PCOL};background:rgba(238,243,247,.22)"></i>In permitting</span><span><i class="ring" style="border-color:${PCOL};border-style:dashed"></i>Planned</span><span><i class="ring" style="border-color:rgba(238,243,247,.7);border-style:dotted"></i>Long range</span><span><i class="ring" style="border-color:${C.bus};border-style:dashed;background:rgba(79,152,222,.15)"></i>Site, homes not set</span><span><i style="background:${LOTC};opacity:.8"></i>Buildable vacant lot</span><span><i class="line" style="background:${C.bus};opacity:.7"></i>Bus routes</span><span><i class="ring" style="border-color:rgba(169,196,228,.5);border-style:dashed"></i>½ mile from a station</span><span>Zoom in to see each project's lot.</span>`;
   const why = (s) => PP.drop.filter((x) => x.why.startsWith(s));
   const same = why('same site'), stale = why('not updated'), zon = why('a zoning'), prog = why('a program'), inP = why('in the City');
   $('#n-pipe').innerHTML = `<b>Under construction and in permitting:</b> the City's permit applications (as of ${PP.asof}): every "New Construction" building permit applied for since ${PP.from} whose description gives a number of homes, grouped by address. Under construction: a building permit issued (often for the foundation first) and no residential certificate of occupancy yet. In permitting: applied for, none issued. Homes are what the permit says; a final building can differ. Hotels left out, and ${PP.closed} projects whose permit closed with no certificate. `
+    + `<b>Public and nonprofit sites</b> the permits don't have yet, checked by hand from the City's pages: ${PP.p.filter((x) => x.note).map((x) => `${esc(x.a)} (${x.u ? `${fmt(x.u)} homes` : 'homes not set'})`).join(', ')}. `
     + `<b>Planned and long range:</b> MAPC's MassBuilds (updated to ${PP.mbup}), what isn't completed yet. It's kept by volunteers and can be out of date: some of its "in construction" entries have no City building permit, so they're shown as planned. Left out: ${inP.length + same.length} already in the City's permits${same.length ? ` (${same.map((x) => `${esc(x.n)}, ${x.u} homes`).join('; ')}: same site)` : ''}, ${zon.length} zoning scenarios, ${prog.length} program over many sites and ${stale.length} entries not updated in four years; the list is under All the numbers. `
     + `<b>Vacant lots:</b> MassGIS property tax parcels (Somerville assessor, FY${PP.fy}), the codes for vacant land that's developable or potentially so (residential, commercial, industrial); undevelopable and City-owned lots left out. Zoomed in, each project shows as its lot (the parcels on its permits, or the parcel under MassBuilds' point; ${PP.p.filter((x) => !x.lot).length} without one stay circles). Circles are straight-line ½ miles; walks are longer.`;
 }
@@ -1059,7 +1063,7 @@ function table() {
     + `<p class="note">New homes near the T without resident parking permits (the City's Schedule W, every address; homes and dates from each project's permits):</p><table><thead><tr><th>Address</th><th>Homes</th><th>Status</th><th>First permit</th><th>Occupied</th><th>Permits</th></tr></thead><tbody>`
     + D.homes.list.map((x) => `<tr><td>${esc(x.w)}</td><td>${x.u == null ? '—' : fmt(x.u)}</td><td>${esc(x.s)}</td><td>${x.p || '—'}</td><td>${x.o || '—'}</td><td>${esc(x.n) || '—'}</td></tr>`).join('') + '</tbody></table>'
     + `<p class="note">The housing pipeline (City permits since ${D.pipe.from}, as of ${D.pipe.asof}; MassBuilds, updated to ${D.pipe.mbup}):</p><table><thead><tr><th>Project</th><th>Homes</th><th>Stage</th><th>Source</th><th>Applied / expected</th><th>First permit / MassBuilds updated</th></tr></thead><tbody>`
-    + D.pipe.p.map((x) => `<tr><td>${esc(x.full || x.a)}</td><td>${fmt(x.u)}</td><td>${PT[x.t]}</td><td>${x.full ? 'MassBuilds' : 'City permits'}</td><td>${x.full ? (x.y || '—') : x.d}</td><td>${x.full ? x.up : (x.f || '—')}</td></tr>`).join('') + '</tbody></table>'
+    + D.pipe.p.map((x) => `<tr><td>${esc(x.full || x.a)}</td><td>${x.u ? fmt(x.u) : 'not set'}</td><td>${PT[x.t]}</td><td>${x.note ? `<a href="${esc(x.src)}">City of Somerville</a>` : x.full ? 'MassBuilds' : 'City permits'}</td><td>${x.note ? '—' : x.full ? (x.y || '—') : x.d}</td><td>${x.note ? x.asof : x.full ? x.up : (x.f || '—')}</td></tr>`).join('') + '</tbody></table>'
     + `<p class="note">MassBuilds entries left out of the pipeline:</p><table><thead><tr><th>MassBuilds entry</th><th>Homes</th><th>Why</th></tr></thead><tbody>`
     + D.pipe.drop.map((x) => `<tr><td>${esc(x.n)}</td><td>${fmt(x.u)}</td><td>${esc(x.why)}</td></tr>`).join('') + '</tbody></table>'
     + `<p class="note">Buildable vacant lots (MassGIS parcels, FY${D.pipe.fy}):</p><table><thead><tr><th>Address</th><th>Use</th><th>Acres</th></tr></thead><tbody>`

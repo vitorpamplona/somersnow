@@ -933,7 +933,7 @@ def city_projects():
     return out, d['asof']
 
 
-def massbuilds(city):
+def massbuilds(city, sites=()):
     """MassBuilds developments in Somerville not yet completed (planning, in construction, projected) with homes, less
     the ones the City's permits already have: within 80 m of a City project with at least half the homes (one to one,
     closest first), or City projects within 100 m that add up to half its homes (a big site permitted in pieces, like
@@ -958,6 +958,10 @@ def massbuilds(city):
     for x in cand:
         if x['id'] in why:
             continue
+        near = [s for s in sites if s['homes'] and x['hu'] >= 0.25 * s['homes'] and dist(x, {'lon': s['lon'], 'lat': s['lat']}) <= 150]
+        if near:
+            why[x['id']] = f"the City's record for {near[0]['label']} replaces it"
+            continue
         close = [i for i, p in enumerate(city) if i not in taken and dist(x, p) <= 100]
         if close and sum(city[i]['u'] for i in close) >= 0.5 * x['hu']:
             why[x['id']] = (f"same site as City permits for {sum(city[i]['u'] for i in close)} homes ("
@@ -972,6 +976,15 @@ def massbuilds(city):
     keep = [x for x in cand if x['id'] not in why]
     drop = [{'n': x['name'].strip(), 'u': x['hu'], 'why': why[x['id']]} for x in cand if x['id'] in why]
     return keep, drop, max((x.get('updated_at') or '')[:10] for x in som)
+
+
+def pipeline_sites():
+    """Public and nonprofit sites the permits and MassBuilds miss or have out of date, checked by hand from the City's
+    own pages (pipeline_sites.csv: name, label, homes or blank when not set, a note, the source and its date)."""
+    with open(os.path.join(HERE, 'pipeline_sites.csv'), newline='') as f:
+        rows = list(csv.DictReader(f))
+    return [dict(r, homes=int(r['homes']) if r['homes'] else None, lat=float(r['lat']), lon=float(r['lon']),
+                 props=[p for p in [prop_id(r['parcel'])] if p]) for r in rows]
 
 
 def vacant_lots():
@@ -992,12 +1005,12 @@ def vacant_lots():
 
 
 def prop_id(parcel):
-    """The City's parcel number ("058-E-00016-000000") as MassGIS writes it (PROP_ID "58_E_16")."""
-    m = re.match(r'0*(\d+)-([A-Z]+)-0*(\d+)(?:-0*(\w+))?$', parcel or '')
-    return m and f"{m.group(1)}_{m.group(2)}_{m.group(3)}" + (f"_{m.group(4)}" if m.group(4) else '')
+    """The City's parcel number ("058-E-00016-000000", "106-A-0003B-000000") as MassGIS writes it ("58_E_16", "106_A_3_B")."""
+    m = re.match(r'0*(\d+)-([A-Z]+)-0*(\d+)([A-Z]*)(?:-0*(\w*))?$', parcel or '')    # a lettered lot: 0003B → 3_B
+    return m and '_'.join(x for x in (m.group(1), m.group(2), m.group(3), m.group(4), m.group(5)) if x)
 
 
-def project_lots(city, keep):
+def project_lots(city, keep, sites=()):
     """The parcel outlines under each project: by the permits' parcel numbers for City projects (all of them, a project
     can span lots), else the parcel under its point (MassBuilds entries, and permits whose parcel was renumbered when
     lots merged). Cached for the month."""
@@ -1007,18 +1020,23 @@ def project_lots(city, keep):
         with open(path) as f:
             got = json.load(f)
     fields = {'outFields': 'PROP_ID,SITE_ADDR', 'returnGeometry': 'true', 'outSR': 4326, 'geometryPrecision': 6, 'f': 'json'}
-    want = sorted({p for c in city for p in c['props']} - set(got))
-    for i in range(0, len(want), 25):
-        ids = ','.join(f"'{p}'" for p in want[i:i + 25])
-        for ft in json.loads(get(PARCELS, {'where': f'TOWN_ID=274 AND PROP_ID IN ({ids})', **fields}))['features']:
-            got[ft['attributes']['PROP_ID']] = ft['geometry']['rings']
-        for p in want[i:i + 25]:
+    # by parcel number, through an area query around the project: the service refuses (400) queries on PROP_ID or
+    # SITE_ADDR, but answers a box around a point with every parcel in it
+    for c in list(city) + list(sites):
+        if not c['props'] or all(p in got for p in c['props']):
+            continue
+        box = f"{c['lon'] - 0.002},{c['lat'] - 0.0015},{c['lon'] + 0.002},{c['lat'] + 0.0015}"
+        fs = json.loads(get(PARCELS, {'geometry': box, 'geometryType': 'esriGeometryEnvelope', 'inSR': 4326,
+                                      'spatialRel': 'esriSpatialRelIntersects', 'where': 'TOWN_ID=274', **fields})).get('features', [])
+        for ft in fs:
+            got.setdefault(ft['attributes']['PROP_ID'], ft['geometry']['rings'])
+        for p in c['props']:
             got.setdefault(p, None)
     def at(lon, lat):
         k = f'pt:{lon:.6f},{lat:.6f}'
         if k not in got:
             fs = json.loads(get(PARCELS, {'geometry': f'{lon},{lat}', 'geometryType': 'esriGeometryPoint', 'inSR': 4326,
-                                          'spatialRel': 'esriSpatialRelIntersects', **fields}))['features']
+                                          'spatialRel': 'esriSpatialRelIntersects', **fields})).get('features', [])
             got[k] = fs[0]['geometry']['rings'] if fs else None
         return got[k]
     out = {}
@@ -1027,6 +1045,8 @@ def project_lots(city, keep):
         out[('c', c['a'])] = rings
     for x in keep:
         out[('m', x['id'])] = at(float(x['longitude']), float(x['latitude']))
+    for s in sites:
+        out[('s', s['label'])] = [r for p in s['props'] if got.get(p) for r in got[p]] or at(s['lon'], s['lat'])
     os.makedirs(CACHE, exist_ok=True)
     with open(path, 'w') as f:
         json.dump(got, f)
@@ -1041,16 +1061,26 @@ def short_name(n):
 
 def pipeline(xy):
     city, asof = city_projects()
-    keep, drop, mbup = massbuilds(city)
+    sites = pipeline_sites()
+    keep, drop, mbup = massbuilds(city, sites)
     lots = vacant_lots()
     shown = [c for c in city if c['stage'] in ('construction', 'permitting')]
-    plot = project_lots(shown, keep)
+    K = (math.cos(math.radians(42.39)) * 111320, 110540)
+    permitted = lambda s: [c for c in shown if math.hypot((c['lon'] - s['lon']) * K[0], (c['lat'] - s['lat']) * K[1]) <= 80
+                           and c['u'] >= 0.5 * (s['homes'] or 0)]
+    for s in [s for s in sites if permitted(s)]:          # once the City has a building permit, the permit is the record
+        print(f"  WARNING: {s['label']} is now in the City's permits ({permitted(s)[0]['a'].title()}); "
+              f"remove it from pipeline_sites.csv", file=sys.stderr)
+        sites.remove(s)
+    plot = project_lots(shown, keep, sites)
     p = [{'xy': xy(c['lon'], c['lat']), 'u': c['u'], 't': 'c' if c['stage'] == 'construction' else 'p', 'a': c['a'].title(),
           'd': c['applied'], 'f': c['first'], 'n': c['n'], 'k': ('c', c['a'])} for c in shown]
     p += [{'xy': xy(float(x['longitude']), float(x['latitude'])), 'u': x['hu'], 't': 'f' if x['status'] == 'projected' else 'm',
            'a': short_name(x['name']), 'full': x['name'].strip(), 'ms': x['status'].replace('_', ' '), 'y': x.get('year_compl'),
            'up': (x.get('updated_at') or '')[:10], 'k': ('m', x['id'])} for x in keep]
-    p.sort(key=lambda x: -x['u'])
+    p += [{'xy': xy(s['lon'], s['lat']), 'u': s['homes'], 't': 'm' if s['homes'] else 's', 'a': s['label'], 'full': s['name'],
+           'note': s['note'], 'src': s['source'], 'asof': s['as_of'], 'k': ('s', s['label'])} for s in sites]
+    p.sort(key=lambda x: -(x['u'] or 0))
     used = set()                                       # a lot drawn once, for the biggest project on it; the others keep a circle
     for x in p:
         rings = plot.get(x.pop('k'))
@@ -1062,10 +1092,10 @@ def pipeline(xy):
     lo = [{'r': [[xy(*q) for q in r] for r in v['rings']], 'a': (v['a'].get('SITE_ADDR') or '').title(),
            'c': VACANT.get(v['a']['USE_CODE'], v['a']['USE_CODE']), 'ac': v['a'].get('LOT_SIZE'), 'fy': v['a'].get('FY')} for v in lots]
     n = Counter(x['t'] for x in p)
-    h = {t: sum(x['u'] for x in p if x['t'] == t) for t in 'cpmf'}
+    h = {t: sum(x['u'] or 0 for x in p if x['t'] == t) for t in 'cpmfs'}
     closed = [c for c in city if c['stage'] == 'closed']
     print(f'  housing pipeline: City permits {n["c"]} under construction ({h["c"]} homes), {n["p"]} in permitting ({h["p"]}); '
-          f'MassBuilds {n["m"]} planned ({h["m"]}), {n["f"]} long range ({h["f"]}), {len(drop)} left out; {len(lo)} vacant lots', file=sys.stderr)
+          f'MassBuilds and City sites {n["m"]} planned ({h["m"]}), {n["f"]} long range ({h["f"]}), {n["s"]} sites with homes not set, {len(drop)} MassBuilds left out; {len(lo)} vacant lots', file=sys.stderr)
     for x in drop:
         print(f"    MassBuilds left out: {x['n']} ({x['u']}): {x['why']}", file=sys.stderr)
     return {'p': p, 'lots': lo, 'drop': drop, 'asof': asof, 'mbup': mbup, 'from': PIPE_FROM, 'closed': len(closed),

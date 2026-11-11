@@ -46,6 +46,7 @@ STATIONS = [
 ]
 OLD_NAMES = {'Davis': 'place-davis', 'Porter': 'place-portr', 'Assembly': 'place-astao', 'Sullivan Square': 'place-sull'}
 ROUTE_NAME = {'747': 'CT2', '194': '89/93'}
+ROUTE_ID = {v: k for k, v in ROUTE_NAME.items()}
 BIKES = 'https://s3.amazonaws.com/hubway-data/'      # Bluebikes (Hubway until 2018) monthly trip files
 BIKE_MONTHS = (9, 10, 11)                            # "fall" for bikes: September to November
 ACS_TABLE = 'https://data.census.gov/api/access/data/table'   # Census tables, no key; Somerville city = 160XX00US2562535
@@ -175,6 +176,20 @@ def somerville_exact():
     return rings
 
 
+def start_min(t):
+    """Minutes after midnight a trip starts ("7:05:00", or a fraction of a day like 0.538 in some Fall 2025 rows)."""
+    t = t.strip()
+    if ':' in t:
+        h, m = t.split(':')[:2]
+        return int(h) * 60 + int(m)
+    return int(round(float(t) * 1440))
+
+
+def rush(minute):
+    """The MBTA's weekday peak periods: AM 7:00-8:59, PM 4:00-6:29 (Service Delivery Policy, Dec 2025)."""
+    return 420 <= minute < 540 or 960 <= minute < 1110
+
+
 def start_hour(t):
     """Hour a trip starts, from "7:05:00" or (some rows of the Fall 2025 file) a fraction of a day like 0.538."""
     t = t.strip()
@@ -188,7 +203,8 @@ def bus(som_rings):
     feeds = fall_feeds()
     COLS = {'route': ('route_id', 'GTFS route_id'), 'stop': ('stop_id', 'GTFS stop_id'), 'day': ('day_type_name', 'Day Type'),
             'on': ('boardings', 'Boardings'), 'off': ('alightings', 'Alightings'), 'start': ('trip_start_time', 'trip start time'),
-            'name': ('stop_name', 'Stop Name'), 'variant': ('route_variant', 'Route/Variant'), 'dir': ('direction_id', 'GTFS direction_id')}
+            'name': ('stop_name', 'Stop Name'), 'variant': ('route_variant', 'Route/Variant'), 'dir': ('direction_id', 'GTFS direction_id'),
+            'load': ('load_', 'load', 'Load')}
     DAY = {'weekday': 'wk', 'Wkdy': 'wk', 'Fri': 'fri', 'saturday': 'sat', 'Sat': 'sat', 'sunday': 'sun', 'Sun': 'sun'}
     seasons, stops_all = {}, {}
     files = sorted(n for n in z.namelist() if n.endswith('.csv') and '_Fall_' in n)
@@ -209,6 +225,7 @@ def bus(som_rings):
         hour = defaultdict(Counter)
         names, unknown = {}, 0.0
         trips = defaultdict(set)                       # route -> weekday trips that stop in Somerville (Mon-Thu from 2025)
+        prof = defaultdict(lambda: [set(), defaultdict(lambda: [0.0, 0])])   # (route id, direction) -> [rush trips, stop -> [load sum, n]]
         for row in r:
             d = DAY.get(row[col['day']])
             if not d:
@@ -217,6 +234,10 @@ def bus(som_rings):
             off = float(row[col['off']] or 0)
             sid = row[col['stop']]
             tot[d]['sys'] += on
+            if d == 'wk' and rush(start_min(row[col['start']])):          # for the load profiles: every stop, rush hours
+                pr = prof[(row[col['route']].strip(), row[col['dir']].strip())]
+                pr[0].add((row[col['variant']], row[col['start']]))
+                a = pr[1][sid]; a[0] += float(row[col['load']] or 0); a[1] += 1
             if sid not in locs:
                 unknown += on
             if sid in som:
@@ -246,6 +267,8 @@ def bus(som_rings):
             'off': round(wk['som_off']),
             'routes': {k: round(v) for k, v in wkavg(route['wk'], route.get('fri')).items() if v >= 0.5},
             'trips': {k: len(v) for k, v in trips.items()},
+            'prof': {k: (len(v[0]), {sid: (a[0] / a[1], a[1]) for sid, a in v[1].items()}) for k, v in prof.items()},
+            'locs': locs,
             'stops': {k: round(v, 1) for k, v in wkavg(stop['wk'], stop.get('fri')).items() if v >= 0.05},
             'hours': [round(wkavg(hour['wk'], hour.get('fri'))[h]) for h in range(4, 28)],
             'nstops': len([1 for v in wkavg(stop['wk'], stop.get('fri')).values() if v >= 0.05]),
@@ -523,6 +546,118 @@ def gates(years):
     return out
 
 
+HUBS = {'place-davis': 'Davis', 'place-portr': 'Porter', 'place-harsq': 'Harvard', 'place-cntsq': 'Central', 'place-knncl': 'Kendall',
+        'place-lech': 'Lechmere', 'place-sull': 'Sullivan', 'place-unsqu': 'Union Sq', 'place-astao': 'Assembly', 'place-welln': 'Wellington',
+        'place-mlmnl': 'Malden Ctr', 'place-rugg': 'Ruggles', 'place-mdftf': 'Medford/Tufts', 'place-gilmn': 'Gilman Sq', 'place-balsq': 'Ball Sq',
+        'place-mgngl': 'Magoun Sq', 'place-esomr': 'E. Somerville', 'place-alfcl': 'Alewife'}
+
+
+def route_paths(feed, ids):
+    """{'route|direction': {'h': headsign, 'p': [[lon, lat], ...]}} from one archived feed: per direction the longest path among
+    those run on at least 5% as many trips as the most-run one (so a route that still reaches its far end is drawn to it)."""
+    date, url = feed
+    path = os.path.join(CACHE, f'trends-paths-{date}.json')
+    if os.path.exists(path):
+        with open(path) as f:
+            out = json.load(f)
+        if all(f'{r}|{d}' in out for r in ids for d in '01'):
+            return out
+    z = zipfile.ZipFile(io.BufferedReader(RemoteFile(url), buffer_size=1 << 22))
+    cnt, head = Counter(), {}
+    for r in csv.DictReader(io.TextIOWrapper(z.open('trips.txt'), encoding='utf-8-sig')):
+        if r['route_id'] in ids and r['shape_id']:
+            k = (r['route_id'], r['direction_id'], r['shape_id']); cnt[k] += 1; head[k] = r['trip_headsign']
+    need = {k[2] for k in cnt}; pts = defaultdict(list)
+    for r in csv.DictReader(io.TextIOWrapper(z.open('shapes.txt'), encoding='utf-8-sig')):
+        if r['shape_id'] in need:
+            pts[r['shape_id']].append((int(r['shape_pt_sequence']), float(r['shape_pt_lon']), float(r['shape_pt_lat'])))
+    def length(sh):
+        p = [(x * 82000, y * 110540) for _, x, y in sorted(pts[sh])]
+        return sum(math.dist(a, b) for a, b in zip(p, p[1:]))
+    out = {}
+    for rid in ids:
+        for d in '01':
+            cand = [(n, k) for k, n in cnt.items() if k[0] == rid and k[1] == d]
+            if not cand:
+                continue
+            top = max(n for n, _ in cand)
+            _, k = max(((n, k) for n, k in cand if n >= 0.05 * top), key=lambda t: length(t[1][2]))
+            out[f'{rid}|{d}'] = {'h': head[k], 'p': [[round(x, 6), round(y, 6)] for _, x, y in sorted(pts[k[2]])]}
+    os.makedirs(CACHE, exist_ok=True)
+    with open(path, 'w') as f:
+        json.dump(out, f)
+    return out
+
+
+def profiles(seasons, base, last, names, som_rings):
+    """Load profiles: riders on board leaving each stop at weekday rush hours, along each route's path, for the base fall and
+    the latest. Stops are placed by distance along the latest path; stops more than 150 m off it, stops past its ends, and
+    stops only a few rush trips serve (school trips, short variants) are left out."""
+    ids = {ROUTE_ID.get(n, n): n for n in names}
+    paths = route_paths(fall_feeds()[int(last[5:])], sorted(ids))
+    K = (math.cos(math.radians(42.39)) * 111320, 110540)
+    xy = lambda p: (p[0] * K[0], p[1] * K[1])
+    pn, pidx, out = [], {}, []
+    def name_id(n):
+        if n not in pidx:
+            pidx[n] = len(pn); pn.append(n)
+        return pidx[n]
+    clean = lambda h: h.replace(' (Limited Stops)', '').replace(' via Sullivan', '')
+    for rid, nm in ids.items():
+        dirs = []
+        for d in ('1', '0'):
+            if f'{rid}|{d}' not in paths:
+                continue
+            shape = paths[f'{rid}|{d}']['p']; P = [xy(p) for p in shape]; cum = [0.0]
+            for a, b in zip(P, P[1:]):
+                cum.append(cum[-1] + math.dist(a, b))
+            total = cum[-1]
+            def proj(p):
+                q = xy(p); best = (1e18, 0.0)
+                for i, (a, b) in enumerate(zip(P, P[1:])):
+                    dx, dy = b[0] - a[0], b[1] - a[1]; L2 = dx * dx + dy * dy or 1
+                    t = max(0, min(1, ((q[0] - a[0]) * dx + (q[1] - a[1]) * dy) / L2))
+                    dd = math.dist(q, (a[0] + t * dx, a[1] + t * dy))
+                    if dd < best[0]:
+                        best = (dd, cum[i] + t * math.sqrt(L2))
+                return best
+            bands, start = [], None
+            for i, p in enumerate(shape):
+                isin = inside(som_rings, p[0], p[1])
+                if isin and start is None:
+                    start = cum[i]
+                if not isin and start is not None:
+                    bands.append([round(start), round(cum[i])]); start = None
+            if start is not None:
+                bands.append([round(start), round(total)])
+            lines, trips = {}, []
+            for key, se in (('b', base), ('n', last)):
+                if key == 'b' and not seasons[base]['routes'].get(nm):
+                    trips.append(0); continue                   # not a Somerville route then (the 109): no before line
+                n, st = seasons[se]['prof'].get((rid, d), (0, {}))
+                trips.append(n); locs = seasons[se]['locs']; pts = []
+                for sid, (load, cnt_) in st.items():
+                    if sid not in locs or cnt_ < max(2, 0.3 * n):
+                        continue
+                    dd, a = proj(locs[sid][:2])
+                    if dd < 150 and not (dd > 40 and (a < 30 or a > total - 30)):
+                        pts.append([round(a), round(load, 1), name_id(locs[sid][2])])
+                if pts:
+                    lines[key] = sorted(pts)
+            hubs = []
+            for hid, hn in HUBS.items():
+                if hid in seasons[last]['locs']:
+                    dd, a = proj(seasons[last]['locs'][hid][:2])
+                    if dd < 220:
+                        hubs.append([round(a), hn])
+            other = paths.get(f'{rid}|{"0" if d == "1" else "1"}', {'h': ''})['h']
+            dirs.append({'to': clean(paths[f'{rid}|{d}']['h']), 'from': clean(other), 'len': round(total), 'som': bands,
+                         'hubs': sorted(hubs), 'trips': trips, 'l': lines})
+        out.append({'r': nm, 'dirs': dirs})
+    print(f'  load profiles: {len(out)} routes, {sum(len(r["dirs"]) for r in out)} directions', file=sys.stderr)
+    return {'routes': out, 'names': pn}
+
+
 def main():
     tw = towns()
     som = somerville_exact()
@@ -588,6 +723,7 @@ def main():
         'seasons': order,
         'bus': {s: {k: seasons[s][k] for k in ('som', 'sys', 'off', 'hours', 'nstops')} for s in order},
         'routes': [{'r': r, 'v': [seasons[s]['routes'].get(r, 0) for s in order], 't': [seasons[s]['trips'].get(r, 0) for s in order]} for r in routes],
+        'prof': profiles(seasons, 'Fall 2019', order[-1], [r for r in routes if seasons[order[-1]]['routes'].get(r, 0) >= MIN_ROUTE], som),
         'stopv': {s: per_place(seasons[s]['stops']) for s in order},
         'stops': stops, 'stations': stations, 'towns': towns_out, 'bikes': bikes, 'work': work,
         'size': xy(box[2], box[1]),

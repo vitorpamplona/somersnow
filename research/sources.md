@@ -32,6 +32,7 @@ Pages marked * were seen only as search-result excerpts, not opened in full. Che
 
 - [Bus Service During Winter Storms](https://www.mbta.com/winter-weather/bus-service-during-winter-storms)
 - [Winter Weather Guide](https://www.mbta.com/guides/winter-guide) *
+- [Service Delivery Policy, December 2025](https://cdn.mbta.com/sites/default/files/2026-01/20260128_Service%20Delivery%20Policy_December%202025.pdf) (linked from [mbta.com/policies/service-delivery-policy](https://www.mbta.com/policies/service-delivery-policy)): weekday peak periods AM 7:00–8:59 and PM 4:00–6:29; bus comfort limits 140% of seats at peak, 125% off-peak (from DPU 220 CMR 155.02); Table B1, seats per bus (40-foot buses 36–39).
 - [Green Line Extension](https://www.mbta.com/projects/green-line-extension-glx): riders validate their fare at the fare vending machines at every GLX station before boarding (no fare gates).
 - [Bus network redesign, next 5 years](https://www.mbta.com/projects/bus-network-redesign/next-5-years-bus-service-changes): Phase 1, December 2024, changed routes 86, 104, 109, 110, 116 and 117. Today's routes: [86 Harvard Square – Reservoir](https://www.mbta.com/schedules/86/line), [109 Linden Square – Harvard Square via Sullivan](https://www.mbta.com/schedules/109/line).
 

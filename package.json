@@ -15,7 +15,8 @@
     "lights": "node scripts/render-lights.mjs",
     "letter": "python3 scripts/build_letter.py && node scripts/print-letter.mjs",
     "trips": "python3 analysis/bus-trips/build.py",
-    "planner": "python3 analysis/bus-stop-clearing/build.py"
+    "planner": "python3 analysis/bus-stop-clearing/build.py",
+    "trends": "python3 analysis/transit-trends/build.py"
   },
   "license": "MIT",
   "devDependencies": {

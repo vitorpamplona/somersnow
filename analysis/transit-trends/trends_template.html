@@ -198,19 +198,11 @@ thead th{color:var(--ice);font-weight:600}
   </section>
 
   <section aria-labelledby="h-full">
-    <h2 id="h-full">How full are the buses?</h2>
-    <p class="sub">Riders on board after each stop, for every weekday departure, route by route.</p>
+    <h2 id="h-full">How full and how fast are the buses?</h2>
+    <p class="sub">Route by route: riders on board after each stop (top) and miles per hour between timing stops (bottom), along the same stretch of road. Weekdays.</p>
     <div class="legend" id="leg-full"></div>
     <div id="c-full"></div>
-    <p class="note">Thin lines: each weekday departure in Fall 2025, as the MBTA counted it over the fall (Monday–Thursday). Thick: the average. Peak: the average at its fullest, 2019 → 2025. Over 36: departures that pass 36 seats, an MBTA 40-foot bus (dashed). Shaded: inside Somerville.</p>
-  </section>
-
-  <section aria-labelledby="h-speed">
-    <h2 id="h-speed">How fast are the buses?</h2>
-    <p class="sub">Miles per hour between timing stops, stops and red lights included: the speed a rider travels. Weekdays, Fall 2025.</p>
-    <div class="legend" id="leg-speed"></div>
-    <div id="c-speed"></div>
-    <p class="note">Thin lines: each weekday departure, its median over September to November. Thick: the median of every run. Overall: the whole route's distance over its time. The MBTA records times only at timing stops, a few per route.</p>
+    <p class="note">Thin lines: each weekday departure in Fall 2025 (riders as the MBTA counted them over the fall, Monday–Thursday; speeds as its median over September to November). Thick: the average riders, and the median speed of every run. Peak: the average at its fullest, 2019 → 2025. Over 36: departures that pass 36 seats, an MBTA 40-foot bus (dashed). mph: the whole route's distance over its time, stops and red lights included; the MBTA records times only at timing stops, a few per route. Shaded: inside Somerville.</p>
   </section>
 
   <section aria-labelledby="h-homes">
@@ -526,23 +518,28 @@ function routes() {
 const PR = [...D.prof.routes].sort((a, b) => rnum(a.r) - rnum(b.r) || a.r.localeCompare(b.r)), PN = D.prof.names, SEATS = 36;
 const clock = (m) => { const h = Math.floor(m / 60) % 24, mm = String(m % 60).padStart(2, '0'); return `${h % 12 || 12}:${mm} ${h < 12 ? 'am' : 'pm'}`; };
 function full() {
-  $('#leg-full').innerHTML = `<span><i class="line" style="background:${C.ref}"></i>${BASE}, average</span><span><i class="line" style="background:${C.bus}"></i>${LAST}, average</span><span><i class="line" style="background:${C.bus};opacity:.4;height:2px"></i>${LAST}, each departure</span>`;
+  $('#leg-full').innerHTML = `<span><i class="line" style="background:${C.ref}"></i>Riders, ${yr(BASE)} average</span><span><i class="line" style="background:${C.bus}"></i>Riders, ${yr(LAST)} average</span><span><i class="line" style="background:${C.bus};opacity:.4;height:2px"></i>Each departure</span><span><i class="line" style="background:${SPC}"></i>Speed, median</span>`;
   const top = (arr) => arr && arr.length ? Math.round(Math.max(...arr.map((p) => p[1]))) : null;
   $('#c-full').innerHTML = PR.map((rt, i) => `<h3 class="prt"><span class="n">${esc(rt.r)}</span>${esc(rt.dirs[0].from)} – ${esc(rt.dirs[0].to)}</h3><div class="pgrid">`
     + rt.dirs.map((d, k) => {
       const over = d.dep.filter((t) => Math.max(...t[2]) > SEATS).length, tb = top(d.avg.b), tn = top(d.avg.n);
-      return `<div><p class="ph">To <b>${esc(d.to)}</b> · peak ${tb != null ? `${tb} → ` : ''}<b>${tn}</b> · <b>${over}</b>/${d.dep.length} over ${SEATS}</p><div class="chart" data-i="${i}" data-k="${k}"></div></div>`;
+      return `<div><p class="ph">To <b>${esc(d.to)}</b> · peak ${tb != null ? `${tb} → ` : ''}<b>${tn}</b> · <b>${over}</b>/${d.dep.length} over ${SEATS}${d.v ? ` · <b>${d.v.all.toFixed(1)}</b> mph` : ''}</p>`
+        + `<div class="chart" data-i="${i}" data-k="${k}" data-c="load"></div>${d.v ? `<div class="chart" data-i="${i}" data-k="${k}" data-c="speed"></div>` : ''}</div>`;
     }).join('') + '</div>').join('');
-  $('#c-full').querySelectorAll('.chart').forEach((c) => { const rt = PR[+c.dataset.i]; profile(c, rt, rt.dirs[+c.dataset.k]); });
+  $('#c-full').querySelectorAll('.chart').forEach((c) => {
+    const rt = PR[+c.dataset.i], d = rt.dirs[+c.dataset.k];
+    if (c.dataset.c === 'load') profile(c, rt, d, !!d.v); else speedChart(c, rt, d);
+  });
 }
-function profile(el, rt, d) {
-  const w = W(el), phone = w < 520, m = { l: 34, r: 10, t: 10, b: 38 }, h = phone ? 200 : 230, ih = h - m.t - m.b, iw = w - m.l - m.r;
+function profile(el, rt, d, bare) {                    // bare: no station or end labels (the speed chart below has them)
+  const w = W(el), phone = w < 520, m = { l: 34, r: 10, t: 10, b: bare ? 8 : 38 }, h = (phone ? 200 : 230) - (bare ? 30 : 0), ih = h - m.t - m.b, iw = w - m.l - m.r;
   const deps = d.dep;
   const top = Math.max(40, Math.ceil(Math.max(0, ...deps.map((t) => Math.max(...t[2]))) / 10) * 10);
   const x = (a) => m.l + iw * a / d.len, y = (v) => m.t + ih - ih * v / top;
   let g = `<rect x="${m.l}" y="${m.t}" width="${iw}" height="${ih}" fill="rgba(169,196,228,.04)"/>`;
   d.som.forEach(([a, b]) => { g += `<rect x="${x(a).toFixed(1)}" y="${m.t}" width="${Math.max(0, x(b) - x(a)).toFixed(1)}" height="${ih}" fill="rgba(79,152,222,.16)"/>`; });
   for (let v = 0; v <= top; v += 10) g += `<line x1="${m.l}" x2="${m.l + iw}" y1="${y(v)}" y2="${y(v)}" stroke="${v ? GRID : AXIS}"/><text x="${m.l - 5}" y="${y(v) + 4}" text-anchor="end">${v}</text>`;
+  g += `<text x="${m.l + 4}" y="${m.t + 12}" style="font-size:11px">riders</text>`;
   const depPath = (t) => 'M' + t[2].map((v, j) => v < 0 ? null : `${x(d.s[t[1] + j][0]).toFixed(1)},${y(v).toFixed(1)}`).filter(Boolean).join('L');
   const op = deps.length > 30 ? .16 : .3;
   deps.forEach((t) => { g += `<path d="${depPath(t)}" fill="none" stroke="${C.bus}" stroke-opacity="${op}" stroke-width="1.1" stroke-linejoin="round"/>`; });
@@ -554,10 +551,10 @@ function profile(el, rt, d) {
   });
   const placed = [], RANK = ['Davis', 'Harvard', 'Sullivan', 'Lechmere', 'Central', 'Kendall', 'Porter', 'Union Sq', 'Assembly', 'Malden Ctr'];
   const rank = (n) => { const i = RANK.indexOf(n); return i < 0 ? 99 : i; };
-  [...d.hubs].sort((p, q) => rank(p[1]) - rank(q[1])).forEach(([a, n]) => { const X = x(a);   // big stations first, then whatever fits
+  if (!bare) [...d.hubs].sort((p, q) => rank(p[1]) - rank(q[1])).forEach(([a, n]) => { const X = x(a);   // big stations first, then whatever fits
     if (X < m.l + 24 || X > m.l + iw - 24 || placed.some((q) => Math.abs(q - X) < (phone ? 64 : 70))) return; placed.push(X);
     g += `<line x1="${X}" x2="${X}" y1="${m.t + ih}" y2="${m.t + ih + 4}" stroke="${AXIS}"/><text x="${X}" y="${m.t + ih + 15}" text-anchor="middle" style="font-size:11px">${esc(n)}</text>`; });
-  g += `<text x="${m.l}" y="${h - 4}" style="font-size:12px;font-weight:700;fill:#EEF3F7">${esc(d.from)}</text><text x="${m.l + iw}" y="${h - 4}" text-anchor="end" style="font-size:12px;font-weight:700;fill:#EEF3F7">→ ${esc(d.to)}</text>`;
+  if (!bare) g += `<text x="${m.l}" y="${h - 4}" style="font-size:12px;font-weight:700;fill:#EEF3F7">${esc(d.from)}</text><text x="${m.l + iw}" y="${h - 4}" text-anchor="end" style="font-size:12px;font-weight:700;fill:#EEF3F7">→ ${esc(d.to)}</text>`;
   g += `<path class="hl" d="" fill="none" stroke="#EEF3F7" stroke-width="2" visibility="hidden"/><rect class="hitp" x="${m.l}" y="${m.t}" width="${iw}" height="${ih}" fill="transparent"/>`;
   const over = deps.filter((t) => Math.max(...t[2]) > SEATS).length, tn = Math.round(Math.max(...d.avg.n.map((p) => p[1])));
   el.innerHTML = `<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="Route ${esc(rt.r)} toward ${esc(d.to)}, weekdays: riders on board along the route for each of ${deps.length} departures in ${LAST}; the average is ${tn} at its fullest; ${over} departures go over ${SEATS} seats.">${g}</svg>`;
@@ -578,12 +575,6 @@ function profile(el, rt, d) {
 
 // ---------- bus speeds ----------
 const SPC = '#E8B84A';                                    // speed: a color of its own (amber-gold), used nowhere else
-function speeds() {
-  $('#leg-speed').innerHTML = `<span><i class="line" style="background:${SPC}"></i>Median of every run</span><span><i class="line" style="background:${SPC};opacity:.4;height:2px"></i>Each departure</span>`;
-  $('#c-speed').innerHTML = PR.map((rt, i) => !rt.dirs.some((d) => d.v) ? '' : `<h3 class="prt"><span class="n">${esc(rt.r)}</span>${esc(rt.dirs[0].from)} – ${esc(rt.dirs[0].to)}</h3><div class="pgrid">`
-    + rt.dirs.map((d, k) => !d.v ? '<div></div>' : `<div><p class="ph">To <b>${esc(d.to)}</b> · overall <b>${d.v.all.toFixed(1)}</b> mph · slowest ${Math.min(...d.v.med).toFixed(1)} mph</p><div class="chart" data-i="${i}" data-k="${k}"></div></div>`).join('') + '</div>').join('');
-  $('#c-speed').querySelectorAll('.chart').forEach((c) => { const rt = PR[+c.dataset.i]; speedChart(c, rt, rt.dirs[+c.dataset.k]); });
-}
 function speedChart(el, rt, d) {
   const v = d.v, w = W(el), phone = w < 520, m = { l: 34, r: 10, t: 10, b: 38 }, h = phone ? 190 : 210, ih = h - m.t - m.b, iw = w - m.l - m.r;
   const top = Math.max(20, Math.ceil(Math.max(...v.med, ...v.dep.flatMap((t) => t[1])) / 5) * 5);
@@ -886,7 +877,7 @@ function table() {
       .map(([n, f]) => `<tr><td>${esc(n)}</td>${WY.map((y) => { const v = f(y); return `<td>${v == null ? '—' : typeof v === 'string' ? v : fmt(v)}</td>`; }).join('')}</tr>`).join('') + '</tbody></table>';
 }
 
-function all() { decade(); back(); stations(); bikes(); routes(); map(); full(); speeds(); homes(); hours(); work(); }
+function all() { decade(); back(); stations(); bikes(); routes(); map(); full(); homes(); hours(); work(); }
 tiles(); table(); all();
 let rz, lastW = innerWidth; addEventListener('resize', () => { if (innerWidth === lastW) return; lastW = innerWidth; clearTimeout(rz); rz = setTimeout(all, 150); });
 if (document.fonts) document.fonts.ready.then(all);

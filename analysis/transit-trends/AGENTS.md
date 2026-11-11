@@ -85,7 +85,7 @@ Everything downloaded is cached in `../../.cache/` (about 1.5 GB). `cached()` do
 - **Missing T years** are hatched fare-gate bars labeled "fare gates", never zero and never an empty height.
 - **Map stop merge:** `SAME_STOP` 12 m. Tried 25 and 40 m: the gone stops stay, so they are real changes. The map note names the 86 only when the falls picked span Dec 2024.
 - **Route lists** (Every route, the load profiles, the speeds, the tables) are in route-number order, CT2 last.
-- **Page order:** headline and tiles; the decade of boardings; Bluebikes; back to 2019; why (how residents get to work, people with jobs, when people ride the bus); the stations; where riders went; every route; how full the buses are; how fast the buses are; new neighbors near the T; "All the numbers" and "How it's counted" folded at the end. Notes one line; chart headings one line at 360 px.
+- **Page order:** headline and tiles; the decade of boardings; Bluebikes; back to 2019; why (how residents get to work, people with jobs, when people ride the bus); the stations; where riders went; every route; how full and how fast the buses are (one section: per direction, the load chart then the speed chart below it, same horizontal scale; the load chart is drawn `bare`, without station labels, when a speed chart follows); new neighbors near the T; "All the numbers" and "How it's counted" folded at the end. Notes one line; chart headings one line at 360 px.
 - **Weight:** the page is about 310 KB; the departures in the load profiles (about 140 KB) and the speeds (about 45 KB) are most of it.
 
 ## Charts and colors

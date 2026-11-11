@@ -242,6 +242,8 @@ const railBy = (s, line) => { const v = ST.filter((x) => x.line === line && x.v[
 const hasRail = (s) => ST.some((x) => x.v[s] != null);
 const tTotal = (s) => hasRail(s) ? LINES.reduce((a, l) => a + (railBy(s, l) || 0), 0) : null;
 const busWk = (s) => D.bus[s].som.wk;
+const rnum = (r) => { const n = parseInt(r, 10); return isNaN(n) ? Infinity : n; };   // route number order; CT2 last
+D.routes.sort((a, b) => rnum(a.r) - rnum(b.r) || a.r.localeCompare(b.r));             // every route list in route-number order
 // Fare-gate entries (Davis, Porter, Assembly, Sullivan): fill the falls with no published boardings, and give one
 // measure for every fall. The Green Line Extension has no gates.
 const gateBy = (s, line) => { const v = ST.filter((x) => x.line === line && x.g && x.g[s] != null); return v.length ? v.reduce((a, x) => a + x.g[s], 0) : null; };
@@ -502,7 +504,6 @@ function routes() {
 }
 
 // ---------- load profiles ----------
-const rnum = (r) => { const n = parseInt(r, 10); return isNaN(n) ? Infinity : n; };   // route number order; CT2 last
 const PR = [...D.prof.routes].sort((a, b) => rnum(a.r) - rnum(b.r) || a.r.localeCompare(b.r)), PN = D.prof.names, SEATS = 36;
 const clock = (m) => { const h = Math.floor(m / 60) % 24, mm = String(m % 60).padStart(2, '0'); return `${h % 12 || 12}:${mm} ${h < 12 ? 'am' : 'pm'}`; };
 function full() {

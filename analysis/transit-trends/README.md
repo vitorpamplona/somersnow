@@ -14,7 +14,7 @@ How many people ride the bus and the T in Somerville, and how many Bluebikes tri
 - **When people ride the bus:** weekday riders by the hour their trip started, Fall 2019 vs the latest fall, as counts or as a share of the day.
 - **The stations:** weekday boardings at each station, every fall with a count.
 - **Where riders went:** every bus stop in Somerville, sized by riders and colored by the change between any two falls you pick; stops that are new or gone are rings, counted under the map. A stop renumbered or moved less than 12 m is the same stop.
-- **Every route:** each route's weekday riders at Somerville stops and the weekday trips it runs through the city, Fall 2019 vs the latest fall: a small chart per route with both as a share of 2019, so a gap between the lines means riders fell more than service (a ranked list with both numbers on phones; trips by route in the table).
+- **Every route:** each route's weekday riders at Somerville stops and the weekday trips it runs through the city, Fall 2019 vs the latest fall: a small chart per route with both as a share of 2019, so a gap between the lines means riders fell more than service (in route-number order, CT2 last; a list with both numbers on phones; trips by route in the table).
 - **How full are the buses?** Every route through Somerville, one after another, both directions: riders on board after each stop, a thin line for each weekday departure in the latest fall and the weekday average of each fall (2019 and the latest) on top, with the stretch inside Somerville shaded, a line at 36 seats, and how many departures go over it.
 - **All the numbers** in a table, and how it's counted, both folded away at the end.
 

@@ -392,7 +392,8 @@ def acs():
         out[y] = {'workers': round(n('B08006_001E')), 'workers_moe': round(n('B08006_001M')),
                   'wfh': round(n('B08006_017E')), 'wfh_moe': round(n('B08006_017M')),
                   'transit': round(n('B08006_008E')), 'transit_moe': round(n('B08006_008M')), 'alone': round(n('B08006_003E')),
-                  'carpool': round(n('B08006_004E')), 'walk': round(n('B08006_015E')), 'bike': round(n('B08006_014E')),
+                  'carpool': round(n('B08006_004E')), 'walk': round(n('B08006_015E')), 'walk_moe': round(n('B08006_015M')), 'bike': round(n('B08006_014E')), 'bike_moe': round(n('B08006_014M')),
+                  'bus': round(n('B08006_009E')), 'subway': round(n('B08006_010E')), 'lrail': round(n('B08006_012E')),
                   'employed': round(n('B23025_004E')), 'employed_moe': round(n('B23025_004M')),
                   'older': round(100 * older / n('B01001_001E'), 1)}
         w = out[y]

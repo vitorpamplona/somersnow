@@ -632,12 +632,13 @@ function work() {
     ['Work from home', (100 * a1.wfh / a1.workers).toFixed(1) + '%', `${(100 * a0.wfh / a0.workers).toFixed(1)}% in ${A0}`],
     ['Take transit to work', fmt(a1.transit), vs(sameTransit, a1.transit, a0.transit, '')],
   ].map(([k, v, sub]) => `<div class="tile"><div class="k">${k}</div><div class="v">${v}</div><div class="s">${sub}</div></div>`).join('');
-  const modes = [{ n: 'Worked from home', c: '#C8609C', v: share('wfh') }, { n: 'Took transit', c: C.t, v: share('transit') }, { n: 'Drove alone', c: C.ref, v: share('alone') }];
+  const modes = [{ n: 'Worked from home', c: '#C8609C', v: share('wfh') }, { n: 'Took transit', c: C.t, v: share('transit') }, { n: 'Drove alone', c: C.ref, v: share('alone') },
+    { n: 'Walked', c: '#45B7C9', v: share('walk') }, { n: 'Biked', c: C.bike, v: share('bike') }];
   lineChart($('#c-mode'), modes, { tick: (v) => v + '%', end: (v) => v.toFixed(1) + '%', gap: (yy) => !WA[yy] && yy <= A1,
-    tip: (v, yy, sr) => `${v.toFixed(1)}%`, label: `Lines: share of working residents by how they get to work. Worked from home ${(100 * a0.wfh / a0.workers).toFixed(1)}% in ${A0}, ${(100 * a1.wfh / a1.workers).toFixed(1)}% in ${A1}; took transit ${(100 * a0.transit / a0.workers).toFixed(1)}% and ${(100 * a1.transit / a1.workers).toFixed(1)}%.`,
-    extra: (yy) => WA[yy] ? tipRow('', 'Walked', (100 * WA[yy].walk / WA[yy].workers).toFixed(1) + '%') + tipRow('', 'Biked', (100 * WA[yy].bike / WA[yy].workers).toFixed(1) + '%') + tipRow('', 'Residents who worked', fmt(WA[yy].workers)) : '' });
+    tip: (v, yy, sr) => `${v.toFixed(1)}%`, label: `Lines: share of working residents by how they get to work. Worked from home ${(100 * a0.wfh / a0.workers).toFixed(1)}% in ${A0}, ${(100 * a1.wfh / a1.workers).toFixed(1)}% in ${A1}; took transit ${(100 * a0.transit / a0.workers).toFixed(1)}% and ${(100 * a1.transit / a1.workers).toFixed(1)}%; walked ${(100 * a0.walk / a0.workers).toFixed(1)}% and ${(100 * a1.walk / a1.workers).toFixed(1)}%; biked ${(100 * a0.bike / a0.workers).toFixed(1)}% and ${(100 * a1.bike / a1.workers).toFixed(1)}%.`,
+    extra: (yy) => WA[yy] ? (WA[yy].subway != null ? tipRow('', 'Transit: subway', (100 * WA[yy].subway / WA[yy].workers).toFixed(1) + '%') + tipRow('', 'Transit: bus', (100 * WA[yy].bus / WA[yy].workers).toFixed(1) + '%') + tipRow('', 'Transit: light rail', (100 * WA[yy].lrail / WA[yy].workers).toFixed(1) + '%') : '') + tipRow('', 'Residents who worked', fmt(WA[yy].workers)) : '' });
   $('#leg-mode').innerHTML = modes.map((sr) => `<span><i class="line" style="background:${sr.c}"></i>${sr.n}</span>`).join('');
-  $('#n-mode').textContent = `"About the same": within the survey's margin (± about ${fmt(Math.round(a1.employed_moe / 100) * 100)}). Hybrid workers count by their usual way to work. No survey for 2020.`;
+  $('#n-mode').textContent = `"About the same": within the survey's margin (± about ${fmt(Math.round(a1.employed_moe / 100) * 100)} people for jobs, ${fmt(Math.round(Math.max(a1.walk_moe, a1.bike_moe) / 100) * 100)} for walking or biking). Hybrid workers count by their usual way to work. No survey for 2020.`;
   const jobs = [{ n: 'Residents with a job (survey)', s: 'Residents with a job', c: '#DCE6F2', v: (yy) => WA[yy] ? WA[yy].employed : null },
     { n: 'Jobs held by residents (payroll)', s: 'Residents\' jobs', c: '#A9C4E4', v: (yy) => WL[yy] ? WL[yy].jobs_res : null },
     { n: 'Jobs located in Somerville (payroll)', s: 'Jobs in Somerville', c: '#7690B0', v: (yy) => WL[yy] ? WL[yy].jobs_in : null }];

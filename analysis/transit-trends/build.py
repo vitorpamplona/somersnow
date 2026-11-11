@@ -185,11 +185,6 @@ def start_min(t):
     return int(round(float(t) * 1440))
 
 
-def rush(minute):
-    """The MBTA's weekday peak periods: AM 7:00-8:59, PM 4:00-6:29 (Service Delivery Policy, Dec 2025)."""
-    return 420 <= minute < 540 or 960 <= minute < 1110
-
-
 def start_hour(t):
     """Hour a trip starts, from "7:05:00" or (some rows of the Fall 2025 file) a fraction of a day like 0.538."""
     t = t.strip()
@@ -607,9 +602,9 @@ def trip_loads(seasons_wanted, route_ids):
 
 
 def profiles(seasons, base, last, names, som_rings):
-    """Load profiles: riders on board leaving each stop at weekday rush hours, along each route's path, for the base fall and
+    """Load profiles: riders on board leaving each stop on weekdays, along each route's path, for the base fall and
     the latest. Stops are placed by distance along the latest path; stops more than 150 m off it, stops past its ends, and
-    stops only a few rush trips serve (school trips, short variants) are left out."""
+    stops only a few trips serve (school trips, short variants) are left out."""
     ids = {ROUTE_ID.get(n, n): n for n in names}
     paths = route_paths(fall_feeds()[int(last[5:])], sorted(ids))
     TL = trip_loads([base, last], set(ids))
@@ -664,20 +659,18 @@ def profiles(seasons, base, last, names, som_rings):
                 if key == 'b' and not seasons[base]['routes'].get(nm):
                     continue                                    # not a Somerville route then (the 109): no before line
                 lc = seasons[se]['locs']; trips = [t for t in TL[se].get((rid, d), {}).values() if t[1] >= 3]
-                avg[key], cnt[key] = {}, {}
-                for per, keep in (('r', lambda m: rush(m)), ('d', lambda m: True)):
-                    tp = [t for t in trips if keep(t[0])]; cnt[key][per] = len(tp); acc = defaultdict(lambda: [0.0, 0])
-                    for t in tp:
-                        for sid, ld in t[2].items():
-                            acc[sid][0] += ld; acc[sid][1] += 1
-                    pts = []
-                    for sid, (sm, k_) in acc.items():
-                        if sid not in lc or k_ < max(2, 0.3 * len(tp)):
-                            continue                            # stops only a few trips serve (school trips, short variants)
-                        dd, a = proj(lc[sid][:2])
-                        if dd < 150 and not (dd > 40 and (a < 30 or a > total - 30)):
-                            pts.append([round(a), round(sm / k_, 1), name_id(lc[sid][2])])
-                    avg[key][per] = sorted(pts)
+                cnt[key] = len(trips); acc = defaultdict(lambda: [0.0, 0])
+                for t in trips:
+                    for sid, ld in t[2].items():
+                        acc[sid][0] += ld; acc[sid][1] += 1
+                pts = []
+                for sid, (sm, k_) in acc.items():
+                    if sid not in lc or k_ < max(2, 0.3 * len(trips)):
+                        continue                            # stops only a few trips serve (school trips, short variants)
+                    dd, a = proj(lc[sid][:2])
+                    if dd < 150 and not (dd > 40 and (a < 30 or a > total - 30)):
+                        pts.append([round(a), round(sm / k_, 1), name_id(lc[sid][2])])
+                avg[key] = sorted(pts)
             deps = []                                           # each latest-fall departure: [start minute, first stop, loads]
             for t in sorted(TL[last].get((rid, d), {}).values()):
                 idx = sorted((sidx[sid], ld) for sid, ld in t[2].items() if sid in sidx)

@@ -51,6 +51,8 @@ details.about .src{color:var(--ice);font-size:14px;max-width:860px}
 .rlist .ch{text-align:right;font-weight:600;font-size:14px}
 .tile .s{font-size:14px;color:var(--snow)}
 .tile .s b{font-weight:600}
+.tiles.three{grid-template-columns:repeat(3,minmax(0,1fr));margin:12px 0 4px}
+.tiles.three .v{font-size:32px}
 section{margin-top:44px}
 h2{font:800 28px/1.05 var(--display);text-transform:uppercase;letter-spacing:.5px;margin:0 0 6px}
 .sub{color:var(--ice);margin:0 0 12px;max-width:760px}
@@ -97,6 +99,9 @@ thead th{color:var(--ice);font-weight:600}
   .tile .k{font-size:13px;line-height:1.25}
   .tile .v{font-size:28px}
   .tile .s{font-size:12px}
+  .tiles.three{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+  .tiles.three .tile{padding:8px 9px}
+  .tiles.three .v{font-size:21px}
   .headline{font-size:19px}
   .bar nav .long{display:none}
   h2{font-size:24px}
@@ -133,6 +138,7 @@ thead th{color:var(--ice);font-weight:600}
   <section aria-labelledby="h-work">
     <h2 id="h-work">Why: more work from home</h2>
     <p class="sub" id="sub-work"></p>
+    <div class="tiles three" id="tiles-work"></div>
     <h3>How working residents get to work</h3>
     <div class="legend" id="leg-mode"></div>
     <div class="chart" id="c-mode"></div>
@@ -140,7 +146,7 @@ thead th{color:var(--ice);font-weight:600}
     <h3>People with jobs</h3>
     <div class="legend" id="leg-jobs"></div>
     <div class="chart" id="c-jobs"></div>
-    <p class="note">Survey: residents with a job. Payroll: jobs with unemployment insurance, where the job is or where the worker lives. The 2018 jump: about 5,800 jobs coded "management of companies" first counted at one census block.</p>
+    <p class="note">Payroll: jobs with unemployment insurance. The 2018 jump: about 5,800 "management of companies" jobs first counted at one census block.</p>
   </section>
 
   <section aria-labelledby="h-stations">
@@ -608,18 +614,22 @@ const share = (k) => (yy) => WA[yy] ? 100 * WA[yy][k] / WA[yy].workers : null;
 const AY = Object.keys(WA).map(Number), LY = Object.keys(WL).map(Number), A0 = 2019, A1 = Math.max(...AY);
 function work() {
   const a0 = WA[A0], a1 = WA[A1];
-  const tb0 = busWk(BASE) + tTotal(BASE), tb1 = busWk(LAST) + tTotal(LAST);
-  const L1 = Math.max(...LY), sameJobs = !beyondMargin(a0.employed, a0.employed_moe, a1.employed, a1.employed_moe);
+  const sameJobs = !beyondMargin(a0.employed, a0.employed_moe, a1.employed, a1.employed_moe);
   const sameTransit = !beyondMargin(a0.transit, a0.transit_moe, a1.transit, a1.transit_moe);
-  $('#sub-work').innerHTML = `${sameJobs ? 'About as many residents have jobs as' : a1.employed > a0.employed ? 'More residents have jobs than' : 'Fewer residents have jobs than'} in ${A0}: ${fmt(a1.employed)} in ${A1}, ${fmt(a0.employed)} in ${A0} (survey, ± about ${fmt(Math.round(a1.employed_moe / 100) * 100)})`
-    + `; payroll counts ${fmt(WL[L1].jobs_res)} jobs held by residents in ${L1}, ${fmt(WL[A0].jobs_res)} in ${A0}. But <b style="color:#EEF3F7">${(100 * a1.wfh / a1.workers).toFixed(1)}%</b> work from home, up from ${(100 * a0.wfh / a0.workers).toFixed(1)}%. `
-    + `${sameTransit ? 'About as many' : a1.transit > a0.transit ? 'More' : 'Fewer'} residents mostly take transit to work (${fmt(a1.transit)}, was ${fmt(a0.transit)}${sameTransit ? ', within the survey\'s margin' : ''}), yet boardings are at ${pctOf(tb1, tb0)}%: hybrid workers likely ride fewer days.`;
+  const vs = (same, e1, e0, unit) => same ? `about the same as ${A0} (${fmt(e0)}${unit})` : `${fmt(e0)}${unit} in ${A0}`;
+  $('#sub-work').textContent = (sameJobs && sameTransit ? `About as many residents have jobs and take transit to work as in ${A0}. ` : '')
+    + `More work from home, so they likely ride fewer days.`;
+  $('#tiles-work').innerHTML = [
+    ['Residents with a job', fmt(a1.employed), vs(sameJobs, a1.employed, a0.employed, '')],
+    ['Work from home', (100 * a1.wfh / a1.workers).toFixed(1) + '%', `${(100 * a0.wfh / a0.workers).toFixed(1)}% in ${A0}`],
+    ['Take transit to work', fmt(a1.transit), vs(sameTransit, a1.transit, a0.transit, '')],
+  ].map(([k, v, sub]) => `<div class="tile"><div class="k">${k}</div><div class="v">${v}</div><div class="s">${sub}</div></div>`).join('');
   const modes = [{ n: 'Worked from home', c: '#C8609C', v: share('wfh') }, { n: 'Took transit', c: C.t, v: share('transit') }, { n: 'Drove alone', c: C.ref, v: share('alone') }];
   lineChart($('#c-mode'), modes, { tick: (v) => v + '%', end: (v) => v.toFixed(1) + '%', gap: (yy) => !WA[yy] && yy <= A1,
     tip: (v, yy, sr) => `${v.toFixed(1)}%`, label: `Lines: share of working residents by how they get to work. Worked from home ${(100 * a0.wfh / a0.workers).toFixed(1)}% in ${A0}, ${(100 * a1.wfh / a1.workers).toFixed(1)}% in ${A1}; took transit ${(100 * a0.transit / a0.workers).toFixed(1)}% and ${(100 * a1.transit / a1.workers).toFixed(1)}%.`,
     extra: (yy) => WA[yy] ? tipRow('', 'Walked', (100 * WA[yy].walk / WA[yy].workers).toFixed(1) + '%') + tipRow('', 'Biked', (100 * WA[yy].bike / WA[yy].workers).toFixed(1) + '%') + tipRow('', 'Residents who worked', fmt(WA[yy].workers)) : '' });
   $('#leg-mode').innerHTML = modes.map((sr) => `<span><i class="line" style="background:${sr.c}"></i>${sr.n}</span>`).join('');
-  $('#n-mode').textContent = `The survey counts each worker by their usual way to work, so a hybrid worker who rides three days a week still counts as transit. No survey for 2020.`;
+  $('#n-mode').textContent = `"About the same": within the survey's margin (± about ${fmt(Math.round(a1.employed_moe / 100) * 100)}). Hybrid workers count by their usual way to work. No survey for 2020.`;
   const jobs = [{ n: 'Residents with a job (survey)', s: 'Residents with a job', c: '#DCE6F2', v: (yy) => WA[yy] ? WA[yy].employed : null },
     { n: 'Jobs held by residents (payroll)', s: 'Residents\' jobs', c: '#A9C4E4', v: (yy) => WL[yy] ? WL[yy].jobs_res : null },
     { n: 'Jobs located in Somerville (payroll)', s: 'Jobs in Somerville', c: '#7690B0', v: (yy) => WL[yy] ? WL[yy].jobs_in : null }];

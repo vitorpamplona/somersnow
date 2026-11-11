@@ -72,7 +72,7 @@ h3{font:700 19px/1.1 var(--display);text-transform:uppercase;letter-spacing:.5px
 .seg button{border:0;background:none;color:var(--snow);font:600 14px var(--body);height:34px;padding:0 12px;border-radius:8px;cursor:pointer}
 .seg button[aria-pressed=true]{background:var(--snow);color:var(--navy)}
 .pgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
-.pgrid .ph{font-size:14px;color:var(--ice);margin:0 0 4px}
+.pgrid .ph{font-size:14px;color:var(--ice);margin:0 0 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pgrid .ph b{color:var(--snow)}
 .pgrid>div{display:flex;flex-direction:column;justify-content:flex-end}
 .prt{margin:22px 0 4px}
@@ -186,7 +186,7 @@ thead th{color:var(--ice);font-weight:600}
     <p class="sub">Riders on board after each stop, for every weekday departure, route by route.</p>
     <div class="legend" id="leg-full"></div>
     <div id="c-full"></div>
-    <p class="note">Thin lines: each weekday departure in Fall 2025, as the MBTA counted it over the fall (Monday–Thursday). Thick: the average. Shaded: inside Somerville. Dashed: 36 seats, an MBTA 40-foot bus.</p>
+    <p class="note">Thin lines: each weekday departure in Fall 2025, as the MBTA counted it over the fall (Monday–Thursday). Thick: the average. Peak: the average at its fullest, 2019 → 2025. Over 36: departures that pass 36 seats, an MBTA 40-foot bus (dashed). Shaded: inside Somerville.</p>
   </section>
 
   <section aria-labelledby="h-hours">
@@ -502,7 +502,7 @@ function full() {
   $('#c-full').innerHTML = PR.map((rt, i) => `<h3 class="prt"><span class="n">${esc(rt.r)}</span>${esc(rt.dirs[0].from)} – ${esc(rt.dirs[0].to)}</h3><div class="pgrid">`
     + rt.dirs.map((d, k) => {
       const over = d.dep.filter((t) => Math.max(...t[2]) > SEATS).length, tb = top(d.avg.b), tn = top(d.avg.n);
-      return `<div><p class="ph">Toward <b>${esc(d.to)}</b> · average fullest ${tb != null ? `${tb} → ` : ''}<b>${tn}</b> · ${d.dep.length} trips${d.cnt.b ? ` (was ${d.cnt.b})` : ''} · <b>${over}</b> over ${SEATS} seats</p><div class="chart" data-i="${i}" data-k="${k}"></div></div>`;
+      return `<div><p class="ph">To <b>${esc(d.to)}</b> · peak ${tb != null ? `${tb} → ` : ''}<b>${tn}</b> · <b>${over}</b>/${d.dep.length} over ${SEATS}</p><div class="chart" data-i="${i}" data-k="${k}"></div></div>`;
     }).join('') + '</div>').join('');
   $('#c-full').querySelectorAll('.chart').forEach((c) => { const rt = PR[+c.dataset.i]; profile(c, rt, rt.dirs[+c.dataset.k]); });
 }

@@ -95,9 +95,9 @@ The city changed a lot after 2014, so **data from before 2015 is context only**:
 Housing counts, for the pace of new homes (details in [`research/parking-restricted-housing.md`](parking-restricted-housing.md)):
 
 - **Census Building Permits Survey**, place files (`https://www2.census.gov/econ/bps/Place/Northeast%20Region/ne{year}a.txt`, Somerville place 62535): units authorized a year. Somerville didn't report in 2021, 2022, 2025 (and only partly 2020, 2024): those years are Census estimates and miss big projects. Context only.
-- **MAPC MassBuilds** ([API](https://api.massbuilds.com/developments)): developments with units, status and completion year; 326 in Somerville (to Jul 2025); has the big projects, misses small ones.
+- **MAPC MassBuilds** ([API](https://api.massbuilds.com/developments)): developments with units, status and completion year; 326 in Somerville (to Jul 2025); has the big projects, misses small ones. In use: the planned and long-range layers of the housing pipeline on the transit page (stale entries and those already in the City's permits left out).
 - **ACS 1-year B25001** (housing units): about 35,000–40,000 in 2019–2025, ± about 2,000 a year: too noisy for yearly pace.
-- **MassGIS property tax parcels** (`Massachusetts_Property_Tax_Parcels`, `TOWN_ID` 274): Somerville leaves `UNITS` empty on nearly every parcel.
+- **MassGIS property tax parcels** (`Massachusetts_Property_Tax_Parcels`, `TOWN_ID` 274): Somerville leaves `UNITS` empty on nearly every parcel. In use: vacant lots (use codes 1300, 1310, 3900, 3910, 4400, 4410: 61 lots, 17 acres, FY2025) and each pipeline project's lot (`PROP_ID` = the City's parcel number without zeros: `058-E-00016-000000` → `58_E_16`).
 
 ## Safety
 

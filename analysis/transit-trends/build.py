@@ -12,6 +12,8 @@ Sources (all public, no keys):
   - MassGIS municipalities: the Somerville outline (a stop is in Somerville if it's inside it) and its neighbors.
   - MBTA rail ridership: Fall 2017-2019 by time period (item 9fea7862...), Fall 2023 by time period (80a379eb...),
     Fall 2024 by hour (8f20b4e8...), Fall 2025 by hour (6494749a..., CSV). No rail files for Fall 2020-2022.
+  - The housing pipeline: the City's permit applications (data.somervillema.gov nneb-s3f7), MAPC's MassBuilds
+    (api.massbuilds.com) and MassGIS property tax parcels (vacant lots). See pipeline() and AGENTS.md.
 """
 import csv, gzip, io, json, math, os, re, shutil, sys, urllib.error, urllib.parse, urllib.request, zipfile
 from collections import Counter, defaultdict
@@ -833,6 +835,242 @@ def homes(xy, route_ids, feed):
     print(f"  homes without resident permits: {n}; renter household {hh}", file=sys.stderr)
     return out
 
+# ---------- the housing pipeline: what's being built, in permitting and planned, and the vacant lots ----------
+PERMITS = 'https://data.somervillema.gov/resource/nneb-s3f7.json'      # City permit applications (Citizenserve, 2014 on)
+MASSBUILDS = 'https://api.massbuilds.com/developments'                  # MAPC MassBuilds, every development in Massachusetts
+PARCELS = ('https://services1.arcgis.com/hGdibHYSPO59RG1h/arcgis/rest/services/'
+           'Massachusetts_Property_Tax_Parcels/FeatureServer/0/query')  # MassGIS property tax parcels, Somerville TOWN_ID 274
+PIPE_FROM = 2021        # building permit applications from this year on
+MB_MAX_AGE = 4          # MassBuilds entries not updated in this many years are left out (2018 entries list buildings since built)
+VACANT = {'1300': 'Residential vacant, developable', '1310': 'Residential vacant, potentially developable',
+          '3900': 'Commercial vacant', '3910': 'Commercial vacant, potentially developable',
+          '4400': 'Industrial vacant', '4410': 'Industrial vacant, potentially developable'}   # undevelopable (x320) and City-owned (93xx) left out
+NUM_WORDS = {'single': 1, 'one': 1, 'two': 2, 'three': 3, 'four': 4, 'five': 5, 'six': 6, 'seven': 7, 'eight': 8, 'nine': 9, 'ten': 10, 'twelve': 12}
+
+
+def socrata(where, select):
+    out = []
+    while True:
+        blob = get(PERMITS, {'$where': where, '$select': select, '$limit': 5000, '$offset': len(out), '$order': 'application_id'})
+        page = json.loads(blob)
+        out += page
+        if len(page) < 5000:
+            return out
+
+
+def homes_in(text):
+    """Homes a permit's description gives: "40 unit", "(29) dwelling units", "two family", "3-decker", an ADU. 0 if none."""
+    t = (text or '').lower().replace('\n', ' ')
+    t = re.sub(r'\d+\s*(?:parking|car|vehicle|bike|bicycle|sub-grade|indoor|garage)\s*(?:spaces|spots|stalls)', ' ', t)
+    t = re.sub(r'(?:spaces|spots)\s*\(\d+\)', ' ', t)
+    best = 0
+    for m in re.finditer(r'(\d{1,3})\s*[-–]?\s*(?:new\s+)?(?:residential\s+|dwelling\s+|apartment\s+|condo(?:minium)?\s+|rental\s+|'
+                         r'affordable\s+|housing\s+)*(?:units?|apartments|dus\b|dwellings|condos)', t):
+        best = max(best, int(m.group(1)))
+    for m in re.finditer(r'\((\d{1,3})\)\s*(?:dwelling|residential)?\s*units?', t):
+        best = max(best, int(m.group(1)))
+    for w, n in NUM_WORDS.items():
+        if re.search(rf'\b{w}[- ]?(?:family|fam)\b', t):
+            best = max(best, n)
+    for m in re.finditer(r'\b(\d)[- ]?(?:family|fam)\b', t):
+        best = max(best, int(m.group(1)))
+    if re.search(r'3[- ]?decker|triple[- ]decker', t):
+        best = max(best, 3)
+    if best == 0 and re.search(r'\badu\b|accessory dwelling', t):
+        best = 1
+    return best
+
+
+def city_projects():
+    """New housing in the City's permit applications: every "New Construction" building permit applied for since
+    PIPE_FROM whose description gives a number of homes, grouped by address. Stage: done (a residential certificate of
+    occupancy issued after the first permit), construction (a permit issued, status Issued), closed (issued, closed, no
+    certificate: left out), permitting (applied for, none issued). Hotels left out; labs and offices give no homes."""
+    month = datetime.now().strftime('%Y-%m')
+    path = os.path.join(CACHE, f'trends-permits-{month}.json')
+    if not os.path.exists(path):
+        sel = ('application_number,application_subtype,status,project_description_or_business_name,application_date,'
+               'issue_date,application_address,application_latitude,application_longitude,parcel_number')
+        d = {'bp': socrata(f"application_type='Building Permit' AND application_subtype like '%New Construction%' AND "
+                           f"application_date >= '{PIPE_FROM}-01-01'", sel),
+             'co': socrata(f"application_type='Certificate of Occupancy' AND application_date >= '{PIPE_FROM}-01-01'", sel),
+             'asof': date.today().isoformat()}
+        os.makedirs(CACHE, exist_ok=True)
+        with open(path, 'w') as f:
+            json.dump(d, f)
+    with open(path) as f:
+        d = json.load(f)
+    addr = lambda r: (r.get('application_address') or '').split(',')[0].strip().upper()
+    bp, co = defaultdict(list), defaultdict(list)
+    for r in d['bp']:
+        bp[addr(r)].append(r)
+    for r in d['co']:
+        if 'Residential' in (r.get('application_subtype') or '') or re.search(r'unit|residential|dwelling|apartment|family',
+                                                                              r.get('project_description_or_business_name') or '', re.I):
+            co[addr(r)].append(r)
+    out = []
+    for a, rs in bp.items():
+        live = [r for r in rs if r.get('status') not in ('Withdrawn', 'Denied', 'Expired')]
+        desc = [r.get('project_description_or_business_name') or '' for r in live]
+        if not live or any('hotel' in x.lower() for x in desc):
+            continue
+        u = max(homes_in(x) for x in desc)
+        if u == 0:
+            continue
+        issued = [r for r in live if r.get('issue_date')]
+        first = min((r['issue_date'][:10] for r in issued), default='')
+        cos = sorted(c['issue_date'][:10] for c in co.get(a, []) if c.get('issue_date') and (not first or c['issue_date'][:10] >= first))
+        stage = ('done' if cos else 'construction' if any(r.get('status') == 'Issued' for r in issued)
+                 else 'closed' if issued else 'permitting')
+        lat = sorted(float(r['application_latitude']) for r in live if r.get('application_latitude'))
+        lon = sorted(float(r['application_longitude']) for r in live if r.get('application_longitude'))
+        if not lat:
+            continue
+        out.append({'a': a, 'u': u, 'stage': stage, 'applied': min(r['application_date'][:10] for r in live), 'first': first,
+                    'co': cos[0] if cos else '', 'lon': lon[len(lon) // 2], 'lat': lat[len(lat) // 2],
+                    'n': ' '.join(sorted(r['application_number'] for r in live)),
+                    'props': sorted({prop_id(r.get('parcel_number')) for r in live} - {None})})
+    return out, d['asof']
+
+
+def massbuilds(city):
+    """MassBuilds developments in Somerville not yet completed (planning, in construction, projected) with homes, less
+    the ones the City's permits already have: within 80 m of a City project with at least half the homes (one to one,
+    closest first), or City projects within 100 m that add up to half its homes (a big site permitted in pieces, like
+    Clarendon Hill); less zoning scenarios ("Rezoning"), scattered-site programs ("Ongoing") and stale entries."""
+    path = cached(f"trends-massbuilds-{datetime.now():%Y-%m}.json", MASSBUILDS)
+    with open(path) as f:
+        mb = [dict(x['attributes'], id=int(x['id'])) for x in json.load(f)['data']]
+    som = [x for x in mb if (x.get('municipal') or '') == 'Somerville']
+    cand = [x for x in som if x['status'] in ('planning', 'projected', 'in_construction') and (x.get('hu') or 0) > 0]
+    K = (math.cos(math.radians(42.39)) * 111320, 110540)
+    dist = lambda x, p: math.hypot((float(x['longitude']) - p['lon']) * K[0], (float(x['latitude']) - p['lat']) * K[1])
+    by = {x['id']: x for x in cand}
+    pairs = sorted((dist(x, p), x['id'], i) for x in cand for i, p in enumerate(city))
+    taken, why = set(), {}
+    for d_, xid, i in pairs:
+        if d_ > 80:
+            break
+        if xid not in why and i not in taken and city[i]['u'] >= 0.5 * by[xid]['hu']:
+            why[xid] = f"in the City's permits ({city[i]['a'].title()})"
+            taken.add(i)
+    oldest = str(datetime.now().year - MB_MAX_AGE)
+    for x in cand:
+        if x['id'] in why:
+            continue
+        close = [i for i, p in enumerate(city) if i not in taken and dist(x, p) <= 100]
+        if close and sum(city[i]['u'] for i in close) >= 0.5 * x['hu']:
+            why[x['id']] = (f"same site as City permits for {sum(city[i]['u'] for i in close)} homes ("
+                            + ', '.join(city[i]['a'].title() for i in sorted(close, key=lambda i: -city[i]['u'])) + ')')
+            taken.update(close)
+        elif 'rezoning' in x['name'].lower():
+            why[x['id']] = 'a zoning scenario, not a project'
+        elif 'ongoing' in x['name'].lower():
+            why[x['id']] = 'a program over many sites, not one site'
+        elif (x.get('updated_at') or '') < oldest:
+            why[x['id']] = f"not updated since {(x.get('updated_at') or '?')[:4]}"
+    keep = [x for x in cand if x['id'] not in why]
+    drop = [{'n': x['name'].strip(), 'u': x['hu'], 'why': why[x['id']]} for x in cand if x['id'] in why]
+    return keep, drop, max((x.get('updated_at') or '')[:10] for x in som)
+
+
+def vacant_lots():
+    """Buildable vacant parcels in Somerville (the assessor's use codes in VACANT), with their outlines. One query per
+    code: the statewide service times out (504) on several codes at once."""
+    path = os.path.join(CACHE, f'trends-vacant-parcels-{datetime.now().year}.json')
+    if not os.path.exists(path):
+        out = []
+        for c in VACANT:
+            blob = get(PARCELS, {'where': f"TOWN_ID=274 AND USE_CODE='{c}'", 'outFields': 'USE_CODE,LOT_SIZE,SITE_ADDR,FY',
+                                 'returnGeometry': 'true', 'outSR': 4326, 'geometryPrecision': 6, 'f': 'json'})
+            out += [{'a': x['attributes'], 'rings': x['geometry']['rings']} for x in json.loads(blob)['features']]
+        os.makedirs(CACHE, exist_ok=True)
+        with open(path, 'w') as f:
+            json.dump(out, f)
+    with open(path) as f:
+        return json.load(f)
+
+
+def prop_id(parcel):
+    """The City's parcel number ("058-E-00016-000000") as MassGIS writes it (PROP_ID "58_E_16")."""
+    m = re.match(r'0*(\d+)-([A-Z]+)-0*(\d+)(?:-0*(\w+))?$', parcel or '')
+    return m and f"{m.group(1)}_{m.group(2)}_{m.group(3)}" + (f"_{m.group(4)}" if m.group(4) else '')
+
+
+def project_lots(city, keep):
+    """The parcel outlines under each project: by the permits' parcel numbers for City projects (all of them, a project
+    can span lots), else the parcel under its point (MassBuilds entries, and permits whose parcel was renumbered when
+    lots merged). Cached for the month."""
+    path = os.path.join(CACHE, f"trends-pipeline-parcels-{datetime.now():%Y-%m}.json")
+    got = {}
+    if os.path.exists(path):
+        with open(path) as f:
+            got = json.load(f)
+    fields = {'outFields': 'PROP_ID,SITE_ADDR', 'returnGeometry': 'true', 'outSR': 4326, 'geometryPrecision': 6, 'f': 'json'}
+    want = sorted({p for c in city for p in c['props']} - set(got))
+    for i in range(0, len(want), 25):
+        ids = ','.join(f"'{p}'" for p in want[i:i + 25])
+        for ft in json.loads(get(PARCELS, {'where': f'TOWN_ID=274 AND PROP_ID IN ({ids})', **fields}))['features']:
+            got[ft['attributes']['PROP_ID']] = ft['geometry']['rings']
+        for p in want[i:i + 25]:
+            got.setdefault(p, None)
+    def at(lon, lat):
+        k = f'pt:{lon:.6f},{lat:.6f}'
+        if k not in got:
+            fs = json.loads(get(PARCELS, {'geometry': f'{lon},{lat}', 'geometryType': 'esriGeometryPoint', 'inSR': 4326,
+                                          'spatialRel': 'esriSpatialRelIntersects', **fields}))['features']
+            got[k] = fs[0]['geometry']['rings'] if fs else None
+        return got[k]
+    out = {}
+    for c in city:
+        rings = [r for p in c['props'] if got.get(p) for r in got[p]] or at(c['lon'], c['lat'])
+        out[('c', c['a'])] = rings
+    for x in keep:
+        out[('m', x['id'])] = at(float(x['longitude']), float(x['latitude']))
+    os.makedirs(CACHE, exist_ok=True)
+    with open(path, 'w') as f:
+        json.dump(got, f)
+    return out
+
+
+def short_name(n):
+    n = re.sub(r'\s*-\s*2nd Urban Renewal District', ' renewal district', n.strip())
+    n = re.sub(r'Union Square Revitalization:\s*', 'Union Sq ', n).replace('Square', 'Sq').replace('Avenue', 'Ave').replace('Street', 'St')
+    return n.split(' - ')[0].strip()
+
+
+def pipeline(xy):
+    city, asof = city_projects()
+    keep, drop, mbup = massbuilds(city)
+    lots = vacant_lots()
+    shown = [c for c in city if c['stage'] in ('construction', 'permitting')]
+    plot = project_lots(shown, keep)
+    p = [{'xy': xy(c['lon'], c['lat']), 'u': c['u'], 't': 'c' if c['stage'] == 'construction' else 'p', 'a': c['a'].title(),
+          'd': c['applied'], 'f': c['first'], 'n': c['n'], 'k': ('c', c['a'])} for c in shown]
+    p += [{'xy': xy(float(x['longitude']), float(x['latitude'])), 'u': x['hu'], 't': 'f' if x['status'] == 'projected' else 'm',
+           'a': short_name(x['name']), 'full': x['name'].strip(), 'ms': x['status'].replace('_', ' '), 'y': x.get('year_compl'),
+           'up': (x.get('updated_at') or '')[:10], 'k': ('m', x['id'])} for x in keep]
+    p.sort(key=lambda x: -x['u'])
+    used = set()                                       # a lot drawn once, for the biggest project on it; the others keep a circle
+    for x in p:
+        rings = plot.get(x.pop('k'))
+        key = json.dumps(rings[0][:3]) if rings else None
+        if rings and key not in used:
+            used.add(key)
+            x['lot'] = [[xy(*q) for q in r] for r in rings]
+    print(f"  project lots: {sum(1 for x in p if 'lot' in x)} of {len(p)} projects on a parcel outline", file=sys.stderr)
+    lo = [{'r': [[xy(*q) for q in r] for r in v['rings']], 'a': (v['a'].get('SITE_ADDR') or '').title(),
+           'c': VACANT.get(v['a']['USE_CODE'], v['a']['USE_CODE']), 'ac': v['a'].get('LOT_SIZE'), 'fy': v['a'].get('FY')} for v in lots]
+    n = Counter(x['t'] for x in p)
+    h = {t: sum(x['u'] for x in p if x['t'] == t) for t in 'cpmf'}
+    closed = [c for c in city if c['stage'] == 'closed']
+    print(f'  housing pipeline: City permits {n["c"]} under construction ({h["c"]} homes), {n["p"]} in permitting ({h["p"]}); '
+          f'MassBuilds {n["m"]} planned ({h["m"]}), {n["f"]} long range ({h["f"]}), {len(drop)} left out; {len(lo)} vacant lots', file=sys.stderr)
+    for x in drop:
+        print(f"    MassBuilds left out: {x['n']} ({x['u']}): {x['why']}", file=sys.stderr)
+    return {'p': p, 'lots': lo, 'drop': drop, 'asof': asof, 'mbup': mbup, 'from': PIPE_FROM, 'closed': len(closed),
+            'fy': max((v['fy'] or 0) for v in lo) if lo else None}
+
 
 def main():
     tw = towns()
@@ -901,6 +1139,7 @@ def main():
         'routes': [{'r': r, 'v': [seasons[s]['routes'].get(r, 0) for s in order], 't': [seasons[s]['trips'].get(r, 0) for s in order]} for r in routes],
         'prof': profiles(seasons, 'Fall 2019', order[-1], [r for r in routes if seasons[order[-1]]['routes'].get(r, 0) >= MIN_ROUTE], som),
         'homes': homes(xy, [ROUTE_ID.get(r, r) for r in routes if seasons[order[-1]]['routes'].get(r, 0) >= MIN_ROUTE], fall_feeds()[int(order[-1][5:])]),
+        'pipe': pipeline(xy),
         'stopv': {s: per_place(seasons[s]['stops']) for s in order},
         'stops': stops, 'stations': stations, 'towns': towns_out, 'bikes': bikes, 'work': work,
         'size': xy(box[2], box[1]),

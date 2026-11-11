@@ -14,6 +14,7 @@ Pages marked * were seen only as search-result excerpts, not opened in full. Che
 - [Committee discussion of the curb-ramp amendment, Dec 2, 2025 (citizenportal.ai)](https://citizenportal.ai/articles/7669908/massachusetts/middlesex-county/somerville-city/somerville-committee-asks-analyst-to-draft-commercial-only-curb-ramp-snow-clearing-language)
 - [PTAC: Bus Network Redesign proposed amendments, June 2026](https://s3.amazonaws.com/somervillema-live/s3fs-public/PTAC_BNRProposedAmendments_June2026.pdf) *
 - [Somerville services (311 data), data.gov](https://catalog.data.gov/dataset/somerville-services)
+- Housing pipeline: City [Applications for Permits and Licenses](https://data.somervillema.gov/d/nneb-s3f7) (new-construction building permits and certificates of occupancy); MAPC [MassBuilds](https://www.massbuilds.com/) ([API](https://api.massbuilds.com/developments)); [MassGIS property tax parcels](https://www.mass.gov/info-details/massgis-data-property-tax-parcels) (FY2025, Somerville assessor).
 - [Parking permit restrictions in Transit Areas](https://www.somervillema.gov/departments/parking-department): rule approved by the Traffic Commission Dec 12, 2019, for properties with a first building permit on or after Jan 15, 2020; [Schedule W list of restricted addresses](https://s3.amazonaws.com/somervillema-live/s3fs-public/schedule-w-list-of-restricted-addresses.pdf) (as of May 5, 2026); [FAQ](https://s3.amazonaws.com/somervillema-live/s3fs-public/parking-permit-restrictions-transit-areas-faq.pdf).
 
 ## PTAC

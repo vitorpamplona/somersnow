@@ -91,6 +91,18 @@ select{font:600 14px var(--body);color:var(--snow);background:var(--panel);borde
 .card .nums{font-size:13px;color:var(--ice)}
 .card .why{font-size:12px;color:var(--ink3);margin-top:2px;min-height:16px}
 .card svg{display:block;width:100%;height:auto;margin:6px 0 2px;overflow:visible}
+.tiles.five{grid-template-columns:repeat(5,minmax(0,1fr));margin:12px 0 4px}
+.tiles.five .v{font-size:30px}
+.tile .k span{display:block;color:var(--ink3);font-size:12px}
+@media (max-width:960px){.tiles.five{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.zoom{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin:0 0 10px}
+.zoom .seg{margin:0}
+.zoom .hint{font-size:13px;color:var(--ink3)}
+.pmap{cursor:grab;touch-action:pan-y;outline:none}
+.pmap.zoomed{touch-action:none}
+.pmap.drag{cursor:grabbing}
+.pmap:focus-visible{outline:2px solid var(--orange);outline-offset:-2px}
+.pmap svg{overflow:hidden}
 .mapwrap{background:#0B1C2E;border-radius:14px;overflow:hidden}
 details.table{margin-top:36px}
 details summary{cursor:pointer;font:800 22px var(--display);text-transform:uppercase;letter-spacing:.5px}
@@ -112,6 +124,8 @@ thead th{color:var(--ice);font-weight:600}
   .tiles.three{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
   .tiles.three .tile{padding:8px 9px}
   .tiles.three .v{font-size:21px}
+  .tiles.five{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .tiles.five .v{font-size:24px}
   .headline{font-size:19px}
   .bar nav .long{display:none}
   h2{font-size:24px}
@@ -214,6 +228,16 @@ thead th{color:var(--ice);font-weight:600}
     <p class="note" id="n-homes"></p>
   </section>
 
+  <section aria-labelledby="h-pipe">
+    <h2 id="h-pipe">What's coming: the housing pipeline</h2>
+    <p class="sub" id="sub-pipe">New homes being built, in permitting and planned, and the vacant lots that could take more, with the T and the buses. Sized by homes.</p>
+    <div class="tiles five" id="tiles-pipe"></div>
+    <div class="legend" id="leg-pipe"></div>
+    <div class="zoom" id="zoom-pipe"></div>
+    <div class="mapwrap"><div class="chart pmap" id="c-pipe" tabindex="0" aria-describedby="hint-pipe"></div></div>
+    <p class="note" id="n-pipe"></p>
+  </section>
+
   <details class="table">
     <summary>All the numbers</summary>
     <div class="tbl" id="table"></div>
@@ -229,8 +253,9 @@ thead th{color:var(--ice);font-weight:600}
       <li><b>Boardings, not people:</b> a rider who changes from bus to T counts twice.</li>
       <li><b>Somerville since 2015:</b> Assembly opened in 2014, the pandemic hit in 2020, the Green Line Extension opened in 2022, the bus redesign began in Dec 2024.</li>
       <li><b>Averages:</b> the MBTA's counts are each fall's average day, from the trips and days it counted.</li>
+      <li><b>Housing pipeline:</b> homes from each project's building permit application (City of Somerville), what isn't permitted yet from MAPC's MassBuilds, less what's already in the permits, and vacant lots from the assessor's parcels (MassGIS). A permit's homes can change before the building opens.</li>
     </ul>
-    <p class="src">Sources: <a href="https://mbta-massdot.opendata.arcgis.com/datasets/8daf4a33925a4df59183f860826d29ee">MBTA bus ridership by trip, season, route and stop</a>; <a href="https://mbta-massdot.opendata.arcgis.com/datasets/9fea7862501f4c59ab2c001ad6ae19b0">MBTA rail ridership</a> (2017–2019) and the <a href="https://mbta-massdot.opendata.arcgis.com/datasets/80a379ebaa374cfd836ca4d3880ceda4">Fall 2023</a>, <a href="https://mbta-massdot.opendata.arcgis.com/datasets/8f20b4e8d24e466fbca157cca63f6e16">Fall 2024</a> and <a href="https://mbta-massdot.opendata.arcgis.com/datasets/6494749a29c648018820d0e49636205c">Fall 2025</a> rail files; the <a href="https://cdn.mbta.com/archive/archived_feeds.txt">MBTA schedule archive</a>; <a href="https://bluebikes.com/system-data">Bluebikes system data</a>; <a href="https://data.census.gov/table/ACSDT1Y2024.B08006?g=160XX00US2562535">American Community Survey</a>; <a href="https://lehd.ces.census.gov/data/">LEHD LODES</a>; <a href="https://www.mass.gov/info-details/massgis-data-municipalities">MassGIS</a>. By the Somerville Pedestrian &amp; Transit Advisory Committee (PTAC). Not an MBTA or City page. <a href="https://github.com/vitorpamplona/somerwalks/tree/main/analysis/transit-trends">Method and code</a>.</p>
+    <p class="src">Sources: <a href="https://mbta-massdot.opendata.arcgis.com/datasets/8daf4a33925a4df59183f860826d29ee">MBTA bus ridership by trip, season, route and stop</a>; <a href="https://mbta-massdot.opendata.arcgis.com/datasets/9fea7862501f4c59ab2c001ad6ae19b0">MBTA rail ridership</a> (2017–2019) and the <a href="https://mbta-massdot.opendata.arcgis.com/datasets/80a379ebaa374cfd836ca4d3880ceda4">Fall 2023</a>, <a href="https://mbta-massdot.opendata.arcgis.com/datasets/8f20b4e8d24e466fbca157cca63f6e16">Fall 2024</a> and <a href="https://mbta-massdot.opendata.arcgis.com/datasets/6494749a29c648018820d0e49636205c">Fall 2025</a> rail files; the <a href="https://cdn.mbta.com/archive/archived_feeds.txt">MBTA schedule archive</a>; <a href="https://bluebikes.com/system-data">Bluebikes system data</a>; <a href="https://data.census.gov/table/ACSDT1Y2024.B08006?g=160XX00US2562535">American Community Survey</a>; <a href="https://lehd.ces.census.gov/data/">LEHD LODES</a>; <a href="https://www.mass.gov/info-details/massgis-data-municipalities">MassGIS</a>; the City's <a href="https://data.somervillema.gov/d/nneb-s3f7">permit applications</a> and <a href="https://www.somervillema.gov/departments/parking-department">Schedule W</a>; MAPC's <a href="https://www.massbuilds.com/">MassBuilds</a>; <a href="https://www.mass.gov/info-details/massgis-data-property-tax-parcels">MassGIS property tax parcels</a>. By the Somerville Pedestrian &amp; Transit Advisory Committee (PTAC). Not an MBTA or City page. <a href="https://github.com/vitorpamplona/somerwalks/tree/main/analysis/transit-trends">Method and code</a>.</p>
   </details>
 </main>
 <div id="tip" role="tooltip"></div>
@@ -670,6 +695,168 @@ function homes() {
   $('#n-homes').textContent = `Homes from each project's building permit and certificate of occupancy; the list (Schedule W) is the City's as of ${HM.asof || 'May 5, 2026'}.${HM.hh ? ` People: homes × ${HM.hh[1]}, the average Somerville renter household (survey, ${HM.hh[0]}), an estimate.` : ''} Circles are straight-line ½ miles; the City's Transit Area uses walking routes.${old.length ? ` Left out, occupied before ${HM.from}: ${old.map((x) => `${x.a} (${x.u})`).join(', ')}, ${fmt(old.reduce((a, x) => a + x.u, 0))} homes.` : ''}${unk.length ? ` Not shown: ${unk.join(', ')} (no permit found).` : ''}`;
 }
 
+// ---------- the housing pipeline: a map you can zoom ----------
+const PP = D.pipe, PCOL = '#EEF3F7', LOTC = '#E8B84A';
+const PT = { c: 'Under construction', p: 'In permitting', m: 'Planned', f: 'Long range' };
+const PV = { z: 1, cx: null, cy: null };                      // the view: zoom and centre, in map metres
+const PZMAX = 8, LOTZ = 2.2;                                 // zoomed in this far, projects show as their lots
+const nearSta = (x, y) => HM.sta.reduce((b, s) => { const d = Math.hypot(s[0] - x, s[1] - y); return d < b[0] ? [d, s[2]] : b; }, [Infinity, '']);
+const half = (x, y) => nearSta(x, y)[0] <= 805;
+const lotXY = (l) => l.r[0][0];
+function pipeTiles() {
+  const by = (t) => PP.p.filter((x) => x.t === t), hom = (a) => a.reduce((s, x) => s + x.u, 0);
+  const pc = (a) => a.length ? Math.round(100 * hom(a.filter((x) => half(...x.xy))) / hom(a)) : 0;
+  const k = { c: 'Under construction <span>(building permit issued)</span>', p: 'In permitting <span>(applied for)</span>', m: 'Planned <span>(MassBuilds, no permit yet)</span>', f: 'Long range <span>(MassBuilds “projected”)</span>' };
+  const ac = PP.lots.reduce((s, l) => s + (l.ac || 0), 0);
+  $('#tiles-pipe').innerHTML = 'cpmf'.split('').map((t) => `<div class="tile"><div class="k">${k[t]}</div><div class="v">${fmt(hom(by(t)))}</div><div class="s">homes, ${by(t).length} ${t === 'f' ? 'sites' : 'projects'} · ${pc(by(t))}% within ½ mile of a station</div></div>`).join('')
+    + `<div class="tile"><div class="k">Buildable vacant lots <span>(assessor)</span></div><div class="v">${PP.lots.length}</div><div class="s">lots, ${ac.toFixed(0)} acres · ${PP.lots.filter((l) => half(...lotXY(l))).length} within ½ mile</div></div>`;
+}
+function pipe() {
+  pipeTiles();
+  const el = $('#c-pipe'), w = W(el), [MW, MH] = D.size, phone = w < 600, h = Math.round(w * MH / MW), k0 = w / MW;
+  if (PV.cx == null) { PV.cx = MW / 2; PV.cy = MH / 2; }
+  const rad = (u) => (2.5 + 19 * Math.sqrt(u / 450)) * Math.max(0.75, Math.min(1.2, w / 900));
+  const STY = { c: `fill="${PCOL}" fill-opacity=".9" stroke="${SURF}" stroke-width="1.5"`, p: `fill="${PCOL}" fill-opacity=".22" stroke="${PCOL}" stroke-width="1.8"`,
+    m: `fill="rgba(0,0,0,0)" stroke="${PCOL}" stroke-width="1.8" stroke-dasharray="4 3"`, f: `fill="rgba(0,0,0,0)" stroke="${PCOL}" stroke-opacity=".7" stroke-width="1.6" stroke-dasharray="1.5 3.5" stroke-linecap="round"` };
+  const NS = 'vector-effect="non-scaling-stroke"';
+  let base = '';                                              // drawn once in map metres, moved with a transform
+  D.towns.forEach((t) => { base += `<path d="${t.rings.map(pathOf).join('')}" fill="${t.n === 'Somerville' ? '#163452' : '#11283F'}" stroke="rgba(169,196,228,.28)" stroke-width="1.2" ${NS}/>`; });
+  HM.sta.forEach(([x, y]) => { base += `<circle cx="${x}" cy="${y}" r="805" fill="rgba(169,196,228,.05)" stroke="rgba(169,196,228,.25)" stroke-width="1" stroke-dasharray="3 4" ${NS}/>`; });
+  HM.bus.forEach((ln) => { base += `<path d="M${ln.map((p) => p.join(',')).join('L')}" fill="none" stroke="${C.bus}" stroke-opacity=".5" stroke-width="1.6" stroke-linejoin="round" ${NS}/>`; });
+  Object.entries(HM.rail).forEach(([n, ln]) => { base += `<path d="M${ln.map((p) => p.join(',')).join('L')}" fill="none" stroke="${LINEC[n]}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" ${NS}/>`; });
+  PP.lots.forEach((l, i) => { base += `<path class="pl" data-l="${i}" d="${l.r.map(pathOf).join('')}" fill="${LOTC}" fill-opacity=".6" stroke="${LOTC}" stroke-width="1.5" stroke-linejoin="round" ${NS}/>`; });
+  const LST = { c: `fill="${PCOL}" fill-opacity=".85" stroke="${PCOL}" stroke-width="1"`, p: `fill="${PCOL}" fill-opacity=".25" stroke="${PCOL}" stroke-width="1.8"`,
+    m: `fill="${PCOL}" fill-opacity=".06" stroke="${PCOL}" stroke-width="1.8" stroke-dasharray="5 3"`, f: `fill="${PCOL}" fill-opacity=".04" stroke="${PCOL}" stroke-opacity=".75" stroke-width="1.6" stroke-dasharray="1.5 4" stroke-linecap="round"` };
+  PP.p.forEach((x, i) => {                                    // each project's lot, under its circle; the circle gives way as you zoom in
+    if (!x.lot) return;
+    base += `<path class="pp" data-i="${i}" d="${x.lot.map(pathOf).join('')}" ${LST[x.t]} stroke-linejoin="round" ${NS}/>`;
+    const xs = x.lot.flat().map((q) => q[0]), ys = x.lot.flat().map((q) => q[1]);
+    x.lc = [(Math.min(...xs) + Math.max(...xs)) / 2, (Math.min(...ys) + Math.max(...ys)) / 2, Math.max(Math.max(...xs) - Math.min(...xs), Math.max(...ys) - Math.min(...ys)) / 2];
+  });
+  const tot = (t) => PP.p.filter((x) => x.t === t).reduce((s, x) => s + x.u, 0);
+  el.innerHTML = `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" role="img" aria-label="Zoomable map of Somerville's housing pipeline: ${fmt(tot('c'))} homes under construction, ${fmt(tot('p'))} in permitting, ${fmt(tot('m'))} planned and ${fmt(tot('f'))} long range, and ${PP.lots.length} buildable vacant lots, with the T lines, stations and bus routes. The biggest: ${PP.p.slice(0, 4).map((x) => `${x.full || x.a}, ${x.u} homes, ${PT[x.t].toLowerCase()}`).join('; ')}. Every project is in the table under All the numbers."><g id="pb">${base}</g><g id="pf"></g></svg>`;
+  const svg = el.firstChild, gb = svg.querySelector('#pb'), gf = svg.querySelector('#pf');
+  const clamp = () => {                                       // keep the view on the map
+    PV.z = Math.max(1, Math.min(PZMAX, PV.z));
+    const hw = MW / PV.z / 2, hh = MH / PV.z / 2;
+    PV.cx = Math.max(hw, Math.min(MW - hw, PV.cx)); PV.cy = Math.max(hh, Math.min(MH - hh, PV.cy));
+  };
+  const S = () => k0 * PV.z, sx = (x) => (x - PV.cx) * S() + w / 2, sy = (y) => (y - PV.cy) * S() + h / 2;
+  let raf = 0;
+  const draw = () => {
+    raf = 0; clamp();
+    el.classList.toggle('zoomed', PV.z > 1.01);
+    gb.setAttribute('transform', `translate(${w / 2 - PV.cx * S()},${h / 2 - PV.cy * S()}) scale(${S()})`);
+    const grow = 1 + 0.3 * Math.log2(PV.z), vis = (x, y, r) => x > -r && x < w + r && y > -r && y < h + r;
+    let g = '';
+    HM.sta.forEach(([x, y]) => { g += `<circle cx="${sx(x)}" cy="${sy(y)}" r="${4 + PV.z * 0.3}" fill="${SURF}" stroke="#EEF3F7" stroke-width="2" pointer-events="none"/>`; });
+    const lots = PV.z >= LOTZ, asLot = (x) => lots && x.lc;
+    PP.p.forEach((x, i) => { const X = sx(x.xy[0]), Y = sy(x.xy[1]), r = rad(x.u) * grow; if (!asLot(x) && vis(X, Y, r)) g += `<circle class="pp" data-i="${i}" cx="${X}" cy="${Y}" r="${r}" ${STY[x.t]}/>`; });
+    const boxes = [], circ = PP.p.map((x) => asLot(x) ? [sx(x.lc[0]), sy(x.lc[1]), Math.max(3, x.lc[2] * S())] : [sx(x.xy[0]), sy(x.xy[1]), rad(x.u) * grow]);
+    const fits = (b) => b[0] > 2 && b[2] < w - 2 && b[1] > 2 && b[3] < h - 2 && !boxes.some((q) => b[0] < q[2] && b[2] > q[0] && b[1] < q[3] && b[3] > q[1]);
+    const cover = (b) => circ.reduce((n, [cx, cy, r]) => n + (r > 5 && r < 80 && cx + r > b[0] && cx - r < b[2] && cy + r > b[1] && cy - r < b[3] ? 1 : 0), 0);
+    if (!phone || PV.z > 1.5) HM.sta.forEach(([x, y, n]) => {          // station names first
+      const s = n.replace(' Square', ' Sq').replace('East Somerville', 'E. Somerville').replace('Community College', 'Comm. College');
+      const tx = sx(x) + 6, ty = sy(y) - 6, b = [tx, ty - 10, tx + s.length * 6, ty + 2];
+      if (fits(b)) { boxes.push(b); g += `<text x="${tx}" y="${ty}" class="slab" pointer-events="none">${esc(s)}</text>`; }
+    });
+    const minU = (phone ? 200 : 75) / PV.z / PV.z;               // more labels as you zoom in
+    PP.p.forEach((x, i) => {                                      // biggest first, beside the bubble, skipped where none fits
+      if (x.u < minU) return;
+      const [X, Y, r] = circ[i]; if (!vis(X, Y, 0)) return;
+      const txt = `${x.a} · ${x.u} homes`, tw = txt.length * 6.4 + 4; let best = null;
+      for (const d of (phone && PV.z < 1.5 ? [0] : [0, 10, 22])) {
+        for (const a of [0, 180, -35, 35, 215, 145, -90, 90]) {
+          const c = Math.cos(a * Math.PI / 180), ex = X + (r + 4 + d) * c, ey = Y - (r + 4 + d) * Math.sin(a * Math.PI / 180) + 4;
+          const x0 = c >= -0.1 ? ex : ex - tw, b = [x0, ey - 11, x0 + tw, ey + 3];
+          if (!fits(b)) continue;
+          const sc = cover(b) * 14 + d * 1.5;
+          if (!best || sc < best[0]) best = [sc, b, ex, ey, d, x0];
+        }
+        if (best && best[0] < 14) break;
+      }
+      if (!best) return;
+      const [, b, ex, ey, d, x0] = best; boxes.push(b);
+      if (d) g += `<path d="M${X},${Y}L${x0 === ex ? b[0] : b[2]},${ey - 4}" stroke="${PCOL}" stroke-opacity=".5" fill="none" pointer-events="none"/>`;
+      g += `<text x="${b[0] + 2}" y="${ey}" class="hlab" pointer-events="none"${x.t === 'f' ? ' fill-opacity=".8"' : ''}>${esc(txt)}</text>`;
+    });
+    gf.innerHTML = g;
+    zb.forEach(([b, , z]) => b.setAttribute('aria-pressed', String(z === 1 ? PV.z <= 1.01 : Math.abs(PV.z - z) < 0.05 && Math.hypot(PV.cx - b._c[0], PV.cy - b._c[1]) < 50)));
+  };
+  const redraw = () => { if (!raf) raf = requestAnimationFrame(draw); };
+  const zoomAt = (f, px, py) => {                              // zoom by f, keeping the point under (px, py) still
+    const mx = PV.cx + (px - w / 2) / S(), my = PV.cy + (py - h / 2) / S();
+    PV.z = Math.max(1, Math.min(PZMAX, PV.z * f));
+    PV.cx = mx - (px - w / 2) / S(); PV.cy = my - (py - h / 2) / S(); redraw();
+  };
+  // presets and buttons
+  const sta = (n) => HM.sta.find((s) => s[2] === n);
+  const pre = [['All', [MW / 2, MH / 2], 1], ['Union Sq', sta('Union Square'), 3], ['Assembly', sta('Assembly'), 3], ['Winter Hill', sta('Gilman Square'), 2.5], ['Davis', sta('Davis'), 3]].filter((p) => p[1]);
+  const zw = $('#zoom-pipe');
+  zw.innerHTML = `<div class="seg" role="group" aria-label="Zoom to">${pre.map(([n], i) => `<button type="button" data-p="${i}">${n}</button>`).join('')}</div>`
+    + `<div class="seg" role="group" aria-label="Zoom"><button type="button" data-z="in" aria-label="Zoom in">+</button><button type="button" data-z="out" aria-label="Zoom out">−</button></div>`
+    + `<span class="hint" id="hint-pipe">${matchMedia('(pointer:coarse)').matches ? 'Double-tap or pinch to zoom, drag to move, tap a project for details.' : 'Double-click or Ctrl + scroll to zoom, drag to move, arrow keys too.'}</span>`;
+  const zb = [...zw.querySelectorAll('[data-p]')].map((b) => { const p = pre[+b.dataset.p]; b._c = p[1]; b.onclick = () => { PV.z = p[2]; PV.cx = p[1][0]; PV.cy = p[1][1]; redraw(); }; return [b, p[1], p[2]]; });
+  zw.querySelector('[data-z=in]').onclick = () => zoomAt(1.6, w / 2, h / 2);
+  zw.querySelector('[data-z=out]').onclick = () => zoomAt(1 / 1.6, w / 2, h / 2);
+  // pointer: drag to pan, two fingers to pinch, tap or hover for details
+  const pts = new Map(); let moved = false, pinch = null, lastTap = 0;
+  const local = (e) => { const r = svg.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+  const tipFor = (e) => {
+    const hit = document.elementFromPoint(e.clientX, e.clientY), c = hit && hit.closest && hit.closest('#c-pipe [data-i], #c-pipe [data-l]');
+    if (!c) return hideTip();
+    if (c.dataset.l != null) {
+      const l = PP.lots[+c.dataset.l], [d, n] = nearSta(...lotXY(l));
+      return showTip(`<b>${esc(l.a || 'Vacant lot')}</b>` + tipRow('', 'Vacant lot', esc(l.c)) + (l.ac ? tipRow('', 'Size', `${l.ac.toFixed(2)} acres`) : '') + tipRow('', 'Nearest station', `${esc(n)}, ${fmt(d)} m`), e);
+    }
+    const x = PP.p[+c.dataset.i], [d, n] = nearSta(...x.xy);
+    showTip(`<b>${esc(x.full || x.a)}</b>` + tipRow('', 'Homes', fmt(x.u)) + tipRow('', 'Stage', PT[x.t])
+      + (x.full ? tipRow('', 'MassBuilds status', esc(x.ms)) + (x.y ? tipRow('', 'Expected', x.y) : '') + tipRow('', 'MassBuilds updated', x.up)
+        : tipRow('', 'Applied', x.d) + (x.f ? tipRow('', 'First permit', x.f) : ''))
+      + tipRow('', 'Nearest station', `${esc(n)}, ${fmt(d)} m`), e);
+  };
+  el.onpointerdown = (e) => {
+    pts.set(e.pointerId, local(e)); moved = false;
+    if (pts.size === 2) { const [a, b] = [...pts.values()]; pinch = { d: Math.hypot(a[0] - b[0], a[1] - b[1]), z: PV.z }; }
+    if (e.pointerType === 'mouse' || PV.z > 1.01 || pts.size === 2) { el.setPointerCapture(e.pointerId); }
+  };
+  el.onpointermove = (e) => {
+    if (!pts.has(e.pointerId)) { if (e.pointerType === 'mouse') tipFor(e); return; }
+    const p = local(e), q = pts.get(e.pointerId);
+    if (pts.size === 2 && pinch) {
+      pts.set(e.pointerId, p); const [a, b] = [...pts.values()], d = Math.hypot(a[0] - b[0], a[1] - b[1]);
+      zoomAt(pinch.z * d / pinch.d / PV.z, (a[0] + b[0]) / 2, (a[1] + b[1]) / 2); moved = true; return;
+    }
+    if (Math.hypot(p[0] - q[0], p[1] - q[1]) > 3 && (e.pointerType === 'mouse' ? e.buttons & 1 : PV.z > 1.01)) {
+      PV.cx -= (p[0] - q[0]) / S(); PV.cy -= (p[1] - q[1]) / S(); pts.set(e.pointerId, p); moved = true; el.classList.add('drag'); hideTip(); redraw();
+    } else if (e.pointerType === 'mouse') tipFor(e);
+  };
+  const up = (e) => {
+    pts.delete(e.pointerId); if (pts.size < 2) pinch = null; el.classList.remove('drag');
+    if (e.type === 'pointerup' && !moved && e.pointerType !== 'mouse') {
+      const now = Date.now();
+      if (now - lastTap < 300) { const [x, y] = local(e); zoomAt(2, x, y); lastTap = 0; hideTip(); } else { lastTap = now; tipFor(e); }
+    }
+  };
+  el.onpointerup = up; el.onpointercancel = up;
+  el.onpointerleave = (e) => { if (e.pointerType === 'mouse') hideTip(); };
+  el.ondblclick = (e) => { const [x, y] = local(e); zoomAt(e.shiftKey ? 0.5 : 2, x, y); };
+  el.onwheel = (e) => { if (!e.ctrlKey && !e.metaKey) return; e.preventDefault(); const [x, y] = local(e); zoomAt(Math.exp(-e.deltaY / 300), x, y); };
+  el.onkeydown = (e) => {
+    const st = 120 / S(), mv = { ArrowLeft: [-st, 0], ArrowRight: [st, 0], ArrowUp: [0, -st], ArrowDown: [0, st] }[e.key];
+    if (mv && PV.z > 1.01) { PV.cx += mv[0]; PV.cy += mv[1]; redraw(); e.preventDefault(); }
+    else if (e.key === '+' || e.key === '=') { zoomAt(1.6, w / 2, h / 2); e.preventDefault(); }
+    else if (e.key === '-' || e.key === '_') { zoomAt(1 / 1.6, w / 2, h / 2); e.preventDefault(); }
+  };
+  draw();
+  $('#leg-pipe').innerHTML = `<span><i style="background:${PCOL};border-radius:50%"></i>Under construction</span><span><i class="ring" style="border-color:${PCOL};background:rgba(238,243,247,.22)"></i>In permitting</span><span><i class="ring" style="border-color:${PCOL};border-style:dashed"></i>Planned</span><span><i class="ring" style="border-color:rgba(238,243,247,.7);border-style:dotted"></i>Long range</span><span><i style="background:${LOTC};opacity:.8"></i>Buildable vacant lot</span><span><i class="line" style="background:${C.bus};opacity:.7"></i>Bus routes</span><span><i class="ring" style="border-color:rgba(169,196,228,.5);border-style:dashed"></i>½ mile from a station</span><span>Zoom in to see each project's lot.</span>`;
+  const why = (s) => PP.drop.filter((x) => x.why.startsWith(s));
+  const same = why('same site'), stale = why('not updated'), zon = why('a zoning'), prog = why('a program'), inP = why('in the City');
+  $('#n-pipe').innerHTML = `<b>Under construction and in permitting:</b> the City's permit applications (as of ${PP.asof}): every "New Construction" building permit applied for since ${PP.from} whose description gives a number of homes, grouped by address. Under construction: a building permit issued (often for the foundation first) and no residential certificate of occupancy yet. In permitting: applied for, none issued. Homes are what the permit says; a final building can differ. Hotels left out, and ${PP.closed} projects whose permit closed with no certificate. `
+    + `<b>Planned and long range:</b> MAPC's MassBuilds (updated to ${PP.mbup}), what isn't completed yet. It's kept by volunteers and can be out of date: some of its "in construction" entries have no City building permit, so they're shown as planned. Left out: ${inP.length + same.length} already in the City's permits${same.length ? ` (${same.map((x) => `${esc(x.n)}, ${x.u} homes`).join('; ')}: same site)` : ''}, ${zon.length} zoning scenarios, ${prog.length} program over many sites and ${stale.length} entries not updated in four years; the list is under All the numbers. `
+    + `<b>Vacant lots:</b> MassGIS property tax parcels (Somerville assessor, FY${PP.fy}), the codes for vacant land that's developable or potentially so (residential, commercial, industrial); undevelopable and City-owned lots left out. Zoomed in, each project shows as its lot (the parcels on its permits, or the parcel under MassBuilds' point; ${PP.p.filter((x) => !x.lot).length} without one stay circles). Circles are straight-line ½ miles; walks are longer.`;
+}
+
 // ---------- 5. map ----------
 const pathOf = (r) => 'M' + r.map((p) => p[0] + ' ' + p[1]).join('L') + 'Z';
 function divColor(ch) {                                  // change as a fraction: orange for fewer riders, blue for more
@@ -871,6 +1058,12 @@ function table() {
     + D.routes.map((r) => `<tr><td>${esc(r.r)}</td>${r.v.map((v) => `<td>${fmt(v)}</td>`).join('')}</tr>`).join('') + '</tbody></table>'
     + `<p class="note">New homes near the T without resident parking permits (the City's Schedule W, every address; homes and dates from each project's permits):</p><table><thead><tr><th>Address</th><th>Homes</th><th>Status</th><th>First permit</th><th>Occupied</th><th>Permits</th></tr></thead><tbody>`
     + D.homes.list.map((x) => `<tr><td>${esc(x.w)}</td><td>${x.u == null ? '—' : fmt(x.u)}</td><td>${esc(x.s)}</td><td>${x.p || '—'}</td><td>${x.o || '—'}</td><td>${esc(x.n) || '—'}</td></tr>`).join('') + '</tbody></table>'
+    + `<p class="note">The housing pipeline (City permits since ${D.pipe.from}, as of ${D.pipe.asof}; MassBuilds, updated to ${D.pipe.mbup}):</p><table><thead><tr><th>Project</th><th>Homes</th><th>Stage</th><th>Source</th><th>Applied / expected</th><th>First permit / MassBuilds updated</th></tr></thead><tbody>`
+    + D.pipe.p.map((x) => `<tr><td>${esc(x.full || x.a)}</td><td>${fmt(x.u)}</td><td>${PT[x.t]}</td><td>${x.full ? 'MassBuilds' : 'City permits'}</td><td>${x.full ? (x.y || '—') : x.d}</td><td>${x.full ? x.up : (x.f || '—')}</td></tr>`).join('') + '</tbody></table>'
+    + `<p class="note">MassBuilds entries left out of the pipeline:</p><table><thead><tr><th>MassBuilds entry</th><th>Homes</th><th>Why</th></tr></thead><tbody>`
+    + D.pipe.drop.map((x) => `<tr><td>${esc(x.n)}</td><td>${fmt(x.u)}</td><td>${esc(x.why)}</td></tr>`).join('') + '</tbody></table>'
+    + `<p class="note">Buildable vacant lots (MassGIS parcels, FY${D.pipe.fy}):</p><table><thead><tr><th>Address</th><th>Use</th><th>Acres</th></tr></thead><tbody>`
+    + D.pipe.lots.slice().sort((a, b) => (b.ac || 0) - (a.ac || 0)).map((l) => `<tr><td>${esc(l.a || '—')}</td><td>${esc(l.c)}</td><td>${l.ac == null ? '—' : l.ac.toFixed(2)}</td></tr>`).join('') + '</tbody></table>'
     + `<p class="note">By route (weekday trips that stop in Somerville; Monday–Thursday from 2025):</p><table><thead><tr><th>Route</th>${S.map((s) => `<th>${yr(s)}</th>`).join('')}</tr></thead><tbody>`
     + D.routes.map((r) => `<tr><td>${esc(r.r)}</td>${r.t.map((v) => `<td>${fmt(v)}</td>`).join('')}</tr>`).join('') + '</tbody></table>'
     + `<p class="note">Who's working (each year; survey: — not published for Somerville that year):</p><table><thead><tr><th></th>${WY.map((y) => `<th>${y}</th>`).join('')}</tr></thead><tbody>`
@@ -880,7 +1073,7 @@ function table() {
       .map(([n, f]) => `<tr><td>${esc(n)}</td>${WY.map((y) => { const v = f(y); return `<td>${v == null ? '—' : typeof v === 'string' ? v : fmt(v)}</td>`; }).join('')}</tr>`).join('') + '</tbody></table>';
 }
 
-function all() { decade(); back(); stations(); bikes(); routes(); map(); full(); homes(); hours(); work(); }
+function all() { decade(); back(); stations(); bikes(); routes(); map(); full(); homes(); pipe(); hours(); work(); }
 tiles(); table(); all();
 let rz, lastW = innerWidth; addEventListener('resize', () => { if (innerWidth === lastW) return; lastW = innerWidth; clearTimeout(rz); rz = setTimeout(all, 150); });
 if (document.fonts) document.fonts.ready.then(all);

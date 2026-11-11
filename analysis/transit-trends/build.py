@@ -160,6 +160,27 @@ def towns():
     return out
 
 
+def somerville_exact():
+    """Somerville's outline at full detail, for deciding what's inside. The map's simplified outline (about 20 m) put a
+    Cambridge Bluebikes dock (Inman Square at Springfield St) inside the city in 2019 and 2020."""
+    path = cached('trends-somerville-exact.geojson', TOWNS, {"where": "TOWN = 'SOMERVILLE'", 'outFields': 'TOWN',
+                                                             'outSR': 4326, 'f': 'geojson'})
+    with open(path) as f:
+        g = json.load(f)
+    rings = []
+    for ft in g['features']:
+        geom = ft['geometry']
+        for poly in (geom['coordinates'] if geom['type'] == 'MultiPolygon' else [geom['coordinates']]):
+            rings += poly
+    return rings
+
+
+def start_hour(t):
+    """Hour a trip starts, from "7:05:00" or (some rows of the Fall 2025 file) a fraction of a day like 0.538."""
+    t = t.strip()
+    return int(t.split(':')[0]) if ':' in t else int(float(t) * 24)
+
+
 def bus(som_rings):
     """Per fall season: weekday/Saturday/Sunday boardings in Somerville and systemwide; weekday by route, by stop and by
     the hour the trip started."""
@@ -170,12 +191,15 @@ def bus(som_rings):
             'name': ('stop_name', 'Stop Name')}
     DAY = {'weekday': 'wk', 'Wkdy': 'wk', 'Fri': 'fri', 'saturday': 'sat', 'Sat': 'sat', 'sunday': 'sun', 'Sun': 'sun'}
     seasons, stops_all = {}, {}
-    for n in sorted(z.namelist()):
-        if not n.endswith('.csv') or '_Fall_' not in n:
-            continue
-        year = int(n.rsplit('_', 1)[1][:4])
-        date, url = feeds[year]
-        locs = season_stops(date, url)
+    files = sorted(n for n in z.namelist() if n.endswith('.csv') and '_Fall_' in n)
+    years = [int(n.rsplit('_', 1)[1][:4]) for n in files]
+    feed_locs = {y: season_stops(*feeds[y]) for y in years}
+    for n, year in zip(files, years):
+        # The fall's last feed can miss stops that had riders earlier that fall (a detour, a stop closed in Nov): use
+        # the same stop id from the nearest other fall's feed, then this fall's own on top.
+        locs = {}
+        for y in sorted(years, key=lambda y: -abs(y - year)):
+            locs.update(feed_locs[y])
         som = {s for s, (x, y, _) in locs.items() if inside(som_rings, x, y)}
         r = csv.DictReader(io.TextIOWrapper(z.open(n), encoding='utf-8-sig'))
         col = {k: next(c for c in v if c in r.fieldnames) for k, v in COLS.items()}
@@ -201,7 +225,7 @@ def bus(som_rings):
                     rt = ROUTE_NAME.get(row[col['route']].strip(), row[col['route']].strip())
                     route[d][rt] += on
                     stop[d][sid] += on
-                    h = int(row[col['start']].split(':')[0])
+                    h = start_hour(row[col['start']])
                     hour[d][h if h >= 3 else h + 24] += on
                     names[sid] = row[col['name']]
         # Fall 2025 on: "Wkdy" is Monday to Thursday and Friday is its own day type; combine them as a Monday-Friday
@@ -239,7 +263,19 @@ def holidays(y):
         d += timedelta((weekday - d.weekday()) % 7)
         return d + timedelta(7 * (n - 1))
     thanks = nth(11, 3, 4)
-    return {nth(9, 0, 1), nth(10, 0, 2), date(y, 11, 11), thanks, thanks + timedelta(1)}
+    vets = date(y, 11, 11)
+    vets += timedelta({5: -1, 6: 1}.get(vets.weekday(), 0))     # observed on Friday or Monday when it falls on a weekend
+    return {nth(9, 0, 1), nth(10, 0, 2), vets, thanks, thanks + timedelta(1)}
+
+
+def places(pts, metres=40):
+    """How many distinct places a list of (lon, lat, ...) points makes: ids renumbered at the same dock count once."""
+    kept = []
+    for x, y, *_ in pts:
+        kx = 111320 * math.cos(math.radians(y))
+        if all(math.hypot((x - a) * kx, (y - b) * 110540) > metres for a, b in kept):
+            kept.append((x, y))
+    return len(kept)
 
 
 def bluebikes(som_rings, years):
@@ -252,12 +288,12 @@ def bluebikes(som_rings, years):
             keys[(int(m.group(1)), int(m.group(2)))] = k
     out = {}
     for y in years:
-        path = os.path.join(CACHE, f'trends-bikes-{y}.json')
+        path = os.path.join(CACHE, f'trends-bikes-v2-{y}.json')
         if not os.path.exists(path):
             # count by station; place each station by its dock (classic bikes start at the dock; from 2024 e-bike
             # trips carry the bike's GPS position, which near the city line can fall on the wrong side)
             per = defaultdict(Counter)                     # station -> day -> trips
-            loc, eb = {}, Counter()
+            loc, eb, name = {}, Counter(), {}
             for mo in BIKE_MONTHS:
                 if (y, mo) not in keys:
                     continue
@@ -272,6 +308,7 @@ def bluebikes(som_rings, years):
                         if not st or not sid:
                             continue
                         t = r.get('rideable_type') or ''
+                        name[sid] = r.get('start_station_name') or r.get('start station name') or sid
                         per[sid][st[:10]] += 1
                         eb[sid] += t == 'electric_bike'
                         if lat and lon and (sid not in loc or (t != 'electric_bike' and loc[sid][2])):
@@ -292,7 +329,7 @@ def bluebikes(som_rings, years):
             we = [d for d in alld if d.weekday() >= 5]
             res = {'wk': round(sum(days[d.isoformat()] for d in wk) / len(wk)),
                    'we': round(sum(days[d.isoformat()] for d in we) / len(we)),
-                   'docks': len(here), 'ebike': round(100 * ebike / total, 1) if ebike else None,
+                   'docks': places([loc[k] for k in here if 'temp' not in name[k].lower()]), 'ebike': round(100 * ebike / total, 1) if ebike else None,
                    'months': sum((y, mo) in keys for mo in BIKE_MONTHS)}
             os.makedirs(CACHE, exist_ok=True)
             with open(path, 'w') as f:
@@ -410,10 +447,16 @@ def rail():
         if not os.path.exists(path):
             res = Counter()
             if kind == 'csv':
+                # Rows per route, direction and hour, each an average over its own number of service days (a branch
+                # can run fewer days at a station): add total boardings and divide by the station's weekdays.
                 blob = get(f'https://www.arcgis.com/sharing/rest/content/items/{item}/data')
+                tot, days = Counter(), Counter()
                 for r in csv.DictReader(io.StringIO(blob.decode('utf-8-sig'))):
                     if r['day_type_name'] == 'Weekday' and r['parent_station'] in want:
-                        res[r['parent_station']] += float(r['average_ons'] or 0)
+                        st = r['parent_station']
+                        tot[st] += float(r['total_ons'] or 0)
+                        days[st] = max(days[st], int(float(r['number_service_days'] or 0)))
+                res = Counter({st: tot[st] / days[st] for st in tot if days[st]})
             else:
                 url = item_url(item) + '/0/query'
                 if kind == 'old':
@@ -438,9 +481,10 @@ def rail():
 
 def main():
     tw = towns()
-    seasons, stops_all = bus(tw['Somerville'])
+    som = somerville_exact()
+    seasons, stops_all = bus(som)
     rails = rail()
-    bikes = bluebikes(tw['Somerville'], sorted(int(s[5:]) for s in seasons))
+    bikes = bluebikes(som, sorted(int(s[5:]) for s in seasons))
     work = {'acs': acs(), 'lodes': lodes()}
     # map frame: Somerville plus a margin; neighbors cut to it
     xs = [p[0] for r in tw['Somerville'] for p in r]

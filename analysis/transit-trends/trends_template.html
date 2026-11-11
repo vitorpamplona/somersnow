@@ -123,12 +123,12 @@ thead th{color:var(--ice);font-weight:600}
     <p class="sub">Each weekday, every fall: Somerville's bus stops, its T stations, and Porter and Sullivan just over the line.</p>
     <div class="legend" id="leg-decade"></div>
     <div class="chart" id="c-decade"></div>
-    <p class="note">No T counts for 2016 or 2020–22. A rider who changes from bus to T counts twice.</p>
+    <p class="note">The MBTA published no station boardings for 2016 or 2020–22. A rider who changes from bus to T counts twice.</p>
   </section>
 
   <section aria-labelledby="h-back">
     <h2 id="h-back">How far back to 2019?</h2>
-    <p class="sub">Each fall as a share of 2019. Gray: every MBTA bus.</p>
+    <p class="sub">Each fall as a percentage of Fall 2019 (100% = back to 2019). Gray: every MBTA bus.</p>
     <div class="ctl"><span class="seg" role="group" aria-label="Day" id="day"><button data-d="wk" aria-pressed="true">Weekday</button><button data-d="sat" aria-pressed="false">Saturday</button><button data-d="sun" aria-pressed="false">Sunday</button></span></div>
     <div class="legend" id="leg-back"></div>
     <div class="chart" id="c-back"></div>
@@ -153,7 +153,7 @@ thead th{color:var(--ice);font-weight:600}
     <h2 id="h-stations">The stations</h2>
     <p class="sub">Weekday boardings. Ring: Fall 2019. Dot: the latest fall.</p>
     <div class="chart" id="c-stations"></div>
-    <p class="note">* Just outside Somerville. The Green Line stations have no fare gates, so their counts jump around.</p>
+    <p class="note">* Just outside Somerville. Green Line Extension riders pay at machines, not gates; their counts swing a lot year to year. Assembly’s boardings run well above its fare-gate entries since 2023 (4,891 vs about 3,100 in 2025): read its rise with care.</p>
   </section>
 
   <section aria-labelledby="h-map">
@@ -200,7 +200,7 @@ thead th{color:var(--ice);font-weight:600}
       <li><b>Who's working:</b> the Census Bureau's yearly survey (usual way to work last week, ± a margin; none for 2020) and its payroll counts (LODES).</li>
       <li><b>Boardings, not people:</b> a rider who changes from bus to T counts twice.</li>
       <li><b>Somerville since 2015:</b> Assembly opened in 2014, the pandemic hit in 2020, the Green Line Extension opened in 2022, the bus redesign began in Dec 2024.</li>
-      <li><b>An estimate:</b> the MBTA's counts are averages from a sample of trips.</li>
+      <li><b>Averages:</b> the MBTA's counts are each fall's average day, from the trips and days it counted.</li>
     </ul>
     <p class="src">Sources: <a href="https://mbta-massdot.opendata.arcgis.com/datasets/8daf4a33925a4df59183f860826d29ee">MBTA bus ridership by trip, season, route and stop</a>; <a href="https://mbta-massdot.opendata.arcgis.com/datasets/9fea7862501f4c59ab2c001ad6ae19b0">MBTA rail ridership</a> (2017–2019) and the <a href="https://mbta-massdot.opendata.arcgis.com/datasets/80a379ebaa374cfd836ca4d3880ceda4">Fall 2023</a>, <a href="https://mbta-massdot.opendata.arcgis.com/datasets/8f20b4e8d24e466fbca157cca63f6e16">Fall 2024</a> and <a href="https://mbta-massdot.opendata.arcgis.com/datasets/6494749a29c648018820d0e49636205c">Fall 2025</a> rail files; the <a href="https://cdn.mbta.com/archive/archived_feeds.txt">MBTA schedule archive</a>; <a href="https://bluebikes.com/system-data">Bluebikes system data</a>; <a href="https://data.census.gov/table/ACSDT1Y2024.B08006?g=160XX00US2562535">American Community Survey</a>; <a href="https://lehd.ces.census.gov/data/">LEHD LODES</a>; <a href="https://www.mass.gov/info-details/massgis-data-municipalities">MassGIS</a>. By the Somerville Pedestrian &amp; Transit Advisory Committee (PTAC). Not an MBTA or City page. <a href="https://github.com/vitorpamplona/somerwalks/tree/main/analysis/transit-trends">Method and code</a>.</p>
   </details>
@@ -310,7 +310,7 @@ function decade() {
 let day = 'wk';
 function back() {
   const el = $('#c-back'), w = W(el), phone = w < 560;
-  const m = { l: 40, r: phone ? 52 : 160, t: 14, b: 30 }, h = phone ? 260 : 320, ih = h - m.t - m.b, iw = w - m.l - m.r;
+  const m = { l: 46, r: phone ? 58 : 170, t: 14, b: 30 }, h = phone ? 260 : 320, ih = h - m.t - m.b, iw = w - m.l - m.r;
   const series = [
     { n: 'All MBTA buses', c: C.ref, v: S.map((s) => D.bus[s].sys[day]), base: D.bus[BASE].sys[day], w: 2 },
     { n: 'Buses in Somerville', c: C.bus, v: S.map((s) => D.bus[s].som[day]), base: D.bus[BASE].som[day], w: 2.5 },
@@ -321,7 +321,7 @@ function back() {
   const hi = Math.max(120, ...series.flatMap((sr) => sr.v.filter((v) => v != null).map((v) => 100 * v / sr.base)));
   const top = Math.ceil(hi / 20) * 20, x = (i) => m.l + iw * i / (S.length - 1), y = (v) => m.t + ih - ih * v / top;
   let g = '';
-  Array.from({ length: top / 20 + 1 }, (_, k) => k * 20).forEach((v) => { g += `<line x1="${m.l}" x2="${m.l + iw}" y1="${y(v)}" y2="${y(v)}" stroke="${v === 100 ? AXIS : GRID}"/><text x="${m.l - 6}" y="${y(v) + 4}" text-anchor="end">${v}</text>`; });
+  Array.from({ length: top / 20 + 1 }, (_, k) => k * 20).forEach((v) => { g += `<line x1="${m.l}" x2="${m.l + iw}" y1="${y(v)}" y2="${y(v)}" stroke="${v === 100 ? AXIS : GRID}"/><text x="${m.l - 6}" y="${y(v) + 4}" text-anchor="end">${v}%</text>`; });
   S.forEach((s, i) => { if (!phone || i % 3 === 0 || i === S.length - 1) g += `<text x="${x(i)}" y="${h - 8}" text-anchor="middle">${phone ? "'" + yr(s).slice(2) : yr(s)}</text>`; });
   const ends = [];
   series.forEach((sr) => {
@@ -331,25 +331,25 @@ function back() {
     g += `<path d="${d}" fill="none" stroke="${sr.c}" stroke-width="${sr.w}" stroke-linejoin="round" stroke-linecap="round"/>`;
     pts.forEach((p) => { if (p) g += `<circle cx="${p[0]}" cy="${p[1]}" r="3.5" fill="${sr.c}" stroke="${SURF}" stroke-width="2"/>`; });
     const lastI = sr.v.length - 1;
-    if (sr.v[lastI] != null) ends.push({ y: y(100 * sr.v[lastI] / sr.base), t: `${pctOf(sr.v[lastI], sr.base)}`, n: sr.n, c: sr.c });
+    if (sr.v[lastI] != null) ends.push({ y: y(100 * sr.v[lastI] / sr.base), t: `${pctOf(sr.v[lastI], sr.base)}%`, n: sr.n, c: sr.c });
   });
   ends.sort((a, b) => a.y - b.y);
   for (let i = 1; i < ends.length; i++) if (ends[i].y - ends[i - 1].y < 30) ends[i].y = ends[i - 1].y + 30;
-  ends.forEach((e) => { g += `<text class="lab" x="${m.l + iw + 8}" y="${e.y + 4}">${e.t}</text>` + (phone ? '' : `<text x="${m.l + iw + 38}" y="${e.y + 4}" style="font-size:12px">${e.n}</text>`); });
+  ends.forEach((e) => { g += `<text class="lab" x="${m.l + iw + 8}" y="${e.y + 4}">${e.t}</text>` + (phone ? '' : `<text x="${m.l + iw + 50}" y="${e.y + 4}" style="font-size:12px">${e.n}</text>`); });
   g += `<line id="xh" x1="0" x2="0" y1="${m.t}" y2="${m.t + ih}" stroke="${AXIS}" visibility="hidden"/>`;
   g += `<rect id="hitb" x="${m.l - 10}" y="${m.t}" width="${iw + 20}" height="${ih}" fill="transparent"/>`;
-  el.innerHTML = `<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="Lines: each year as a share of Fall 2019. ${series.map((sr) => `${sr.n}: ${pctOf(sr.v[sr.v.length - 1], sr.base)} in ${LAST}`).join('; ')}.">${g}</svg>`;
+  el.innerHTML = `<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="Lines: each fall as a percentage of Fall 2019. ${series.map((sr) => `${sr.n}: ${pctOf(sr.v[sr.v.length - 1], sr.base)}% in ${LAST}`).join('; ')}.">${g}</svg>`;
   const hit = el.querySelector('#hitb'), xh = el.querySelector('#xh');
   hit.addEventListener('pointermove', (e) => {
     const r = el.querySelector('svg').getBoundingClientRect(), px = (e.clientX - r.left) * w / r.width;
     const i = Math.max(0, Math.min(S.length - 1, Math.round((px - m.l) / iw * (S.length - 1))));
     xh.setAttribute('x1', x(i)); xh.setAttribute('x2', x(i)); xh.setAttribute('visibility', 'visible');
-    showTip(`<b>${S[i]}</b>` + series.map((sr) => tipRow(sr.c, sr.n, sr.v[i] == null ? 'no data' : `${pctOf(sr.v[i], sr.base)} (${fmt(sr.v[i])})`)).join(''), e);
+    showTip(`<b>${S[i]}</b>` + series.map((sr) => tipRow(sr.c, sr.n, sr.v[i] == null ? 'no data' : `${pctOf(sr.v[i], sr.base)}% (${fmt(sr.v[i])})`)).join(''), e);
   });
   hit.addEventListener('pointerleave', () => { hideTip(); xh.setAttribute('visibility', 'hidden'); });
   $('#leg-back').innerHTML = series.map((sr) => `<span><i class="line" style="background:${sr.c}"></i>${sr.n}</span>`).join('');
   const dn = { wk: 'weekday', sat: 'Saturday', sun: 'Sunday' }[day];
-  $('#n-back').textContent = day === 'wk' ? 'The T line has gaps: no counts for 2016 or 2020–22.' : `Weekends: buses and Bluebikes only (its average weekend day).`;
+  $('#n-back').textContent = day === 'wk' ? 'The T line has gaps: no station boardings published for 2016 or 2020–22.' : `Weekends: buses and Bluebikes only (its average weekend day).`;
 }
 $('#day').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; day = b.dataset.d; document.querySelectorAll('#day button').forEach((x) => x.setAttribute('aria-pressed', x === b)); back(); });
 

@@ -32,6 +32,8 @@ Pages marked * were seen only as search-result excerpts, not opened in full. Che
 
 - [Bus Service During Winter Storms](https://www.mbta.com/winter-weather/bus-service-during-winter-storms)
 - [Winter Weather Guide](https://www.mbta.com/guides/winter-guide) *
+- [Green Line Extension](https://www.mbta.com/projects/green-line-extension-glx): riders validate their fare at the fare vending machines at every GLX station before boarding (no fare gates).
+- [Bus network redesign, next 5 years](https://www.mbta.com/projects/bus-network-redesign/next-5-years-bus-service-changes): Phase 1, December 2024, changed routes 86, 104, 109, 110, 116 and 117. Today's routes: [86 Harvard Square – Reservoir](https://www.mbta.com/schedules/86/line), [109 Linden Square – Harvard Square via Sullivan](https://www.mbta.com/schedules/109/line).
 
 ## Other cities
 

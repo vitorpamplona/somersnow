@@ -140,7 +140,7 @@ thead th{color:var(--ice);font-weight:600}
     <h3>People with jobs</h3>
     <div class="legend" id="leg-jobs"></div>
     <div class="chart" id="c-jobs"></div>
-    <p class="note">Survey: residents who worked. Payroll: jobs with unemployment insurance, where the job is or where the worker lives.</p>
+    <p class="note">Survey: residents with a job. Payroll: jobs with unemployment insurance, where the job is or where the worker lives. The 2018 jump: about 5,800 jobs coded "management of companies" first counted at one census block.</p>
   </section>
 
   <section aria-labelledby="h-stations">
@@ -189,14 +189,14 @@ thead th{color:var(--ice);font-weight:600}
     <summary>How it's counted</summary>
     <ul>
       <li><b>Buses:</b> the MBTA's average riders per trip and stop, each fall, added up at stops inside Somerville (placed with that fall's schedule). Friday is folded into the weekday average from 2025.</li>
-      <li><b>The T:</b> average weekday boardings, Fall 2017–19 and 2023–25. Porter and Sullivan are just outside the city. Lechmere is left out: far from the line, next to industrial land.</li>
+      <li><b>The T:</b> average weekday boardings, Fall 2017–19 and 2023–25. Porter and Sullivan are just outside the city. Lechmere is left out: close to the line, but next to industrial land, not homes.</li>
       <li><b>Bluebikes:</b> trips from docks in Somerville, weekdays and weekends of September to November, holidays out. Each station placed at its dock.</li>
-      <li><b>Who's working:</b> the Census Bureau's yearly survey (usual way to work last week, ± a margin; none for Somerville in 2020, 2022, 2023) and its payroll counts (LODES).</li>
+      <li><b>Who's working:</b> the Census Bureau's yearly survey (usual way to work last week, ± a margin; none for 2020) and its payroll counts (LODES).</li>
       <li><b>Boardings, not people:</b> a rider who changes from bus to T counts twice.</li>
       <li><b>Somerville since 2015:</b> Assembly opened in 2014, the pandemic hit in 2020, the Green Line Extension opened in 2022, the bus redesign began in Dec 2024.</li>
       <li><b>An estimate:</b> the MBTA's counts are averages from a sample of trips.</li>
     </ul>
-    <p class="src">Sources: <a href="https://mbta-massdot.opendata.arcgis.com/datasets/8daf4a33925a4df59183f860826d29ee">MBTA bus ridership by trip, season, route and stop</a>; <a href="https://mbta-massdot.opendata.arcgis.com/datasets/9fea7862501f4c59ab2c001ad6ae19b0">MBTA rail ridership</a> (2017–2019) and the <a href="https://mbta-massdot.opendata.arcgis.com/datasets/80a379ebaa374cfd836ca4d3880ceda4">Fall 2023</a>, <a href="https://mbta-massdot.opendata.arcgis.com/datasets/8f20b4e8d24e466fbca157cca63f6e16">Fall 2024</a> and <a href="https://mbta-massdot.opendata.arcgis.com/datasets/6494749a29c648018820d0e49636205c">Fall 2025</a> rail files; the <a href="https://cdn.mbta.com/archive/archived_feeds.txt">MBTA schedule archive</a>; <a href="https://bluebikes.com/system-data">Bluebikes system data</a>; <a href="https://data.census.gov/table/ACSDT1Y2024.B08301?g=160XX00US2562535">American Community Survey</a>; <a href="https://lehd.ces.census.gov/data/">LEHD LODES</a>; <a href="https://www.mass.gov/info-details/massgis-data-municipalities">MassGIS</a>. By the Somerville Pedestrian &amp; Transit Advisory Committee (PTAC). Not an MBTA or City page. <a href="https://github.com/vitorpamplona/somerwalks/tree/main/analysis/transit-trends">Method and code</a>.</p>
+    <p class="src">Sources: <a href="https://mbta-massdot.opendata.arcgis.com/datasets/8daf4a33925a4df59183f860826d29ee">MBTA bus ridership by trip, season, route and stop</a>; <a href="https://mbta-massdot.opendata.arcgis.com/datasets/9fea7862501f4c59ab2c001ad6ae19b0">MBTA rail ridership</a> (2017–2019) and the <a href="https://mbta-massdot.opendata.arcgis.com/datasets/80a379ebaa374cfd836ca4d3880ceda4">Fall 2023</a>, <a href="https://mbta-massdot.opendata.arcgis.com/datasets/8f20b4e8d24e466fbca157cca63f6e16">Fall 2024</a> and <a href="https://mbta-massdot.opendata.arcgis.com/datasets/6494749a29c648018820d0e49636205c">Fall 2025</a> rail files; the <a href="https://cdn.mbta.com/archive/archived_feeds.txt">MBTA schedule archive</a>; <a href="https://bluebikes.com/system-data">Bluebikes system data</a>; <a href="https://data.census.gov/table/ACSDT1Y2024.B08006?g=160XX00US2562535">American Community Survey</a>; <a href="https://lehd.ces.census.gov/data/">LEHD LODES</a>; <a href="https://www.mass.gov/info-details/massgis-data-municipalities">MassGIS</a>. By the Somerville Pedestrian &amp; Transit Advisory Committee (PTAC). Not an MBTA or City page. <a href="https://github.com/vitorpamplona/somerwalks/tree/main/analysis/transit-trends">Method and code</a>.</p>
   </details>
 </main>
 <div id="tip" role="tooltip"></div>
@@ -206,6 +206,8 @@ const $ = (s) => document.querySelector(s);
 const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const fmt = (x) => x == null ? '—' : Math.round(x).toLocaleString('en-US');
 const pctOf = (a, b) => Math.round(100 * a / b);
+// Two survey estimates differ only if the gap is bigger than their 90% margins combined: √(m0² + m1²).
+const beyondMargin = (e0, m0, e1, m1) => Math.abs(e1 - e0) > Math.sqrt(m0 * m0 + m1 * m1);
 const yr = (s) => s.slice(5);
 const S = D.seasons, LAST = S[S.length - 1], BASE = 'Fall 2019';
 const C = { gain: '#9575E3', bike: '#2FA37A', bus: '#4F98DE', Red: '#DA291C', Green: '#1B9B6A', Orange: '#D57200', t: '#C08A14', ref: '#8A9BB0', loss: '#E36F28' };
@@ -246,7 +248,8 @@ function roundTop(x, y, w, h, r) {                     // a bar with its top cor
 function tiles() {
   const b0 = busWk(BASE), b1 = busWk(LAST), t0 = tTotal(BASE), t1 = tTotal(LAST);
   const wa = D.work.acs, ay = Object.keys(wa).map(Number), y1 = Math.max(...ay), h0 = 100 * wa[2019].wfh / wa[2019].workers, h1 = 100 * wa[y1].wfh / wa[y1].workers;
-  $('#headline').innerHTML = `Weekday boardings are at <b>${pctOf(b1 + t1, b0 + t0)}%</b> of 2019. More residents have jobs, but more of them work from home (${h0.toFixed(1)}% in 2019, ${h1.toFixed(1)}% in ${y1}).`;
+  const more = beyondMargin(wa[2019].employed, wa[2019].employed_moe, wa[y1].employed, wa[y1].employed_moe);
+  $('#headline').innerHTML = `Weekday boardings are at <b>${pctOf(b1 + t1, b0 + t0)}%</b> of 2019. ${more ? (wa[y1].employed > wa[2019].employed ? 'More' : 'Fewer') : 'About as many'} residents have jobs, but more of them work from home (${h0.toFixed(1)}% in 2019, ${h1.toFixed(1)}% in ${y1}).`;
   $('#tilehead').textContent = `A weekday in ${LAST}, against ${BASE}`;
   $('#tiles').innerHTML = [
     ['Bus and T boardings', b1 + t1, b0 + t0],
@@ -606,14 +609,18 @@ const AY = Object.keys(WA).map(Number), LY = Object.keys(WL).map(Number), A0 = 2
 function work() {
   const a0 = WA[A0], a1 = WA[A1];
   const tb0 = busWk(BASE) + tTotal(BASE), tb1 = busWk(LAST) + tTotal(LAST);
-  $('#sub-work').innerHTML = `More residents have a job than in ${A0} (${fmt(a1.workers)}, was ${fmt(a0.workers)}), and <b style="color:#EEF3F7">${(100 * a1.wfh / a1.workers).toFixed(1)}%</b> work from home (was ${(100 * a0.wfh / a0.workers).toFixed(1)}%). Those who mostly take transit to work are at ${pctOf(a1.transit, a0.transit)}% of ${A0}, boardings at ${pctOf(tb1, tb0)}%: hybrid workers likely ride fewer days. From the Census Bureau's yearly survey and payroll counts.`;
+  const L1 = Math.max(...LY), sameJobs = !beyondMargin(a0.employed, a0.employed_moe, a1.employed, a1.employed_moe);
+  const sameTransit = !beyondMargin(a0.transit, a0.transit_moe, a1.transit, a1.transit_moe);
+  $('#sub-work').innerHTML = `${sameJobs ? 'About as many residents have jobs as' : a1.employed > a0.employed ? 'More residents have jobs than' : 'Fewer residents have jobs than'} in ${A0}: ${fmt(a1.employed)} in ${A1}, ${fmt(a0.employed)} in ${A0} (survey, ± about ${fmt(Math.round(a1.employed_moe / 100) * 100)})`
+    + `; payroll counts ${fmt(WL[L1].jobs_res)} jobs held by residents in ${L1}, ${fmt(WL[A0].jobs_res)} in ${A0}. But <b style="color:#EEF3F7">${(100 * a1.wfh / a1.workers).toFixed(1)}%</b> work from home, up from ${(100 * a0.wfh / a0.workers).toFixed(1)}%. `
+    + `${sameTransit ? 'About as many' : a1.transit > a0.transit ? 'More' : 'Fewer'} residents mostly take transit to work (${fmt(a1.transit)}, was ${fmt(a0.transit)}${sameTransit ? ', within the survey\'s margin' : ''}), yet boardings are at ${pctOf(tb1, tb0)}%: hybrid workers likely ride fewer days.`;
   const modes = [{ n: 'Worked from home', c: '#C8609C', v: share('wfh') }, { n: 'Took transit', c: C.t, v: share('transit') }, { n: 'Drove alone', c: C.ref, v: share('alone') }];
   lineChart($('#c-mode'), modes, { tick: (v) => v + '%', end: (v) => v.toFixed(1) + '%', gap: (yy) => !WA[yy] && yy <= A1,
     tip: (v, yy, sr) => `${v.toFixed(1)}%`, label: `Lines: share of working residents by how they get to work. Worked from home ${(100 * a0.wfh / a0.workers).toFixed(1)}% in ${A0}, ${(100 * a1.wfh / a1.workers).toFixed(1)}% in ${A1}; took transit ${(100 * a0.transit / a0.workers).toFixed(1)}% and ${(100 * a1.transit / a1.workers).toFixed(1)}%.`,
-    extra: (yy) => WA[yy] ? tipRow('', 'Walked', (100 * WA[yy].walk / WA[yy].workers).toFixed(1) + '%') + tipRow('', 'Biked', (100 * WA[yy].bike / WA[yy].workers).toFixed(1) + '%') + tipRow('', 'Residents working', fmt(WA[yy].workers)) : '' });
+    extra: (yy) => WA[yy] ? tipRow('', 'Walked', (100 * WA[yy].walk / WA[yy].workers).toFixed(1) + '%') + tipRow('', 'Biked', (100 * WA[yy].bike / WA[yy].workers).toFixed(1) + '%') + tipRow('', 'Residents who worked', fmt(WA[yy].workers)) : '' });
   $('#leg-mode').innerHTML = modes.map((sr) => `<span><i class="line" style="background:${sr.c}"></i>${sr.n}</span>`).join('');
-  $('#n-mode').textContent = `The survey counts each worker by their usual way to work, so a hybrid worker who rides three days a week still counts as transit. No survey for Somerville in 2020, 2022 or 2023.`;
-  const jobs = [{ n: 'Residents with a job (survey)', s: 'Residents working', c: '#DCE6F2', v: (yy) => WA[yy] ? WA[yy].employed : null },
+  $('#n-mode').textContent = `The survey counts each worker by their usual way to work, so a hybrid worker who rides three days a week still counts as transit. No survey for 2020.`;
+  const jobs = [{ n: 'Residents with a job (survey)', s: 'Residents with a job', c: '#DCE6F2', v: (yy) => WA[yy] ? WA[yy].employed : null },
     { n: 'Jobs held by residents (payroll)', s: 'Residents\' jobs', c: '#A9C4E4', v: (yy) => WL[yy] ? WL[yy].jobs_res : null },
     { n: 'Jobs located in Somerville (payroll)', s: 'Jobs in Somerville', c: '#7690B0', v: (yy) => WL[yy] ? WL[yy].jobs_in : null }];
   lineChart($('#c-jobs'), jobs, { tick: kfmt, end: (v) => kfmt(Math.round(v / 100) * 100), tip: (v) => fmt(v),
@@ -635,7 +642,7 @@ function table() {
     + `<p class="note">By route (weekday riders getting on in Somerville):</p><table><thead><tr><th>Route</th>${S.map((s) => `<th>${yr(s)}</th>`).join('')}</tr></thead><tbody>`
     + D.routes.map((r) => `<tr><td>${esc(r.r)}</td>${r.v.map((v) => `<td>${fmt(v)}</td>`).join('')}</tr>`).join('') + '</tbody></table>'
     + `<p class="note">Who's working (each year; survey: — not published for Somerville that year):</p><table><thead><tr><th></th>${WY.map((y) => `<th>${y}</th>`).join('')}</tr></thead><tbody>`
-    + [['Residents working (survey)', (y) => WA[y] && WA[y].workers], ['Worked from home', (y) => WA[y] && WA[y].wfh], ['Took transit', (y) => WA[y] && WA[y].transit], ['Drove alone', (y) => WA[y] && WA[y].alone],
+    + [['Residents who worked, by way to work (survey)', (y) => WA[y] && WA[y].workers], ['Worked from home', (y) => WA[y] && WA[y].wfh], ['Took transit', (y) => WA[y] && WA[y].transit], ['Drove alone', (y) => WA[y] && WA[y].alone],
        ['Walked', (y) => WA[y] && WA[y].walk], ['Biked', (y) => WA[y] && WA[y].bike], ['Residents with a job (employed, survey)', (y) => WA[y] && WA[y].employed],
        ['Share aged 65+ (survey)', (y) => WA[y] ? WA[y].older + '%' : null], ['Jobs held by residents (payroll)', (y) => WL[y] && WL[y].jobs_res], ['Jobs located in Somerville (payroll)', (y) => WL[y] && WL[y].jobs_in]]
       .map(([n, f]) => `<tr><td>${esc(n)}</td>${WY.map((y) => { const v = f(y); return `<td>${v == null ? '—' : typeof v === 'string' ? v : fmt(v)}</td>`; }).join('')}</tr>`).join('') + '</tbody></table>';

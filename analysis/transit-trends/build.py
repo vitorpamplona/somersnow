@@ -34,8 +34,9 @@ RAIL_ITEMS = {  # season -> (ArcGIS item, kind)
     'Fall 2024': ('8f20b4e8d24e466fbca157cca63f6e16', 'service'), 'Fall 2025': ('6494749a29c648018820d0e49636205c', 'csv'),
 }
 # The T stations people in Somerville use: the seven inside the city, plus Porter (Cambridge, at the city line) and
-# Sullivan Square (Charlestown, where many Somerville buses end). Lechmere is left out: it's farther from the city line,
-# next to industrial land rather than homes, and few in Somerville use it as their station.
+# Sullivan Square (Charlestown, where many Somerville buses end). Lechmere is left out: it's close
+# to the city line (about 220 m), but the Somerville land next to it is industrial rather than homes, and few in
+# Somerville use it as their station.
 STATIONS = [
     ('place-davis', 'Davis', 'Red', True), ('place-portr', 'Porter', 'Red', False),
     ('place-astao', 'Assembly', 'Orange', True), ('place-sull', 'Sullivan Square', 'Orange', False),
@@ -49,6 +50,7 @@ BIKES = 'https://s3.amazonaws.com/hubway-data/'      # Bluebikes (Hubway until 2
 BIKE_MONTHS = (9, 10, 11)                            # "fall" for bikes: September to November
 ACS_TABLE = 'https://data.census.gov/api/access/data/table'   # Census tables, no key; Somerville city = 160XX00US2562535
 LODES = 'https://lehd.ces.census.gov/data/lodes/LODES8/ma/{kind}/ma_{kind}_S000_JT00_{year}.csv.gz'
+LODES_XWALK = 'https://lehd.ces.census.gov/data/lodes/LODES8/ma/ma_xwalk.csv.gz'   # census block → town
 FIRST_YEAR = 2015
 SAME_STOP = 12                                    # metres: stop ids this close are one place on the map
 MIN_ROUTE = 50                                    # routes with fewer weekday riders in Somerville every season are left out
@@ -318,21 +320,26 @@ def get_maybe(url, params=None):
 
 
 def acs():
-    """Somerville residents who work, and how they get there, from the American Community Survey 1-year tables: B08301
-    (means of transportation to work), B23025 (employment status), B01001 (age). The Census Bureau doesn't publish
-    Somerville every year (none for 2020; none for 2022 or 2023); those years are left out."""
+    """Somerville residents who work, and how they get there, from the American Community Survey 1-year tables: B08006
+    (means of transportation to work, by sex: its totals equal B08301's), B23025 (employment status), B01001 (age).
+    Use B08006, not B08301: the Census Bureau left B08301 blank for Somerville in 2022 and 2023 but published B08006.
+    There are no 1-year tables for 2020; that year is left out."""
     out, this = {}, datetime.now().year
     for y in range(FIRST_YEAR, this):
-        path = os.path.join(CACHE, f'trends-acs-{y}.json')
+        path = os.path.join(CACHE, f'trends-acs-b08006-{y}.json')
         if not os.path.exists(path):
             res = {}
-            for t in ('B08301', 'B23025', 'B01001'):
+            for t in ('B08006', 'B23025', 'B01001'):
                 blob = get_maybe(ACS_TABLE, {'id': f'ACSDT1Y{y}.{t}', 'g': '160XX00US2562535'})
                 if not blob:
                     res = None
                     break
                 d = json.loads(blob)['response']['data']
-                res.update(dict(zip(d[0], d[1])))
+                row = dict(zip(d[0], d[1]))
+                if not row.get(f'{t}_001E'):              # listed, but the values left blank
+                    res = None
+                    break
+                res.update(row)
             if res is None and y >= this - 2:
                 continue                                  # maybe not released yet: ask again next build
             os.makedirs(CACHE, exist_ok=True)
@@ -345,10 +352,12 @@ def acs():
             continue
         n = lambda k: float(res.get(k) or 0)
         older = sum(n(f'B01001_{k:03d}E') for k in list(range(20, 26)) + list(range(44, 50)))
-        out[y] = {'workers': round(n('B08301_001E')), 'wfh': round(n('B08301_021E')), 'wfh_moe': round(n('B08301_021M')),
-                  'transit': round(n('B08301_010E')), 'transit_moe': round(n('B08301_010M')), 'alone': round(n('B08301_003E')),
-                  'carpool': round(n('B08301_004E')), 'walk': round(n('B08301_019E')), 'bike': round(n('B08301_018E')),
-                  'employed': round(n('B23025_004E')), 'older': round(100 * older / n('B01001_001E'), 1)}
+        out[y] = {'workers': round(n('B08006_001E')), 'workers_moe': round(n('B08006_001M')),
+                  'wfh': round(n('B08006_017E')), 'wfh_moe': round(n('B08006_017M')),
+                  'transit': round(n('B08006_008E')), 'transit_moe': round(n('B08006_008M')), 'alone': round(n('B08006_003E')),
+                  'carpool': round(n('B08006_004E')), 'walk': round(n('B08006_015E')), 'bike': round(n('B08006_014E')),
+                  'employed': round(n('B23025_004E')), 'employed_moe': round(n('B23025_004M')),
+                  'older': round(100 * older / n('B01001_001E'), 1)}
         w = out[y]
         print(f"  survey {y}: {w['workers']:,} working, from home {100 * w['wfh'] / w['workers']:.1f}%, "
               f"transit {100 * w['transit'] / w['workers']:.1f}%", file=sys.stderr)
@@ -358,11 +367,16 @@ def acs():
 def lodes():
     """Jobs in Somerville (by workplace) and jobs held by Somerville residents (by home), each year, from the Census
     Bureau's LEHD Origin-Destination Employment Statistics: jobs covered by unemployment insurance, all jobs (JT00).
-    Somerville's census tracts are 25017-350100 to 351599."""
-    som = lambda g: g.startswith('25017') and 350100 <= int(g[5:11]) <= 351599
+    Somerville's census blocks come from the LODES crosswalk (county subdivision "Somerville city"); a tract range
+    would take in a Medford block."""
+    som_blocks = set()
+    for r in csv.DictReader(gzip.open(cached('trends-lodes-xwalk.csv.gz', LODES_XWALK), 'rt', encoding='utf-8')):
+        if r['ctycsubname'].startswith('Somerville city'):
+            som_blocks.add(r['tabblk2020'])
+    som = som_blocks.__contains__
     out, this = {}, datetime.now().year
     for y in range(FIRST_YEAR, this):
-        path = os.path.join(CACHE, f'trends-lodes-{y}.json')
+        path = os.path.join(CACHE, f'trends-lodes-blocks-{y}.json')
         if not os.path.exists(path):
             res = {}
             for kind, geo, key in (('wac', 'w_geocode', 'jobs_in'), ('rac', 'h_geocode', 'jobs_res')):

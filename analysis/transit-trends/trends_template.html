@@ -123,7 +123,7 @@ thead th{color:var(--ice);font-weight:600}
     <p class="sub">Each weekday, every fall: Somerville's bus stops, its T stations, and Porter and Sullivan just over the line.</p>
     <div class="legend" id="leg-decade"></div>
     <div class="chart" id="c-decade"></div>
-    <p class="note">The MBTA published no station boardings for 2016 or 2020–22. A rider who changes from bus to T counts twice.</p>
+    <p class="note">Hatched: 2016 and 2020–22 have no published boardings, so they show fare-gate entries at Davis, Porter, Assembly and Sullivan (a tap count; the Green Line Extension has no gates). A rider who changes from bus to T counts twice.</p>
   </section>
 
   <section aria-labelledby="h-back">
@@ -225,6 +225,10 @@ const railBy = (s, line) => { const v = ST.filter((x) => x.line === line && x.v[
 const hasRail = (s) => ST.some((x) => x.v[s] != null);
 const tTotal = (s) => hasRail(s) ? LINES.reduce((a, l) => a + (railBy(s, l) || 0), 0) : null;
 const busWk = (s) => D.bus[s].som.wk;
+// Fare-gate entries (Davis, Porter, Assembly, Sullivan): fill the falls with no published boardings, and give one
+// measure for every fall. The Green Line Extension has no gates.
+const gateBy = (s, line) => { const v = ST.filter((x) => x.line === line && x.g && x.g[s] != null); return v.length ? v.reduce((a, x) => a + x.g[s], 0) : null; };
+const gTotal = (s) => ST.some((x) => x.g && x.g[s] != null) ? LINES.reduce((a, l) => a + (gateBy(s, l) || 0), 0) : null;
 
 // ---------- tooltip ----------
 const tip = $('#tip');
@@ -270,7 +274,8 @@ const EVENTS = { 'Fall 2020': 'Pandemic', 'Fall 2022': 'Green Line Ext.', 'Fall 
 function decade() {
   const el = $('#c-decade'), w = W(el), phone = w < 560;
   const m = { l: 44, r: 8, t: 26, b: phone ? 44 : 46 }, h = phone ? 300 : 360, ih = h - m.t - m.b, iw = w - m.l - m.r;
-  const rows = S.map((s) => ({ s, bus: busWk(s), lines: LINES.map((l) => railBy(s, l)), t: tTotal(s) }));
+  const rows = S.map((s) => hasRail(s) ? { s, bus: busWk(s), lines: LINES.map((l) => railBy(s, l)), t: tTotal(s) }
+    : { s, bus: busWk(s), lines: LINES.map((l) => gateBy(s, l)), t: gTotal(s), gate: true });
   const max = Math.max(...rows.map((r) => r.bus + (r.t || 0)));
   const tk = ticks(max * 1.05), top = tk[tk.length - 1], y = (v) => m.t + ih - ih * v / top;
   const bw = Math.min(56, iw / S.length * 0.62), step = iw / S.length;
@@ -282,28 +287,28 @@ function decade() {
     let acc = 0;
     segs.forEach(([name, col, v], k) => {
       const y0 = y(acc), y1 = y(acc + v), hh = y0 - y1 - (k < segs.length - 1 ? 2 : 0);
-      g += k === segs.length - 1 ? `<path d="${roundTop(x, y1, bw, Math.max(0, y0 - y1), 4)}" fill="${col}"/>` : `<rect x="${x}" y="${y1 + 2}" width="${bw}" height="${Math.max(0, hh)}" fill="${col}"/>`;
+      const gt = r.gate && k > 0;                 // a fare-gate count: the line's color, lighter, with a hatch
+      g += k === segs.length - 1 ? `<path d="${roundTop(x, y1, bw, Math.max(0, y0 - y1), 4)}" fill="${col}"${gt ? ' fill-opacity=".45"' : ''}/>` : `<rect x="${x}" y="${y1 + 2}" width="${bw}" height="${Math.max(0, hh)}" fill="${col}"${gt ? ' fill-opacity=".45"' : ''}/>`;
+      if (gt) g += `<rect x="${x}" y="${y1 + (k < segs.length - 1 ? 2 : 0)}" width="${bw}" height="${Math.max(0, k < segs.length - 1 ? hh : y0 - y1)}" fill="url(#hatchg)"/>`;
       acc += v;
     });
-    if (!r.t) {                                   // the T wasn't counted: an empty outline above the buses, not a value
-      const yb = y(r.bus) - 3, yt = yb - (phone ? 30 : 44);   // a short dashed cap: missing, not a height
-      g += `<rect x="${x + 0.75}" y="${yt}" width="${bw - 1.5}" height="${yb - yt}" rx="3" fill="url(#hatch)" stroke="rgba(169,196,228,.45)" stroke-width="1.2" stroke-dasharray="4 3"/>`;
-      g += `<text x="${x + bw / 2}" y="${yt - 6}" text-anchor="middle" style="font-size:${phone ? 10 : 12}px;fill:#A9C4E4">${phone ? 'no T' : 'T not counted'}</text>`;
-    }
+    if (r.gate) g += `<text x="${x + bw / 2}" y="${y(r.bus + (r.t || 0)) - 6}" text-anchor="middle" style="font-size:${phone ? 10 : 11}px;fill:#A9C4E4">${phone ? 'gates' : 'fare gates'}</text>`;
     else if (r.s === BASE || r.s === LAST) g += `<text class="lab" x="${x + bw / 2}" y="${y(r.bus + r.t) - 7}" text-anchor="middle">${fmt(r.bus + r.t)}</text>`;
     g += `<text x="${x + bw / 2}" y="${h - m.b + 16}" text-anchor="middle">${phone ? "'" + yr(r.s).slice(2) : yr(r.s)}</text>`;
     if (EVENTS[r.s]) g += `<text x="${x + bw / 2}" y="${h - m.b + 32}" text-anchor="middle" style="font-size:11px;fill:#7F99B5">${phone ? EVENTS[r.s].split(' ')[0] : EVENTS[r.s]}</text>`;
     g += `<rect class="hit" data-i="${i}" x="${m.l + step * i}" y="${m.t}" width="${step}" height="${ih}" fill="transparent"/>`;
   });
-  g = `<defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="rgba(169,196,228,.04)"/><line x1="0" y1="0" x2="0" y2="6" stroke="rgba(169,196,228,.16)" stroke-width="2"/></pattern></defs>` + g;
+  g = `<defs><pattern id="hatchg" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="rgba(16,36,58,.55)" stroke-width="2.5"/></pattern><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="rgba(169,196,228,.04)"/><line x1="0" y1="0" x2="0" y2="6" stroke="rgba(169,196,228,.16)" stroke-width="2"/></pattern></defs>` + g;
   el.innerHTML = `<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="Stacked columns of weekday boardings each fall from 2016 to ${yr(LAST)}: buses in Somerville and the T stations by line. ${BASE}: ${fmt(busWk(BASE) + tTotal(BASE))}; ${LAST}: ${fmt(busWk(LAST) + tTotal(LAST))}.">${g}</svg>`;
   el.querySelectorAll('.hit').forEach((hit) => {
     const r = rows[+hit.dataset.i];
-    const html = `<b>${r.s}</b>` + tipRow(C.bus, 'Buses', fmt(r.bus)) + LINES.map((l, k) => tipRow(C[l], LINE_NAME[l], r.lines[k] == null ? 'no data' : fmt(r.lines[k]))).join('')
-      + (r.t ? tipRow('', '<b style="display:inline">Total</b>', `<b style="display:inline">${fmt(r.bus + r.t)}</b>`) : '');
+    const html = `<b>${r.s}</b>` + tipRow(C.bus, 'Buses', fmt(r.bus)) + LINES.map((l, k) => tipRow(C[l], LINE_NAME[l] + (r.gate ? ', fare gates' : ''), r.lines[k] == null ? (r.gate && l === 'Green' ? 'no gates' : 'no data') : fmt(r.lines[k]))).join('')
+      + (r.t ? tipRow('', '<b style="display:inline">Total</b>', `<b style="display:inline">${fmt(r.bus + r.t)}</b>`) : '')
+      + (r.gate ? '<div style="font-size:12px;color:#A9C4E4;margin-top:4px">No boardings published: fare-gate entries at Davis, Porter, Assembly, Sullivan</div>' : '');
     hit.addEventListener('pointermove', (e) => showTip(html, e)); hit.addEventListener('pointerleave', hideTip);
   });
-  $('#leg-decade').innerHTML = [['Buses in Somerville', C.bus], ...LINES.map((l) => [LINE_NAME[l], C[l]])].map(([n, c]) => `<span><i style="background:${c}"></i>${n}</span>`).join('');
+  $('#leg-decade').innerHTML = [['Buses in Somerville', C.bus], ...LINES.map((l) => [LINE_NAME[l], C[l]])].map(([n, c]) => `<span><i style="background:${c}"></i>${n}</span>`).join('')
+    + `<span><i style="background:repeating-linear-gradient(45deg,rgba(218,41,28,.45) 0 3px,rgba(16,36,58,.6) 3px 5px)"></i>Fare-gate entries</span>`;
 }
 
 // ---------- 2. index to 2019: lines ----------
@@ -315,7 +320,8 @@ function back() {
     { n: 'All MBTA buses', c: C.ref, v: S.map((s) => D.bus[s].sys[day]), base: D.bus[BASE].sys[day], w: 2 },
     { n: 'Buses in Somerville', c: C.bus, v: S.map((s) => D.bus[s].som[day]), base: D.bus[BASE].som[day], w: 2.5 },
   ];
-  if (day === 'wk') series.push({ n: 'T stations', c: C.t, v: S.map((s) => tTotal(s)), base: tTotal(BASE), w: 2.5 });
+  if (day === 'wk') series.push({ n: 'T stations', c: C.t, v: S.map((s) => tTotal(s)), base: tTotal(BASE), w: 2.5 },
+    { n: 'T fare gates', c: C.t, v: S.map((s) => gTotal(s)), base: gTotal(BASE), w: 2, dash: true });
   const bk = day === 'wk' ? 'wk' : 'we';
   series.push({ n: 'Bluebikes trips', c: C.bike, v: S.map((s) => D.bikes[s] ? D.bikes[s][bk] : null), base: D.bikes[BASE][bk], w: 2.5 });
   const hi = Math.max(120, ...series.flatMap((sr) => sr.v.filter((v) => v != null).map((v) => 100 * v / sr.base)));
@@ -328,13 +334,14 @@ function back() {
     const pts = sr.v.map((v, i) => v == null ? null : [x(i), y(100 * v / sr.base)]);
     let d = '', on = false;
     pts.forEach((p) => { if (!p) { on = false; return; } d += (on ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1); on = true; });
-    g += `<path d="${d}" fill="none" stroke="${sr.c}" stroke-width="${sr.w}" stroke-linejoin="round" stroke-linecap="round"/>`;
-    pts.forEach((p) => { if (p) g += `<circle cx="${p[0]}" cy="${p[1]}" r="3.5" fill="${sr.c}" stroke="${SURF}" stroke-width="2"/>`; });
+    g += `<path d="${d}" fill="none" stroke="${sr.c}" stroke-width="${sr.w}" stroke-linejoin="round" stroke-linecap="round"${sr.dash ? ' stroke-dasharray="5 4"' : ''}/>`;
+    pts.forEach((p) => { if (p) g += `<circle cx="${p[0]}" cy="${p[1]}" r="${sr.dash ? 2.5 : 3.5}" fill="${sr.dash ? SURF : sr.c}" stroke="${sr.dash ? sr.c : SURF}" stroke-width="${sr.dash ? 1.5 : 2}"/>`; });
     const lastI = sr.v.length - 1;
     if (sr.v[lastI] != null) ends.push({ y: y(100 * sr.v[lastI] / sr.base), t: `${pctOf(sr.v[lastI], sr.base)}%`, n: sr.n, c: sr.c });
   });
   ends.sort((a, b) => a.y - b.y);
-  for (let i = 1; i < ends.length; i++) if (ends[i].y - ends[i - 1].y < 30) ends[i].y = ends[i - 1].y + 30;
+  const gap = phone ? 17 : 30;
+  for (let i = 1; i < ends.length; i++) if (ends[i].y - ends[i - 1].y < gap) ends[i].y = ends[i - 1].y + gap;
   ends.forEach((e) => { g += `<text class="lab" x="${m.l + iw + 8}" y="${e.y + 4}">${e.t}</text>` + (phone ? '' : `<text x="${m.l + iw + 50}" y="${e.y + 4}" style="font-size:12px">${e.n}</text>`); });
   g += `<line id="xh" x1="0" x2="0" y1="${m.t}" y2="${m.t + ih}" stroke="${AXIS}" visibility="hidden"/>`;
   g += `<rect id="hitb" x="${m.l - 10}" y="${m.t}" width="${iw + 20}" height="${ih}" fill="transparent"/>`;
@@ -347,9 +354,9 @@ function back() {
     showTip(`<b>${S[i]}</b>` + series.map((sr) => tipRow(sr.c, sr.n, sr.v[i] == null ? 'no data' : `${pctOf(sr.v[i], sr.base)}% (${fmt(sr.v[i])})`)).join(''), e);
   });
   hit.addEventListener('pointerleave', () => { hideTip(); xh.setAttribute('visibility', 'hidden'); });
-  $('#leg-back').innerHTML = series.map((sr) => `<span><i class="line" style="background:${sr.c}"></i>${sr.n}</span>`).join('');
+  $('#leg-back').innerHTML = series.map((sr) => `<span><i class="line" style="background:${sr.dash ? `repeating-linear-gradient(90deg,${sr.c} 0 5px,transparent 5px 8px)` : sr.c}"></i>${sr.n}</span>`).join('');
   const dn = { wk: 'weekday', sat: 'Saturday', sun: 'Sunday' }[day];
-  $('#n-back').textContent = day === 'wk' ? 'The T line has gaps: no station boardings published for 2016 or 2020–22.' : `Weekends: buses and Bluebikes only (its average weekend day).`;
+  $('#n-back').textContent = day === 'wk' ? `T fare gates: entries at Davis, Porter, Assembly and Sullivan, every fall (${pctOf(gTotal(LAST), gTotal(BASE))}% of 2019 in ${yr(LAST)}). T stations: boardings at all nine, none published for 2016 or 2020–22.` : `Weekends: buses and Bluebikes only (its average weekend day).`;
 }
 $('#day').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; day = b.dataset.d; document.querySelectorAll('#day button').forEach((x) => x.setAttribute('aria-pressed', x === b)); back(); });
 
@@ -642,7 +649,9 @@ function work() {
 function table() {
   const rows = [['Buses in Somerville (weekday)', (s) => busWk(s)], ['Buses in Somerville (Saturday)', (s) => D.bus[s].som.sat], ['Buses in Somerville (Sunday)', (s) => D.bus[s].som.sun],
     ...ST.map((st) => [`${st.n}${st.in ? '' : ' *'}`, (s) => st.v[s]]),
-    ['T stations', (s) => tTotal(s)], ['Buses + T (weekday)', (s) => tTotal(s) == null ? null : busWk(s) + tTotal(s)], ['All MBTA buses (weekday)', (s) => D.bus[s].sys.wk],
+    ['T stations', (s) => tTotal(s)],
+    ...ST.filter((st) => st.g && Object.keys(st.g).length).map((st) => [`${st.n}${st.in ? '' : ' *'}, fare-gate entries`, (s) => st.g[s]]),
+    ['4 gated stations, fare-gate entries', (s) => gTotal(s)], ['Buses + T (weekday)', (s) => tTotal(s) == null ? null : busWk(s) + tTotal(s)], ['All MBTA buses (weekday)', (s) => D.bus[s].sys.wk],
     ['Bus stops in Somerville with riders', (s) => D.bus[s].nstops],
     ['Bluebikes trips from Somerville docks (weekday, Sep–Nov)', (s) => D.bikes[s] && D.bikes[s].wk], ['Bluebikes trips (weekend day)', (s) => D.bikes[s] && D.bikes[s].we],
     ['Bluebikes docks in Somerville with trips', (s) => D.bikes[s] && D.bikes[s].docks]];

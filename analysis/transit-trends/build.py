@@ -479,12 +479,52 @@ def rail():
     return out
 
 
+GATES = 'https://www.arcgis.com/sharing/rest/content/items/7859894afb5641ce91a2bb03599fdf5b/data'  # GSE_by_year.zip
+GATED = ('place-davis', 'place-portr', 'place-astao', 'place-sull')   # the Green Line Extension stations have no gates
+
+
+def gates(years):
+    """{season: {station: average weekday fare-gate entries}} for the gated stations, September to November, federal
+    holidays out, from the MBTA's Gated Station Entries (unscaled taps at the gates; children and fare evasion aren't
+    counted). Days with no entries at a station (a closure, a shutdown) are left out of its average."""
+    out = {}
+    z = None
+    for y in years:
+        path = os.path.join(CACHE, f'trends-gates-{y}.json')
+        if not os.path.exists(path):
+            if z is None:
+                z = zipfile.ZipFile(cached('mbta-gated-entries.zip', GATES))
+            name = next((n for n in z.namelist() if n.endswith(f'_{y}.csv')), None)
+            if not name:
+                continue
+            per = defaultdict(Counter)                      # station -> date -> entries
+            hol = holidays(y)
+            with z.open(name) as fh:
+                for r in csv.DictReader(io.TextIOWrapper(fh, encoding='utf-8-sig')):
+                    if r['stop_id'] not in GATED:
+                        continue
+                    ds = r['service_date'][:10].replace('/', '-')
+                    d = date(int(ds[:4]), int(ds[5:7]), int(ds[8:10]))
+                    if d.month in BIKE_MONTHS and d.weekday() < 5 and d not in hol:
+                        per[r['stop_id']][d] += float(r['gated_entries'] or 0)
+            res = {st: round(sum(v for v in per[st].values() if v > 0) / max(1, sum(1 for v in per[st].values() if v > 0)))
+                   for st in GATED if per[st]}
+            os.makedirs(CACHE, exist_ok=True)
+            with open(path, 'w') as f:
+                json.dump(res, f)
+        with open(path) as f:
+            out[f'Fall {y}'] = json.load(f)
+        print(f"  gates Fall {y}: " + ', '.join(f'{k[6:]} {v:,}' for k, v in out[f'Fall {y}'].items()), file=sys.stderr)
+    return out
+
+
 def main():
     tw = towns()
     som = somerville_exact()
     seasons, stops_all = bus(som)
     rails = rail()
     bikes = bluebikes(som, sorted(int(s[5:]) for s in seasons))
+    gate = gates(sorted(int(s[5:]) for s in seasons))
     work = {'acs': acs(), 'lodes': lodes()}
     # map frame: Somerville plus a margin; neighbors cut to it
     xs = [p[0] for r in tw['Somerville'] for p in r]
@@ -508,7 +548,8 @@ def main():
             st_locs[sid] = locs[sid][:2]
     for sid, name, line, here in STATIONS:
         stations.append({'id': sid, 'n': name, 'line': line, 'in': here, 'p': xy(*st_locs[sid]),
-                         'v': {s: rails[s].get(sid) for s in rails if rails[s].get(sid) is not None}})
+                         'v': {s: rails[s].get(sid) for s in rails if rails[s].get(sid) is not None},
+                         'g': {s: gate[s][sid] for s in gate if sid in gate[s]}})
     # one map dot per place: a stop that only got a new number (the bus redesign renumbered many) or moved a few metres
     # is the same stop; stops on opposite sides of a street (20 m and more apart) stay apart
     order = sorted(seasons, key=lambda s: int(s[5:]))

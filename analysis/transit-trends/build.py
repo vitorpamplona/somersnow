@@ -958,6 +958,10 @@ def massbuilds(city, sites=()):
     for x in cand:
         if x['id'] in why:
             continue
+        named = [s for s in sites if s['replaces'] and s['replaces'].lower() in x['name'].lower()]
+        if named:
+            why[x['id']] = f"the City's record replaces it ({named[0]['address'].split(',')[0]} master plan)"
+            continue
         near = [s for s in sites if s['homes'] and x['hu'] >= 0.25 * s['homes'] and dist(x, {'lon': s['lon'], 'lat': s['lat']}) <= 150]
         if near:
             why[x['id']] = f"the City's record for {near[0]['label']} replaces it"
@@ -980,7 +984,8 @@ def massbuilds(city, sites=()):
 
 def pipeline_sites():
     """Public and nonprofit sites the permits and MassBuilds miss or have out of date, checked by hand from the City's
-    own pages (pipeline_sites.csv: name, label, homes or blank when not set, a note, the source and its date)."""
+    own pages (pipeline_sites.csv: name, label, homes or blank when not set, a note, the source and its date; tier f =
+    long range, blank = planned; replaces = text in the names of MassBuilds entries this record replaces)."""
     with open(os.path.join(HERE, 'pipeline_sites.csv'), newline='') as f:
         rows = list(csv.DictReader(f))
     return [dict(r, homes=int(r['homes']) if r['homes'] else None, lat=float(r['lat']), lon=float(r['lon']),
@@ -1046,7 +1051,7 @@ def project_lots(city, keep, sites=()):
     for x in keep:
         out[('m', x['id'])] = at(float(x['longitude']), float(x['latitude']))
     for s in sites:
-        out[('s', s['label'])] = [r for p in s['props'] if got.get(p) for r in got[p]] or at(s['lon'], s['lat'])
+        out[('s', s['label'])] = [r for p in s['props'] if got.get(p) for r in got[p]] or None   # no parcel given: a circle
     os.makedirs(CACHE, exist_ok=True)
     with open(path, 'w') as f:
         json.dump(got, f)
@@ -1066,8 +1071,8 @@ def pipeline(xy):
     lots = vacant_lots()
     shown = [c for c in city if c['stage'] in ('construction', 'permitting')]
     K = (math.cos(math.radians(42.39)) * 111320, 110540)
-    permitted = lambda s: [c for c in shown if math.hypot((c['lon'] - s['lon']) * K[0], (c['lat'] - s['lat']) * K[1]) <= 80
-                           and c['u'] >= 0.5 * (s['homes'] or 0)]
+    permitted = lambda s: s['props'] and [c for c in shown if set(c['props']) & set(s['props']) or (     # sites placed only roughly
+        math.hypot((c['lon'] - s['lon']) * K[0], (c['lat'] - s['lat']) * K[1]) <= 80 and c['u'] >= 0.5 * (s['homes'] or 0))]  # (no parcel) are never matched
     for s in [s for s in sites if permitted(s)]:          # once the City has a building permit, the permit is the record
         print(f"  WARNING: {s['label']} is now in the City's permits ({permitted(s)[0]['a'].title()}); "
               f"remove it from pipeline_sites.csv", file=sys.stderr)
@@ -1078,17 +1083,20 @@ def pipeline(xy):
     p += [{'xy': xy(float(x['longitude']), float(x['latitude'])), 'u': x['hu'], 't': 'f' if x['status'] == 'projected' else 'm',
            'a': short_name(x['name']), 'full': x['name'].strip(), 'ms': x['status'].replace('_', ' '), 'y': x.get('year_compl'),
            'up': (x.get('updated_at') or '')[:10], 'k': ('m', x['id'])} for x in keep]
-    p += [{'xy': xy(s['lon'], s['lat']), 'u': s['homes'], 't': 'm' if s['homes'] else 's', 'a': s['label'], 'full': s['name'],
+    p += [{'xy': xy(s['lon'], s['lat']), 'u': s['homes'], 't': s['tier'] or ('m' if s['homes'] else 's'), 'a': s['label'], 'full': s['name'],
            'note': s['note'], 'src': s['source'], 'asof': s['as_of'], 'k': ('s', s['label'])} for s in sites]
     p.sort(key=lambda x: -(x['u'] or 0))
-    used = set()                                       # a lot drawn once, for the biggest project on it; the others keep a circle
-    for x in p:
+    used = {}                                          # a lot drawn once, for the biggest project on it; the others point to it
+    for i, x in enumerate(p):
         rings = plot.get(x.pop('k'))
         key = json.dumps(rings[0][:3]) if rings else None
-        if rings and key not in used:
-            used.add(key)
+        if rings and key in used:
+            x['on'] = used[key]
+        elif rings:
+            used[key] = i
             x['lot'] = [[xy(*q) for q in r] for r in rings]
-    print(f"  project lots: {sum(1 for x in p if 'lot' in x)} of {len(p)} projects on a parcel outline", file=sys.stderr)
+    print(f"  project lots: {sum(1 for x in p if 'lot' in x or 'on' in x)} of {len(p)} projects on a parcel outline; "
+          f"no lot: {', '.join(x['a'] for x in p if 'lot' not in x and 'on' not in x)}", file=sys.stderr)
     lo = [{'r': [[xy(*q) for q in r] for r in v['rings']], 'a': (v['a'].get('SITE_ADDR') or '').title(),
            'c': VACANT.get(v['a']['USE_CODE'], v['a']['USE_CODE']), 'ac': v['a'].get('LOT_SIZE'), 'fy': v['a'].get('FY')} for v in lots]
     n = Counter(x['t'] for x in p)

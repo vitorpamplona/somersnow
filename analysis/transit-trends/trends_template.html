@@ -98,8 +98,13 @@ select{font:600 14px var(--body);color:var(--snow);background:var(--panel);borde
 .zoom{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin:0 0 10px}
 .zoom .seg{margin:0}
 .zoom .hint{font-size:13px;color:var(--ink3)}
-.pmap{cursor:grab;touch-action:pan-y;outline:none}
-.pmap.zoomed{touch-action:none}
+.pmap{cursor:grab;touch-action:none;outline:none;user-select:none;-webkit-user-select:none}
+.mapwrap{position:relative}
+.mapctl{position:absolute;right:10px;bottom:10px;display:flex;flex-direction:column;background:var(--snow);border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.35);overflow:hidden}
+.mapctl button{width:40px;height:40px;border:0;background:none;color:var(--navy);font:600 24px/1 var(--body);cursor:pointer}
+.mapctl button+button{border-top:1px solid #C9D3DE}
+.mapctl button:hover{background:#DCE4EC}
+.mapctl button:focus-visible{outline:2px solid var(--orange);outline-offset:-2px}
 .pmap.drag{cursor:grabbing}
 .pmap:focus-visible{outline:2px solid var(--orange);outline-offset:-2px}
 .pmap svg{overflow:hidden}
@@ -699,7 +704,7 @@ function homes() {
 const PP = D.pipe, PCOL = '#EEF3F7', LOTC = '#E8B84A';
 const PT = { c: 'Under construction', p: 'In permitting', m: 'Planned', f: 'Long range', s: 'Site, homes not set' };
 const PV = { z: 1, cx: null, cy: null };                      // the view: zoom and centre, in map metres
-const PZMAX = 8, LOTZ = 2.2;                                 // zoomed in this far, projects show as their lots
+const PZMAX = 12, LOTZ = 2.2;                                // zoomed in this far, projects show as their lots
 const nearSta = (x, y) => HM.sta.reduce((b, s) => { const d = Math.hypot(s[0] - x, s[1] - y); return d < b[0] ? [d, s[2]] : b; }, [Infinity, '']);
 const half = (x, y) => nearSta(x, y)[0] <= 805;
 const lotXY = (l) => l.r[0][0];
@@ -735,13 +740,13 @@ function pipe() {
     const xs = x.lot.flat().map((q) => q[0]), ys = x.lot.flat().map((q) => q[1]);
     x.lc = [(Math.min(...xs) + Math.max(...xs)) / 2, (Math.min(...ys) + Math.max(...ys)) / 2, Math.max(Math.max(...xs) - Math.min(...xs), Math.max(...ys) - Math.min(...ys)) / 2];
   });
+  PP.p.forEach((x) => { if (x.on != null) x.lc = PP.p[x.on].lc; });   // projects that share a lot with a bigger one
   const tot = (t) => PP.p.filter((x) => x.t === t).reduce((s, x) => s + x.u, 0);
   el.innerHTML = `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" role="img" aria-label="Zoomable map of Somerville's housing pipeline: ${fmt(tot('c'))} homes under construction, ${fmt(tot('p'))} in permitting, ${fmt(tot('m'))} planned and ${fmt(tot('f'))} long range, and ${PP.lots.length} buildable vacant lots, with the T lines, stations and bus routes. The biggest: ${PP.p.slice(0, 4).map((x) => `${x.full || x.a}, ${x.u} homes, ${PT[x.t].toLowerCase()}`).join('; ')}.${PP.p.some((x) => x.t === 's') ? ` Sites with no number of homes yet: ${PP.p.filter((x) => x.t === 's').map((x) => x.full).join('; ')}.` : ''} Every project is in the table under All the numbers."><g id="pb">${base}</g><g id="pf"></g></svg>`;
   const svg = el.firstChild, gb = svg.querySelector('#pb'), gf = svg.querySelector('#pf');
-  const clamp = () => {                                       // keep the view on the map
+  const clamp = () => {                                       // like a web map: zoom 1× to PZMAX×; the centre stays on the map
     PV.z = Math.max(1, Math.min(PZMAX, PV.z));
-    const hw = MW / PV.z / 2, hh = MH / PV.z / 2;
-    PV.cx = Math.max(hw, Math.min(MW - hw, PV.cx)); PV.cy = Math.max(hh, Math.min(MH - hh, PV.cy));
+    PV.cx = Math.max(0, Math.min(MW, PV.cx)); PV.cy = Math.max(0, Math.min(MH, PV.cy));
   };
   const S = () => k0 * PV.z, sx = (x) => (x - PV.cx) * S() + w / 2, sy = (y) => (y - PV.cy) * S() + h / 2;
   let raf = 0;
@@ -786,23 +791,51 @@ function pipe() {
     zb.forEach(([b, , z]) => b.setAttribute('aria-pressed', String(z === 1 ? PV.z <= 1.01 : Math.abs(PV.z - z) < 0.05 && Math.hypot(PV.cx - b._c[0], PV.cy - b._c[1]) < 50)));
   };
   const redraw = () => { if (!raf) raf = requestAnimationFrame(draw); };
-  const zoomAt = (f, px, py) => {                              // zoom by f, keeping the point under (px, py) still
-    const mx = PV.cx + (px - w / 2) / S(), my = PV.cy + (py - h / 2) / S();
-    PV.z = Math.max(1, Math.min(PZMAX, PV.z * f));
-    PV.cx = mx - (px - w / 2) / S(); PV.cy = my - (py - h / 2) / S(); redraw();
+  // ---- moving the map like Google Maps: scroll or pinch to zoom, drag to move (with a glide), double-click or
+  // double-tap to zoom in, two-finger tap to zoom out, + and − on the map, arrow keys and + / − on the keyboard
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let anim = 0;
+  const stop = () => { cancelAnimationFrame(anim); anim = 0; };
+  const toMap = (px, py) => [PV.cx + (px - w / 2) / S(), PV.cy + (py - h / 2) / S()];
+  const zoomAt = (f, px, py, smooth) => {                     // zoom by f, keeping the point under (px, py) still
+    const [mx, my] = toMap(px, py), z = Math.max(1, Math.min(PZMAX, PV.z * f));
+    const k = k0 * z, to = [z, mx - (px - w / 2) / k, my - (py - h / 2) / k];
+    smooth && !calm ? flyTo(...to) : (PV.z = to[0], PV.cx = to[1], PV.cy = to[2], redraw());
   };
-  // presets and buttons
+  function flyTo(z, cx, cy, ms = 260) {                       // eased zoom and move; instant with reduced motion
+    stop(); if (calm) { PV.z = z; PV.cx = cx; PV.cy = cy; return redraw(); }
+    const z0 = PV.z, x0 = PV.cx, y0 = PV.cy, t0 = performance.now();
+    const step = (now) => {
+      const p = Math.min(1, (now - t0) / ms), e = 1 - Math.pow(1 - p, 3);
+      PV.z = z0 * Math.pow(z / z0, e); PV.cx = x0 + (cx - x0) * e; PV.cy = y0 + (cy - y0) * e; draw();
+      anim = p < 1 ? requestAnimationFrame(step) : 0;
+    };
+    anim = requestAnimationFrame(step);
+  }
+  const glide = (vx, vy) => {                                 // after a fling, slow down over about half a second
+    if (calm || Math.hypot(vx, vy) < 0.15) return;
+    let last = performance.now();
+    const step = (now) => {
+      const dt = Math.min(40, now - last); last = now; vx *= Math.pow(0.994, dt); vy *= Math.pow(0.994, dt);
+      PV.cx -= vx * dt / S(); PV.cy -= vy * dt / S(); draw();
+      anim = Math.hypot(vx, vy) > 0.02 ? requestAnimationFrame(step) : 0;
+    };
+    anim = requestAnimationFrame(step);
+  };
+  // presets (jump to a place) and the + / − on the map
   const sta = (n) => HM.sta.find((s) => s[2] === n);
   const pre = [['All', [MW / 2, MH / 2], 1], ['Union Sq', sta('Union Square'), 3], ['Assembly', sta('Assembly'), 3], ['Winter Hill', sta('Gilman Square'), 2.5], ['Davis', sta('Davis'), 3]].filter((p) => p[1]);
-  const zw = $('#zoom-pipe');
+  const coarse = matchMedia('(pointer:coarse)').matches, zw = $('#zoom-pipe');
   zw.innerHTML = `<div class="seg" role="group" aria-label="Zoom to">${pre.map(([n], i) => `<button type="button" data-p="${i}">${n}</button>`).join('')}</div>`
-    + `<div class="seg" role="group" aria-label="Zoom"><button type="button" data-z="in" aria-label="Zoom in">+</button><button type="button" data-z="out" aria-label="Zoom out">−</button></div>`
-    + `<span class="hint" id="hint-pipe">${matchMedia('(pointer:coarse)').matches ? 'Double-tap or pinch to zoom, drag to move, tap a project for details.' : 'Double-click or Ctrl + scroll to zoom, drag to move, arrow keys too.'}</span>`;
-  const zb = [...zw.querySelectorAll('[data-p]')].map((b) => { const p = pre[+b.dataset.p]; b._c = p[1]; b.onclick = () => { PV.z = p[2]; PV.cx = p[1][0]; PV.cy = p[1][1]; redraw(); }; return [b, p[1], p[2]]; });
-  zw.querySelector('[data-z=in]').onclick = () => zoomAt(1.6, w / 2, h / 2);
-  zw.querySelector('[data-z=out]').onclick = () => zoomAt(1 / 1.6, w / 2, h / 2);
-  // pointer: drag to pan, two fingers to pinch, tap or hover for details
-  const pts = new Map(); let moved = false, pinch = null, lastTap = 0;
+    + `<span class="hint" id="hint-pipe">${coarse ? 'Pinch to zoom, drag to move, double-tap to zoom in; tap a project for details.' : 'Scroll to zoom, drag to move, double-click to zoom in; hover a project for details.'}</span>`;
+  const zb = [...zw.querySelectorAll('[data-p]')].map((b) => { const p = pre[+b.dataset.p]; b._c = p[1]; b.onclick = () => flyTo(p[2], p[1][0], p[1][1], 450); return [b, p[1], p[2]]; });
+  let ctl = el.parentNode.querySelector('.mapctl');
+  if (!ctl) { ctl = document.createElement('div'); ctl.className = 'mapctl'; el.parentNode.appendChild(ctl); }
+  ctl.innerHTML = '<button type="button" data-z="in" aria-label="Zoom in">+</button><button type="button" data-z="out" aria-label="Zoom out">−</button>';
+  ctl.querySelector('[data-z=in]').onclick = () => zoomAt(2, w / 2, h / 2, true);
+  ctl.querySelector('[data-z=out]').onclick = () => zoomAt(0.5, w / 2, h / 2, true);
+  // pointers: one finger or the mouse moves the map, two fingers pinch (and move), taps show details
+  const pts = new Map(); let moved = false, pinch = null, lastTap = 0, lastTapXY = [0, 0], two = 0, vel = [0, 0], lastMove = 0;
   const local = (e) => { const r = svg.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
   const tipFor = (e) => {
     const hit = document.elementFromPoint(e.clientX, e.clientY), c = hit && hit.closest && hit.closest('#c-pipe [data-i], #c-pipe [data-l]');
@@ -816,40 +849,62 @@ function pipe() {
       + (x.note ? `<div>${esc(x.note)}</div>` + tipRow('', 'Source', `City of Somerville, ${x.asof}`)
         : x.full ? tipRow('', 'MassBuilds status', esc(x.ms)) + (x.y ? tipRow('', 'Expected', x.y) : '') + tipRow('', 'MassBuilds updated', x.up)
         : tipRow('', 'Applied', x.d) + (x.f ? tipRow('', 'First permit', x.f) : ''))
-      + tipRow('', 'Nearest station', `${esc(n)}, ${fmt(d)} m`), e);
+      + tipRow('', 'Nearest station', `${esc(n)}, ${fmt(d)} m`)
+      + (c.tagName === 'path' && PP.p.some((o) => o.on === +c.dataset.i) ? `<div>Also on this lot: ${PP.p.filter((o) => o.on === +c.dataset.i).map((o) => `${esc(o.a)} (${o.u ? fmt(o.u) + ' homes' : 'homes not set'}, ${PT[o.t].toLowerCase()})`).join('; ')}</div>` : ''), e);
   };
+  const mid = () => { const [p, q] = [...pts.values()]; return [(p[0] + q[0]) / 2, (p[1] + q[1]) / 2, Math.hypot(p[0] - q[0], p[1] - q[1])]; };
   el.onpointerdown = (e) => {
-    pts.set(e.pointerId, local(e)); moved = false;
-    if (pts.size === 2) { const [a, b] = [...pts.values()]; pinch = { d: Math.hypot(a[0] - b[0], a[1] - b[1]), z: PV.z }; }
-    if (e.pointerType === 'mouse' || PV.z > 1.01 || pts.size === 2) { el.setPointerCapture(e.pointerId); }
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    stop(); pts.set(e.pointerId, local(e)); el.setPointerCapture(e.pointerId);
+    if (pts.size === 1) { moved = false; vel = [0, 0]; lastMove = performance.now(); }
+    if (pts.size === 2) { const [mx, my, d] = mid(); pinch = { d, z: PV.z, m: toMap(mx, my) }; two = performance.now(); moved = false; hideTip(); }
   };
   el.onpointermove = (e) => {
     if (!pts.has(e.pointerId)) { if (e.pointerType === 'mouse') tipFor(e); return; }
     const p = local(e), q = pts.get(e.pointerId);
-    if (pts.size === 2 && pinch) {
-      pts.set(e.pointerId, p); const [a, b] = [...pts.values()], d = Math.hypot(a[0] - b[0], a[1] - b[1]);
-      zoomAt(pinch.z * d / pinch.d / PV.z, (a[0] + b[0]) / 2, (a[1] + b[1]) / 2); moved = true; return;
+    if (pts.size === 2 && pinch) {                             // pinch: zoom about the fingers, and follow them
+      pts.set(e.pointerId, p); const [mx, my, d] = mid();
+      if (Math.abs(d - pinch.d) > 4 || moved) {
+        PV.z = Math.max(1, Math.min(PZMAX, pinch.z * d / pinch.d));
+        PV.cx = pinch.m[0] - (mx - w / 2) / S(); PV.cy = pinch.m[1] - (my - h / 2) / S(); moved = true; redraw();
+      }
+      return;
     }
-    if (Math.hypot(p[0] - q[0], p[1] - q[1]) > 3 && (e.pointerType === 'mouse' ? e.buttons & 1 : PV.z > 1.01)) {
-      PV.cx -= (p[0] - q[0]) / S(); PV.cy -= (p[1] - q[1]) / S(); pts.set(e.pointerId, p); moved = true; el.classList.add('drag'); hideTip(); redraw();
-    } else if (e.pointerType === 'mouse') tipFor(e);
+    if (!moved && Math.hypot(p[0] - q[0], p[1] - q[1]) < 4) { if (e.pointerType === 'mouse') tipFor(e); return; }
+    const now = performance.now(), dt = Math.max(1, now - lastMove);
+    vel = [0.7 * (p[0] - q[0]) / dt + 0.3 * vel[0], 0.7 * (p[1] - q[1]) / dt + 0.3 * vel[1]]; lastMove = now;
+    PV.cx -= (p[0] - q[0]) / S(); PV.cy -= (p[1] - q[1]) / S(); pts.set(e.pointerId, p);
+    if (!moved) { moved = true; el.classList.add('drag'); hideTip(); }
+    redraw();
   };
   const up = (e) => {
-    pts.delete(e.pointerId); if (pts.size < 2) pinch = null; el.classList.remove('drag');
-    if (e.type === 'pointerup' && !moved && e.pointerType !== 'mouse') {
+    if (!pts.has(e.pointerId)) return;
+    const was = pts.size, at = local(e); pts.delete(e.pointerId); el.classList.remove('drag');
+    if (was === 2) {                                           // a quick two-finger tap zooms out
+      if (!moved && performance.now() - two < 300 && e.type === 'pointerup') { const [mx, my] = at; zoomAt(0.5, mx, my, true); }
+      pinch = null; moved = true; return;
+    }
+    if (e.type !== 'pointerup') return;
+    if (moved) { if (performance.now() - lastMove < 80) glide(vel[0], vel[1]); return; }
+    if (e.pointerType !== 'mouse') {                           // touch: tap for details, double-tap to zoom in
       const now = Date.now();
-      if (now - lastTap < 300) { const [x, y] = local(e); zoomAt(2, x, y); lastTap = 0; hideTip(); } else { lastTap = now; tipFor(e); }
+      if (now - lastTap < 300 && Math.hypot(at[0] - lastTapXY[0], at[1] - lastTapXY[1]) < 30) { zoomAt(2, at[0], at[1], true); lastTap = 0; hideTip(); }
+      else { lastTap = now; lastTapXY = at; tipFor(e); }
     }
   };
   el.onpointerup = up; el.onpointercancel = up;
-  el.onpointerleave = (e) => { if (e.pointerType === 'mouse') hideTip(); };
-  el.ondblclick = (e) => { const [x, y] = local(e); zoomAt(e.shiftKey ? 0.5 : 2, x, y); };
-  el.onwheel = (e) => { if (!e.ctrlKey && !e.metaKey) return; e.preventDefault(); const [x, y] = local(e); zoomAt(Math.exp(-e.deltaY / 300), x, y); };
+  el.onpointerleave = (e) => { if (e.pointerType === 'mouse' && !pts.size) hideTip(); };
+  el.ondblclick = (e) => { if (matchMedia('(pointer:coarse)').matches && e.pointerType !== 'mouse') return; const [x, y] = local(e); zoomAt(e.shiftKey ? 0.5 : 2, x, y, true); };
+  el.onwheel = (e) => {                                        // scroll (or a trackpad pinch) zooms at the cursor
+    e.preventDefault(); stop(); hideTip();
+    const dy = e.deltaY * (e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? h : 1), [x, y] = local(e);
+    zoomAt(Math.max(0.5, Math.min(2, Math.exp(-dy * (e.ctrlKey ? 0.01 : 0.002)))), x, y);
+  };
   el.onkeydown = (e) => {
-    const st = 120 / S(), mv = { ArrowLeft: [-st, 0], ArrowRight: [st, 0], ArrowUp: [0, -st], ArrowDown: [0, st] }[e.key];
-    if (mv && PV.z > 1.01) { PV.cx += mv[0]; PV.cy += mv[1]; redraw(); e.preventDefault(); }
-    else if (e.key === '+' || e.key === '=') { zoomAt(1.6, w / 2, h / 2); e.preventDefault(); }
-    else if (e.key === '-' || e.key === '_') { zoomAt(1 / 1.6, w / 2, h / 2); e.preventDefault(); }
+    const st = Math.min(w, h) / 4, mv = { ArrowLeft: [-st, 0], ArrowRight: [st, 0], ArrowUp: [0, -st], ArrowDown: [0, st] }[e.key];
+    if (mv) { flyTo(PV.z, PV.cx + mv[0] / S(), PV.cy + mv[1] / S(), 200); e.preventDefault(); }
+    else if (e.key === '+' || e.key === '=') { zoomAt(2, w / 2, h / 2, true); e.preventDefault(); }
+    else if (e.key === '-' || e.key === '_') { zoomAt(0.5, w / 2, h / 2, true); e.preventDefault(); }
   };
   draw();
   $('#leg-pipe').innerHTML = `<span><i style="background:${PCOL};border-radius:50%"></i>Under construction</span><span><i class="ring" style="border-color:${PCOL};background:rgba(238,243,247,.22)"></i>In permitting</span><span><i class="ring" style="border-color:${PCOL};border-style:dashed"></i>Planned</span><span><i class="ring" style="border-color:rgba(238,243,247,.7);border-style:dotted"></i>Long range</span><span><i class="ring" style="border-color:${C.bus};border-style:dashed;background:rgba(79,152,222,.15)"></i>Site, homes not set</span><span><i style="background:${LOTC};opacity:.8"></i>Buildable vacant lot</span><span><i class="line" style="background:${C.bus};opacity:.7"></i>Bus routes</span><span><i class="ring" style="border-color:rgba(169,196,228,.5);border-style:dashed"></i>½ mile from a station</span><span>Zoom in to see each project's lot.</span>`;
@@ -858,7 +913,7 @@ function pipe() {
   $('#n-pipe').innerHTML = `<b>Under construction and in permitting:</b> the City's permit applications (as of ${PP.asof}): every "New Construction" building permit applied for since ${PP.from} whose description gives a number of homes, grouped by address. Under construction: a building permit issued (often for the foundation first) and no residential certificate of occupancy yet. In permitting: applied for, none issued. Homes are what the permit says; a final building can differ. Hotels left out, and ${PP.closed} projects whose permit closed with no certificate. `
     + `<b>Public and nonprofit sites</b> the permits don't have yet, checked by hand from the City's pages: ${PP.p.filter((x) => x.note).map((x) => `${esc(x.a)} (${x.u ? `${fmt(x.u)} homes` : 'homes not set'})`).join(', ')}. `
     + `<b>Planned and long range:</b> MAPC's MassBuilds (updated to ${PP.mbup}), what isn't completed yet. It's kept by volunteers and can be out of date: some of its "in construction" entries have no City building permit, so they're shown as planned. Left out: ${inP.length + same.length} already in the City's permits${same.length ? ` (${same.map((x) => `${esc(x.n)}, ${x.u} homes`).join('; ')}: same site)` : ''}, ${zon.length} zoning scenarios, ${prog.length} program over many sites and ${stale.length} entries not updated in four years; the list is under All the numbers. `
-    + `<b>Vacant lots:</b> MassGIS property tax parcels (Somerville assessor, FY${PP.fy}), the codes for vacant land that's developable or potentially so (residential, commercial, industrial); undevelopable and City-owned lots left out. Zoomed in, each project shows as its lot (the parcels on its permits, or the parcel under MassBuilds' point; ${PP.p.filter((x) => !x.lot).length} without one stay circles). Circles are straight-line ½ miles; walks are longer.`;
+    + `<b>Vacant lots:</b> MassGIS property tax parcels (Somerville assessor, FY${PP.fy}), the codes for vacant land that's developable or potentially so (residential, commercial, industrial); undevelopable and City-owned lots left out. Zoomed in, each project shows as its lot (the parcels on its permits, or the parcel under MassBuilds' point; ${PP.p.filter((x) => !x.lot && x.on == null).length} without one stay circles). Circles are straight-line ½ miles; walks are longer.`;
 }
 
 // ---------- 5. map ----------

@@ -50,6 +50,7 @@ BIKE_MONTHS = (9, 10, 11)                            # "fall" for bikes: Septemb
 ACS_TABLE = 'https://data.census.gov/api/access/data/table'   # Census tables, no key; Somerville city = 160XX00US2562535
 LODES = 'https://lehd.ces.census.gov/data/lodes/LODES8/ma/{kind}/ma_{kind}_S000_JT00_{year}.csv.gz'
 FIRST_YEAR = 2015
+SAME_STOP = 12                                    # metres: stop ids this close are one place on the map
 MIN_ROUTE = 50                                    # routes with fewer weekday riders in Somerville every season are left out
 
 
@@ -450,10 +451,32 @@ def main():
     for sid, name, line, here in STATIONS:
         stations.append({'id': sid, 'n': name, 'line': line, 'in': here, 'p': xy(*st_locs[sid]),
                          'v': {s: rails[s].get(sid) for s in rails if rails[s].get(sid) is not None}})
-    ids = sorted(stops_all)
-    stops = [{'id': s, 'n': stops_all[s][2], 'p': xy(stops_all[s][0], stops_all[s][1])} for s in ids]
-    ix = {s: i for i, s in enumerate(ids)}
+    # one map dot per place: a stop that only got a new number (the bus redesign renumbered many) or moved a few metres
+    # is the same stop; stops on opposite sides of a street (20 m and more apart) stay apart
     order = sorted(seasons, key=lambda s: int(s[5:]))
+    riders = Counter()
+    for se in order:
+        riders.update(seasons[se]['stops'])
+    pts = {k: xy(stops_all[k][0], stops_all[k][1]) for k in stops_all}
+    canon, grid, stops = {}, defaultdict(list), []
+    for k in sorted(stops_all, key=lambda k: (-riders[k], k)):     # busiest first, so it names the place
+        x, y = pts[k]
+        gx, gy = x // SAME_STOP, y // SAME_STOP
+        near = [c for dx in (-1, 0, 1) for dy in (-1, 0, 1) for c in grid[(gx + dx, gy + dy)]
+                if math.hypot(stops[c]['p'][0] - x, stops[c]['p'][1] - y) <= SAME_STOP]
+        if near:
+            canon[k] = near[0]
+            continue
+        canon[k] = len(stops)
+        grid[(gx, gy)].append(len(stops))
+        stops.append({'id': k, 'n': stops_all[k][2], 'p': [x, y]})
+    merged = len(stops_all) - len(stops)
+    print(f'  map: {len(stops_all)} stop ids at {len(stops)} places ({merged} renumbered or moved a few metres)', file=sys.stderr)
+    def per_place(d):
+        c = Counter()
+        for k, v in d.items():
+            c[canon[k]] += v
+        return [[i, round(v, 1)] for i, v in c.items()]
     routes = sorted({r for s in order for r, v in seasons[s]['routes'].items()},
                     key=lambda r: -max(seasons[s]['routes'].get(r, 0) for s in order))
     routes = [r for r in routes if max(seasons[s]['routes'].get(r, 0) for s in order) >= MIN_ROUTE]
@@ -461,7 +484,7 @@ def main():
         'seasons': order,
         'bus': {s: {k: seasons[s][k] for k in ('som', 'sys', 'off', 'hours', 'nstops')} for s in order},
         'routes': [{'r': r, 'v': [seasons[s]['routes'].get(r, 0) for s in order]} for r in routes],
-        'stopv': {s: [[ix[k], v] for k, v in seasons[s]['stops'].items()] for s in order},
+        'stopv': {s: per_place(seasons[s]['stops']) for s in order},
         'stops': stops, 'stations': stations, 'towns': towns_out, 'bikes': bikes, 'work': work,
         'size': xy(box[2], box[1]),
     }

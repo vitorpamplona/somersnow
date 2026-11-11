@@ -196,15 +196,18 @@ def start_hour(t):
     return int(t.split(':')[0]) if ':' in t else int(float(t) * 24)
 
 
+# the ridership file's columns, by year (the names changed in Fall 2024 and Fall 2025)
+COLS = {'route': ('route_id', 'GTFS route_id'), 'stop': ('stop_id', 'GTFS stop_id'), 'day': ('day_type_name', 'Day Type'),
+        'on': ('boardings', 'Boardings'), 'off': ('alightings', 'Alightings'), 'start': ('trip_start_time', 'trip start time'),
+        'name': ('stop_name', 'Stop Name'), 'variant': ('route_variant', 'Route/Variant'), 'dir': ('direction_id', 'GTFS direction_id'),
+        'load': ('load_', 'load', 'Load'), 'samples': ('sample_size', 'sample_count', '# of Trip Samples ')}
+
+
 def bus(som_rings):
     """Per fall season: weekday/Saturday/Sunday boardings in Somerville and systemwide; weekday by route, by stop and by
     the hour the trip started."""
     z = zipfile.ZipFile(cached('mbta-bus-ridership.zip', RIDERSHIP))
     feeds = fall_feeds()
-    COLS = {'route': ('route_id', 'GTFS route_id'), 'stop': ('stop_id', 'GTFS stop_id'), 'day': ('day_type_name', 'Day Type'),
-            'on': ('boardings', 'Boardings'), 'off': ('alightings', 'Alightings'), 'start': ('trip_start_time', 'trip start time'),
-            'name': ('stop_name', 'Stop Name'), 'variant': ('route_variant', 'Route/Variant'), 'dir': ('direction_id', 'GTFS direction_id'),
-            'load': ('load_', 'load', 'Load')}
     DAY = {'weekday': 'wk', 'Wkdy': 'wk', 'Fri': 'fri', 'saturday': 'sat', 'Sat': 'sat', 'sunday': 'sun', 'Sun': 'sun'}
     seasons, stops_all = {}, {}
     files = sorted(n for n in z.namelist() if n.endswith('.csv') and '_Fall_' in n)
@@ -225,7 +228,6 @@ def bus(som_rings):
         hour = defaultdict(Counter)
         names, unknown = {}, 0.0
         trips = defaultdict(set)                       # route -> weekday trips that stop in Somerville (Mon-Thu from 2025)
-        prof = defaultdict(lambda: [set(), defaultdict(lambda: [0.0, 0])])   # (route id, direction) -> [rush trips, stop -> [load sum, n]]
         for row in r:
             d = DAY.get(row[col['day']])
             if not d:
@@ -234,10 +236,6 @@ def bus(som_rings):
             off = float(row[col['off']] or 0)
             sid = row[col['stop']]
             tot[d]['sys'] += on
-            if d == 'wk' and rush(start_min(row[col['start']])):          # for the load profiles: every stop, rush hours
-                pr = prof[(row[col['route']].strip(), row[col['dir']].strip())]
-                pr[0].add((row[col['variant']], row[col['start']]))
-                a = pr[1][sid]; a[0] += float(row[col['load']] or 0); a[1] += 1
             if sid not in locs:
                 unknown += on
             if sid in som:
@@ -267,7 +265,6 @@ def bus(som_rings):
             'off': round(wk['som_off']),
             'routes': {k: round(v) for k, v in wkavg(route['wk'], route.get('fri')).items() if v >= 0.5},
             'trips': {k: len(v) for k, v in trips.items()},
-            'prof': {k: (len(v[0]), {sid: (a[0] / a[1], a[1]) for sid, a in v[1].items()}) for k, v in prof.items()},
             'locs': locs,
             'stops': {k: round(v, 1) for k, v in wkavg(stop['wk'], stop.get('fri')).items() if v >= 0.05},
             'hours': [round(wkavg(hour['wk'], hour.get('fri'))[h]) for h in range(4, 28)],
@@ -589,12 +586,33 @@ def route_paths(feed, ids):
     return out
 
 
+def trip_loads(seasons_wanted, route_ids):
+    """{season: {(route id, direction): {(variant, start): [start minute, days counted, {stop: riders on board leaving it}]}}}
+    for weekday departures (Monday-Thursday from Fall 2025), read again from the ridership file for the routes asked."""
+    z = zipfile.ZipFile(cached('mbta-bus-ridership.zip', RIDERSHIP)); out = {}
+    for se in seasons_wanted:
+        n = next(n for n in z.namelist() if n.endswith(f"_Fall_{se[5:]}.csv"))
+        r = csv.DictReader(io.TextIOWrapper(z.open(n), encoding='utf-8-sig'))
+        c = lambda k: next(x for x in COLS[k] if x in r.fieldnames)
+        R, D, T, V, DIR, ST, L, SA = (c(k) for k in ('route', 'day', 'start', 'variant', 'dir', 'stop', 'load', 'samples'))
+        res = defaultdict(dict)
+        for row in r:
+            rid = row[R].strip()
+            if rid not in route_ids or row[D] not in ('weekday', 'Wkdy'):
+                continue
+            t = res[(rid, row[DIR].strip())].setdefault((row[V], row[T]), [start_min(row[T]), int(float(row[SA] or 0)), {}])
+            t[2][row[ST]] = float(row[L] or 0)
+        out[se] = res
+    return out
+
+
 def profiles(seasons, base, last, names, som_rings):
     """Load profiles: riders on board leaving each stop at weekday rush hours, along each route's path, for the base fall and
     the latest. Stops are placed by distance along the latest path; stops more than 150 m off it, stops past its ends, and
     stops only a few rush trips serve (school trips, short variants) are left out."""
     ids = {ROUTE_ID.get(n, n): n for n in names}
     paths = route_paths(fall_feeds()[int(last[5:])], sorted(ids))
+    TL = trip_loads([base, last], set(ids))
     K = (math.cos(math.radians(42.39)) * 111320, 110540)
     xy = lambda p: (p[0] * K[0], p[1] * K[1])
     pn, pidx, out = [], {}, []
@@ -630,20 +648,45 @@ def profiles(seasons, base, last, names, som_rings):
                     bands.append([round(start), round(cum[i])]); start = None
             if start is not None:
                 bands.append([round(start), round(total)])
-            lines, trips = {}, []
+            locs = seasons[last]['locs']
+            stops, sidx = [], {}                              # the latest fall's stops along the path: [distance, name]
+            for sid in {sid for t in TL[last].get((rid, d), {}).values() for sid in t[2]}:
+                if sid not in locs:
+                    continue
+                dd, a = proj(locs[sid][:2])
+                if dd < 150 and not (dd > 40 and (a < 30 or a > total - 30)):
+                    stops.append([round(a), name_id(locs[sid][2]), sid])
+            stops.sort()
+            for i, st in enumerate(stops):
+                sidx[st[2]] = i
+            avg, cnt = {}, {}
             for key, se in (('b', base), ('n', last)):
                 if key == 'b' and not seasons[base]['routes'].get(nm):
-                    trips.append(0); continue                   # not a Somerville route then (the 109): no before line
-                n, st = seasons[se]['prof'].get((rid, d), (0, {}))
-                trips.append(n); locs = seasons[se]['locs']; pts = []
-                for sid, (load, cnt_) in st.items():
-                    if sid not in locs or cnt_ < max(2, 0.3 * n):
-                        continue
-                    dd, a = proj(locs[sid][:2])
-                    if dd < 150 and not (dd > 40 and (a < 30 or a > total - 30)):
-                        pts.append([round(a), round(load, 1), name_id(locs[sid][2])])
-                if pts:
-                    lines[key] = sorted(pts)
+                    continue                                    # not a Somerville route then (the 109): no before line
+                lc = seasons[se]['locs']; trips = [t for t in TL[se].get((rid, d), {}).values() if t[1] >= 3]
+                avg[key], cnt[key] = {}, {}
+                for per, keep in (('r', lambda m: rush(m)), ('d', lambda m: True)):
+                    tp = [t for t in trips if keep(t[0])]; cnt[key][per] = len(tp); acc = defaultdict(lambda: [0.0, 0])
+                    for t in tp:
+                        for sid, ld in t[2].items():
+                            acc[sid][0] += ld; acc[sid][1] += 1
+                    pts = []
+                    for sid, (sm, k_) in acc.items():
+                        if sid not in lc or k_ < max(2, 0.3 * len(tp)):
+                            continue                            # stops only a few trips serve (school trips, short variants)
+                        dd, a = proj(lc[sid][:2])
+                        if dd < 150 and not (dd > 40 and (a < 30 or a > total - 30)):
+                            pts.append([round(a), round(sm / k_, 1), name_id(lc[sid][2])])
+                    avg[key][per] = sorted(pts)
+            deps = []                                           # each latest-fall departure: [start minute, first stop, loads]
+            for t in sorted(TL[last].get((rid, d), {}).values()):
+                idx = sorted((sidx[sid], ld) for sid, ld in t[2].items() if sid in sidx)
+                if len(idx) < 3 or t[1] < 3:
+                    continue
+                first, lastx = idx[0][0], idx[-1][0]; row = [-1] * (lastx - first + 1)
+                for i, ld in idx:
+                    row[i - first] = round(ld)
+                deps.append([t[0], first, row])
             hubs = []
             for hid, hn in HUBS.items():
                 if hid in seasons[last]['locs']:
@@ -652,7 +695,7 @@ def profiles(seasons, base, last, names, som_rings):
                         hubs.append([round(a), hn])
             other = paths.get(f'{rid}|{"0" if d == "1" else "1"}', {'h': ''})['h']
             dirs.append({'to': clean(paths[f'{rid}|{d}']['h']), 'from': clean(other), 'len': round(total), 'som': bands,
-                         'hubs': sorted(hubs), 'trips': trips, 'l': lines})
+                         'hubs': sorted(hubs), 's': [st[:2] for st in stops], 'avg': avg, 'cnt': cnt, 'dep': deps})
         out.append({'r': nm, 'dirs': dirs})
     print(f'  load profiles: {len(out)} routes, {sum(len(r["dirs"]) for r in out)} directions', file=sys.stderr)
     return {'routes': out, 'names': pn}

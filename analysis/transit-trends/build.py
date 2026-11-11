@@ -788,6 +788,51 @@ def profiles(seasons, base, last, names, som_rings):
     return {'routes': out, 'names': pn}
 
 
+HOME_STATIONS = ('place-davis', 'place-portr', 'place-astao', 'place-sull', 'place-lech', 'place-ccmnl', 'place-unsqu', 'place-esomr',
+                 'place-gilmn', 'place-mgngl', 'place-balsq', 'place-mdftf')  # Red, Orange and Green Line stations in or by Somerville
+
+
+def renter_household():
+    """(year, average renter household size, margin) for Somerville, ACS 1-year B25010, the latest year published."""
+    this = datetime.now().year
+    for y in range(this - 1, FIRST_YEAR, -1):
+        path = os.path.join(CACHE, f'trends-acs-b25010-{y}.json')
+        if not os.path.exists(path):
+            blob = get_maybe(ACS_TABLE, {'id': f'ACSDT1Y{y}.B25010', 'g': '160XX00US2562535'})
+            if not blob:
+                continue
+            d = json.loads(blob)['response']['data']
+            with open(path, 'w') as f:
+                json.dump(dict(zip(d[0], d[1])), f)
+        with open(path) as f:
+            r = json.load(f)
+        if r.get('B25010_003E'):
+            return y, float(r['B25010_003E']), float(r['B25010_003M'] or 0)
+    return None
+
+
+def homes(xy, route_ids, feed):
+    """New housing near the T that can't get resident parking permits: the City's Schedule W addresses, with units, status
+    and dates from each project's building permit and certificate of occupancy (restricted_housing.csv, checked by hand;
+    see research/parking-restricted-housing.md), plus the T lines, stations and bus routes to draw around them."""
+    with open(os.path.join(HERE, 'restricted_housing.csv'), newline='') as f:
+        rows = list(csv.DictReader(f))
+    paths = route_paths(feed, sorted(set(route_ids) | {'Red', 'Orange', 'Green-D', 'Green-E'}))
+    line = lambda pts: [xy(*p) for p in pts[::2]] + [xy(*pts[-1])]
+    locs = season_stops(*feed)
+    hh = renter_household()
+    out = {'list': [{'a': r['label'], 'w': r['schedule_w'], 'u': int(r['units']) if r['units'] else None, 's': r['status'],
+                     'p': r['first_permit'], 'o': r['occupied'], 'n': r['permits'],
+                     'xy': xy(float(r['lon']), float(r['lat'])) if r['lat'] else None} for r in rows],
+           'rail': {k: line(paths[f'{k}|0']['p']) for k in ('Red', 'Orange', 'Green-D', 'Green-E') if f'{k}|0' in paths},
+           'bus': [line(paths[f'{r}|0']['p']) for r in route_ids if f'{r}|0' in paths],
+           'sta': [xy(*locs[s][:2]) + [locs[s][2]] for s in HOME_STATIONS if s in locs],
+           'hh': hh}
+    n = {s: sum(h['u'] or 0 for h in out['list'] if h['s'] == s) for s in ('built', 'under construction', 'planned')}
+    print(f"  homes without resident permits: {n}; renter household {hh}", file=sys.stderr)
+    return out
+
+
 def main():
     tw = towns()
     som = somerville_exact()
@@ -854,6 +899,7 @@ def main():
         'bus': {s: {k: seasons[s][k] for k in ('som', 'sys', 'off', 'hours', 'nstops')} for s in order},
         'routes': [{'r': r, 'v': [seasons[s]['routes'].get(r, 0) for s in order], 't': [seasons[s]['trips'].get(r, 0) for s in order]} for r in routes],
         'prof': profiles(seasons, 'Fall 2019', order[-1], [r for r in routes if seasons[order[-1]]['routes'].get(r, 0) >= MIN_ROUTE], som),
+        'homes': homes(xy, [ROUTE_ID.get(r, r) for r in routes if seasons[order[-1]]['routes'].get(r, 0) >= MIN_ROUTE], fall_feeds()[int(order[-1][5:])]),
         'stopv': {s: per_place(seasons[s]['stops']) for s in order},
         'stops': stops, 'stations': stations, 'towns': towns_out, 'bikes': bikes, 'work': work,
         'size': xy(box[2], box[1]),

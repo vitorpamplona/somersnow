@@ -1,0 +1,38 @@
+schedule_w,label,units,status,first_permit,occupied,permits,lat,lon
+13-17 (odd side) Allen Street,13–17 Allen,40,under construction,2024-10-29,,B22-001878,42.378173,-71.093266
+19-27 (odd side) Allen Street,19–27 Allen,69,under construction,2024-02-08,,B22-002161,42.377854,-71.093511
+37 Allen Street,37 Allen,24,planned,,,B23-001556 B25-002248 B26-000317,42.377348,-71.09345
+2-4 (even side) Alpine Street,2–4 Alpine,26,under construction,2024-04-30,,B24-000435 B24-001570,42.393774,-71.110812
+59-61 (odd side) Bow Street,59–61 Bow,13,under construction,2024-07-22,,B23-001972 B25-001651,42.381668,-71.099235
+299 Broadway,299 Broadway,204,under construction,2026-01-20,,B25-000868 B25-001211,42.392319,-71.091879
+366 Broadway,366 Broadway,50,under construction,2025-12-11,,B25-000116 B25-000231,42.39392,-71.096405
+595 Broadway,595 Broadway,7,built,2024-04-17,2026-04-27,B23-001170 B24-000031 CO26-000054,42.398833,-71.108334
+872 Broadway,872 Broadway,12,built,2022-04-26,2026-02-05,B20-001557 B22-000527 B26-000836 CO25-000001,42.400657,-71.11797
+171 Cedar Street,171 Cedar,15,planned,2024-06-05,,B21-000880,42.394316,-71.110673
+53 Chester Street,53 Chester,3,under construction,2026-03-03,,B25-001926 B25-002006,42.395138,-71.12245
+199 Elm Street,199 Elm,10,planned,,,B25-002074 B25-002075,42.393596,-71.120498
+3-5 (odd side) Hawkins Street,3–5 Hawkins,59,built,2021-11-22,2024-09-19,B21-001864 B21-002392 CO23-000178,42.380197,-71.098341
+371 Highland Ave,371 Highland,22,under construction,2026-04-28,,B24-000324,42.394972,-71.1182
+394 McGrath Highway,394 McGrath,15,built,2024-04-02,2025-08-28,B23-001827 CO25-000109,42.381587,-71.090579
+"60, 62, 64 Medford Street",60–64 Medford,9,under construction,2026-09-17,,B25-001908,42.375427,-71.088751
+24-28 (even side) Mount Pleasant Street,24–28 Mt Pleasant,32,built,2022-11-03,2025-12-31,B22-001664 B22-002252 CO25-000056,42.385121,-71.078347
+10 Oak Street,10 Oak,3,planned,,,B22-000845 B25-000886 B26-000506,42.375906,-71.096903
+181 Pearl Street,181 Pearl,3,under construction,2025-12-01,,B25-001503 B25-001591,42.386799,-71.090904
+20-50 (even side) Prospect Street,Union Sq D2,450,built,2021-01-07,2023-10-30,B19-001839 B19-002091 B21-000105 CO23-000102,42.377495,-71.094682
+82-86 (even side) Prospect Street,82–86 Prospect,29,under construction,2024-08-06,,B23-000026,42.375939,-71.09595
+108-110 (even side) Prospect Street,108–110 Prospect,29,under construction,2025-11-20,,B24-002259 B25-000190,42.374987,-71.096725
+118 Prospect Street,118 Prospect,29,under construction,2021-12-31,,B21-001948,42.374514,-71.096873
+121 Prospect Street,121 Prospect,32,under construction,2022-07-19,,B22-000642 B22-000663 B24-000906 B24-002056,42.374655,-71.097492
+344-346 (even side) Somerville Ave,344–346 Somerville Ave,94,built,2021-03-16,2023-05-24,B20-001584 B20-001657 CO22-000136,42.380593,-71.098623
+379 Somerville Ave,379 Somerville Ave,10,built,2021-12-21,2025-04-03,B21-002202 B22-000164 CO24-000122,42.381589,-71.100071
+26-28 (even side) South Street,26–28 South,19,built,2022-07-18,2025-01-16,B21-000224 CO24-000184,42.37411,-71.089392
+73 Summer Street,73 Summer,27,planned,,,B22-001811 B25-000751,42.384674,-71.100534
+15 Temple Street,15 Temple,115,under construction,2026-01-20,,B25-000866 B25-001031,42.393042,-71.092596
+115 Thurston Street,115 Thurston,9,built,2022-07-01,2025-04-30,B21-001111 B22-000406 CO23-000174,42.393553,-71.096077
+31 Tufts Street,31 Tufts,16,built,2022-05-13,2024-06-11,B21-002042 B21-002457 B22-001116 CO23-000222,42.382448,-71.088602
+13 Warwick Street,13 Warwick,28,built,2023-02-13,2026-09-25,B20-001404 B22-001009 CO25-000148,42.394139,-71.110389
+24 Webster Avenue,24 Webster,42,under construction,2026-03-09,,B24-002327 B25-000895,42.378553,-71.095845
+0-14 (even side) White Street Place,0–14 White St Pl,25,under construction,,,,42.38884,-71.117544
+14 Sewall Street,14 Sewall St,,unknown,,,,,
+30 Sewall Street,30 Sewall St,,unknown,,,,,
+11 Temple Street,11 Temple St,,unknown,,,,,

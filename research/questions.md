@@ -154,6 +154,18 @@ What PTAC found in public data, and what's missing, is in [data-sources.md](data
 58. **Bus shelters.** Which Somerville bus stops have a shelter, who owns and maintains each (City, MBTA or an advertising contractor), and who clears the snow in and around it? Neither the City nor the MBTA publishes a list; Cambridge publishes its own.
     - Nothing on data.somervillema.gov; [Cambridge: Bus Shelters](https://www.arcgis.com/home/item.html?id=d3901fd1218c45f1924adcce50e5b9ed) for comparison; MBTA side: question 59
 
+62. **Resident parking permits since 2020.** The open dataset of permits stops in Nov 2020. How many resident, 65+ and visitor permits were issued each year since, and what does the 2022 Parking & Curb Use Study's 52,243 "resident permits" count (it is far above the 32,000–33,000 a year in 2017–19)?
+    - [City of Somerville Parking Permits](https://data.somervillema.gov/d/xavb-4s9w); [Parking Profile (Feb 2022)](https://s3.amazonaws.com/somervillema-live/s3fs-public/2024-11/2022%20February%20COS%20Parking%20Profile%20and%20Use%20Assessment%20NELSON%20NYGARD%20%281%29.pdf); [`parking-restricted-housing.md`](parking-restricted-housing.md)
+
+63. **Is the restricted-address list complete?** Schedule W (May 5, 2026) lists 37 entries. Does it include every property in a Transit Area outside NR zoning with a first building permit since Jan 15, 2020, and what are 14 Sewall St, 30 Sewall St and 11 Temple St (no building permit found for them)? 10 Oak St is on the list, but its permit applications say it is in an NR district.
+    - [Schedule W](https://s3.amazonaws.com/somervillema-live/s3fs-public/schedule-w-list-of-restricted-addresses.pdf); [Parking Department](https://www.somervillema.gov/departments/parking-department)
+
+64. **Waivers.** How many residents of restricted addresses have received a parking permit waiver (disability, affordable unit, extenuating circumstances), by year?
+    - [Waiver application](https://s3.amazonaws.com/somervillema-live/s3fs-public/waiver-application-resident-permit-restrictions.pdf)
+
+65. **ADUs and parking.** Does an accessory dwelling unit in a Transit Area count as "new development that adds new units" under the permit restriction? How many ADUs has the City permitted and completed each year? The permit data has no ADU type; descriptions mention 32 in 2025 and 44 so far in 2026.
+    - [Applications for Permits and Licenses](https://data.somervillema.gov/d/nneb-s3f7)
+
 ## Sources
 
 See [sources.md](sources.md).

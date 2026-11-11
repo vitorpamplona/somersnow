@@ -1,6 +1,6 @@
 # Housing without resident parking permits
 
-Somerville's new housing near the T can't get on-street resident permits. How much housing is that, and how fast is it growing? Researched Nov 11, 2026, from public City records. Not on the site yet.
+Somerville's new housing near the T can't get on-street resident permits. How much housing is that, and how fast is it growing? Researched Nov 11, 2026, from public City records. On the site as "New neighbors near the T", the last section of [Riding transit in Somerville](https://somerwalks.org/transit-trends.html): a map of these homes with the T lines, stations and the bus routes through Somerville, built from [`analysis/transit-trends/restricted_housing.csv`](../analysis/transit-trends/restricted_housing.csv) (this table, with permit numbers and coordinates).
 
 ## The rule
 
@@ -55,6 +55,16 @@ Schedule W lists 37 address entries and no unit counts. Units and dates below co
 
 For scale: the Census survey counts about 36,000–40,000 housing units in Somerville in 2021–2025 (ACS 1-year B25001, ± about 2,000), so built restricted housing is about 2% of the city's homes, and about 4% with what's under construction.
 
+## People, roughly
+
+At 1.97 people per home (the average Somerville renter household, ACS 1-year 2025 B25010, ± 0.12): about 1,480 people in the built homes, 1,460 more under construction, 160 planned. An estimate: new buildings have many studios and one-bedrooms, so it may be high. 59% of the homes are within 400 m (a 5-minute walk, straight line) of a Red, Orange or Green Line station; half are within 364 m.
+
+## Accessory dwelling units (ADUs)
+
+- The permit applications have no ADU type; searching project descriptions for "ADU", "accessory dwelling" or "accessory apartment" (whole words) finds **85 applications**: 1 in 2015, then 2 (2021), 1 (2022), 2 (2023), 3 (2024), **32 (2025)** and **44 (2026 to date)**. Of them, 56 are building permits at 43 addresses; 22 addresses have an issued permit (first issued: 1 in 2015, 2 in 2024, 4 in 2025, 15 in 2026). Mostly garage conversions and detached backyard cottages.
+- A floor, not a count: an ADU permit whose description doesn't say so is missed.
+- Whether an ADU in a Transit Area counts as "new development that adds new units" under the parking restriction isn't stated by the City; none is on Schedule W (question 65).
+
 ## Permits over time
 
 - The City's [parking permits dataset](https://data.somervillema.gov/resource/xavb-4s9w.json) (one row per permit, with addresses: publish totals only) runs Jan 2017 – Nov 2020 and was frozen in Dec 2020. Resident permits (types A1 "Residential" and A2 "65+") a year: 33,330 (2017), 32,530 (2018), 32,616 (2019), 23,913 (2020, Jan–Nov). Visitor (G1): 16,717, 15,416, 14,812, 9,180.
@@ -68,8 +78,9 @@ For scale: the Census survey counts about 36,000–40,000 housing units in Somer
 - **MassGIS property tax parcels** (statewide service, Somerville `TOWN_ID` 274, 19,065 parcels): Somerville leaves `UNITS` empty on nearly every parcel, so it can't count units.
 - **Better:** the City's permit applications (above) give units and occupancy dates per project; a full count of new units citywide would parse every "New Construction" building permit and its CO, not just the restricted addresses.
 
-## Open questions for the City
+## Open questions for the City (questions 62–65 in [`questions.md`](questions.md))
 
 - How many resident and visitor permits were issued each year since 2020, and what the 2022 study's 52,243 counts.
 - Whether Schedule W is complete (every property with a first building permit since Jan 15, 2020 in a Transit Area outside NR zoning), and what 14 and 30 Sewall St and 11 Temple St are.
 - How many waivers have been granted.
+- Whether ADUs in a Transit Area are restricted, and how many ADUs the City has permitted.

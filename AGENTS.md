@@ -64,7 +64,8 @@ Builders (each writes into `docs/`; run the one for what you changed):
 5. **Privacy.** No house numbers for incidents (crashes, fire calls: street or intersection only); no personal data; complaint counts are complaints, not conditions. Area guides have the specifics.
 6. **Public data, no keys.** Builders use public sources and the standard library (Python) or Playwright (Node). Big downloads go to `.cache/` (git-ignored). Credit sources on the page (OpenStreetMap data needs "© OpenStreetMap contributors", ODbL).
 7. **Accessible.** Works on a phone first; keyboard reachable; text contrast on the dark panels; animations stop or calm down with `prefers-reduced-motion`; charts and maps have a text equivalent (`aria-label`, tables, tooltips).
-8. **No build tooling on the site.** Plain HTML, CSS and JavaScript modules; links between pages are relative; no frameworks, no bundler, no tracking.
+8. **Somerville since 2015.** The city changed a lot after 2014 (Assembly station 2014, the pandemic 2020, the Green Line Extension 2022, the bus network redesign from Dec 2024): data from before 2015 is context only, never "how Somerville moves", and every number carries its year. Mind those breaks in any series ([`research/mobility-data.md`](research/mobility-data.md#read-first-somerville-since-2015)).
+9. **No build tooling on the site.** Plain HTML, CSS and JavaScript modules; links between pages are relative; no frameworks, no bundler, no tracking.
 
 ## Voice and design
 
@@ -91,6 +92,7 @@ Builders (each writes into `docs/`; run the one for what you changed):
 | [`research/questions.md`](research/questions.md) | Questions and proposals for City, MBTA and State officials (numbered; pages cite them as "question 47"). |
 | [`research/ordinance.md`](research/ordinance.md), [`research/source-files/`](research/source-files/) | The ordinance text and fines, and the original PDFs. |
 | [`research/sources.md`](research/sources.md) | Every source, * for search-snippet-only. |
+| [`research/mobility-data.md`](research/mobility-data.md) | Catalog of public data on how Somerville moves (buses and stops, the T, walking, biking, cars, parking, safety, surveys): what, where, years, status, links. Start here before looking for a new dataset. |
 | [`research/data-sources.md`](research/data-sources.md) | Public datasets for the storm replays: what each holds, queries, caveats. |
 | [`research/ordinance-proposals.md`](research/ordinance-proposals.md) | PTAC's letter to the City Council proposing amendments to the snow ordinances. |
 | [`research/translation-review.md`](research/translation-review.md) | Checklist for native speakers reviewing a translation. |

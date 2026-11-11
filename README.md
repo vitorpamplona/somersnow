@@ -15,7 +15,7 @@ Projects for people who walk, roll or ride the bus in Somerville, MA, by the Som
 | **Somerville's pulse** | [/bus-pulse.html](https://somerwalks.org/bus-pulse.html) | A weekday on the buses, played back: every trip, every stop. Try [Holiday lights](https://somerwalks.org/bus-pulse.html#lights). |
 | **Bus stop clearing planner** | [/bus-planner.html](https://somerwalks.org/bus-planner.html) | Design and score the routes crews take to clear bus stops after a storm. Not a City plan. [How it works](analysis/bus-stop-clearing/README.md). |
 
-Behind them, `research/` holds the ordinance text and fines, the verified facts, questions and proposals for City, MBTA and State officials, and every source.
+Behind them, `research/` holds the ordinance text and fines, the verified facts, questions and proposals for City, MBTA and State officials, every source, and [a catalog of public mobility data for Somerville](research/mobility-data.md).
 
 ## Work on it
 

@@ -13,7 +13,7 @@ Sources (all public, no keys):
   - MBTA rail ridership: Fall 2017-2019 by time period (item 9fea7862...), Fall 2023 by time period (80a379eb...),
     Fall 2024 by hour (8f20b4e8...), Fall 2025 by hour (6494749a..., CSV). No rail files for Fall 2020-2022.
 """
-import csv, io, json, math, os, re, shutil, sys, urllib.parse, urllib.request, zipfile
+import csv, gzip, io, json, math, os, re, shutil, sys, urllib.error, urllib.parse, urllib.request, zipfile
 from collections import Counter, defaultdict
 from datetime import date, datetime, timedelta
 
@@ -47,6 +47,9 @@ OLD_NAMES = {'Davis': 'place-davis', 'Porter': 'place-portr', 'Assembly': 'place
 ROUTE_NAME = {'747': 'CT2', '194': '89/93'}
 BIKES = 'https://s3.amazonaws.com/hubway-data/'      # Bluebikes (Hubway until 2018) monthly trip files
 BIKE_MONTHS = (9, 10, 11)                            # "fall" for bikes: September to November
+ACS_TABLE = 'https://data.census.gov/api/access/data/table'   # Census tables, no key; Somerville city = 160XX00US2562535
+LODES = 'https://lehd.ces.census.gov/data/lodes/LODES8/ma/{kind}/ma_{kind}_S000_JT00_{year}.csv.gz'
+FIRST_YEAR = 2015
 MIN_ROUTE = 50                                    # routes with fewer weekday riders in Somerville every season are left out
 
 
@@ -299,6 +302,86 @@ def bluebikes(som_rings, years):
     return out
 
 
+def get_maybe(url, params=None):
+    """Like get(), but None when the server has nothing (HTTP 204 or 404): a year not published (yet)."""
+    if params:
+        url += ('&' if '?' in url else '?') + urllib.parse.urlencode(params)
+    req = urllib.request.Request(url, headers={'User-Agent': 'curl/8.5.0 ' + UA})   # the Census site refuses some clients
+    try:
+        with urllib.request.urlopen(req, timeout=180) as r:
+            return r.read() if r.status != 204 else None
+    except urllib.error.HTTPError as e:
+        if e.code in (400, 404):                          # 400: a table that year doesn't have (2020 1-year)
+            return None
+        raise
+
+
+def acs():
+    """Somerville residents who work, and how they get there, from the American Community Survey 1-year tables: B08301
+    (means of transportation to work), B23025 (employment status), B01001 (age). The Census Bureau doesn't publish
+    Somerville every year (none for 2020; none for 2022 or 2023); those years are left out."""
+    out, this = {}, datetime.now().year
+    for y in range(FIRST_YEAR, this):
+        path = os.path.join(CACHE, f'trends-acs-{y}.json')
+        if not os.path.exists(path):
+            res = {}
+            for t in ('B08301', 'B23025', 'B01001'):
+                blob = get_maybe(ACS_TABLE, {'id': f'ACSDT1Y{y}.{t}', 'g': '160XX00US2562535'})
+                if not blob:
+                    res = None
+                    break
+                d = json.loads(blob)['response']['data']
+                res.update(dict(zip(d[0], d[1])))
+            if res is None and y >= this - 2:
+                continue                                  # maybe not released yet: ask again next build
+            os.makedirs(CACHE, exist_ok=True)
+            with open(path, 'w') as f:
+                json.dump(res, f)
+        with open(path) as f:
+            res = json.load(f)
+        if not res:
+            print(f'  survey {y}: not published for Somerville', file=sys.stderr)
+            continue
+        n = lambda k: float(res.get(k) or 0)
+        older = sum(n(f'B01001_{k:03d}E') for k in list(range(20, 26)) + list(range(44, 50)))
+        out[y] = {'workers': round(n('B08301_001E')), 'wfh': round(n('B08301_021E')), 'wfh_moe': round(n('B08301_021M')),
+                  'transit': round(n('B08301_010E')), 'transit_moe': round(n('B08301_010M')), 'alone': round(n('B08301_003E')),
+                  'carpool': round(n('B08301_004E')), 'walk': round(n('B08301_019E')), 'bike': round(n('B08301_018E')),
+                  'employed': round(n('B23025_004E')), 'older': round(100 * older / n('B01001_001E'), 1)}
+        w = out[y]
+        print(f"  survey {y}: {w['workers']:,} working, from home {100 * w['wfh'] / w['workers']:.1f}%, "
+              f"transit {100 * w['transit'] / w['workers']:.1f}%", file=sys.stderr)
+    return out
+
+
+def lodes():
+    """Jobs in Somerville (by workplace) and jobs held by Somerville residents (by home), each year, from the Census
+    Bureau's LEHD Origin-Destination Employment Statistics: jobs covered by unemployment insurance, all jobs (JT00).
+    Somerville's census tracts are 25017-350100 to 351599."""
+    som = lambda g: g.startswith('25017') and 350100 <= int(g[5:11]) <= 351599
+    out, this = {}, datetime.now().year
+    for y in range(FIRST_YEAR, this):
+        path = os.path.join(CACHE, f'trends-lodes-{y}.json')
+        if not os.path.exists(path):
+            res = {}
+            for kind, geo, key in (('wac', 'w_geocode', 'jobs_in'), ('rac', 'h_geocode', 'jobs_res')):
+                blob = get_maybe(LODES.format(kind=kind, year=y))
+                if not blob:
+                    res = None
+                    break
+                rows = csv.DictReader(io.TextIOWrapper(gzip.GzipFile(fileobj=io.BytesIO(blob))))
+                res[key] = sum(int(r['C000']) for r in rows if som(r[geo]))
+            if res is None:
+                continue                                  # not published yet
+            os.makedirs(CACHE, exist_ok=True)
+            with open(path, 'w') as f:
+                json.dump(res, f)
+        with open(path) as f:
+            out[y] = json.load(f)
+        print(f"  jobs {y}: in Somerville {out[y]['jobs_in']:,}, held by residents {out[y]['jobs_res']:,}", file=sys.stderr)
+    return out
+
+
 def item_url(item):
     return json.loads(get(f'https://www.arcgis.com/sharing/rest/content/items/{item}', {'f': 'json'}))['url']
 
@@ -343,6 +426,7 @@ def main():
     seasons, stops_all = bus(tw['Somerville'])
     rails = rail()
     bikes = bluebikes(tw['Somerville'], sorted(int(s[5:]) for s in seasons))
+    work = {'acs': acs(), 'lodes': lodes()}
     # map frame: Somerville plus a margin; neighbors cut to it
     xs = [p[0] for r in tw['Somerville'] for p in r]
     ys = [p[1] for r in tw['Somerville'] for p in r]
@@ -378,7 +462,7 @@ def main():
         'bus': {s: {k: seasons[s][k] for k in ('som', 'sys', 'off', 'hours', 'nstops')} for s in order},
         'routes': [{'r': r, 'v': [seasons[s]['routes'].get(r, 0) for s in order]} for r in routes],
         'stopv': {s: [[ix[k], v] for k, v in seasons[s]['stops'].items()] for s in order},
-        'stops': stops, 'stations': stations, 'towns': towns_out, 'bikes': bikes,
+        'stops': stops, 'stations': stations, 'towns': towns_out, 'bikes': bikes, 'work': work,
         'size': xy(box[2], box[1]),
     }
     blob = json.dumps(payload, separators=(',', ':'))

@@ -298,8 +298,9 @@ def places(pts, metres=40):
 
 
 def bluebikes(som_rings, years):
-    """Per fall (Sep-Nov): average trips a weekday and a weekend day that start at a dock in Somerville, the docks in
-    Somerville that had trips, and the share of trips on e-bikes (from 2020, when the files say)."""
+    """Per fall (Sep-Nov): average Bluebikes trips a weekday and a weekend day that start or end at a dock in Somerville,
+    split into trips within the city, leaving it and arriving in it (a trip within the city counts once); the docks in
+    Somerville that had trips, and the share of those trips on e-bikes (from 2024, when the files say)."""
     keys = {}
     for k in re.findall(r'<Key>([^<]+)</Key>', get(BIKES).decode()):
         m = re.match(r'(\d{4})(\d{2})-(?:hubway|bluebikes)-tripdata\.(?:csv\.)?zip$', k)
@@ -307,12 +308,11 @@ def bluebikes(som_rings, years):
             keys[(int(m.group(1)), int(m.group(2)))] = k
     out = {}
     for y in years:
-        path = os.path.join(CACHE, f'trends-bikes-v2-{y}.json')
+        path = os.path.join(CACHE, f'trends-bikes-v3-{y}.json')
         if not os.path.exists(path):
-            # count by station; place each station by its dock (classic bikes start at the dock; from 2024 e-bike
-            # trips carry the bike's GPS position, which near the city line can fall on the wrong side)
-            per = defaultdict(Counter)                     # station -> day -> trips
-            loc, eb, name = {}, Counter(), {}
+            # place each station by its dock: classic bikes start and end at the dock; from 2024 e-bike trips carry the
+            # bike's GPS position, which near the city line can fall on the wrong side
+            loc, name, trips, n2id = {}, {}, [], {}            # n2id: station name -> id (2025 has a few trips with the name only)
             for mo in BIKE_MONTHS:
                 if (y, mo) not in keys:
                     continue
@@ -321,34 +321,53 @@ def bluebikes(som_rings, years):
                 with z.open(f) as fh:
                     for r in csv.DictReader(io.TextIOWrapper(fh, encoding='utf-8-sig', newline='')):
                         st = r.get('started_at') or r.get('starttime')
-                        sid = r.get('start_station_id') or r.get('start station id') or r.get('start_station_name') or r.get('start station name')
-                        lat = r.get('start_lat') or r.get('start station latitude')
-                        lon = r.get('start_lng') or r.get('start station longitude')
-                        if not st or not sid:
+                        na, nb = r.get('start_station_name') or r.get('start station name'), r.get('end_station_name') or r.get('end station name')
+                        a = r.get('start_station_id') or r.get('start station id') or (na and '@' + na)
+                        b = r.get('end_station_id') or r.get('end station id') or (nb and '@' + nb)
+                        for sid, nm in ((a, na), (b, nb)):
+                            if sid and nm and not sid.startswith('@'):
+                                n2id[nm] = sid
+                        if not st or not (a or b):
                             continue
                         t = r.get('rideable_type') or ''
-                        name[sid] = r.get('start_station_name') or r.get('start station name') or sid
-                        per[sid][st[:10]] += 1
-                        eb[sid] += t == 'electric_bike'
-                        if lat and lon and (sid not in loc or (t != 'electric_bike' and loc[sid][2])):
-                            try:
-                                loc[sid] = (float(lon), float(lat), t == 'electric_bike')
-                            except ValueError:
-                                pass
-            here = [k for k in per if k in loc and inside(som_rings, loc[k][0], loc[k][1])]
-            days = Counter()
-            for k in here:
-                days.update(per[k])
-            total = sum(days.values())
-            ebike = sum(eb[k] for k in here)
+                        eb = t == 'electric_bike'
+                        for sid, la, lo, nm in ((a, r.get('start_lat') or r.get('start station latitude'), r.get('start_lng') or r.get('start station longitude'), r.get('start_station_name') or r.get('start station name')),
+                                                (b, r.get('end_lat') or r.get('end station latitude'), r.get('end_lng') or r.get('end station longitude'), r.get('end_station_name') or r.get('end station name'))):
+                            if sid and la and lo and (sid not in loc or (not eb and loc[sid][2])):
+                                try:
+                                    loc[sid] = (float(lo), float(la), eb)
+                                except ValueError:
+                                    pass
+                            if sid:
+                                name[sid] = nm or sid
+                        trips.append((st[:10], a, b, eb))
+            fix = lambda k: n2id.get(k[1:], k) if k and k.startswith('@') else k   # a name-only trip takes its station's id
+            for k in [k for k in loc if k.startswith('@')]:
+                v = loc.pop(k)
+                if fix(k) not in loc:
+                    loc[fix(k)] = v
+            trips = [(d, fix(a), fix(b), eb) for d, a, b, eb in trips]
+            name = {fix(k): v for k, v in name.items()}
+            here = {k for k in loc if inside(som_rings, loc[k][0], loc[k][1])}
+            per = defaultdict(Counter)                         # date -> within / out / in
+            used, ebike, total = set(), 0, 0
+            for d, a, b, eb in trips:
+                ia, ib = a in here, b in here
+                if not (ia or ib):
+                    continue
+                per[d]['within' if ia and ib else 'out' if ia else 'in'] += 1
+                used.update(x for x in (a, b) if x in here)
+                total += 1; ebike += eb
             hol = holidays(y)
             alld = [date(y, mo, 1) + timedelta(i) for mo in BIKE_MONTHS for i in range(31)
                     if (date(y, mo, 1) + timedelta(i)).month == mo]
             wk = [d for d in alld if d.weekday() < 5 and d not in hol]
             we = [d for d in alld if d.weekday() >= 5]
-            res = {'wk': round(sum(days[d.isoformat()] for d in wk) / len(wk)),
-                   'we': round(sum(days[d.isoformat()] for d in we) / len(we)),
-                   'docks': places([loc[k] for k in here if 'temp' not in name[k].lower()]), 'ebike': round(100 * ebike / total, 1) if ebike else None,
+            avg = lambda ds, k: round(sum(per[d.isoformat()][k] for d in ds) / len(ds))
+            res = {'wk': sum(avg(wk, k) for k in ('within', 'out', 'in')), 'we': sum(avg(we, k) for k in ('within', 'out', 'in')),
+                   'parts': {'wk': {k: avg(wk, k) for k in ('within', 'out', 'in')}, 'we': {k: avg(we, k) for k in ('within', 'out', 'in')}},
+                   'docks': places([loc[k] for k in used if 'temp' not in name.get(k, '').lower()]),
+                   'ebike': round(100 * ebike / total, 1) if ebike else None,
                    'months': sum((y, mo) in keys for mo in BIKE_MONTHS)}
             os.makedirs(CACHE, exist_ok=True)
             with open(path, 'w') as f:
@@ -356,8 +375,8 @@ def bluebikes(som_rings, years):
         with open(path) as f:
             out[f'Fall {y}'] = json.load(f)
         b = out[f'Fall {y}']
-        print(f"  bikes Fall {y}: {b['wk']:,} trips a weekday, {b['we']:,} a weekend day, {b['docks']} docks, "
-              f"e-bikes {b['ebike']}%, months {b['months']}", file=sys.stderr)
+        print(f"  bikes Fall {y}: {b['wk']:,} trips a weekday to, from or within Somerville ({b['parts']['wk']}), "
+              f"{b['we']:,} a weekend day, {b['docks']} docks, e-bikes {b['ebike']}%, months {b['months']}", file=sys.stderr)
     return out
 
 

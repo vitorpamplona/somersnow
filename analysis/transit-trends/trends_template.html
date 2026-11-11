@@ -199,9 +199,10 @@ thead th{color:var(--ice);font-weight:600}
 
   <section aria-labelledby="h-bikes">
     <h2 id="h-bikes">Bluebikes</h2>
-    <p class="sub">Trips from Somerville docks, each weekday, September to November.</p>
+    <p class="sub">Trips that start or end at a Somerville dock, each weekday, September to November.</p>
+    <div class="legend" id="leg-bikes"></div>
     <div class="chart" id="c-bikes"></div>
-    <p class="note">More docks, more trips: 12 in 2016, 39 now. About 30% of trips are on e-bikes (marked since 2024).</p>
+    <p class="note">A trip within Somerville counts once. More docks, more trips: 12 in 2016, 39 now. About 30% of trips are on e-bikes (marked since 2024).</p>
   </section>
 
   <details class="table">
@@ -214,7 +215,7 @@ thead th{color:var(--ice);font-weight:600}
     <ul>
       <li><b>Buses:</b> the MBTA's average riders per trip and stop, each fall, added up at stops inside Somerville (placed with that fall's schedule). Friday is folded into the weekday average from 2025.</li>
       <li><b>The T:</b> average weekday boardings, Fall 2017–19 and 2023–25. Porter and Sullivan are just outside the city. Lechmere is left out: close to the line, but next to industrial land, not homes.</li>
-      <li><b>Bluebikes:</b> trips from docks in Somerville, weekdays and weekends of September to November, holidays out. Each station placed at its dock.</li>
+      <li><b>Bluebikes:</b> trips that start or end at a dock in Somerville (once if both), weekdays and weekends of September to November, holidays out. Each station placed at its dock.</li>
       <li><b>Who's working:</b> the Census Bureau's yearly survey (usual way to work last week, ± a margin; none for 2020) and its payroll counts (LODES).</li>
       <li><b>Boardings, not people:</b> a rider who changes from bus to T counts twice.</li>
       <li><b>Somerville since 2015:</b> Assembly opened in 2014, the pandemic hit in 2020, the Green Line Extension opened in 2022, the bus redesign began in Dec 2024.</li>
@@ -283,7 +284,7 @@ function tiles() {
     ['Bus and T boardings', b1 + t1, b0 + t0],
     ['Bus boardings in Somerville', b1, b0],
     ['T station boardings', t1, t0],
-    ['Bluebikes trips from Somerville docks', D.bikes[LAST].wk, D.bikes[BASE].wk],
+    ['Bluebikes trips to, from or within Somerville', D.bikes[LAST].wk, D.bikes[BASE].wk],
   ].map(([k, now, then]) => `<div class="tile"><div class="k">${k}</div><div class="v">${fmt(now)}</div><div class="s"><b>${pctOf(now, then)}%</b> of 2019 (${fmt(then)})</div></div>`).join('');
 }
 
@@ -417,6 +418,7 @@ function stations() {
 }
 
 // ---------- Bluebikes: columns ----------
+const BPARTS = [['within', 'Within Somerville', '#2FA37A'], ['out', 'Leaving Somerville', '#67C29A'], ['in', 'Arriving in Somerville', '#A6DDC2']];
 function bikes() {
   const el = $('#c-bikes'), w = W(el), phone = w < 560;
   const m = { l: 44, r: 8, t: 26, b: 44 }, h = phone ? 250 : 290, ih = h - m.t - m.b, iw = w - m.l - m.r;
@@ -428,18 +430,26 @@ function bikes() {
   rows.forEach((r, i) => {
     const x = m.l + step * i + (step - bw) / 2;
     if (r.b) {
-      g += `<path d="${roundTop(x, y(r.b.wk), bw, y(0) - y(r.b.wk), 4)}" fill="${C.bike}"/>`;
+      let acc = 0;
+      BPARTS.forEach(([k, , col], j) => {
+        const v = r.b.parts.wk[k], y0 = y(acc), y1 = y(acc + v);
+        g += j === BPARTS.length - 1 ? `<path d="${roundTop(x, y1, bw, Math.max(0, y0 - y1), 4)}" fill="${col}"/>` : `<rect x="${x}" y="${y1 + 1}" width="${bw}" height="${Math.max(0, y0 - y1 - 1)}" fill="${col}"/>`;
+        acc += v;
+      });
       if (r.s === BASE || r.s === LAST) g += `<text class="lab" x="${x + bw / 2}" y="${y(r.b.wk) - 7}" text-anchor="middle">${fmt(r.b.wk)}</text>`;
       g += `<text x="${x + bw / 2}" y="${h - m.b + 32}" text-anchor="middle" style="font-size:11px;fill:#7F99B5">${r.b.docks}${phone ? '' : ' docks'}</text>`;
     }
     g += `<text x="${x + bw / 2}" y="${h - m.b + 16}" text-anchor="middle">${phone ? "'" + yr(r.s).slice(2) : yr(r.s)}</text>`;
     g += `<rect class="hit" data-i="${i}" x="${m.l + step * i}" y="${m.t}" width="${step}" height="${ih}" fill="transparent"/>`;
   });
-  el.innerHTML = `<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="Columns: Bluebikes trips a weekday from Somerville docks each fall. ${fmt(D.bikes[BASE].wk)} in 2019, ${fmt(D.bikes[LAST].wk)} in ${yr(LAST)}.">${g}</svg>`
+  const pb = D.bikes[BASE].parts.wk, pl = D.bikes[LAST].parts.wk;
+  el.innerHTML = `<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="Stacked columns: Bluebikes trips a weekday that start or end in Somerville each fall, within the city, leaving and arriving. ${fmt(D.bikes[BASE].wk)} in 2019 (${fmt(pb.within)} within, ${fmt(pb.out)} leaving, ${fmt(pb.in)} arriving), ${fmt(D.bikes[LAST].wk)} in ${yr(LAST)} (${fmt(pl.within)}, ${fmt(pl.out)}, ${fmt(pl.in)}).">${g}</svg>`
     + (phone ? '<p class="note" style="margin-top:0">The small numbers are the docks in Somerville with trips that fall.</p>' : '');
+  $('#leg-bikes').innerHTML = BPARTS.map(([, n, c]) => `<span><i style="background:${c}"></i>${n}</span>`).join('');
   el.querySelectorAll('.hit').forEach((hit) => {
     const r = rows[+hit.dataset.i]; if (!r.b) return;
-    const html = `<b>${r.s} (Sep–Nov)</b>` + tipRow(C.bike, 'A weekday', fmt(r.b.wk)) + tipRow('', 'A weekend day', fmt(r.b.we)) + tipRow('', 'Docks with trips', r.b.docks)
+    const html = `<b>${r.s} (Sep–Nov), a weekday</b>` + BPARTS.map(([k, n, c]) => tipRow(c, n, fmt(r.b.parts.wk[k]))).reverse().join('') + tipRow('', '<b style="display:inline">Total</b>', `<b style="display:inline">${fmt(r.b.wk)}</b>`)
+      + tipRow('', 'A weekend day', fmt(r.b.we)) + tipRow('', 'Docks with trips', r.b.docks)
       + tipRow('', 'Trips a dock, weekday', (r.b.wk / r.b.docks).toFixed(1)) + (r.b.ebike != null ? tipRow('', 'On e-bikes', r.b.ebike + '%') : '');
     hit.addEventListener('pointermove', (e) => showTip(html, e)); hit.addEventListener('pointerleave', hideTip);
   });
@@ -734,7 +744,9 @@ function table() {
     ...ST.filter((st) => st.g && Object.keys(st.g).length).map((st) => [`${st.n}${st.in ? '' : ' *'}, fare-gate entries`, (s) => st.g[s]]),
     ['4 gated stations, fare-gate entries', (s) => gTotal(s)], ['Buses + T (weekday)', (s) => tTotal(s) == null ? null : busWk(s) + tTotal(s)], ['All MBTA buses (weekday)', (s) => D.bus[s].sys.wk],
     ['Bus stops in Somerville with riders', (s) => D.bus[s].nstops],
-    ['Bluebikes trips from Somerville docks (weekday, Sep–Nov)', (s) => D.bikes[s] && D.bikes[s].wk], ['Bluebikes trips (weekend day)', (s) => D.bikes[s] && D.bikes[s].we],
+    ['Bluebikes trips to, from or within Somerville (weekday, Sep–Nov)', (s) => D.bikes[s] && D.bikes[s].wk],
+    ...BPARTS.map(([k, n]) => [`  ${n}`, (s) => D.bikes[s] && D.bikes[s].parts.wk[k]]),
+    ['Bluebikes trips (weekend day)', (s) => D.bikes[s] && D.bikes[s].we],
     ['Bluebikes docks in Somerville with trips', (s) => D.bikes[s] && D.bikes[s].docks]];
   $('#table').innerHTML = `<table><thead><tr><th>Average weekday boardings</th>${S.map((s) => `<th>${yr(s)}</th>`).join('')}</tr></thead><tbody>`
     + rows.map(([n, f]) => `<tr><td>${esc(n)}</td>${S.map((s) => `<td>${fmt(f(s))}</td>`).join('')}</tr>`).join('')

@@ -31,7 +31,8 @@ main{max-width:1080px;margin:0 auto;padding:0 16px 40px}
 h1{font:800 clamp(34px,6vw,54px)/1 var(--display);text-transform:uppercase;margin:28px 0 10px;letter-spacing:.5px}
 .lede{color:var(--ice);font-size:18px;margin:0 0 6px;max-width:760px}
 .official{color:var(--ink3);font-size:13px;margin:0 0 22px}
-.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px 0 8px}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:18px 0 8px}
+@media (max-width:960px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .tile{background:var(--panel);border-radius:14px;padding:14px 16px}
 .tile .k{font-size:14px;color:var(--ice)}
 .tile .v{font:700 40px/1.05 var(--body);margin:4px 0 2px}
@@ -92,7 +93,7 @@ thead th{color:var(--ice);font-weight:600}
 <header class="bar"><div><a class="brand" href="./">Somer<span>Walks</span></a><nav><a href="bus-trips.html" class="long">Where riders go</a><a href="bus-pulse.html" class="long">Pulse</a><a href="snow/">Snow guide</a></nav></div></header>
 <main>
   <h1>Riding transit in Somerville</h1>
-  <p class="lede">Weekday boardings at Somerville's bus stops and at the T stations its people use, every fall since 2016. From the MBTA's counts.</p>
+  <p class="lede">Weekday boardings at Somerville's bus stops and at the T stations its people use, and Bluebikes trips from its docks, every fall since 2016. From the MBTA's counts and Bluebikes' trip data.</p>
   <p class="official">By the Somerville Pedestrian &amp; Transit Advisory Committee (PTAC). Not an MBTA or City page.</p>
   <div class="tiles" id="tiles"></div>
 
@@ -118,6 +119,13 @@ thead th{color:var(--ice);font-weight:600}
     <p class="sub">Weekday boardings at each station, every fall with a count. The ring is Fall 2019, the filled dot the latest fall.</p>
     <div class="chart" id="c-stations"></div>
     <p class="note">The five Green Line stations opened in 2022 and have no fare gates, so their counts come from samples and jump around from year to year.</p>
+  </section>
+
+  <section aria-labelledby="h-bikes">
+    <h2 id="h-bikes">Bluebikes</h2>
+    <p class="sub">Trips starting at Bluebikes docks in Somerville, each weekday, September to November.</p>
+    <div class="chart" id="c-bikes"></div>
+    <p class="note">Fall here is September to November, holidays left out. More docks bring more trips: Somerville had 12 docks with trips in 2016–17, 24 in 2018 and 36–39 since 2022. From 2024 the files mark e-bikes: about 30% of these trips.</p>
   </section>
 
   <section aria-labelledby="h-routes">
@@ -153,11 +161,12 @@ thead th{color:var(--ice);font-weight:600}
     <ul>
       <li><b>Buses:</b> the MBTA's average boardings per scheduled trip and stop, each fall, added up for every weekday trip at stops inside Somerville (each stop placed with that fall's schedule, then matched to the city's outline). Fall 2025 on, the MBTA reports Friday on its own; it's folded into a Monday–Friday average.</li>
       <li><b>The T:</b> the MBTA's average weekday boardings at each station (Fall 2017–2019 and Fall 2023–2025; it has published none for 2016 or 2020–2022). Porter (Cambridge) and Sullivan Square (Charlestown) are just outside the city but used by many in it; they also serve their own neighborhoods. Lechmere is left out: it's farther from the city line, next to industrial land rather than homes.</li>
+      <li><b>Bluebikes:</b> every trip that starts at a dock inside Somerville, from Bluebikes' public trip files, averaged over the weekdays (and weekend days) of September to November, without Labor Day, Columbus Day, Veterans Day, Thanksgiving and the Friday after. Each station is placed at its dock (from 2024, e-bike trips record the bike's GPS position, not the dock's). Trips, not boardings: one trip is one ride.</li>
       <li><b>Counted twice:</b> a rider who takes a bus to Davis or Sullivan and gets on the T there is counted at both. The totals count boardings, not people.</li>
       <li><b>Somerville since 2015:</b> the city's transit changed a lot (Assembly opened in 2014, the pandemic in 2020, the Green Line Extension in 2022, the bus network redesign from December 2024). Compare years with those breaks in mind.</li>
       <li><b>An estimate:</b> the MBTA's counts are averages from automatic passenger counters on a sample of trips, not every rider.</li>
     </ul>
-    <p class="src">Sources: <a href="https://mbta-massdot.opendata.arcgis.com/datasets/8daf4a33925a4df59183f860826d29ee">MBTA bus ridership by trip, season, route and stop</a>; <a href="https://mbta-massdot.opendata.arcgis.com/datasets/9fea7862501f4c59ab2c001ad6ae19b0">MBTA rail ridership by season, time period and stop</a> (2017–2019) and the <a href="https://mbta-massdot.opendata.arcgis.com/datasets/80a379ebaa374cfd836ca4d3880ceda4">Fall 2023</a>, <a href="https://mbta-massdot.opendata.arcgis.com/datasets/8f20b4e8d24e466fbca157cca63f6e16">Fall 2024</a> and <a href="https://mbta-massdot.opendata.arcgis.com/datasets/6494749a29c648018820d0e49636205c">Fall 2025</a> rail files; stop locations from the <a href="https://cdn.mbta.com/archive/archived_feeds.txt">MBTA schedule archive</a>; town outlines: <a href="https://www.mass.gov/info-details/massgis-data-municipalities">MassGIS</a>. Made by the Somerville Pedestrian &amp; Transit Advisory Committee (PTAC). Not an MBTA or City page. <a href="https://github.com/vitorpamplona/somerwalks/tree/main/analysis/transit-trends">Method and code</a>.</p>
+    <p class="src">Sources: <a href="https://mbta-massdot.opendata.arcgis.com/datasets/8daf4a33925a4df59183f860826d29ee">MBTA bus ridership by trip, season, route and stop</a>; <a href="https://mbta-massdot.opendata.arcgis.com/datasets/9fea7862501f4c59ab2c001ad6ae19b0">MBTA rail ridership by season, time period and stop</a> (2017–2019) and the <a href="https://mbta-massdot.opendata.arcgis.com/datasets/80a379ebaa374cfd836ca4d3880ceda4">Fall 2023</a>, <a href="https://mbta-massdot.opendata.arcgis.com/datasets/8f20b4e8d24e466fbca157cca63f6e16">Fall 2024</a> and <a href="https://mbta-massdot.opendata.arcgis.com/datasets/6494749a29c648018820d0e49636205c">Fall 2025</a> rail files; stop locations from the <a href="https://cdn.mbta.com/archive/archived_feeds.txt">MBTA schedule archive</a>; <a href="https://bluebikes.com/system-data">Bluebikes system data</a>; town outlines: <a href="https://www.mass.gov/info-details/massgis-data-municipalities">MassGIS</a>. Made by the Somerville Pedestrian &amp; Transit Advisory Committee (PTAC). Not an MBTA or City page. <a href="https://github.com/vitorpamplona/somerwalks/tree/main/analysis/transit-trends">Method and code</a>.</p>
   </div>
 </main>
 <div id="tip" role="tooltip"></div>
@@ -169,7 +178,7 @@ const fmt = (x) => x == null ? '—' : Math.round(x).toLocaleString('en-US');
 const pctOf = (a, b) => Math.round(100 * a / b);
 const yr = (s) => s.slice(5);
 const S = D.seasons, LAST = S[S.length - 1], BASE = 'Fall 2019';
-const C = { bus: '#4F98DE', Red: '#DA291C', Green: '#1B9B6A', Orange: '#D57200', t: '#C08A14', ref: '#8A9BB0', loss: '#E36F28', gain: '#4F98DE' };
+const C = { bike: '#2FA37A', bus: '#4F98DE', Red: '#DA291C', Green: '#1B9B6A', Orange: '#D57200', t: '#C08A14', ref: '#8A9BB0', loss: '#E36F28', gain: '#4F98DE' };
 const GRID = 'rgba(169,196,228,.16)', AXIS = 'rgba(169,196,228,.4)', SURF = '#10243A';
 const LINES = ['Red', 'Green', 'Orange'];              // stack order above the buses (red and orange never touch)
 const LINE_NAME = { Red: 'Red Line', Green: 'Green Line', Orange: 'Orange Line' };
@@ -210,6 +219,7 @@ function tiles() {
     ['Buses and the T, each weekday', b1 + t1, b0 + t0],
     ['Buses at stops in Somerville', b1, b0],
     ['T stations', t1, t0],
+    ['Bluebikes trips from Somerville docks', D.bikes[LAST].wk, D.bikes[BASE].wk],
   ].map(([k, now, then]) => `<div class="tile"><div class="k">${k}, ${LAST}</div><div class="v">${fmt(now)}</div><div class="s"><b>${pctOf(now, then)}%</b> of Fall 2019 (${fmt(then)})</div></div>`).join('');
 }
 
@@ -253,15 +263,18 @@ function decade() {
 let day = 'wk';
 function back() {
   const el = $('#c-back'), w = W(el), phone = w < 560;
-  const m = { l: 40, r: phone ? 70 : 130, t: 14, b: 30 }, h = phone ? 260 : 320, ih = h - m.t - m.b, iw = w - m.l - m.r;
+  const m = { l: 40, r: phone ? 52 : 160, t: 14, b: 30 }, h = phone ? 260 : 320, ih = h - m.t - m.b, iw = w - m.l - m.r;
   const series = [
     { n: 'All MBTA buses', c: C.ref, v: S.map((s) => D.bus[s].sys[day]), base: D.bus[BASE].sys[day], w: 2 },
     { n: 'Buses in Somerville', c: C.bus, v: S.map((s) => D.bus[s].som[day]), base: D.bus[BASE].som[day], w: 2.5 },
   ];
   if (day === 'wk') series.push({ n: 'T stations', c: C.t, v: S.map((s) => tTotal(s)), base: tTotal(BASE), w: 2.5 });
-  const x = (i) => m.l + iw * i / (S.length - 1), top = 120, y = (v) => m.t + ih - ih * v / top;
+  const bk = day === 'wk' ? 'wk' : 'we';
+  series.push({ n: 'Bluebikes trips', c: C.bike, v: S.map((s) => D.bikes[s] ? D.bikes[s][bk] : null), base: D.bikes[BASE][bk], w: 2.5 });
+  const hi = Math.max(120, ...series.flatMap((sr) => sr.v.filter((v) => v != null).map((v) => 100 * v / sr.base)));
+  const top = Math.ceil(hi / 20) * 20, x = (i) => m.l + iw * i / (S.length - 1), y = (v) => m.t + ih - ih * v / top;
   let g = '';
-  [0, 20, 40, 60, 80, 100, 120].forEach((v) => { g += `<line x1="${m.l}" x2="${m.l + iw}" y1="${y(v)}" y2="${y(v)}" stroke="${v === 100 ? AXIS : GRID}"/><text x="${m.l - 6}" y="${y(v) + 4}" text-anchor="end">${v}</text>`; });
+  Array.from({ length: top / 20 + 1 }, (_, k) => k * 20).forEach((v) => { g += `<line x1="${m.l}" x2="${m.l + iw}" y1="${y(v)}" y2="${y(v)}" stroke="${v === 100 ? AXIS : GRID}"/><text x="${m.l - 6}" y="${y(v) + 4}" text-anchor="end">${v}</text>`; });
   S.forEach((s, i) => { if (!phone || i % 3 === 0 || i === S.length - 1) g += `<text x="${x(i)}" y="${h - 8}" text-anchor="middle">${phone ? "'" + yr(s).slice(2) : yr(s)}</text>`; });
   const ends = [];
   series.forEach((sr) => {
@@ -289,7 +302,7 @@ function back() {
   hit.addEventListener('pointerleave', () => { hideTip(); xh.setAttribute('visibility', 'hidden'); });
   $('#leg-back').innerHTML = series.map((sr) => `<span><i class="line" style="background:${sr.c}"></i>${sr.n}</span>`).join('');
   const dn = { wk: 'weekday', sat: 'Saturday', sun: 'Sunday' }[day];
-  $('#n-back').textContent = day === 'wk' ? 'The T has no counts for 2016 or 2020–2022, so its line has gaps.' : `The T line is weekdays only, so it's hidden for ${dn}.`;
+  $('#n-back').textContent = day === 'wk' ? 'The T has no counts for 2016 or 2020–2022, so its line has gaps. Bluebikes counts trips, not boardings.' : `The T line is weekdays only, so it's hidden for ${dn}. Bluebikes shows its average weekend day (Saturday and Sunday together).`;
 }
 $('#day').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; day = b.dataset.d; document.querySelectorAll('#day button').forEach((x) => x.setAttribute('aria-pressed', x === b)); back(); });
 
@@ -327,6 +340,35 @@ function stations() {
   el.querySelectorAll('.hit').forEach((hit) => {
     const r = rows[+hit.dataset.k];
     const html = `<b>${esc(r.n)} · ${LINE_NAME[r.line]}</b>` + S.filter((s) => r.v[s] != null).map((s) => tipRow('', s, fmt(r.v[s]))).join('');
+    hit.addEventListener('pointermove', (e) => showTip(html, e)); hit.addEventListener('pointerleave', hideTip);
+  });
+}
+
+// ---------- Bluebikes: columns ----------
+function bikes() {
+  const el = $('#c-bikes'), w = W(el), phone = w < 560;
+  const m = { l: 44, r: 8, t: 26, b: 44 }, h = phone ? 250 : 290, ih = h - m.t - m.b, iw = w - m.l - m.r;
+  const rows = S.map((s) => ({ s, b: D.bikes[s] }));
+  const tk = ticks(Math.max(...rows.map((r) => r.b ? r.b.wk : 0)) * 1.05), top = tk[tk.length - 1], y = (v) => m.t + ih - ih * v / top;
+  const step = iw / S.length, bw = Math.min(48, step * 0.6);
+  let g = '';
+  tk.forEach((v) => { g += `<line x1="${m.l}" x2="${w - m.r}" y1="${y(v)}" y2="${y(v)}" stroke="${v ? GRID : AXIS}"/><text x="${m.l - 6}" y="${y(v) + 4}" text-anchor="end">${kfmt(v)}</text>`; });
+  rows.forEach((r, i) => {
+    const x = m.l + step * i + (step - bw) / 2;
+    if (r.b) {
+      g += `<path d="${roundTop(x, y(r.b.wk), bw, y(0) - y(r.b.wk), 4)}" fill="${C.bike}"/>`;
+      if (r.s === BASE || r.s === LAST) g += `<text class="lab" x="${x + bw / 2}" y="${y(r.b.wk) - 7}" text-anchor="middle">${fmt(r.b.wk)}</text>`;
+      g += `<text x="${x + bw / 2}" y="${h - m.b + 32}" text-anchor="middle" style="font-size:11px;fill:#7F99B5">${r.b.docks}${phone ? '' : ' docks'}</text>`;
+    }
+    g += `<text x="${x + bw / 2}" y="${h - m.b + 16}" text-anchor="middle">${phone ? "'" + yr(r.s).slice(2) : yr(r.s)}</text>`;
+    g += `<rect class="hit" data-i="${i}" x="${m.l + step * i}" y="${m.t}" width="${step}" height="${ih}" fill="transparent"/>`;
+  });
+  el.innerHTML = `<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="Columns: Bluebikes trips a weekday from Somerville docks each fall. ${fmt(D.bikes[BASE].wk)} in 2019, ${fmt(D.bikes[LAST].wk)} in ${yr(LAST)}.">${g}</svg>`
+    + (phone ? '<p class="note" style="margin-top:0">The small numbers are the docks in Somerville with trips that fall.</p>' : '');
+  el.querySelectorAll('.hit').forEach((hit) => {
+    const r = rows[+hit.dataset.i]; if (!r.b) return;
+    const html = `<b>${r.s} (Sep–Nov)</b>` + tipRow(C.bike, 'A weekday', fmt(r.b.wk)) + tipRow('', 'A weekend day', fmt(r.b.we)) + tipRow('', 'Docks with trips', r.b.docks)
+      + tipRow('', 'Trips a dock, weekday', (r.b.wk / r.b.docks).toFixed(1)) + (r.b.ebike != null ? tipRow('', 'On e-bikes', r.b.ebike + '%') : '');
     hit.addEventListener('pointermove', (e) => showTip(html, e)); hit.addEventListener('pointerleave', hideTip);
   });
 }
@@ -477,7 +519,9 @@ function table() {
   const rows = [['Buses in Somerville (weekday)', (s) => busWk(s)], ['Buses in Somerville (Saturday)', (s) => D.bus[s].som.sat], ['Buses in Somerville (Sunday)', (s) => D.bus[s].som.sun],
     ...ST.map((st) => [`${st.n}${st.in ? '' : ' *'}`, (s) => st.v[s]]),
     ['T stations', (s) => tTotal(s)], ['Buses + T (weekday)', (s) => tTotal(s) == null ? null : busWk(s) + tTotal(s)], ['All MBTA buses (weekday)', (s) => D.bus[s].sys.wk],
-    ['Bus stops in Somerville with riders', (s) => D.bus[s].nstops]];
+    ['Bus stops in Somerville with riders', (s) => D.bus[s].nstops],
+    ['Bluebikes trips from Somerville docks (weekday, Sep–Nov)', (s) => D.bikes[s] && D.bikes[s].wk], ['Bluebikes trips (weekend day)', (s) => D.bikes[s] && D.bikes[s].we],
+    ['Bluebikes docks in Somerville with trips', (s) => D.bikes[s] && D.bikes[s].docks]];
   $('#table').innerHTML = `<table><thead><tr><th>Average weekday boardings</th>${S.map((s) => `<th>${yr(s)}</th>`).join('')}</tr></thead><tbody>`
     + rows.map(([n, f]) => `<tr><td>${esc(n)}</td>${S.map((s) => `<td>${fmt(f(s))}</td>`).join('')}</tr>`).join('')
     + `</tbody></table><p class="note">— no count published. * Just outside Somerville.</p>`
@@ -485,7 +529,7 @@ function table() {
     + D.routes.map((r) => `<tr><td>${esc(r.r)}</td>${r.v.map((v) => `<td>${fmt(v)}</td>`).join('')}</tr>`).join('') + '</tbody></table>';
 }
 
-function all() { decade(); back(); stations(); routes(); map(); hours(); }
+function all() { decade(); back(); stations(); bikes(); routes(); map(); hours(); }
 tiles(); table(); all();
 let rz, lastW = innerWidth; addEventListener('resize', () => { if (innerWidth === lastW) return; lastW = innerWidth; clearTimeout(rz); rz = setTimeout(all, 150); });
 if (document.fonts) document.fonts.ready.then(all);

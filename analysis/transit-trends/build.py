@@ -13,8 +13,9 @@ Sources (all public, no keys):
   - MBTA rail ridership: Fall 2017-2019 by time period (item 9fea7862...), Fall 2023 by time period (80a379eb...),
     Fall 2024 by hour (8f20b4e8...), Fall 2025 by hour (6494749a..., CSV). No rail files for Fall 2020-2022.
 """
-import csv, io, json, math, os, shutil, sys, urllib.parse, urllib.request, zipfile
+import csv, io, json, math, os, re, shutil, sys, urllib.parse, urllib.request, zipfile
 from collections import Counter, defaultdict
+from datetime import date, datetime, timedelta
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.normpath(os.path.join(HERE, '..', '..'))
@@ -44,6 +45,8 @@ STATIONS = [
 ]
 OLD_NAMES = {'Davis': 'place-davis', 'Porter': 'place-portr', 'Assembly': 'place-astao', 'Sullivan Square': 'place-sull'}
 ROUTE_NAME = {'747': 'CT2', '194': '89/93'}
+BIKES = 'https://s3.amazonaws.com/hubway-data/'      # Bluebikes (Hubway until 2018) monthly trip files
+BIKE_MONTHS = (9, 10, 11)                            # "fall" for bikes: September to November
 MIN_ROUTE = 50                                    # routes with fewer weekday riders in Somerville every season are left out
 
 
@@ -222,6 +225,80 @@ def bus(som_rings):
     return seasons, stops_all
 
 
+def holidays(y):
+    """Federal holidays in September to November: Labor Day, Columbus/Indigenous Peoples' Day, Veterans Day,
+    Thanksgiving and the Friday after (people ride differently on them)."""
+    def nth(month, weekday, n):
+        d = date(y, month, 1)
+        d += timedelta((weekday - d.weekday()) % 7)
+        return d + timedelta(7 * (n - 1))
+    thanks = nth(11, 3, 4)
+    return {nth(9, 0, 1), nth(10, 0, 2), date(y, 11, 11), thanks, thanks + timedelta(1)}
+
+
+def bluebikes(som_rings, years):
+    """Per fall (Sep-Nov): average trips a weekday and a weekend day that start at a dock in Somerville, the docks in
+    Somerville that had trips, and the share of trips on e-bikes (from 2020, when the files say)."""
+    keys = {}
+    for k in re.findall(r'<Key>([^<]+)</Key>', get(BIKES).decode()):
+        m = re.match(r'(\d{4})(\d{2})-(?:hubway|bluebikes)-tripdata\.(?:csv\.)?zip$', k)
+        if m:
+            keys[(int(m.group(1)), int(m.group(2)))] = k
+    out = {}
+    for y in years:
+        path = os.path.join(CACHE, f'trends-bikes-{y}.json')
+        if not os.path.exists(path):
+            # count by station; place each station by its dock (classic bikes start at the dock; from 2024 e-bike
+            # trips carry the bike's GPS position, which near the city line can fall on the wrong side)
+            per = defaultdict(Counter)                     # station -> day -> trips
+            loc, eb = {}, Counter()
+            for mo in BIKE_MONTHS:
+                if (y, mo) not in keys:
+                    continue
+                z = zipfile.ZipFile(cached(keys[(y, mo)], BIKES + keys[(y, mo)]))
+                f = next(n for n in z.namelist() if n.endswith('.csv') and not n.startswith('__'))
+                with z.open(f) as fh:
+                    for r in csv.DictReader(io.TextIOWrapper(fh, encoding='utf-8-sig', newline='')):
+                        st = r.get('started_at') or r.get('starttime')
+                        sid = r.get('start_station_id') or r.get('start station id') or r.get('start_station_name') or r.get('start station name')
+                        lat = r.get('start_lat') or r.get('start station latitude')
+                        lon = r.get('start_lng') or r.get('start station longitude')
+                        if not st or not sid:
+                            continue
+                        t = r.get('rideable_type') or ''
+                        per[sid][st[:10]] += 1
+                        eb[sid] += t == 'electric_bike'
+                        if lat and lon and (sid not in loc or (t != 'electric_bike' and loc[sid][2])):
+                            try:
+                                loc[sid] = (float(lon), float(lat), t == 'electric_bike')
+                            except ValueError:
+                                pass
+            here = [k for k in per if k in loc and inside(som_rings, loc[k][0], loc[k][1])]
+            days = Counter()
+            for k in here:
+                days.update(per[k])
+            total = sum(days.values())
+            ebike = sum(eb[k] for k in here)
+            hol = holidays(y)
+            alld = [date(y, mo, 1) + timedelta(i) for mo in BIKE_MONTHS for i in range(31)
+                    if (date(y, mo, 1) + timedelta(i)).month == mo]
+            wk = [d for d in alld if d.weekday() < 5 and d not in hol]
+            we = [d for d in alld if d.weekday() >= 5]
+            res = {'wk': round(sum(days[d.isoformat()] for d in wk) / len(wk)),
+                   'we': round(sum(days[d.isoformat()] for d in we) / len(we)),
+                   'docks': len(here), 'ebike': round(100 * ebike / total, 1) if ebike else None,
+                   'months': sum((y, mo) in keys for mo in BIKE_MONTHS)}
+            os.makedirs(CACHE, exist_ok=True)
+            with open(path, 'w') as f:
+                json.dump(res, f)
+        with open(path) as f:
+            out[f'Fall {y}'] = json.load(f)
+        b = out[f'Fall {y}']
+        print(f"  bikes Fall {y}: {b['wk']:,} trips a weekday, {b['we']:,} a weekend day, {b['docks']} docks, "
+              f"e-bikes {b['ebike']}%, months {b['months']}", file=sys.stderr)
+    return out
+
+
 def item_url(item):
     return json.loads(get(f'https://www.arcgis.com/sharing/rest/content/items/{item}', {'f': 'json'}))['url']
 
@@ -265,6 +342,7 @@ def main():
     tw = towns()
     seasons, stops_all = bus(tw['Somerville'])
     rails = rail()
+    bikes = bluebikes(tw['Somerville'], sorted(int(s[5:]) for s in seasons))
     # map frame: Somerville plus a margin; neighbors cut to it
     xs = [p[0] for r in tw['Somerville'] for p in r]
     ys = [p[1] for r in tw['Somerville'] for p in r]
@@ -300,7 +378,7 @@ def main():
         'bus': {s: {k: seasons[s][k] for k in ('som', 'sys', 'off', 'hours', 'nstops')} for s in order},
         'routes': [{'r': r, 'v': [seasons[s]['routes'].get(r, 0) for s in order]} for r in routes],
         'stopv': {s: [[ix[k], v] for k, v in seasons[s]['stops'].items()] for s in order},
-        'stops': stops, 'stations': stations, 'towns': towns_out,
+        'stops': stops, 'stations': stations, 'towns': towns_out, 'bikes': bikes,
         'size': xy(box[2], box[1]),
     }
     blob = json.dumps(payload, separators=(',', ':'))

@@ -47,6 +47,7 @@ STATIONS = [
 OLD_NAMES = {'Davis': 'place-davis', 'Porter': 'place-portr', 'Assembly': 'place-astao', 'Sullivan Square': 'place-sull'}
 ROUTE_NAME = {'747': 'CT2', '194': '89/93'}
 ROUTE_ID = {v: k for k, v in ROUTE_NAME.items()}
+ROUTE_NAME_TIMES = {'747': 'CT2'}                         # route ids in the arrival-time files
 BIKES = 'https://s3.amazonaws.com/hubway-data/'      # Bluebikes (Hubway until 2018) monthly trip files
 BIKE_MONTHS = (9, 10, 11)                            # "fall" for bikes: September to November
 ACS_TABLE = 'https://data.census.gov/api/access/data/table'   # Census tables, no key; Somerville city = 160XX00US2562535
@@ -620,6 +621,44 @@ def trip_loads(seasons_wanted, route_ids):
     return out
 
 
+BUS_TIMES = {  # MBTA Bus Arrival Departure Times, a yearly collection (one CSV a month); the same files as the storm replays
+    2025: '924df13d845f4907bb6a6c3ed380d57a',
+}
+
+
+def bus_runs(year, route_ids):
+    """{(route id, direction): [run, ...]} for September to November weekdays (federal holidays out): each run is one bus on
+    one day, its timing stops in order as [stop id, actual seconds, scheduled seconds at the first one]."""
+    item = BUS_TIMES.get(year)
+    if not item:
+        print(f'  bus speeds: no arrival-time file listed for {year} (add it to BUS_TIMES)', file=sys.stderr)
+        return {}
+    z = zipfile.ZipFile(cached(f'bus-{year}.zip', f'https://www.arcgis.com/sharing/rest/content/items/{item}/data'))
+    hol = holidays(year)
+    sec = lambda t: (int(t[8:10]) - 1) * 86400 + int(t[11:13]) * 3600 + int(t[14:16]) * 60 + int(t[17:19])   # "1900-01-0DTHH:MM:SSZ" (local time)
+    gid = {ROUTE_NAME_TIMES.get(r, r): r for r in route_ids}        # the CT2 is "CT2" here, 747 in the schedules
+    trips = defaultdict(list)
+    for mo in BIKE_MONTHS:
+        n = next((n for n in z.namelist() if n.endswith(f'{year}-{mo:02d}.csv')), None)
+        if not n:
+            continue
+        for r in csv.DictReader(io.TextIOWrapper(z.open(n), encoding='utf-8-sig')):
+            rt = r['route_id'].lstrip('0')
+            if rt not in gid or not r['actual'] or not r['half_trip_id']:
+                continue
+            d = date.fromisoformat(r['service_date'])
+            if d.weekday() >= 5 or d in hol:
+                continue
+            trips[(gid[rt], '1' if r['direction_id'] == 'Inbound' else '0', r['service_date'], r['half_trip_id'])].append(
+                (int(r['time_point_order']), r['stop_id'], sec(r['actual']), sec(r['scheduled']) if r['scheduled'] else None))
+    out = defaultdict(list)
+    for (rid, d, _, _), pts in trips.items():
+        pts.sort()
+        out[(rid, d)].append([[p[1], p[2]] for p in pts] + [pts[0][3]])
+    print(f'  bus speeds {year}: {sum(len(v) for v in out.values()):,} weekday runs on {len(out)} route directions', file=sys.stderr)
+    return out
+
+
 def profiles(seasons, base, last, names, som_rings):
     """Load profiles: riders on board leaving each stop on weekdays, along each route's path, for the base fall and
     the latest. Stops are placed by distance along the latest path; stops more than 150 m off it, stops past its ends, and
@@ -627,6 +666,7 @@ def profiles(seasons, base, last, names, som_rings):
     ids = {ROUTE_ID.get(n, n): n for n in names}
     paths = route_paths(fall_feeds()[int(last[5:])], sorted(ids))
     TL = trip_loads([base, last], set(ids))
+    RUNS = bus_runs(int(last[5:]), set(ids))
     K = (math.cos(math.radians(42.39)) * 111320, 110540)
     xy = lambda p: (p[0] * K[0], p[1] * K[1])
     pn, pidx, out = [], {}, []
@@ -706,8 +746,43 @@ def profiles(seasons, base, last, names, som_rings):
                     if dd < 220:
                         hubs.append([round(a), hn])
             other = paths.get(f'{rid}|{"0" if d == "1" else "1"}', {'h': ''})['h']
+            # speeds: miles per hour between consecutive timing stops on each run, placed along the same path
+            pos, segs, runs_by_dep = {}, {}, defaultdict(list)
+            for run in RUNS.get((rid, d), []):
+                tps, sched = run[:-1], run[-1]; got = []
+                for (s1, t1), (s2, t2) in zip(tps, tps[1:]):
+                    for sid in (s1, s2):
+                        if sid not in pos:
+                            pos[sid] = proj(locs[sid][:2]) if sid in locs else (1e9, 0)
+                    (d1, a1), (d2, a2) = pos[s1], pos[s2]
+                    if d1 > 150 or d2 > 150 or a2 - a1 < 150 or t2 <= t1:
+                        continue                                # off the path, out of order, or a clock glitch
+                    mph = (a2 - a1) / (t2 - t1) * 2.23694
+                    if 1 <= mph <= 45:
+                        segs[(s1, s2)] = (a1, a2); got.append(((s1, s2), mph))
+                if got and sched is not None:
+                    runs_by_dep[sched // 60].append(dict(got))
+            seg = sorted(segs, key=lambda k: segs[k])
+            med = lambda xs: sorted(xs)[len(xs) // 2] if xs else None
+            allv = {k: [r[k] for rs in runs_by_dep.values() for r in rs if k in r] for k in seg}
+            keep = []                                           # one chain of stretches that don't overlap: the most-run first
+            for k in sorted((k for k in seg if len(allv[k]) >= 20), key=lambda k: -len(allv[k])):
+                a1, a2 = segs[k]
+                if all(a2 <= segs[q][0] + 50 or a1 >= segs[q][1] - 50 for q in keep):
+                    keep.append(k)
+            keep.sort(key=lambda k: segs[k])
+            sp = None
+            if keep:
+                mm = [med(allv[k]) for k in keep]
+                dist = sum(segs[k][1] - segs[k][0] for k in keep)
+                sp = {'seg': [[round(segs[k][0]), round(segs[k][1]), name_id(locs[k[0]][2]), name_id(locs[k[1]][2])] for k in keep],
+                      'med': [round(v, 1) for v in mm],
+                      'all': round(dist / sum((segs[k][1] - segs[k][0]) / v for k, v in zip(keep, mm)), 1),
+                      'runs': sum(len(v) for v in runs_by_dep.values()),
+                      'dep': [[m, [round(med(x), 1) if (x := [r[k] for r in rs if k in r]) else -1 for k in keep]]
+                              for m, rs in sorted(runs_by_dep.items()) if len(rs) >= 5]}
             dirs.append({'to': clean(paths[f'{rid}|{d}']['h']), 'from': clean(other), 'len': round(total), 'som': bands,
-                         'hubs': sorted(hubs), 's': [st[:2] for st in stops], 'avg': avg, 'cnt': cnt, 'dep': deps})
+                         'hubs': sorted(hubs), 's': [st[:2] for st in stops], 'avg': avg, 'cnt': cnt, 'dep': deps, 'v': sp})
         out.append({'r': nm, 'dirs': dirs})
     print(f'  load profiles: {len(out)} routes, {sum(len(r["dirs"]) for r in out)} directions', file=sys.stderr)
     return {'routes': out, 'names': pn}

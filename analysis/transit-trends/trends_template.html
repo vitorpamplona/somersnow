@@ -203,6 +203,14 @@ thead th{color:var(--ice);font-weight:600}
     <p class="note">Thin lines: each weekday departure in Fall 2025, as the MBTA counted it over the fall (Monday–Thursday). Thick: the average. Peak: the average at its fullest, 2019 → 2025. Over 36: departures that pass 36 seats, an MBTA 40-foot bus (dashed). Shaded: inside Somerville.</p>
   </section>
 
+  <section aria-labelledby="h-speed">
+    <h2 id="h-speed">How fast are the buses?</h2>
+    <p class="sub">Miles per hour between timing stops, stops and red lights included: the speed a rider travels. Weekdays, Fall 2025.</p>
+    <div class="legend" id="leg-speed"></div>
+    <div id="c-speed"></div>
+    <p class="note">Thin lines: each weekday departure, its median over September to November. Thick: the median of every run. Overall: the whole route's distance over its time. The MBTA records times only at timing stops, a few per route.</p>
+  </section>
+
   <details class="table">
     <summary>All the numbers</summary>
     <div class="tbl" id="table"></div>
@@ -557,6 +565,49 @@ function profile(el, rt, d) {
   hit.addEventListener('pointerleave', () => { hideTip(); hl.setAttribute('visibility', 'hidden'); });
 }
 
+// ---------- bus speeds ----------
+const SPC = '#E8B84A';                                    // speed: a color of its own (amber-gold), used nowhere else
+function speeds() {
+  $('#leg-speed').innerHTML = `<span><i class="line" style="background:${SPC}"></i>Median of every run</span><span><i class="line" style="background:${SPC};opacity:.4;height:2px"></i>Each departure</span>`;
+  $('#c-speed').innerHTML = PR.map((rt, i) => !rt.dirs.some((d) => d.v) ? '' : `<h3 class="prt"><span class="n">${esc(rt.r)}</span>${esc(rt.dirs[0].from)} – ${esc(rt.dirs[0].to)}</h3><div class="pgrid">`
+    + rt.dirs.map((d, k) => !d.v ? '<div></div>' : `<div><p class="ph">To <b>${esc(d.to)}</b> · overall <b>${d.v.all.toFixed(1)}</b> mph · slowest ${Math.min(...d.v.med).toFixed(1)} mph</p><div class="chart" data-i="${i}" data-k="${k}"></div></div>`).join('') + '</div>').join('');
+  $('#c-speed').querySelectorAll('.chart').forEach((c) => { const rt = PR[+c.dataset.i]; speedChart(c, rt, rt.dirs[+c.dataset.k]); });
+}
+function speedChart(el, rt, d) {
+  const v = d.v, w = W(el), phone = w < 520, m = { l: 34, r: 10, t: 10, b: 38 }, h = phone ? 190 : 210, ih = h - m.t - m.b, iw = w - m.l - m.r;
+  const top = Math.max(20, Math.ceil(Math.max(...v.med, ...v.dep.flatMap((t) => t[1])) / 5) * 5);
+  const x = (a) => m.l + iw * a / d.len, y = (s) => m.t + ih - ih * Math.min(s, top) / top;
+  let g = `<rect x="${m.l}" y="${m.t}" width="${iw}" height="${ih}" fill="rgba(169,196,228,.04)"/>`;
+  d.som.forEach(([a, b]) => { g += `<rect x="${x(a).toFixed(1)}" y="${m.t}" width="${Math.max(0, x(b) - x(a)).toFixed(1)}" height="${ih}" fill="rgba(79,152,222,.16)"/>`; });
+  for (let s = 0; s <= top; s += 5) g += `<line x1="${m.l}" x2="${m.l + iw}" y1="${y(s)}" y2="${y(s)}" stroke="${s ? GRID : AXIS}"/><text x="${m.l - 5}" y="${y(s) + 4}" text-anchor="end">${s}</text>`;
+  g += `<text x="${m.l + 4}" y="${m.t + 12}" style="font-size:11px">mph</text>`;
+  const steps = (vals) => vals.map((s, j) => s < 0 ? '' : `M${x(v.seg[j][0]).toFixed(1)},${y(s).toFixed(1)}H${x(v.seg[j][1]).toFixed(1)}`).join('');
+  const op = v.dep.length > 30 ? .22 : .35;
+  v.dep.forEach((t) => { g += `<path d="${steps(t[1])}" fill="none" stroke="${SPC}" stroke-opacity="${op}" stroke-width="1.2"/>`; });
+  g += `<path d="${steps(v.med)}" fill="none" stroke="${SURF}" stroke-width="6" stroke-linecap="round"/><path d="${steps(v.med)}" fill="none" stroke="${SPC}" stroke-width="3.2" stroke-linecap="round"/>`;
+  const placed = [], RANK = ['Davis', 'Harvard', 'Sullivan', 'Lechmere', 'Central', 'Kendall', 'Porter', 'Union Sq', 'Assembly', 'Malden Ctr'];
+  const rank = (n) => { const i = RANK.indexOf(n); return i < 0 ? 99 : i; };
+  [...d.hubs].sort((p, q) => rank(p[1]) - rank(q[1])).forEach(([a, n]) => { const X = x(a);
+    if (X < m.l + 24 || X > m.l + iw - 24 || placed.some((q) => Math.abs(q - X) < (phone ? 64 : 70))) return; placed.push(X);
+    g += `<line x1="${X}" x2="${X}" y1="${m.t + ih}" y2="${m.t + ih + 4}" stroke="${AXIS}"/><text x="${X}" y="${m.t + ih + 15}" text-anchor="middle" style="font-size:11px">${esc(n)}</text>`; });
+  g += `<text x="${m.l}" y="${h - 4}" style="font-size:12px;font-weight:700;fill:#EEF3F7">${esc(d.from)}</text><text x="${m.l + iw}" y="${h - 4}" text-anchor="end" style="font-size:12px;font-weight:700;fill:#EEF3F7">→ ${esc(d.to)}</text>`;
+  g += `<path class="hl" d="" fill="none" stroke="#EEF3F7" stroke-width="2" visibility="hidden"/><rect class="hitp" x="${m.l}" y="${m.t}" width="${iw}" height="${ih}" fill="transparent"/>`;
+  const slow = v.med.indexOf(Math.min(...v.med));
+  el.innerHTML = `<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="Route ${esc(rt.r)} toward ${esc(d.to)}: bus speed between timing stops, weekdays, Fall 2025. Overall ${v.all} mph; slowest stretch ${v.med[slow]} mph, ${esc(PN[v.seg[slow][2]])} to ${esc(PN[v.seg[slow][3]])}.">${g}</svg>`;
+  const svg = el.querySelector('svg'), hit = el.querySelector('.hitp'), hl = el.querySelector('.hl');
+  hit.addEventListener('pointermove', (e) => {
+    const r = svg.getBoundingClientRect(), px = (e.clientX - r.left) * w / r.width, py = (e.clientY - r.top) * h / r.height, a = (px - m.l) / iw * d.len;
+    let j = v.seg.findIndex((sg) => a >= sg[0] && a <= sg[1]);
+    if (j < 0) j = v.seg.reduce((b, sg, k) => Math.abs((sg[0] + sg[1]) / 2 - a) < Math.abs((v.seg[b][0] + v.seg[b][1]) / 2 - a) ? k : b, 0);
+    let best = null;
+    v.dep.forEach((t) => { if (t[1][j] < 0) return; if (!best || Math.abs(y(t[1][j]) - py) < Math.abs(y(best[1][j]) - py)) best = t; });
+    const near = best && Math.abs(y(best[1][j]) - py) < Math.abs(y(v.med[j]) - py);
+    hl.setAttribute('d', near ? steps(best[1]) : ''); hl.setAttribute('visibility', near ? 'visible' : 'hidden');
+    showTip(`<b>${esc(PN[v.seg[j][2]])} → ${esc(PN[v.seg[j][3]])}</b>` + (near ? tipRow(SPC, `${clock(best[0])} departure`, `${best[1][j].toFixed(1)} mph`) : '') + tipRow(SPC, 'Median of every run', `${v.med[j].toFixed(1)} mph`), e);
+  });
+  hit.addEventListener('pointerleave', () => { hideTip(); hl.setAttribute('visibility', 'hidden'); });
+}
+
 // ---------- 5. map ----------
 const pathOf = (r) => 'M' + r.map((p) => p[0] + ' ' + p[1]).join('L') + 'Z';
 function divColor(ch) {                                  // change as a fraction: orange for fewer riders, blue for more
@@ -765,7 +816,7 @@ function table() {
       .map(([n, f]) => `<tr><td>${esc(n)}</td>${WY.map((y) => { const v = f(y); return `<td>${v == null ? '—' : typeof v === 'string' ? v : fmt(v)}</td>`; }).join('')}</tr>`).join('') + '</tbody></table>';
 }
 
-function all() { decade(); back(); stations(); bikes(); routes(); map(); full(); hours(); work(); }
+function all() { decade(); back(); stations(); bikes(); routes(); map(); full(); speeds(); hours(); work(); }
 tiles(); table(); all();
 let rz, lastW = innerWidth; addEventListener('resize', () => { if (innerWidth === lastW) return; lastW = innerWidth; clearTimeout(rz); rz = setTimeout(all, 150); });
 if (document.fonts) document.fonts.ready.then(all);

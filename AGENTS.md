@@ -43,7 +43,7 @@ Builders (each writes into `docs/`; run the one for what you changed):
 | `npm run cards` (`-- 23-fines` for one) | card PNGs from `cards/src/` | Playwright |
 | `npm run flyer` | `docs/snow/flyer-phone.png` | `npm run dev` running |
 | `npm run trips` | `docs/bus-trips.html` and `docs/bus-pulse.html` | network: big downloads are cached in `.cache/` after the first run, but every build fetches the MBTA's small feed list; delete `.cache/bus-trips-osm.json` to pick up new OpenStreetMap edits |
-| `npm run trends` | `docs/transit-trends.html` | network the first time (the ridership file, stop locations and rail counts are cached in `.cache/`); every build fetches the MBTA's small feed list |
+| `npm run trends` | `docs/transit-trends.html` | network the first time (the ridership file, stop locations, rail counts, fare-gate entries, Bluebikes trips and the bus arrival-time file, about 1.5 GB in all, are cached in `.cache/`); every build fetches the MBTA's small feed list |
 | `npm run planner` | `docs/bus-planner.html` | `docs/snow/data/bus-stops.json` and `wards.json` (no network) |
 | `npm run lights` | the "Somerville's lights" GIF and video in the cards gallery | `npm run dev` running, ffmpeg |
 | `npm run letter` | `research/ordinance-proposals.pdf` (git-ignored) | network for fonts |

@@ -788,6 +788,7 @@ def profiles(seasons, base, last, names, som_rings):
     return {'routes': out, 'names': pn}
 
 
+HOMES_FROM = 2025       # "new neighbors": buildings occupied from this year on, plus everything under construction or planned
 HOME_STATIONS = ('place-davis', 'place-portr', 'place-astao', 'place-sull', 'place-lech', 'place-ccmnl', 'place-unsqu', 'place-esomr',
                  'place-gilmn', 'place-mgngl', 'place-balsq', 'place-mdftf')  # Red, Orange and Green Line stations in or by Somerville
 
@@ -827,7 +828,7 @@ def homes(xy, route_ids, feed):
            'rail': {k: line(paths[f'{k}|0']['p']) for k in ('Red', 'Orange', 'Green-D', 'Green-E') if f'{k}|0' in paths},
            'bus': [line(paths[f'{r}|0']['p']) for r in route_ids if f'{r}|0' in paths],
            'sta': [xy(*locs[s][:2]) + [locs[s][2]] for s in HOME_STATIONS if s in locs],
-           'hh': hh}
+           'hh': hh, 'from': HOMES_FROM}
     n = {s: sum(h['u'] or 0 for h in out['list'] if h['s'] == s) for s in ('built', 'under construction', 'planned')}
     print(f"  homes without resident permits: {n}; renter household {hh}", file=sys.stderr)
     return out

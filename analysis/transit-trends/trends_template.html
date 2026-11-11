@@ -207,7 +207,7 @@ thead th{color:var(--ice);font-weight:600}
 
   <section aria-labelledby="h-homes">
     <h2 id="h-homes">New neighbors near the T</h2>
-    <p class="sub">Since 2020, new homes within ½ mile of the Red, Orange or Green Line can't get resident parking permits. These are the City's list.</p>
+    <p class="sub" id="sub-homes">New homes within ½ mile of the Red, Orange or Green Line can't get resident parking permits.</p>
     <div class="tiles three" id="tiles-homes"></div>
     <div class="legend" id="leg-homes"></div>
     <div class="mapwrap"><div class="chart" id="c-homes"></div></div>
@@ -614,9 +614,12 @@ function speedChart(el, rt, d) {
 const HM = D.homes, HCOL = '#EEF3F7', LINEC = { Red: '#DA291C', Orange: '#D57200', 'Green-D': '#1B9B6A', 'Green-E': '#1B9B6A' };
 const HST = { built: 'Built', 'under construction': 'Under construction', planned: 'Planned' };
 const ppl = (u) => HM.hh ? Math.round(u * HM.hh[1] / 10) * 10 : null;
+const recent = (x) => x.s !== 'built' || +String(x.o).slice(0, 4) >= HM.from;   // built from HM.from on, plus what's coming
 function homes() {
-  const sum = (st) => HM.list.filter((x) => x.s === st).reduce((a, x) => a + (x.u || 0), 0);
-  $('#tiles-homes').innerHTML = ['built', 'under construction', 'planned'].map((st) => `<div class="tile"><div class="k">${HST[st]}</div><div class="v">${fmt(sum(st))}</div><div class="s">homes${HM.hh ? `, about ${fmt(ppl(sum(st)))} people` : ''}</div></div>`).join('');
+  const old = HM.list.filter((x) => x.u && !recent(x));
+  $('#sub-homes').textContent = `New homes within ½ mile of the Red, Orange or Green Line can't get resident parking permits. The City's list: built since ${HM.from}, under construction and planned.`;
+  const sum = (st) => HM.list.filter((x) => x.s === st && recent(x)).reduce((a, x) => a + (x.u || 0), 0);
+  $('#tiles-homes').innerHTML = ['built', 'under construction', 'planned'].map((st) => `<div class="tile"><div class="k">${st === 'built' ? `Built since ${HM.from}` : HST[st]}</div><div class="v">${fmt(sum(st))}</div><div class="s">homes${HM.hh ? `, about ${fmt(ppl(sum(st)))} people` : ''}</div></div>`).join('');
   const el = $('#c-homes'), w = W(el), [MW, MH] = D.size, h = Math.round(w * MH / MW), k = w / MW, phone = w < 600;
   const rad = (u) => (2.5 + 19 * Math.sqrt(u / 450)) * Math.max(0.75, Math.min(1.2, w / 900));
   let g = `<g transform="scale(${k})">`;
@@ -626,7 +629,7 @@ function homes() {
   Object.entries(HM.rail).forEach(([n, ln]) => { g += `<path d="M${ln.map((p) => p.join(',')).join('L')}" fill="none" stroke="${LINEC[n]}" stroke-width="${4 / k}" stroke-linecap="round" stroke-linejoin="round"/>`; });
   g += '</g>';
   HM.sta.forEach(([x, y]) => { g += `<circle cx="${x * k}" cy="${y * k}" r="4" fill="${SURF}" stroke="#EEF3F7" stroke-width="2"/>`; });
-  const list = HM.list.filter((x) => x.xy && x.u).sort((a, b) => b.u - a.u);
+  const list = HM.list.filter((x) => x.xy && x.u && recent(x)).sort((a, b) => b.u - a.u);
   list.forEach((x, i) => {
     const cx = x.xy[0] * k, cy = x.xy[1] * k, r = rad(x.u);
     g += x.s === 'built' ? `<circle class="hh" data-i="${i}" cx="${cx}" cy="${cy}" r="${r}" fill="${HCOL}" fill-opacity=".9" stroke="${SURF}" stroke-width="1.5"/>`
@@ -664,7 +667,7 @@ function homes() {
   });
   $('#leg-homes').innerHTML = `<span><i style="background:${HCOL};border-radius:50%"></i>Built</span><span><i class="ring" style="border-color:${HCOL};background:rgba(238,243,247,.25)"></i>Under construction</span><span><i class="ring" style="border-color:${HCOL};border-style:dashed"></i>Planned</span><span><i class="line" style="background:${C.bus};opacity:.7"></i>Bus routes</span><span><i class="ring" style="border-color:rgba(169,196,228,.5);border-style:dashed"></i>½ mile from a station</span>`;
   const unk = HM.list.filter((x) => !x.u).map((x) => x.a);
-  $('#n-homes').textContent = `Homes from each project's building permit and certificate of occupancy; the list (Schedule W) is the City's as of ${HM.asof || 'May 5, 2026'}.${HM.hh ? ` People: homes × ${HM.hh[1]}, the average Somerville renter household (survey, ${HM.hh[0]}), an estimate.` : ''} Circles are straight-line ½ miles; the City's Transit Area uses walking routes.${unk.length ? ` Not shown: ${unk.join(', ')} (no permit found).` : ''}`;
+  $('#n-homes').textContent = `Homes from each project's building permit and certificate of occupancy; the list (Schedule W) is the City's as of ${HM.asof || 'May 5, 2026'}.${HM.hh ? ` People: homes × ${HM.hh[1]}, the average Somerville renter household (survey, ${HM.hh[0]}), an estimate.` : ''} Circles are straight-line ½ miles; the City's Transit Area uses walking routes.${old.length ? ` Left out, occupied before ${HM.from}: ${old.map((x) => `${x.a} (${x.u})`).join(', ')}, ${fmt(old.reduce((a, x) => a + x.u, 0))} homes.` : ''}${unk.length ? ` Not shown: ${unk.join(', ')} (no permit found).` : ''}`;
 }
 
 // ---------- 5. map ----------
@@ -866,7 +869,7 @@ function table() {
     + `</tbody></table><p class="note">— no count published. * Just outside Somerville.</p>`
     + `<p class="note">By route (weekday riders getting on in Somerville):</p><table><thead><tr><th>Route</th>${S.map((s) => `<th>${yr(s)}</th>`).join('')}</tr></thead><tbody>`
     + D.routes.map((r) => `<tr><td>${esc(r.r)}</td>${r.v.map((v) => `<td>${fmt(v)}</td>`).join('')}</tr>`).join('') + '</tbody></table>'
-    + `<p class="note">New homes near the T without resident parking permits (the City's Schedule W; homes and dates from each project's permits):</p><table><thead><tr><th>Address</th><th>Homes</th><th>Status</th><th>First permit</th><th>Occupied</th><th>Permits</th></tr></thead><tbody>`
+    + `<p class="note">New homes near the T without resident parking permits (the City's Schedule W, every address; homes and dates from each project's permits):</p><table><thead><tr><th>Address</th><th>Homes</th><th>Status</th><th>First permit</th><th>Occupied</th><th>Permits</th></tr></thead><tbody>`
     + D.homes.list.map((x) => `<tr><td>${esc(x.w)}</td><td>${x.u == null ? '—' : fmt(x.u)}</td><td>${esc(x.s)}</td><td>${x.p || '—'}</td><td>${x.o || '—'}</td><td>${esc(x.n) || '—'}</td></tr>`).join('') + '</tbody></table>'
     + `<p class="note">By route (weekday trips that stop in Somerville; Monday–Thursday from 2025):</p><table><thead><tr><th>Route</th>${S.map((s) => `<th>${yr(s)}</th>`).join('')}</tr></thead><tbody>`
     + D.routes.map((r) => `<tr><td>${esc(r.r)}</td>${r.t.map((v) => `<td>${fmt(v)}</td>`).join('')}</tr>`).join('') + '</tbody></table>'

@@ -134,6 +134,15 @@ thead th{color:var(--ice);font-weight:600}
     <p class="note">Hatched: 2016 and 2020–22 have no published boardings, so they show fare-gate entries at Davis, Porter, Assembly and Sullivan (a tap count; the Green Line Extension has no gates). A rider who changes from bus to T counts twice.</p>
   </section>
 
+  <section aria-labelledby="h-bikes">
+    <h2 id="h-bikes">Bluebikes</h2>
+    <p class="sub">Trips that start or end at a Somerville dock, each weekday, September to November.</p>
+    <div class="legend" id="leg-bikes"></div>
+    <div class="chart" id="c-bikes"></div>
+    <p class="note">A trip within Somerville counts once. More docks, more trips: 12 in 2016, 39 now. About 30% of trips are on e-bikes (marked since 2024).</p>
+  </section>
+
+
   <section aria-labelledby="h-back">
     <h2 id="h-back">How far back to 2019?</h2>
     <p class="sub">Each fall as a percentage of Fall 2019 (100% = back to 2019). Gray: every MBTA bus.</p>
@@ -155,6 +164,11 @@ thead th{color:var(--ice);font-weight:600}
     <div class="legend" id="leg-jobs"></div>
     <div class="chart" id="c-jobs"></div>
     <p class="note">Payroll: jobs with unemployment insurance. The 2018 jump: about 5,800 "management of companies" jobs first counted at one census block.</p>
+    <h3 id="h-hours">When people ride the bus</h3>
+    <p class="note" style="margin-top:0" id="n-hours">Weekday bus riders in Somerville, by the hour their trip started.</p>
+    <div class="ctl"><span class="seg" role="group" aria-label="Show" id="hmode"><button data-m="n" aria-pressed="true">Riders</button><button data-m="s" aria-pressed="false">Share of the day</button></span></div>
+    <div class="legend" id="leg-hours"></div>
+    <div class="chart" id="c-hours"></div>
   </section>
 
   <section aria-labelledby="h-stations">
@@ -187,22 +201,6 @@ thead th{color:var(--ice);font-weight:600}
     <div class="legend" id="leg-full"></div>
     <div id="c-full"></div>
     <p class="note">Thin lines: each weekday departure in Fall 2025, as the MBTA counted it over the fall (Monday–Thursday). Thick: the average. Peak: the average at its fullest, 2019 → 2025. Over 36: departures that pass 36 seats, an MBTA 40-foot bus (dashed). Shaded: inside Somerville.</p>
-  </section>
-
-  <section aria-labelledby="h-hours">
-    <h2 id="h-hours">When people ride the bus</h2>
-    <p class="sub">Weekday riders in Somerville, by the hour their trip started.</p>
-    <div class="ctl"><span class="seg" role="group" aria-label="Show" id="hmode"><button data-m="n" aria-pressed="true">Riders</button><button data-m="s" aria-pressed="false">Share of the day</button></span></div>
-    <div class="legend" id="leg-hours"></div>
-    <div class="chart" id="c-hours"></div>
-  </section>
-
-  <section aria-labelledby="h-bikes">
-    <h2 id="h-bikes">Bluebikes</h2>
-    <p class="sub">Trips that start or end at a Somerville dock, each weekday, September to November.</p>
-    <div class="legend" id="leg-bikes"></div>
-    <div class="chart" id="c-bikes"></div>
-    <p class="note">A trip within Somerville counts once. More docks, more trips: 12 in 2016, 39 now. About 30% of trips are on e-bikes (marked since 2024).</p>
   </section>
 
   <details class="table">
@@ -641,6 +639,8 @@ const HOURS = Array.from({ length: 24 }, (_, i) => i + 4);
 const hname = (h) => { h %= 24; return h === 0 ? '12a' : h === 12 ? 'noon' : h < 12 ? h + 'a' : (h - 12) + 'p'; };
 function hours() {
   const el = $('#c-hours'), w = W(el), phone = w < 560;
+  const hb = D.bus[BASE].hours, hl = D.bus[LAST].hours, part = (h, a, b) => h.slice(a - 4, b - 4).reduce((x, y) => x + y, 0);   // hours[0] is 4 am
+  $('#n-hours').textContent = `Weekday bus riders in Somerville, by the hour their trip started. The morning commute (5–9 am) is at ${pctOf(part(hl, 5, 9), part(hb, 5, 9))}% of 2019, midday (9 am–3 pm) at ${pctOf(part(hl, 9, 15), part(hb, 9, 15))}%.`;
   const m = { l: 44, r: 12, t: 14, b: 30 }, h = phone ? 240 : 300, ih = h - m.t - m.b, iw = w - m.l - m.r;
   const series = [{ s: BASE, c: C.ref }, { s: LAST, c: C.bus }].map((x) => {
     const v = D.bus[x.s].hours, tot = v.reduce((a, b) => a + b, 0);

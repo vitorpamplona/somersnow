@@ -17,7 +17,7 @@ The first and biggest project is the **snow guide**: Somerville's sidewalk snow 
 | `docs/snow/storms/`, `docs/snow/data/`, `scripts/` | /snow/storms/ | Storm replays: a page per snow period since the winter of 2015–16, built from public data by Python scripts; `scripts/` also renders cards, flyer, GIF and the Council letter. | [`scripts/AGENTS.md`](scripts/AGENTS.md), then [`docs/snow/data/README.md`](docs/snow/data/README.md) |
 | `cards/src/` | /snow/cards.html | 34 phone-size social cards, editable HTML; rendered to `docs/snow/cards/`. | [`docs/snow/AGENTS.md`](docs/snow/AGENTS.md) |
 | `analysis/bus-trips/` | /bus-trips.html, /bus-pulse.html | "Where bus riders go" (pick a stop, see where its riders get off) and "Somerville's pulse" (a weekday on the buses, animated). One build writes both. | [`analysis/bus-trips/AGENTS.md`](analysis/bus-trips/AGENTS.md) |
-| `analysis/transit-trends/` | /transit-trends.html | "Riding transit in Somerville": weekday boardings at Somerville's bus stops and nearby T stations, and Bluebikes trips from its docks, every fall since 2016, by route, station, stop and hour. | [`analysis/transit-trends/AGENTS.md`](analysis/transit-trends/AGENTS.md) |
+| `analysis/transit-trends/` | /transit-trends.html | "Riding transit in Somerville": weekday boardings at Somerville's bus stops and nearby T stations, and Bluebikes trips to, from or within the city, every fall since 2016, by route, station, stop and hour; who's working (survey and payroll counts); and for the latest fall, how full and how fast every bus route is. | [`analysis/transit-trends/AGENTS.md`](analysis/transit-trends/AGENTS.md) |
 | `analysis/bus-stop-clearing/` | /bus-planner.html | Bus stop clearing planner: design and score the routes crews take to clear bus stops after a storm. | [`analysis/bus-stop-clearing/AGENTS.md`](analysis/bus-stop-clearing/AGENTS.md) |
 | `research/` | (not served) | The law, verified facts, open questions for officials, sources, data-source notes, PTAC's letter to the City Council. | [`research/facts.md`](research/facts.md) |
 | `test/` | | `node --test` tests for the guide's deadline and live-storm logic. | |
@@ -50,7 +50,7 @@ Builders (each writes into `docs/`; run the one for what you changed):
 
 ## How changes reach the site
 
-- **`main` is live.** GitHub Pages serves `docs/` from `main`; anything merged there is on somerwalks.org within a minute or two. There is no build step on the server: what's committed in `docs/` is what's served.
+- **`main` is live.** GitHub Pages serves `docs/` from `main`; anything merged there is usually on somerwalks.org within a minute or two. There is no build step on the server: what's committed in `docs/` is what's served. A deploy can wait in GitHub's queue for many minutes: if the site looks old, check the latest "pages build and deployment" run in Actions before pushing again (a later deploy publishes everything before it), and remember browsers keep a page up to 10 minutes (`max-age=600`; a hard refresh skips it).
 - **Work on a branch and open a pull request** against `main`. Don't push to `main` unless a maintainer asked you to. CI (`.github/workflows/test.yml`) runs `npm test` and `npm run verify` on every push and pull request.
 - **Generated files are committed, and never edited by hand.** Edit the source, rebuild, commit both. Sources → outputs: `cards/src/*.html` → `docs/snow/cards/*.png`; `scripts/storm_page.html` + `docs/snow/data/` → `docs/snow/storms/*.html`; `analysis/*/…_template.html` + `build.py` → `analysis/*/output/` → copied to `docs/*.html`; `docs/snow/flyer-phone.html` → `flyer-phone.png`.
 - **Before you push:** `npm test` and `npm run verify` (CI runs both); open the page with `npm run dev` and check it at phone width (390 px): nothing scrolls sideways, nothing overlaps, no errors in the console. Check desktop too.
@@ -68,6 +68,19 @@ Builders (each writes into `docs/`; run the one for what you changed):
 7. **Accessible.** Works on a phone first; keyboard reachable; text contrast on the dark panels; animations stop or calm down with `prefers-reduced-motion`; charts and maps have a text equivalent (`aria-label`, tables, tooltips).
 8. **Somerville since 2015.** The city changed a lot after 2014 (Assembly station 2014, the pandemic 2020, the Green Line Extension 2022, the bus network redesign from Dec 2024): data from before 2015 is context only, never "how Somerville moves", and every number carries its year. Mind those breaks in any series ([`research/mobility-data.md`](research/mobility-data.md#read-first-somerville-since-2015)).
 9. **No build tooling on the site.** Plain HTML, CSS and JavaScript modules; links between pages are relative; no frameworks, no bundler, no tracking.
+
+## Working with public data
+
+Lessons from building and auditing the data pages (details and the fixes in [`analysis/transit-trends/AGENTS.md`](analysis/transit-trends/AGENTS.md#pitfalls-found-in-the-nov-2026-audit-and-while-building-keep-the-fixes)):
+
+- **Recompute before you trust.** After a big change, have a second agent recompute the published numbers from the raw files without reading the builder; it finds what reading the code doesn't (a Cambridge dock counted as Somerville, stops missing from a schedule file, docks counted twice).
+- **Print totals per year, and compare runs.** Column names, codes and day types change from one year's file to the next; map them explicitly and expect new spellings.
+- **The edge of the city is where errors live.** Test "inside Somerville" against the full-detail outline, never a simplified one, and use official crosswalks (census blocks to towns), not ID ranges.
+- **Blank is not missing.** A table can list Somerville with every value blank while a sibling table has the numbers; look before writing "not published".
+- **Survey numbers have margins.** Say "more" or "fewer" only when the gap is bigger than the combined 90% margins; otherwise "about as many".
+- **Averages hide single trips.** One school bus can double a per-stop average; drop places only a few trips serve, and show the spread where it matters.
+- **Compare like with like.** Before stacking or adding two counts, check they count the same thing at the same end (boardings in Somerville vs trips with either end in Somerville; boardings vs fare-gate taps; averages over different numbers of days).
+- **"No data" names its dataset.** One source missing a year doesn't mean nothing exists; say which data, and look for another.
 
 ## Voice and design
 
@@ -104,7 +117,7 @@ Builders (each writes into `docs/`; run the one for what you changed):
 
 - Domain bought Nov 2026; DNS on Squarespace points to GitHub Pages (`docs/CNAME`, HTTPS enforced). Repository `vitorpamplona/somerwalks`, renamed from `somersnow` in Nov 2026; the old address (vitorpamplona.com/somersnow/) stopped working then, and PTAC moves people to the new site by hand (no forwarding repository, by choice).
 - The guide used to sit at the top of `docs/`; it moved to `docs/snow/` in Nov 2026. Every old page path has a small forwarding page to its new place (written once by `scripts/build_redirects.py`, which skips real pages); `docs/404.html` sends any other old address (card images, data files) to the same path under `snow/`; old guide links with `#section`, `?lang=` or `?live=` reach the home page, which sends them on. New pages never need forwarding pages.
-- Built Oct–Nov 2026: the guide's sections, cards and research; the animated corner, the redrawn "Who clears this?" map, flyers, draft translations, live storm mode; storm replays (one storm, then all 44 snow periods with "Getting around" data); then the bus tools and the PTAC home page. The git log has the details.
+- Built Oct–Nov 2026: the guide's sections, cards and research; the animated corner, the redrawn "Who clears this?" map, flyers, draft translations, live storm mode; storm replays (one storm, then all 44 snow periods with "Getting around" data); then the bus tools and the PTAC home page; then "Riding transit in Somerville" (transit over time, who's working, how full and how fast the buses are), audited by recomputing every number from the raw files. The git log has the details.
 
 ## For maintainers
 

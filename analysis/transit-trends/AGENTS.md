@@ -25,7 +25,7 @@ Agent guide. Start with the root [`AGENTS.md`](../../AGENTS.md). What the page s
 - **Missing T years** (2016, 2020–22) are a short dashed, hatched cap above the bus column labeled "T not counted": missing, never zero, and never a height that looks like a value.
 - **Map stops** are merged across seasons when they sit within `SAME_STOP` (12 m) of each other (a renumbered or moved stop is one place, the busiest first); farther apart, a stop shows as gone in one fall and new in the other. Tried 25 and 40 m: the gone stops stay, so they're real route changes. The map note counts them, and names the 86 only when the falls picked span the Dec 2024 redesign.
 - **Page order:** the answer first (a computed headline sentence, then four tiles under one "A weekday in Fall …, against Fall 2019" line), then the decade, back to 2019, why (who's working), the stations, the map, the routes, the hours, Bluebikes; "All the numbers" and "How it's counted" fold away at the end. Keep notes to one line.
-- **Every route:** cards with a small chart on wide screens; under 600 px a ranked list (route, 2019 → latest, change).
+- **Every route:** cards with a small chart on wide screens; under 600 px a ranked list (route, 2019 → latest, change). Each route carries riders `v` and trips `t` (weekday trips that stop in Somerville, counted in `bus()` from variant, direction and start time; `Wkdy` only from 2025). The card draws both as a share of 2019 on one axis (no second axis); a route with no 2019 riders (the 109) shows riders only. Trips are gray, like other reference lines.
 
 ## Charts and colors
 

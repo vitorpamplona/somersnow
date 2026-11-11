@@ -188,7 +188,7 @@ def bus(som_rings):
     feeds = fall_feeds()
     COLS = {'route': ('route_id', 'GTFS route_id'), 'stop': ('stop_id', 'GTFS stop_id'), 'day': ('day_type_name', 'Day Type'),
             'on': ('boardings', 'Boardings'), 'off': ('alightings', 'Alightings'), 'start': ('trip_start_time', 'trip start time'),
-            'name': ('stop_name', 'Stop Name')}
+            'name': ('stop_name', 'Stop Name'), 'variant': ('route_variant', 'Route/Variant'), 'dir': ('direction_id', 'GTFS direction_id')}
     DAY = {'weekday': 'wk', 'Wkdy': 'wk', 'Fri': 'fri', 'saturday': 'sat', 'Sat': 'sat', 'sunday': 'sun', 'Sun': 'sun'}
     seasons, stops_all = {}, {}
     files = sorted(n for n in z.namelist() if n.endswith('.csv') and '_Fall_' in n)
@@ -208,6 +208,7 @@ def bus(som_rings):
         stop = defaultdict(Counter)
         hour = defaultdict(Counter)
         names, unknown = {}, 0.0
+        trips = defaultdict(set)                       # route -> weekday trips that stop in Somerville (Mon-Thu from 2025)
         for row in r:
             d = DAY.get(row[col['day']])
             if not d:
@@ -224,6 +225,8 @@ def bus(som_rings):
                 if d in ('wk', 'fri'):
                     rt = ROUTE_NAME.get(row[col['route']].strip(), row[col['route']].strip())
                     route[d][rt] += on
+                    if d == 'wk':
+                        trips[rt].add((row[col['variant']], row[col['dir']], row[col['start']]))
                     stop[d][sid] += on
                     h = start_hour(row[col['start']])
                     hour[d][h if h >= 3 else h + 24] += on
@@ -242,6 +245,7 @@ def bus(som_rings):
             'sys': {'wk': round(wk['sys']), 'sat': round(tot['sat']['sys']), 'sun': round(tot['sun']['sys'])},
             'off': round(wk['som_off']),
             'routes': {k: round(v) for k, v in wkavg(route['wk'], route.get('fri')).items() if v >= 0.5},
+            'trips': {k: len(v) for k, v in trips.items()},
             'stops': {k: round(v, 1) for k, v in wkavg(stop['wk'], stop.get('fri')).items() if v >= 0.05},
             'hours': [round(wkavg(hour['wk'], hour.get('fri'))[h]) for h in range(4, 28)],
             'nstops': len([1 for v in wkavg(stop['wk'], stop.get('fri')).values() if v >= 0.05]),
@@ -583,7 +587,7 @@ def main():
     payload = {
         'seasons': order,
         'bus': {s: {k: seasons[s][k] for k in ('som', 'sys', 'off', 'hours', 'nstops')} for s in order},
-        'routes': [{'r': r, 'v': [seasons[s]['routes'].get(r, 0) for s in order]} for r in routes],
+        'routes': [{'r': r, 'v': [seasons[s]['routes'].get(r, 0) for s in order], 't': [seasons[s]['trips'].get(r, 0) for s in order]} for r in routes],
         'stopv': {s: per_place(seasons[s]['stops']) for s in order},
         'stops': stops, 'stations': stations, 'towns': towns_out, 'bikes': bikes, 'work': work,
         'size': xy(box[2], box[1]),

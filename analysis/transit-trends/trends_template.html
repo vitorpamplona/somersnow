@@ -168,8 +168,10 @@ thead th{color:var(--ice);font-weight:600}
 
   <section aria-labelledby="h-routes">
     <h2 id="h-routes">Every route</h2>
-    <p class="sub">Weekday riders at Somerville stops, Fall 2019 → the latest fall.</p>
+    <p class="sub">Weekday riders at Somerville stops, and the trips the MBTA runs through the city, Fall 2019 → the latest fall. A gap between the lines: riders fell more than service.</p>
+    <div class="legend" id="leg-routes"></div>
     <div id="c-routes"></div>
+    <p class="note">Trips: weekday trips that stop in Somerville, from the MBTA's ridership file (Monday–Thursday from 2025). Lines as a share of Fall 2019.</p>
   </section>
 
   <section aria-labelledby="h-hours">
@@ -433,36 +435,44 @@ const WHY = { '86': 'Left Somerville in Dec 2024 (redesign)', '109': 'Through So
 const CH_LOSS = '#F2A374', CH_GAIN = '#B9A3F0';            // text tints of the map's orange (fewer) and purple (more)
 function routes() {
   const el = $('#c-routes');
+  $('#leg-routes').innerHTML = `<span><i class="line" style="background:${C.bus}"></i>Riders</span><span><i class="line" style="background:${C.ref}"></i>Trips the MBTA runs</span>`;
   if (W(el) < 600) {                              // phones: one ranked list, no small charts
-    el.className = '';
+    el.className = ''; $('#leg-routes').innerHTML = '';
     el.innerHTML = '<ol class="rlist">' + D.routes.map((rt) => {
       const v = rt.v, a = v[S.indexOf(BASE)], b = v[v.length - 1], ch = a ? Math.round(100 * (b - a) / a) : null;
-      return `<li><span class="rt">${esc(rt.r)}</span><span class="nums">${fmt(a)} → <b>${fmt(b)}</b>${WHY[rt.r] ? `<span class="why">${WHY[rt.r]}</span>` : ''}</span><span class="ch" style="color:${ch == null || ch >= 0 ? CH_GAIN : CH_LOSS}">${ch == null ? 'new' : (ch > 0 ? '+' : '') + ch + '%'}</span></li>`;
+      const ta = rt.t[S.indexOf(BASE)], tb = rt.t[rt.t.length - 1];
+      return `<li><span class="rt">${esc(rt.r)}</span><span class="nums">${fmt(a)} → <b>${fmt(b)}</b> riders<span class="why">${ta || tb ? `${fmt(ta)} → ${fmt(tb)} trips a weekday${ta ? ` (${pctOf(tb, ta)}%)` : ''}` : ''}${WHY[rt.r] ? ` · ${WHY[rt.r]}` : ''}</span></span><span class="ch" style="color:${ch == null || ch >= 0 ? CH_GAIN : CH_LOSS}">${ch == null ? 'new' : (ch > 0 ? '+' : '') + ch + '%'}</span></li>`;
     }).join('') + '</ol>';
     return;
   }
   el.className = 'grid';
   el.innerHTML = D.routes.map((rt, k) => {
-    const v = rt.v, a = v[S.indexOf(BASE)], b = v[v.length - 1], max = Math.max(...v, 1);
-    const sw_ = 140, sh = 40, px = (i) => 4 + (sw_ - 8) * i / (v.length - 1), py = (x) => 4 + (sh - 8) * (1 - x / max);
-    const d = v.map((x, i) => (i ? 'L' : 'M') + px(i).toFixed(1) + ' ' + py(x).toFixed(1)).join('');
+    const v = rt.v, t = rt.t, bi = S.indexOf(BASE), a = v[bi], b = v[v.length - 1], ta = t[bi], tb = t[t.length - 1];
+    const idx = a > 0 && ta > 0;                  // both lines as a share of 2019; a route new since 2019 shows riders only
+    const rv = idx ? v.map((x) => 100 * x / a) : v, tv = idx ? t.map((x) => 100 * x / ta) : null;
+    const max = Math.max(...rv, ...(tv || []), idx ? 120 : 1);
+    const sw_ = 140, sh = 44, px = (i) => 4 + (sw_ - 8) * i / (v.length - 1), py = (x) => 4 + (sh - 8) * (1 - x / max);
+    const line = (arr) => arr.map((x, i) => (i ? 'L' : 'M') + px(i).toFixed(1) + ' ' + py(x).toFixed(1)).join('');
     const ch = a ? Math.round(100 * (b - a) / a) : null;
     const chs = ch == null ? 'new' : (ch > 0 ? '+' : '') + ch + '%';
     return `<div class="card"><div class="top"><span class="rt">${esc(rt.r)}</span><span class="ch" style="color:${ch == null || ch >= 0 ? CH_GAIN : CH_LOSS}">${chs}</span></div>
-      <svg viewBox="0 0 ${sw_} ${sh}" role="img" aria-label="Route ${esc(rt.r)}: ${v.map((x, i) => `${yr(S[i])} ${fmt(x)}`).join(', ')}" data-k="${k}">
+      <svg viewBox="0 0 ${sw_} ${sh}" role="img" aria-label="Route ${esc(rt.r)}: riders ${v.map((x, i) => `${yr(S[i])} ${fmt(x)}`).join(', ')}; trips a weekday ${t.map((x, i) => `${yr(S[i])} ${fmt(x)}`).join(', ')}" data-k="${k}">
         <line x1="4" x2="${sw_ - 4}" y1="${sh - 4}" y2="${sh - 4}" stroke="${AXIS}"/>
-        <path d="${d}" fill="none" stroke="${C.bus}" stroke-width="2" stroke-linejoin="round"/>
-        <circle cx="${px(S.indexOf(BASE))}" cy="${py(a)}" r="3.5" fill="${SURF}" stroke="${C.bus}" stroke-width="2"/>
-        <circle cx="${px(v.length - 1)}" cy="${py(b)}" r="3.5" fill="${C.bus}" stroke="${SURF}" stroke-width="1.5"/>
+        ${idx ? `<line x1="4" x2="${sw_ - 4}" y1="${py(100)}" y2="${py(100)}" stroke="${GRID}" stroke-dasharray="2 3"/>` : ''}
+        ${tv ? `<path d="${line(tv)}" fill="none" stroke="${C.ref}" stroke-width="1.6" stroke-linejoin="round"/>` : ''}
+        <path d="${line(rv)}" fill="none" stroke="${C.bus}" stroke-width="2" stroke-linejoin="round"/>
+        <circle cx="${px(bi)}" cy="${py(rv[bi])}" r="3.5" fill="${SURF}" stroke="${C.bus}" stroke-width="2"/>
+        <circle cx="${px(v.length - 1)}" cy="${py(rv[v.length - 1])}" r="3.5" fill="${C.bus}" stroke="${SURF}" stroke-width="1.5"/>
         <rect x="0" y="0" width="${sw_}" height="${sh}" fill="transparent" class="hit"/>
       </svg>
-      <div class="nums">${fmt(a)} → <b style="color:#EEF3F7">${fmt(b)}</b> a weekday</div><div class="why">${WHY[rt.r] || ''}</div></div>`;
+      <div class="nums">${fmt(a)} → <b style="color:#EEF3F7">${fmt(b)}</b> riders a weekday</div>
+      <div class="nums">${fmt(ta)} → <b style="color:#EEF3F7">${fmt(tb)}</b> trips${ta ? ` (${pctOf(tb, ta)}%)` : ''}</div><div class="why">${WHY[rt.r] || ''}</div></div>`;
   }).join('');
   el.querySelectorAll('svg').forEach((svg) => {
     const rt = D.routes[+svg.dataset.k];
     svg.querySelector('.hit').addEventListener('pointermove', (e) => {
       const r = svg.getBoundingClientRect(), i = Math.max(0, Math.min(S.length - 1, Math.round(((e.clientX - r.left) / r.width * 140 - 4) / 132 * (S.length - 1))));
-      showTip(`<b>Route ${esc(rt.r)} · ${S[i]}</b>${fmt(rt.v[i])} riders a weekday at Somerville stops`, e);
+      showTip(`<b>Route ${esc(rt.r)} · ${S[i]}</b>` + tipRow(C.bus, 'Riders a weekday', fmt(rt.v[i])) + tipRow(C.ref, 'Trips a weekday', fmt(rt.t[i])), e);
     });
     svg.querySelector('.hit').addEventListener('pointerleave', hideTip);
   });
@@ -662,6 +672,8 @@ function table() {
     + `</tbody></table><p class="note">— no count published. * Just outside Somerville.</p>`
     + `<p class="note">By route (weekday riders getting on in Somerville):</p><table><thead><tr><th>Route</th>${S.map((s) => `<th>${yr(s)}</th>`).join('')}</tr></thead><tbody>`
     + D.routes.map((r) => `<tr><td>${esc(r.r)}</td>${r.v.map((v) => `<td>${fmt(v)}</td>`).join('')}</tr>`).join('') + '</tbody></table>'
+    + `<p class="note">By route (weekday trips that stop in Somerville; Monday–Thursday from 2025):</p><table><thead><tr><th>Route</th>${S.map((s) => `<th>${yr(s)}</th>`).join('')}</tr></thead><tbody>`
+    + D.routes.map((r) => `<tr><td>${esc(r.r)}</td>${r.t.map((v) => `<td>${fmt(v)}</td>`).join('')}</tr>`).join('') + '</tbody></table>'
     + `<p class="note">Who's working (each year; survey: — not published for Somerville that year):</p><table><thead><tr><th></th>${WY.map((y) => `<th>${y}</th>`).join('')}</tr></thead><tbody>`
     + [['Residents who worked, by way to work (survey)', (y) => WA[y] && WA[y].workers], ['Worked from home', (y) => WA[y] && WA[y].wfh], ['Took transit', (y) => WA[y] && WA[y].transit], ['Drove alone', (y) => WA[y] && WA[y].alone],
        ['Walked', (y) => WA[y] && WA[y].walk], ['Biked', (y) => WA[y] && WA[y].bike], ['Residents with a job (employed, survey)', (y) => WA[y] && WA[y].employed],

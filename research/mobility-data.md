@@ -88,7 +88,16 @@ The city changed a lot after 2014, so **data from before 2015 is context only**:
 | Parking zones and utilization, 2017 | ArcGIS account "u3agis" (not the City) | Block-face utilization High/Med/Low (65 segments), private lots | Block face | 2017 | Open, unclear origin; likely Union Square planning |
 | Perfect Fit Parking | MAPC, [CSV](https://datacommon.mapc.org/api/export?token=datacommon&database=ds&schema=tabular&table=trans_perfect_fit_parking&format=csv) | Overnight counts at residential buildings | 5 sites in Somerville | ~2015 – 2016 | Context only (latitude and longitude columns swapped) |
 | Parking Department page | City, [somervillema.gov](https://www.somervillema.gov/departments/parking-department) | 8 permit renewal zones, fees, meter rate, tow fee, permit-restricted addresses | — | Current (fees not yet updated for July 2026) | Reference |
+| Addresses with no resident permits (Schedule W) | City, [PDF](https://s3.amazonaws.com/somervillema-live/s3fs-public/schedule-w-list-of-restricted-addresses.pdf), rule on the Parking Department page (Traffic Commission Dec 12, 2019; first building permit on or after Jan 15, 2020; ½ mile of the Red, Orange, Green Line; NR zoning excluded) | 37 address entries, no unit counts | Address | As of May 5, 2026 | Researched: units and occupancy dates from the City's permit applications ([`research/parking-restricted-housing.md`](parking-restricted-housing.md)): 751 units built, 740 under construction, about 79 planned. |
+| Permit and license applications | City, [`nneb-s3f7`](https://data.somervillema.gov/resource/nneb-s3f7.json) (Citizenserve) | Every building permit, certificate of occupancy and more: type, subtype (e.g. "Residential New Construction"), project description (units), application, issue and close dates, address, parcel | Address, parcel | 2014 – now (daily) | Used for the restricted-housing count; could count all new units citywide. |
 | Daily meter or ParkMobile revenue; parking tickets by day; permits by zone after 2020; curb inventory data | — | — | — | — | **Not public** (questions 56–57) |
+
+Housing counts, for the pace of new homes (details in [`research/parking-restricted-housing.md`](parking-restricted-housing.md)):
+
+- **Census Building Permits Survey**, place files (`https://www2.census.gov/econ/bps/Place/Northeast%20Region/ne{year}a.txt`, Somerville place 62535): units authorized a year. Somerville didn't report in 2021, 2022, 2025 (and only partly 2020, 2024): those years are Census estimates and miss big projects. Context only.
+- **MAPC MassBuilds** ([API](https://api.massbuilds.com/developments)): developments with units, status and completion year; 326 in Somerville (to Jul 2025); has the big projects, misses small ones.
+- **ACS 1-year B25001** (housing units): about 35,000–40,000 in 2019–2025, ± about 2,000 a year: too noisy for yearly pace.
+- **MassGIS property tax parcels** (`Massachusetts_Property_Tax_Parcels`, `TOWN_ID` 274): Somerville leaves `UNITS` empty on nearly every parcel.
 
 ## Safety
 

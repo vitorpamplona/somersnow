@@ -5,15 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Snow guide flyer · SomerWalks</title>
 <meta name="description" content="A one-page, printable flyer on Somerville's sidewalk snow rules, for doors, building lobbies and shop windows. By the Somerville PTAC.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500;600;700&display=swap">
+<link rel="preload" href="../fonts/barlow-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../fonts/barlow-condensed-800-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../fonts/fonts.css">
 <style>
 /* One US Letter page. Same palette and fonts as the site and the cards.
    The QR code (qr.svg) points to https://somerwalks.org/snow/ ; to remake it:
    npx qrcode -t svg -d 10243A -o docs/snow/qr.svg "https://somerwalks.org/snow/" */
 :root{--night:#10243A;--night-2:#1A3A5F;--snow:#EEF3F7;--orange:#FF8A3D;--rust:#B93D06;--ice:#A9C4E4;--mute:#47607C;--sub:#2C4460;
-  --display:'Barlow Condensed','Arial Narrow',sans-serif;--body:'Barlow','Helvetica Neue',Arial,sans-serif}
+  --display:'Barlow Condensed','Barlow Condensed Fallback','Arial Narrow',sans-serif;--body:'Barlow','Barlow Fallback','Helvetica Neue',Arial,sans-serif}
 *{box-sizing:border-box}
 html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 body{margin:0;background:#C9D6E3;font-family:var(--body);color:var(--night)}

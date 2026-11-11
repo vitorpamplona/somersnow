@@ -8,14 +8,15 @@
 <meta property="og:title" content="Transit in Somerville over time · SomerWalks">
 <meta property="og:description" content="Buses and the T in Somerville, every fall since 2016. From the MBTA's counts.">
 <meta name="theme-color" content="#10243A">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" href="fonts/barlow-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/barlow-condensed-800-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts/fonts.css">
 <style>
 :root{--navy:#10243A;--panel:#1A3A5F;--snow:#EEF3F7;--orange:#FF8A3D;--ice:#A9C4E4;--mute:#47607C;--deep:#0A1929;
   --grid:rgba(169,196,228,.16);--axis:rgba(169,196,228,.4);--ink2:#A9C4E4;--ink3:#7F99B5;
   --bus:#4F98DE;--red:#DA291C;--green:#1B9B6A;--orangeline:#D57200;--t:#C08A14;--ref:#8A9BB0;
   --loss:#E36F28;--gain:#4F98DE;
-  --display:'Barlow Condensed',Arial Narrow,sans-serif;--body:'Barlow',Arial,sans-serif}
+  --display:'Barlow Condensed','Barlow Condensed Fallback',Arial Narrow,sans-serif;--body:'Barlow','Barlow Fallback',Arial,sans-serif}
 *{box-sizing:border-box}
 html,body{margin:0}
 body{background:var(--navy);color:var(--snow);font:16px/1.5 var(--body)}

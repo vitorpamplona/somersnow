@@ -2,8 +2,8 @@
   /* One visual world: a winter night street (navy) and fresh snow (pale blue-white). Orange = action, like a plow light. */
   --night:#10243A; --night-2:#1A3A5F; --snow:#EEF3F7; --paper:#FFFFFF;
   --orange:#FF8A3D; --rust:#B93D06; --ice:#A9C4E4; --mute:#47607C; --sub:#2C4460;
-  --display:'Barlow Condensed','Arial Narrow','Helvetica Neue',sans-serif;
-  --body:'Barlow','Helvetica Neue',Arial,sans-serif;
+  --display:'Barlow Condensed','Barlow Condensed Fallback','Arial Narrow','Helvetica Neue',sans-serif;
+  --body:'Barlow','Barlow Fallback','Helvetica Neue',Arial,sans-serif;
   /* Layout: a storm timeline, top to bottom. Before → snowing → stopped → emergency → not cleared. */
   color-scheme:light;
 }

@@ -73,7 +73,7 @@ Builders (each writes into `docs/`; run the one for what you changed):
 
 - **Short sentences, pictures first.** The owner cut the first version of the guide for having too many words. One headline and one short line per idea; icon tiles over paragraphs. Plain and direct ("Ice can never happen.", "Blue lights? Move your car.").
 - **Colors** (same as the cards): navy `#10243A`, panel `#1A3A5F`, snow `#EEF3F7`, orange `#FF8A3D` (on dark), rust `#B93D06` (on light), ice `#A9C4E4`, mute `#47607C`. On the bus pages, orange `#E36F28`/`#FF8A3D` means getting on and blue `#4F98DE` getting off, everywhere on the page.
-- **Fonts:** Barlow Condensed 700/800 for headings (uppercase), Barlow for body, from Google Fonts.
+- **Fonts:** Barlow Condensed 700/800 for headings (uppercase), Barlow for body, served from the site (`docs/fonts/`, SIL Open Font License), not from Google Fonts: a third-party font loads late, so pages drew in Arial first and jumped. Every page's `<head>` has the two preloads and `fonts.css` with the right relative path (`fonts/`, `../fonts/`, `../../fonts/`), and every font list names the sized fallback after the family: `'Barlow Condensed','Barlow Condensed Fallback',…` and `'Barlow','Barlow Fallback',…` (copy an existing page). A new weight: add its `@font-face` to `docs/fonts/fonts.css` and its files to `docs/fonts/`. The cards' sources and the Council letter are rendered offline and still use Google Fonts.
 - **Every page:** the dark header bar with the SomerWalks brand linking home (`./` or `../`), a title like `Where bus riders go · SomerWalks`, and the PTAC / not-official line.
 
 ## Recipes

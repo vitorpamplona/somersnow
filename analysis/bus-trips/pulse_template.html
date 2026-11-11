@@ -8,11 +8,12 @@
 <meta property="og:title" content="Somerville's pulse · SomerWalks">
 <meta property="og:description" content="A weekday on Somerville's buses, played back: every trip, every stop.">
 <meta name="theme-color" content="#0A1929">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" href="fonts/barlow-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/barlow-condensed-800-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts/fonts.css">
 <style>
 :root{--on:#FF8A3D;--off:#4F98DE;--navy:#10243A;--panel:#1A3A5F;--snow:#EEF3F7;--orange:#FF8A3D;--blue:#4F98DE;--ice:#A9C4E4;--mute:#47607C;--deep:#0A1929;
-  --display:'Barlow Condensed',Arial Narrow,sans-serif;--body:'Barlow',Arial,sans-serif}
+  --display:'Barlow Condensed','Barlow Condensed Fallback',Arial Narrow,sans-serif;--body:'Barlow','Barlow Fallback',Arial,sans-serif}
 *{box-sizing:border-box}
 html,body{margin:0;height:100%}
 body{background:var(--deep);color:var(--snow);font:16px/1.4 var(--body);display:flex;flex-direction:column;overflow:hidden}
@@ -234,7 +235,7 @@ function drawBase() {
   gb.globalAlpha = 1; gb.fillStyle = 'rgba(238,243,247,.22)';
   const sr = 1.1 * px; S.forEach((s) => { gb.beginPath(); gb.arc(s.p[0], s.p[1], sr, 0, 7); gb.fill(); });
   gb.setTransform(DPR, 0, 0, DPR, 0, 0);
-  gb.textAlign = 'center'; gb.font = `800 ${Math.round(13 * Math.min(1.4, zs()))}px 'Barlow Condensed', Arial Narrow, sans-serif`;
+  gb.textAlign = 'center'; gb.font = `800 ${Math.round(13 * Math.min(1.4, zs()))}px 'Barlow Condensed','Barlow Condensed Fallback', Arial Narrow, sans-serif`;
   TOWNLAB.forEach((t) => { gb.fillStyle = TH.lab[t.n === 'Somerville' ? 0 : 1]; gb.fillText(t.n.toUpperCase().split('').join(' '), sx(t.x), sy(t.y)); });
 }
 

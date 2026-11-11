@@ -504,7 +504,8 @@ function routes() {
 }
 
 // ---------- load profiles ----------
-const PR = D.prof.routes, PN = D.prof.names, SEATS = 36;
+const rnum = (r) => { const n = parseInt(r, 10); return isNaN(n) ? Infinity : n; };   // route number order; CT2 last
+const PR = [...D.prof.routes].sort((a, b) => rnum(a.r) - rnum(b.r) || a.r.localeCompare(b.r)), PN = D.prof.names, SEATS = 36;
 const clock = (m) => { const h = Math.floor(m / 60) % 24, mm = String(m % 60).padStart(2, '0'); return `${h % 12 || 12}:${mm} ${h < 12 ? 'am' : 'pm'}`; };
 function full() {
   $('#leg-full').innerHTML = `<span><i class="line" style="background:${C.ref}"></i>${BASE}, average</span><span><i class="line" style="background:${C.bus}"></i>${LAST}, average</span><span><i class="line" style="background:${C.bus};opacity:.4;height:2px"></i>${LAST}, each departure</span>`;

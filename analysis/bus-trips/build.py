@@ -25,6 +25,7 @@ Python standard library only.
 """
 import csv, io, json, math, os, shutil, sys, time, urllib.parse, urllib.request, zipfile
 from collections import defaultdict
+from datetime import datetime, timedelta
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.normpath(os.path.join(HERE, '..', '..'))
@@ -352,6 +353,104 @@ def estimate(trip_list):
     return od
 
 
+RAIL_RIDERS = 'https://www.arcgis.com/sharing/rest/content/items/6494749a29c648018820d0e49636205c/data'   # Fall 2025, by hour
+LINES = ['Red', 'Orange', 'Green-B', 'Green-C', 'Green-D', 'Green-E', 'Blue']
+
+
+def trains(z, stopinfo, xy, box, feed):
+    """Every weekday Red, Orange, Green and Blue Line trip on the map, station by station at its scheduled times, and
+    each station's average weekday riders getting on and off and riding through, by line, direction and hour (MBTA
+    rail ridership, Fall 2025). The page splits each hour's riders evenly among that hour's trains: an estimate."""
+    inbox = lambda lon, lat: box[0] <= lon <= box[2] and box[1] <= lat <= box[3]
+    # a typical weekday: the first Wednesday a week into the feed, with the calendar's exceptions for that day
+    d0 = datetime.strptime(feed, '%Y%m%d') + timedelta(days=7)
+    day = d0 + timedelta(days=(2 - d0.weekday()) % 7)
+    ds = day.strftime('%Y%m%d')
+    svc = {r['service_id'] for r in table(z, 'calendar.txt') if r['wednesday'] == '1' and r['start_date'] <= ds <= r['end_date']}
+    for r in table(z, 'calendar_dates.txt'):
+        if r['date'] == ds:
+            (svc.add if r['exception_type'] == '1' else svc.discard)(r['service_id'])
+    dname = {(r['route_id'], r['direction_id']): r['direction'][0] + 'B' for r in table(z, 'directions.txt') if r['route_id'] in LINES}
+    tinfo = {t['trip_id']: (t['route_id'], t['direction_id'], t['shape_id']) for t in table(z, 'trips.txt')
+             if t['route_id'] in LINES and t['service_id'] in svc}
+    rows = defaultdict(list)
+    for r in table(z, 'stop_times.txt'):
+        if r['trip_id'] in tinfo and r['arrival_time']:
+            h, m, s = (int(x) for x in r['arrival_time'].split(':'))
+            rows[r['trip_id']].append((int(r['stop_sequence']), r['stop_id'], h * 60 + m + s / 60))
+    want = {v[2] for v in tinfo.values()}
+    pts = defaultdict(list)
+    for r in table(z, 'shapes.txt'):
+        if r['shape_id'] in want:
+            pts[r['shape_id']].append((int(r['shape_pt_sequence']), float(r['shape_pt_lon']), float(r['shape_pt_lat'])))
+    shape = {k: [(x, y) for _, x, y in sorted(v)] for k, v in pts.items()}
+    parent = lambda sid: stopinfo[sid].get('parent_station') or sid
+    ll = lambda sid: (float(stopinfo[sid]['stop_lon']), float(stopinfo[sid]['stop_lat']))
+    st_ix, stations, seg, pats, pat_ix, out = {}, [], {}, [], {}, []
+    for tid, rs in rows.items():
+        rid, dirn, shp = tinfo[tid]
+        rs.sort()
+        run, runs = [], []
+        for _, sid, m in rs:                               # the stretch of the trip on the map, station by station
+            if inbox(*ll(parent(sid))):
+                run.append((sid, m))
+            elif run:
+                runs.append(run); run = []
+        if run:
+            runs.append(run)
+        for run in runs:
+            if len(run) < 2:
+                continue
+            ids = []
+            for sid, _ in run:
+                p = parent(sid)
+                if p not in st_ix:
+                    st_ix[p] = len(stations)
+                    stations.append({'id': p, 'n': stopinfo[p]['stop_name'], 'p': xy(*ll(p))})
+                ids.append(st_ix[p])
+            for (a, _), (b, _), ia, ib in zip(run, run[1:], ids, ids[1:]):
+                k = f'{ia}-{ib}'
+                if k not in seg and f'{ib}-{ia}' not in seg and shape.get(shp):
+                    path = piece(shape[shp], ll(a), ll(b))
+                    if path:
+                        seg[k] = [xy(*q) for q in simplify(path, 0.00003)]
+            t0 = run[0][1]
+            key = (LINES.index(rid), int(dirn), tuple(ids), tuple(round((m - t0) * 4) / 4 for _, m in run))
+            if key not in pat_ix:
+                pat_ix[key] = len(pats)
+                pats.append([key[0], key[1], list(key[2]), list(key[3])])
+            out.append([pat_ix[key], round(t0, 2)])
+    out.sort(key=lambda t: t[1])
+    # riders by station, line, direction and hour (hours 0-3 a.m. are the end of the service day: 24-27)
+    path = cached('mbta-rail-ridership-fall-2025.csv', RAIL_RIDERS, quiet=True)
+    tot = defaultdict(lambda: [0.0, 0.0, 0.0])
+    with open(path, encoding='utf-8-sig') as f:
+        for r in csv.DictReader(f):
+            if r['day_type_name'] != 'Weekday' or r['parent_station'] not in st_ix or r['route_id'] not in LINES:
+                continue
+            days = float(r['number_service_days'] or 0)
+            if not days:
+                continue
+            dirn = next((d for (rr, d), nm in dname.items() if rr == r['route_id'] and nm == r['dir_id']), None)
+            if dirn is None:
+                continue
+            h = int(r['hour_of_service'][:2])
+            h += 24 if h < 4 else 0
+            v = tot[(st_ix[r['parent_station']], LINES.index(r['route_id']), int(dirn), h)]
+            v[0] += float(r['total_ons'] or 0) / days; v[1] += float(r['total_offs'] or 0) / days; v[2] += float(r['average_flow'] or 0)
+    riders = defaultdict(list)
+    for (s, li, dirn, h), (on, off, flow) in sorted(tot.items()):
+        if on or off or flow:
+            riders[f'{s}|{li}|{dirn}'].append([h, round(on * 10), round(off * 10), round(flow * 10)])
+    data = {'day': ds, 'lines': [[k, RAPID[k]] for k in LINES], 'st': [{'n': s['n'], 'p': s['p']} for s in stations],
+            'seg': seg, 'pats': pats, 'trips': out, 'riders': riders}
+    ons = sum(v[0] for v in tot.values())
+    print(f'  trains: {len(out)} weekday trips on the map ({ds}), {len(pats)} patterns, {len(stations)} stations, '
+          f'{len(seg)} track pieces; {ons:,.0f} weekday boardings at those stations; '
+          f'{len(json.dumps(data, separators=(",", ":"))) // 1024} KB', file=sys.stderr)
+    return data
+
+
 def main():
     routes = somerville_routes()
     print('routes:', ', '.join(routes))
@@ -572,13 +671,13 @@ def main():
     with open(os.path.join(OUT, 'trips.html'), 'w') as f:
         f.write(page)
     shutil.copy(os.path.join(OUT, 'trips.html'), os.path.join(ROOT, 'docs', 'bus-trips.html'))
-    pulse(by_day['Wkdy'], offset, sched, ix, rdi, stops, rshapes, rapid, towns, water, season, feed)
+    pulse(by_day['Wkdy'], offset, sched, ix, rdi, stops, rshapes, rapid, towns, water, season, feed, trains(z, stopinfo, xy, box, feed))
     pairs = sum(len(v) for d in flows.values() for v in d.values())
     print(f'{season}: {len(stops)} stops, {len(rshapes)} routes, {len(towns)} towns, {pairs} stop pairs; '
           f'riders a day: ' + ', '.join(f'{DAYS[d]} {totals[d]:,}' for d in DAYS) + f'; page {len(page) // 1024} KB')
 
 
-def pulse(day_trips, offset, sched, ix, rdi, stops, rshapes, rapid, towns, water, season, feed):
+def pulse(day_trips, offset, sched, ix, rdi, stops, rshapes, rapid, towns, water, season, feed, rail):
     """The pulse page: every weekday trip on these routes, stop by stop, with the minutes from the trip's start (the
     schedule's usual ones) and its riders getting on and off. Trips that share a route, direction, stops and times
     share a pattern. Writes output/pulse.html, copied to ../../docs/bus-pulse.html."""
@@ -601,7 +700,7 @@ def pulse(day_trips, offset, sched, ix, rdi, stops, rshapes, rapid, towns, water
     trips_out.sort(key=lambda t: t[1])
     data = {'season': season, 'feed': feed, 'routes': rshapes, 'rapid': rapid, 'towns': towns, 'water': water,
             'stops': [{'n': s['n'], 't': s['t'], 'p': s['p'], 'd': s['d']} for s in stops],
-            'rd': [k for k in sorted(rdi, key=rdi.get)], 'pats': pats, 'trips': trips_out}
+            'rd': [k for k in sorted(rdi, key=rdi.get)], 'pats': pats, 'trips': trips_out, 'rail': rail}
     data['rd'] = [[next(i for i, r in enumerate(rshapes) if r['id'] == rid), int(dirn)] for rid, dirn in data['rd']]
     with open(os.path.join(HERE, 'pulse_template.html')) as f:
         page = f.read().replace('/*DATA*/null', json.dumps(data, separators=(',', ':')))

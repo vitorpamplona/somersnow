@@ -66,6 +66,9 @@ body.xmas .hud h1{color:#FFE9B8;text-shadow:0 0 18px rgba(255,196,92,.55)}
 #buses i{display:inline-block;width:9px;height:9px;border-radius:50%;background:#fff;box-shadow:0 0 6px 2px rgba(169,196,228,.8)}
 #buses[aria-pressed=false]{color:var(--ice);border-style:dashed}
 #buses[aria-pressed=false] i{background:none;box-shadow:none;border:1.5px solid var(--ice)}
+#trains i{display:inline-block;width:14px;height:6px;border-radius:3px;background:linear-gradient(90deg,#DA291C,#ED8B00,#00843D)}
+#trains[aria-pressed=false]{color:var(--ice);border-style:dashed}
+#trains[aria-pressed=false] i{background:none;border:1.5px solid var(--ice)}
 #holiday svg{width:16px;height:16px;fill:currentColor}
 #holiday[aria-pressed=true]{background:#FFE9B8;color:#5A2A00;border-color:#FFE9B8;box-shadow:0 0 14px rgba(255,196,92,.6)}
 .speed button{border:0;background:none;border-radius:8px;height:34px;min-width:40px;padding:0 8px}
@@ -104,19 +107,21 @@ body.xmas .hud h1{color:#FFE9B8;text-shadow:0 0 18px rgba(255,196,92,.55)}
 <main class="stage" id="stage">
   <canvas id="base" aria-hidden="true"></canvas>
   <canvas id="trail" aria-hidden="true"></canvas>
-  <canvas id="top" role="img" aria-label="Animated map of Somerville and its neighbors: buses move along their routes through a weekday, and stops flash orange when riders get on and blue when they get off."></canvas>
+  <canvas id="top" role="img" aria-label="Animated map of Somerville and its neighbors: buses and Red, Orange, Green and Blue Line trains move along their routes through a weekday, and stops and stations flash orange when riders get on and blue when they get off."></canvas>
   <div id="tip"></div>
   <div class="hud">
     <h1 id="h1">Somerville's pulse</h1>
-    <p class="sub" id="sub">A weekday on its buses.</p>
+    <p class="sub" id="sub">A weekday on its buses and trains.</p>
     <div class="clock" aria-live="off"><span id="clock">5:00</span><small id="ampm">a.m.</small></div>
     <div class="stats">
       <div><b id="aboard">0</b>on a bus now</div>
       <div class="on"><b id="hon">0</b>got on, last hour</div>
       <div class="off"><b id="hoff">0</b>got off, last hour</div>
+      <div id="trainstat"><b id="ontrain">0</b>on a train now</div>
     </div>
     <div class="key">
       <span><i style="width:9px;height:9px;background:#fff;box-shadow:0 0 6px 2px rgba(169,196,228,.8)"></i>A bus (bigger: fuller)</span>
+      <span id="trainkey"><i style="width:14px;height:6px;border-radius:3px;background:linear-gradient(90deg,#DA291C,#ED8B00,#00843D)"></i>A train (bigger: fuller)</span>
       <span><i style="width:10px;height:10px;border:2px solid var(--on)"></i>Getting on</span>
       <span><i style="width:10px;height:10px;border:2px solid var(--off)"></i>Getting off</span>
     </div>
@@ -124,16 +129,17 @@ body.xmas .hud h1{color:#FFE9B8;text-shadow:0 0 18px rgba(255,196,92,.55)}
   <div class="dock">
     <button id="play" aria-label="Pause"><svg viewBox="0 0 20 20" aria-hidden="true"><path id="playicon" d="M5 3h4v14H5zM11 3h4v14h-4z"/></svg></button>
     <div class="wavewrap"><canvas id="wave" tabindex="0" role="slider" aria-label="Time of day" aria-valuemin="0" aria-valuemax="1440" aria-valuenow="300" aria-valuetext="5:00 a.m."></canvas></div>
-    <div class="ctrls"><button id="holiday" class="tog" aria-pressed="false" title="Holiday lights" aria-label="Holiday lights"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.3 5.4 5.7.4-4.4 3.7 1.4 5.6L10 13.6l-5 3 1.4-5.6L2 7.3l5.7-.4z"/></svg><span class="lbl">Holiday lights</span></button><button id="buses" class="tog" aria-pressed="true" title="Show or hide the buses" aria-label="Buses"><i aria-hidden="true"></i><span class="lbl">Buses</span></button><div class="speed" role="group" aria-label="Speed"><button data-s="0" aria-pressed="false">1×</button><button data-s="1" aria-pressed="true">2×</button><button data-s="2" aria-pressed="false">5×</button></div></div>
-    <div class="foot"><span class="long"><span style="color:var(--on)">▲ getting on</span> · <span style="color:var(--off)">▼ getting off</span>, every 5 minutes<span class="wide"> · drag to pick a time</span></span><button id="aboutbtn">How it's made</button></div>
+    <div class="ctrls"><button id="holiday" class="tog" aria-pressed="false" title="Holiday lights" aria-label="Holiday lights"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.3 5.4 5.7.4-4.4 3.7 1.4 5.6L10 13.6l-5 3 1.4-5.6L2 7.3l5.7-.4z"/></svg><span class="lbl">Holiday lights</span></button><button id="buses" class="tog" aria-pressed="true" title="Show or hide the buses" aria-label="Buses"><i aria-hidden="true"></i><span class="lbl">Buses</span></button><button id="trains" class="tog" aria-pressed="true" title="Show or hide the trains and stations" aria-label="Trains"><i aria-hidden="true"></i><span class="lbl">Trains</span></button><div class="speed" role="group" aria-label="Speed"><button data-s="0" aria-pressed="false">1×</button><button data-s="1" aria-pressed="true">2×</button><button data-s="2" aria-pressed="false">5×</button></div></div>
+    <div class="foot"><span class="long"><span style="color:var(--on)">▲ getting on</span> · <span style="color:var(--off)">▼ getting off</span>, on buses, every 5 minutes<span class="wide"> · drag to pick a time</span></span><button id="aboutbtn">How it's made</button></div>
   </div>
   <div id="about" hidden>
     <button class="x" id="aboutx" aria-label="Close">✕</button>
     <h2>How it's made</h2>
     <p>Every weekday trip on the <span id="nroutes">15</span> bus routes that stop in Somerville (<span class="season"></span>), moving at its scheduled times along its route.</p>
     <p>At each stop, riders getting on and off are the MBTA's average counts for that trip. Riders on board are what's left after each stop.</p>
-    <p><b>An estimate:</b> the buses run on schedule here, not as they really ran on any one day. Routes as they ran in <span class="season"></span>.</p>
-    <p style="font-size:13px;color:var(--ice)">Sources: <a href="https://mbta-massdot.opendata.arcgis.com/datasets/8daf4a33925a4df59183f860826d29ee">MBTA bus ridership by trip</a>; <a href="https://www.mbta.com/developers/gtfs">MBTA schedule</a> (<span id="feed"></span>); town outlines: MassGIS; water: MassDEP. Made by the Somerville Pedestrian &amp; Transit Advisory Committee (PTAC). Not an MBTA or City page. <a href="https://github.com/vitorpamplona/somerwalks/tree/main/analysis/bus-trips">Method and code</a>.</p>
+    <p><b>Trains:</b> every weekday Red, Orange, Green and Blue Line trip on the map, at its scheduled times. Each station's riders getting on, off and riding through are the MBTA's average weekday counts for each hour, shared evenly among that hour's trains. Stations glow on a gentler scale than bus stops: they have far more riders.</p>
+    <p><b>An estimate:</b> buses and trains run on schedule here, not as they really ran on any one day. Routes as they ran in <span class="season"></span>.</p>
+    <p style="font-size:13px;color:var(--ice)">Sources: <a href="https://mbta-massdot.opendata.arcgis.com/datasets/8daf4a33925a4df59183f860826d29ee">MBTA bus ridership by trip</a>; <a href="https://mbta-massdot.opendata.arcgis.com/datasets/6494749a29c648018820d0e49636205c">MBTA rail ridership by hour</a> (Fall 2025); <a href="https://www.mbta.com/developers/gtfs">MBTA schedule</a> (<span id="feed"></span>); town outlines: MassGIS; water: MassDEP. Made by the Somerville Pedestrian &amp; Transit Advisory Committee (PTAC). Not an MBTA or City page. <a href="https://github.com/vitorpamplona/somerwalks/tree/main/analysis/bus-trips">Method and code</a>.</p>
   </div>
 </main>
 <script>
@@ -145,7 +151,7 @@ const S = D.stops, N = S.length;
 const THEMES = {
   night: { on: [255, 138, 61], off: [79, 152, 222], bus: '200,222,246', core: '#fff', trail: 'rgba(169,196,228,.55)', bg: '#0B1C2E', town: '#11283F', home: '#163452',
     water: '#07121D', edge: 'rgba(169,196,228,.16)', wire: 'rgba(169,196,228,.13)', lab: ['rgba(169,196,228,.32)', 'rgba(169,196,228,.2)'], outline: '169,196,228', rapid: 0.28,
-    tip: ['#B93D06', '#1F5FA0'], title: "Somerville's pulse", sub: 'A weekday on its buses.' },
+    tip: ['#B93D06', '#1F5FA0'], title: "Somerville's pulse", sub: 'A weekday on its buses and trains.' },
   lights: { on: [255, 72, 72], off: [52, 214, 120], bus: '255,214,120', core: '#FFF4D6', trail: 'rgba(255,205,110,.5)', bg: '#050C15', town: '#0A1624', home: '#0D1D30',
     water: '#03080F', edge: 'rgba(169,196,228,.09)', wire: 'rgba(70,160,100,.32)', lab: ['rgba(255,226,170,.3)', 'rgba(169,196,228,.16)'], outline: '255,196,92', rapid: 0.1,
     tip: ['#C62828', '#1B7F3B'], title: "Somerville's lights", sub: 'A weekday on its buses, lit up.', bulbs: true, snow: true },
@@ -196,6 +202,39 @@ for (let i = 1; i < cumOn.length; i++) { cumOn[i] += cumOn[i - 1]; cumOff[i] += 
 const cumAt = (c, t) => c[Math.max(0, Math.min(c.length - 1, Math.floor(t - T0) + 1))];
 const binMax = Math.max(...binOn, ...binOff);
 
+// ---------- trains: every weekday Red, Orange, Green and Blue Line trip on the map ----------
+// Riders by station, line, direction and hour (the MBTA's weekday averages) are shared evenly among that hour's trains.
+const RL = D.rail, TST = RL ? RL.st : [], NT = TST.length;
+const hexRgb = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+const LRGB = RL ? RL.lines.map((l) => hexRgb(l[1])) : [];
+const TT = [], TEV = [];                               // trains; [minute, station, on, off] at each station stop
+if (RL) {
+  const key = (s, li, dir, h) => `${s}|${li}|${dir}|${h}`;
+  const raw = RL.trips.map(([pi, start]) => { const [li, dir, st, mins] = RL.pats[pi]; const t = mins.map((m) => start + m); return { li, dir, st, t, start: t[0], end: t[t.length - 1], j: 0, prev: null }; });
+  const cnt = new Map(), R = new Map();
+  raw.forEach((r) => r.st.forEach((s, j) => { const k = key(s, r.li, r.dir, Math.floor(r.t[j] / 60)); cnt.set(k, (cnt.get(k) || 0) + 1); }));
+  Object.entries(RL.riders).forEach(([k, v]) => v.forEach(([h, on, off, flow]) => R.set(`${k}|${h}`, [on / 10, off / 10, flow / 10])));
+  raw.forEach((r) => {
+    r.load = r.st.map((s, j) => {
+      const k = key(s, r.li, r.dir, Math.floor(r.t[j] / 60)), v = R.get(k), n = cnt.get(k) || 1;
+      if (!v) return 0;
+      if (v[0] || v[1]) TEV.push([r.t[j], s, v[0] / n, v[1] / n]);
+      return v[2] / n;                                 // riders on board as it leaves
+    });
+    TT.push(r);
+  });
+  TEV.sort((a, b) => a[0] - b[0]);
+}
+const tsegCache = new Map();
+function tseg(a, b) {                                  // the track from station a to station b
+  const k = a + '-' + b; let s = tsegCache.get(k); if (s) return s;
+  let pts = RL.seg[k];
+  if (!pts && RL.seg[b + '-' + a]) pts = RL.seg[b + '-' + a].slice().reverse();
+  if (!pts || pts.length < 2) pts = [TST[a].p, TST[b].p];
+  const cum = [0]; for (let i = 1; i < pts.length; i++) cum.push(cum[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]));
+  s = { pts, cum, len: cum[cum.length - 1] || 1 }; tsegCache.set(k, s); return s;
+}
+
 // ---------- view: Somerville in the middle, pan and zoom ----------
 const stage = $('#stage'), cb = $('#base'), ct = $('#trail'), cx_ = $('#top');
 const gb = cb.getContext('2d'), gt = ct.getContext('2d'), gx = cx_.getContext('2d');
@@ -234,6 +273,7 @@ function drawBase() {
   D.rapid.forEach((r) => { gb.strokeStyle = r.color; gb.globalAlpha = TH.rapid; gb.lineWidth = 2.5 * px; r.paths.forEach((q) => gb.stroke(path(q))); });
   gb.globalAlpha = 1; gb.fillStyle = 'rgba(238,243,247,.22)';
   const sr = 1.1 * px; S.forEach((s) => { gb.beginPath(); gb.arc(s.p[0], s.p[1], sr, 0, 7); gb.fill(); });
+  if (showTrains) { gb.strokeStyle = 'rgba(238,243,247,.45)'; gb.lineWidth = 1.2 * px; TST.forEach((s) => { gb.beginPath(); gb.arc(s.p[0], s.p[1], 2.6 * px, 0, 7); gb.stroke(); }); }
   gb.setTransform(DPR, 0, 0, DPR, 0, 0);
   gb.textAlign = 'center'; gb.font = `800 ${Math.round(13 * Math.min(1.4, zs()))}px 'Barlow Condensed','Barlow Condensed Fallback', Arial Narrow, sans-serif`;
   TOWNLAB.forEach((t) => { gb.fillStyle = TH.lab[t.n === 'Somerville' ? 0 : 1]; gb.fillText(t.n.toUpperCase().split('').join(' '), sx(t.x), sy(t.y)); });
@@ -248,7 +288,8 @@ function sprite(rgb, soft) {
 }
 let SPR_ON, SPR_OFF, SPR_BUS;
 const SPR_BULB = sprite('255,236,190', 0.3);
-function sprites() { SPR_ON = sprite(ONC.join(','), 0.25); SPR_OFF = sprite(OFFC.join(','), 0.25); SPR_BUS = sprite(TH.bus, 0.2); }
+let SPR_LINE = [];
+function sprites() { SPR_ON = sprite(ONC.join(','), 0.25); SPR_OFF = sprite(OFFC.join(','), 0.25); SPR_BUS = sprite(TH.bus, 0.2); SPR_LINE = LRGB.map((c) => sprite(c.join(','), 0.2)); }
 sprites();
 // holiday lights: each stop's bulb twinkles at its own pace; snow drifts down over the map
 const TW = S.map((_, i) => [(i * 2.39996) % 6.2832, 0.5 + ((i * 7919) % 100) / 100]);
@@ -261,11 +302,15 @@ const SPEEDS = [6, 12, 30];                            // minutes of the day per
 let T = 300, speed = 1, playing = !matchMedia('(prefers-reduced-motion: reduce)').matches, evPtr = 0, last = performance.now();
 const eOn = new Float32Array(N), eOff = new Float32Array(N), TAU = 10;   // each stop's glow: riders of the last ~10 minutes
 let ripples = [];
-function lowerBound(t) { let lo = 0, hi = EV.length; while (lo < hi) { const m = (lo + hi) >> 1; if (EV[m][0] <= t) lo = m + 1; else hi = m; } return lo; }
+const tOn = new Float32Array(NT), tOff = new Float32Array(NT);   // each station's glow, the same way
+let tevPtr = 0;
+function lowerBound(t, E = EV) { let lo = 0, hi = E.length; while (lo < hi) { const m = (lo + hi) >> 1; if (E[m][0] <= t) lo = m + 1; else hi = m; } return lo; }
 function seek(t) {
   T = Math.max(T0, Math.min(T1, t)); evPtr = lowerBound(T); eOn.fill(0); eOff.fill(0); ripples = [];
   for (let i = lowerBound(T - 4 * TAU); i < evPtr; i++) { const [te, s, on, off] = EV[i], w = Math.exp(-(T - te) / TAU); eOn[s] += on * w; eOff[s] += off * w; }
-  TR.forEach((r) => { r.j = 0; r.prev = null; });
+  tevPtr = lowerBound(T, TEV); tOn.fill(0); tOff.fill(0);
+  for (let i = lowerBound(T - 4 * TAU, TEV); i < tevPtr; i++) { const [te, s, on, off] = TEV[i], w = Math.exp(-(T - te) / TAU); tOn[s] += on * w; tOff[s] += off * w; }
+  TR.forEach((r) => { r.j = 0; r.prev = null; }); TT.forEach((r) => { r.j = 0; r.prev = null; });
   gt.setTransform(1, 0, 0, 1, 0, 0); gt.clearRect(0, 0, ct.width, ct.height);
 }
 function advance(nt) {
@@ -277,14 +322,21 @@ function advance(nt) {
     if (on >= 0.15) ripples.push({ s, n: on, c: ONC, b: now });
     if (off >= 0.15) ripples.push({ s, n: off, c: OFFC, b: now });
   }
+  while (tevPtr < TEV.length && TEV[tevPtr][0] <= nt) {
+    const [, s, on, off] = TEV[tevPtr++];
+    tOn[s] += on; tOff[s] += off;
+    if (showTrains && on >= 3) ripples.push({ s, n: on / 8, c: ONC, b: now, st: 1 });
+    if (showTrains && off >= 3) ripples.push({ s, n: off / 8, c: OFFC, b: now, st: 1 });
+  }
   if (ripples.length > 900) ripples = ripples.slice(-900);
   const f = Math.exp(-(nt - T) / TAU); for (let i = 0; i < N; i++) { eOn[i] *= f; eOff[i] *= f; }
+  for (let i = 0; i < NT; i++) { tOn[i] *= f; tOff[i] *= f; }
   T = nt;
 }
 
 // ---------- drawing, every frame ----------
 const RIP = 1300;                                      // a ripple lasts this many milliseconds
-let aboard = 0;
+let aboard = 0, onTrain = 0;
 function draw(dt) {
   const now = performance.now(), z = zs();
   // trails: what's there fades, the buses draw on top of it
@@ -315,10 +367,17 @@ function draw(dt) {
     if (a >= 0.03) { const r = (4 + 4.2 * Math.sqrt(a)) * z; gx.globalAlpha = Math.min(0.9, 0.25 + a / 6); gx.drawImage(SPR_ON, x - r, y - r, 2 * r, 2 * r); }
     if (o >= 0.03) { const r = (4 + 4.2 * Math.sqrt(o)) * z; gx.globalAlpha = Math.min(0.9, 0.25 + o / 6); gx.drawImage(SPR_OFF, x - r, y - r, 2 * r, 2 * r); }
   }
-  // ripples: a ring for each bus's riders getting on (orange) or off (blue)
-  ripples = ripples.filter((p) => now - p.b < RIP);
+  // the stations' glow, on a gentler scale (a station has far more riders than a bus stop)
+  if (showTrains) for (let i = 0; i < NT; i++) {
+    const a = tOn[i], o = tOff[i]; if (a < 0.3 && o < 0.3) continue;
+    const x = sx(TST[i].p[0]), y = sy(TST[i].p[1]); if (x < -80 || y < -80 || x > W + 80 || y > H + 80) continue;
+    if (a >= 0.3) { const r = (4 + 1.05 * Math.sqrt(a)) * z; gx.globalAlpha = Math.min(0.55, 0.15 + a / 160); gx.drawImage(SPR_ON, x - r, y - r, 2 * r, 2 * r); }
+    if (o >= 0.3) { const r = (4 + 1.05 * Math.sqrt(o)) * z; gx.globalAlpha = Math.min(0.55, 0.15 + o / 160); gx.drawImage(SPR_OFF, x - r, y - r, 2 * r, 2 * r); }
+  }
+  // ripples: a ring for each bus's riders getting on (orange) or off (blue), and for each train's
+  ripples = ripples.filter((p) => now - p.b < RIP && (!p.st || showTrains));
   ripples.forEach((p) => {
-    const q = (now - p.b) / RIP, x = sx(S[p.s].p[0]), y = sy(S[p.s].p[1]);
+    const q = (now - p.b) / RIP, P = p.st ? TST[p.s].p : S[p.s].p, x = sx(P[0]), y = sy(P[1]);
     if (x < -40 || y < -40 || x > W + 40 || y > H + 40) return;
     gx.globalAlpha = Math.min(1, 0.35 + p.n / 3) * (1 - q) * (1 - q);
     gx.strokeStyle = `rgb(${p.c})`; gx.lineWidth = 1.6;
@@ -342,6 +401,25 @@ function draw(dt) {
     const rad = (1.7 + 0.5 * Math.sqrt(l)) * z;
     gx.globalAlpha = 0.55; gx.drawImage(SPR_BUS, x - rad * 3.2, y - rad * 3.2, rad * 6.4, rad * 6.4);
     gx.globalAlpha = 1; gx.fillStyle = TH.core; gx.beginPath(); gx.arc(x, y, rad, 0, 7); gx.fill();
+  });
+  // the trains, in their line's color (bigger: fuller)
+  onTrain = 0;
+  TT.forEach((r) => {
+    if (T < r.start || T > r.end) { r.prev = null; return; }
+    const t = r.t; while (r.j < t.length - 2 && t[r.j + 1] <= T) r.j++; while (r.j > 0 && t[r.j] > T) r.j--;
+    const j = r.j, l = r.load[j]; onTrain += l;
+    if (!showTrains) { r.prev = null; return; }
+    const f = t[j + 1] > t[j] ? Math.min(1, (T - t[j]) / (t[j + 1] - t[j])) : 1;
+    const w = along(tseg(r.st[j], r.st[j + 1]), f), x = sx(w[0]), y = sy(w[1]), c = LRGB[r.li];
+    if (r.prev && playing) {
+      const d = Math.hypot(x - r.prev[0], y - r.prev[1]);
+      if (d < 140 && d > 0.05) { gt.strokeStyle = `rgba(${c},.28)`; gt.lineWidth = (1.2 + 0.05 * Math.sqrt(l)) * z; gt.beginPath(); gt.moveTo(r.prev[0], r.prev[1]); gt.lineTo(x, y); gt.stroke(); gt.strokeStyle = TH.trail; }
+    }
+    r.prev = [x, y];
+    if (x < -20 || y < -20 || x > W + 20 || y > H + 20) return;
+    const rad = (2.2 + 0.17 * Math.sqrt(l)) * z;
+    gx.globalAlpha = 0.7; gx.drawImage(SPR_LINE[r.li], x - rad * 3.2, y - rad * 3.2, rad * 6.4, rad * 6.4);
+    gx.globalAlpha = 1; gx.fillStyle = `rgb(${c.map((v) => Math.round(v + (255 - v) * 0.2))})`; gx.beginPath(); gx.arc(x, y, rad, 0, 7); gx.fill();
   });
   gx.globalAlpha = 1; gx.globalCompositeOperation = 'source-over';
   if (TH.snow && !STILL) {
@@ -386,7 +464,7 @@ let lastHud = 0;
 function hud(force) {
   const now = performance.now(); if (!force && now - lastHud < 120) return; lastHud = now;
   const [c, ap] = timeText(T); $('#clock').textContent = c; $('#ampm').textContent = ap;
-  $('#aboard').textContent = fmt(aboard);
+  $('#aboard').textContent = fmt(aboard); $('#ontrain').textContent = showTrains ? fmt(onTrain) : '–';
   $('#hon').textContent = fmt(cumAt(cumOn, T) - cumAt(cumOn, T - 60));
   $('#hoff').textContent = fmt(cumAt(cumOff, T) - cumAt(cumOff, T - 60));
   wave.setAttribute('aria-valuenow', Math.round(T)); wave.setAttribute('aria-valuetext', c + ' ' + ap);
@@ -424,6 +502,16 @@ function setBuses(v) {
   if (!playing) draw(0);
 }
 $('#buses').addEventListener('click', () => setBuses(!showBuses));
+// the trains, the stations' glow and their rings on or off
+let showTrains = !!RL;
+function setTrains(v) {
+  showTrains = v && !!RL; $('#trains').setAttribute('aria-pressed', showTrains);
+  $('#trainkey').style.opacity = showTrains ? '' : '.4'; $('#trainstat').style.opacity = showTrains ? '' : '.5';
+  gt.setTransform(1, 0, 0, 1, 0, 0); gt.clearRect(0, 0, ct.width, ct.height);
+  drawBase(); if (!playing) draw(0); hud(true);
+}
+$('#trains').addEventListener('click', () => setTrains(!showTrains));
+if (!RL) { $('#trains').hidden = true; $('#trainstat').hidden = true; $('#trainkey').hidden = true; }
 // holiday lights: a look of its own (and the buses off, so the stops twinkle); #lights in the address opens it
 function setTheme(name) {
   TH = THEMES[name]; ONC = TH.on; OFFC = TH.off; sprites(); ripples = [];
@@ -431,7 +519,7 @@ function setTheme(name) {
   $('#holiday').setAttribute('aria-pressed', name === 'lights');
   $('#h1').textContent = TH.title; $('#sub').textContent = TH.sub;
   if (TH.snow) makeSnow();
-  drawBase(); setBuses(name !== 'lights');
+  drawBase(); setBuses(name !== 'lights'); setTrains(name !== 'lights');
   history.replaceState(null, '', name === 'lights' ? '#lights' : location.pathname + location.search);
 }
 $('#holiday').addEventListener('click', () => setTheme(TH === THEMES.lights ? 'night' : 'lights'));
@@ -457,7 +545,7 @@ $('#aboutx').addEventListener('click', () => { $('#about').hidden = true; });
 // pan, pinch and wheel zoom on the map; hover a stop for its last hour
 const top_ = cx_, ptrs = new Map(), tip = $('#tip');
 let drag = null, pinch = null;
-function viewChanged() { drawBase(); gt.setTransform(1, 0, 0, 1, 0, 0); gt.clearRect(0, 0, ct.width, ct.height); TR.forEach((r) => { r.prev = null; }); if (!playing) draw(0); }
+function viewChanged() { drawBase(); gt.setTransform(1, 0, 0, 1, 0, 0); gt.clearRect(0, 0, ct.width, ct.height); TR.forEach((r) => { r.prev = null; }); TT.forEach((r) => { r.prev = null; }); if (!playing) draw(0); }
 function zoomAt(f, px, py) {
   const r = stage.getBoundingClientRect(), mx = px - r.left, my = py - r.top;
   const wx = (mx - W / 2) / view.k + view.x, wy = (my - H / 2) / view.k + view.y;
@@ -496,11 +584,18 @@ top_.addEventListener('wheel', (e) => { e.preventDefault(); zoomAt(Math.exp(-e.d
 top_.addEventListener('dblclick', () => { fit(); viewChanged(); });
 function showTip(cx, cy) {
   const r = stage.getBoundingClientRect(), mx = cx - r.left, my = cy - r.top;
-  let best = -1, bd = 14;
+  let best = -1, bd = 14, stn = -1;
   for (let i = 0; i < N; i++) { const d = Math.hypot(sx(S[i].p[0]) - mx, sy(S[i].p[1]) - my); if (d < bd) { bd = d; best = i; } }
-  if (best < 0) { tip.style.display = 'none'; return; }
-  const [on, off] = lastHour(best);
-  tip.innerHTML = `<b>${esc(S[best].n)}</b>${esc(S[best].t)} · last hour: <span style="color:${TH.tip[0]};font-weight:600">${fmt(on)} on</span>, <span style="color:${TH.tip[1]};font-weight:600">${fmt(off)} off</span>`;
+  if (showTrains) for (let i = 0; i < NT; i++) { const d = Math.hypot(sx(TST[i].p[0]) - mx, sy(TST[i].p[1]) - my); if (d < bd + 2) { bd = d; stn = i; best = -1; } }
+  if (best < 0 && stn < 0) { tip.style.display = 'none'; return; }
+  const counts = (on, off) => `last hour: <span style="color:${TH.tip[0]};font-weight:600">${fmt(on)} on</span>, <span style="color:${TH.tip[1]};font-weight:600">${fmt(off)} off</span>`;
+  if (stn >= 0) {                                      // a T station: its riders in the last hour, all lines
+    let on = 0, off = 0; for (let i = lowerBound(T - 60, TEV), e = lowerBound(T, TEV); i < e; i++) if (TEV[i][1] === stn) { on += TEV[i][2]; off += TEV[i][3]; }
+    tip.innerHTML = `<b>${esc(TST[stn].n)}</b>T station · ${counts(on, off)}`;
+  } else {
+    const [on, off] = lastHour(best);
+    tip.innerHTML = `<b>${esc(S[best].n)}</b>${esc(S[best].t)} · ${counts(on, off)}`;
+  }
   tip.style.display = 'block';
   tip.style.left = Math.min(W - 270, mx + 14) + 'px'; tip.style.top = Math.max(4, my - 50) + 'px';
 }

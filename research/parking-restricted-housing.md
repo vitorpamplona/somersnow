@@ -1,6 +1,6 @@
 # Housing without resident parking permits
 
-Somerville's new housing near the T can't get on-street resident permits. How much housing is that, and how fast is it growing? Researched Nov 11, 2026, from public City records. On the site as "New neighbors near the T" in [Riding transit in Somerville](https://somerwalks.org/transit-trends.html): tiles with these homes from the buildings occupied since 2025 on; the ones not built yet are on the housing pipeline map, each marked as on the list in its tooltip (built 2025–26: 132 homes; under construction 740; planned 79), with the T lines, stations and the bus routes through Somerville, built from [`analysis/transit-trends/restricted_housing.csv`](../analysis/transit-trends/restricted_housing.csv) (this table, with permit numbers and coordinates).
+Somerville's new housing near the T can't get on-street resident permits. How much housing is that, and how fast is it growing? Researched Nov 11, 2026, from public City records. On the site as "New neighbors near the T" in [Riding transit in Somerville](https://somerwalks.org/transit-trends.html): tiles with these homes from the buildings occupied since 2025 on; the ones not built yet are on the housing pipeline map, each marked as on the list in its tooltip (built 2025–26: 132 homes; under construction 740; planned 79), built from [`analysis/transit-trends/restricted_housing.csv`](../analysis/transit-trends/restricted_housing.csv) (this table, with permit numbers and coordinates).
 
 ## The rule
 

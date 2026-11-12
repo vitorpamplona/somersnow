@@ -865,7 +865,7 @@ def homes_in(text):
     t = re.sub(r'(?:spaces|spots)\s*\(\d+\)', ' ', t)
     best = 0
     for m in re.finditer(r'(\d{1,3})\s*[-–]?\s*(?:new\s+)?(?:residential\s+|dwelling\s+|apartment\s+|condo(?:minium)?\s+|rental\s+|'
-                         r'affordable\s+|housing\s+)*(?:units?|apartments|dus\b|dwellings|condos)', t):
+                         r'affordable\s+|housing\s+)*(?:units?|apartments?\b|dus\b|dwellings|condos)', t):
         best = max(best, int(m.group(1)))
     for m in re.finditer(r'\((\d{1,3})\)\s*(?:dwelling|residential)?\s*units?', t):
         best = max(best, int(m.group(1)))
@@ -910,7 +910,8 @@ def city_projects():
             co[addr(r)].append(r)
     out = []
     for a, rs in bp.items():
-        live = [r for r in rs if r.get('status') not in ('Withdrawn', 'Denied', 'Expired')]
+        live = [r for r in rs if r.get('status') not in ('Withdrawn', 'Denied', 'Expired')
+                and not (r.get('status') == 'Closed' and not r.get('issue_date'))]   # closed, never issued: a dead plan
         desc = [r.get('project_description_or_business_name') or '' for r in live]
         if not live or any('hotel' in x.lower() for x in desc):
             continue

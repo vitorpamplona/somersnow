@@ -93,6 +93,8 @@ select{font:600 14px var(--body);color:var(--snow);background:var(--panel);borde
 .card svg{display:block;width:100%;height:auto;margin:6px 0 2px;overflow:visible}
 .tiles.five{grid-template-columns:repeat(5,minmax(0,1fr));margin:12px 0 4px}
 .tiles.five .v{font-size:30px}
+.park{margin:4px 0 12px;font-size:15px;color:var(--ice);max-width:820px}
+.park b{color:var(--snow)}
 .tile .k span{display:block;color:var(--ink3);font-size:12px}
 @media (max-width:960px){.tiles.five{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .zoom{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin:0 0 10px}
@@ -227,21 +229,16 @@ thead th{color:var(--ice);font-weight:600}
     <p class="note">Thin lines: each weekday departure in Fall 2025 (riders as the MBTA counted them over the fall, Monday–Thursday; speeds as its median over September to November). Thick: the average riders, and the median speed of every run. Peak: the average at its fullest, 2019 → 2025. Over 36: departures that pass 36 seats, an MBTA 40-foot bus (dashed). mph: the whole route's distance over its time, stops and red lights included; the MBTA records times only at timing stops, a few per route. Shaded: inside Somerville.</p>
   </section>
 
-  <section aria-labelledby="h-homes">
-    <h2 id="h-homes">New neighbors near the T</h2>
-    <p class="sub" id="sub-homes">New homes within ½ mile of the Red, Orange or Green Line can't get resident parking permits.</p>
-    <div class="tiles three" id="tiles-homes"></div>
-    <p class="note" id="n-homes"></p>
-  </section>
-
   <section aria-labelledby="h-pipe">
     <h2 id="h-pipe">What's coming: the housing pipeline</h2>
     <p class="sub" id="sub-pipe">New homes being built, in permitting and planned, and the vacant lots that could take more, with the T and the buses. Each project is drawn as its lot.</p>
     <div class="tiles five" id="tiles-pipe"></div>
+    <p class="park" id="park-pipe"></p>
     <div class="legend" id="leg-pipe"></div>
     <div class="zoom" id="zoom-pipe"></div>
     <div class="mapwrap"><div class="chart pmap" id="c-pipe" tabindex="0" aria-describedby="hint-pipe"></div></div>
     <p class="note" id="n-pipe"></p>
+    <p class="note" id="n-homes"></p>
   </section>
 
   <details class="table">
@@ -648,11 +645,11 @@ const ppl = (u) => HM.hh ? Math.round(u * HM.hh[1] / 10) * 10 : null;
 const recent = (x) => x.s !== 'built' || +String(x.o).slice(0, 4) >= HM.from;   // built from HM.from on, plus what's coming
 function homes() {
   const old = HM.list.filter((x) => x.u && !recent(x));
-  $('#sub-homes').textContent = `New homes within ½ mile of the Red, Orange or Green Line can't get resident parking permits. The City's list: built since ${HM.from}, under construction and planned.`;
   const sum = (st) => HM.list.filter((x) => x.s === st && recent(x)).reduce((a, x) => a + (x.u || 0), 0);
-  $('#tiles-homes').innerHTML = ['built', 'under construction', 'planned'].map((st) => `<div class="tile"><div class="k">${st === 'built' ? `Built since ${HM.from}` : HST[st]}</div><div class="v">${fmt(sum(st))}</div><div class="s">homes${HM.hh ? `, about ${fmt(ppl(sum(st)))} people` : ''}</div></div>`).join('');
+  const coming = sum('under construction') + sum('planned');           // one line under the pipeline's tiles
+  $('#park-pipe').innerHTML = `<b>No resident parking:</b> ${fmt(coming)} of these homes can't get resident or guest parking permits (${fmt(sum('under construction'))} being built, ${fmt(sum('planned'))} planned${HM.hh ? `; about ${fmt(ppl(coming))} people` : ''}). They're on the City's list for new buildings near the T. ${fmt(sum('built'))} more on it were built since ${HM.from}. Listed projects say so when you hover or tap them.`;
   const unk = HM.list.filter((x) => !x.u).map((x) => x.a);
-  $('#n-homes').textContent = `Homes from each project's building permit and certificate of occupancy; the list (Schedule W) is the City's as of ${HM.asof || 'May 5, 2026'}.${HM.hh ? ` People: homes × ${HM.hh[1]}, the average Somerville renter household (survey, ${HM.hh[0]}), an estimate.` : ''} The ones not built yet are on the housing map below; hover or tap one and it says so.${old.length ? ` Left out, occupied before ${HM.from}: ${old.map((x) => `${x.a} (${x.u})`).join(', ')}, ${fmt(old.reduce((a, x) => a + x.u, 0))} homes.` : ''}${unk.length ? ` Not counted: ${unk.join(', ')} (no permit found).` : ''}`;
+  $('#n-homes').textContent = `No resident parking: the City's list (Schedule W, as of ${HM.asof || 'May 5, 2026'}), for buildings with a first building permit on or after Jan 15, 2020; homes from each project's building permit and certificate of occupancy; every address is in the table under All the numbers.${HM.hh ? ` People: homes × ${HM.hh[1]}, the average Somerville renter household (survey, ${HM.hh[0]}), an estimate.` : ''}${old.length ? ` Left out, occupied before ${HM.from}: ${old.map((x) => `${x.a} (${x.u})`).join(', ')}, ${fmt(old.reduce((a, x) => a + x.u, 0))} homes.` : ''}${unk.length ? ` Not counted: ${unk.join(', ')} (no permit found).` : ''}`;
 }
 
 // ---------- the housing pipeline: a map you can zoom ----------
@@ -1155,7 +1152,7 @@ function table() {
       .map(([n, f]) => `<tr><td>${esc(n)}</td>${WY.map((y) => { const v = f(y); return `<td>${v == null ? '—' : typeof v === 'string' ? v : fmt(v)}</td>`; }).join('')}</tr>`).join('') + '</tbody></table>';
 }
 
-function all() { decade(); back(); stations(); bikes(); routes(); map(); full(); homes(); pipe(); hours(); work(); }
+function all() { decade(); back(); stations(); bikes(); routes(); map(); full(); pipe(); homes(); hours(); work(); }
 tiles(); table(); all();
 let rz, lastW = innerWidth; addEventListener('resize', () => { if (innerWidth === lastW) return; lastW = innerWidth; clearTimeout(rz); rz = setTimeout(all, 150); });
 if (document.fonts) document.fonts.ready.then(all);

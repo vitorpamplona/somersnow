@@ -235,7 +235,7 @@ thead th{color:var(--ice);font-weight:600}
 
   <section aria-labelledby="h-pipe">
     <h2 id="h-pipe">What's coming: the housing pipeline</h2>
-    <p class="sub" id="sub-pipe">New homes being built, in permitting and planned, and the vacant lots that could take more, with the T and the buses. Sized by homes.</p>
+    <p class="sub" id="sub-pipe">New homes being built, in permitting and planned, and the vacant lots that could take more, with the T and the buses. Each project is drawn as its lot.</p>
     <div class="tiles five" id="tiles-pipe"></div>
     <div class="legend" id="leg-pipe"></div>
     <div class="zoom" id="zoom-pipe"></div>
@@ -704,7 +704,7 @@ function homes() {
 const PP = D.pipe, PCOL = '#EEF3F7', LOTC = '#E8B84A';
 const PT = { c: 'Under construction', p: 'In permitting', m: 'Planned', f: 'Long range', s: 'Site, homes not set' };
 const PV = { z: 1, cx: null, cy: null };                      // the view: zoom and centre, in map metres
-const PZMAX = 12, LOTZ = 2.2;                                // zoomed in this far, projects show as their lots
+const PZMAX = 12;
 const nearSta = (x, y) => HM.sta.reduce((b, s) => { const d = Math.hypot(s[0] - x, s[1] - y); return d < b[0] ? [d, s[2]] : b; }, [Infinity, '']);
 const half = (x, y) => nearSta(x, y)[0] <= 805;
 const lotXY = (l) => l.r[0][0];
@@ -727,7 +727,6 @@ function pipe() {
   const NS = 'vector-effect="non-scaling-stroke"';
   let base = '';                                              // drawn once in map metres, moved with a transform
   D.towns.forEach((t) => { base += `<path d="${t.rings.map(pathOf).join('')}" fill="${t.n === 'Somerville' ? '#163452' : '#11283F'}" stroke="rgba(169,196,228,.28)" stroke-width="1.2" ${NS}/>`; });
-  HM.sta.forEach(([x, y]) => { base += `<circle cx="${x}" cy="${y}" r="805" fill="rgba(169,196,228,.05)" stroke="rgba(169,196,228,.25)" stroke-width="1" stroke-dasharray="3 4" ${NS}/>`; });
   HM.bus.forEach((ln) => { base += `<path d="M${ln.map((p) => p.join(',')).join('L')}" fill="none" stroke="${C.bus}" stroke-opacity=".5" stroke-width="1.6" stroke-linejoin="round" ${NS}/>`; });
   Object.entries(HM.rail).forEach(([n, ln]) => { base += `<path d="M${ln.map((p) => p.join(',')).join('L')}" fill="none" stroke="${LINEC[n]}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" ${NS}/>`; });
   PP.lots.forEach((l, i) => { base += `<path class="pl" data-l="${i}" d="${l.r.map(pathOf).join('')}" fill="${LOTC}" fill-opacity=".6" stroke="${LOTC}" stroke-width="1.5" stroke-linejoin="round" ${NS}/>`; });
@@ -757,7 +756,7 @@ function pipe() {
     const grow = 1 + 0.3 * Math.log2(PV.z), vis = (x, y, r) => x > -r && x < w + r && y > -r && y < h + r;
     let g = '';
     HM.sta.forEach(([x, y]) => { g += `<circle cx="${sx(x)}" cy="${sy(y)}" r="${4 + PV.z * 0.3}" fill="${SURF}" stroke="#EEF3F7" stroke-width="2" pointer-events="none"/>`; });
-    const lots = PV.z >= LOTZ, asLot = (x) => lots && x.lc;
+    const asLot = (x) => !!x.lc;                                    // every project is its lot; a circle only where the lot isn't known
     PP.p.forEach((x, i) => { const X = sx(x.xy[0]), Y = sy(x.xy[1]), r = rad(x.u) * grow; if (!asLot(x) && vis(X, Y, r)) g += `<circle class="pp" data-i="${i}" cx="${X}" cy="${Y}" r="${r}" ${STY[x.t]}/>`; });
     const boxes = [], circ = PP.p.map((x) => asLot(x) ? [sx(x.lc[0]), sy(x.lc[1]), Math.max(3, x.lc[2] * S())] : [sx(x.xy[0]), sy(x.xy[1]), rad(x.u) * grow]);
     const fits = (b) => b[0] > 2 && b[2] < w - 2 && b[1] > 2 && b[3] < h - 2 && !boxes.some((q) => b[0] < q[2] && b[2] > q[0] && b[1] < q[3] && b[3] > q[1]);
@@ -907,13 +906,13 @@ function pipe() {
     else if (e.key === '-' || e.key === '_') { zoomAt(0.5, w / 2, h / 2, true); e.preventDefault(); }
   };
   draw();
-  $('#leg-pipe').innerHTML = `<span><i style="background:${PCOL};border-radius:50%"></i>Under construction</span><span><i class="ring" style="border-color:${PCOL};background:rgba(238,243,247,.22)"></i>In permitting</span><span><i class="ring" style="border-color:${PCOL};border-style:dashed"></i>Planned</span><span><i class="ring" style="border-color:rgba(238,243,247,.7);border-style:dotted"></i>Long range</span><span><i class="ring" style="border-color:${C.bus};border-style:dashed;background:rgba(79,152,222,.15)"></i>Site, homes not set</span><span><i style="background:${LOTC};opacity:.8"></i>Buildable vacant lot</span><span><i class="line" style="background:${C.bus};opacity:.7"></i>Bus routes</span><span><i class="ring" style="border-color:rgba(169,196,228,.5);border-style:dashed"></i>½ mile from a station</span><span>Zoom in to see each project's lot.</span>`;
+  $('#leg-pipe').innerHTML = `<span><i style="background:${PCOL}"></i>Under construction</span><span><i class="ring" style="border-radius:2px;border-color:${PCOL};background:rgba(238,243,247,.22)"></i>In permitting</span><span><i class="ring" style="border-radius:2px;border-color:${PCOL};border-style:dashed"></i>Planned</span><span><i class="ring" style="border-radius:2px;border-color:rgba(238,243,247,.7);border-style:dotted"></i>Long range</span><span><i class="ring" style="border-radius:2px;border-color:${C.bus};border-style:dashed;background:rgba(79,152,222,.15)"></i>Site, homes not set</span><span><i style="background:${LOTC};opacity:.8"></i>Buildable vacant lot</span><span><i class="line" style="background:${C.bus};opacity:.7"></i>Bus routes</span><span><i class="ring" style="border-color:${PCOL};border-style:dashed"></i>Lot not known yet</span>`;
   const why = (s) => PP.drop.filter((x) => x.why.startsWith(s));
   const same = why('same site'), stale = why('not updated'), zon = why('a zoning'), prog = why('a program'), inP = why('in the City');
   $('#n-pipe').innerHTML = `<b>Under construction and in permitting:</b> the City's permit applications (as of ${PP.asof}): every "New Construction" building permit applied for since ${PP.from} whose description gives a number of homes, grouped by address. Under construction: a building permit issued (often for the foundation first) and no residential certificate of occupancy yet. In permitting: applied for, none issued. Homes are what the permit says; a final building can differ. Hotels left out, and ${PP.closed} projects whose permit closed with no certificate. `
     + `<b>Public and nonprofit sites</b> the permits don't have yet, checked by hand from the City's pages: ${PP.p.filter((x) => x.note).map((x) => `${esc(x.a)} (${x.u ? `${fmt(x.u)} homes` : 'homes not set'})`).join(', ')}. `
     + `<b>Planned and long range:</b> MAPC's MassBuilds (updated to ${PP.mbup}), what isn't completed yet. It's kept by volunteers and can be out of date: some of its "in construction" entries have no City building permit, so they're shown as planned. Left out: ${inP.length + same.length} already in the City's permits${same.length ? ` (${same.map((x) => `${esc(x.n)}, ${x.u} homes`).join('; ')}: same site)` : ''}, ${zon.length} zoning scenarios, ${prog.length} program over many sites and ${stale.length} entries not updated in four years; the list is under All the numbers. `
-    + `<b>Vacant lots:</b> MassGIS property tax parcels (Somerville assessor, FY${PP.fy}), the codes for vacant land that's developable or potentially so (residential, commercial, industrial); undevelopable and City-owned lots left out. Zoomed in, each project shows as its lot (the parcels on its permits, or the parcel under MassBuilds' point; ${PP.p.filter((x) => !x.lot && x.on == null).length} without one stay circles). Circles are straight-line ½ miles; walks are longer.`;
+    + `<b>Vacant lots:</b> MassGIS property tax parcels (Somerville assessor, FY${PP.fy}), the codes for vacant land that's developable or potentially so (residential, commercial, industrial); undevelopable and City-owned lots left out. Each project is drawn as its lot: the parcels on its permits, or the parcel under MassBuilds' point. ${PP.p.filter((x) => !x.lot && x.on == null).length} whose lot isn't known yet are circles: ${PP.p.filter((x) => !x.lot && x.on == null).map((x) => esc(x.a)).join(', ')}. "Within ½ mile" is a straight line to a Red, Orange or Green Line station; walks are longer.`;
 }
 
 // ---------- 5. map ----------

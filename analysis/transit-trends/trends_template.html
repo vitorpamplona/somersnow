@@ -107,7 +107,10 @@ select{font:600 14px var(--body);color:var(--snow);background:var(--panel);borde
 .mapctl button:focus-visible{outline:2px solid var(--orange);outline-offset:-2px}
 .pmap.drag{cursor:grabbing}
 .pmap:focus-visible{outline:2px solid var(--orange);outline-offset:-2px}
-.pmap svg{overflow:hidden}
+.pmap svg{overflow:hidden;position:relative}
+.pmap canvas{position:absolute;left:0;top:0;pointer-events:none}
+.osm{position:absolute;left:8px;bottom:6px;font-size:11px;color:var(--ink3);background:rgba(11,28,46,.75);padding:1px 6px;border-radius:4px}
+.osm a{color:var(--ice)}
 .mapwrap{background:#0B1C2E;border-radius:14px;overflow:hidden}
 details.table{margin-top:36px}
 details summary{cursor:pointer;font:800 22px var(--display);text-transform:uppercase;letter-spacing:.5px}
@@ -260,7 +263,7 @@ thead th{color:var(--ice);font-weight:600}
       <li><b>Averages:</b> the MBTA's counts are each fall's average day, from the trips and days it counted.</li>
       <li><b>Housing pipeline:</b> homes from each project's building permit application (City of Somerville), what isn't permitted yet from MAPC's MassBuilds, less what's already in the permits, and vacant lots from the assessor's parcels (MassGIS). A permit's homes can change before the building opens.</li>
     </ul>
-    <p class="src">Sources: <a href="https://mbta-massdot.opendata.arcgis.com/datasets/8daf4a33925a4df59183f860826d29ee">MBTA bus ridership by trip, season, route and stop</a>; <a href="https://mbta-massdot.opendata.arcgis.com/datasets/9fea7862501f4c59ab2c001ad6ae19b0">MBTA rail ridership</a> (2017–2019) and the <a href="https://mbta-massdot.opendata.arcgis.com/datasets/80a379ebaa374cfd836ca4d3880ceda4">Fall 2023</a>, <a href="https://mbta-massdot.opendata.arcgis.com/datasets/8f20b4e8d24e466fbca157cca63f6e16">Fall 2024</a> and <a href="https://mbta-massdot.opendata.arcgis.com/datasets/6494749a29c648018820d0e49636205c">Fall 2025</a> rail files; the <a href="https://cdn.mbta.com/archive/archived_feeds.txt">MBTA schedule archive</a>; <a href="https://bluebikes.com/system-data">Bluebikes system data</a>; <a href="https://data.census.gov/table/ACSDT1Y2024.B08006?g=160XX00US2562535">American Community Survey</a>; <a href="https://lehd.ces.census.gov/data/">LEHD LODES</a>; <a href="https://www.mass.gov/info-details/massgis-data-municipalities">MassGIS</a>; the City's <a href="https://data.somervillema.gov/d/nneb-s3f7">permit applications</a> and <a href="https://www.somervillema.gov/departments/parking-department">Schedule W</a>; MAPC's <a href="https://www.massbuilds.com/">MassBuilds</a>; <a href="https://www.mass.gov/info-details/massgis-data-property-tax-parcels">MassGIS property tax parcels</a>. By the Somerville Pedestrian &amp; Transit Advisory Committee (PTAC). Not an MBTA or City page. <a href="https://github.com/vitorpamplona/somerwalks/tree/main/analysis/transit-trends">Method and code</a>.</p>
+    <p class="src">Sources: <a href="https://mbta-massdot.opendata.arcgis.com/datasets/8daf4a33925a4df59183f860826d29ee">MBTA bus ridership by trip, season, route and stop</a>; <a href="https://mbta-massdot.opendata.arcgis.com/datasets/9fea7862501f4c59ab2c001ad6ae19b0">MBTA rail ridership</a> (2017–2019) and the <a href="https://mbta-massdot.opendata.arcgis.com/datasets/80a379ebaa374cfd836ca4d3880ceda4">Fall 2023</a>, <a href="https://mbta-massdot.opendata.arcgis.com/datasets/8f20b4e8d24e466fbca157cca63f6e16">Fall 2024</a> and <a href="https://mbta-massdot.opendata.arcgis.com/datasets/6494749a29c648018820d0e49636205c">Fall 2025</a> rail files; the <a href="https://cdn.mbta.com/archive/archived_feeds.txt">MBTA schedule archive</a>; <a href="https://bluebikes.com/system-data">Bluebikes system data</a>; <a href="https://data.census.gov/table/ACSDT1Y2024.B08006?g=160XX00US2562535">American Community Survey</a>; <a href="https://lehd.ces.census.gov/data/">LEHD LODES</a>; <a href="https://www.mass.gov/info-details/massgis-data-municipalities">MassGIS</a>; the City's <a href="https://data.somervillema.gov/d/nneb-s3f7">permit applications</a> and <a href="https://www.somervillema.gov/departments/parking-department">Schedule W</a>; MAPC's <a href="https://www.massbuilds.com/">MassBuilds</a>; streets, parks, water and buildings under the housing map © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors (ODbL); <a href="https://www.mass.gov/info-details/massgis-data-property-tax-parcels">MassGIS property tax parcels</a>. By the Somerville Pedestrian &amp; Transit Advisory Committee (PTAC). Not an MBTA or City page. <a href="https://github.com/vitorpamplona/somerwalks/tree/main/analysis/transit-trends">Method and code</a>.</p>
   </details>
 </main>
 <div id="tip" role="tooltip"></div>
@@ -716,6 +719,68 @@ function pipeTiles() {
   $('#tiles-pipe').innerHTML = 'cpmf'.split('').map((t) => `<div class="tile"><div class="k">${k[t]}</div><div class="v">${fmt(hom(by(t)))}</div><div class="s">homes, ${by(t).length} ${t === 'f' ? 'sites' : 'projects'} · ${pc(by(t))}% within ½ mile of a station</div></div>`).join('')
     + `<div class="tile"><div class="k">Buildable vacant lots <span>(assessor)</span></div><div class="v">${PP.lots.length}</div><div class="s">lots, ${ac.toFixed(0)} acres · ${PP.lots.filter((l) => half(...lotXY(l))).length} within ½ mile</div></div>`;
 }
+// ---------- the base map under the pipeline: OpenStreetMap streets, parks, water, rail, buildings ----------
+// Built by build.py into two files beside the page; drawn on a canvas under the SVG, in map metres.
+const BM = { base: null, bld: null, towns: null, loading: 0, redraw: null };
+const unpack = (a) => { const p = new Path2D(); let x = a[0], y = a[1]; p.moveTo(x, y); for (let i = 2; i < a.length; i += 2) { x += a[i]; y += a[i + 1]; p.lineTo(x, y); } return p; };
+const joined = (list, close) => { const p = new Path2D(); list.forEach((a) => { const q = unpack(a); if (close) q.closePath(); p.addPath(q); }); return p; };
+function loadBase() {
+  if (BM.loading & 1 || !D.base) return; BM.loading |= 1;
+  fetch(D.base.files[0]).then((r) => r.ok ? r.json() : null).then((d) => {
+    if (!d) return;
+    BM.base = { M: joined(d.roads.M), m: joined(d.roads.m), p: joined(d.roads.p), rail: joined(d.rail), green: joined(d.green, true), water: joined(d.water, true), names: d.names };
+    if (BM.redraw) BM.redraw();
+  }).catch(() => {});                                                    // no base map (a file opened from disk): the map works without it
+}
+function loadBuildings() {
+  if (BM.loading & 2 || !D.base) return; BM.loading |= 2;
+  fetch(D.base.files[1]).then((r) => r.ok ? r.json() : null).then((d) => {
+    if (!d) return;
+    BM.bld = { cell: d.cell, g: Object.fromEntries(Object.entries(d.g).map(([k, v]) => [k, joined(v, true)])) };
+    if (BM.redraw) BM.redraw();
+  }).catch(() => {});
+}
+const BLDZ = 2.5;                                                        // buildings from this zoom on (loaded the first time)
+function paint(cv, w, h, s, V, boxes, phone) {
+  const ctx = cv.getContext('2d'), dpr = cv.width / w, z = V.z, ox = w / 2 - V.cx * s, oy = h / 2 - V.cy * s;
+  ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, cv.width, cv.height);
+  ctx.setTransform(dpr * s, 0, 0, dpr * s, dpr * ox, dpr * oy);
+  if (!BM.towns) BM.towns = D.towns.map((t) => [t.n, (() => { const p = new Path2D(); t.rings.forEach((r) => { const q = new Path2D(); q.moveTo(r[0][0], r[0][1]); r.forEach((pt) => q.lineTo(pt[0], pt[1])); q.closePath(); p.addPath(q); }); return p; })()]);
+  BM.towns.forEach(([n, p]) => { ctx.fillStyle = n === 'Somerville' ? '#163452' : '#11283F'; ctx.fill(p); });
+  const B = BM.base, px = (v) => v / s;                                 // a width in screen pixels, in map metres
+  if (B) {
+    ctx.fillStyle = 'rgba(96,170,124,.17)'; ctx.fill(B.green);
+    ctx.fillStyle = '#0B1C2E'; ctx.fill(B.water);
+  }
+  if (z >= BLDZ) {
+    loadBuildings();
+    if (BM.bld) {
+      const c = BM.bld.cell, x0 = Math.floor(-ox / s / c) - 1, x1 = Math.floor((w - ox) / s / c) + 1, y0 = Math.floor(-oy / s / c) - 1, y1 = Math.floor((h - oy) / s / c) + 1;
+      ctx.fillStyle = `rgba(169,196,228,${Math.min(0.16, 0.06 + 0.02 * z)})`;
+      for (let gx = x0; gx <= x1; gx++) for (let gy = y0; gy <= y1; gy++) { const p = BM.bld.g[gx + ',' + gy]; if (p) ctx.fill(p); }
+    }
+  }
+  if (B) {
+    const lz = Math.log2(z); ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    if (z >= 1.6) { ctx.strokeStyle = 'rgba(169,196,228,.13)'; ctx.lineWidth = px(0.8); ctx.setLineDash([px(3), px(3)]); ctx.stroke(B.p); }
+    ctx.setLineDash([px(4), px(3)]); ctx.strokeStyle = 'rgba(169,196,228,.24)'; ctx.lineWidth = px(1.2); ctx.stroke(B.rail); ctx.setLineDash([]);
+    ctx.strokeStyle = 'rgba(169,196,228,.15)'; ctx.lineWidth = px(0.7 + 0.45 * lz); ctx.stroke(B.m);
+    ctx.strokeStyle = 'rgba(169,196,228,.26)'; ctx.lineWidth = px(1.5 + 0.7 * lz); ctx.stroke(B.M);
+    if (z >= (phone ? 4 : 3)) {                                          // street names where they fit, after the projects' labels
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.font = `600 ${phone ? 11 : 11.5}px Barlow, 'Barlow Fallback', Arial, sans-serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(16,36,58,.85)'; ctx.fillStyle = 'rgba(169,196,228,.62)';
+      for (const [n, mx, my, ang] of B.names) {
+        const x = mx * s + ox, y = my * s + oy; if (x < 20 || x > w - 20 || y < 12 || y > h - 12) continue;
+        const tw = ctx.measureText(n).width, a = ang * Math.PI / 180, cw = Math.abs(Math.cos(a)) * tw / 2 + 7, ch = Math.abs(Math.sin(a)) * tw / 2 + 7;
+        const b = [x - cw, y - ch, x + cw, y + ch];
+        if (boxes.some((q) => b[0] < q[2] && b[2] > q[0] && b[1] < q[3] && b[3] > q[1])) continue;
+        boxes.push(b); ctx.save(); ctx.translate(x, y); ctx.rotate(a); ctx.strokeText(n, 0, 0); ctx.fillText(n, 0, 0); ctx.restore();
+      }
+    }
+  }
+}
+
 function pipe() {
   pipeTiles();
   const el = $('#c-pipe'), w = W(el), [MW, MH] = D.size, phone = w < 600, h = Math.round(w * MH / MW), k0 = w / MW;
@@ -726,7 +791,7 @@ function pipe() {
     s: `fill="${C.bus}" fill-opacity=".15" stroke="${C.bus}" stroke-width="2" stroke-dasharray="4 3"` };
   const NS = 'vector-effect="non-scaling-stroke"';
   let base = '';                                              // drawn once in map metres, moved with a transform
-  D.towns.forEach((t) => { base += `<path d="${t.rings.map(pathOf).join('')}" fill="${t.n === 'Somerville' ? '#163452' : '#11283F'}" stroke="rgba(169,196,228,.28)" stroke-width="1.2" ${NS}/>`; });
+  D.towns.forEach((t) => { base += `<path d="${t.rings.map(pathOf).join('')}" fill="none" stroke="rgba(169,196,228,.28)" stroke-width="1.2" ${NS}/>`; });
   HM.bus.forEach((ln) => { base += `<path d="M${ln.map((p) => p.join(',')).join('L')}" fill="none" stroke="${C.bus}" stroke-opacity=".5" stroke-width="1.6" stroke-linejoin="round" ${NS}/>`; });
   Object.entries(HM.rail).forEach(([n, ln]) => { base += `<path d="M${ln.map((p) => p.join(',')).join('L')}" fill="none" stroke="${LINEC[n]}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" ${NS}/>`; });
   PP.lots.forEach((l, i) => { base += `<path class="pl" data-l="${i}" d="${l.r.map(pathOf).join('')}" fill="${LOTC}" fill-opacity=".6" stroke="${LOTC}" stroke-width="1.5" stroke-linejoin="round" ${NS}/>`; });
@@ -741,8 +806,12 @@ function pipe() {
   });
   PP.p.forEach((x) => { if (x.on != null) x.lc = PP.p[x.on].lc; });   // projects that share a lot with a bigger one
   const tot = (t) => PP.p.filter((x) => x.t === t).reduce((s, x) => s + x.u, 0);
-  el.innerHTML = `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" role="img" aria-label="Zoomable map of Somerville's housing pipeline: ${fmt(tot('c'))} homes under construction, ${fmt(tot('p'))} in permitting, ${fmt(tot('m'))} planned and ${fmt(tot('f'))} long range, and ${PP.lots.length} buildable vacant lots, with the T lines, stations and bus routes. The biggest: ${PP.p.slice(0, 4).map((x) => `${x.full || x.a}, ${x.u} homes, ${PT[x.t].toLowerCase()}`).join('; ')}.${PP.p.some((x) => x.t === 's') ? ` Sites with no number of homes yet: ${PP.p.filter((x) => x.t === 's').map((x) => x.full).join('; ')}.` : ''} Every project is in the table under All the numbers."><g id="pb">${base}</g><g id="pf"></g></svg>`;
-  const svg = el.firstChild, gb = svg.querySelector('#pb'), gf = svg.querySelector('#pf');
+  el.innerHTML = `<canvas aria-hidden="true"></canvas><svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" role="img" aria-label="Zoomable map of Somerville's housing pipeline: ${fmt(tot('c'))} homes under construction, ${fmt(tot('p'))} in permitting, ${fmt(tot('m'))} planned and ${fmt(tot('f'))} long range, and ${PP.lots.length} buildable vacant lots, with the T lines, stations and bus routes. The biggest: ${PP.p.slice(0, 4).map((x) => `${x.full || x.a}, ${x.u} homes, ${PT[x.t].toLowerCase()}`).join('; ')}.${PP.p.some((x) => x.t === 's') ? ` Sites with no number of homes yet: ${PP.p.filter((x) => x.t === 's').map((x) => x.full).join('; ')}.` : ''} Every project is in the table under All the numbers."><g id="pb">${base}</g><g id="pf"></g></svg>`;
+  const svg = el.querySelector('svg'), gb = svg.querySelector('#pb'), gf = svg.querySelector('#pf'), cv = el.querySelector('canvas');
+  const dpr = Math.min(2, devicePixelRatio || 1);
+  cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); cv.style.width = w + 'px'; cv.style.height = h + 'px';
+  if (!el.parentNode.querySelector('.osm')) el.parentNode.insertAdjacentHTML('beforeend', '<div class="osm">© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors</div>');
+  loadBase(); BM.redraw = () => redraw();
   const clamp = () => {                                       // like a web map: zoom 1× to PZMAX×; the centre stays on the map
     PV.z = Math.max(1, Math.min(PZMAX, PV.z));
     PV.cx = Math.max(0, Math.min(MW, PV.cx)); PV.cy = Math.max(0, Math.min(MH, PV.cy));
@@ -758,7 +827,7 @@ function pipe() {
     HM.sta.forEach(([x, y]) => { g += `<circle cx="${sx(x)}" cy="${sy(y)}" r="${4 + PV.z * 0.3}" fill="${SURF}" stroke="#EEF3F7" stroke-width="2" pointer-events="none"/>`; });
     const asLot = (x) => !!x.lc;                                    // every project is its lot; a circle only where the lot isn't known
     PP.p.forEach((x, i) => { const X = sx(x.xy[0]), Y = sy(x.xy[1]), r = rad(x.u) * grow; if (!asLot(x) && vis(X, Y, r)) g += `<circle class="pp" data-i="${i}" cx="${X}" cy="${Y}" r="${r}" ${STY[x.t]}/>`; });
-    const boxes = [], circ = PP.p.map((x) => asLot(x) ? [sx(x.lc[0]), sy(x.lc[1]), Math.max(3, x.lc[2] * S())] : [sx(x.xy[0]), sy(x.xy[1]), rad(x.u) * grow]);
+    const boxes = [[w - 58, h - 100, w, h], [0, h - 24, 190, h]], circ = PP.p.map((x) => asLot(x) ? [sx(x.lc[0]), sy(x.lc[1]), Math.max(3, Math.min(12, x.lc[2] * S()))] : [sx(x.xy[0]), sy(x.xy[1]), rad(x.u) * grow]);
     const fits = (b) => b[0] > 2 && b[2] < w - 2 && b[1] > 2 && b[3] < h - 2 && !boxes.some((q) => b[0] < q[2] && b[2] > q[0] && b[1] < q[3] && b[3] > q[1]);
     const cover = (b) => circ.reduce((n, [cx, cy, r]) => n + (r > 5 && r < 80 && cx + r > b[0] && cx - r < b[2] && cy + r > b[1] && cy - r < b[3] ? 1 : 0), 0);
     if (!phone || PV.z > 1.5) HM.sta.forEach(([x, y, n]) => {          // station names first
@@ -787,6 +856,7 @@ function pipe() {
       g += `<text x="${b[0] + 2}" y="${ey}" class="hlab" pointer-events="none"${x.t === 'f' ? ' fill-opacity=".8"' : ''}>${esc(txt)}</text>`;
     });
     gf.innerHTML = g;
+    paint(cv, w, h, S(), PV, boxes, phone);
     zb.forEach(([b, , z]) => b.setAttribute('aria-pressed', String(z === 1 ? PV.z <= 1.01 : Math.abs(PV.z - z) < 0.05 && Math.hypot(PV.cx - b._c[0], PV.cy - b._c[1]) < 50)));
   };
   const redraw = () => { if (!raf) raf = requestAnimationFrame(draw); };

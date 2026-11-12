@@ -989,7 +989,7 @@ def pipeline_sites():
     with open(os.path.join(HERE, 'pipeline_sites.csv'), newline='') as f:
         rows = list(csv.DictReader(f))
     return [dict(r, homes=int(r['homes']) if r['homes'] else None, lat=float(r['lat']), lon=float(r['lon']),
-                 props=[p for p in [prop_id(r['parcel'])] if p]) for r in rows]
+                 props=[p for p in map(prop_id, r['parcel'].split()) if p]) for r in rows]
 
 
 def vacant_lots():
@@ -1011,6 +1011,8 @@ def vacant_lots():
 
 def prop_id(parcel):
     """The City's parcel number ("058-E-00016-000000", "106-A-0003B-000000") as MassGIS writes it ("58_E_16", "106_A_3_B")."""
+    if re.match(r'\d+_[A-Z]+_\w+$', parcel or ''):     # already MassGIS's spelling (pipeline_sites.csv)
+        return parcel
     m = re.match(r'0*(\d+)-([A-Z]+)-0*(\d+)([A-Z]*)(?:-0*(\w*))?$', parcel or '')    # a lettered lot: 0003B → 3_B
     return m and '_'.join(x for x in (m.group(1), m.group(2), m.group(3), m.group(4), m.group(5)) if x)
 
@@ -1044,9 +1046,22 @@ def project_lots(city, keep, sites=()):
                                           'spatialRel': 'esriSpatialRelIntersects', **fields})).get('features', [])
             got[k] = fs[0]['geometry']['rings'] if fs else None
         return got[k]
+    def nearest(lon, lat):                              # the closest parcel within about 30 m: a lot too new for the file
+        k = f'near:{lon:.6f},{lat:.6f}'
+        if k not in got:
+            box = f'{lon - 0.0004},{lat - 0.0003},{lon + 0.0004},{lat + 0.0003}'
+            fs = json.loads(get(PARCELS, {'geometry': box, 'geometryType': 'esriGeometryEnvelope', 'inSR': 4326,
+                                          'spatialRel': 'esriSpatialRelIntersects', 'where': 'TOWN_ID=274', **fields})).get('features', [])
+            K = (math.cos(math.radians(lat)) * 111320, 110540)
+            d = lambda ft: min(math.hypot((x - lon) * K[0], (y - lat) * K[1]) for r in ft['geometry']['rings'] for x, y in r)
+            fs = sorted(fs, key=d)
+            got[k] = fs[0]['geometry']['rings'] if fs and d(fs[0]) <= 30 else None
+        return got[k]
     out = {}
     for c in city:
         rings = [r for p in c['props'] if got.get(p) for r in got[p]] or at(c['lon'], c['lat'])
+        if not rings and nearest(c['lon'], c['lat']):
+            rings, c['est'] = nearest(c['lon'], c['lat']), True
         out[('c', c['a'])] = rings
     for x in keep:
         out[('m', x['id'])] = at(float(x['longitude']), float(x['latitude']))
@@ -1071,15 +1086,14 @@ def pipeline(xy):
     lots = vacant_lots()
     shown = [c for c in city if c['stage'] in ('construction', 'permitting')]
     K = (math.cos(math.radians(42.39)) * 111320, 110540)
-    permitted = lambda s: s['props'] and [c for c in shown if set(c['props']) & set(s['props']) or (     # sites placed only roughly
-        math.hypot((c['lon'] - s['lon']) * K[0], (c['lat'] - s['lat']) * K[1]) <= 80 and c['u'] >= 0.5 * (s['homes'] or 0))]  # (no parcel) are never matched
+    permitted = lambda s: [c for c in shown if set(c['props']) & set(s['props'])]   # a City permit on the site's own parcels
     for s in [s for s in sites if permitted(s)]:          # once the City has a building permit, the permit is the record
         print(f"  WARNING: {s['label']} is now in the City's permits ({permitted(s)[0]['a'].title()}); "
               f"remove it from pipeline_sites.csv", file=sys.stderr)
         sites.remove(s)
     plot = project_lots(shown, keep, sites)
     p = [{'xy': xy(c['lon'], c['lat']), 'u': c['u'], 't': 'c' if c['stage'] == 'construction' else 'p', 'a': c['a'].title(),
-          'd': c['applied'], 'f': c['first'], 'n': c['n'], 'k': ('c', c['a'])} for c in shown]
+          'd': c['applied'], 'f': c['first'], 'n': c['n'], 'k': ('c', c['a']), **({'est': 1} if c.get('est') else {})} for c in shown]
     p += [{'xy': xy(float(x['longitude']), float(x['latitude'])), 'u': x['hu'], 't': 'f' if x['status'] == 'projected' else 'm',
            'a': short_name(x['name']), 'full': x['name'].strip(), 'ms': x['status'].replace('_', ' '), 'y': x.get('year_compl'),
            'up': (x.get('updated_at') or '')[:10], 'k': ('m', x['id'])} for x in keep]

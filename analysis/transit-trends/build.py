@@ -1101,6 +1101,15 @@ def pipeline(xy):
     p += [{'xy': xy(s['lon'], s['lat']), 'u': s['homes'], 't': s['tier'] or ('m' if s['homes'] else 's'), 'a': s['label'], 'full': s['name'],
            'note': s['note'], 'src': s['source'], 'asof': s['as_of'], 'k': ('s', s['label'])} for s in sites]
     p.sort(key=lambda x: -(x['u'] or 0))
+    with open(os.path.join(HERE, 'restricted_housing.csv'), newline='') as f:   # the City's no-resident-parking list
+        sw = [r for r in csv.DictReader(f) if r['status'] in ('under construction', 'planned')]
+    for x, c in [(x, c) for x in p if x.get('n') for c in shown if c['n'] == x['n']]:
+        hit = [r for r in sw if set(r['permits'].split()) & set(c['n'].split()) or (not r['permits'] and r['lat'] and math.hypot(
+               (float(r['lon']) - c['lon']) * 82000, (float(r['lat']) - c['lat']) * 110540) <= 40)]
+        if hit:
+            x['sw'] = hit[0]['schedule_w']
+    print(f"  on the no-resident-parking list (Schedule W): {sum(1 for x in p if x.get('sw'))} pipeline projects of "
+          f"{len(sw)} listed under construction or planned", file=sys.stderr)
     used = {}                                          # a lot drawn once, for the biggest project on it; the others point to it
     for i, x in enumerate(p):
         rings = plot.get(x.pop('k'))
